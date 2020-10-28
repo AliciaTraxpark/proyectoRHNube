@@ -38,7 +38,7 @@ function RefreshTablaEmpleadoArea() {
                     ">";
                 tbody +=
                     '<td class="text-center">\
-                            <input type="checkbox" id="tdC" style="margin-right:5.7px!important"\
+                            <input type="checkbox" name="selec" id="tdC" style="margin-right:5.7px!important"\
                             class="form-check-input sub_chk" data-id=' +
                     data[i].emple_id +
                     " " +
@@ -361,26 +361,24 @@ function RefreshTablaEmpleadoArea() {
                         });
                 },
             });
-            var seleccionarTodos = $("#selectT");
-            var table = $("#tablaEmpleado");
-            var CheckBoxs = table.find("tbody input:checkbox[name=selec]");
+            var seleccionarTodos = $('#selectT');
+            var table = $('#tablaEmpleado');
+            var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
             var CheckBoxMarcados = 0;
 
-            seleccionarTodos.on("click", function () {
+            seleccionarTodos.on('click', function () {
                 if (seleccionarTodos.is(":checked")) {
-                    CheckBoxs.prop("checked", true);
+                    CheckBoxs.prop('checked', true);
                 } else {
-                    CheckBoxs.prop("checked", false);
-                }
+                    CheckBoxs.prop('checked', false);
+                };
+
             });
 
-            CheckBoxs.on("change", function (e) {
-                CheckBoxMarcados = table.find("tbody input:checkbox:checked")
-                    .length;
-                seleccionarTodos.prop(
-                    "checked",
-                    CheckBoxMarcados === CheckBoxs.length
-                );
+
+            CheckBoxs.on('change', function (e) {
+                CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
+                seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
             });
         },
     });
@@ -408,7 +406,7 @@ function RefreshTablaEmpleado() {
                     ">";
                 tbody +=
                     '<td class="text-center">\
-                            <input type="checkbox" id="tdC" style="margin-right:5.7px!important"\
+                            <input type="checkbox" name="selec" id="tdC" style="margin-right:5.7px!important"\
                             class="form-check-input sub_chk" data-id=' +
                     data[i].emple_id +
                     " " +
@@ -732,26 +730,24 @@ function RefreshTablaEmpleado() {
                         });
                 },
             });
-            var seleccionarTodos = $("#selectT");
-            var table = $("#tablaEmpleado");
-            var CheckBoxs = table.find("tbody input:checkbox[name=selec]");
+            var seleccionarTodos = $('#selectT');
+            var table = $('#tablaEmpleado');
+            var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
             var CheckBoxMarcados = 0;
 
-            seleccionarTodos.on("click", function () {
+            seleccionarTodos.on('click', function () {
                 if (seleccionarTodos.is(":checked")) {
-                    CheckBoxs.prop("checked", true);
+                    CheckBoxs.prop('checked', true);
                 } else {
-                    CheckBoxs.prop("checked", false);
-                }
+                    CheckBoxs.prop('checked', false);
+                };
+
             });
 
-            CheckBoxs.on("change", function (e) {
-                CheckBoxMarcados = table.find("tbody input:checkbox:checked")
-                    .length;
-                seleccionarTodos.prop(
-                    "checked",
-                    CheckBoxMarcados === CheckBoxs.length
-                );
+
+            CheckBoxs.on('change', function (e) {
+                CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
+                seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
             });
         },
     });

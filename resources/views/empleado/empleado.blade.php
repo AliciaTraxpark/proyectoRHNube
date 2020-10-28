@@ -104,6 +104,160 @@ use Carbon\Carbon;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- MODAL DE VIDEO DATOS PERSONALES --}}
+    <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideo()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframe">
+                                <iframe id="contenidoIframe"
+                                    src="https://player.vimeo.com/video/472833228?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen"></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO DATOS EMPRESARIAL --}}
+    <div class="modal fade" id="modal-videoE" tabindex="-1" role="dialog" aria-labelledby="modal-videoE"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideoE()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeE">
+                                <iframe id="contenidoIframe"
+                                    src="https://player.vimeo.com/video/472833228?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen"></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO FOTO--}}
+    <div class="modal fade" id="modal-videoF" tabindex="-1" role="dialog" aria-labelledby="modal-videoF"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideoF()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeF">
+                                <iframe id="contenidoIframe"
+                                    src="https://player.vimeo.com/video/472833622?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen"></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO HORARIO--}}
+    <div class="modal fade" id="modal-videoH" tabindex="-1" role="dialog" aria-labelledby="modal-videoH"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideoH()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeH">
+                                <iframe id="contenidoIframe"
+                                    src="https://player.vimeo.com/video/472833750?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen"></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO ACTIVIDADES--}}
+    <div class="modal fade" id="modal-videoA" tabindex="-1" role="dialog" aria-labelledby="modal-videoA"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideoA()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeA">
+                                <iframe src="https://player.vimeo.com/video/472834003?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen" id="contenidoIframeA"></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
     <div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -2064,1076 +2218,22 @@ use Carbon\Carbon;
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="validFechaC" style="color: red;display: none;">*Fecha
-                                                            incorrecta.</span>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <select class="form-control" name="dia_fecha"
-                                                                    id="dia_fecha" required="">
-                                                                    <option value="0">Dia</option>
-                                                                    @for ($i = 1; $i <32; $i++) <option class=""
-                                                                        value="{{$i}}">{{$i}}</option>
-                                                                        @endfor
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <select class="form-control" name="mes_fecha"
-                                                                    id="mes_fecha" required="">
-                                                                    <option value="0">Mes</option>
-                                                                    <option class="" value="1">Ene.</option>
-                                                                    <option class="" value="2">Feb.</option>
-                                                                    <option class="" value="3">Mar.</option>
-                                                                    <option class="" value="4">Abr.</option>
-                                                                    <option class="" value="5">May.</option>
-                                                                    <option class="" value="6">Jun.</option>
-                                                                    <option class="" value="7">Jul.</option>
-                                                                    <option class="" value="8">Ago.</option>
-                                                                    <option class="" value="9">Set.</option>
-                                                                    <option class="" value="10">Oct.</option>
-                                                                    <option class="" value="11">Nov.</option>
-                                                                    <option class="" value="12">Dic.</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
-                                                                    <option value="0">Año</option>
-                                                                    @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                                        value="{{$i}}">{{$i}}
-                                                                        </option>
-                                                                        @endfor
-                                                                </select>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Nombres</label>
-                                                        <span id="validNombres" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <input type="text" class="form-control" name="nombres"
-                                                            id="nombres" tabindex="6" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Teléfono</label>
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <select class="form-control" id="codigoTelefono">
-                                                                    <option value="01" selected>01</option>
-                                                                    <option value="41">41</option>
-                                                                    <option value="43">43</option>
-                                                                    <option value="83">83</option>
-                                                                    <option value="54">54</option>
-                                                                    <option value="66">66</option>
-                                                                    <option value="76">76</option>
-                                                                    <option value="84">84</option>
-                                                                    <option value="67">67</option>
-                                                                    <option value="62">62</option>
-                                                                    <option value="56">56</option>
-                                                                    <option value="64">64</option>
-                                                                    <option value="44">44</option>
-                                                                    <option value="74">74</option>
-                                                                    <option value="65">65</option>
-                                                                    <option value="82">82</option>
-                                                                    <option value="53">53</option>
-                                                                    <option value="63">63</option>
-                                                                    <option value="73">73</option>
-                                                                    <option value="51">51</option>
-                                                                    <option value="42">42</option>
-                                                                    <option value="52">52</option>
-                                                                    <option value="72">72</option>
-                                                                    <option value="61">61</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <input type="number" class="form-control"
-                                                                    name="telefono" id="telefono" tabindex="9"
-                                                                    maxlength="9" onkeypress="return isNumeric(event)"
-                                                                    oninput="maxLengthCheck(this)">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Dirección</label>
-                                                        <input type="text" class="form-control" name="direccion"
-                                                            id="direccion" tabindex="10" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Dirección Domiciliara</label>
-                                                        <select class="form-control" placeholder="Departamento"
-                                                            name="departamento" id="dep" tabindex="11" required>
-                                                            <option value="">Departamento</option>
-                                                            @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{$departamentos->id}}">
-                                                                {{$departamentos->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Lugar Nacimiento</label>
-                                                        <select class="form-control" placeholder="Departamento"
-                                                            name="departamento" id="departamento" tabindex="14"
-                                                            required>
-                                                            <option value="">Departamento</option>
-                                                            @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{$departamentos->id}}">
-                                                                {{$departamentos->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="normal" for="">Género</label>
-                                                        <span id="validGenero" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <label class="custom-control custom-radio">
-                                                            <input type="radio" name="tipo" id="tipo" value="Femenino"
-                                                                required>
-                                                            Femenino
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Provincia "
-                                                            name="provincia" id="prov" tabindex="12" required>
-                                                            <option value="">Provincia</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Provincia "
-                                                            name="provincia" id="provincia" tabindex="15" required>
-                                                            <option value="">Provincia</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="normal" for=""><br></label>
-                                                        <label class="custom-control custom-radio">
-                                                            <input type="radio" name="tipo" id="tipo" value="Masculino"
-                                                                required>
-                                                            Masculino
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Distrito "
-                                                            name="distrito" id="dist" tabindex="13" required>
-                                                            <option value="">Distrito</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Distrito "
-                                                            name="distrito" id="distrito" tabindex="16" required>
-                                                            <option value="">Distrito</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="normal" for=""><br></label>
-                                                        <label class="custom-control custom-radio" data-toggle="tooltip"
-                                                            data-placement="right" title=""
-                                                            data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
-                                                            <input type="radio" name="tipo" id="tipo"
-                                                                value="Personalizado" required>
-                                                            Personalizado
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end row -->
-                                        </div>
-                                        <div id="sw-default-step-2" class="setup-content"
-                                            style="font-size: 12px!important">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Codigo Empleado</label>
-                                                        <input type="text" class="form-control" name="codigoEmpleado"
-                                                            id="codigoEmpleado" tabindex="1" maxlength="200"
-                                                            onfocus="javascript:valorCodigoEmpleado()"
-                                                            data-toggle="tooltip" data-placement="right"
-                                                            title="Número de documento por defecto o Ingrese un código interno"
-                                                            data-original-title="Número de documento por defecto o Ingrese un código interno">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4"><br></div>
-                                                <div class="col-4"><br></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Cargo <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#cargomodal" data-toggle="modal"
-                                                                data-target="#cargomodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="cargo" id="cargo"
-                                                            tabindex="2">
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($cargo as $cargos)
-                                                            <option class="" value="{{$cargos->cargo_id}}">
-                                                                {{$cargos->cargo_descripcion}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Contrato <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#contratomodal" data-toggle="modal"
-                                                                data-target="#contratomodal"><i
-                                                                    class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <a id="detalleContrato"
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#fechasmodal" data-toggle="modal"
-                                                                data-target="#fechasmodal" data-toggle="tooltip"
-                                                                data-placement="right" title="Detalle de Contrato."
-                                                                data-original-title="Detalle de Contrato."
-                                                                style="cursor: pointer;"><img
-                                                                    src="{{asset('landing/images/adaptive.svg')}}"
-                                                                    height="18"></a></label>
-                                                        <select class="form-control" name="contrato" id="contrato"
-                                                            onchange="$('#detalleContrato').show();" tabindex="5"
-                                                            required>
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($tipo_cont as $tipo_conts)
-                                                            <option value="{{$tipo_conts->contrato_id}}">
-                                                                {{$tipo_conts->contrato_descripcion}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> <!-- end col -->
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Área <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#areamodal" data-toggle="modal"
-                                                                data-target="#areamodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="area" id="area" tabindex="3">
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($area as $areas)
-                                                            <option class="" value="{{$areas->area_id}}">
-                                                                {{$areas->area_descripcion}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Nivel <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#nivelmodal" data-toggle="modal"
-                                                                data-target="#nivelmodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="nivel" id="nivel"
-                                                            tabindex="6">
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($nivel as $niveles)
-                                                            <option class="" value="{{$niveles->nivel_id}}">
-                                                                {{$niveles->nivel_descripcion}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> <!-- end col -->
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Centro Costo <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#centrocmodal" data-toggle="modal"
-                                                                data-target="#centrocmodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="centroc" id="centroc"
-                                                            tabindex="4">
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($centro_costo as $centro_costos)
-                                                            <option class="" value="{{$centro_costos->centroC_id}}">
-                                                                {{$centro_costos->centroC_descripcion}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Local <a
-                                                                onclick="$('#form-registrar').modal('hide');"
-                                                                href="#localmodal" data-toggle="modal"
-                                                                data-target="#localmodal"><i
-                                                                    class="uil uil-plus"></i></a></label>
-                                                        <select class="form-control" name="local" id="local"
-                                                            tabindex="7">
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($local as $locales)
-                                                            <option class="" value="{{$locales->local_id}}">
-                                                                {{$locales->local_descripcion}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> <!-- end col -->
-                                            </div> <!-- end row -->
-                                        </div>
-                                        <div id="sw-default-step-3" class="setup-content"
-                                            style="font-size: 12px!important">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <input type="file" name="file" id="file" accept="image/*">
-                                                    </div>
-                                                </div> <!-- end col -->
-                                            </div> <!-- end row -->
-                                        </div>
-                                        <div id="sw-default-step-4" class="setup-content"
-                                            style="font-size: 12px!important">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    @if (count($calendario) === 0)
-                                                    <div class="col-md-12 text-center">
-                                                        <h5>No existe calendarios registrados</h5>
-                                                    </div>
-                                                    <div style="display: none">
-                                                        <div class="col-md-12" id="calendarInv"
-                                                            style="display: none!important">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @else
-                                                <div class="form-group row">
-                                                    <div class="col-md-1"></div>
-                                                    <label style="font-weight: 600;font-size: 14px;"
-                                                        class="col-lg-3 col-form-label" for="simpleinput">Calendario
-                                                        de empleado:</label>
-                                                    <div class="col-lg-5">
-                                                        <span id="vallidCalend" style="color: red;display:none">Eliga
-                                                            calendario</span>
-                                                        <select name="" id="selectCalendario"
-                                                            class="form-control col-lg-6 form-control-sm"
-                                                            style="margin-top: 4px;">
-                                                            <option hidden selected>Asignar calendario</option>
-                                                            @foreach ($calendario as $calendarios)
-                                                            <option class="" value="{{ $calendarios->calen_id }}">
-                                                                {{ $calendarios->calendario_nombre }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2" id="opborrar" style="display: none">
-
-                                                        <div class="btn-group mt-2 mr-1">
-                                                            <button type="button"
-                                                                class="btn btn-primary btn-sm dropdown-toggle"
-                                                                style="color: #fff;background-color: #4a5669;border-color: #485263;"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false"><img
-                                                                    src="{{ asset('admin/images/borrador.svg') }}"
-                                                                    height="15">
-                                                                Borrar <i class="icon"><span
-                                                                        data-feather="chevron-down"></span></i></button>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias
-                                                                    feriados</a>
-                                                                <a class="dropdown-item"
-                                                                    onclick="vaciarddescanso()">Dias
-                                                                    descanso</a>
-                                                                {{-- <a class="dropdown-item"
-                                                            onclick="vaciardlabTem()">D.
-                                                            laborables</a> --}}
-                                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D.
-                                                                    no
-                                                                    laborables</a>
-                                                                <a class="dropdown-item"
-                                                                    onclick="vaciardIncidTem()">Incidencia</a>
-                                                            </div>
-                                                        </div><!-- /btn-group -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-10" id="calendarInv"></div>
-                                            @endif
-                                            <input type="hidden" id="pruebaEnd">
-                                            <input type="hidden" id="pruebaStar">
-                                            <div class="col-md-10" id="calendar" style="display: none"></div>
-                                            <div class="col-md-1"></div>
-                                            <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
-                                                aria-labelledby="myModalLabel" aria-hidden="true"
-                                                data-backdrop="static">
-                                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width:750px;  margin-top: 150px; left:0px;">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body"
-                                                            style="font-size:12px!important;background: #f3f3f3;">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-3">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="laborableTem()"><img
-                                                                                src="{{ asset('admin/images/dormir.svg') }}"
-                                                                                height="20"> Descanso</button>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="nolaborableTem()"><img
-                                                                                src="{{ asset('admin/images/evento.svg') }}"
-                                                                                height="20"> Dia no laborable</button>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
-                                                                                src="{{ asset('admin/images/calendario.svg') }}"
-                                                                                height="20"> Dia feriado</button>
-                                                                    </div>
-                                                                    <div class="col-md-3 text-right">
-                                                                        {{-- <button type="button"
-                                                                    style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm "
-                                                                    onclick="registrarDdescanso()"><img
-                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                        height="20"> Incidencia</button>
-                                                                        --}}
-                                                                        <button style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="agregarinciden()"><img
-                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                                height="20"> Incidencia</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer"
-                                                            style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-12 text-right">
-                                                                        <button type="button"
-                                                                            class="btn btn-soft-primary btn-sm "
-                                                                            onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
-
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                            </div><!-- /.modal -->
-                                            <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog"
-                                                aria-labelledby="myModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header" style="background-color: #163552;">
-                                                            <h5 class="modal-title" id="myModalLabel"
-                                                                style="color:#ffffff;font-size:15px">Agregar nuevo
-                                                                feriado</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="form-group col-md-12">
-                                                                    <div class="col-md-6">
-                                                                        <label for="">Nombre de dia feriado:</label>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <form action="javascript:diaferiadoTem()">
-                                                                            <input class="form-control" type="text"
-                                                                                id="nombreFeriado" required>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-7 text-right">
-                                                                        <button type="button" class="btn btn-light"
-                                                                            data-dismiss="modal">Cancelar</button>
-                                                                    </div>
-                                                                    <div class="col-md-5 text-right"
-                                                                        style="padding-right: 38px; ">
-                                                                        <button type="submit"
-                                                                            class="btn btn-secondary">Aceptar</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                            </div><!-- /.modal -->
-                                        </div>
-                                    </div>
-                                    <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center" id="detallehorario"></div>
-                                            <div class="col-md-1"><br></div>
-                                            <div class="col-md-10" id="mensajeOc"><label for="">Aún no ha
-                                                    seleccionado un calendario en el paso anterior.</label></div>
-                                            <div class="col-md-10" id="calendar2" style="display: none"></div>
-                                            <div class="col-md-1"><br></div>
-                                        </div>
-                                        <div id="horarioAsignar" class="modal fade" role="dialog"
-                                            aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width:400px;  margin-top: 150px; left: 30px;">
-                                                <div class="modal-content">
-                                                    <div class="modal-body"
-                                                        style="font-size:12px!important;background: #f3f3f3;">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-8">
-                                                                    <span id="errorSel_re"
-                                                                        style="color: #8b3a1e;display:none">Seleccione
-                                                                        un horario</span>
-                                                                    <select data-plugin="customselect"
-                                                                        class="form-control custom-select custom-select-sm"
-                                                                        name="selectHorario" id="selectHorario">
-                                                                        <option hidden selected disabled>Seleccionar
-                                                                            horario
-                                                                        </option>
-                                                                        @foreach ($horario as $horarios)
-                                                                        <option class=""
-                                                                            value="{{$horarios->horario_id}}">
-                                                                            {{$horarios->horario_descripcion}} <span
-                                                                                style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
-                                                                        </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-4 text-left"
-                                                                    style="padding-left: 0px;">
-                                                                    <button class="btn btn-primary btn-sm"
-                                                                        style="background-color: #183b5d;border-color:#62778c;"
-                                                                        onclick="abrirHorario()">+</button>
-                                                                </div>
-                                                                <div class="col-md-12"><br>
-                                                                    <div class="custom-control custom-switch mb-2">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="fueraHSwitch_re">
-                                                                        <label class="custom-control-label"
-                                                                            for="fueraHSwitch_re">Trabajar fuera de
-                                                                            horario</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-switch mb-2">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="horCompSwitch_re">
-                                                                        <label class="custom-control-label"
-                                                                            for="horCompSwitch_re">Horario
-                                                                            compensable.</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-switch mb-2">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="horAdicSwitch_re">
-                                                                        <label class="custom-control-label"
-                                                                            for="horAdicSwitch_re">Permite marcar horas
-                                                                            adicionales.</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer"
-                                                        style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                        <div class="col-md-12 text-right" style="padding-right: 0px;">
-                                                            <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
-                                                        border-color: #f3f3f3;"
-                                                                onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
-                                                            <button type="button" class="btn btn-primary btn-sm"
-                                                                style="background-color: #183b5d;border-color:#62778c;"
-                                                                onclick="agregarHorarioSe_regis()">Registrar</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-                                        <div id="horarioAgregar" class="modal fade" tabindex="-1" role="dialog"
-                                            aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width: 600px;">
-
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:#163552;">
-                                                        <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                                        <button type="button" class="close"
-                                                            onclick="$('#horarioAgregar').modal('hide')"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body" style="font-size:12px!important">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <form id="frmHor"
-                                                                    action="javascript:registrarHorario()">
-                                                                    <div class="row">
-
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label for="">Descripción del
-                                                                                    horario:</label>
-                                                                                <input type="text"
-                                                                                    class="form-control form-control-sm"
-                                                                                    id="descripcionCa" maxlength="60"
-                                                                                    required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Hora de
-                                                                                    inicio(24h):</label>
-                                                                                <input type="text" id="horaI"
-                                                                                    class="form-control form-control-sm"
-                                                                                    required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Hora de fin(24h):</label>
-                                                                                <input type="text" id="horaF"
-                                                                                    class="form-control form-control-sm"
-                                                                                    required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Horas obligadas:</label>
-                                                                                <div class="input-group form-control-sm"
-                                                                                    style="bottom: 4px;
-                                                                   padding-left: 0px; padding-right: 0px;">
-
-                                                                                    <input type="number"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="1" id="horaOblig" required>
-                                                                                    <div class="input-group-prepend ">
-                                                                                        <div class="input-group-text form-control-sm"
-                                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                                            Horas</div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Tolerancia al
-                                                                                    ingreso(Min):</label>
-                                                                                <div class="input-group form-control-sm "
-                                                                                    style="bottom: 4px;
-                                                                    padding-left: 0px; padding-right: 0px;">
-                                                                                    <input type="number" value="0"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="0" id="toleranciaH"
-                                                                                        required>
-                                                                                    <div class="input-group-prepend  ">
-                                                                                        <div class="input-group-text form-control-sm "
-                                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                                            Minutos</div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Tolerancia a la
-                                                                                    salida(Min):</label>
-                                                                                <div class="input-group form-control-sm "
-                                                                                    style="bottom: 4px;
-                                                                   padding-left: 0px; padding-right: 0px;">
-                                                                                    <input type="number" value="0"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="0" id="toleranciaSalida"
-                                                                                        required>
-                                                                                    <div class="input-group-prepend  ">
-                                                                                        <div class="input-group-text form-control-sm "
-                                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                                            Minutos</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-md-4" id="divOtrodia"
-                                                                            style="display: none">
-                                                                            <div class="form-check">
-                                                                                <input type="checkbox"
-                                                                                    class="form-check-input"
-                                                                                    id="otroDCh" checked disabled>
-                                                                                <label class="form-check-label"
-                                                                                    for="otroDCh"
-                                                                                    style="margin-top: 2px; font-weight: 700">La
-                                                                                    hora fin de este horario pertenece
-                                                                                    al siguiente día.</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <div
-                                                                                class="custom-control custom-switch mb-2">
-                                                                                <input type="checkbox"
-                                                                                    class="custom-control-input"
-                                                                                    id="SwitchTardanza">
-                                                                                <label class="custom-control-label"
-                                                                                    for="SwitchTardanza"
-                                                                                    style="font-weight: bold;padding-top: 1px">Controlar
-                                                                                    tardanza</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <div
-                                                                                class="custom-control custom-switch mb-2">
-                                                                                <input type="checkbox"
-                                                                                    class="custom-control-input"
-                                                                                    id="SwitchPausa">
-                                                                                <label class="custom-control-label"
-                                                                                    for="SwitchPausa"
-                                                                                    style="font-weight: bold;padding-top: 1px">Pausas
-                                                                                    en el horario</label> &nbsp;
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div id="divPausa" class="col-md-12"
-                                                                            style="display: none">
-                                                                            <div class="col-md-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-5">
-                                                                                        <label for=""
-                                                                                            style="font-weight:600">Descripción</label>
-                                                                                    </div>
-                                                                                    <div class="col-md-3">
-                                                                                        <label for=""
-                                                                                            style="font-weight:600">Inicio
-                                                                                            pausa(24h)</label>
-                                                                                    </div>
-                                                                                    <div class="col-md-3">
-                                                                                        <label for=""
-                                                                                            style="font-weight:600">Fin
-                                                                                            pausa(24h)</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div id="inputPausa">
-
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-12 text-right">
-                                                                    <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#horarioAgregar').modal('hide')">Cancelar</button>
-                                                                    <button type="submit" name=""
-                                                                        style="background-color: #163552;"
-                                                                        class="btn btn-sm ">Guardar</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-                                    </div>
-                                    <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-body border p-2" id="regbodyModoTarea">
-                                                        <div class="row">
-                                                            <div class="col-xl-12 text-right">
-                                                                <button type="button" class="btn btn-sm mt-1"
-                                                                    style="background-color: #163552;"
-                                                                    onclick="$('#regactividadTarea').modal();">+ Asignar
-                                                                    Actividad
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row pt-3">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl scroll">
-                                                                    <table class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead
-                                                                            style="background: #fafafa;font-size: 14px">
-                                                                            <tr>
-                                                                                <th>Actividad</th>
-                                                                                <th>Estado</th>
-                                                                                <th>Total</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="regtablaBodyTarea"
-                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                                            aria-labelledby="regactividadTarea" aria-hidden="true"
-                                            data-backdrop="static">
-                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width: 550px;">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:#163552;">
-                                                        <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Asignar Actividad
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body" style="font-size:12px!important">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <form action="javascript:registrarNuevaActividadTarea()"
-                                                                    id="formActvidadesReg">
-                                                                    <div class="row justify-content-center">
-                                                                        <div class="col-xl-12">
-                                                                            <label>
-                                                                                Actividades
-                                                                            </label>
-                                                                            <a class="mr-3" data-toggle="tooltip"
-                                                                                data-placement="right"
-                                                                                title="registrar nueva actividad"
-                                                                                data-original-title="registrar nueva actividad"
-                                                                                onclick="$('#form-registrar').modal('hide');$('#ActividadTareaGE').modal();">
-                                                                                <i class="uil uil-plus"
-                                                                                    style="color: darkblue;cursor: pointer;"></i>
-                                                                            </a>
-                                                                            <select multiple="multiple"
-                                                                                data-plugin="customselect"
-                                                                                class="form-control" multiple="multiple"
-                                                                                id="regEmpleadoActiv"></select>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-12 text-right">
-                                                                    <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#regactividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
-                                                                    <button type="submit" name=""
-                                                                        style="background-color: #163552;"
-                                                                        class="btn btn-sm ">Guardar</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-                                    </div>
-                                    <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitchCR1">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitchCR1"
-                                                                        style="font-weight: bold">Modo Control
-                                                                        Remoto</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body border p-2" id="bodyModoControlRR">
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <button class="btn btn-sm dropdown-toggle"
-                                                                    style="background-color:#163552;"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">+
-                                                                    Agregar
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="btnGroupDrop1">
-                                                                    <a class="dropdown-item"
-                                                                        id="agregarWindows">WINDOWS</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl">
-                                                                    <table id="tablaDispositivo" class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead style="background: #fafafa;">
-                                                                            <tr>
-                                                                                <th>Tipo Dispositivo</th>
-                                                                                <th>Nombre</th>
-                                                                                <th>Activación de Dispositivo</th>
-                                                                                <th>Codigo</th>
-                                                                                <th>Enviado</th>
-                                                                                <th>Estado</th>
-                                                                                <th></th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="tbodyDispositivo"
-                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitchCR2">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitchCR2"
-                                                                        style="font-weight: bold">Modo Control de
-                                                                        Asistencia en Puerta</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body border p-2" id="bodyModoControlAR">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog"
-                aria-labelledby="form-ver" aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background: #163552;">
-                            <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                            <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" style="padding: 0px;">
-                            <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
-                                <ul style="background: #fdfdfd!important;">
-                                    <li><a href="#persona-step-1">Personales</a></li>
-                                    <li><a href="#swE-default-step-2">Empresarial</a></li>
-                                    <li><a href="#swF-default-step-3">Foto</a></li>
-                                    <li><a href="#sw-default-step-4">Calendario</a></li>
-                                    <li><a href="#sw-default-step-5">Horario</a></li>
-                                    <li><a href="#sw-default-step-6">Actividades</a></li>
-                                    <li><a href="#sw-default-step-7">Dispositivo</a></li>
-                                </ul>
-                                <input type="hidden" id="estadoP" value="false">
-                                <input type="hidden" id="estadoE" value="false">
-                                <input type="hidden" id="estadoF" value="false">
-                                <div class="p-3" id="form-registrar">
-                                    <div id="persona-step-1" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <input type="hidden" name="v_id" id="v_id">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Tipo Documento</label>
-                                                    <input type="text" class="form-control" name="v_tipoDoc"
-                                                        id="v_tipoDoc" disabled style="background-color: #fcfcfc;"
-                                                        tabindex="1">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Apellido Paterno</label>
-                                                    <span id="v_validApPaterno" style="color: red;">*Campo
-                                                        Obligatorio</span>
-                                                    <input type="text" class="form-control" name="v_apPaterno"
-                                                        id="v_apPaterno" tabindex="4" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Correo Electrónico</label>
-                                                    <span id="v_validCorreo" style="color: red;">*Campo
-                                                        Obligatorio</span>
-                                                    <span id="v_emailR" style="color: red;">*Correo
-                                                        registrado</span>
-                                                    <input type="email" class="form-control" id="v_email" name="email"
-                                                        tabindex="7">
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Num. Documento</label>
-                                                    <span id="v_validNumDocumento" style="color: red;">*Campo
-                                                        Obligatorio</span>
-                                                    <input type="text" class="form-control" name="v_numDocumento"
-                                                        id="v_numDocumento" required disabled
-                                                        style="background-color: #fcfcfc;" tabindex="2">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Apellido Materno</label>
-                                                    <span id="v_validApMaterno" style="color: red;">*Campo
-                                                        Obligatorio</span>
-                                                    <input type="text" class="form-control" name="v_apMaterno"
-                                                        id="v_apMaterno" tabindex="5" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Celular</label>
-                                                    <span id="v_validCel" style="color: red;">*Número
-                                                        incorrecto.</span>
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <select class="form-control" id="v_codigoCelular">
-                                                                <option value="+51" selected>+51</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <input type="text" class="form-control" name="v_celular"
-                                                                id="v_celular" tabindex="8" maxlength="9"
-                                                                onkeypress="return isNumeric(event)"
-                                                                oninput="maxLengthCheck(this)">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
+                                                    {{-- <div class="float-md-right">
+                                                        <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
+                                                            data-placement="left" title="ver vídeo"
+                                                            data-original-title="ver vídeo">
+                                                            <img src="{{asset('landing/images/play.svg')}}"
+                                                    height="23">
+                                                    </a>
+                                                </div> --}}
                                                 <div class="form-group">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <span id="v_validFechaC" style="color: red;display: none;">*Fecha
+                                                    <span id="validFechaC" style="color: red;display: none;">*Fecha
                                                         incorrecta.</span>
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <select class="form-control" name="v_dia_fecha"
-                                                                id="v_dia_fecha" required="">
+                                                            <select class="form-control" name="dia_fecha" id="dia_fecha"
+                                                                required="">
                                                                 <option value="0">Dia</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">{{$i}}</option>
@@ -3141,8 +2241,8 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control" name="v_mes_fecha"
-                                                                id="v_mes_fecha" required="">
+                                                            <select class="form-control" name="mes_fecha" id="mes_fecha"
+                                                                required="">
                                                                 <option value="0">Mes</option>
                                                                 <option class="" value="1">Ene.</option>
                                                                 <option class="" value="2">Feb.</option>
@@ -3159,9 +2259,8 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control"
-                                                                style="padding-left: 5px;padding-right: 5px;"
-                                                                name="v_mes_fecha" id="v_ano_fecha" required="">
+                                                            <select class="form-control" style="padding-left: 5px;
+                                                    padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
                                                                 <option value="0">Año</option>
                                                                 @for ($i = 1950; $i <2011; $i++) <option class=""
                                                                     value="{{$i}}">{{$i}}
@@ -3169,20 +2268,21 @@ use Carbon\Carbon;
                                                                     @endfor
                                                             </select>
                                                         </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Nombres</label>
-                                                    <span id="v_validNombres" style="color: red;">*Campo
+                                                    <span id="validNombres" style="color: red;">*Campo
                                                         Obligatorio</span>
-                                                    <input type="text" class="form-control" name="v_nombres"
-                                                        id="v_nombres" tabindex="6" required>
+                                                    <input type="text" class="form-control" name="nombres" id="nombres"
+                                                        tabindex="6" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Teléfono</label>
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <select class="form-control" id="v_codigoTelefono">
+                                                            <select class="form-control" id="codigoTelefono">
                                                                 <option value="01" selected>01</option>
                                                                 <option value="41">41</option>
                                                                 <option value="43">43</option>
@@ -3211,7 +2311,7 @@ use Carbon\Carbon;
                                                         </div>
                                                         <div class="col-8">
                                                             <input type="number" class="form-control" name="telefono"
-                                                                id="v_telefono" tabindex="9" maxlength="9"
+                                                                id="telefono" tabindex="9" maxlength="9"
                                                                 onkeypress="return isNumeric(event)"
                                                                 oninput="maxLengthCheck(this)">
                                                         </div>
@@ -3221,15 +2321,15 @@ use Carbon\Carbon;
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección</label>
-                                                    <input type="text" class="form-control" name="v_direccion"
-                                                        id="v_direccion" tabindex="10" required>
+                                                    <input type="text" class="form-control" name="direccion"
+                                                        id="direccion" tabindex="10" required>
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Dirección Domiciliara</label>
-                                                    <select class="form-control" placeholder="Departamento" name="v_dep"
-                                                        id="v_dep" tabindex="11" required>
+                                                    <select class="form-control" placeholder="Departamento"
+                                                        name="departamento" id="dep" tabindex="11" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                         <option class="" value="{{$departamentos->id}}">
@@ -3240,7 +2340,7 @@ use Carbon\Carbon;
                                                 <div class="form-group">
                                                     <label for="sw-default">Lugar Nacimiento</label>
                                                     <select class="form-control" placeholder="Departamento"
-                                                        name="v_departamento" id="v_departamento" tabindex="14">
+                                                        name="departamento" id="departamento" tabindex="14" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                         <option class="" value="{{$departamentos->id}}">
@@ -3250,10 +2350,11 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for="">Género</label>
-                                                    <span id="v_validGenero" style="color: red;">*Campo
+                                                    <span id="validGenero" style="color: red;">*Campo
                                                         Obligatorio</span>
                                                     <label class="custom-control custom-radio">
-                                                        <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
+                                                        <input type="radio" name="tipo" id="tipo" value="Femenino"
+                                                            required>
                                                         Femenino
                                                     </label>
                                                 </div>
@@ -3261,22 +2362,23 @@ use Carbon\Carbon;
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <select class="form-control " placeholder="Provincia " name="v_prov"
-                                                        id="v_prov" tabindex="12" required>
+                                                    <select class="form-control " placeholder="Provincia "
+                                                        name="provincia" id="prov" tabindex="12" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select class="form-control " placeholder="Provincia "
-                                                        name="v_provincia" id="v_provincia" tabindex="15">
+                                                        name="provincia" id="provincia" tabindex="15" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
                                                     <label class="custom-control custom-radio">
-                                                        <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
+                                                        <input type="radio" name="tipo" id="tipo" value="Masculino"
+                                                            required>
                                                         Masculino
                                                     </label>
                                                 </div>
@@ -3284,51 +2386,65 @@ use Carbon\Carbon;
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
-                                                    <select class="form-control " placeholder="Distrito " name="v_dist"
-                                                        id="v_dist" tabindex="13" required>
+                                                    <select class="form-control " placeholder="Distrito "
+                                                        name="distrito" id="dist" tabindex="13" required>
                                                         <option value="">Distrito</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default"><br></label>
                                                     <select class="form-control " placeholder="Distrito "
-                                                        name="v_distrito" id="v_distrito" tabindex="16">
+                                                        name="distrito" id="distrito" tabindex="16" required>
                                                         <option value="">Distrito</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input type="radio" name="v_tipo" id="v_tipo"
-                                                            value="Personalizado">
+                                                    <label class="custom-control custom-radio" data-toggle="tooltip"
+                                                        data-placement="right" title=""
+                                                        data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
+                                                        <input type="radio" name="tipo" id="tipo" value="Personalizado"
+                                                            required>
                                                         Personalizado
                                                     </label>
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="swE-default-step-2" style="font-size: 12px!important">
+                                    <div id="sw-default-step-2" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Codigo Empleado</label>
-                                                    <input type="text" class="form-control" name="v_codigoEmpleado"
-                                                        maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
+                                                    <input type="text" class="form-control" name="codigoEmpleado"
+                                                        id="codigoEmpleado" tabindex="1" maxlength="200"
+                                                        onfocus="javascript:valorCodigoEmpleado()" data-toggle="tooltip"
+                                                        data-placement="right"
+                                                        title="Número de documento por defecto o Ingrese un código interno"
+                                                        data-original-title="Número de documento por defecto o Ingrese un código interno">
                                                 </div>
                                             </div>
                                             <div class="col-4"><br></div>
+                                            <div class="col-4">
+                                                <div class="float-md-right">
+                                                    <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
+                                                        data-placement="left" title="ver vídeo"
+                                                        data-original-title="ver vídeo">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Cargo <a
-                                                            onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_cargo" id="v_cargo"
-                                                        tabindex="2" required>
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#cargomodal" data-toggle="modal"
+                                                            data-target="#cargomodal"><i
+                                                                class="uil uil-plus"></i></a></label>
+                                                    <select class="form-control" name="cargo" id="cargo" tabindex="2">
                                                         <option value="">Seleccionar</option>
-
                                                         @foreach ($cargo as $cargos)
                                                         <option class="" value="{{$cargos->cargo_id}}">
                                                             {{$cargos->cargo_descripcion}}</option>
@@ -3337,41 +2453,37 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Contrato <a
-                                                            onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContratoE" onclick="$('#form-ver').modal('hide');"
-                                                            href="#fechasmodalE" data-toggle="modal"
-                                                            data-target="#fechasmodalE" data-toggle="tooltip"
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#contratomodal" data-toggle="modal"
+                                                            data-target="#contratomodal"><i
+                                                                class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <a id="detalleContrato"
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#fechasmodal" data-toggle="modal"
+                                                            data-target="#fechasmodal" data-toggle="tooltip"
                                                             data-placement="right" title="Detalle de Contrato."
                                                             data-original-title="Detalle de Contrato."
                                                             style="cursor: pointer;"><img
                                                                 src="{{asset('landing/images/adaptive.svg')}}"
                                                                 height="18"></a></label>
-                                                    <select class="form-control" name="v_contrato" id="v_contrato"
-                                                        onchange="$('#detalleContratoE').show();" tabindex="5" required>
+                                                    <select class="form-control" name="contrato" id="contrato"
+                                                        onchange="$('#detalleContrato').show();" tabindex="5" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{$tipo_conts->contrato_id}}">
+                                                        <option value="{{$tipo_conts->contrato_id}}">
                                                             {{$tipo_conts->contrato_descripcion}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <!--<div class="form-group" style="display: none;">
-                                                        <label for="sw-default" style="color: darkblue;">Fecha Inicio
-                                                            <label for="sw-default" id="v_fechaIC"></label></label>
-                                                        <label for="sw-default" style="color: red;">Fecha Final <label
-                                                                for="sw-default" id="v_fechaFC"></label></label>
-                                                    </div>-->
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Área <a
-                                                            onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_area" id="v_area" tabindex="3"
-                                                        required>
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#areamodal" data-toggle="modal"
+                                                            data-target="#areamodal"><i
+                                                                class="uil uil-plus"></i></a></label>
+                                                    <select class="form-control" name="area" id="area" tabindex="3">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($area as $areas)
                                                         <option class="" value="{{$areas->area_id}}">
@@ -3380,12 +2492,12 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Nivel del Colaborador<a
-                                                            onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_nivel" id="v_nivel"
-                                                        tabindex="6">
+                                                    <label for="sw-default">Nivel <a
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#nivelmodal" data-toggle="modal"
+                                                            data-target="#nivelmodal"><i
+                                                                class="uil uil-plus"></i></a></label>
+                                                    <select class="form-control" name="nivel" id="nivel" tabindex="6">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($nivel as $niveles)
                                                         <option class="" value="{{$niveles->nivel_id}}">
@@ -3397,11 +2509,12 @@ use Carbon\Carbon;
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="sw-default">Centro Costo <a
-                                                            onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_centroc" id="v_centroc"
-                                                        tabindex="4" required>
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#centrocmodal" data-toggle="modal"
+                                                            data-target="#centrocmodal"><i
+                                                                class="uil uil-plus"></i></a></label>
+                                                    <select class="form-control" name="centroc" id="centroc"
+                                                        tabindex="4">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($centro_costo as $centro_costos)
                                                         <option class="" value="{{$centro_costos->centroC_id}}">
@@ -3411,11 +2524,11 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sw-default">Local <a
-                                                            onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
-                                                            data-toggle="modal"><i class="uil uil-plus"
-                                                                style="color: darkblue;cursor: pointer;"></i></a></label>
-                                                    <select class="form-control" name="v_local" id="v_local"
-                                                        tabindex="7">
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#localmodal" data-toggle="modal"
+                                                            data-target="#localmodal"><i
+                                                                class="uil uil-plus"></i></a></label>
+                                                    <select class="form-control" name="local" id="local" tabindex="7">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($local as $locales)
                                                         <option class="" value="{{$locales->local_id}}">
@@ -3426,487 +2539,198 @@ use Carbon\Carbon;
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
                                     </div>
-                                    <div id="swF-default-step-3" style="font-size: 12px!important">
+                                    <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
+                                            <div class="col-12 pb-2">
+                                                <div class="float-md-right">
+                                                    <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
+                                                        data-placement="left" title="ver vídeo"
+                                                        data-original-title="ver vídeo">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                    </a>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
-                                                <div class="form-group text-center">
-                                                    {{ csrf_field() }}
-                                                    <!--<img  alt="" id="v_foto" width="300" height="200">-->
-                                                    <input type="file" name="file" id="file2" accept="image/*">
+                                                <div class="form-group">
+                                                    <input type="file" name="file" id="file" accept="image/*">
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
-                                        <br>
                                     </div>
-                                    <div id="sw-default-step-4" style="font-size: 12px!important">
+                                    <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
-                                            <div class="col-md-12" id="MostrarCa_e" style="display: none">
-                                                <div class="form-group row">
-                                                    <label style="font-weight: 600;font-size: 14px;"
-                                                        class="col-lg-5 col-form-label text-right"
-                                                        for="simpleinput">Calendario
-                                                        de empleado:</label>
-                                                    <div class="col-lg-5">
-                                                        <select name="" id="selectCalendario_ed"
-                                                            class="form-control form-control-sm"
-                                                            style="margin-top: 4px;">
-                                                            <option hidden selected>Asignar calendario</option>
-                                                            @foreach ($calendario as $calendarios)
-                                                            <option class="" value="{{ $calendarios->calen_id }}">
-                                                                {{ $calendarios->calendario_nombre }}</option>
-                                                            @endforeach
-                                                        </select>
+                                            <div class="col-md-12">
+                                                @if (count($calendario) === 0)
+                                                <div class="col-md-12 text-center">
+                                                    <h5>No existe calendarios registrados</h5>
+                                                </div>
+                                                <div style="display: none">
+                                                    <div class="col-md-12" id="calendarInv"
+                                                        style="display: none!important">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            @else
+                                            <div class="form-group row">
+                                                <div class="col-md-1"></div>
+                                                <label style="font-weight: 600;font-size: 14px;"
+                                                    class="col-lg-3 col-form-label" for="simpleinput">Calendario
+                                                    de empleado:</label>
+                                                <div class="col-lg-5">
+                                                    <span id="vallidCalend" style="color: red;display:none">Eliga
+                                                        calendario</span>
+                                                    <select name="" id="selectCalendario"
+                                                        class="form-control col-lg-6 form-control-sm"
+                                                        style="margin-top: 4px;">
+                                                        <option hidden selected>Asignar calendario</option>
+                                                        @foreach ($calendario as $calendarios)
+                                                        <option class="" value="{{ $calendarios->calen_id }}">
+                                                            {{ $calendarios->calendario_nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2" id="opborrar" style="display: none">
 
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-8" id="divescond1" style="display: none">
-                                                <input type="hidden" id="idselect3">
-                                                <select name="" id="selectCalendario_edit3"
-                                                    class="form-control col-lg-6 form-control-sm"
-                                                    style="margin-top: 4px;">
-                                                    <option hidden selected>Asignar calendario</option>
-                                                    @foreach ($calendario as $calendarios)
-                                                    <option class="" value="{{ $calendarios->calen_id }}">
-                                                        {{ $calendarios->calendario_nombre }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2" id="divescond2" style="display: none">
-                                                <div class="btn-group mt-2 mr-1">
-                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
-                                                        style="color: #fff;
-                                                    background-color: #4a5669;
-                                                    border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><img
-                                                            src="{{ asset('admin/images/borrador.svg') }}" height="15">
-                                                        Borrar <i class="icon"><span
-                                                                data-feather="chevron-down"></span></i></button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
-                                                            feriados</a>
-                                                        <a class="dropdown-item" onclick="vaciarddescansoBD()">Dias
-                                                            descanso</a>
-                                                        {{-- <a class="dropdown-item"
+                                                    <div class="btn-group mt-2 mr-1">
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-sm dropdown-toggle"
+                                                            style="color: #fff;background-color: #4a5669;border-color: #485263;"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false"><img
+                                                                src="{{ asset('admin/images/borrador.svg') }}"
+                                                                height="15">
+                                                            Borrar <i class="icon"><span
+                                                                    data-feather="chevron-down"></span></i></button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" onclick="vaciardFeria()">Dias
+                                                                feriados</a>
+                                                            <a class="dropdown-item" onclick="vaciarddescanso()">Dias
+                                                                descanso</a>
+                                                            {{-- <a class="dropdown-item"
                                                             onclick="vaciardlabTem()">D.
                                                             laborables</a> --}}
-                                                        <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
-                                                            laborables</a>
-                                                        <a class="dropdown-item"
-                                                            onclick="vaciardIncidBD()">Incidencia</a>
-                                                    </div>
-                                                </div><!-- /btn-group -->
+                                                            <a class="dropdown-item" onclick="vaciardNlabTem()">D.
+                                                                no
+                                                                laborables</a>
+                                                            <a class="dropdown-item"
+                                                                onclick="vaciardIncidTem()">Incidencia</a>
+                                                        </div>
+                                                    </div><!-- /btn-group -->
+                                                </div>
                                             </div>
-                                            <div class="col-md-12"></div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
-                                            <input type="hidden" id="pruebaEnd_ed">
-                                            <input type="hidden" id="pruebaStar_ed">
-                                            <div class="col-md-10" id="calendar_ed" style="display: none;"></div>
-                                            <div class="col-md-1"></div>
-                                            <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1"
-                                                role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-                                                data-backdrop="static">
-                                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width:750px;  margin-top: 150px; left: 0px;">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body"
-                                                            style="font-size:12px!important;background: #f3f3f3;">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-3 text-center">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="laborable_ed()"><img
-                                                                                src="{{ asset('admin/images/dormir.svg') }}"
-                                                                                height="20"> Descanso</button>
-                                                                    </div>
-                                                                    <div class="col-md-3 text-center">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="nolaborable_ed()"><img
-                                                                                src="{{ asset('admin/images/evento.svg') }}"
-                                                                                height="20"> Dia no
-                                                                            laborable</button>
-                                                                    </div>
-                                                                    <div class="col-md-3 text-center">
-                                                                        <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
-                                                                                src="{{ asset('admin/images/calendario.svg') }}"
-                                                                                height="20"> Dia feriado</button>
-                                                                    </div>
-                                                                    <div class="col-md-3 text-center">
-                                                                        {{-- <button type="button"
-                                                                            style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm "
-                                                                            onclick="registrarDdescanso()"><img
-                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                        height="20"> Incidencia</button>
-                                                                        --}}
-                                                                        <button style=" max-width: 18em!important;"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="agregarinciden_ed()"><img
-                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                                height="20"> Incidencia</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer"
-                                                            style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                            <div class="col-md-12 text-right">
-                                                                <button type="button" style="margin-right: 25px;"
-                                                                    class="btn btn-soft-primary btn-sm "
-                                                                    onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                            </div><!-- /.modal -->
-                                            <div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
-                                                aria-labelledby="myModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header" style="background-color: #163552;">
-                                                            <h5 class="modal-title" id="myModalLabel"
-                                                                style="color:#ffffff;font-size:15px">Agregar nuevo
-                                                                feriado</h5>
-                                                            <button type="button" class="close" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="form-group col-md-12">
-                                                                    <div class="col-md-6">
-                                                                        <label for="">Nombre de dia feriado:</label>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <form action="javascript:diaferiadoRe_ed()">
-                                                                            <input class="form-control" type="text"
-                                                                                id="nombreFeriado_ed" required>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-7 text-right">
-                                                                        <button type="button" class="btn btn-light"
-                                                                            data-dismiss="modal">Cancelar</button>
-                                                                    </div>
-                                                                    <div class="col-md-5 text-right"
-                                                                        style="padding-right: 38px; ">
-                                                                        <button type="submit"
-                                                                            class="btn btn-secondary">Aceptar</button>
-                                                                        </form>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                            </div><!-- /.modal -->
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center" id="detallehorario_ed"></div>
-                                            <div id="detallehorario_ed2" class="col-md-12"></div>
-                                            <div class="col-md-1"><br></div>
-                                            <div class="col-md-10" id="mensajeOc_ed"><label for="">Aún no ha
-                                                    seleccionado un
-                                                    calendario en el paso anterior.</label></div>
-                                            <div class="col-md-10" id="calendar2_ed" style="display: none"></div>
-                                            <div class="col-md-1"><br></div>
                                         </div>
-                                        <div id="horarioAsignar_ed" class="modal fade" role="dialog"
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10" id="calendarInv"></div>
+                                        @endif
+                                        <input type="hidden" id="pruebaEnd">
+                                        <input type="hidden" id="pruebaStar">
+                                        <div class="col-md-10" id="calendar" style="display: none"></div>
+                                        <div class="col-md-1"></div>
+                                        <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width:400px;  margin-top: 150px; left: 30px;">
-
+                                                style="width:750px;  margin-top: 150px; left:0px;">
                                                 <div class="modal-content">
-
                                                     <div class="modal-body"
                                                         style="font-size:12px!important;background: #f3f3f3;">
                                                         <div class="col-md-12">
                                                             <div class="row">
-                                                                <div class="col-md-8">
-                                                                    <span id=errorSel
-                                                                        style="color: #8b3a1e;display:none">Seleccione
-                                                                        un horario</span>
-                                                                    <select data-plugin="customselect"
-                                                                        class="form-control custom-select custom-select-sm"
-                                                                        name="selectHorario_ed" id="selectHorario_ed">
-                                                                        <option hidden selected disabled>Seleccionar
-                                                                            horario
-                                                                        </option>
-                                                                        @foreach ($horario as $horarios)
-                                                                        <option class=""
-                                                                            value="{{$horarios->horario_id}}">
-                                                                            {{$horarios->horario_descripcion}} <span
-                                                                                style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
-                                                                        </option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                <div class="col-md-3">
+                                                                    <button type="button"
+                                                                        style=" max-width: 18em!important;"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="laborableTem()"><img
+                                                                            src="{{ asset('admin/images/dormir.svg') }}"
+                                                                            height="20"> Descanso</button>
                                                                 </div>
-                                                                <div class="col-md-4 text-left"
-                                                                    style="padding-left: 0px;">
-                                                                    <button class="btn btn-primary btn-sm"
-                                                                        style="background-color: #183b5d;border-color:#62778c;margin-top: 5px"
-                                                                        onclick="abrirHorario_ed()">+</button>
+                                                                <div class="col-md-3">
+                                                                    <button type="button"
+                                                                        style=" max-width: 18em!important;"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="nolaborableTem()"><img
+                                                                            src="{{ asset('admin/images/evento.svg') }}"
+                                                                            height="20"> Dia no laborable</button>
                                                                 </div>
-                                                                <div class="col-md-12"><br>
-                                                                    <div class="custom-control custom-switch mb-2">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="fueraHSwitch">
-                                                                        <label class="custom-control-label"
-                                                                            for="fueraHSwitch">Trabajar fuera de
-                                                                            horario</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-switch mb-2">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="horCompSwitch">
-                                                                        <label class="custom-control-label"
-                                                                            for="horCompSwitch">Horario
-                                                                            compensable.</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-switch mb-2">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="horAdicSwitch">
-                                                                        <label class="custom-control-label"
-                                                                            for="horAdicSwitch">Permite marcar horas
-                                                                            adicionales.</label>
-                                                                    </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="button"
+                                                                        style=" max-width: 18em!important;"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
+                                                                            src="{{ asset('admin/images/calendario.svg') }}"
+                                                                            height="20"> Dia feriado</button>
                                                                 </div>
-
+                                                                <div class="col-md-3 text-right">
+                                                                    {{-- <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm "
+                                                                    onclick="registrarDdescanso()"><img
+                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                    height="20"> Incidencia</button>
+                                                                    --}}
+                                                                    <button style=" max-width: 18em!important;"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="agregarinciden()"><img
+                                                                            src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                            height="20"> Incidencia</button>
+                                                                </div>
                                                             </div>
-
                                                         </div>
-
                                                     </div>
                                                     <div class="modal-footer"
                                                         style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                                        <div class="col-md-12 text-right" style="padding-right: 0px;">
-                                                            <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
-                                                        border-color: #f3f3f3;"
-                                                                onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
-                                                            <button type="button" class="btn btn-primary btn-sm"
-                                                                style="background-color: #183b5d;border-color:#62778c;"
-                                                                onclick="agregarHorarioSe()">Registrar</button>
-                                                            </form>
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-right">
+                                                                    <button type="button"
+                                                                        class="btn btn-soft-primary btn-sm "
+                                                                        onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
+
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                        <div id="horarioAgregar_ed" class="modal fade" role="dialog"
-                                            aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width: 600px;">
-
+                                        <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog"
+                                            aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:#163552;">
+                                                    <div class="modal-header" style="background-color: #163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Asignar horario</h5>
-                                                        <button type="button" class="close"
-                                                            onclick="$('#horarioAgregar_ed').modal('hide')"
+                                                            style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                            feriado</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <div class="modal-body" style="font-size:12px!important">
+                                                    <div class="modal-body">
                                                         <div class="row">
-
-                                                            <div class="col-md-12">
-                                                                <form id="frmHor_ed"
-                                                                    action="javascript:registrarHorario_ed()">
-                                                                    <div class="row">
-
-
-
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group">
-                                                                                <label for="">Descripción del
-                                                                                    horario:</label>
-                                                                                <input type="text"
-                                                                                    class="form-control form-control-sm"
-                                                                                    id="descripcionCa_ed" maxlength="60"
-                                                                                    required>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Hora de
-                                                                                    inicio(24h):</label>
-                                                                                <input type="text" id="horaI_ed"
-                                                                                    class="form-control form-control-sm"
-                                                                                    required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Hora de fin(24h):</label>
-                                                                                <input type="text" id="horaF_ed"
-                                                                                    class="form-control form-control-sm"
-                                                                                    required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Horas obligadas:</label>
-                                                                                <div class="input-group form-control-sm"
-                                                                                    style="bottom: 4px;
-                                                                           padding-left: 0px; padding-right: 0px;">
-
-                                                                                    <input type="number"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="1" id="horaOblig_ed"
-                                                                                        value="8" required>
-                                                                                    <div class="input-group-prepend ">
-                                                                                        <div class="input-group-text form-control-sm"
-                                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                                            Horas</div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Tolerancia al
-                                                                                    ingreso(Min):</label>
-                                                                                <div class="input-group form-control-sm "
-                                                                                    style="bottom: 4px;
-                                                                            padding-left: 0px; padding-right: 0px;">
-                                                                                    <input type="number" value="0"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="0" id="toleranciaH_ed"
-                                                                                        required>
-                                                                                    <div class="input-group-prepend  ">
-                                                                                        <div class="input-group-text form-control-sm "
-                                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                                            Minutos</div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="">Tolerancia a la
-                                                                                    salida(Min):</label>
-                                                                                <div class="input-group form-control-sm "
-                                                                                    style="bottom: 4px;
-                                                                           padding-left: 0px; padding-right: 0px;">
-                                                                                    <input type="number" value="0"
-                                                                                        class="form-control form-control-sm"
-                                                                                        min="0" id="toleranciaSalida_ed"
-                                                                                        required>
-                                                                                    <div class="input-group-prepend  ">
-                                                                                        <div class="input-group-text form-control-sm "
-                                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                                            Minutos</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-md-4" id="divOtrodia_ed"
-                                                                            style="display: none">
-                                                                            <div class="form-check">
-                                                                                <input type="checkbox"
-                                                                                    class="form-check-input"
-                                                                                    id="otroDC_ed" checked disabled>
-                                                                                <label class="form-check-label"
-                                                                                    for="otroDC_ed"
-                                                                                    style="margin-top: 2px;font-weight: 700">La
-                                                                                    hora fin de este horario pertenece
-                                                                                    al siguiente día.</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <div
-                                                                                class="custom-control custom-switch mb-2">
-                                                                                <input type="checkbox"
-                                                                                    class="custom-control-input"
-                                                                                    id="SwitchTardanza_ed">
-                                                                                <label class="custom-control-label"
-                                                                                    for="SwitchTardanza_ed"
-                                                                                    style="font-weight: bold;padding-top: 1px">Controlar
-                                                                                    tardanza</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <div
-                                                                                class="custom-control custom-switch mb-2">
-                                                                                <input type="checkbox"
-                                                                                    class="custom-control-input"
-                                                                                    id="SwitchPausa_ed">
-                                                                                <label class="custom-control-label"
-                                                                                    for="SwitchPausa_ed"
-                                                                                    style="font-weight: bold;padding-top: 1px">Pausas
-                                                                                    en el horario</label> &nbsp;
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div id="divPausa_ed" class="col-md-12"
-                                                                            style="display: none">
-                                                                            <div class="col-md-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-5">
-                                                                                        <label for=""
-                                                                                            style="font-weight:600">Descripción</label>
-                                                                                    </div>
-                                                                                    <div class="col-md-3">
-                                                                                        <label for=""
-                                                                                            style="font-weight:600">Inicio
-                                                                                            pausa(24h)</label>
-                                                                                    </div>
-                                                                                    <div class="col-md-3">
-                                                                                        <label for=""
-                                                                                            style="font-weight:600">Fin
-                                                                                            pausa(24h)</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div id="inputPausa_ed">
-
-                                                                            </div>
-
-                                                                        </div>
-
-
-                                                                    </div>
-
+                                                            <div class="form-group col-md-12">
+                                                                <div class="col-md-6">
+                                                                    <label for="">Nombre de dia feriado:</label>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <form action="javascript:diaferiadoTem()">
+                                                                        <input class="form-control" type="text"
+                                                                            id="nombreFeriado" required>
+                                                                </div>
                                                             </div>
-
-
-
                                                         </div>
-
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="col-md-12">
                                                             <div class="row">
-                                                                <div class="col-md-12 text-right">
-                                                                    <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#horarioAgregar_ed').modal('hide')">Cancelar</button>
-                                                                    <button type="submit" name=""
-                                                                        style="background-color: #163552;"
-                                                                        class="btn btn-sm ">Guardar</button>
+                                                                <div class="col-md-7 text-right">
+                                                                    <button type="button" class="btn btn-light"
+                                                                        data-dismiss="modal">Cancelar</button>
+                                                                </div>
+                                                                <div class="col-md-5 text-right"
+                                                                    style="padding-right: 38px; ">
+                                                                    <button type="submit"
+                                                                        class="btn btn-secondary">Aceptar</button>
                                                                     </form>
                                                                 </div>
                                                             </div>
@@ -3916,101 +2740,448 @@ use Carbon\Carbon;
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
                                     </div>
-                                    <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-body border p-2" id="bodyModoTarea">
+                                </div>
+                                <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="float-md-right">
+                                                <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
+                                                    data-placement="left" title="ver vídeo"
+                                                    data-original-title="ver vídeo">
+                                                    <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center" id="detallehorario"></div>
+                                        <div class="col-md-1"><br></div>
+                                        <div class="col-md-10" id="mensajeOc"><label for="">Aún no ha
+                                                seleccionado un calendario en el paso anterior.</label></div>
+                                        <div class="col-md-10" id="calendar2" style="display: none"></div>
+                                        <div class="col-md-1"><br></div>
+                                    </div>
+                                    <div id="horarioAsignar" class="modal fade" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width:400px;  margin-top: 150px; left: 30px;">
+                                            <div class="modal-content">
+                                                <div class="modal-body"
+                                                    style="font-size:12px!important;background: #f3f3f3;">
+                                                    <div class="col-md-12">
                                                         <div class="row">
-                                                            <div class="col-xl-12 text-right">
-                                                                <button type="button" class="btn btn-sm mt-1"
-                                                                    style="background-color: #163552;"
-                                                                    onclick="$('#actividadTarea').modal()">+ Asignar
-                                                                    Actividad
-                                                                </button>
+                                                            <div class="col-md-8">
+                                                                <span id="errorSel_re"
+                                                                    style="color: #8b3a1e;display:none">Seleccione
+                                                                    un horario</span>
+                                                                <select data-plugin="customselect"
+                                                                    class="form-control custom-select custom-select-sm"
+                                                                    name="selectHorario" id="selectHorario">
+                                                                    <option hidden selected disabled>Seleccionar
+                                                                        horario
+                                                                    </option>
+                                                                    @foreach ($horario as $horarios)
+                                                                    <option class="" value="{{$horarios->horario_id}}">
+                                                                        {{$horarios->horario_descripcion}} <span
+                                                                            style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4 text-left" style="padding-left: 0px;">
+                                                                <button class="btn btn-primary btn-sm"
+                                                                    style="background-color: #183b5d;border-color:#62778c;"
+                                                                    onclick="abrirHorario()">+</button>
+                                                            </div>
+                                                            <div class="col-md-12"><br>
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="fueraHSwitch_re">
+                                                                    <label class="custom-control-label"
+                                                                        for="fueraHSwitch_re">Trabajar fuera de
+                                                                        horario</label>
+                                                                </div>
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="horCompSwitch_re">
+                                                                    <label class="custom-control-label"
+                                                                        for="horCompSwitch_re">Horario
+                                                                        compensable.</label>
+                                                                </div>
+                                                                <div class="custom-control custom-switch mb-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="horAdicSwitch_re">
+                                                                    <label class="custom-control-label"
+                                                                        for="horAdicSwitch_re">Permite marcar horas
+                                                                        adicionales.</label>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row pt-3">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl scroll">
-                                                                    <table class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead
-                                                                            style="background: #fafafa;font-size: 14px">
-                                                                            <tr>
-                                                                                <th>Actividad</th>
-                                                                                <th>Estado</th>
-                                                                                <th>Total</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="tablaBodyTarea"
-                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                                        </tbody>
-                                                                    </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer"
+                                                    style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                                        <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
+                                                        border-color: #f3f3f3;"
+                                                            onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
+                                                        <button type="button" class="btn btn-primary btn-sm"
+                                                            style="background-color: #183b5d;border-color:#62778c;"
+                                                            onclick="agregarHorarioSe_regis()">Registrar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                    <div id="horarioAgregar" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width: 600px;">
+
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background-color:#163552;">
+                                                    <h5 class="modal-title" id="myModalLabel"
+                                                        style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                                                    <button type="button" class="close"
+                                                        onclick="$('#horarioAgregar').modal('hide')" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="font-size:12px!important">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <form id="frmHor" action="javascript:registrarHorario()">
+                                                                <div class="row">
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label for="">Descripción del
+                                                                                horario:</label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm"
+                                                                                id="descripcionCa" maxlength="60"
+                                                                                required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label for="">Hora de
+                                                                                inicio(24h):</label>
+                                                                            <input type="text" id="horaI"
+                                                                                class="form-control form-control-sm"
+                                                                                required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label for="">Hora de fin(24h):</label>
+                                                                            <input type="text" id="horaF"
+                                                                                class="form-control form-control-sm"
+                                                                                required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label for="">Horas obligadas:</label>
+                                                                            <div class="input-group form-control-sm"
+                                                                                style="bottom: 4px;
+                                                                   padding-left: 0px; padding-right: 0px;">
+
+                                                                                <input type="number"
+                                                                                    class="form-control form-control-sm"
+                                                                                    min="1" id="horaOblig" required>
+                                                                                <div class="input-group-prepend ">
+                                                                                    <div class="input-group-text form-control-sm"
+                                                                                        style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                        Horas</div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label for="">Tolerancia al
+                                                                                ingreso(Min):</label>
+                                                                            <div class="input-group form-control-sm "
+                                                                                style="bottom: 4px;
+                                                                    padding-left: 0px; padding-right: 0px;">
+                                                                                <input type="number" value="0"
+                                                                                    class="form-control form-control-sm"
+                                                                                    min="0" id="toleranciaH" required>
+                                                                                <div class="input-group-prepend  ">
+                                                                                    <div class="input-group-text form-control-sm "
+                                                                                        style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                        Minutos</div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label for="">Tolerancia a la
+                                                                                salida(Min):</label>
+                                                                            <div class="input-group form-control-sm "
+                                                                                style="bottom: 4px;
+                                                                   padding-left: 0px; padding-right: 0px;">
+                                                                                <input type="number" value="0"
+                                                                                    class="form-control form-control-sm"
+                                                                                    min="0" id="toleranciaSalida"
+                                                                                    required>
+                                                                                <div class="input-group-prepend  ">
+                                                                                    <div class="input-group-text form-control-sm "
+                                                                                        style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                        Minutos</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4" id="divOtrodia"
+                                                                        style="display: none">
+                                                                        <div class="form-check">
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input" id="otroDCh"
+                                                                                checked disabled>
+                                                                            <label class="form-check-label"
+                                                                                for="otroDCh"
+                                                                                style="margin-top: 2px; font-weight: 700">La
+                                                                                hora fin de este horario pertenece
+                                                                                al siguiente día.</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="custom-control custom-switch mb-2">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input"
+                                                                                id="SwitchTardanza">
+                                                                            <label class="custom-control-label"
+                                                                                for="SwitchTardanza"
+                                                                                style="font-weight: bold;padding-top: 1px">Controlar
+                                                                                tardanza</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="custom-control custom-switch mb-2">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input"
+                                                                                id="SwitchPausa">
+                                                                            <label class="custom-control-label"
+                                                                                for="SwitchPausa"
+                                                                                style="font-weight: bold;padding-top: 1px">Pausas
+                                                                                en el horario</label> &nbsp;
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="divPausa" class="col-md-12"
+                                                                        style="display: none">
+                                                                        <div class="col-md-12">
+                                                                            <div class="row">
+                                                                                <div class="col-md-5">
+                                                                                    <label for=""
+                                                                                        style="font-weight:600">Descripción</label>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for=""
+                                                                                        style="font-weight:600">Inicio
+                                                                                        pausa(24h)</label>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for=""
+                                                                                        style="font-weight:600">Fin
+                                                                                        pausa(24h)</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="inputPausa">
+
+                                                                        </div>
+
+                                                                    </div>
                                                                 </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12 text-right">
+                                                                <button type="button" class="btn btn-light btn-sm "
+                                                                    onclick="$('#horarioAgregar').modal('hide')">Cancelar</button>
+                                                                <button type="submit" name=""
+                                                                    style="background-color: #163552;"
+                                                                    class="btn btn-sm ">Guardar</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </div>
+                                <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-body border p-2" id="regbodyModoTarea">
+                                                    <div class="row">
+                                                        <div class="col-xl-12">
+                                                            <div class="float-md-right">
+                                                                <a onclick="javascript:mostrarContenidoA()"
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="ver vídeo" data-original-title="ver vídeo">
+                                                                    <img src="{{asset('landing/images/play.svg')}}"
+                                                                        height="23">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-12 text-right">
+                                                            <button type="button" class="btn btn-sm mt-1"
+                                                                style="background-color: #163552;"
+                                                                onclick="$('#regactividadTarea').modal();">+ Asignar
+                                                                Actividad
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-3">
+                                                        <div class="col-xl-12 col-sm-12">
+                                                            <div class="table-responsive-xl scroll">
+                                                                <table class="table" style="font-size: 13px!important;">
+                                                                    <thead style="background: #fafafa;font-size: 14px">
+                                                                        <tr>
+                                                                            <th>Actividad</th>
+                                                                            <th>Estado</th>
+                                                                            <th>Total</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id="regtablaBodyTarea"
+                                                                        style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                                            aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
-                                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width: 550px;">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:#163552;">
-                                                        <h5 class="modal-title" id="myModalLabel"
-                                                            style="color:#ffffff;font-size:15px">Asignar Actividad
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body" style="font-size:12px!important">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <form action="javascript:registrarActividadTarea()"
-                                                                    id="formActvidades">
-                                                                    <div class="row justify-content-center">
-                                                                        <div class="col-xl-12">
-                                                                            <label>
-                                                                                Actividades
-                                                                            </label>
-                                                                            <a class="mr-3" data-toggle="tooltip"
-                                                                                data-placement="right"
-                                                                                title="registrar nueva actividad"
-                                                                                data-original-title="registrar nueva actividad"
-                                                                                onclick="$('#form-ver').modal('hide');$('#RegActividadTareaGE').modal();">
-                                                                                <i class="uil uil-plus"
-                                                                                    style="color: darkblue;cursor: pointer;"></i>
-                                                                            </a>
-                                                                            <select multiple="multiple"
-                                                                                data-plugin="customselect"
-                                                                                class="form-control" multiple="multiple"
-                                                                                id="empleadoActiv"></select>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-12 text-right">
-                                                                    <button type="button" class="btn btn-light btn-sm "
-                                                                        onclick="$('#actividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
-                                                                    <button type="submit" name=""
-                                                                        style="background-color: #163552;"
-                                                                        class="btn btn-sm ">Guardar</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
                                     </div>
-                                    <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
+                                    <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width: 550px;">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background-color:#163552;">
+                                                    <h5 class="modal-title" id="myModalLabel"
+                                                        style="color:#ffffff;font-size:15px">Asignar Actividad
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body" style="font-size:12px!important">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <form action="javascript:registrarNuevaActividadTarea()"
+                                                                id="formActvidadesReg">
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col-xl-12">
+                                                                        <label>
+                                                                            Actividades
+                                                                        </label>
+                                                                        <a class="mr-3" data-toggle="tooltip"
+                                                                            data-placement="right"
+                                                                            title="registrar nueva actividad"
+                                                                            data-original-title="registrar nueva actividad"
+                                                                            onclick="$('#form-registrar').modal('hide');$('#ActividadTareaGE').modal();">
+                                                                            <i class="uil uil-plus"
+                                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                                        </a>
+                                                                        <select multiple="multiple"
+                                                                            data-plugin="customselect"
+                                                                            class="form-control" multiple="multiple"
+                                                                            id="regEmpleadoActiv"></select>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12 text-right">
+                                                                <button type="button" class="btn btn-light btn-sm "
+                                                                    onclick="$('#regactividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
+                                                                <button type="submit" name=""
+                                                                    style="background-color: #163552;"
+                                                                    class="btn btn-sm ">Guardar</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </div>
+                                <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="row pb-1 pl-2">
+                                                        <div class="col">
+                                                            <div class="custom-control custom-switch mb-2">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="customSwitchCR1">
+                                                                <label class="custom-control-label"
+                                                                    for="customSwitchCR1" style="font-weight: bold">Modo
+                                                                    Control
+                                                                    Remoto</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body border p-2" id="bodyModoControlRR">
+                                                    <div class="row">
+                                                        <div class="col-xl-12 col-sm-12">
+                                                            <button class="btn btn-sm dropdown-toggle"
+                                                                style="background-color:#163552;" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">+
+                                                                Agregar
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-xl-12 col-sm-12">
+                                                            <div class="table-responsive-xl">
+                                                                <table id="tablaDispositivo" class="table"
+                                                                    style="font-size: 13px!important;">
+                                                                    <thead style="background: #fafafa;">
+                                                                        <tr>
+                                                                            <th>Tipo Dispositivo</th>
+                                                                            <th>Nombre</th>
+                                                                            <th>Activación de Dispositivo</th>
+                                                                            <th>Codigo</th>
+                                                                            <th>Enviado</th>
+                                                                            <th>Estado</th>
+                                                                            <th></th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id="tbodyDispositivo"
+                                                                        style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -4018,62 +3189,1071 @@ use Carbon\Carbon;
                                                             <div class="col">
                                                                 <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitchC1">
+                                                                        id="customSwitchCR2">
                                                                     <label class="custom-control-label"
-                                                                        for="customSwitchC1"
-                                                                        style="font-weight: bold">Modo Control
-                                                                        Remoto</label>
+                                                                        for="customSwitchCR2"
+                                                                        style="font-weight: bold">Modo Control de
+                                                                        Asistencia en Puerta</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card-body border p-2" id="bodyModoControlR">
+                                                    <div class="card-body border p-2" id="bodyModoControlAR">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog"
+            aria-labelledby="form-ver" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #163552;">
+                        <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
+                        <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding: 0px;">
+                        <div id="smartwizard1" style="background: #ffffff; color:#3d3d3d;">
+                            <ul style="background: #fdfdfd!important;">
+                                <li><a href="#persona-step-1">Personales</a></li>
+                                <li><a href="#swE-default-step-2">Empresarial</a></li>
+                                <li><a href="#swF-default-step-3">Foto</a></li>
+                                <li><a href="#sw-default-step-4">Calendario</a></li>
+                                <li><a href="#sw-default-step-5">Horario</a></li>
+                                <li><a href="#sw-default-step-6">Actividades</a></li>
+                                <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                            </ul>
+                            <input type="hidden" id="estadoP" value="false">
+                            <input type="hidden" id="estadoE" value="false">
+                            <input type="hidden" id="estadoF" value="false">
+                            <div class="p-3" id="form-registrar">
+                                <div id="persona-step-1" style="font-size: 12px!important">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="hidden" name="v_id" id="v_id">
+                                            <div class="form-group">
+                                                <label for="sw-default">Tipo Documento</label>
+                                                <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc"
+                                                    disabled style="background-color: #fcfcfc;" tabindex="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sw-default">Apellido Paterno</label>
+                                                <span id="v_validApPaterno" style="color: red;">*Campo
+                                                    Obligatorio</span>
+                                                <input type="text" class="form-control" name="v_apPaterno"
+                                                    id="v_apPaterno" tabindex="4" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sw-default">Correo Electrónico</label>
+                                                <span id="v_validCorreo" style="color: red;">*Campo
+                                                    Obligatorio</span>
+                                                <span id="v_emailR" style="color: red;">*Correo
+                                                    registrado</span>
+                                                <input type="email" class="form-control" id="v_email" name="email"
+                                                    tabindex="7">
+                                            </div>
+                                        </div> <!-- end col -->
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="sw-default">Num. Documento</label>
+                                                <span id="v_validNumDocumento" style="color: red;">*Campo
+                                                    Obligatorio</span>
+                                                <input type="text" class="form-control" name="v_numDocumento"
+                                                    id="v_numDocumento" required disabled
+                                                    style="background-color: #fcfcfc;" tabindex="2">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sw-default">Apellido Materno</label>
+                                                <span id="v_validApMaterno" style="color: red;">*Campo
+                                                    Obligatorio</span>
+                                                <input type="text" class="form-control" name="v_apMaterno"
+                                                    id="v_apMaterno" tabindex="5" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sw-default">Celular</label>
+                                                <span id="v_validCel" style="color: red;">*Número
+                                                    incorrecto.</span>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <select class="form-control" id="v_codigoCelular">
+                                                            <option value="+51" selected>+51</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input type="text" class="form-control" name="v_celular"
+                                                            id="v_celular" tabindex="8" maxlength="9"
+                                                            onkeypress="return isNumeric(event)"
+                                                            oninput="maxLengthCheck(this)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            {{-- <div class="float-md-right">
+                                                <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
+                                                    data-placement="left" title="ver vídeo"
+                                                    data-original-title="ver vídeo">
+                                                    <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            </a>
+                                        </div> --}}
+                                        <div class="form-group">
+                                            <label for="sw-default">Fecha Nacimiento</label>
+                                            <span id="v_validFechaC" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
+                                                        required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
+                                                        required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        style="padding-left: 5px;padding-right: 5px;" name="v_mes_fecha"
+                                                        id="v_ano_fecha" required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nombres</label>
+                                            <span id="v_validNombres" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <input type="text" class="form-control" name="v_nombres" id="v_nombres"
+                                                tabindex="6" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Teléfono</label>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <select class="form-control" id="v_codigoTelefono">
+                                                        <option value="01" selected>01</option>
+                                                        <option value="41">41</option>
+                                                        <option value="43">43</option>
+                                                        <option value="83">83</option>
+                                                        <option value="54">54</option>
+                                                        <option value="66">66</option>
+                                                        <option value="76">76</option>
+                                                        <option value="84">84</option>
+                                                        <option value="67">67</option>
+                                                        <option value="62">62</option>
+                                                        <option value="56">56</option>
+                                                        <option value="64">64</option>
+                                                        <option value="44">44</option>
+                                                        <option value="74">74</option>
+                                                        <option value="65">65</option>
+                                                        <option value="82">82</option>
+                                                        <option value="53">53</option>
+                                                        <option value="63">63</option>
+                                                        <option value="73">73</option>
+                                                        <option value="51">51</option>
+                                                        <option value="42">42</option>
+                                                        <option value="52">52</option>
+                                                        <option value="72">72</option>
+                                                        <option value="61">61</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="number" class="form-control" name="telefono"
+                                                        id="v_telefono" tabindex="9" maxlength="9"
+                                                        onkeypress="return isNumeric(event)"
+                                                        oninput="maxLengthCheck(this)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección</label>
+                                            <input type="text" class="form-control" name="v_direccion" id="v_direccion"
+                                                tabindex="10" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección Domiciliara</label>
+                                            <select class="form-control" placeholder="Departamento" name="v_dep"
+                                                id="v_dep" tabindex="11" required>
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                <option class="" value="{{$departamentos->id}}">
+                                                    {{$departamentos->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Lugar Nacimiento</label>
+                                            <select class="form-control" placeholder="Departamento"
+                                                name="v_departamento" id="v_departamento" tabindex="14">
+                                                <option value="">Departamento</option>
+                                                @foreach ($departamento as $departamentos)
+                                                <option class="" value="{{$departamentos->id}}">
+                                                    {{$departamentos->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for="">Género</label>
+                                            <span id="v_validGenero" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
+                                                Femenino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Provincia " name="v_prov"
+                                                id="v_prov" tabindex="12" required>
+                                                <option value="">Provincia</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Provincia " name="v_provincia"
+                                                id="v_provincia" tabindex="15">
+                                                <option value="">Provincia</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Distrito " name="v_dist"
+                                                id="v_dist" tabindex="13" required>
+                                                <option value="">Distrito</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <select class="form-control " placeholder="Distrito " name="v_distrito"
+                                                id="v_distrito" tabindex="16">
+                                                <option value="">Distrito</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
+                                                Personalizado
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="swE-default-step-2" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Codigo Empleado</label>
+                                            <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4"><br></div>
+                                    <div class="col-4">
+                                        <div class="float-md-right">
+                                            <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
+                                                data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Cargo <a
+                                                    onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_cargo" id="v_cargo" tabindex="2"
+                                                required>
+                                                <option value="">Seleccionar</option>
+
+                                                @foreach ($cargo as $cargos)
+                                                <option class="" value="{{$cargos->cargo_id}}">
+                                                    {{$cargos->cargo_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Contrato <a
+                                                    onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a id="detalleContratoE" onclick="$('#form-ver').modal('hide');"
+                                                    href="#fechasmodalE" data-toggle="modal" data-target="#fechasmodalE"
+                                                    data-toggle="tooltip" data-placement="right"
+                                                    title="Detalle de Contrato."
+                                                    data-original-title="Detalle de Contrato."
+                                                    style="cursor: pointer;"><img
+                                                        src="{{asset('landing/images/adaptive.svg')}}"
+                                                        height="18"></a></label>
+                                            <select class="form-control" name="v_contrato" id="v_contrato"
+                                                onchange="$('#detalleContratoE').show();" tabindex="5" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($tipo_cont as $tipo_conts)
+                                                <option class="" value="{{$tipo_conts->contrato_id}}">
+                                                    {{$tipo_conts->contrato_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <!--<div class="form-group" style="display: none;">
+                                                        <label for="sw-default" style="color: darkblue;">Fecha Inicio
+                                                            <label for="sw-default" id="v_fechaIC"></label></label>
+                                                        <label for="sw-default" style="color: red;">Fecha Final <label
+                                                                for="sw-default" id="v_fechaFC"></label></label>
+                                                    </div>-->
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Área <a
+                                                    onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_area" id="v_area" tabindex="3"
+                                                required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($area as $areas)
+                                                <option class="" value="{{$areas->area_id}}">
+                                                    {{$areas->area_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nivel del Colaborador<a
+                                                    onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_nivel" id="v_nivel" tabindex="6">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($nivel as $niveles)
+                                                <option class="" value="{{$niveles->nivel_id}}">
+                                                    {{$niveles->nivel_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Centro Costo <a
+                                                    onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_centroc" id="v_centroc" tabindex="4"
+                                                required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($centro_costo as $centro_costos)
+                                                <option class="" value="{{$centro_costos->centroC_id}}">
+                                                    {{$centro_costos->centroC_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Local <a
+                                                    onclick="$('#form-ver').modal('hide');$('#localmodalE').modal('show');"
+                                                    data-toggle="modal"><i class="uil uil-plus"
+                                                        style="color: darkblue;cursor: pointer;"></i></a></label>
+                                            <select class="form-control" name="v_local" id="v_local" tabindex="7">
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($local as $locales)
+                                                <option class="" value="{{$locales->local_id}}">
+                                                    {{$locales->local_descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="swF-default-step-3" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-12 pb-2">
+                                        <div class="float-md-right">
+                                            <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
+                                                data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group text-center">
+                                            {{ csrf_field() }}
+                                            <!--<img  alt="" id="v_foto" width="300" height="200">-->
+                                            <input type="file" name="file" id="file2" accept="image/*">
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                                <br>
+                            </div>
+                            <div id="sw-default-step-4" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-md-12" id="MostrarCa_e" style="display: none">
+                                        <div class="form-group row">
+                                            <label style="font-weight: 600;font-size: 14px;"
+                                                class="col-lg-5 col-form-label text-right" for="simpleinput">Calendario
+                                                de empleado:</label>
+                                            <div class="col-lg-5">
+                                                <select name="" id="selectCalendario_ed"
+                                                    class="form-control form-control-sm" style="margin-top: 4px;">
+                                                    <option hidden selected>Asignar calendario</option>
+                                                    @foreach ($calendario as $calendarios)
+                                                    <option class="" value="{{ $calendarios->calen_id }}">
+                                                        {{ $calendarios->calendario_nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-8" id="divescond1" style="display: none">
+                                        <input type="hidden" id="idselect3">
+                                        <select name="" id="selectCalendario_edit3"
+                                            class="form-control col-lg-6 form-control-sm" style="margin-top: 4px;">
+                                            <option hidden selected>Asignar calendario</option>
+                                            @foreach ($calendario as $calendarios)
+                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                {{ $calendarios->calendario_nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2" id="divescond2" style="display: none">
+                                        <div class="btn-group mt-2 mr-1">
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
+                                                    background-color: #4a5669;
+                                                    border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"><img
+                                                    src="{{ asset('admin/images/borrador.svg') }}" height="15">
+                                                Borrar <i class="icon"><span
+                                                        data-feather="chevron-down"></span></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
+                                                    feriados</a>
+                                                <a class="dropdown-item" onclick="vaciarddescansoBD()">Dias
+                                                    descanso</a>
+                                                {{-- <a class="dropdown-item"
+                                                            onclick="vaciardlabTem()">D.
+                                                            laborables</a> --}}
+                                                <a class="dropdown-item" onclick="vaciarNlabBD()">D. no
+                                                    laborables</a>
+                                                <a class="dropdown-item" onclick="vaciardIncidBD()">Incidencia</a>
+                                            </div>
+                                        </div><!-- /btn-group -->
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10" id="calendarInv_ed" style="display:none"></div>
+                                    <input type="hidden" id="pruebaEnd_ed">
+                                    <input type="hidden" id="pruebaStar_ed">
+                                    <div class="col-md-10" id="calendar_ed" style="display: none;"></div>
+                                    <div class="col-md-1"></div>
+                                    <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                            style="width:750px;  margin-top: 150px; left: 0px;">
+                                            <div class="modal-content">
+                                                <div class="modal-body"
+                                                    style="font-size:12px!important;background: #f3f3f3;">
+                                                    <div class="col-md-12">
                                                         <div class="row">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <button class="btn btn-sm dropdown-toggle"
-                                                                    style="background-color:#163552;"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">+
-                                                                    Agregar
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="btnGroupDrop1">
-                                                                    <a class="dropdown-item"
-                                                                        id="v_agregarWindows">WINDOWS</a>
-                                                                </div>
+                                                            <div class="col-md-3 text-center">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="laborable_ed()"><img
+                                                                        src="{{ asset('admin/images/dormir.svg') }}"
+                                                                        height="20"> Descanso</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="nolaborable_ed()"><img
+                                                                        src="{{ asset('admin/images/evento.svg') }}"
+                                                                        height="20"> Dia no
+                                                                    laborable</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                <button type="button"
+                                                                    style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
+                                                                        src="{{ asset('admin/images/calendario.svg') }}"
+                                                                        height="20"> Dia feriado</button>
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                {{-- <button type="button"
+                                                                            style=" max-width: 18em!important;"
+                                                                            class="btn btn-secondary btn-sm "
+                                                                            onclick="registrarDdescanso()"><img
+                                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                height="20"> Incidencia</button>
+                                                                --}}
+                                                                <button style=" max-width: 18em!important;"
+                                                                    class="btn btn-secondary btn-sm"
+                                                                    onclick="agregarinciden_ed()"><img
+                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
+                                                                        height="20"> Incidencia</button>
                                                             </div>
                                                         </div>
-                                                        <br>
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl">
-                                                                    <table id="v_tablaDispositivo" class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead
-                                                                            style="background: #fafafa;font-size: 14px">
-                                                                            <tr>
-                                                                                <th>Tipo Dispositivo</th>
-                                                                                <th>Nombre</th>
-                                                                                <th>Activación de Dispositivo</th>
-                                                                                <th>Codigo</th>
-                                                                                <th>Enviado</th>
-                                                                                <th>Estado</th>
-                                                                                <th></th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="v_tbodyDispositivo"
-                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer"
+                                                    style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                    <div class="col-md-12 text-right">
+                                                        <button type="button" style="margin-right: 25px;"
+                                                            class="btn btn-soft-primary btn-sm "
+                                                            onclick="$('#calendarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                    <div id="myModalFeriado_ed" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background-color: #163552;">
+                                                    <h5 class="modal-title" id="myModalLabel"
+                                                        style="color:#ffffff;font-size:15px">Agregar nuevo
+                                                        feriado</h5>
+                                                    <button type="button" class="close" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <div class="col-md-6">
+                                                                <label for="">Nombre de dia feriado:</label>
                                                             </div>
+                                                            <div class="col-md-12">
+                                                                <form action="javascript:diaferiadoRe_ed()">
+                                                                    <input class="form-control" type="text"
+                                                                        id="nombreFeriado_ed" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-7 text-right">
+                                                                <button type="button" class="btn btn-light"
+                                                                    data-dismiss="modal">Cancelar</button>
+                                                            </div>
+                                                            <div class="col-md-5 text-right"
+                                                                style="padding-right: 38px; ">
+                                                                <button type="submit"
+                                                                    class="btn btn-secondary">Aceptar</button>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="float-md-right">
+                                            <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
+                                                data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center" id="detallehorario_ed"></div>
+                                    <div id="detallehorario_ed2" class="col-md-12"></div>
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="mensajeOc_ed"><label for="">Aún no ha
+                                            seleccionado un
+                                            calendario en el paso anterior.</label></div>
+                                    <div class="col-md-10" id="calendar2_ed" style="display: none"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+                                <div id="horarioAsignar_ed" class="modal fade" role="dialog"
+                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width:400px;  margin-top: 150px; left: 30px;">
+
+                                        <div class="modal-content">
+
+                                            <div class="modal-body"
+                                                style="font-size:12px!important;background: #f3f3f3;">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <span id=errorSel
+                                                                style="color: #8b3a1e;display:none">Seleccione
+                                                                un horario</span>
+                                                            <select data-plugin="customselect"
+                                                                class="form-control custom-select custom-select-sm"
+                                                                name="selectHorario_ed" id="selectHorario_ed">
+                                                                <option hidden selected disabled>Seleccionar
+                                                                    horario
+                                                                </option>
+                                                                @foreach ($horario as $horarios)
+                                                                <option class="" value="{{$horarios->horario_id}}">
+                                                                    {{$horarios->horario_descripcion}} <span
+                                                                        style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 text-left" style="padding-left: 0px;">
+                                                            <button class="btn btn-primary btn-sm"
+                                                                style="background-color: #183b5d;border-color:#62778c;margin-top: 5px"
+                                                                onclick="abrirHorario_ed()">+</button>
+                                                        </div>
+                                                        <div class="col-md-12"><br>
+                                                            <div class="custom-control custom-switch mb-2">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="fueraHSwitch">
+                                                                <label class="custom-control-label"
+                                                                    for="fueraHSwitch">Trabajar fuera de
+                                                                    horario</label>
+                                                            </div>
+                                                            <div class="custom-control custom-switch mb-2">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="horCompSwitch">
+                                                                <label class="custom-control-label"
+                                                                    for="horCompSwitch">Horario
+                                                                    compensable.</label>
+                                                            </div>
+                                                            <div class="custom-control custom-switch mb-2">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="horAdicSwitch">
+                                                                <label class="custom-control-label"
+                                                                    for="horAdicSwitch">Permite marcar horas
+                                                                    adicionales.</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer"
+                                                style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
+                                                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                                                    <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
+                                                        border-color: #f3f3f3;"
+                                                        onclick="$('#horarioAsignar_ed').modal('hide')">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        style="background-color: #183b5d;border-color:#62778c;"
+                                                        onclick="agregarHorarioSe()">Registrar</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                <div id="horarioAgregar_ed" class="modal fade" role="dialog"
+                                    aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width: 600px;">
+
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color:#163552;">
+                                                <h5 class="modal-title" id="myModalLabel"
+                                                    style="color:#ffffff;font-size:15px">Asignar horario</h5>
+                                                <button type="button" class="close"
+                                                    onclick="$('#horarioAgregar_ed').modal('hide')" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size:12px!important">
+                                                <div class="row">
+
+                                                    <div class="col-md-12">
+                                                        <form id="frmHor_ed" action="javascript:registrarHorario_ed()">
+                                                            <div class="row">
+
+
+
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="">Descripción del
+                                                                            horario:</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            id="descripcionCa_ed" maxlength="60"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hora de
+                                                                            inicio(24h):</label>
+                                                                        <input type="text" id="horaI_ed"
+                                                                            class="form-control form-control-sm"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="">Hora de fin(24h):</label>
+                                                                        <input type="text" id="horaF_ed"
+                                                                            class="form-control form-control-sm"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="">Horas obligadas:</label>
+                                                                        <div class="input-group form-control-sm" style="bottom: 4px;
+                                                                           padding-left: 0px; padding-right: 0px;">
+
+                                                                            <input type="number"
+                                                                                class="form-control form-control-sm"
+                                                                                min="1" id="horaOblig_ed" value="8"
+                                                                                required>
+                                                                            <div class="input-group-prepend ">
+                                                                                <div class="input-group-text form-control-sm"
+                                                                                    style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                    Horas</div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="">Tolerancia al
+                                                                            ingreso(Min):</label>
+                                                                        <div class="input-group form-control-sm " style="bottom: 4px;
+                                                                            padding-left: 0px; padding-right: 0px;">
+                                                                            <input type="number" value="0"
+                                                                                class="form-control form-control-sm"
+                                                                                min="0" id="toleranciaH_ed" required>
+                                                                            <div class="input-group-prepend  ">
+                                                                                <div class="input-group-text form-control-sm "
+                                                                                    style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                    Minutos</div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="">Tolerancia a la
+                                                                            salida(Min):</label>
+                                                                        <div class="input-group form-control-sm " style="bottom: 4px;
+                                                                           padding-left: 0px; padding-right: 0px;">
+                                                                            <input type="number" value="0"
+                                                                                class="form-control form-control-sm"
+                                                                                min="0" id="toleranciaSalida_ed"
+                                                                                required>
+                                                                            <div class="input-group-prepend  ">
+                                                                                <div class="input-group-text form-control-sm "
+                                                                                    style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                                    Minutos</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4" id="divOtrodia_ed"
+                                                                    style="display: none">
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" class="form-check-input"
+                                                                            id="otroDC_ed" checked disabled>
+                                                                        <label class="form-check-label" for="otroDC_ed"
+                                                                            style="margin-top: 2px;font-weight: 700">La
+                                                                            hora fin de este horario pertenece
+                                                                            al siguiente día.</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="custom-control custom-switch mb-2">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input"
+                                                                            id="SwitchTardanza_ed">
+                                                                        <label class="custom-control-label"
+                                                                            for="SwitchTardanza_ed"
+                                                                            style="font-weight: bold;padding-top: 1px">Controlar
+                                                                            tardanza</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="custom-control custom-switch mb-2">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input"
+                                                                            id="SwitchPausa_ed">
+                                                                        <label class="custom-control-label"
+                                                                            for="SwitchPausa_ed"
+                                                                            style="font-weight: bold;padding-top: 1px">Pausas
+                                                                            en el horario</label> &nbsp;
+
+                                                                    </div>
+                                                                </div>
+                                                                <div id="divPausa_ed" class="col-md-12"
+                                                                    style="display: none">
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-5">
+                                                                                <label for=""
+                                                                                    style="font-weight:600">Descripción</label>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <label for=""
+                                                                                    style="font-weight:600">Inicio
+                                                                                    pausa(24h)</label>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <label for=""
+                                                                                    style="font-weight:600">Fin
+                                                                                    pausa(24h)</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="inputPausa_ed">
+
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right">
+                                                            <button type="button" class="btn btn-light btn-sm "
+                                                                onclick="$('#horarioAgregar_ed').modal('hide')">Cancelar</button>
+                                                            <button type="submit" name=""
+                                                                style="background-color: #163552;"
+                                                                class="btn btn-sm ">Guardar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                            <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">
+                                            <div class="card-body border p-2" id="bodyModoTarea">
+                                                <div class="row">
+                                                    <div class="col-xl-12">
+                                                        <div class="float-md-right">
+                                                            <a onclick="javascript:mostrarContenidoA()"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                title="ver vídeo" data-original-title="ver vídeo">
+                                                                <img src="{{asset('landing/images/play.svg')}}"
+                                                                    height="23">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12 text-right">
+                                                        <button type="button" class="btn btn-sm mt-1"
+                                                            style="background-color: #163552;"
+                                                            onclick="$('#actividadTarea').modal()">+ Asignar
+                                                            Actividad
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-3">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <div class="table-responsive-xl scroll">
+                                                            <table class="table" style="font-size: 13px!important;">
+                                                                <thead style="background: #fafafa;font-size: 14px">
+                                                                    <tr>
+                                                                        <th>Actividad</th>
+                                                                        <th>Estado</th>
+                                                                        <th>Total</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tablaBodyTarea"
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
+                                    </div>
+                                </div>
+                                <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
+                                    aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog  modal-lg d-flex justify-content-center "
+                                        style="width: 550px;">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color:#163552;">
+                                                <h5 class="modal-title" id="myModalLabel"
+                                                    style="color:#ffffff;font-size:15px">Asignar Actividad
+                                                </h5>
+                                            </div>
+                                            <div class="modal-body" style="font-size:12px!important">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form action="javascript:registrarActividadTarea()"
+                                                            id="formActvidades">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-xl-12">
+                                                                    <label>
+                                                                        Actividades
+                                                                    </label>
+                                                                    <a class="mr-3" data-toggle="tooltip"
+                                                                        data-placement="right"
+                                                                        title="registrar nueva actividad"
+                                                                        data-original-title="registrar nueva actividad"
+                                                                        onclick="$('#form-ver').modal('hide');$('#RegActividadTareaGE').modal();">
+                                                                        <i class="uil uil-plus"
+                                                                            style="color: darkblue;cursor: pointer;"></i>
+                                                                    </a>
+                                                                    <select multiple="multiple"
+                                                                        data-plugin="customselect" class="form-control"
+                                                                        multiple="multiple" id="empleadoActiv"></select>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right">
+                                                            <button type="button" class="btn btn-light btn-sm "
+                                                                onclick="$('#actividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
+                                                            <button type="submit" name=""
+                                                                style="background-color: #163552;"
+                                                                class="btn btn-sm ">Guardar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                            <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="row pb-1 pl-2">
+                                                    <div class="col">
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customSwitchC1">
+                                                            <label class="custom-control-label" for="customSwitchC1"
+                                                                style="font-weight: bold">Modo Control
+                                                                Remoto</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border p-2" id="bodyModoControlR">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <button class="btn btn-sm dropdown-toggle"
+                                                            style="background-color:#163552;" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">+
+                                                            Agregar
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <div class="table-responsive-xl">
+                                                            <table id="v_tablaDispositivo" class="table"
+                                                                style="font-size: 13px!important;">
+                                                                <thead style="background: #fafafa;font-size: 14px">
+                                                                    <tr>
+                                                                        <th>Tipo Dispositivo</th>
+                                                                        <th>Nombre</th>
+                                                                        <th>Activación de Dispositivo</th>
+                                                                        <th>Codigo</th>
+                                                                        <th>Enviado</th>
+                                                                        <th>Estado</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="v_tbodyDispositivo"
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -4095,343 +4275,339 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div> --}}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--VER EMPLEADO-->
-            <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog"
-                aria-labelledby="verEmpleadoDetalles" aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background: #163552;">
-                            <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                onclick="javascript:cerrarVer()">
-                                <span class="badge float-left pr-4 pt-0">
-                                    <a style="color: #f0f0f0"
-                                        onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                                        <span style="font-weight: bold">Editar Empleado</span>
-                                    </a>
-                                </span>
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" style="padding: 0px;">
-                            <div id="smartwizardVer" style="background: #ffffff; color:#3d3d3d;">
-                                <ul style="background: #fdfdfd!important;font-size: 13px;">
-                                    <li><a href="#persona-step-1">Personales</a></li>
-                                    <li><a href="#sw-default-step-2">Empresarial</a></li>
-                                    <li><a href="#sw-default-step-3">Foto</a></li>
-                                    <li><a href="#sw-default-step-4">Calendario</a></li>
-                                    <li><a href="#sw-default-step-5">Horario</a></li>
-                                    <li><a href="#sw-default-step-6">Actividades</a></li>
-                                    <li><a href="#sw-default-step-7">Dispositivo</a></li>
-                                </ul>
-                                <div class="p-3" id="form-registrar">
-                                    <div id="persona-step-1" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <input style="display: none;" name="v_idV" id="v_idV">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Tipo Documento</label>
-                                                    <input type="text" class="form-control" name="v_tipoDocV"
-                                                        id="v_tipoDocV" style="background-color: #fcfcfc;" disabled>
+        </div>
+    </div>
+    <!--VER EMPLEADO-->
+    <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #163552;">
+                    <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:cerrarVer()">
+                        <span class="badge float-left pr-4 pt-0">
+                            <a style="color: #f0f0f0"
+                                onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                                <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                                <span style="font-weight: bold">Editar Empleado</span>
+                            </a>
+                        </span>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 0px;">
+                    <div id="smartwizardVer" style="background: #ffffff; color:#3d3d3d;">
+                        <ul style="background: #fdfdfd!important;font-size: 13px;">
+                            <li><a href="#persona-step-1">Personales</a></li>
+                            <li><a href="#sw-default-step-2">Empresarial</a></li>
+                            <li><a href="#sw-default-step-3">Foto</a></li>
+                            <li><a href="#sw-default-step-4">Calendario</a></li>
+                            <li><a href="#sw-default-step-5">Horario</a></li>
+                            <li><a href="#sw-default-step-6">Actividades</a></li>
+                            <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                        </ul>
+                        <div class="p-3" id="form-registrar">
+                            <div id="persona-step-1" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input style="display: none;" name="v_idV" id="v_idV">
+                                        <div class="form-group">
+                                            <label for="sw-default">Tipo Documento</label>
+                                            <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV"
+                                                style="background-color: #fcfcfc;" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Paterno</label>
+                                            <input type="text" class="form-control" name="v_apPaternoV"
+                                                id="v_apPaternoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Correo Electrónico</label>
+                                            <input type="email" class="form-control" id="v_emailV" name="v_emailV"
+                                                disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Num. Documento</label>
+                                            <input type="text" class="form-control" name="v_numDocumentoV"
+                                                id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Apellido Materno</label>
+                                            <input type="text" class="form-control" name="v_apMaternoV"
+                                                id="v_apMaternoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Celular</label>
+                                            <input type="text" class="form-control" name="v_celularV" id="v_celularV"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Fecha Nacimiento</label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
+                                                        required="">
+                                                        <option value="0">Dia</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Apellido Paterno</label>
-                                                    <input type="text" class="form-control" name="v_apPaternoV"
-                                                        id="v_apPaternoV" disabled>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="v_mes_fechaV" id="v_mes_fechaV"
+                                                        required="">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Correo Electrónico</label>
-                                                    <input type="email" class="form-control" id="v_emailV"
-                                                        name="v_emailV" disabled>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Num. Documento</label>
-                                                    <input type="text" class="form-control" name="v_numDocumentoV"
-                                                        id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Apellido Materno</label>
-                                                    <input type="text" class="form-control" name="v_apMaternoV"
-                                                        id="v_apMaternoV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Celular</label>
-                                                    <input type="text" class="form-control" name="v_celularV"
-                                                        id="v_celularV" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Fecha Nacimiento</label>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <select class="form-control" name="v_dia_fechaV"
-                                                                id="v_dia_fechaV" required="">
-                                                                <option value="0">Dia</option>
-                                                                @for ($i = 1; $i <32; $i++) <option class=""
-                                                                    value="{{$i}}">{{$i}}</option>
-                                                                    @endfor
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select class="form-control" name="v_mes_fechaV"
-                                                                id="v_mes_fechaV" required="">
-                                                                <option value="0">Mes</option>
-                                                                <option class="" value="1">Ene.</option>
-                                                                <option class="" value="2">Feb.</option>
-                                                                <option class="" value="3">Mar.</option>
-                                                                <option class="" value="4">Abr.</option>
-                                                                <option class="" value="5">May.</option>
-                                                                <option class="" value="6">Jun.</option>
-                                                                <option class="" value="7">Jul.</option>
-                                                                <option class="" value="8">Ago.</option>
-                                                                <option class="" value="9">Set.</option>
-                                                                <option class="" value="10">Oct.</option>
-                                                                <option class="" value="11">Nov.</option>
-                                                                <option class="" value="12">Dic.</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select class="form-control" style="padding-left: 5px;
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
                                                             padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV"
-                                                                required="">
-                                                                <option value="0">Año</option>
-                                                                @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                                    value="{{$i}}">{{$i}}
-                                                                    </option>
-                                                                    @endfor
-                                                            </select>
-                                                        </div>
+                                                        required="">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
 
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Nombres</label>
-                                                    <input type="text" class="form-control" name="v_nombresV"
-                                                        id="v_nombresV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Teléfono</label>
-                                                    <input type="text" class="form-control" name="v_telefonoV"
-                                                        id="v_telefonoV" disabled>
-                                                </div>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Dirección</label>
-                                                    <input type="text" class="form-control" name="v_direccionV"
-                                                        id="v_direccionV" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Dirección
-                                                        Domiciliara</label>
-                                                    <input type="text" class="form-control" placeholder="Departamento"
-                                                        name="v_depV" id="v_depV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Lugar Nacimiento</label>
-                                                    <input type="text" class="form-control" placeholder="Departamento"
-                                                        name="v_departamentoV" id="v_departamentoV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="normal" for="">Género</label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino"
-                                                            disabled>
-                                                        Femenino
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <input type="text" class="form-control" placeholder="Provincia "
-                                                        name="v_provV" id="v_provV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <input type="text" class="form-control" placeholder="Provincia "
-                                                        name="v_provinciaV" id="v_provinciaV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input type="radio" name="v_tipoV" id="v_tipoV"
-                                                            value="Masculino" disabled>
-                                                        Masculino
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <input type="text" class="form-control" placeholder="Distrito "
-                                                        name="v_distV" id="v_distV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default"><br></label>
-                                                    <input type="text" class="form-control" placeholder="Distrito "
-                                                        name="v_distritoV" id="v_distritoV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="normal" for=""><br></label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input type="radio" name="v_tipoV" id="v_tipoV"
-                                                            value="Personalizado" disabled>
-                                                        Personalizado
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div id="sw-default-step-2" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Codigo Empleado</label>
-                                                    <input type="text" class="form-control" name="v_codigoEmpleadoV"
-                                                        maxlength="200" id="v_codigoEmpleadoV" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-4"><br></div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Cargo</label>
-                                                    <input type="text" class="form-control" name="v_cargoV"
-                                                        id="v_cargoV" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Contrato
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContratoVer"
-                                                            onclick="$('#verEmpleadoDetalles').modal('hide');"
-                                                            href="#fechasmodalVer" data-toggle="modal"
-                                                            data-target="#fechasmodalVer" data-toggle="tooltip"
-                                                            data-placement="right" title="Detalle de Contrato."
-                                                            data-original-title="Detalle de Contrato."
-                                                            style="cursor: pointer;">
-                                                            <img src="{{asset('landing/images/adaptive.svg')}}"
-                                                                height="18">
-                                                        </a>
-                                                    </label>
-                                                    <input type="text" class="form-control" name="v_contratoV"
-                                                        id="v_contratoV" tabindex="5" disabled>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Área</label>
-                                                    <input type="text" class="form-control" name="v_areaV" id="v_areaV"
-                                                        tabindex="3" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Nivel del Colaborador</label>
-                                                    <input type="text" class="form-control" name="v_nivelV"
-                                                        id="v_nivelV" tabindex="6" disabled>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="sw-default">Centro Costo</label>
-                                                    <input type="text" class="form-control" name="v_centrocV"
-                                                        id="v_centrocV" tabindex="4" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sw-default">Local</label>
-                                                    <input type="text" class="form-control" name="v_localV"
-                                                        id="v_localV" tabindex="7" disabled>
-                                                </div>
-                                            </div> <!-- end col -->
+                                        <div class="form-group">
+                                            <label for="sw-default">Nombres</label>
+                                            <input type="text" class="form-control" name="v_nombresV" id="v_nombresV"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Teléfono</label>
+                                            <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV"
+                                                disabled>
                                         </div>
                                     </div>
-                                    <div id="sw-default-step-3" style="font-size: 12px!important">
-                                        <br><br>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group text-center">
-                                                    <img src="landing/images/png.svg" height="150" id="v_fotoV">
-                                                    <br><br>
-                                                    <h5 id="h5Ocultar" class="m-0 font-size-14" style="color:#8888">
-                                                        No se encontro imagen</h5>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección</label>
+                                            <input type="text" class="form-control" name="v_direccionV"
+                                                id="v_direccionV" disabled>
+                                        </div>
                                     </div>
-                                    <div id="sw-default-step-4" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-md-4 text-right"><label for=""
-                                                    style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
-                                            <div class="col-md-4 text-center" id="divescond1_ver">
-                                                <input type="hidden" id="idselect3_ver">
-                                                <select name="" id="selectCalendario_edit3_ver" disabled
-                                                    class="form-control form-control-sm" style="margin-top: 4px;">
-                                                    <option hidden selected>Asignar calendario</option>
-                                                    @foreach ($calendario as $calendarios)
-                                                    <option class="" value="{{ $calendarios->calen_id }}">
-                                                        {{ $calendarios->calendario_nombre }}</option>
-                                                    @endforeach
-                                                </select><br><br>
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <input type="hidden" name="" id="idempleado">
-                                            <div class="col-md-1"><br></div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Dirección
+                                                Domiciliara</label>
+                                            <input type="text" class="form-control" placeholder="Departamento"
+                                                name="v_depV" id="v_depV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Lugar Nacimiento</label>
+                                            <input type="text" class="form-control" placeholder="Departamento"
+                                                name="v_departamentoV" id="v_departamentoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for="">Género</label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino"
+                                                    disabled>
+                                                Femenino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input type="text" class="form-control" placeholder="Provincia "
+                                                name="v_provV" id="v_provV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input type="text" class="form-control" placeholder="Provincia "
+                                                name="v_provinciaV" id="v_provinciaV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino"
+                                                    disabled>
+                                                Masculino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input type="text" class="form-control" placeholder="Distrito "
+                                                name="v_distV" id="v_distV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default"><br></label>
+                                            <input type="text" class="form-control" placeholder="Distrito "
+                                                name="v_distritoV" id="v_distritoV" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="normal" for=""><br></label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Personalizado"
+                                                    disabled>
+                                                Personalizado
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-2" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Codigo Empleado</label>
+                                            <input type="text" class="form-control" name="v_codigoEmpleadoV"
+                                                maxlength="200" id="v_codigoEmpleadoV" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-4"><br></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Cargo</label>
+                                            <input type="text" class="form-control" name="v_cargoV" id="v_cargoV"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Contrato
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a id="detalleContratoVer"
+                                                    onclick="$('#verEmpleadoDetalles').modal('hide');"
+                                                    href="#fechasmodalVer" data-toggle="modal"
+                                                    data-target="#fechasmodalVer" data-toggle="tooltip"
+                                                    data-placement="right" title="Detalle de Contrato."
+                                                    data-original-title="Detalle de Contrato." style="cursor: pointer;">
+                                                    <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
+                                                </a>
+                                            </label>
+                                            <input type="text" class="form-control" name="v_contratoV" id="v_contratoV"
+                                                tabindex="5" disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Área</label>
+                                            <input type="text" class="form-control" name="v_areaV" id="v_areaV"
+                                                tabindex="3" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Nivel del Colaborador</label>
+                                            <input type="text" class="form-control" name="v_nivelV" id="v_nivelV"
+                                                tabindex="6" disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="sw-default">Centro Costo</label>
+                                            <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
+                                                tabindex="4" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sw-default">Local</label>
+                                            <input type="text" class="form-control" name="v_localV" id="v_localV"
+                                                tabindex="7" disabled>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div>
+                            </div>
+                            <div id="sw-default-step-3" style="font-size: 12px!important">
+                                <br><br>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-center">
+                                            <img src="landing/images/png.svg" height="150" id="v_fotoV">
+                                            <br><br>
+                                            <h5 id="h5Ocultar" class="m-0 font-size-14" style="color:#8888">
+                                                No se encontro imagen</h5>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                            </div>
+                            <div id="sw-default-step-4" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-md-4 text-right"><label for=""
+                                            style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
+                                    <div class="col-md-4 text-center" id="divescond1_ver">
+                                        <input type="hidden" id="idselect3_ver">
+                                        <select name="" id="selectCalendario_edit3_ver" disabled
+                                            class="form-control form-control-sm" style="margin-top: 4px;">
+                                            <option hidden selected>Asignar calendario</option>
+                                            @foreach ($calendario as $calendarios)
+                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                {{ $calendarios->calendario_nombre }}</option>
+                                            @endforeach
+                                        </select><br><br>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <input type="hidden" name="" id="idempleado">
+                                    <div class="col-md-1"><br></div>
 
-                                            <div class="col-md-10" id="calendar3"></div>
-                                            <div class="col-md-1"><br></div>
-                                        </div>
-                                    </div>
-                                    <div id="sw-default-step-5" style="font-size: 12px!important">
-                                        <div class="row">
+                                    <div class="col-md-10" id="calendar3"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+                            </div>
+                            <div id="sw-default-step-5" style="font-size: 12px!important">
+                                <div class="row">
 
-                                            <div class="col-md-1"><br></div>
-                                            <div class="col-md-10" id="calendar4"></div>
-                                            <div class="col-md-1"><br></div>
-                                        </div>
-                                    </div>
-                                    <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-body border p-2" id="bodyModoTarea_ver">
-                                                        <div class="row pt-3">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl scroll">
-                                                                    <table class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead
-                                                                            style="background: #fafafa;font-size: 14px">
-                                                                            <tr>
-                                                                                <th>Actividad</th>
-                                                                                <th>Estado</th>
-                                                                                <th>Total</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="tablaBodyTarea_ver"
-                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
+                                    <div class="col-md-1"><br></div>
+                                    <div class="col-md-10" id="calendar4"></div>
+                                    <div class="col-md-1"><br></div>
+                                </div>
+                            </div>
+                            <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">
+                                            <div class="card-body border p-2" id="bodyModoTarea_ver">
+                                                <div class="row pt-3">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <div class="table-responsive-xl scroll">
+                                                            <table class="table" style="font-size: 13px!important;">
+                                                                <thead style="background: #fafafa;font-size: 14px">
+                                                                    <tr>
+                                                                        <th>Actividad</th>
+                                                                        <th>Estado</th>
+                                                                        <th>Total</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tablaBodyTarea_ver"
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -4453,55 +4629,55 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div> --}}
-                                    </div>
-                                    <div id="sw-default-step-7" style="font-size: 12px!important">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitchCV1">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitchCV1"
-                                                                        style="font-weight: bold">Modo Control
-                                                                        Remoto</label>
-                                                                </div>
-                                                            </div>
+                            </div>
+                            <div id="sw-default-step-7" style="font-size: 12px!important">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="row pb-1 pl-2">
+                                                    <div class="col">
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customSwitchCV1">
+                                                            <label class="custom-control-label" for="customSwitchCV1"
+                                                                style="font-weight: bold">Modo
+                                                                Control
+                                                                Remoto</label>
                                                         </div>
                                                     </div>
-                                                    <div class="card-body border p-3" id="bodyModoControlRV">
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-sm-12">
-                                                                <div class="table-responsive-xl">
-                                                                    <table id="ver_tablaDispositivo" class="table"
-                                                                        style="font-size: 13px!important;">
-                                                                        <thead style="background: #fafafa;">
-                                                                            <tr>
-                                                                                <th>Tipo Dispositivo</th>
-                                                                                <th>Nombre</th>
-                                                                                <th>Activación de Dispositivo</th>
-                                                                                <th>Codigo</th>
-                                                                                <th>Enviado</th>
-                                                                                <th>Estado</th>
-                                                                                <th></th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="ver_tbodyDispositivo"
-                                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border p-3" id="bodyModoControlRV">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <div class="table-responsive-xl">
+                                                            <table id="ver_tablaDispositivo" class="table"
+                                                                style="font-size: 13px!important;">
+                                                                <thead style="background: #fafafa;">
+                                                                    <tr>
+                                                                        <th>Tipo Dispositivo</th>
+                                                                        <th>Nombre</th>
+                                                                        <th>Activación de Dispositivo</th>
+                                                                        <th>Codigo</th>
+                                                                        <th>Enviado</th>
+                                                                        <th>Estado</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="ver_tbodyDispositivo"
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -4523,137 +4699,135 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div> --}}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!-- /.modal -->
-            <div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                Agregar
-                                nueva incidencia</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-
-                                <div class="col-md-12">
-                                    <form id="frmIncidenciaCa" action="javascript:modalIncidencia()">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="">Descripcion:</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionInciCa" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6"><label for=""><br></label>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input"
-                                                        id="descuentoCheckCa">
-                                                    <label class="form-check-label" for="descuentoCheckCa">Aplicar
-                                                        descuento</label>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-light btn-sm "
-                                            data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" name="" style="background-color: #163552;"
-                                            class="btn btn-sm">Guardar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <div id="modalIncidencia_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                                nueva
-                                incidencia
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-
-                                <div class="col-md-12">
-                                    <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="">Descripcion:</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionInciCa_ed" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6"><label for=""><br></label>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input"
-                                                        id="descuentoCheckCa_ed">
-                                                    <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
-                                                        descuento</label>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-light btn-sm "
-                                            data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" name="" style="background-color: #163552;"
-                                            class="btn btn-sm">Guardar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+            </div>
         </div>
-        <footer class="border-top">
-            <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos
-                reservados.</p>
-        </footer>
+    </div><!-- /.modal -->
+    <div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Agregar
+                        nueva incidencia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <form id="frmIncidenciaCa" action="javascript:modalIncidencia()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Descripcion:</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="descripcionInciCa" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"><label for=""><br></label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="descuentoCheckCa">
+                                            <label class="form-check-label" for="descuentoCheckCa">Aplicar
+                                                descuento</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-light btn-sm "
+                                    data-dismiss="modal">Cancelar</button>
+                                <button type="submit" name="" style="background-color: #163552;"
+                                    class="btn btn-sm">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="modalIncidencia_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                        nueva
+                        incidencia
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Descripcion:</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="descripcionInciCa_ed" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"><label for=""><br></label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
+                                            <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
+                                                descuento</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-light btn-sm "
+                                    data-dismiss="modal">Cancelar</button>
+                                <button type="submit" name="" style="background-color: #163552;"
+                                    class="btn btn-sm">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    </div>
+    <footer class="border-top">
+        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos
+            reservados.</p>
+    </footer>
     </div>
     </div>
     <script>
@@ -4711,6 +4885,7 @@ use Carbon\Carbon;
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
     <script src="{{asset('landing/js/empleadoA.js')}}"></script>

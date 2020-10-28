@@ -595,7 +595,7 @@ use App\proyecto_empleado;
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
                         <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeA">
-                            <iframe id="contenidoIframe"
+                            <iframe id="contenidoIframeA"
                                 src="https://player.vimeo.com/video/472834003?title=0&byline=0&portrait=0"
                                 style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
                                 allow="autoplay; fullscreen" allowfullscreen></iframe>
