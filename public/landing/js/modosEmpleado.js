@@ -1221,6 +1221,7 @@ function registrarActividad() {
                     }
                 } else {
                     $('#RegActividadTareaGE').modal('toggle');
+                    limpiarModo();
                     $('#form-ver').modal('show');
                     $.notifyClose();
                     $.notify(
@@ -1262,7 +1263,7 @@ function recuperarActividad(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            // limpiarModo();
+            limpiarModo();
             $('#RegActividadTareaGE').modal('toggle');
             $('#form-ver').modal('show');
             actividadEmp();
@@ -1292,4 +1293,12 @@ function recuperarActividad(id) {
         error: function () { },
     });
 
+}
+
+// LIMPIEZA DE MODAL 
+function limpiarModo() {
+    $('#nombreTarea').val("");
+    $('#codigoTarea').val("");
+    $('#customCR').prop("checked", false);
+    $('#customAP').prop("checked", false);
 }

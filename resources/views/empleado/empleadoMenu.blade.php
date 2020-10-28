@@ -325,7 +325,7 @@ use App\proyecto_empleado;
                     Registrar Actividad
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-ver').modal('show');">
+                    onclick="$('#form-ver').modal('show');javascript:limpiarModo()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -375,7 +375,7 @@ use App\proyecto_empleado;
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-ver').modal('show');">Cancelar</button>
+                                onclick="$('#form-ver').modal('show');javascript:limpiarModo()">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm ">Guardar</button>
                             </form>
