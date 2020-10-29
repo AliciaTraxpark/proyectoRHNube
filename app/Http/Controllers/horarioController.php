@@ -924,6 +924,28 @@ class horarioController extends Controller
                 }
             }
         }
+        else{
+            //ACTUALIZAR PAUSAS YA REGISTRADAS
+            $idpausasReg = $request->get('ID_edReg');
+            $descPausaReg = $request->get('descPausa_edReg');
+            $IniPausaReg = $request->get('pausaInicio_edReg');
+            $FinPausaReg = $request->get('finPausa_edReg');
+            if ($idpausasReg) {
+
+                if ($idpausasReg != null || $idpausasReg != '') {
+                    for ($i = 0; $i < sizeof($idpausasReg); $i++) {
+                        if ($idpausasReg[$i] != null) {
+                            $pausas_horarioReg = pausas_horario::findOrFail($idpausasReg[$i]);
+                            $pausas_horarioReg->pausH_descripcion = $descPausaReg[$i];
+                            $pausas_horarioReg->pausH_Inicio = $IniPausaReg[$i];
+                            $pausas_horarioReg->pausH_Fin = $FinPausaReg[$i];
+                            $pausas_horarioReg->horario_id = $idhorario;
+                            $pausas_horarioReg->save();
+                        }
+                    }
+                }
+            }
+        }
 
 
 
