@@ -80,6 +80,7 @@
         .width-400 {
             width: 100% !important;
         }
+
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
             padding-left: 8% !important;
@@ -885,6 +886,9 @@ function verDEmpleado(idempleadoVer){
         $('input.column_filter').on('keyup click', function () {
             filterColumn($(this).parents('div').attr('data-column'));
         });
+
+        // SELECT DEFECTO PARA BUSQUEDA
+        $('#select').val(5).trigger('change');
     });
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
