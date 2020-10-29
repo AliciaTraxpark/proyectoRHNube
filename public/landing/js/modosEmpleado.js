@@ -200,7 +200,6 @@ $('#empleadoActiv').select2({
 });
 // SELECT EN MODAL EDITAR
 $('#empleadoActiv').on("select2:opening", function () {
-    console.log("ingreso");
     var idE = $("#v_id").val();
     var value = $('#empleadoActiv').val();
     $('#empleadoActiv').empty();
@@ -1125,6 +1124,8 @@ function registrarActividad() {
                     $('#RegActividadTareaGE').modal('toggle');
                     limpiarModo();
                     $('#form-ver').modal('show');
+                    $('#empleadoActiv').trigger('select2:opening');
+                    $('#empleadoActiv').val(data.Activi_id).trigger('change');
                     $.notifyClose();
                     $.notify(
                         {
