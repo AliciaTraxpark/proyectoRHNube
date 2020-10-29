@@ -856,13 +856,13 @@ function verDEmpleado(idempleadoVer){
 
                         var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
-                            that.column(this.value).search(val).draw();
+                            that.column(this.value).search( "^" + val, true, false, true).draw();
                         }
                         val1 = $.fn.dataTable.util.escapeRegex(this.value);
                         $('#global_filter').on("keyup change clear",function(){
                             var val = $(this).val();
                             if(that.column(i).search() !== val1){
-                                that.column(val1).search(val).draw();
+                                that.column(val1).search("^" + val, true, false, true).draw();
                             }
                         });
                     });
