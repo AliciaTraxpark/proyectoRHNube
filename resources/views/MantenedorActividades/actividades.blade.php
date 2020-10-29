@@ -29,6 +29,10 @@
         width: 100% !important;
     }
 
+    div.dataTables_wrapper div.dataTables_filter {
+        display: none;
+    }
+
     .dataTables_scrollHeadInner {
         margin: 0 auto !important;
         width: 100% !important;
@@ -78,6 +82,14 @@
     <div class="col-md-11">
         <div class="card">
             <div class="card-body">
+                {{-- BUSCAR PERSONALIZADO --}}
+                <div class="col-md-4 inputResponsive" id="filter_global">
+                    <td align="center">
+                        <input type="text" class="global_filter form-control" id="global_filter" style="height: 35px;"
+                            placeholder="Buscar">
+                    </td>
+                </div>
+                {{-- FINALIZACION --}}
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
                     <thead style="background: #fafafa;" style="width:100%!important">
                         <tr>

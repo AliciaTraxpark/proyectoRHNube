@@ -4,7 +4,7 @@ function tablaActividades() {
         scrollX: true,
         responsive: true,
         retrieve: true,
-        "searching": false,
+        "searching": true,
         "lengthChange": false,
         scrollCollapse: false,
         "pageLength": 30,
@@ -710,4 +710,15 @@ function empleadoListaReg() {
 $("#reg_empleados").select2({
     placeholder: 'Seleccionar Empleados',
     tags: "true"
+});
+
+// * BUSCAR PERSONALIZADO
+function filterGlobal() {
+    $("#actividades").DataTable().search(
+        $('#global_filter').val(),
+
+    ).draw();
+}
+$('input.global_filter').on('keyup click change clear', function () {
+    filterGlobal();
 });
