@@ -68,30 +68,25 @@
 
                         </div>
                     </div>
-                    {{-- <div class="col-xl-3 text-center">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
-                    height="18" class="mr-2">Refrescar</button>
-                </div> --}}
-                <div class="col-xl-4">
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">Empleado:</label>
-                        <div class="col-lg-9">
-                            <select id="empleado" data-plugin="customselect" class="form-control">
-                            </select>
-                        </div>
+                    <div class="col-xl-4">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Empleado:</label>
+                            <div class="col-lg-9">
+                                <select id="empleado" data-plugin="customselect" class="form-control">
+                                </select>
+                            </div>
 
+                        </div>
+                    </div>
+                    <div class="col-xl-1 text-center">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                                height="18"></button>
                     </div>
                 </div>
-                <div class="col-xl-1 text-center">
-                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                        onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                            height="18"></button>
-                </div>
-            </div>
-        </div> <!-- end card-body-->
-    </div> <!-- end card-->
-</div> <!-- end col-->
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col-->
 </div>
 <!-- end row -->
 <div class="row justify-content-center pt-5">
@@ -100,7 +95,11 @@
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row">
-                    <h4 class="header-title col-12 mt-0">Resultado</h4>
+                    <div class="col-md-6 text-left">
+                        <h4 class="header-title col-12 mt-0">Resultado</h4>
+                    </div>
+                    <div class="col-md-6 text-right" id="listaD">
+                    </div>
                 </div>
             </div>
             <div class="card-body">
