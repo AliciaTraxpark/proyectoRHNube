@@ -267,7 +267,7 @@ function reporteEmpleado() {
                 for (let index = 0; index < data.dispositivo.length; index++) {
                     if (data.dispositivo[index].nombrePC === '0') {
                         menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
-                        title="nombre PC y versión" data-original-title="nombre PC y versión">PC ${index} ${data.dispositivo[index].version}</a>`;
+                        title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> PC ${index}</strong> | ${data.dispositivo[index].version}</a>`;
                     } else {
                         menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
                         title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> ${data.dispositivo[index].nombrePC}</strong> | ${data.dispositivo[index].version}</a>`;
