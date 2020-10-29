@@ -158,19 +158,25 @@ function reporteEmpleado() {
                     html_tr += '<tr><td class="text-center">' + data[i].idCaptura + '</td>';
                     html_tr += '<td class="text-center">' + data[i].hora_ini + '</td>';
                     html_tr += '<td class="text-center">' + data[i].hora_fin + '</td>';
+                    if (data[i].horario === '0') {
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-success\">Sin horario</a></td>';
+                    } else {
+                        html_tr += '<td class="text-center">' + data[i].horario + '</td>';
+                    }
                     html_tr += '<td class="text-center">' + data[i].actividad + '</td>';
-                    if(data[i].respuestaI === 'SI'){
+                    if (data[i].respuestaI === 'SI') {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data[i].respuestaI + '</a></td>';
-                    }else{
+                    } else {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data[i].respuestaI + '</a></td>';
                     }
-                    if(data[i].respuestaM === 'SI'){
+                    if (data[i].respuestaM === 'SI') {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data[i].respuestaM + '</a></td>';
-                    }else{
+                    } else {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data[i].respuestaM + '</a></td>';
                     }
                     html_tr += '<td class="text-center">' + data[i].cantidadI + '</td></tr>';
                 }
+                console.log();
                 $('#datos').html(html_tr);
                 $("#Reporte").DataTable({
                     "searching": false,

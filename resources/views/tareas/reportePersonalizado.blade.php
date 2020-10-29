@@ -71,27 +71,27 @@
                     {{-- <div class="col-xl-3 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
                             onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
-                                height="18" class="mr-2">Refrescar</button>
-                    </div> --}}
-                    <div class="col-xl-4">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Empleado:</label>
-                            <div class="col-lg-9">
-                                <select id="empleado" data-plugin="customselect" class="form-control">
-                                </select>
-                            </div>
-
+                    height="18" class="mr-2">Refrescar</button>
+                </div> --}}
+                <div class="col-xl-4">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label">Empleado:</label>
+                        <div class="col-lg-9">
+                            <select id="empleado" data-plugin="customselect" class="form-control">
+                            </select>
                         </div>
-                    </div>
-                    <div class="col-xl-1 text-center">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                                height="18"></button>
+
                     </div>
                 </div>
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-    </div> <!-- end col-->
+                <div class="col-xl-1 text-center">
+                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                        onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                            height="18"></button>
+                </div>
+            </div>
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div> <!-- end col-->
 </div>
 <!-- end row -->
 <div class="row justify-content-center pt-5">
@@ -105,13 +105,13 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive-xl">
-                    <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
-                    100%;">
+                    <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
                                 <th class="text-center">Id Captura</th>
                                 <th class="text-center">Hora Inicio</th>
                                 <th class="text-center">Hora Fin</th>
+                                <th class="text-center">Horario</th>
                                 <th class="text-center">Actividad</th>
                                 <th class="text-center">Imagen</th>
                                 <th class="text-center">Miniatura</th>

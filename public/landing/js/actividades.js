@@ -722,3 +722,4 @@ function filterGlobal() {
 $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
+// **********************************
