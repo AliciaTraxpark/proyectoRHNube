@@ -165,7 +165,7 @@ function reporteEmpleado() {
                     if (data.captura[i].horario === '0') {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-success\">Sin horario</a></td>';
                     } else {
-                        html_tr += '<td class="text-center">' + data.captura[i].horario + '</td>';
+                        html_tr += '<td class="text-center"> <i class="uil uil-calender"></i>' + data.captura[i].horario + '</td>';
                     }
                     html_tr += '<td class="text-center">' + data.captura[i].actividad + '</td>';
                     if (data.captura[i].respuestaI === 'SI') {
