@@ -68,11 +68,6 @@
 
                         </div>
                     </div>
-                    {{-- <div class="col-xl-3 text-center">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:refreshCapturas()"> <img src="{{asset('landing/images/refresh.svg')}}"
-                                height="18" class="mr-2">Refrescar</button>
-                    </div> --}}
                     <div class="col-xl-4">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Empleado:</label>
@@ -100,18 +95,22 @@
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row">
-                    <h4 class="header-title col-12 mt-0">Resultado</h4>
+                    <div class="col-md-6 text-left">
+                        <h4 class="header-title col-12 mt-0">Resultado</h4>
+                    </div>
+                    <div class="col-md-6 text-right" id="listaD">
+                    </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive-xl">
-                    <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:
-                    100%;">
+                    <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
                                 <th class="text-center">Id Captura</th>
                                 <th class="text-center">Hora Inicio</th>
                                 <th class="text-center">Hora Fin</th>
+                                <th class="text-center">Horario</th>
                                 <th class="text-center">Actividad</th>
                                 <th class="text-center">Imagen</th>
                                 <th class="text-center">Miniatura</th>

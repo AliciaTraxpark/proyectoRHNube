@@ -152,26 +152,36 @@ function reporteEmpleado() {
         },
         success: function (data) {
             console.log(data);
-            if (data.length != 0) {
+            if (data.captura.length != 0) {
+                // ? BOTON DE DISPOSITIVOS
+                $('#listaD').show();
+                // ?
+                // ? DATOS DE CAPTURA PARA LA TABLA 
                 var html_tr = '';
-                for (var i = 0; i < data.length; i++) {
-                    html_tr += '<tr><td class="text-center">' + data[i].idCaptura + '</td>';
-                    html_tr += '<td class="text-center">' + data[i].hora_ini + '</td>';
-                    html_tr += '<td class="text-center">' + data[i].hora_fin + '</td>';
-                    html_tr += '<td class="text-center">' + data[i].actividad + '</td>';
-                    if(data[i].respuestaI === 'SI'){
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data[i].respuestaI + '</a></td>';
-                    }else{
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data[i].respuestaI + '</a></td>';
+                for (var i = 0; i < data.captura.length; i++) {
+                    html_tr += '<tr><td class="text-center">' + data.captura[i].idCaptura + '</td>';
+                    html_tr += '<td class="text-center">' + data.captura[i].hora_ini + '</td>';
+                    html_tr += '<td class="text-center">' + data.captura[i].hora_fin + '</td>';
+                    if (data.captura[i].horario === '0') {
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-success\">Sin horario</a></td>';
+                    } else {
+                        html_tr += '<td class="text-center">' + data.captura[i].horario + '</td>';
                     }
-                    if(data[i].respuestaM === 'SI'){
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data[i].respuestaM + '</a></td>';
-                    }else{
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data[i].respuestaM + '</a></td>';
+                    html_tr += '<td class="text-center">' + data.captura[i].actividad + '</td>';
+                    if (data.captura[i].respuestaI === 'SI') {
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data.captura[i].respuestaI + '</a></td>';
+                    } else {
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data.captura[i].respuestaI + '</a></td>';
                     }
-                    html_tr += '<td class="text-center">' + data[i].cantidadI + '</td></tr>';
+                    if (data.captura[i].respuestaM === 'SI') {
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data.captura[i].respuestaM + '</a></td>';
+                    } else {
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data.captura[i].respuestaM + '</a></td>';
+                    }
+                    html_tr += '<td class="text-center">' + data.captura[i].cantidadI + '</td></tr>';
                 }
                 $('#datos').html(html_tr);
+                // ? FINALIZACION
                 $("#Reporte").DataTable({
                     "searching": false,
                     "scrollX": true,
@@ -246,8 +256,32 @@ function reporteEmpleado() {
                     }],
                     paging: true
                 });
+                // ? DATOS DE LISTA DE DISPOSITIVOS
+                $('#listaD').empty();
+                menuItem = `<div class="dropdown">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dispositivos
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" id="menuD">`;
+                for (let index = 0; index < data.dispositivo.length; index++) {
+                    if (data.dispositivo[index].nombrePC === '0') {
+                        menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
+                        title="nombre PC y versión" data-original-title="nombre PC y versión">PC ${index} ${data.dispositivo[index].version}</a>`;
+                    } else {
+                        menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
+                        title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> ${data.dispositivo[index].nombrePC}</strong> | ${data.dispositivo[index].version}</a>`;
+                    }
+                }
+                menuItem += `</div></div>`;
+                $('#listaD').append(menuItem);
+                $('[data-toggle="tooltip"]').tooltip();
+                // $fecha = new Date();
+                // console.log($fecha.toLocaleTimeString("es-ES", { timeZone: 'America/Lima' }));
+                // console.log($fecha);
             } else {
                 tablaR();
+                $('#listaD').hide();
                 $.notify({
                     message: "No se encontraron datos.",
                     icon: 'admin/images/warning.svg'

@@ -578,10 +578,10 @@ class ControlController extends Controller
     {
         $idEmpleado = $request->get('idEmpleado');
         $fecha = $request->get('fecha');
-        $respuesta = [];
         // DB::enableQueryLog();
         $captura = DB::table('captura as cp')
             ->leftJoin('captura_imagen as ci', 'ci.idCaptura', '=', 'cp.idCaptura')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'cp.idHorario_dias')
             ->select(
                 'cp.idCaptura',
                 'cp.hora_ini',
@@ -589,14 +589,24 @@ class ControlController extends Controller
                 'cp.actividad',
                 DB::raw("CASE WHEN(ci.imagen) IS NULL THEN 'NO' ELSE 'SI' END AS respuestaI"),
                 DB::raw("CASE WHEN(ci.miniatura) IS NULL THEN 'NO' ELSE 'SI' END AS respuestaM"),
-                DB::raw("CASE WHEN(ci.idCaptura) IS NULL THEN 0 ELSE COUNT('ci.idCaptura') END AS cantidadI")
+                DB::raw("CASE WHEN(ci.idCaptura) IS NULL THEN 0 ELSE COUNT('ci.idCaptura') END AS cantidadI"),
+                DB::raw("CASE WHEN (cp.idHorario_dias) IS NULL THEN 0 ELSE DATE(hd.start) END AS horario")
             )
             ->where('cp.idEmpleado', '=', $idEmpleado)
             ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
             ->groupBy('cp.idCaptura')
             ->get();
         // dd(DB::getQueryLog());
-        return response()->json($captura, 200);
+        $dispositivos = DB::table('vinculacion as v')
+            ->leftJoin('software_vinculacion as sv', 'sv.id', '=', 'v.idSoftware')
+            ->select(
+                DB::raw("CASE WHEN(v.pc_mac) IS NULL THEN 0 ELSE v.pc_mac END AS nombrePC"),
+                DB::raw("CASE WHEN(v.idSoftware) IS NULL THEN '1.10.09' ELSE sv.version END AS version")
+                )
+            ->where('v.idEmpleado', '=', $idEmpleado)
+            ->groupBy('v.id')
+            ->get();
+        return response()->json(array("captura" => $captura, "dispositivo" => $dispositivos), 200);
     }
 
     // REPORTE PEROSNALIZADO TRAZABILIDAD DE CAPTURAS

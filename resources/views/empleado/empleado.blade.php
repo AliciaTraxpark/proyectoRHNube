@@ -46,11 +46,11 @@ use Carbon\Carbon;
 
 
     <script type="text/javascript" src="{{asset('admin/assets/pace/pace.min.js')}}"></script>
-
+    <script src="https://player.vimeo.com/api/player.js"></script>
     {{-- <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/owl-carousel/css/owl.theme.default.css')}}">
     <link rel="stylesheet" href="{{asset('landing/vendors/mdi/css/materialdesignicons.min.css')}}"> --}}
-    <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -4885,7 +4885,6 @@ use Carbon\Carbon;
     <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
     <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="https://player.vimeo.com/api/player.js"></script>
     <script src="{{asset('landing/js/empleado.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
     <script src="{{asset('landing/js/empleadoA.js')}}"></script>
