@@ -2048,12 +2048,26 @@ function editarHorarioLista(idsedit) {
                 $.each(data[1], function (key, item) {
                     $('#SwitchPausa_ed').prop('checked', true);
                     $('#SwitchPausa_ed').prop('disabled', true);
-                    $("#PausasHorar_ed").append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
-                        '<input type="text" disabled value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-6" name="descPausa_ed[]" id="descPausa_ed" >' +
-                        '<input type="text" disabled value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
-                        '<input type="text" disabled value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
-                        ' ' +
+                    $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
+                        '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
+                        '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" required  >' +
+                        '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]"  required >' +
+                        '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  >' +
+
                         '</div>');
+                      /*  */
+                });
+                $('input[name="InicioPausa_edReg[]"]').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true
+                });
+                $('input[name="FinPausa_edReg[]"]').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true
                 });
             }
         },
@@ -2084,6 +2098,12 @@ function editarHorario() {
         var descPausa_ed = [];
         var pausaInicio_ed = [];
         var finPausa_ed = [];
+
+        var ID_edReg = [];
+        var descPausa_edReg = [];
+        var pausaInicio_edReg = [];
+        var finPausa_edReg = [];
+        //NUEVOS EN EDICION
         $('input[name="descPausa_ed[]"]').each(function () {
             descPausa_ed.push($(this).val());
         });
@@ -2093,11 +2113,32 @@ function editarHorario() {
         $('input[name="FinPausa_ed[]"]').each(function () {
             finPausa_ed.push($(this).val());
         });
+        //ANTIGUOS EDITADO
+        $('input[name="idPausasRegistradas_ed[]"]').each(function () {
+            ID_edReg.push($(this).val());
+        });
+        $('input[name="descPausa_edRegist[]"]').each(function () {
+            descPausa_edReg.push($(this).val());
+        });
+        $('input[name="InicioPausa_edReg[]"]').each(function () {
+            pausaInicio_edReg.push($(this).val());
+        });
+        $('input[name="FinPausa_edReg[]"]').each(function () {
+            finPausa_edReg.push($(this).val());
+        });
+
     }
+    console.log(ID_edReg);
+    console.log(descPausa_edReg);
+    console.log(pausaInicio_edReg);
+    console.log(finPausa_edReg);
+    
     $.ajax({
         type: "post",
         url: "/horario/actualizarhorario",
-        data: { idhorario, descried, toleed, horaIed, horaFed,tardanza_ed, toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed},
+        data: { idhorario, descried, toleed, horaIed, horaFed,tardanza_ed,
+             toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed,ID_edReg,descPausa_edReg,
+             pausaInicio_edReg,finPausa_edReg },
         statusCode: {
             /*401: function () {
                 location.reload();
