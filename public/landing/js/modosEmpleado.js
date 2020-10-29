@@ -1348,6 +1348,8 @@ function registrarActividadFR() {
                     $('#ActividadTareaGE').modal('toggle');
                     limpiarModo();
                     $('#form-registrar').modal('show');
+                    $('#regEmpleadoActiv').trigger('select2:opening');
+                    $('#regEmpleadoActiv').val(data.Activi_id).trigger('change');
                     $.notifyClose();
                     $.notify(
                         {
