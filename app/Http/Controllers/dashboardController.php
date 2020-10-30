@@ -627,6 +627,7 @@ class dashboardController extends Controller
                     $actividadArea = DB::table('empleado as e')
                         ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                         ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                        ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->select(
@@ -640,13 +641,14 @@ class dashboardController extends Controller
                         ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                        ->whereRaw("DATE(cp.hora_ini) ='$fecha'")
+                        ->whereRaw("IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start)) ='$fecha'")
                         ->get()
                         ->first();
                 } else {
                     $actividadArea = DB::table('empleado as e')
                         ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                         ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                        ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
                         ->select(
                             'e.emple_id',
                             DB::raw('SUM(pc.tiempo_rango) as totalRango'),
@@ -656,7 +658,7 @@ class dashboardController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->where('e.emple_area', '=', $respuesta[$i]['idArea'])
-                        ->whereRaw("DATE(cp.hora_ini) ='$fecha'")
+                        ->whereRaw("IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start)) ='$fecha'")
                         ->get()
                         ->first();
                 }
