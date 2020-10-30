@@ -2821,7 +2821,7 @@ use App\proyecto_empleado;
                                                             id="horAdicSwitch_re">
                                                         <label class="custom-control-label"
                                                             for="horAdicSwitch_re">Permite marcar horas
-                                                            adicionales.</label>
+                                                            adicionales.</label><input id="nHorasAdic_re" style="display: none" type="text" class="form-control form-control-sm col-md-5">
                                                     </div>
                                                 </div>
                                             </div>
@@ -3984,7 +3984,7 @@ use App\proyecto_empleado;
                                                                     id="SwitchPausa_ed">
                                                                 <label class="custom-control-label" for="SwitchPausa_ed"
                                                                     style="font-weight: bold;padding-top: 1px">Pausas
-                                                                    en el horario</label> &nbsp;
+                                                                    en el horario</label> &nbsp; <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
 
                                                             </div>
                                                         </div>
