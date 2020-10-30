@@ -15,7 +15,7 @@
     }
 
     .table thead th {
-        /* border-bottom: none; */
+        border-bottom: none;
         vertical-align: top;
         padding-bottom: 0.2rem;
         padding-top: 0.2rem;
@@ -108,38 +108,53 @@
         .thTitulo {
             padding: 0% !important;
         }
+        .imgU{
+            height: 25px !important;
+        }
+        .pImg{
+            margin: 0% !important;
+        }
     }
 </style>
 <div class="row p-5 rowResponsive">
     <div class="col-md-12">
         <table id="planesMovil" class="table nowrap" style="font-size: 13px;width:100%;">
             <thead>
-                <tr class="pt-3" style="border-bottom: 1.8px dashed #5369F8;">
+                <tr class="pt-3">
                     <th class="tituloPrincipal thTitulo">
                         <span class="tituloRotar">
                             Planes y precios
                             <img src="{{asset('/landing/images/peru (1).svg')}}" height="17" class="mr-1">
                         </span>
                     </th>
-                    <th class="text-center">
+                    <th class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
                         <div class="divContainer pyme">
                             <p class="titulo tituloPyme">PYME</p>
                             <h4>$3</h4>
-                            <span class="textR">Hasta 200 empleados al mes</span>
+                            <p class="pImg">
+                                <img src="{{asset('/landing/images/multitud-de-usuarios.svg')}}" height="30" class="imgU">
+                            </p>
+                            <span class="textR">Hasta 200 emp.(*c)</span>
                         </div>
                     </th>
-                    <th class="text-center">
+                    <th class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);">
                         <div class="divContainer profesional">
                             <p class="titulo tituloProfesional">PROFESIONAL</p>
-                            <h4>$3</h4>
-                            <span class="textR">Hasta 200 empleados al mes</span>
+                            <h4>$2.5</h4>
+                            <p class="pImg">
+                                <img src="{{asset('/landing/images/multitud-de-usuarios (1).svg')}}" height="30" class="imgU">
+                            </p>
+                            <span class="textR">De 200 a 5000 emp.(*c)</span>
                         </div>
                     </th>
-                    <th class="text-center">
+                    <th class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)">
                         <div class="divContainer enterprise">
                             <p class="titulo tituloEnterprise">ENTERPRISE</p>
-                            <h4>$3</h4>
-                            <span class="textR">Hasta 200 empleados al mes</span>
+                            <h4>$2</h4>
+                            <p class="pImg">
+                                <img src="{{asset('/landing/images/multitud-de-usuarios (2).svg')}}" height="30" class="imgU">
+                            </p>
+                            <span class="textR">Desde 5001 emp.(*c)</span>
                         </div>
                     </th>
                 </tr>
@@ -172,12 +187,12 @@
                 <tr>
                     <th scope="rowgroup" colspan="8" class="text-center" style="background:#f5f5f5">Multiempresa</th>
                 </tr>
-                <tr align="center" style="border-bottom: 1.8px dashed #5369F8;">
-                    <td class="text-center">
+                <tr align="center">
+                    <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
                         <span>5$</span>
                     </td>
-                    <td class="text-center"><span>Ilimitado</span></td>
-                    <td class="text-center"><span>Ilimitado</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);"><span>Ilimitado</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)"><span>Ilimitado</span></td>
                 </tr>
             </thead>
             <tbody>
