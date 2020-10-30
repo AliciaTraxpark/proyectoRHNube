@@ -347,9 +347,9 @@ class ControlController extends Controller
         $respuesta = [];
 
         if (sizeof($empleados) > 0) {
-            // DB::enableQueryLog();
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
         if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+            // DB::enableQueryLog();
             $horasTrabajadas = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
@@ -373,7 +373,7 @@ class ControlController extends Controller
                 ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '<=', $fechaF[1])
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_fin)'))
+                ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_ini)'))
                 ->get();
             // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
@@ -602,7 +602,7 @@ class ControlController extends Controller
             ->select(
                 DB::raw("CASE WHEN(v.pc_mac) IS NULL THEN 0 ELSE v.pc_mac END AS nombrePC"),
                 DB::raw("CASE WHEN(v.idSoftware) IS NULL THEN '1.10.09' ELSE sv.version END AS version")
-                )
+            )
             ->where('v.idEmpleado', '=', $idEmpleado)
             ->groupBy('v.id')
             ->get();
