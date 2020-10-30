@@ -448,7 +448,22 @@ background-color: #ffffff !important;
                         </div> --}}
                         <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label><input id="nHorasAdic" style="display: none" type="text" class="form-control form-control-sm col-md-5">
+                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+                            <select id="nHorasAdic" style="display: none"  class="form-control form-control-sm col-md-5">
+                                <option value="0.5">0.5 hora </option>
+                                <option value="1">1 hora </option>
+                                <option value="2">2 horas </option>
+                                <option value="3">3 horas </option>
+                                <option value="4">4 horas </option>
+                                <option value="5">5 horas </option>
+                                <option value="6">6 horas </option>
+                                <option value="7">7 horas </option>
+                                <option value="8">8 horas </option>
+                                <option value="9">9 horas </option>
+                                <option value="10">10 horas </option>
+                                <option value="11">11 horas </option>
+                                <option value="12">12 horas </option>
+                            </select>
                         </div>
                      </div>
                     </div>

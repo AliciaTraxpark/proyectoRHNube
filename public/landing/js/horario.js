@@ -3130,14 +3130,14 @@ $(function () {
     $(document).on('change', '#horAdicSwitch', function (event) {
         if ($('#horAdicSwitch').prop('checked')) {
             $('#nHorasAdic').show();
-            $('#nHorasAdic').flatpickr({
+           /*  $('#nHorasAdic').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
                 defaultDate:"02:00"
             });
-            $('#nHorasAdic').val( "02:00");
+            $('#nHorasAdic').val( "02:00"); */
             $('#fueraHSwitch').prop('checked', true);
             $('#fueraHSwitch').prop('disabled', true);
 
