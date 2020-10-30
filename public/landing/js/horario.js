@@ -367,18 +367,8 @@ $('#horaFen').flatpickr({
 });
 
 
-$('#horaI_ed').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
-$('#horaF_ed').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
+
+
 
 $('#btnasignar').on('click', function (e) {
     $('#divOtrodia').hide();
@@ -486,6 +476,8 @@ function calendario() {
             $('#errorSel').hide();
             $("#selectHorario").trigger("change");
             $('#fueraHSwitch').prop('checked', true)
+            $('#nHorasAdic').hide();
+            $('#fueraHSwitch').prop('disabled', false);
             $('#horAdicSwitch').prop('checked', false)
             $('#horCompSwitch').prop('checked', true)
             $('#horarioAsignar_ed').modal('show');
@@ -635,16 +627,20 @@ function agregarHorarioSe() {
         var horarioC;
         if ($('#horCompSwitch').prop('checked')) {
             horarioC = 1;
+
         } else {
             horarioC = 0;
+
         }
 
         // HORA ADICIONAL
         var horarioA;
         if ($('#horAdicSwitch').prop('checked')) {
             horarioA = 1;
+            var nHoraAdic=$('#nHorasAdic').val();
         } else {
             horarioA = 0;
+            var nHoraAdic=null;
         }
         var diasEntreFechas = function (desde, hasta) {
             var dia_actual = desde;
@@ -690,7 +686,7 @@ function agregarHorarioSe() {
                 hora: textSelec,
                 idhorar: idhorar, fueraHora,
                 horaC: horarioC,
-                horaA:horarioA
+                horaA:horarioA,nHoraAdic
 
             },
             statusCode: {
@@ -930,14 +926,10 @@ function abrirHorario() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:null
     });
-    $('#FinPausa').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
-    });
+
     $('input[name="descPausa[]"]').prop('required', false);
     $('input[name="InicioPausa[]"]').prop('required', false);
     $('input[name="FinPausa[]"]').prop('required', false);
@@ -2004,7 +1996,8 @@ function editarHorarioLista(idsedit) {
     $('#pausas_edit').hide();
     $("#PausasHorar_ed").empty();
     $('#divOtrodia_ed').hide();
-
+    $('#errorenPausas_ed').hide();
+      $('#fueraRango_ed').hide();
     $("#frmHorEditar")[0].reset();
     $.ajax({
         type: "post",
@@ -2022,13 +2015,55 @@ function editarHorarioLista(idsedit) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            //HORAS OBLIGADAS
+           var valorObli= data[0].horasObliga;
+
+            if(valorObli!=null ||valorObli!=' '){
+                $('#horaOblig_ed').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultDate:data[0].horasObliga.substr(-20,5)
+                });
+                $('#horaOblig_ed').val( data[0].horasObliga.substr(-20,5));
+            } else{
+                console.log('reconoce vacio');
+                $('#horaOblig_ed').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultDate:"08:00"
+                });
+            }
+
+
+            //HORA IINICIO
+            $('#horaI_ed').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultDate:data[0].horaI.substr(-20,5)
+            });
+            $('#horaI_ed').val(data[0].horaI.substr(-20,5));
+            //HORA FIN
+            $('#horaF_ed').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultDate:data[0].horaF.substr(-20,5)
+            });
+            $('#horaF_ed').val(data[0].horaF.substr(-20,5));
             $('#idhorario_ed').val(data[0].horario_id);
             $('#descripcionCa_ed').val(data[0].horario_descripcion);
             $('#toleranciaH_ed').val(data[0].horario_tolerancia);
             $('#toleranciaSalida_ed').val(data[0].horario_toleranciaF);
-            $('#horaOblig_ed').val(data[0].horasObliga);
-            $('#horaI_ed').val(data[0].horaI);
-            $('#horaF_ed').val(data[0].horaF);
+           /*  $('#horaOblig_ed').val(data[0].horasObliga); */
+
+
             if(data[0].hora_contTardanza==1){
                 $('#SwitchTardanza_ed').prop('checked', true);
             } else{
@@ -2047,15 +2082,70 @@ function editarHorarioLista(idsedit) {
                 $('#pausas_edit').show();
                 $.each(data[1], function (key, item) {
                     $('#SwitchPausa_ed').prop('checked', true);
-                    $('#SwitchPausa_ed').prop('disabled', true);
+                    $('#SwitchPausa_ed').prop('disabled', false);
                     $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
                         '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
-                        '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" required  >' +
-                        '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]"  required >' +
+                        '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg'+ item.idpausas_horario +'" required  >' +
+                        '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg'+ item.idpausas_horario +'" required >' +
                         '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  >' +
 
                         '</div>');
                       /*  */
+
+                      $(function () {
+                        $(document).on('change', '#InicioPausa_edReg'+ item.idpausas_horario +'', function (event) {
+                            let horaF = $('#FinPausa_edReg'+ item.idpausas_horario +'').val();
+                            let horaI = $('#InicioPausa_edReg'+ item.idpausas_horario +'').val();
+                            $('#FinPausa_edReg'+ item.idpausas_horario +'').prop( "disabled",false);
+                            console.log('esta funcionando editar')
+                             if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+                                $('#InicioPausa_edReg'+ item.idpausas_horario +'').val('');
+                                $('#fueraRango_ed').show();
+                                event.stopPropagation();
+                             } else{
+                                $('#fueraRango_ed').hide();
+                             }
+                             console.log(horaF);
+                             if(horaF==null || horaF==''){
+
+                             }
+                             else{
+                                console.log('secumple');
+                                if (horaF < horaI) {
+                                    $('#InicioPausa_edReg'+ item.idpausas_horario +'').val('');
+                                    $('#errorenPausas_ed').show();
+                                    event.stopPropagation();
+                                } else {
+                                    $('#errorenPausas_ed').hide();
+                                }
+                             }
+
+
+                        });
+                    });
+                    $(function () {
+                        $(document).on('change', '#FinPausa_edReg'+ item.idpausas_horario +'', function (event) {
+                            let horaF = $('#FinPausa_edReg'+ item.idpausas_horario +'').val();
+                            let horaI = $('#InicioPausa_edReg'+ item.idpausas_horario +'').val();
+                            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+                                $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
+                                $('#fueraRango_ed').show();
+                                event.stopPropagation();
+                             } else{
+                                $('#fueraRango_ed').hide();
+                             }
+                            if (horaF < horaI) {
+                                $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
+                                $('#errorenPausas_ed').show();
+                                event.stopPropagation();
+                            } else {
+                                $('#errorenPausas_ed').hide();
+                            }
+
+
+                        });
+                    });
                 });
                 $('input[name="InicioPausa_edReg[]"]').flatpickr({
                     enableTime: true,
@@ -2069,6 +2159,8 @@ function editarHorarioLista(idsedit) {
                     dateFormat: "H:i",
                     time_24hr: true
                 });
+
+
             }
         },
         error: function (data) {
@@ -2087,6 +2179,7 @@ function editarHorario() {
     var horaIed = $('#horaI_ed').val();
     var horaFed = $('#horaF_ed').val();
     var toleranciaFed = $('#toleranciaSalida_ed').val();
+
     var horaObed = $('#horaOblig_ed').val();
     var tardanza_ed;
     if ($('#SwitchTardanza_ed').is(":checked")) {
@@ -2132,7 +2225,7 @@ function editarHorario() {
     console.log(descPausa_edReg);
     console.log(pausaInicio_edReg);
     console.log(finPausa_edReg);
-    
+
     $.ajax({
         type: "post",
         url: "/horario/actualizarhorario",
@@ -2442,6 +2535,12 @@ $(function () {
         if (horaF < horaI) {
             $('#divOtrodia').show();
             $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
             $('#horaOblig').val('');
             event.stopPropagation();
         } else {
@@ -2453,7 +2552,19 @@ $(function () {
             minutos = minutos % 60;
             console.log(prefijo(horas) + ':' + prefijo(minutos));
             $('#horaOblig').prop("disabled",false);
-            $('#horaOblig').val(prefijo(horas));
+
+            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
+                $('#horaOblig').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour:"8"
+                });
+                $('#horaOblig').val("08:00");
+
+            }
+
             $('#divOtrodia').hide();
         }
 
@@ -2476,6 +2587,12 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia').show();
+            $('#horaOblig').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
             $('#horaOblig').prop("disabled",false);
             $('#horaOblig').val('');
             event.stopPropagation();
@@ -2488,7 +2605,18 @@ $(function () {
             minutos = minutos % 60;
             console.log(prefijo(horas) + ':' + prefijo(minutos));
             $('#horaOblig').prop("disabled",false);
-            $('#horaOblig').val(prefijo(horas));
+            /* $('#horaOblig').val(prefijo(horas)); */
+            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
+                $('#horaOblig').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour:"8"
+                });
+                $('#horaOblig').val("08:00");
+
+            }
             $('#divOtrodia').hide();
         }
 
@@ -2564,13 +2692,18 @@ function addField() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:null
     });
+    var horafinal=$('#horaF').val();
+    splih=horafinal.split(":");
+    console.log(splih[0]);
     $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:splih[0]
     });;
     $(function () {
         $(document).on('change', '#FinPausa'+ newID, function (event) {
@@ -2658,9 +2791,59 @@ function delRow() {
     $(this).parent('div').remove();
 }
 $('#SwitchPausa_ed').change(function (event) {
+    if ( $('input[name="descPausa_edRegist[]"]').length) {
+        $('#SwitchPausa_ed').prop('checked', true);
+        bootbox.confirm({
+            title:"Eliminar pausas de horario",
+            message: "Se eliminaran todas las pausas de este horario",
+            buttons: {
+                confirm: {
+                    label: 'Aceptar',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Cancelar',
+                    className: 'btn-light'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    var valorHorario=$('#idhorario_ed').val();
+                     $.ajax({
+                        type: "post",
+                        url: "/eliminarPausasEnEditar",
+                        data: {
+                            valorHorario
+                        },
+                        statusCode: {
 
+                            419: function () {
+                                location.reload();
+                            }
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            $('#PausasHorar_ed').empty();
+                            $('#pausas_edit').hide();
+                            $('#SwitchPausa_ed').prop('checked', false);
+
+                        },
+                        error: function (data) {
+                            alert('Ocurrio un error');
+                        }
+
+
+                    });
+                }
+            }
+        });
+    }
     if ($('#SwitchPausa_ed').prop('checked')) {
-        $("#PausasHorar_ed").append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
+        if ( $('input[name="descPausa_edRegist[]"]').length) {}
+        else{
+            $("#PausasHorar_ed").append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
                         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
                         '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
                         '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
@@ -2687,10 +2870,13 @@ $('#SwitchPausa_ed').change(function (event) {
                             dateFormat: "H:i",
                             time_24hr: true
                         });
+
         $('input[name="descPausa_ed[]"]').prop('required', true);
         $('#InicioPausa_ed').prop('required', true);
         $('#FinPausa_ed').prop('required', true);
         $('#pausas_edit').show();
+        }
+
     }
     else {
 
@@ -2734,6 +2920,59 @@ function addField_ed() {
         dateFormat: "H:i",
         time_24hr: true
     });;
+    $(function () {
+        $(document).on('change', '#FinPausa_ed'+ newID, function (event) {
+            let horaF = $('#FinPausa_ed'+ newID).val();
+            let horaI = $('#InicioPausa_ed'+ newID).val();
+
+            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+                $('#FinPausa_ed' + newID).val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango_ed').hide();
+             }
+
+                if (horaF < horaI) {
+                    $('#FinPausa_ed'+ newID).val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+
+
+
+        });
+    });
+    $(function () {
+        $(document).on('change', '#InicioPausa_ed'+ newID, function (event) {
+            let horaF = $('#FinPausa_ed'+ newID).val();
+            let horaI = $('#InicioPausa_ed'+ newID).val();
+            $('#FinPausa_ed'+ newID).prop( "disabled",false);
+            if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+                $('#InicioPausa_ed'+ newID).val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango_ed').hide();
+             }
+
+            if(horaF==null || horaF==''){
+
+            } else{
+            if (horaF < horaI) {
+                $('#InicioPausa_ed'+ newID).val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
+        }
+
+        });
+    });
 
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
@@ -2803,6 +3042,17 @@ $(function () {
          }
          console.log(horaF);
          if(horaF==null || horaF==''){
+            var horafinal1=$('#horaF').val();
+            splih1=horafinal1.split(":");
+            console.log(splih1[0]);
+            console.log('nada me da');
+            $('#FinPausa').val('').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour:splih1[0]
+            });
 
          }
          else{
@@ -2816,6 +3066,85 @@ $(function () {
             }
          }
 
+
+    });
+});
+
+
+$(function () {
+    $(document).on('change', '#FinPausa_ed', function (event) {
+        let horaF = $('#FinPausa_ed').val();
+        let horaI = $('#InicioPausa_ed').val();
+        if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+            $('#FinPausa_ed').val('');
+            $('#fueraRango_ed').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango_ed').hide();
+         }
+        if (horaF < horaI) {
+            $('#FinPausa_ed').val('');
+            $('#errorenPausas_ed').show();
+            event.stopPropagation();
+        } else {
+            $('#errorenPausas_ed').hide();
+        }
+
+
+    });
+});
+$(function () {
+    $(document).on('change', '#InicioPausa_ed', function (event) {
+        let horaF = $('#FinPausa_ed').val();
+        let horaI = $('#InicioPausa_ed').val();
+        $('#FinPausa_ed').prop( "disabled",false);
+        console('esta funcionando editar')
+         if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+            $('#InicioPausa_ed').val('');
+            $('#fueraRango_ed').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango_ed').hide();
+         }
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+
+         }
+         else{
+            console.log('secumple');
+            if (horaF < horaI) {
+                $('#InicioPausa_ed').val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
+         }
+
+
+    });
+});
+/////////////////cambiar sch
+$(function () {
+    $(document).on('change', '#horAdicSwitch', function (event) {
+        if ($('#horAdicSwitch').prop('checked')) {
+            $('#nHorasAdic').show();
+            $('#nHorasAdic').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultDate:"02:00"
+            });
+            $('#nHorasAdic').val( "02:00");
+            $('#fueraHSwitch').prop('checked', true);
+            $('#fueraHSwitch').prop('disabled', true);
+
+        } else{
+            $('#nHorasAdic').hide();
+            $('#fueraHSwitch').prop('disabled', false);
+        }
 
     });
 });

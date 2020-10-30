@@ -2807,12 +2807,12 @@ use App\proyecto_empleado;
                                                         <label class="custom-control-label"
                                                             for="fueraHSwitch_re">Trabajar fuera de horario</label>
                                                     </div>
-                                                    <div class="custom-control custom-switch mb-2">
+                                                   {{--  <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="horCompSwitch_re">
                                                         <label class="custom-control-label"
                                                             for="horCompSwitch_re">Horario compensable.</label>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="horAdicSwitch_re">

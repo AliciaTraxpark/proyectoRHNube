@@ -442,13 +442,13 @@ background-color: #ffffff !important;
                             <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
                             <label class="custom-control-label" for="fueraHSwitch">Permite marcar fuera del horario.</label>
                         </div>
-                        <div class="custom-control custom-switch mb-2">
+                       {{--  <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="horCompSwitch">
                             <label class="custom-control-label" for="horCompSwitch">Horario compensable.</label>
-                        </div>
+                        </div> --}}
                         <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label><input id="nHorasAdic" style="display: none" type="text" class="form-control form-control-sm col-md-5">
                         </div>
                      </div>
                     </div>
@@ -819,7 +819,7 @@ background-color: #ffffff !important;
                                                <div class="input-group form-control-sm" style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
 
-                                            <input type="number"  class="form-control form-control-sm" min="1" id="horaOblig" required>
+                                                 <input type="text"  class="form-control form-control-sm"  id="horaOblig"  required>
                                                    <div class="input-group-prepend ">
                                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Horas</div>
                                                     </div>
@@ -1086,7 +1086,7 @@ background-color: #ffffff !important;
                                                <label for="">Horas obligadas:</label>
                                                <div class="input-group form-control-sm" style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                  <input type="number"  class="form-control form-control-sm" min="1" id="horaOblig_ed" required>
+                                                   <input type="text"  class="form-control form-control-sm"  id="horaOblig_ed" required>
                                                    <div class="input-group-prepend ">
                                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Horas</div>
                                                     </div>
@@ -1141,7 +1141,7 @@ background-color: #ffffff !important;
                                                     id="SwitchPausa_ed">
                                                 <label class="custom-control-label"
                                                     for="SwitchPausa_ed"
-                                                    style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp;
+                                                    style="font-weight: bold;padding-top: 1px">Pausas en el horario</label>  &nbsp; <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
 
                                             </div>
                                          </div>

@@ -110,7 +110,7 @@ class horarioController extends Controller
         $fueraHora = $request->fueraHora;
         $horaC = $request->horaC;
         $horaA = $request->horaA;
-
+        $nHoraAdic= $request->nHoraAdic;
         $arrayrep = collect();
         $arrayeve = collect();
 
@@ -151,6 +151,7 @@ class horarioController extends Controller
             if ($fueraHora == 1) {
                 $temporal_eventos->borderColor = '#5369f8';
             }
+            $temporal_eventos->nHoraAdic = $nHoraAdic;
             $temporal_eventos->save();
             $arrayeve->push($temporal_eventos);
         }
@@ -527,6 +528,7 @@ class horarioController extends Controller
                     $horario_empleado->fuera_horario = $temporal_eventosH->fuera_horario;
                     $horario_empleado->horarioComp = $temporal_eventosH->horarioComp;
                     $horario_empleado->horaAdic = $temporal_eventosH->horaAdic;
+                    $horario_empleado->nHoraAdic = $temporal_eventosH->nHoraAdic;
                     if ($temporal_eventosH->fuera_horario == 1) {
                         $horario_empleado->borderColor = $temporal_eventosH->borderColor;
                     }
@@ -1039,5 +1041,10 @@ class horarioController extends Controller
             ->groupBy('horario.horario_id')
             ->get();
         return json_encode($horario);
+    }
+
+    public function eliminarPausasEnEditar(Request $request){
+        $idhorario = $request->valorHorario;
+        DB::table('pausas_horario')->where('horario_id', '=',$idhorario)->delete();
     }
 }
