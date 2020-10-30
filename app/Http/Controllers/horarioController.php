@@ -1040,4 +1040,9 @@ class horarioController extends Controller
             ->get();
         return json_encode($horario);
     }
+
+    public function eliminarPausasEnEditar(Request $request){
+        $idhorario = $request->valorHorario;
+        DB::table('pausas_horario')->where('horario_id', '=',$idhorario)->delete();
+    }
 }
