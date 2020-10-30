@@ -15,7 +15,7 @@
     }
 
     .table thead th {
-        border-bottom: none;
+        /* border-bottom: none; */
         vertical-align: top;
         padding-bottom: 0.2rem;
         padding-top: 0.2rem;
@@ -85,7 +85,7 @@
 
     @media (max-width: 767.98px) {
         table {
-            font-size: 0.6rem !important;
+            font-size: 0.8rem !important;
         }
 
         .rowResponsive {
@@ -96,42 +96,55 @@
         img {
             height: 13px !important;
         }
+
+        .textR {
+            font-weight: 500 !important;
+        }
+
+        .table th {
+            padding: 0.2rem !important;
+        }
+
+        .thTitulo {
+            padding: 0% !important;
+        }
     }
 </style>
 <div class="row p-5 rowResponsive">
     <div class="col-md-12">
         <table id="planesMovil" class="table nowrap" style="font-size: 13px;width:100%;">
             <thead>
-                <tr style="border-bottom: 1.8px dashed #5369F8;">
-                    <th class="tituloPrincipal">
+                <tr class="pt-3" style="border-bottom: 1.8px dashed #5369F8;">
+                    <th class="tituloPrincipal thTitulo">
                         <span class="tituloRotar">
-                            Planes y precios - perú
+                            Planes y precios
+                            <img src="{{asset('/landing/images/peru (1).svg')}}" height="17" class="mr-1">
                         </span>
                     </th>
                     <th class="text-center">
                         <div class="divContainer pyme">
                             <p class="titulo tituloPyme">PYME</p>
                             <h4>$3</h4>
-                            <span style="font-weight: 100">Hasta 200 empleados al mes</span>
+                            <span class="textR">Hasta 200 empleados al mes</span>
                         </div>
                     </th>
                     <th class="text-center">
                         <div class="divContainer profesional">
                             <p class="titulo tituloProfesional">PROFESIONAL</p>
                             <h4>$3</h4>
-                            <span style="font-weight: 100">Hasta 200 empleados al mes</span>
+                            <span class="textR">Hasta 200 empleados al mes</span>
                         </div>
                     </th>
                     <th class="text-center">
                         <div class="divContainer enterprise">
                             <p class="titulo tituloEnterprise">ENTERPRISE</p>
                             <h4>$3</h4>
-                            <span style="font-weight: 100">Hasta 200 empleados al mes</span>
+                            <span class="textR">Hasta 200 empleados al mes</span>
                         </div>
                     </th>
                 </tr>
                 <tr align="center">
-                    <th rowspan="7" class="tituloPrincipal">
+                    <th rowspan="7" class="tituloPrincipal thTitulo">
                         <span class="tituloRotar">
                             Modalidad de control
                         </span>
@@ -169,7 +182,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <th rowspan="23" class="tituloPrincipal">
+                    <th rowspan="23" class="tituloPrincipal thTitulo">
                         <span class="tituloRotar">Modo: Control Remoto / Home and office
                         </span>
                     </th>
@@ -182,17 +195,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                 </tr>
@@ -202,17 +215,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                 </tr>
@@ -232,7 +245,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
                         </span>
                     </td>
                     <td class="text-center"><span>50$ x empresa</span></td>
@@ -245,17 +258,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
                         </span>
                     </td>
                 </tr>
@@ -266,7 +279,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
                         </span>
                     </td>
                     <td class="text-center"><span>2 emp.</span></td>
@@ -279,7 +292,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
                         </span>
                     </td>
                     <td class="text-center"><span>1 emp.</span></td>
@@ -355,7 +368,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mt-2">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
                         </span>
                     </td>
                     <td class="text-center"><span>2 emp.</span></td>
