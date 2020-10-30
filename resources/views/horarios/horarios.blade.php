@@ -442,13 +442,13 @@ background-color: #ffffff !important;
                             <input type="checkbox" class="custom-control-input" id="fueraHSwitch">
                             <label class="custom-control-label" for="fueraHSwitch">Permite marcar fuera del horario.</label>
                         </div>
-                        <div class="custom-control custom-switch mb-2">
+                       {{--  <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="horCompSwitch">
                             <label class="custom-control-label" for="horCompSwitch">Horario compensable.</label>
-                        </div>
+                        </div> --}}
                         <div class="custom-control custom-switch mb-2">
                             <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label><input id="nHorasAdic" style="display: none" type="text" class="form-control form-control-sm col-md-5">
                         </div>
                      </div>
                     </div>

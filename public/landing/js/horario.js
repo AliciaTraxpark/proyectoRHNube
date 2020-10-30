@@ -476,6 +476,8 @@ function calendario() {
             $('#errorSel').hide();
             $("#selectHorario").trigger("change");
             $('#fueraHSwitch').prop('checked', true)
+            $('#nHorasAdic').hide();
+            $('#fueraHSwitch').prop('disabled', false);
             $('#horAdicSwitch').prop('checked', false)
             $('#horCompSwitch').prop('checked', true)
             $('#horarioAsignar_ed').modal('show');
@@ -625,16 +627,20 @@ function agregarHorarioSe() {
         var horarioC;
         if ($('#horCompSwitch').prop('checked')) {
             horarioC = 1;
+
         } else {
             horarioC = 0;
+
         }
 
         // HORA ADICIONAL
         var horarioA;
         if ($('#horAdicSwitch').prop('checked')) {
             horarioA = 1;
+            var nHoraAdic=$('#nHorasAdic').val();
         } else {
             horarioA = 0;
+            var nHoraAdic=null;
         }
         var diasEntreFechas = function (desde, hasta) {
             var dia_actual = desde;
@@ -680,7 +686,7 @@ function agregarHorarioSe() {
                 hora: textSelec,
                 idhorar: idhorar, fueraHora,
                 horaC: horarioC,
-                horaA:horarioA
+                horaA:horarioA,nHoraAdic
 
             },
             statusCode: {
@@ -2020,7 +2026,7 @@ function editarHorarioLista(idsedit) {
                     time_24hr: true,
                     defaultDate:data[0].horasObliga.substr(-20,5)
                 });
-                $('#horaOblig_ed').val( data[0].horasObliga.substr(-20,5))
+                $('#horaOblig_ed').val( data[0].horasObliga.substr(-20,5));
             } else{
                 console.log('reconoce vacio');
                 $('#horaOblig_ed').flatpickr({
@@ -3116,6 +3122,29 @@ $(function () {
             }
          }
 
+
+    });
+});
+/////////////////cambiar sch
+$(function () {
+    $(document).on('change', '#horAdicSwitch', function (event) {
+        if ($('#horAdicSwitch').prop('checked')) {
+            $('#nHorasAdic').show();
+            $('#nHorasAdic').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultDate:"02:00"
+            });
+            $('#nHorasAdic').val( "02:00");
+            $('#fueraHSwitch').prop('checked', true);
+            $('#fueraHSwitch').prop('disabled', true);
+
+        } else{
+            $('#nHorasAdic').hide();
+            $('#fueraHSwitch').prop('disabled', false);
+        }
 
     });
 });
