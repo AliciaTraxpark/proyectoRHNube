@@ -214,8 +214,8 @@ Route::post('/registrarAE', 'ActividadesController@registrarActividadEmpleado');
 Route::post('/editarA', 'ActividadesController@editarActividad');
 Route::get('/registrarEditar', 'ActividadesController@editarCambios');
 Route::get('/recuperarA', 'ActividadesController@recuperarActividad');
-Route::get('/empleadoActiv','ActividadesController@empleadoSelect');
-Route::get('/empleadoActivReg','ActividadesController@listaEmpleadoReg');
+Route::get('/empleadoActiv', 'ActividadesController@empleadoSelect');
+Route::get('/empleadoActivReg', 'ActividadesController@listaEmpleadoReg');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
@@ -404,6 +404,7 @@ Route::post('/datosControEditar', 'controladoresController@datosControEditar');
 Route::post('/controladUpdate', 'controladoresController@controladUpdate');
 // PRECIOS
 Route::get('/planes', 'PrecioPlanesController@vistaPrecios');
+Route::get('/plan', 'PrecioPlanesController@vistaMovil');
 
 //RUTAS SUPERADMIN
 Route::get('/superadmin', 'superAdmController@indexDashboard');

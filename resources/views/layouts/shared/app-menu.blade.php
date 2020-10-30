@@ -145,7 +145,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     <li>
         <a href="/biblioteca">
             <i data-feather="play-circle"></i>
-            <span>Biblioteca</span>
+            <span>Academia</span>
         </a>
     </li>
 </ul>

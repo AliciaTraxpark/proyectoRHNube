@@ -165,7 +165,7 @@ function reporteEmpleado() {
                     if (data.captura[i].horario === '0') {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-success\">Sin horario</a></td>';
                     } else {
-                        html_tr += '<td class="text-center">' + data.captura[i].horario + '</td>';
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\"><i class="uil uil-calender"></i>&nbsp;' + data.captura[i].horario + '</a></td>';
                     }
                     html_tr += '<td class="text-center">' + data.captura[i].actividad + '</td>';
                     if (data.captura[i].respuestaI === 'SI') {
@@ -267,7 +267,7 @@ function reporteEmpleado() {
                 for (let index = 0; index < data.dispositivo.length; index++) {
                     if (data.dispositivo[index].nombrePC === '0') {
                         menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
-                        title="nombre PC y versión" data-original-title="nombre PC y versión">PC ${index} ${data.dispositivo[index].version}</a>`;
+                        title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> PC ${index}</strong> | ${data.dispositivo[index].version}</a>`;
                     } else {
                         menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
                         title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> ${data.dispositivo[index].nombrePC}</strong> | ${data.dispositivo[index].version}</a>`;

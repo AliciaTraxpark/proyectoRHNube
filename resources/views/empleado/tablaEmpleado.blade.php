@@ -80,6 +80,7 @@
         .width-400 {
             width: 100% !important;
         }
+
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
         table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
             padding-left: 8% !important;
@@ -855,13 +856,13 @@ function verDEmpleado(idempleadoVer){
 
                         var val = $('#global_filter').val();
                         if(that.column(i).search() !== this.value){
-                            that.column(this.value).search(val).draw();
+                            that.column(this.value).search( "^" + val, true, false, true).draw();
                         }
                         val1 = $.fn.dataTable.util.escapeRegex(this.value);
                         $('#global_filter').on("keyup change clear",function(){
                             var val = $(this).val();
                             if(that.column(i).search() !== val1){
-                                that.column(val1).search(val).draw();
+                                that.column(val1).search("^" + val, true, false, true).draw();
                             }
                         });
                     });
@@ -885,6 +886,9 @@ function verDEmpleado(idempleadoVer){
         $('input.column_filter').on('keyup click', function () {
             filterColumn($(this).parents('div').attr('data-column'));
         });
+
+        // SELECT DEFECTO PARA BUSQUEDA
+        $('#select').val(5).trigger('change');
     });
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}

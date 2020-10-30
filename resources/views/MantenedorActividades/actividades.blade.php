@@ -19,7 +19,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Actividades</h4>
+        <h4 class="mb-1 mt-0 pl-3" style="font-weight: bold">Actividades</h4>
     </div>
 </div>
 @endsection
@@ -29,9 +29,7 @@
         width: 100% !important;
     }
 
-    div.dataTables_wrapper div.dataTables_filter {
-        display: none;
-    }
+
 
     .dataTables_scrollHeadInner {
         margin: 0 auto !important;
@@ -46,6 +44,37 @@
         border-color: red;
     }
 
+    .table td {
+        padding-bottom: 0rem;
+    }
+
+    /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
+
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 32px;
+        min-width: 80px;
+    }
+
+    .ajs-cancel {
+        font-size: 11px !important;
+    }
+
+    .ajs-ok {
+        font-size: 11px !important;
+    }
+
+    /* FINALIZACION */
     @media (max-width: 767.98px) {
 
         li.paginate_button.previous,
@@ -70,8 +99,8 @@
         }
     }
 </style>
-<div class="row pr-5">
-    <div class="col-md-12 text-right pr-5">
+<div class="row pr-3">
+    <div class="col-md-12 text-right">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
             onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
             Actividad
@@ -79,17 +108,10 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-md-11">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                {{-- BUSCAR PERSONALIZADO --}}
-                <div class="col-md-4 inputResponsive" id="filter_global">
-                    <td align="center">
-                        <input type="text" class="global_filter form-control" id="global_filter" style="height: 35px;"
-                            placeholder="Buscar">
-                    </td>
-                </div>
-                {{-- FINALIZACION --}}
+
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
                     <thead style="background: #fafafa;" style="width:100%!important">
                         <tr>

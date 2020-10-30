@@ -5,9 +5,9 @@ function tablaActividades() {
         responsive: true,
         retrieve: true,
         "searching": true,
-        "lengthChange": false,
+        "lengthChange": true,
         scrollCollapse: false,
-        "pageLength": 30,
+        // "pageLength": 10,
         "bAutoWidth": true,
         language: {
             "sProcessing": "Procesando...",

@@ -13,9 +13,19 @@ class PrecioPlanesController extends Controller
 
     public function vistaPrecios()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        return view('precios.precios');}
+        } else {
+            return view('precios.precios');
+        }
+    }
+
+    public function vistaMovil()
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            return view('precios.planesMovil');
+        }
     }
 }

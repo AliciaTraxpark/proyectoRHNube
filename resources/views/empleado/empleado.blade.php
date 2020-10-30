@@ -870,10 +870,9 @@ use Carbon\Carbon;
                                 <div class="col-md-2">
                                     <td align="center">
                                         <select class="form-control" name="select" id="select" style="height: 35.5px;">
-                                            <option value="-1">PERSONALIZADO</option>
                                             <option value="3">Número Documento</option>
                                             <option value="4">Nombre</option>
-                                            <option value="5">Apellidos</option>
+                                            <option value="5" selected>Apellidos</option>
                                             <option value="8">Cargo</option>
                                             <option value="9">Área</option>
                                         </select>
@@ -2430,7 +2429,7 @@ use Carbon\Carbon;
                                                     <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                                         data-placement="left" title="ver vídeo"
                                                         data-original-title="ver vídeo">
-                                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                     </a>
                                                 </div>
                                             </div>
@@ -2546,7 +2545,7 @@ use Carbon\Carbon;
                                                     <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
                                                         data-placement="left" title="ver vídeo"
                                                         data-original-title="ver vídeo">
-                                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                     </a>
                                                 </div>
                                             </div>
@@ -2748,7 +2747,7 @@ use Carbon\Carbon;
                                                 <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
                                                     data-placement="left" title="ver vídeo"
                                                     data-original-title="ver vídeo">
-                                                    <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                    <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                 </a>
                                             </div>
                                         </div>
@@ -3024,19 +3023,17 @@ use Carbon\Carbon;
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="card">
-                                                <div class="card-body border p-2" id="regbodyModoTarea">
+                                                <div class="card-body p-2" id="regbodyModoTarea">
                                                     <div class="row">
-                                                        <div class="col-xl-12">
+                                                        <div class="col-xl-12 text-right">
                                                             <div class="float-md-right">
                                                                 <a onclick="javascript:mostrarContenidoA()"
                                                                     data-toggle="tooltip" data-placement="left"
                                                                     title="ver vídeo" data-original-title="ver vídeo">
                                                                     <img src="{{asset('landing/images/play.svg')}}"
-                                                                        height="23">
+                                                                        height="40">
                                                                 </a>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-xl-12 text-right">
                                                             <button type="button" class="btn btn-sm mt-1"
                                                                 style="background-color: #163552;"
                                                                 onclick="$('#regactividadTarea').modal();">+ Asignar
@@ -3083,7 +3080,7 @@ use Carbon\Carbon;
                                                                 id="formActvidadesReg">
                                                                 <div class="row justify-content-center">
                                                                     <div class="col-xl-12">
-                                                                        <label>
+                                                                        <label style="font-size: 14px">
                                                                             Actividades
                                                                         </label>
                                                                         <a class="mr-3" data-toggle="tooltip"
@@ -3092,7 +3089,7 @@ use Carbon\Carbon;
                                                                             data-original-title="registrar nueva actividad"
                                                                             onclick="$('#form-registrar').modal('hide');$('#ActividadTareaGE').modal();">
                                                                             <i class="uil uil-plus"
-                                                                                style="color: darkblue;cursor: pointer;"></i>
+                                                                                style="color: darkblue;cursor: pointer;font-weight: bold;font-size: 13px"></i>
                                                                         </a>
                                                                         <select multiple="multiple"
                                                                             data-plugin="customselect"
@@ -3498,7 +3495,7 @@ use Carbon\Carbon;
                                         <div class="float-md-right">
                                             <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                                 data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
                                             </a>
                                         </div>
                                     </div>
@@ -3615,7 +3612,7 @@ use Carbon\Carbon;
                                         <div class="float-md-right">
                                             <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
                                                 data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
                                             </a>
                                         </div>
                                     </div>
@@ -3808,7 +3805,7 @@ use Carbon\Carbon;
                                         <div class="float-md-right">
                                             <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
                                                 data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
                                             </a>
                                         </div>
                                     </div>
@@ -4098,23 +4095,21 @@ use Carbon\Carbon;
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="card">
-                                            <div class="card-body border p-2" id="bodyModoTarea">
+                                            <div class="card-body p-2" id="bodyModoTarea">
                                                 <div class="row">
-                                                    <div class="col-xl-12">
+                                                    <div class="col-xl-12 text-left">
                                                         <div class="float-md-right">
                                                             <a onclick="javascript:mostrarContenidoA()"
                                                                 data-toggle="tooltip" data-placement="left"
                                                                 title="ver vídeo" data-original-title="ver vídeo">
                                                                 <img src="{{asset('landing/images/play.svg')}}"
-                                                                    height="23">
+                                                                    height="40">
                                                             </a>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-xl-12 text-right">
                                                         <button type="button" class="btn btn-sm mt-1"
                                                             style="background-color: #163552;"
                                                             onclick="$('#actividadTarea').modal()">+ Asignar
-                                                            Actividad
+                                                            actividad
                                                         </button>
                                                     </div>
                                                 </div>
@@ -4157,7 +4152,7 @@ use Carbon\Carbon;
                                                             id="formActvidades">
                                                             <div class="row justify-content-center">
                                                                 <div class="col-xl-12">
-                                                                    <label>
+                                                                    <label style="font-size: 14px">
                                                                         Actividades
                                                                     </label>
                                                                     <a class="mr-3" data-toggle="tooltip"
@@ -4166,7 +4161,7 @@ use Carbon\Carbon;
                                                                         data-original-title="registrar nueva actividad"
                                                                         onclick="$('#form-ver').modal('hide');$('#RegActividadTareaGE').modal();">
                                                                         <i class="uil uil-plus"
-                                                                            style="color: darkblue;cursor: pointer;"></i>
+                                                                            style="color: darkblue;cursor: pointer;font-weight: bold;font-size: 13px"></i>
                                                                     </a>
                                                                     <select multiple="multiple"
                                                                         data-plugin="customselect" class="form-control"
