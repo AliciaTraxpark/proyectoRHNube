@@ -7,7 +7,7 @@ function tablaActividades() {
         "searching": true,
         "lengthChange": false,
         scrollCollapse: false,
-        "pageLength": 30,
+        "pageLength": 10,
         "bAutoWidth": true,
         language: {
             "sProcessing": "Procesando...",
