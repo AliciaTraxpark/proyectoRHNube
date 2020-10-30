@@ -3066,7 +3066,7 @@ use App\proyecto_empleado;
                                                     id="formActvidadesReg">
                                                     <div class="row justify-content-center">
                                                         <div class="col-xl-12">
-                                                            <label>
+                                                            <label style="font-size: 14px">
                                                                 Actividades
                                                             </label>
                                                             <a class="mr-3" data-toggle="tooltip" data-placement="right"
@@ -3074,7 +3074,7 @@ use App\proyecto_empleado;
                                                                 data-original-title="registrar nueva actividad"
                                                                 onclick="$('#form-registrar').modal('hide');$('#ActividadTareaGE').modal();">
                                                                 <i class="uil uil-plus"
-                                                                    style="color: darkblue;cursor: pointer;"></i>
+                                                                    style="color: darkblue;cursor: pointer;font-weight: bold;font-size: 13px"></i>
                                                             </a>
                                                             <select multiple="multiple" data-plugin="customselect"
                                                                 class="form-control" multiple="multiple"
@@ -4099,7 +4099,7 @@ use App\proyecto_empleado;
                                                 <form action="javascript:registrarActividadTarea()" id="formActvidades">
                                                     <div class="row justify-content-center">
                                                         <div class="col-xl-12">
-                                                            <label>
+                                                            <label style="font-size: 14px">
                                                                 Actividades
                                                             </label>
                                                             <a class="mr-3" data-toggle="tooltip" data-placement="right"
@@ -4107,7 +4107,7 @@ use App\proyecto_empleado;
                                                                 data-original-title="registrar nueva actividad"
                                                                 onclick="$('#form-ver').modal('hide');$('#RegActividadTareaGE').modal();">
                                                                 <i class="uil uil-plus"
-                                                                    style="color: darkblue;cursor: pointer;"></i>
+                                                                    style="color: darkblue;cursor: pointer;font-weight: bold;font-size: 13px"></i>
                                                             </a>
                                                             <select multiple="multiple" data-plugin="customselect"
                                                                 class="form-control" multiple="multiple"

@@ -29,9 +29,7 @@
         width: 100% !important;
     }
 
-    div.dataTables_wrapper div.dataTables_filter {
-        display: none;
-    }
+   
 
     .dataTables_scrollHeadInner {
         margin: 0 auto !important;
@@ -101,8 +99,8 @@
         }
     }
 </style>
-<div class="row pr-5">
-    <div class="col-md-12 text-right pr-5">
+<div class="row pr-3">
+    <div class="col-md-12 text-right">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
             onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
             Actividad
@@ -110,19 +108,10 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-md-11">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <div class="row justify-content-end">
-                    {{-- BUSCAR PERSONALIZADO --}}
-                    <div class="col-md-4 inputResponsive" id="filter_global">
-                        <td align="center">
-                            <input type="text" class="global_filter form-control" id="global_filter"
-                                style="height: 35px;" placeholder="Buscar">
-                        </td>
-                    </div>
-                    {{-- FINALIZACION --}}
-                </div>
+                
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
                     <thead style="background: #fafafa;" style="width:100%!important">
                         <tr>
