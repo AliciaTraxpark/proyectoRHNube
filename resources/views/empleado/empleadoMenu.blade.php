@@ -2257,7 +2257,7 @@ use App\proyecto_empleado;
                                             <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
                                                 data-placement="left" title="ver vídeo"
                                                 data-original-title="ver vídeo">
-                                                <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
                                         </a>
                                     </div> --}}
                                     <div class="form-group">
@@ -2460,7 +2460,7 @@ use App\proyecto_empleado;
                                     <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                             data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                            <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            <img src="{{asset('landing/images/play.svg')}}" height="40">
                                         </a>
                                     </div>
                                 </div>
@@ -2563,7 +2563,7 @@ use App\proyecto_empleado;
                                 <div class="float-md-right">
                                     <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
                                         data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                     </a>
                                 </div>
                             </div>
@@ -2759,7 +2759,7 @@ use App\proyecto_empleado;
                                 <div class="float-md-right">
                                     <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
                                         data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                     </a>
                                 </div>
                             </div>
@@ -3011,20 +3011,18 @@ use App\proyecto_empleado;
                                 <div class="card">
                                     <div class="card-body border p-2">
                                         <div class="row">
-                                            <div class="col-xl-12">
+                                            <div class="col-xl-12 text-left">
                                                 <div class="float-md-right">
                                                     <a onclick="javascript:mostrarContenidoA()" data-toggle="tooltip"
                                                         data-placement="left" title="ver vídeo"
                                                         data-original-title="ver vídeo">
-                                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                     </a>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-12 text-right">
                                                 <button type="button" class="btn btn-sm mt-1"
                                                     style="background-color: #163552;"
                                                     onclick="$('#regactividadTarea').modal();">+
-                                                    Asignar Actividad
+                                                    Asignar actividad
                                                 </button>
                                             </div>
                                         </div>
@@ -3276,7 +3274,7 @@ use App\proyecto_empleado;
                                     {{-- <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
                                             data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                            <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                            <img src="{{asset('landing/images/play.svg')}}" height="40">
                                     </a>
                                 </div> --}}
                                 <div class="form-group">
@@ -3476,7 +3474,7 @@ use App\proyecto_empleado;
                                 <div class="float-md-right">
                                     <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                         data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                     </a>
                                 </div>
                             </div>
@@ -3582,7 +3580,7 @@ use App\proyecto_empleado;
                                 <div class="float-md-right">
                                     <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
                                         data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                     </a>
                                 </div>
                             </div>
@@ -3774,7 +3772,7 @@ use App\proyecto_empleado;
                                 <div class="float-md-right">
                                     <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
                                         data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                     </a>
                                 </div>
                             </div>
@@ -4045,16 +4043,14 @@ use App\proyecto_empleado;
                                 <div class="card">
                                     <div class="card-body p-2">
                                         <div class="row">
-                                            <div class="col-xl-12">
+                                            <div class="col-xl-12 text-left">
                                                 <div class="float-md-right">
                                                     <a onclick="javascript:mostrarContenidoA()" data-toggle="tooltip"
                                                         data-placement="left" title="ver vídeo"
                                                         data-original-title="ver vídeo">
-                                                        <img src="{{asset('landing/images/play.svg')}}" height="23">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                     </a>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-12 text-right">
                                                 <button type="button" class="btn btn-sm mt-1"
                                                     style="background-color: #163552;"
                                                     onclick="$('#actividadTarea').modal()">+Asignar actividad
