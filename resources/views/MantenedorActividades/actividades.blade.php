@@ -19,7 +19,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Actividades</h4>
+        <h4 class="mb-1 mt-0 pl-3" style="font-weight: bold">Actividades</h4>
     </div>
 </div>
 @endsection
@@ -29,7 +29,7 @@
         width: 100% !important;
     }
 
-   
+
 
     .dataTables_scrollHeadInner {
         margin: 0 auto !important;
@@ -111,7 +111,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                
+
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
                     <thead style="background: #fafafa;" style="width:100%!important">
                         <tr>
