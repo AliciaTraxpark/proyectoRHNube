@@ -791,6 +791,8 @@ class dashboardController extends Controller
                     ->get()->first();
                 $actividad = DB::table('empleado as e')
                     ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                    ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                    ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                     ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
@@ -803,7 +805,7 @@ class dashboardController extends Controller
                         DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                     )
                     ->where('e.emple_id', '=', $emple->emple_id)
-                    ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
+                    ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start))'), '=', $fecha)
                     ->where('invi.estado', '=', 1)
                     ->where('invi.idinvitado', '=', $invitado->idinvitado)
                     ->get()->first();
@@ -811,6 +813,7 @@ class dashboardController extends Controller
                 $actividad = DB::table('empleado as e')
                     ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                     ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                    ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
                     ->select(
                         'e.emple_id',
                         DB::raw('MIN(TIME(cp.hora_ini)) as inicioA'),
@@ -820,7 +823,7 @@ class dashboardController extends Controller
                         DB::raw('((SUM(cp.actividad)/SUM(pc.tiempo_rango))*100) as division')
                     )
                     ->where('e.emple_id', '=', $emple->emple_id)
-                    ->where(DB::raw('DATE(cp.hora_ini)'), '=', $fecha)
+                    ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start))'), '=', $fecha)
                     ->get()->first();
             }
 
