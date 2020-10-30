@@ -722,7 +722,7 @@ function abrirHorario_ed() {
     $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" disabled >' +
         '&nbsp; <button class="btn btn-sm bt_ed" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
         '</div>');
@@ -1304,13 +1304,15 @@ function calendario2() {
 document.addEventListener("DOMContentLoaded", calendario2);
 
 function abrirHorario() {
+    $('#errorenPausas').hide();
     $('#divOtrodia').hide();
     $('#divPausa').hide();
     $('#inputPausa').empty();
+    $('#horaOblig').prop("disabled","disabled");
     $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" disabled >' +
         '&nbsp; <button class="btn btn-sm bt_re" id="400" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
         '</div>');
@@ -1325,14 +1327,10 @@ function abrirHorario() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:null
     });
-    $('#FinPausa').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
-    });
+
     $('input[name="descPausa[]"]').prop('required', false);
     $('input[name="InicioPausa[]"]').prop('required', false);
     $('input[name="FinPausa[]"]').prop('required', false);
@@ -5262,25 +5260,90 @@ $(function () {
         let horaI = $('#horaI').val();
 
         if (horaF < horaI) {
-            $("#otroDCh").attr("disabled", true);
             $('#divOtrodia').show();
+            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            $('#horaOblig').val('');
             event.stopPropagation();
         } else {
+            var dateDesde = newDate(horaI.split(":"));
+            var dateHasta = newDate(horaF.split(":"));
+
+            var minutos = (dateHasta - dateDesde)/1000/60;
+            var horas = Math.floor(minutos/60);
+            minutos = minutos % 60;
+            console.log(prefijo(horas) + ':' + prefijo(minutos));
+            $('#horaOblig').prop("disabled",false);
+
+            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
+                $('#horaOblig').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour:"8"
+                });
+                $('#horaOblig').val("08:00");
+
+            }
+
             $('#divOtrodia').hide();
         }
 
     });
 });
+function newDate(partes) {
+    var date = new Date(0);
+    date.setHours(partes[0]);
+    date.setMinutes(partes[1]);
+    return date;
+}
+
+function prefijo(num) {
+    return num < 10 ? ("0" + num) : num;
+}
 $(function () {
     $(document).on('change', '#horaI', function (event) {
         let horaF = $('#horaF').val();
         let horaI = $('#horaI').val();
 
         if (horaF < horaI) {
-            $("#otroDCh").attr("disabled", true);
             $('#divOtrodia').show();
+            $('#horaOblig').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').val('');
             event.stopPropagation();
         } else {
+            var dateDesde = newDate(horaI.split(":"));
+            var dateHasta = newDate(horaF.split(":"));
+
+            var minutos = (dateHasta - dateDesde)/1000/60;
+            var horas = Math.floor(minutos/60);
+            minutos = minutos % 60;
+            console.log(prefijo(horas) + ':' + prefijo(minutos));
+            $('#horaOblig').prop("disabled",false);
+            /* $('#horaOblig').val(prefijo(horas)); */
+            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
+                $('#horaOblig').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour:"8"
+                });
+                $('#horaOblig').val("08:00");
+
+            }
             $('#divOtrodia').hide();
         }
 
@@ -5326,14 +5389,73 @@ function addField() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:null
     });
-    $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).flatpickr({
+    var horafinal=$('#horaF_ed').val();
+    splih=horafinal.split(":");
+    console.log(splih[0]);
+    $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:splih[0]
     });;
+    $(function () {
+        $(document).on('change', '#FinPausa_ed'+ newID, function (event) {
+            let horaF = $('#FinPausa_ed'+ newID).val();
+            let horaI = $('#InicioPausa_ed'+ newID).val();
+
+            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+                $('#FinPausa_ed' + newID).val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango_ed').hide();
+             }
+
+                if (horaF < horaI) {
+                    $('#FinPausa_ed'+ newID).val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+
+
+
+        });
+    });
+    $(function () {
+        $(document).on('change', '#InicioPausa_ed'+ newID, function (event) {
+            let horaF = $('#FinPausa_ed'+ newID).val();
+            let horaI = $('#InicioPausa_ed'+ newID).val();
+            $('#FinPausa_ed'+ newID).prop( "disabled",false);
+            if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+                $('#InicioPausa_ed'+ newID).val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+            if(horaF==null || horaF==''){
+
+            } else{
+            if (horaF < horaI) {
+                $('#InicioPausa_ed'+ newID).val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+        }
+
+        });
+    });
+
 
 
     $newClone.children("button").attr("id", newID)
@@ -5400,14 +5522,72 @@ function addFieldRe() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:null
     });
-    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).flatpickr({
+    var horafinal=$('#horaF').val();
+    splih=horafinal.split(":");
+    console.log(splih[0]);
+    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:splih[0]
     });;
+    $(function () {
+        $(document).on('change', '#FinPausa'+ newID, function (event) {
+            let horaF = $('#FinPausa'+ newID).val();
+            let horaI = $('#InicioPausa'+ newID).val();
+
+            if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+                $('#FinPausa' + newID).val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+                if (horaF < horaI) {
+                    $('#FinPausa'+ newID).val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
+
+
+
+        });
+    });
+    $(function () {
+        $(document).on('change', '#InicioPausa'+ newID, function (event) {
+            let horaF = $('#FinPausa'+ newID).val();
+            let horaI = $('#InicioPausa'+ newID).val();
+            $('#FinPausa'+ newID).prop( "disabled",false);
+            if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
+
+                $('#InicioPausa'+ newID).val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+            if(horaF==null || horaF==''){
+
+            } else{
+            if (horaF < horaI) {
+                $('#InicioPausa'+ newID).val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+        }
+
+        });
+    });
 
 
     $newClone.children("button").attr("id", newID)
@@ -5605,3 +5785,69 @@ function stopVideoA() {
         $('#form-ver').modal('show');
     }
 }
+//VALIDACION PAUSAS
+$(function () {
+    $(document).on('change', '#FinPausa', function (event) {
+        let horaF = $('#FinPausa').val();
+        let horaI = $('#InicioPausa').val();
+        if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+            $('#FinPausa').val('');
+            $('#fueraRango').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango').hide();
+         }
+        if (horaF < horaI) {
+            $('#FinPausa').val('');
+            $('#errorenPausas').show();
+            event.stopPropagation();
+        } else {
+            $('#errorenPausas').hide();
+        }
+
+
+    });
+});
+$(function () {
+    $(document).on('change', '#InicioPausa', function (event) {
+        let horaF = $('#FinPausa').val();
+        let horaI = $('#InicioPausa').val();
+        $('#FinPausa').prop( "disabled",false);
+         if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
+
+            $('#InicioPausa').val('');
+            $('#fueraRango').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango').hide();
+         }
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+            var horafinal1=$('#horaF').val();
+            splih1=horafinal1.split(":");
+            console.log(splih1[0]);
+            console.log('nada me da');
+            $('#FinPausa').val('').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour:splih1[0]
+            });
+
+         }
+         else{
+            console.log('secumple');
+            if (horaF < horaI) {
+                $('#InicioPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
+         }
+
+
+    });
+});
+
