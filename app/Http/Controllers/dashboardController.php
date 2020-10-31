@@ -791,11 +791,10 @@ class dashboardController extends Controller
                     ->get()->first();
                 $actividad = DB::table('empleado as e')
                     ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                    ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+                    ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
                     ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                    ->leftJoin('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
                     ->select(
                         'e.emple_id',
                         DB::raw('MIN(TIME(cp.hora_ini)) as inicioA'),

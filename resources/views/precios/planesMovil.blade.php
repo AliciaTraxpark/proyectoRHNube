@@ -1001,6 +1001,64 @@
         </table>
     </div>
 </div>
+<div class="row p-3 rowResponsive">
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*e)</strong>&nbsp;La eliminación de capturas está permitido a través de una
+            transacción auditada en donde se indica el motivo de la eliminación del registro. La eliminación de un
+            registro se sustentado en la protección de los derechos de la intimidad de los empleados, ya que la
+            plataforma pudo haber captado de manera fortuita una actividad de índole personal dentro del horario
+            laboral.
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*v)</strong>&nbsp;Las tomas de video tienen una duración de 1 minuto por
+            cada 10min y el muestreo es aleatorio.
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*L)</strong>&nbsp; Las lectoras bluetooth de códigos de barra, son equipos
+            recomendados para manejar altos volúmenes de personal, el usuario puede comprarlas localmente y anexarlas al
+            celular. RH nube incluye lectoras en los siguientes casos:
+
+        </p>
+        <p style="color:#797a7e;text-align: justify" class="ml-4">
+            <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+            <strong style="color: #000839;">Caso 1:</strong>&nbsp; Suscripción Profresional, incluye 1unidad por una
+            suscripción semestral o anual.
+            Caso 2: Suscripción Enterprise, incluye 3 unidades.
+
+        </p>
+        <p style="color:#797a7e;text-align: justify" class="ml-4">
+            <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+            <strong style="color: #000839;">Caso 2:</strong>&nbsp; Suscripción Enterprise, incluye 3 unidades.
+
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*u)</strong>&nbsp;La facturación de RH nube es reconocida como invoice
+            comercial válido en la declaración de impuestos en Perú.
+            <span style="font-style: oblique">(consultar con su departamento de contabilidad)</span>
+        </p>
+    </div>
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*f)</strong>&nbsp; Facturación local, está disponible a través de un
+            partnert en Perú. Los conceptos que se adicionan son:
+        </p>
+        <p style="color:#797a7e;text-align: justify" class="ml-4">
+            <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+            Gastos administrativos (10%)
+        </p>
+        <p style="color:#797a7e;text-align: justify" class="ml-4">
+            <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
+            I.G.V(18%)
+        </p>
+    </div>
+</div>
 @endsection
 @section('script')
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
