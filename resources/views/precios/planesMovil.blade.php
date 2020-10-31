@@ -1096,7 +1096,6 @@
             <img src="{{asset('landing/images/right-arrow (1).svg')}}" height="15" class="mr-1 ml-2">
             <strong style="color: #000839;">Caso 1:</strong>&nbsp; Suscripción Profresional, incluye 1unidad por una
             suscripción semestral o anual.
-            Caso 2: Suscripción Enterprise, incluye 3 unidades.
 
         </p>
         <p style="color:#797a7e;text-align: justify" class="ml-4">

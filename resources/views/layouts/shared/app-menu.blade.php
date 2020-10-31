@@ -148,6 +148,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         <a href="javascript: void(0);">
             <i data-feather="dollar-sign"></i>
             <span> Suscripciones </span>
+            <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
