@@ -650,8 +650,10 @@ function agregarHorarioSe() {
     var horarioA;
     if ($('#horAdicSwitch').prop('checked')) {
         horarioA = 1;
+        var nHoraAdic=$('#nHorasAdic').val();
     } else {
         horarioA = 0;
+        var nHoraAdic=null;
     }
     var idempleado = $("#idempleado").val();
     var diasEntreFechas = function (desde, hasta) {
@@ -692,7 +694,7 @@ function agregarHorarioSe() {
             fechasArray: fechastart,
             hora: textSelec,
             idhorar: idhorar,
-            idempleado, fueraHora, horarioC, horarioA
+            idempleado, fueraHora, horarioC, horarioA,nHoraAdic
         },
         statusCode: {
             419: function () {
@@ -1190,6 +1192,8 @@ function calendario2() {
             );
             $("#selectHorario").val("Seleccionar horario");
             $('#errorSel_re').hide();
+            $('#nHorasAdic').hide();
+            $('#nHorasAdic_re').hide();
             $("#selectHorario").trigger("change");
             $('#fueraHSwitch_re').prop('checked', true)
             $('#horAdicSwitch_re').prop('checked', false)
@@ -1438,8 +1442,10 @@ function agregarHorarioSe_regis() {
     var horarioA;
     if ($('#horAdicSwitch_re').prop('checked')) {
         horarioA = 1;
+        var nHoraAdic=$('#nHorasAdic_re').val();
     } else {
         horarioA = 0;
+        var nHoraAdic=null;
     }
     var idhorar = $("#selectHorario").val();
     if (idhorar == null) {
@@ -1488,7 +1494,7 @@ function agregarHorarioSe_regis() {
             hora: textSelec,
 
             idhorar: idhorar,
-            idca, fueraHora, horarioC, horarioA
+            idca, fueraHora, horarioC, horarioA,nHoraAdic
         },
         statusCode: {
             419: function () {
@@ -5972,3 +5978,36 @@ $(function () {
     });
 });
 
+/////////////////cambiar sch
+$(function () {
+    $(document).on('change', '#horAdicSwitch', function (event) {
+        if ($('#horAdicSwitch').prop('checked')) {
+            $('#nHorasAdic').show();
+
+            $('#fueraHSwitch').prop('checked', true);
+            $('#fueraHSwitch').prop('disabled', true);
+
+        } else{
+            $('#nHorasAdic').hide();
+            $('#fueraHSwitch').prop('disabled', false);
+        }
+
+    });
+});
+
+/////////////////cambiar sch registrar
+$(function () {
+    $(document).on('change', '#horAdicSwitch_re', function (event) {
+        if ($('#horAdicSwitch_re').prop('checked')) {
+            $('#nHorasAdic_re').show();
+
+            $('#fueraHSwitch_re').prop('checked', true);
+            $('#fueraHSwitch_re').prop('disabled', true);
+
+        } else{
+            $('#nHorasAdic_re').hide();
+            $('#fueraHSwitch_re').prop('disabled', false);
+        }
+
+    });
+});
