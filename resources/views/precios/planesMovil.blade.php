@@ -66,7 +66,8 @@
     }
 
     .tituloPrincipal {
-        background: #111d5e;
+        background: rgb(2, 0, 36);
+        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 100%, rgba(0, 212, 255, 1) 100%);
         color: #ffffff;
         /* border-radius: 5px; */
         width: 1%;
@@ -108,10 +109,12 @@
         .thTitulo {
             padding: 0% !important;
         }
-        .imgU{
+
+        .imgU {
             height: 25px !important;
         }
-        .pImg{
+
+        .pImg {
             margin: 0% !important;
         }
     }
@@ -132,9 +135,10 @@
                             <p class="titulo tituloPyme">PYME</p>
                             <h4>$3</h4>
                             <p class="pImg">
-                                <img src="{{asset('/landing/images/multitud-de-usuarios.svg')}}" height="30" class="imgU">
+                                <img src="{{asset('/landing/images/multitud-de-usuarios.svg')}}" height="30"
+                                    class="imgU">
                             </p>
-                            <span class="textR">Hasta 200 emp.(*c)</span>
+                            <span class="textR">Hasta 200 emp. &nbsp;&nbsp; (*c)</span>
                         </div>
                     </th>
                     <th class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);">
@@ -142,7 +146,8 @@
                             <p class="titulo tituloProfesional">PROFESIONAL</p>
                             <h4>$2.5</h4>
                             <p class="pImg">
-                                <img src="{{asset('/landing/images/multitud-de-usuarios (1).svg')}}" height="30" class="imgU">
+                                <img src="{{asset('/landing/images/multitud-de-usuarios (1).svg')}}" height="30"
+                                    class="imgU">
                             </p>
                             <span class="textR">De 200 a 5000 emp.(*c)</span>
                         </div>
@@ -152,9 +157,10 @@
                             <p class="titulo tituloEnterprise">ENTERPRISE</p>
                             <h4>$2</h4>
                             <p class="pImg">
-                                <img src="{{asset('/landing/images/multitud-de-usuarios (2).svg')}}" height="30" class="imgU">
+                                <img src="{{asset('/landing/images/multitud-de-usuarios (2).svg')}}" height="30"
+                                    class="imgU">
                             </p>
-                            <span class="textR">Desde 5001 emp.(*c)</span>
+                            <span class="textR">Desde 5001 emp. &nbsp; (*c)</span>
                         </div>
                     </th>
                 </tr>
@@ -176,7 +182,8 @@
                     <td class="text-center"><span>$1.50 un pago anual</span></td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Administrador de
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Administrador de
                         personal</th>
                 </tr>
                 <tr>
@@ -185,25 +192,29 @@
                     <td class="text-center"><span>Ilimitado</span></td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="8" class="text-center" style="background:#f5f5f5">Multiempresa</th>
+                    <th scope="rowgroup" colspan="8" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Multiempresa</th>
                 </tr>
                 <tr align="center">
                     <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
                         <span>5$</span>
                     </td>
-                    <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);"><span>Ilimitado</span></td>
-                    <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)"><span>Ilimitado</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);"><span>Ilimitado</span>
+                    </td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)"><span>Ilimitado</span>
+                    </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <th rowspan="23" class="tituloPrincipal thTitulo">
-                        <span class="tituloRotar">Modo: Control Remoto / Home and office
+                        <span class="tituloRotar">
+                            Modo: Control Remoto / Home and office
                         </span>
                     </th>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
                         Captura de actividad diaria
                     </th>
                 </tr>
@@ -225,7 +236,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Control normal</th>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control normal</th>
                 </tr>
                 <tr>
                     <td class="text-center">
@@ -245,7 +257,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Calidad de captura
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Calidad de captura
                     </th>
                 </tr>
                 <tr>
@@ -254,7 +267,8 @@
                     <td class="text-center"><span>Estándar</span></td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Eliminación de
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Eliminación de
                         capturas (*e)</th>
                 </tr>
                 <tr>
@@ -267,7 +281,8 @@
                     <td class="text-center"><span>50$ x empresa</span></td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Permitir actividad
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Permitir actividad
                         fuera de horario</th>
                 </tr>
                 <tr>
@@ -288,7 +303,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Control intensivo
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control intensivo
                         (cada 5min)</th>
                 </tr>
                 <tr>
@@ -301,7 +317,8 @@
                     <td class="text-center"><span>10 emp.</span></td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Control
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control
                         superintensivo (cada1min)</th>
                 </tr>
                 <tr>
@@ -314,7 +331,8 @@
                     <td class="text-center"><span>1 emp.</span></td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Control de tareas
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control de tareas
                         diarias</th>
                 </tr>
                 <tr>
@@ -335,7 +353,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Control de
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control de
                         justificaciones por horas</th>
                 </tr>
                 <tr>
@@ -356,7 +375,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Control de
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control de
                         justificaciones por días</th>
                 </tr>
                 <tr>
@@ -377,17 +397,605 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">Capturas en video
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Capturas en video
                         basic (*v)Aleatorio</th>
                 </tr>
                 <tr>
-                    <td class="text-center">
+                    <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
                         <span>
                             <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
                         </span>
                     </td>
-                    <td class="text-center"><span>2 emp.</span></td>
-                    <td class="text-center"><span>4 emp.</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);"><span>2 emp.</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)"><span>4 emp.</span></td>
+                </tr>
+                <tr>
+                    <th rowspan="17" class="tituloPrincipal thTitulo">
+                        <span class="tituloRotar">
+                            Modo: Asistencia en puerta
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Registro de ingresos y salidas
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Escaneo del DNI o fotocheck
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">
+                        Función manual
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">
+                        Función por cámara
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Función para escaner de barras bluetooth (*L)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                        </span>
+                    </td>
+                    <td class="text-center"><span>Inc. 1 escáner BT (*L)</span></td>
+                    <td class="text-center"><span>Inc. 3 escáner BT (*L)</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Función biométrica (reconocimiento facial)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Ubicación GPS del control
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Fijación de la ubicación de control, con GEOMALLAS tipo radial
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th rowspan="21" class="tituloPrincipal thTitulo">
+                        <span class="tituloRotar">
+                            Modo: Asistencia y actividad en ruta
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Captura de actividad diaria
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control normal (cada 15min)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Captura ubicación GPS
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Permitir actividad fuera de horario
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                        </span>
+                    </td>
+                    <td class="text-center"><span>Inc. 1 escáner BT (*L)</span></td>
+                    <td class="text-center"><span>Inc. 3 escáner BT (*L)</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Comprobación de identidad x DNI x fotocheck
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">
+                        Función manual
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f5f5f5">
+                        Función por cámara
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Ubicación GPS del control
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Fijación de la ubicación de control, con GEOMALLAS tipo radial
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Muestreo biométrico (reconocimiento facial)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                </tr>
+                <tr>
+                    <th class="tituloPrincipal thTitulo">
+                        <span class="tituloRotar">
+                            Modo:Control en ruta
+                        </span>
+                    </th>
+                    <th class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
+                        <div class="divContainer pyme">
+                            <p class="titulo tituloPyme">Proximamente</p>
+                            <p class="pImg">
+                                <img src="{{asset('/landing/images/peru.svg')}}" height="30" class="imgU">
+                            </p>
+                            <h6 class="titulo tituloPyme">Disponible en Android</h6>
+                            <span class="textR">Disponible a partir de diciembre</span>
+                        </div>
+                    </th>
+                    <th class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);">
+                        <div class="divContainer profesional">
+                            <p class="titulo tituloProfesional">Proximamente</p>
+                            <p class="pImg">
+                                <img src="{{asset('/landing/images/peru.svg')}}" height="30" class="imgU">
+                            </p>
+                            <h6 class="titulo tituloPyme">Disponible en Android</h6>
+                            <span class="textR">Disponible a partir de diciembre</span>
+                        </div>
+                    </th>
+                    <th class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)">
+                        <div class="divContainer enterprise">
+                            <p class="titulo tituloEnterprise">Proximamente</p>
+                            <p class="pImg">
+                                <img src="{{asset('/landing/images/peru.svg')}}" height="30" class="imgU">
+                            </p>
+                            <h6 class="titulo tituloPyme">Disponible en Android</h6>
+                            <span class="textR">Disponible a partir de diciembre</span>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th rowspan="11" class="tituloPrincipal thTitulo">
+                        <span class="tituloRotar">
+                            Modo: Asistencia en Puerta
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        En dispositivos Android
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Biométricos ZKTECO
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Biométricos Suprema V1 y V2
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                    <td class="text-center"><span>Próximamente</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center"></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center"></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th rowspan="12" class="tituloPrincipal thTitulo">
+                        <span class="tituloRotar">
+                            Opciones de pago
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background: rgb(63,94,251);
+                    background: radial-gradient(circle, rgba(63,94,251,1) 63%, rgba(254,254,254,1) 100%);
+                        color: #ffffff;">
+                        CUANDO REQUIERE MAYOR AUDITORÍA A UN EMPLEADO ESPECÍFICO (MENSUAL)
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control intensivo
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>$1.50</span></td>
+                    <td class="text-center"><span>$1.50</span></td>
+                    <td class="text-center"><span>$1.50</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Control superintensivo
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>$3.00</span></td>
+                    <td class="text-center"><span>$3.00</span></td>
+                    <td class="text-center"><span>$3.00</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Capturas en video basic (*) Aleatorio
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>$20</span></td>
+                    <td class="text-center"><span>$20</span></td>
+                    <td class="text-center"><span>$20</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Calidad de captura HD
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center"><span>$1.99</span></td>
+                    <td class="text-center"><span>$1.99</span></td>
+                    <td class="text-center"><span>$1.99</span></td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Reconocimiento facial
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);"><span>$3.00</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);"><span>$2.50</span></td>
+                    <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)"><span>$2.00</span></td>
+                </tr>
+                <tr>
+                    <th rowspan="6" class="tituloPrincipal thTitulo">
+                        <span class="tituloRotar">
+                            Facturación
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Factura de origen, USA
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="rowgroup" colspan="3" class="text-center" style="background:#f1f6f9;color:#394867">
+                        Facturación local (*f)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span>
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                        </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
