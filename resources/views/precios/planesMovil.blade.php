@@ -138,7 +138,7 @@
             padding-top: 5% !important;
         }
 
-        img {
+        .imgIc {
             height: 13px !important;
         }
 
@@ -284,17 +284,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                 </tr>
@@ -305,17 +305,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                 </tr>
@@ -337,7 +337,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center"><span>50$ x empresa</span></td>
@@ -351,17 +351,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                 </tr>
@@ -373,7 +373,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center"><span>2 emp.</span></td>
@@ -387,7 +387,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center"><span>1 emp.</span></td>
@@ -401,17 +401,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -423,17 +423,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -445,17 +445,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -467,7 +467,7 @@
                 <tr>
                     <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
                         <span>
-                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1">
+                            <img src="{{asset('landing/images/close (6).svg')}}" height="15" class="mb-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);"><span>2 emp.</span></td>
@@ -488,17 +488,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -510,17 +510,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -532,17 +532,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -554,17 +554,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -576,7 +576,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center"><span>Inc. 1 escáner BT (*L)</span></td>
@@ -600,17 +600,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -622,17 +622,17 @@
                 <tr>
                     <td class="text-center" style="border-bottom: 2px solid rgb(34, 193, 195);">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center" style="border-bottom: 2px solid rgb(43, 89, 187);">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center" style="border-bottom: 2px solid rgb(51, 75, 125)">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -651,17 +651,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -673,17 +673,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -695,17 +695,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -717,7 +717,7 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="imgIc">
                         </span>
                     </td>
                     <td class="text-center"><span>Inc. 1 escáner BT (*L)</span></td>
@@ -731,17 +731,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -753,17 +753,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -775,17 +775,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -797,17 +797,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -819,17 +819,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -895,17 +895,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -1024,17 +1024,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
@@ -1046,17 +1046,17 @@
                 <tr>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                     <td class="text-center">
                         <span>
-                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1">
+                            <img src="{{asset('landing/images/tick (4).svg')}}" height="22" class="mt-1 imgIc">
                         </span>
                     </td>
                 </tr>
