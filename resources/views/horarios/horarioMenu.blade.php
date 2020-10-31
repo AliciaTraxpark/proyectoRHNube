@@ -211,8 +211,8 @@ a:not([href]):not([tabindex]){
                                     <th></th>
                                     <th>Descripcion</th>
                                     <th>Tolerancia</th>
-                                    <th>Hora inicio</th>
-                                    <th>Hora fin</th>
+                                    <th>Hora de inicio</th>
+                                    <th>Hora de fin</th>
                                     <th>En uso</th>
                                     <th></th>
 

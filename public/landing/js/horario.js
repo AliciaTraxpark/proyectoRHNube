@@ -68,8 +68,16 @@ $(document).ready(function () {
 
                 }
             },
-            { data: "horaI" },
-            { data: "horaF" },
+            { data: "horaI",
+            "render": function (data, type, row) {
+                return "&nbsp;&nbsp;&nbsp"+ row.horaI;
+            }
+             },
+            { data: "horaF",
+            "render": function (data, type, row) {
+                return "&nbsp;&nbsp;"+ row.horaF;
+            }
+             },
             {
                 data: "horario_horario_id",
                 "render": function (data, type, row) {

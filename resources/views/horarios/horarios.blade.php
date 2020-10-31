@@ -159,6 +159,7 @@ background-color: #ffffff !important;
 .form-control:disabled{
     background-color: #f1f0f0;
 }
+
 </style>
 <style>
 
@@ -247,8 +248,8 @@ background-color: #ffffff !important;
                                             <th></th>
                                             <th>Descripcion</th>
                                             <th>Tolerancia</th>
-                                            <th>Hora inicio</th>
-                                            <th>Hora fin</th>
+                                            <th>Hora de inicio</th>
+                                            <th>Hora de fin</th>
                                             <th>En uso</th>
                                             <th></th>
 
