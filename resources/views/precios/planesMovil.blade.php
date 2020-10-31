@@ -1001,7 +1001,12 @@
         </table>
     </div>
 </div>
-<div class="row p-3 rowResponsive">
+<div class="row p-2 rowResponsive">
+    <div class="col-md-12 pl-5 pr-5">
+        <p style="color:#797a7e;text-align: justify">
+            <strong style="color: #000839;">(*c)</strong>&nbsp;Cantidad de empleados al mes.
+        </p>
+    </div>
     <div class="col-md-12 pl-5 pr-5">
         <p style="color:#797a7e;text-align: justify">
             <strong style="color: #000839;">(*e)</strong>&nbsp;La eliminación de capturas está permitido a través de una
