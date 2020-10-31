@@ -575,10 +575,13 @@ a:not([href]):not([tabindex]){
                             <input type="checkbox" class="custom-control-input" id="horCompSwitch">
                             <label class="custom-control-label" for="horCompSwitch">Horario compensable.</label>
                         </div> --}}
-                        <div class="custom-control custom-switch mb-2">
-                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
-                            <select id="nHorasAdic" style="display: none"  class="form-control form-control-sm col-md-5">
+                        <div class="row">
+                            <div class="custom-control custom-switch mb-2" style="left: 12px;">
+                                <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
+                                <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+
+                            </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <select id="nHorasAdic" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
                                 <option value="0.5">0.5 hora </option>
                                 <option value="1">1 hora </option>
                                 <option value="2">2 horas </option>
@@ -594,6 +597,7 @@ a:not([href]):not([tabindex]){
                                 <option value="12">12 horas </option>
                             </select>
                         </div>
+
                      </div>
                     </div>
 
