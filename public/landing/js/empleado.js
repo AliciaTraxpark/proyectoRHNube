@@ -650,8 +650,10 @@ function agregarHorarioSe() {
     var horarioA;
     if ($('#horAdicSwitch').prop('checked')) {
         horarioA = 1;
+        var nHoraAdic=$('#nHorasAdic').val();
     } else {
         horarioA = 0;
+        var nHoraAdic=null;
     }
     var idempleado = $("#idempleado").val();
     var diasEntreFechas = function (desde, hasta) {
@@ -692,7 +694,7 @@ function agregarHorarioSe() {
             fechasArray: fechastart,
             hora: textSelec,
             idhorar: idhorar,
-            idempleado, fueraHora, horarioC, horarioA
+            idempleado, fueraHora, horarioC, horarioA,nHoraAdic
         },
         statusCode: {
             419: function () {
@@ -716,9 +718,11 @@ function agregarHorarioSe() {
 
 ////////////////////////////
 function abrirHorario_ed() {
+    $('#errorenPausas_ed').hide();
     $('#divOtrodia_ed').hide();
     $('#divPausa_ed').hide();
     $('#inputPausa_ed').empty();
+    $('#horaOblig_ed').prop("disabled","disabled");
     $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
@@ -737,14 +741,10 @@ function abrirHorario_ed() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
-        time_24hr: true
+        time_24hr: true,
+        defaultHour:null
     });
-    $('#FinPausa_ed').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
-    });
+
     $('input[name="descPausa_ed[]"]').prop('required', false);
     $('input[name="InicioPausa_ed[]"]').prop('required', false);
     $('input[name="FinPausa_ed[]"]').prop('required', false);
@@ -1192,6 +1192,8 @@ function calendario2() {
             );
             $("#selectHorario").val("Seleccionar horario");
             $('#errorSel_re').hide();
+            $('#nHorasAdic').hide();
+            $('#nHorasAdic_re').hide();
             $("#selectHorario").trigger("change");
             $('#fueraHSwitch_re').prop('checked', true)
             $('#horAdicSwitch_re').prop('checked', false)
@@ -1440,8 +1442,10 @@ function agregarHorarioSe_regis() {
     var horarioA;
     if ($('#horAdicSwitch_re').prop('checked')) {
         horarioA = 1;
+        var nHoraAdic=$('#nHorasAdic_re').val();
     } else {
         horarioA = 0;
+        var nHoraAdic=null;
     }
     var idhorar = $("#selectHorario").val();
     if (idhorar == null) {
@@ -1490,7 +1494,7 @@ function agregarHorarioSe_regis() {
             hora: textSelec,
 
             idhorar: idhorar,
-            idca, fueraHora, horarioC, horarioA
+            idca, fueraHora, horarioC, horarioA,nHoraAdic
         },
         statusCode: {
             419: function () {
@@ -5233,8 +5237,37 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia_ed').show();
+            $('#horaOblig_ed').prop("disabled",false);
+            $('#horaOblig_ed').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            $('#horaOblig_ed').val('');
             event.stopPropagation();
         } else {
+            var dateDesde = newDate(horaI.split(":"));
+            var dateHasta = newDate(horaF.split(":"));
+
+            var minutos = (dateHasta - dateDesde)/1000/60;
+            var horas = Math.floor(minutos/60);
+            minutos = minutos % 60;
+           /*  console.log(prefijo(horas) + ':' + prefijo(minutos)); */
+            $('#horaOblig_ed').prop("disabled",false);
+
+            if($('#horaOblig_ed').val()==null || $('#horaOblig_ed').val()==''){
+                $('#horaOblig_ed').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour:"8"
+                });
+                $('#horaOblig_ed').val("08:00");
+
+            }
+
             $('#divOtrodia_ed').hide();
         }
 
@@ -5247,8 +5280,36 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia_ed').show();
+            $('#horaOblig_ed').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            $('#horaOblig_ed').prop("disabled",false);
+            $('#horaOblig_ed').val('');
             event.stopPropagation();
         } else {
+            var dateDesde = newDate(horaI.split(":"));
+            var dateHasta = newDate(horaF.split(":"));
+
+            var minutos = (dateHasta - dateDesde)/1000/60;
+            var horas = Math.floor(minutos/60);
+            minutos = minutos % 60;
+
+            $('#horaOblig_ed').prop("disabled",false);
+            /* $('#horaOblig').val(prefijo(horas)); */
+            if($('#horaOblig_ed').val()==null || $('#horaOblig_ed').val()==''){
+                $('#horaOblig_ed').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour:"8"
+                });
+                $('#horaOblig_ed').val("08:00");
+
+            }
             $('#divOtrodia_ed').hide();
         }
 
@@ -5851,3 +5912,102 @@ $(function () {
     });
 });
 
+//VALIDACIONES PAUSAS EN EDITAR EMPLEADO
+$(function () {
+    $(document).on('change', '#FinPausa_ed', function (event) {
+        let horaF = $('#FinPausa_ed').val();
+        let horaI = $('#InicioPausa_ed').val();
+        if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+            $('#FinPausa_ed').val('');
+            $('#fueraRango_ed').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango_ed').hide();
+         }
+        if (horaF < horaI) {
+            $('#FinPausa_ed').val('');
+            $('#errorenPausas_ed').show();
+            event.stopPropagation();
+        } else {
+            $('#errorenPausas_ed').hide();
+        }
+
+
+    });
+});
+$(function () {
+    $(document).on('change', '#InicioPausa_ed', function (event) {
+        let horaF = $('#FinPausa_ed').val();
+        let horaI = $('#InicioPausa_ed').val();
+        $('#FinPausa_ed').prop( "disabled",false);
+         if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+            $('#InicioPausa_ed').val('');
+            $('#fueraRango_ed').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango_ed').hide();
+         }
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+            var horafinal1=$('#horaF_ed').val();
+            splih1=horafinal1.split(":");
+            console.log(splih1[0]);
+            console.log('nada me da');
+            $('#FinPausa_ed').val('').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour:splih1[0]
+            });
+
+         }
+         else{
+            console.log('secumple');
+            if (horaF < horaI) {
+                $('#InicioPausa_ed').val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
+         }
+
+
+    });
+});
+
+/////////////////cambiar sch
+$(function () {
+    $(document).on('change', '#horAdicSwitch', function (event) {
+        if ($('#horAdicSwitch').prop('checked')) {
+            $('#nHorasAdic').show();
+
+            $('#fueraHSwitch').prop('checked', true);
+            $('#fueraHSwitch').prop('disabled', true);
+
+        } else{
+            $('#nHorasAdic').hide();
+            $('#fueraHSwitch').prop('disabled', false);
+        }
+
+    });
+});
+
+/////////////////cambiar sch registrar
+$(function () {
+    $(document).on('change', '#horAdicSwitch_re', function (event) {
+        if ($('#horAdicSwitch_re').prop('checked')) {
+            $('#nHorasAdic_re').show();
+
+            $('#fueraHSwitch_re').prop('checked', true);
+            $('#fueraHSwitch_re').prop('disabled', true);
+
+        } else{
+            $('#nHorasAdic_re').hide();
+            $('#fueraHSwitch_re').prop('disabled', false);
+        }
+
+    });
+});

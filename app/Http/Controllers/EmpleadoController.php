@@ -86,7 +86,7 @@ class EmpleadoController extends Controller
             $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
             $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
             $local = local::where('organi_id', '=', session('sesionidorg'))->get();
-            $empleado = empleado::where('emple_estado', '=', 1)->get();
+            $empleado = empleado::where('emple_estado', '=', 1)->where('organi_id', '=', session('sesionidorg'))->get();
             $dispositivo = tipo_dispositivo::all();
             $tabla_empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -684,7 +684,7 @@ class EmpleadoController extends Controller
             $horario_empleados->fuera_horario =  $eventos_empleado_tempHors->fuera_horario;
             $horario_empleados->horarioComp =  $eventos_empleado_tempHors->horarioComp;
             $horario_empleados->horaAdic =  $eventos_empleado_tempHors->horaAdic;
-
+            $horario_empleados->nHoraAdic =  $eventos_empleado_tempHors->nHoraAdic;
             if ($eventos_empleado_tempHors->fuera_horario == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }
@@ -1312,7 +1312,7 @@ class EmpleadoController extends Controller
         $horaA = $request->horarioA;
         $arrayeve = collect();
         $arrayrep = collect();
-
+        $nHoraAdic = $request->nHoraAdic;
         foreach ($datafecha as $datafechas) {
             $tempre = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
                 ->where('organi_id', '=', session('sesionidorg'))
@@ -1345,6 +1345,7 @@ class EmpleadoController extends Controller
             $eventos_empleado_tempSave->fuera_horario = $fueraHora;
             $eventos_empleado_tempSave->horarioComp = $horaC;
             $eventos_empleado_tempSave->horaAdic = $horaA;
+            $eventos_empleado_tempSave->nHoraAdic =  $nHoraAdic;
             $eventos_empleado_tempSave->organi_id = session('sesionidorg');
             if ($fueraHora == 1) {
                 $eventos_empleado_tempSave->borderColor = '#5369f8';
@@ -1527,7 +1528,7 @@ class EmpleadoController extends Controller
         $fueraHora = $request->fueraHora;
         $horaC = $request->horarioC;
         $horaA = $request->horarioA;
-
+        $nHoraAdic = $request->nHoraAdic;
         $arrayeve = collect();
         $arrayrep = collect();
 
@@ -1568,6 +1569,7 @@ class EmpleadoController extends Controller
             $horario_empleados->fuera_horario = $fueraHora;
             $horario_empleados->horarioComp = $horaC;
             $horario_empleados->horaAdic = $horaA;
+            $horario_empleados->nHoraAdic = $nHoraAdic;
 
             if ($fueraHora == 1) {
                 $horario_empleados->borderColor = '#5369f8';

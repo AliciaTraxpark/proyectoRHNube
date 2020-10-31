@@ -68,8 +68,16 @@ $(document).ready(function () {
 
                 }
             },
-            { data: "horaI" },
-            { data: "horaF" },
+            { data: "horaI",
+            "render": function (data, type, row) {
+                return "&nbsp;&nbsp;&nbsp"+ row.horaI;
+            }
+             },
+            { data: "horaF",
+            "render": function (data, type, row) {
+                return "&nbsp;&nbsp;"+ row.horaF;
+            }
+             },
             {
                 data: "horario_horario_id",
                 "render": function (data, type, row) {
@@ -3130,14 +3138,14 @@ $(function () {
     $(document).on('change', '#horAdicSwitch', function (event) {
         if ($('#horAdicSwitch').prop('checked')) {
             $('#nHorasAdic').show();
-            $('#nHorasAdic').flatpickr({
+           /*  $('#nHorasAdic').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
                 defaultDate:"02:00"
             });
-            $('#nHorasAdic').val( "02:00");
+            $('#nHorasAdic').val( "02:00"); */
             $('#fueraHSwitch').prop('checked', true);
             $('#fueraHSwitch').prop('disabled', true);
 

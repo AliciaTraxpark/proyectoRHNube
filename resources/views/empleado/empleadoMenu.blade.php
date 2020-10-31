@@ -2816,12 +2816,27 @@ use App\proyecto_empleado;
                                                         <label class="custom-control-label"
                                                             for="horCompSwitch_re">Horario compensable.</label>
                                                     </div> --}}
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="horAdicSwitch_re">
-                                                        <label class="custom-control-label"
-                                                            for="horAdicSwitch_re">Permite marcar horas
-                                                            adicionales.</label>
+                                                    <div class="row">
+                                                        <div class="custom-control custom-switch mb-2" style="left: 12px;">
+                                                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch_re">
+                                                            <label class="custom-control-label" for="horAdicSwitch_re">Permite marcar horas adicionales.</label>
+
+                                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <select id="nHorasAdic_re" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
+                                                            <option value="0.5">0.5 hora </option>
+                                                            <option value="1">1 hora </option>
+                                                            <option value="2">2 horas </option>
+                                                            <option value="3">3 horas </option>
+                                                            <option value="4">4 horas </option>
+                                                            <option value="5">5 horas </option>
+                                                            <option value="6">6 horas </option>
+                                                            <option value="7">7 horas </option>
+                                                            <option value="8">8 horas </option>
+                                                            <option value="9">9 horas </option>
+                                                            <option value="10">10 horas </option>
+                                                            <option value="11">11 horas </option>
+                                                            <option value="12">12 horas </option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3832,12 +3847,27 @@ use App\proyecto_empleado;
                                                         <label class="custom-control-label" for="horCompSwitch">Horario
                                                             compensable.</label>
                                                     </div> --}}
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="horAdicSwitch">
-                                                        <label class="custom-control-label" for="horAdicSwitch">Permite
-                                                            marcar horas
-                                                            adicionales.</label><input id="nHorasAdic" style="display: none" type="text" class="form-control form-control-sm col-md-5">
+                                                    <div class="row">
+                                                        <div class="custom-control custom-switch mb-2" style="left: 12px;">
+                                                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
+                                                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+
+                                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <select id="nHorasAdic" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
+                                                            <option value="0.5">0.5 hora </option>
+                                                            <option value="1">1 hora </option>
+                                                            <option value="2">2 horas </option>
+                                                            <option value="3">3 horas </option>
+                                                            <option value="4">4 horas </option>
+                                                            <option value="5">5 horas </option>
+                                                            <option value="6">6 horas </option>
+                                                            <option value="7">7 horas </option>
+                                                            <option value="8">8 horas </option>
+                                                            <option value="9">9 horas </option>
+                                                            <option value="10">10 horas </option>
+                                                            <option value="11">11 horas </option>
+                                                            <option value="12">12 horas </option>
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -3984,7 +4014,7 @@ use App\proyecto_empleado;
                                                                     id="SwitchPausa_ed">
                                                                 <label class="custom-control-label" for="SwitchPausa_ed"
                                                                     style="font-weight: bold;padding-top: 1px">Pausas
-                                                                    en el horario</label> &nbsp;
+                                                                    en el horario</label> &nbsp; <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
 
                                                             </div>
                                                         </div>
