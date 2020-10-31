@@ -802,7 +802,7 @@
                             <p class="pImg">
                                 <img src="{{asset('/landing/images/peru.svg')}}" height="30" class="imgU">
                             </p>
-                            <h6 class="titulo tituloPyme">Disponible en Android</h6>
+                            <h6 class="titulo tituloProfesional">Disponible en Android</h6>
                             <span class="textR">Disponible a partir de diciembre</span>
                         </div>
                     </th>
@@ -812,7 +812,7 @@
                             <p class="pImg">
                                 <img src="{{asset('/landing/images/peru.svg')}}" height="30" class="imgU">
                             </p>
-                            <h6 class="titulo tituloPyme">Disponible en Android</h6>
+                            <h6 class="titulo tituloEnterprise">Disponible en Android</h6>
                             <span class="textR">Disponible a partir de diciembre</span>
                         </div>
                     </th>
