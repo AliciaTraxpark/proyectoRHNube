@@ -86,7 +86,7 @@ class EmpleadoController extends Controller
             $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
             $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
             $local = local::where('organi_id', '=', session('sesionidorg'))->get();
-            $empleado = empleado::where('emple_estado', '=', 1)->get();
+            $empleado = empleado::where('emple_estado', '=', 1)->where('organi_id', '=', session('sesionidorg'))->get();
             $dispositivo = tipo_dispositivo::all();
             $tabla_empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')

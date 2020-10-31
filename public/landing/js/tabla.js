@@ -396,6 +396,15 @@ function RefreshTablaEmpleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            if(data.length>0){
+                $('#btnContinuar').prop("disabled",false);
+                $('#btnContinuar').attr('title', 'Continuar');
+            }
+            else{
+                $('#btnContinuar').prop("disabled",true);
+                $('#btnContinuar').attr('title', 'Registre al menos un empleado para poder continuar');
+
+            }
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=

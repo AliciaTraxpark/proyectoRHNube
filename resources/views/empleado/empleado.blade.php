@@ -908,8 +908,16 @@ use Carbon\Carbon;
                             <div id="tabladiv">
                             </div>
                             <div class="text-right"><br><br>
-                                <a href="{{('/horario')}}"><button
-                                        class="boton btn btn-default mr-1">CONTINUAR</button></a>
+                                <a href="{{('/horario')}}">
+                                    @if (count($empleado) > 0)
+                                    <button id="btnContinuar"
+                                    class="boton btn btn-default mr-1">CONTINUAR</button>
+                                    @else
+                                    <button id="btnContinuar" disabled title="Registre al menos un empleado para poder continuar"
+                                class="boton btn btn-default mr-1">CONTINUAR</button>
+
+                                    @endif
+                                    </a>
                             </div>
 
                         </div> <!-- end card body-->
