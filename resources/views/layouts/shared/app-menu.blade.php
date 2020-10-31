@@ -144,17 +144,22 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
-    <li class="liNone">
-        <a href="/planes">
+    <li>
+        <a href="javascript: void(0);">
             <i data-feather="dollar-sign"></i>
-            <span> Planes y Precios </span>
+            <span> Suscripciones </span>
         </a>
-    </li>
-    <li class="li-plan" style="display: none">
-        <a href="/plan">
-            <i data-feather="dollar-sign"></i>
-            <span> Planes y Precios </span>
-        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li class="liNone">
+                <a href="/planes">Planes y precios</a>
+
+            </li>
+            <li class="li-plan" style="display: none">
+                <a href="/plan">Planes y precios</a>
+
+            </li>
+        </ul>
     </li>
     <li>
         <a href="/biblioteca">
