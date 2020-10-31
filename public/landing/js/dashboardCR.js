@@ -49,6 +49,14 @@ function resultadoCR() {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
+    statusCode: {
+      401: function () {
+        location.reload();
+      },
+      // 419: function () {
+      //   location.reload();
+      // }
+    },
     success: function (data) {
       var promedio = data.actvidadCR.resultado.toFixed(2);
       resultado = promedio;
@@ -136,6 +144,14 @@ function dataFechas() {
     method: "GET",
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+      401: function () {
+        location.reload();
+      },
+      // 419: function () {
+      //   location.reload();
+      // }
     },
     success: function (data) {
       if (data.length == 0) {
@@ -322,6 +338,14 @@ function empleadosControlRemoto() {
     },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    statusCode: {
+      401: function () {
+        location.reload();
+      },
+      // 419: function () {
+      //   location.reload();
+      // }
     },
     success: function (data) {
       datos = data;
