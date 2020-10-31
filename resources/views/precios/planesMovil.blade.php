@@ -84,6 +84,50 @@
         padding-top: 0.2rem;
     }
 
+    .btn-custom {
+        background: rgb(34, 193, 195);
+        background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(68, 177, 204, 1) 100%);
+        color: #fff;
+        border-radius: 20px
+    }
+
+    .btn-custom:hover {
+        background: #fff;
+        color: #44b1cc;
+        border-color: #44b1cc;
+        border-radius: 20px;
+        -webkit-transition: color 0.5s ease-in-out;
+        transition: color 0.5s ease-in-out;
+    }
+
+    .btn-customD {
+        background: rgb(43, 89, 187);
+        background: linear-gradient(0deg, rgba(43, 89, 187, 1) 0%, rgba(60, 111, 156, 1) 100%);
+        color: #fff;
+        border-radius: 20px
+    }
+
+    .btn-customD:hover {
+        color: #3c6f9c;
+        background: #fff;
+        border-radius: 20px;
+        border-color: #3c6f9c;
+    }
+
+    .btn-customT {
+        background: rgb(51, 75, 125);
+        background: linear-gradient(0deg, rgba(51, 75, 125, 1) 0%, rgba(64, 112, 136, 1) 100%);
+        color: #fff;
+        border-radius: 20px
+    }
+
+    .btn-customT:hover {
+        color: #407088;
+        background: #fff;
+        border-radius: 20px;
+        border-color: #407088;
+    }
+
     @media (max-width: 767.98px) {
         table {
             font-size: 0.8rem !important;
@@ -117,6 +161,13 @@
         .pImg {
             margin: 0% !important;
         }
+        .btn-sm{
+            font-size: 9px !important;
+        }
+
+        .p-btn{
+            margin-top: 0.2rem !important;
+        }
     }
 </style>
 <div class="row p-5 rowResponsive">
@@ -138,6 +189,10 @@
                                 <img src="{{asset('/landing/images/multitud-de-usuarios.svg')}}" height="30"
                                     class="imgU">
                             </p>
+                            <p class="p-btn">
+                                <button type="button" class="btn btn-sm btn-custom"
+                                    style="font-size: 11px;font-weight: bold">SUSCRIBIRSE</button>
+                            </p>
                             <span class="textR">Hasta 200 emp. &nbsp;&nbsp; (*c)</span>
                         </div>
                     </th>
@@ -149,6 +204,10 @@
                                 <img src="{{asset('/landing/images/multitud-de-usuarios (1).svg')}}" height="30"
                                     class="imgU">
                             </p>
+                            <p class="p-btn">
+                                <button type="button" class="btn btn-sm btn-customD"
+                                    style="font-size: 11px;font-weight: bold">SUSCRIBIRSE</button>
+                            </p>
                             <span class="textR">De 200 a 5000 emp.(*c)</span>
                         </div>
                     </th>
@@ -159,6 +218,10 @@
                             <p class="pImg">
                                 <img src="{{asset('/landing/images/multitud-de-usuarios (2).svg')}}" height="30"
                                     class="imgU">
+                            </p>
+                            <p class="p-btn">
+                                <button type="button" class="btn btn-sm btn-customT"
+                                    style="font-size: 11px;font-weight: bold">SUSCRIBIRSE</button>
                             </p>
                             <span class="textR">Desde 5001 emp. &nbsp; (*c)</span>
                         </div>
