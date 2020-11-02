@@ -100,6 +100,43 @@ use App\invitado;
                 <div class="col-md-6 text-left textResp">
                     <h5 style="color: #ffffff">Elige una de tus organizaciones para gestionar.</h5>
                 </div>
+                <div class="col-md-4 text-right" style="padding-right: 0px;
+
+                left: 60px;">
+                    <div class="btn-group mt-2 mr-1">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" style="    background-color: #163552;">
+                            <i class="icon"><span data-feather="chevron-down"></span></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="{{ route('logout') }}" class="dropdown-item
+                            notify-item">
+                            <i data-feather="log-out" class="icon-dual icon-xs
+                                mr-2" style="color: #163552"></i>
+                            <span>Cerrar sesión</span>
+                        </a>
+
+                        </div>
+                    </div>
+
+           {{--  <li class="dropdown d-lg-block" data-toggle="tooltip" data-placement="left" title="">
+
+                <div class="dropdown-menu dropdown-menu-right" style="font-size:
+                    12.2px!important">
+
+
+
+                    <!-- item-->
+                    <a href="{{ route('logout') }}" class="dropdown-item
+                        notify-item">
+                        <i data-feather="log-out" class="icon-dual icon-xs
+                            mr-2" style="color: #163552"></i>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
+            </li> --}}
+
+                </div>
         </nav>
     </header>
 
