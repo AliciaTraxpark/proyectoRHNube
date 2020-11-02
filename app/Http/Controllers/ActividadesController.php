@@ -385,4 +385,16 @@ class ActividadesController extends Controller
 
         return response()->json($empleados, 200);
     }
+
+    // ? SELECT DE ÁREAS EN MODAL EDITAR
+    function listaAreasEdit()
+    {
+        $areas = DB::table('empleado as e')
+            ->join('area as a', 'a.area_id', '=', 'e.emple_area')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+        return response()->json($areas, 200);
+    }
 }

@@ -9,6 +9,7 @@ use App\organizacion;
 use App\persona;
 use App\tipo_dispositivo;
 use App\vinculacion;
+use App\vinculacion_ruta;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -22,50 +23,52 @@ class vinculacionDispositivoController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-    
+
     public function vinculacionAndroid(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
-        $contar = DB::table('vinculacion as v')
-            ->join('modo as m', 'm.id', '=', 'v.idModo')
+        $contar = DB::table('vinculacion_ruta as vr')
+            ->join('modo as m', 'm.id', '=', 'vr.idModo')
             ->select(DB::raw('COUNT(m.idTipoDispositivo) as total'))
-            ->where('v.idEmpleado', '=', $idEmpleado)
+            ->where('vr.idEmpleado', '=', $idEmpleado)
             ->where('m.idTipoDispositivo', '=', 2)
             ->get();
-        if ($contar[0]->total == 1) {
+        if ($contar[0]->total == 2) {
             return 1;
         } else {
+            $celular = DB::table('empleado as e')
+                ->select('e.emple_celular as numero')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()
+                ->first();
             $modo = new modo();
-            $modo->idTipoModo = 1;
+            $modo->idTipoModo = 2;
             $modo->idTipoDispositivo = 2;
             $modo->idEmpleado = $idEmpleado;
             $modo->save();
             $idModo = $modo->id;
-            $licencia = new licencia_empleado();
-            $licencia->idEmpleado = $idEmpleado;
-            $encodeLicencia = STR::random(20);
-            $licencia->licencia = $encodeLicencia;
-            $licencia->disponible = 'c';
-            $licencia->save();
-            $idLicencia = $licencia->id;
-            $vinculacion = new vinculacion();
-            $codigo = intval($encodeLicencia, 36);
-            $vinculacion->hash = $codigo;
+            $codigoEmpresa = session('sesionidorg');
+            $vinculacion = new vinculacion_ruta();
             $vinculacion->idEmpleado = $idEmpleado;
             $vinculacion->envio = 0;
             $vinculacion->idModo = $idModo;
-            $vinculacion->idLicencia = $idLicencia;
+            $vinculacion->celular = $celular->numero;
             $vinculacion->save();
 
             $idVinculacion = $vinculacion->id;
-
+            $codigo =  $idVinculacion . "d" . $codigoEmpresa . "d";
+            $vinc = vinculacion_ruta::where('id', '=', $idVinculacion)->get()->first();
+            $encode = intval($codigo, 36);
+            $vinc->hash = $encode;
+            $vinc->save();
             $tipo_modo = tipo_dispositivo::where('id', '=', 2)->get()->first();
             $respuesta = [];
             $respuesta['dispositivo_descripcion'] = $tipo_modo->dispositivo_descripcion;
-            $respuesta['licencia'] = $encodeLicencia;
             $respuesta['codigo'] = $codigo;
             $respuesta['envio'] = 0;
             $respuesta['idVinculacion'] = $idVinculacion;
+            $respuesta['contar'] = $contar[0]->total;
+            $respuesta['numero'] = $celular->numero;
             return response()->json($respuesta, 200);
         }
     }
@@ -203,5 +206,18 @@ class vinculacionDispositivoController extends Controller
         } else {
             return 1;
         }
+    }
+
+    public function editarNumeroV(Request $request)
+    {
+        $idV = $request->get('id');
+        $numero = $request->get('numero');
+
+        $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
+        if ($vinculacion_ruta) {
+            $vinculacion_ruta->celular = "+51" . $numero;
+            $vinculacion_ruta->save();
+        }
+        return response()->json($vinculacion_ruta, 200);
     }
 }

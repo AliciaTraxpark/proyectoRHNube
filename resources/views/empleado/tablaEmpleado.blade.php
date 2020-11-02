@@ -360,7 +360,7 @@
                 }
             },
             success: function (data) {
-
+                console.log(data);
                 $('#v_tipoDoc').val(data[0].tipoDoc_descripcion);
                 $('#v_apPaterno').val(data[0].perso_apPaterno);
                 $('#v_departamento').val(data[0].iddepaN);
@@ -526,25 +526,22 @@
                             <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                             </tr>`;
                     }else{
-                            var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
+                            var trA = `<tr id="trA${data[0].vinculacion[i].idVinculacion}">
                                 <td>${data[0].vinculacion[i].dispositivoD}</td>
-                                <td>${data[0].vinculacion[i].licencia}</td>
+                                <td>Android</td>
                                 <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                                <td id="enviado${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                                <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
-                                <td id="correo${data[0].vinculacion[i].idVinculacion}">
+                                <td id="enviadoA${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
+                                <td id="sms${data[0].vinculacion[i].idVinculacion}">
                                     <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
                                     <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
                                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                                         src="landing/images/note.svg" height="20">
                                     </a>
                                 </td>
-                                <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                                 </tr>`;
 
                     }
                     container.append(tr);
-
                     // ESTADO DE LICENCIAS
 
                     if(data[0].vinculacion[i].disponible == 'c'){
@@ -582,6 +579,27 @@
                         $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("PC " + i);
                     }
                 }
+                 //VINCULACION MODO RUTA
+                 var containerA = $('#v_tbodyDispositivoA');
+                    for (let index = 0; index < data[0].vinculacionR.length; index++) {
+                        if(data[0].vinculacionR[index].dispositivoD == 'ANDROID'){
+                            var trA = `<tr id="trA${data[0].vinculacionR[index].idVinculacion}" onclick="javascript:modoAndroid(${data[0].vinculacionR[index].idVinculacion})">
+                                <td>${data[0].vinculacionR[index].dispositivoD}</td>
+                                <td>Android</td>
+                                <td id="tdNumero${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].numero}</td>
+                                <td class="hidetext">${data[0].vinculacionR[index].codigo}</td>
+                                <td id="enviadoA${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].envio}</td>
+                                <td id="sms${data[0].vinculacionR[index].idVinculacion}">
+                                    <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacionR[index].idVinculacion}">
+                                    <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                        src="landing/images/note.svg" height="20">
+                                    </a>
+                                </td>
+                                </tr>`;
+                        }
+                    }
+                    containerA .append(trA);
             },
             error: function () {}
         });

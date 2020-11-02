@@ -11,9 +11,9 @@ $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
 });
 $('#customSwitchC2').on('change.bootstrapSwitch', function (event) {
     if (event.target.checked == true) {
-        $('#bodyModoControlA').show();
+        $('#bodyModoControlRuta').show();
     } else {
-        $('#bodyModoControlA').hide();
+        $('#bodyModoControlRuta').hide();
     }
 });
 // EN REGISTRAR
@@ -292,7 +292,7 @@ function vinculacionWindows() {
                 container.append(tr);
             }
         },
-        error: function () {}
+        error: function () { }
     });
 }
 $('#agregarWindows').on("click", vinculacionWindows);
@@ -344,7 +344,7 @@ function enviarCorreoWindows() {
                 spacing: 35
             });
         },
-        error: function () {}
+        error: function () { }
     });
 }
 $('#enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindows);
@@ -407,7 +407,7 @@ function vinculacionWindowsEditar() {
                 container.append(tr);
             }
         },
-        error: function () {}
+        error: function () { }
     });
 }
 $('#v_agregarWindows').on("click", vinculacionWindowsEditar);
@@ -458,19 +458,20 @@ function enviarCorreoWindowsEditar() {
                 spacing: 35
             });
         },
-        error: function () {}
+        error: function () { }
     });
 }
 $('#v_enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindowsEditar);
-function controlPuerta(idPuerta){
+function controlPuerta(idPuerta) {
     var estadoP;
-    if( $('#customSwitchCP'+idPuerta).is(':checked')) {
-        estadoP=1;
+    if ($('#customSwitchCP' + idPuerta).is(':checked')) {
+        estadoP = 1;
 
         $.ajax({
             type: "post",
             url: "/empleado/asisPuerta",
-            data: { idPuerta,
+            data: {
+                idPuerta,
                 estadoP
             },
             statusCode: {
@@ -482,20 +483,21 @@ function controlPuerta(idPuerta){
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (data) {
-                $('#customSwitchCP'+idPuerta).prop('checked',true);
+                $('#customSwitchCP' + idPuerta).prop('checked', true);
             },
             error: function (data) {
                 alert("Ocurrio un error");
             },
         });
     }
-    else{
-        estadoP=0;
+    else {
+        estadoP = 0;
 
         $.ajax({
             type: "post",
             url: "/empleado/asisPuerta",
-            data: { idPuerta,
+            data: {
+                idPuerta,
                 estadoP
             },
             statusCode: {
@@ -507,7 +509,7 @@ function controlPuerta(idPuerta){
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (data) {
-                $('#customSwitchCP'+idPuerta).prop('checked',false);
+                $('#customSwitchCP' + idPuerta).prop('checked', false);
             },
             error: function (data) {
                 alert("Ocurrio un error");
@@ -515,4 +517,131 @@ function controlPuerta(idPuerta){
         });
 
     }
+}
+// ? VINCULACION DE MODO EN RUTA
+function vinculacionAndroidEditar() {
+    var idEmpleado = $('#v_id').val();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "vinculacionAndroid",
+        data: {
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                $.notifyClose();
+                $.notify({
+                    message: "\nLlego al limite de dispositivos Android",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-ver'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                var container = $('#v_tbodyDispositivoA');
+                var tr = `<tr onclick="javascript:modoAndroid(${data.idVinculacion})">
+                <td>${data.dispositivo_descripcion}</td>
+                <td> CEL ${data.contar}</td>
+                <td id="tdNumero"${data.idVinculacion}>${data.numero}</td>
+                <td class="hidetext">${data.codigo}</td>
+                <td id="enviadoA${data.idVinculacion}">${data.envio}</td>
+                <td id="sms${data.idVinculacion}">
+                    <a  onclick="javascript:modalWindowsEditar(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                        src="landing/images/note.svg" height="20">
+                </a>
+                </td>
+                </tr>`;
+                container.append(tr);
+                $('#customSwitchC2').prop('checked', true);
+                $('#bodyModoControlRuta').show();
+            }
+        },
+        error: function () { }
+    });
+}
+$('#v_agregarAndroid').on("click", vinculacionAndroidEditar);
+// ? funcion para editar número
+function editarNumero(id, numero) {
+    $.ajax({
+        async: false,
+        type: "post",
+        url: "/celularVinculacion",
+        data: {
+            id: id,
+            numero: numero
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) { },
+        error: function () { }
+    });
+}
+// ? abrir input para editar número
+function modoAndroid(id) {
+    console.log(id);
+    $("#tdNumero" + id).on("click", function () {
+        $(this).addClass("editable");
+        $(this).html(
+            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
+        );
+        $(this).children().first().focus();
+        $(this)
+            .children()
+            .first()
+            .keypress(function (e) {
+                if (e.which == 13) {
+                    var newContent = $(this).val();
+                    $(this).parent().text(newContent);
+                    $(this).parent().removeClass("editable");
+                    alertify
+                        .confirm(
+                            "¿Desea modificar nombre de la actividad?",
+                            function (e) {
+                                if (e) {
+                                    editarNumero(id, newContent);
+                                }
+                            }
+                        )
+                        .setting({
+                            title: "Modificar Actividad",
+                            labels: {
+                                ok: "Aceptar",
+                                cancel: "Cancelar",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {
+                                // actividad_empleado();
+                            },
+                        });
+                }
+            });
+
+        $(this)
+            .children()
+            .first()
+            .blur(function () {
+                // actividad_empleado();
+            });
+    });
 }

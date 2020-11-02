@@ -216,6 +216,7 @@ Route::get('/registrarEditar', 'ActividadesController@editarCambios');
 Route::get('/recuperarA', 'ActividadesController@recuperarActividad');
 Route::get('/empleadoActiv', 'ActividadesController@empleadoSelect');
 Route::get('/empleadoActivReg', 'ActividadesController@listaEmpleadoReg');
+Route::get('/listaAreasE', 'ActividadesController@listaAreasEdit');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 
@@ -281,6 +282,7 @@ Route::get('/areasCR', 'dashboardController@selctAreas');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
+Route::get('/empleadosPR', 'EmpleadoController@indexMenuPR');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
@@ -288,6 +290,7 @@ Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
 Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAndroid');
 Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWindows');
 Route::get('vinculacionControlRemoto', 'vinculacionDispositivoController@vinculacionWindowsTabla');
+Route::post('celularVinculacion', 'vinculacionDispositivoController@editarNumeroV');
 //WINDOWS
 Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
 Route::get('envioMasivoW', 'correosEmpleadoController@envioMasivoWindows');

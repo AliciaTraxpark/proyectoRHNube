@@ -794,6 +794,19 @@ class EmpleadoController extends Controller
             array_push($vinculacionD, array("idVinculacion" => $lic->idV, "pc" => $lic->pc, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
         }
         $empleados[0]->vinculacion = $vinculacionD;
+        // ? VINCULACIÓN DE RUTA
+        $vinculacionRuta = DB::table('vinculacion_ruta as vr')
+            ->join('modo as m', 'm.id', '=', 'vr.idModo')
+            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+            ->select('vr.id as idV', 'vr.modelo as modelo', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'td.dispositivo_descripcion', 'vr.celular as numero')
+            ->where('vr.idEmpleado', '=', $idempleado)
+            ->get();
+        $vincRuta = [];
+        foreach ($vinculacionRuta as $vincR) {
+            array_push($vincRuta, array("idVinculacion" => $vincR->idV, "modelo" => $vincR->modelo, "dispositivoD" => $vincR->dispositivo_descripcion, "codigo" => $vincR->codigo, "envio" => $vincR->envio, "numero" => $vincR->numero));
+        }
+        $empleados[0]->vinculacionR = $vincRuta;
+        // ?
         $contrato = DB::table('contrato as c')
             ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
             ->leftJoin('condicion_pago as cp', 'cp.id', '=', 'c.id_condicionPago')
@@ -1062,6 +1075,74 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function indexMenuPR()
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            $departamento = ubigeo_peru_departments::all();
+            $provincia = ubigeo_peru_provinces::all();
+            $distrito = ubigeo_peru_districts::all();
+            $tipo_doc = tipo_documento::all();
+            $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
+            $area = area::where('organi_id', '=', session('sesionidorg'))->get();
+            $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
+            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
+            $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
+            $local = local::where('organi_id', '=', session('sesionidorg'))->get();
+            $empleado = empleado::all();
+            $dispositivo = tipo_dispositivo::all();
+            $tabla_empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->select(
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'e.emple_id'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->get();
+            $calendario = DB::table('calendario as ca')
+                ->where('ca.organi_id', '=', session('sesionidorg'))
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
+            //dd($tabla_empleado);
+
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('empleado.empleadoMenuPMR', [
+                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    ]);
+                }
+            } else {
+                return view('empleado.empleadoMenuPMR', [
+                    'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                    'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                    'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                ]);
+            }
+        }
+    }
+
     public function comprobarNumD(Request $request)
     {
         $numeroD = $request->get('numeroD');
@@ -1258,7 +1339,7 @@ class EmpleadoController extends Controller
     }
     public function registrarHorario(Request $request)
     {
-         $tardanza=$request->tardanza;
+        $tardanza = $request->tardanza;
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
