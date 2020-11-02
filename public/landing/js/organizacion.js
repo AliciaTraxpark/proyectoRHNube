@@ -248,10 +248,10 @@ function verUsuarios(idorgani){
                         '<div class="row">'+
                         '<div class="col-md-3">'+
                             '<a href="javascript: void(0);">'+
-                                '<img src="landing/images/usuario.svg" alt="" class="avatar-sm m-1 rounded-circle">'+
+                                '<img src="landing/images/usuario.svg" alt="" class="avatar-sm  rounded-circle">'+
                             '</a>'+
                             '</div>'+
-                            '<div class="row col-md-9" style=" padding-right: 0px;padding-left: 16px;">'+
+                            '<div class="row col-md-9" style=" padding-right: 0px;padding-left: 11px;">'+
                            '<label style="font-weight:600">Fecha de nac: &nbsp; </label>'+''+ moment(usuario.perso_fechaNacimiento).format('DD/MM/YYYY')+
                            '<label style="font-weight:600">Género: </label>'+'&nbsp; '+ usuario.perso_sexo+'&nbsp;&nbsp; '+
                            '<label style="font-weight:600">Celular: <i class="uil  uil-mobile-android-alt mr-1"></i> </label>'+' '+ usuario.perso_celular+
