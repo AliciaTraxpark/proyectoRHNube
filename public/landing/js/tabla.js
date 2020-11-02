@@ -10,6 +10,7 @@ function leertabla() {
         $("#tabladiv").html(data);
         $("#espera").hide();
         $("#tabladiv").show();
+        
     });
 }
 
@@ -57,10 +58,10 @@ function RefreshTablaEmpleadoArea() {
                                 <img src="/admin/images/edit.svg" height="15">\
                                 </a>\
                                 &nbsp;&nbsp;&nbsp;\
-                                <a onclick="javascript:marcareliminar(' +
+                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
-                                    <img src="/admin/images/delete.svg" height="15">\
+                                    <img src="/landing/images/abajo.svg" height="17">\
                                 </a>\
                                 &nbsp;&nbsp;\
                                 <a class="verEmpleado" onclick="javascript:verDEmpleado(' +
@@ -69,19 +70,10 @@ function RefreshTablaEmpleadoArea() {
                                     data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:pointer">\
                                     <img src="/landing/images/see.svg" height="18">\
                                 </a>\
-                            </td>\
-                            <td class="text-center">&nbsp; <input type="hidden" id="codE" value=' +
-                    data[i].emple_id +
-                    ">";
-                if (!(data[i].emple_foto === '')) {
-                    tbody +=
-                        '<img src="/fotosEmpleado/' +
-                        data[i].emple_foto +
-                        '" class="avatar-xs rounded-circle"/>';
-                } else {
-                    tbody +=
-                        '<img src="/admin/assets/images/users/empleado.png"/>';
-                }
+                                <input type="hidden" id="codE" value=' +
+                                data[i].emple_id +
+                                "> </td>";
+
                 tbody += "</td>";
                 tbody +=
                     '<td class="text-center"> <div class="text-wrap width-400">' +
@@ -434,10 +426,10 @@ function RefreshTablaEmpleado() {
                                 <img src="/admin/images/edit.svg" height="15">\
                                 </a>\
                                 &nbsp;&nbsp;&nbsp;\
-                                <a onclick="javascript:marcareliminar(' +
+                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
-                                    <img src="/admin/images/delete.svg" height="15">\
+                                    <img src="/landing/images/abajo.svg" height="17">\
                                 </a>\
                                 &nbsp;&nbsp;\
                                 <a class="verEmpleado" onclick="javascript:verDEmpleado(' +
@@ -446,20 +438,10 @@ function RefreshTablaEmpleado() {
                                     data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:pointer">\
                                     <img src="/landing/images/see.svg" height="18">\
                                 </a>\
-                            </td>\
-                            <td class="text-center">&nbsp; <input type="hidden" id="codE" value=' +
-                    data[i].emple_id +
-                    ">";
-                if (!(data[i].emple_foto === '')) {
-                    tbody +=
-                        '<img src="/fotosEmpleado/' +
-                        data[i].emple_foto +
-                        '" class="avatar-xs rounded-circle"/>';
-                } else {
-                    tbody +=
-                        '<img src="/admin/assets/images/users/empleado.png"/>';
-                }
-                tbody += "</td>";
+                                <input type="hidden" id="codE" value=' +
+                                data[i].emple_id +
+                                "> </td>";
+
                 tbody +=
                     '<td class="text-center"> <div class="text-wrap width-400">' +
                     data[i].emple_nDoc +

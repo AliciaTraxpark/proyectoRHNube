@@ -148,6 +148,8 @@ Route::get('tablaempleado/refresh', 'EmpleadoController@refresTabla');
 Route::get('/empleado/agregarCorreo', 'EmpleadoController@agregarCorreoE');
 Route::post('/empleado/asisPuerta', 'EmpleadoController@asisPuerta');
 Route::post('tablaempleado/refreshArea', 'EmpleadoController@refresTablaAre');
+Route::get('/empleadosdeBaja', 'EmpleadoController@empleadosBaja')->middleware('auth');
+Route::get('tablaempleado/refreshBaja', 'EmpleadoController@refresTablaEmpBaja');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
@@ -416,7 +418,7 @@ Route::post('/sAdmintipoOrg', 'superAdmController@tipoOrg');
 Route::get('/organizaciones', 'OrganizacionesController@index');
 Route::post('/listaoOrganiS', 'OrganizacionesController@listaOrganizaciones');
 Route::post('/activacionOrg', 'OrganizacionesController@activacionOrg');
-
+Route::post('/superAdUsuario', 'OrganizacionesController@superAdUsuario');
 // BIBLIOTECA
 Route::get('/biblioteca', 'bibliotecaController@vista');
 

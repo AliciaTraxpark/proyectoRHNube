@@ -333,7 +333,7 @@
                                     <div class="row rowFecha">
                                         <div class="col-md-3">
                                             <select class="form-control" name="dia_fecha" id="dia_fecha" required="">
-                                                <option value="">Dia</option>
+                                                <option value="">Día</option>
                                                 @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
                                                     </option>
                                                     @endfor

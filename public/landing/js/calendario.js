@@ -358,7 +358,7 @@ function registrarDdescanso()  {
          if(data==1){
 
             bootbox.confirm({
-                title:"Dia de descanso",
+                title:"Día de descanso",
                 message: "¿Agregar los cambios a los empleados asignados a este calendario?",
                 buttons: {
                     confirm: {
@@ -464,7 +464,7 @@ function registrarDferiado()  {
          if(data==1){
 
             bootbox.confirm({
-                title:"Dia feriado",
+                title:"Día feriado",
                 message: "¿Agregar los cambios a los empleados asignados a este calendario?",
                 buttons: {
                     confirm: {
@@ -567,7 +567,7 @@ function registrarDnlaborables()  {
          if(data==1){
 
             bootbox.confirm({
-                title:"Dia no laborable",
+                title:"Día no laborable",
                 message: "¿Agregar los cambios a los empleados asignados a este calendario?",
                 buttons: {
                     confirm: {

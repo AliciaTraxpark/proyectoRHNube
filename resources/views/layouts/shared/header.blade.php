@@ -162,6 +162,12 @@ use App\persona;
                             mr-2" style="color: #163552"></i>
                         <span>Cerrar sesión</span>
                     </a>
+                    <a href="/elegirorganizacion" class="dropdown-item
+                    notify-item">
+                    <i data-feather="arrow-up-left" class="icon-dual icon-xs
+                        mr-2" style="color: #163552"></i>
+                    <span>cambiar organizacion</span>
+                </a>
                 </div>
             </li>
         </ul>

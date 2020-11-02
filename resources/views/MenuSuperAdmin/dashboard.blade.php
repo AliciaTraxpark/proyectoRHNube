@@ -348,7 +348,7 @@
                         <div class="media p-3">
                             <div class="media-body">
                                 <span class="text-muted text-uppercase font-size-12 font-weight-bold">
-                                    Empleados activos </span>
+                                    Empleados {{-- activos  --}}</span>
                                 <h2 class="mb-0">{{$nempleado}}</h2>
                             </div>
                             <div class="align-self-center">

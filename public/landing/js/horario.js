@@ -1293,7 +1293,7 @@ function asignarlabo() {
                         url: "/storeLaborable",
                         data: {
                             start: H1,
-                            title: 'Dia laborable.',
+                            title: 'Día laborable.',
                             pais: idpais,
                             departamento: iddepartamento,
                             end: H2
@@ -1363,7 +1363,7 @@ function asignarlaboen() {
                         url: "/storeLaborHorarioBD",
                         data: {
                             start: H1,
-                            title: 'Dia laborable.',
+                            title: 'Día laborable.',
                             end: H2, idempl
 
                         },
