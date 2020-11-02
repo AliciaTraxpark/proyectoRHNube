@@ -151,8 +151,8 @@
         </tr> --}}
         <tr style="width:100%!important">
             <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
-            <th class="text-center"></th>
-            <th class="text-center"></th>
+            <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+
             <th class="text-center">Documento</th>
             <th>Nombres</th>
             <th>Apellidos</th>
@@ -170,21 +170,21 @@
             </td>
             <td class="text-center"><a  onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
                     style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}"
-                        height="15"></a>&nbsp;&nbsp;&nbsp;<a data-toggle="tooltip" data-original-title="Dar de baja" data-placement="right" onclick="marcareliminar({{$tabla_empleados->emple_id}})"
-                    style="cursor: pointer"><img src="{{asset('landing/images/abajo.svg')}}" height="17"></a>&nbsp;&nbsp;
+                        height="15"></a>&nbsp;<a data-toggle="tooltip" data-original-title="Dar de baja" data-placement="right" onclick="marcareliminar({{$tabla_empleados->emple_id}})"
+                    style="cursor: pointer"><img src="{{asset('landing/images/abajo.svg')}}" height="17"></a>&nbsp;
                 <a class="verEmpleado" onclick="verDEmpleado({{$tabla_empleados->emple_id}})" data-toggle="tooltip"
                     data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                     pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="18">
                 </a>
-            </td>
-            <td class="text-center">&nbsp; <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}">
-                @if (empty($tabla_empleados->emple_foto) === true)
+                <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"></td>
+            {{--<td class="text-center">&nbsp;
+                 @if (empty($tabla_empleados->emple_foto) === true)
                 <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
                 @else
                 <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
                 @endif
-            </td>
+            </td>--}}
             <td class="text-center">
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
             </td>
