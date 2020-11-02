@@ -776,7 +776,7 @@ a:not([href]):not([tabindex]){
                                 <label for=""><br></label>
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                    <label class="custom-control-label" for="customSwitch1">Asignar mas de 1 dia</label>
+                                    <label class="custom-control-label" for="customSwitch1">Asignar mas de 1 día</label>
                                 </div>
                              </div>
 

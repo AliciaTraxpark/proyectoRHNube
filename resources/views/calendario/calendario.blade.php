@@ -318,7 +318,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <div class="col-md-6">
-                                        <label for="">Nombre de dia feriado:</label>
+                                        <label for="">Nombre de día feriado:</label>
                                     </div>
                                      <div class="col-md-12">
                                          <form action="javascript:registrarDferiado()">
@@ -682,7 +682,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                     <div class="modal-content">
                        <div class="modal-header" style="background-color:#163552; padding-bottom: 4px;
                        padding-top: 4px;">
-                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar dia a calendario</h5>
+                           <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Asignar día a calendario</h5>
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                <span aria-hidden="true">&times;</span>
                            </button>
@@ -691,13 +691,13 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                            <div class="row">
                                <br>
                                <div class="col-md-4">
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDdescanso()" ><img src="{{asset('admin/images/dormir.svg')}}" height="20"> Dia de descanso</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDdescanso()" ><img src="{{asset('admin/images/dormir.svg')}}" height="20"> Día de descanso</button>
                                </div>
                                <div class="col-md-4">
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" ><img src="{{asset('admin/images/calendario.svg')}}" height="20">  Dia feriado</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')" ><img src="{{asset('admin/images/calendario.svg')}}" height="20">  Día feriado</button>
                                </div>
                                <div class="col-md-4">
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDnlaborables()" ><img src="{{asset('admin/images/evento.svg')}}" height="20">  Dia no laborable</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="registrarDnlaborables()" ><img src="{{asset('admin/images/evento.svg')}}" height="20">  Día no laborable</button>
                                </div>
                            </div>
                        </div>

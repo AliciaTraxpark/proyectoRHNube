@@ -1414,7 +1414,7 @@ use Carbon\Carbon;
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="m_dia_fecha" id="m_dia_fecha"
                                                         required="">
-                                                        <option value="0">Dia</option>
+                                                        <option value="0">Día</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                             {{$i}}</option>
                                                             @endfor
@@ -1465,7 +1465,7 @@ use Carbon\Carbon;
                                                     <div class="col-md-4">
                                                         <select class="form-control" name="mf_dia_fecha"
                                                             id="mf_dia_fecha" required="">
-                                                            <option value="0">Dia</option>
+                                                            <option value="0">Día</option>
                                                             @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                                 {{$i}}</option>
                                                                 @endfor
@@ -1877,7 +1877,7 @@ use Carbon\Carbon;
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
                                                         required="">
-                                                        <option value="0">Dia</option>
+                                                        <option value="0">Día</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                             {{$i}}
                                                             </option>
@@ -1929,7 +1929,7 @@ use Carbon\Carbon;
                                                     <div class="col-md-4">
                                                         <select class="form-control" name="m_dia_fechaFE"
                                                             id="m_dia_fechaFE">
-                                                            <option value="0">Dia</option>
+                                                            <option value="0">Día</option>
                                                             @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                                 {{$i}}</option>
                                                                 @endfor
@@ -2026,7 +2026,7 @@ use Carbon\Carbon;
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="m_dia_fechaIEV"
                                                         id="m_dia_fechaIEV" required="">
-                                                        <option value="0">Dia</option>
+                                                        <option value="0">Día</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                             {{$i}}
                                                             </option>
@@ -2078,7 +2078,7 @@ use Carbon\Carbon;
                                                     <div class="col-md-4">
                                                         <select class="form-control" name="m_dia_fechaFEV"
                                                             id="m_dia_fechaFEV">
-                                                            <option value="0">Dia</option>
+                                                            <option value="0">Día</option>
                                                             @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                                 {{$i}}</option>
                                                                 @endfor
@@ -2244,7 +2244,7 @@ use Carbon\Carbon;
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="dia_fecha" id="dia_fecha"
                                                                 required="">
-                                                                <option value="0">Dia</option>
+                                                                <option value="0">Día</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">{{$i}}</option>
                                                                     @endfor
@@ -2659,7 +2659,7 @@ use Carbon\Carbon;
                                                                         class="btn btn-secondary btn-sm"
                                                                         onclick="nolaborableTem()"><img
                                                                             src="{{ asset('admin/images/evento.svg') }}"
-                                                                            height="20"> Dia no laborable</button>
+                                                                            height="20"> Día no laborable</button>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <button type="button"
@@ -2667,7 +2667,7 @@ use Carbon\Carbon;
                                                                         class="btn btn-secondary btn-sm"
                                                                         onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
                                                                             src="{{ asset('admin/images/calendario.svg') }}"
-                                                                            height="20"> Dia feriado</button>
+                                                                            height="20"> Día feriado</button>
                                                                 </div>
                                                                 <div class="col-md-3 text-right">
                                                                     {{-- <button type="button"
@@ -2720,7 +2720,7 @@ use Carbon\Carbon;
                                                         <div class="row">
                                                             <div class="form-group col-md-12">
                                                                 <div class="col-md-6">
-                                                                    <label for="">Nombre de dia feriado:</label>
+                                                                    <label for="">Nombre de día feriado:</label>
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <form action="javascript:diaferiadoTem()">
@@ -3335,7 +3335,7 @@ use Carbon\Carbon;
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
                                                         required="">
-                                                        <option value="0">Dia</option>
+                                                        <option value="0">Día</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                             {{$i}}</option>
                                                             @endfor
@@ -3737,7 +3737,7 @@ use Carbon\Carbon;
                                                                     class="btn btn-secondary btn-sm"
                                                                     onclick="nolaborable_ed()"><img
                                                                         src="{{ asset('admin/images/evento.svg') }}"
-                                                                        height="20"> Dia no
+                                                                        height="20"> Día no
                                                                     laborable</button>
                                                             </div>
                                                             <div class="col-md-3 text-center">
@@ -3746,7 +3746,7 @@ use Carbon\Carbon;
                                                                     class="btn btn-secondary btn-sm"
                                                                     onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
                                                                         src="{{ asset('admin/images/calendario.svg') }}"
-                                                                        height="20"> Dia feriado</button>
+                                                                        height="20"> Día feriado</button>
                                                             </div>
                                                             <div class="col-md-3 text-center">
                                                                 {{-- <button type="button"
@@ -3793,7 +3793,7 @@ use Carbon\Carbon;
                                                     <div class="row">
                                                         <div class="form-group col-md-12">
                                                             <div class="col-md-6">
-                                                                <label for="">Nombre de dia feriado:</label>
+                                                                <label for="">Nombre de día feriado:</label>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <form action="javascript:diaferiadoRe_ed()">
@@ -4393,7 +4393,7 @@ use Carbon\Carbon;
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
                                                         required="">
-                                                        <option value="0">Dia</option>
+                                                        <option value="0">Día</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                             {{$i}}</option>
                                                             @endfor
