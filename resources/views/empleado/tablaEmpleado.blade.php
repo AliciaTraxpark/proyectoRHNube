@@ -168,10 +168,10 @@
             <td class="text-center"><input type="checkbox" name="selec" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
-            <td class="text-center"><a id="formNuevoEd" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
+            <td class="text-center"><a  onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
                     style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}"
-                        height="15"></a>&nbsp;&nbsp;&nbsp;<a onclick="marcareliminar({{$tabla_empleados->emple_id}})"
-                    style="cursor: pointer"><img src="{{asset('admin/images/delete.svg')}}" height="15"></a>&nbsp;&nbsp;
+                        height="15"></a>&nbsp;&nbsp;&nbsp;<a data-toggle="tooltip" data-original-title="Dar de baja" data-placement="right" onclick="marcareliminar({{$tabla_empleados->emple_id}})"
+                    style="cursor: pointer"><img src="{{asset('landing/images/abajo.svg')}}" height="17"></a>&nbsp;&nbsp;
                 <a class="verEmpleado" onclick="verDEmpleado({{$tabla_empleados->emple_id}})" data-toggle="tooltip"
                     data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                     pointer">

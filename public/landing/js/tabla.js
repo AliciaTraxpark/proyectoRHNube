@@ -57,10 +57,10 @@ function RefreshTablaEmpleadoArea() {
                                 <img src="/admin/images/edit.svg" height="15">\
                                 </a>\
                                 &nbsp;&nbsp;&nbsp;\
-                                <a onclick="javascript:marcareliminar(' +
+                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
-                                    <img src="/admin/images/delete.svg" height="15">\
+                                    <img src="/landing/images/abajo.svg" height="17">\
                                 </a>\
                                 &nbsp;&nbsp;\
                                 <a class="verEmpleado" onclick="javascript:verDEmpleado(' +
@@ -434,10 +434,10 @@ function RefreshTablaEmpleado() {
                                 <img src="/admin/images/edit.svg" height="15">\
                                 </a>\
                                 &nbsp;&nbsp;&nbsp;\
-                                <a onclick="javascript:marcareliminar(' +
+                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
-                                    <img src="/admin/images/delete.svg" height="15">\
+                                    <img src="/landing/images/abajo.svg" height="17">\
                                 </a>\
                                 &nbsp;&nbsp;\
                                 <a class="verEmpleado" onclick="javascript:verDEmpleado(' +
