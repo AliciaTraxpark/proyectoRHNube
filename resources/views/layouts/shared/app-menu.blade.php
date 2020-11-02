@@ -15,9 +15,17 @@ use Illuminate\Support\Facades\DB;
         font-size: 14px;
     }
 
+    .li-plan {
+        display: none;
+    }
+
     @media (max-width: 767.98px) {
         .liNone {
             display: none;
+        }
+
+        .li-plan {
+            display: initial !important;
         }
     }
 </style>
@@ -122,14 +130,14 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
         <a href="javascript: void(0);">
             <i data-feather="check-circle"></i>
-            <span >Modo: Asistencia en puerta</span>
+            <span>Modo: Asistencia en puerta</span>
             <span class="menu-arrow"></span>
         </a>
 
         <ul class="nav-second-level" aria-expanded="false">
             <li>
-                <a  href="/dispositivos" >Dispositivos</a>
-                <a href="/controladores" >Controladores</a>
+                <a href="/dispositivos">Dispositivos</a>
+                <a href="/controladores">Controladores</a>
                 <a href="/reporteAsistencia">Reporte de asistencia</a>
 
             </li>
@@ -137,10 +145,22 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
 
     <li>
-        <a href="/planes">
+        <a href="javascript: void(0);">
             <i data-feather="dollar-sign"></i>
-            <span> Planes y Precios </span>
+            <span> Suscripciones </span>
+            <span class="menu-arrow"></span>
         </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li class="liNone">
+                <a href="/planes">Planes y precios</a>
+
+            </li>
+            <li class="li-plan" style="display: none">
+                <a href="/plan">Planes y precios</a>
+
+            </li>
+        </ul>
     </li>
     <li>
         <a href="/biblioteca">

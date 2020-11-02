@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\condicion_pago;
 use App\Mail\CorreoMail;
+use App\Mail\NuevoUsuarioMail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\organizacion;
@@ -135,49 +136,16 @@ class registroEmpresaController extends Controller
             $users = User::find($request->get('iduser'));
             $organi = organizacion::find($idorgani);
             $correo = array($datos['email']);
-            $datoNuevo = explode("@", $data[0]->email);
+            $correoU = 'info@rhnube.com.pe';
             /////////////////////////////////
             $comusuario_organizacion = usuario_organizacion::where('user_id', '=', $users->id)->count();
             if ($comusuario_organizacion > 1) {
+                Mail::to($correoU)->queue(new NuevoUsuarioMail($persona, $organi, $users));
                 return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitosamente!");
             } else {
-                if (sizeof($datoNuevo) != 2) {
-                    $codigo = $request->get('iduser') . "c" . $idPersona[0]->perso_id;
-                    $codigoI = intval($codigo, 36);
-                    $mensaje = "RH nube - Codigo de validacion " . $codigoI;
-                    $curl = curl_init();
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_FOLLOWLOCATION => TRUE,
-                        CURLOPT_SSL_VERIFYPEER => false,
-                        CURLOPT_CUSTOMREQUEST => "POST",
-                        CURLOPT_POSTFIELDS => '{
-                            "apiKey":2308,
-                            "country":"PE",
-                            "dial":38383,
-                            "message":"' . $mensaje . '",
-                            "msisdns":[' . $data[0]->email . '],
-                            "tag":"tag-prueba"
-                        }',
-                        CURLOPT_HTTPHEADER => array(
-                            "Content-Type: application/json",
-                            "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
-                            "Cache-Control: no-cache"
-                        ),
-                    ));
-                    $response = curl_exec($curl);
-                    $err = curl_error($curl);
-                    if ($err) {
-                        return Redirect::to('/')->with('mensaje', "Error.!");
-                    } else {
-                        return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado.!");
-                    }
-                } else {
-                    Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
-                    return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
-                }
+                Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
+                Mail::to($correoU)->queue(new NuevoUsuarioMail($persona, $organi, $users));
+                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
             }
             ////////////////////////////
 

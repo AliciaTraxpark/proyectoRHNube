@@ -3051,7 +3051,7 @@ use Carbon\Carbon;
                                             <div class="card">
                                                 <div class="card-body p-2" id="regbodyModoTarea">
                                                     <div class="row">
-                                                        <div class="col-xl-12 text-right">
+                                                        <div class="col-xl-12 text-left">
                                                             <div class="float-md-right">
                                                                 <a onclick="javascript:mostrarContenidoA()"
                                                                     data-toggle="tooltip" data-placement="left"
@@ -3063,7 +3063,7 @@ use Carbon\Carbon;
                                                             <button type="button" class="btn btn-sm mt-1"
                                                                 style="background-color: #163552;"
                                                                 onclick="$('#regactividadTarea').modal();">+ Asignar
-                                                                Actividad
+                                                                actividad
                                                             </button>
                                                         </div>
                                                     </div>
