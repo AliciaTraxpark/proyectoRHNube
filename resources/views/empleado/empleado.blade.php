@@ -873,7 +873,7 @@ use Carbon\Carbon;
                                 <div class="col-md-2">
                                     <td align="center">
                                         <select class="form-control" name="select" id="select" style="height: 35.5px;">
-                                            <option value="3">Número Documento</option>
+                                            <option value="3">Documento</option>
                                             <option value="4">Nombre</option>
                                             <option value="5" selected>Apellidos</option>
                                             <option value="8">Cargo</option>
