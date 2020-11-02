@@ -59,8 +59,8 @@
                                         <th>Organizacion</th>
                                         <th>Tipo</th>
                                         <th>F. de creacion</th>
-                                        <th>Empleados teóric.</th>
-                                        <th>Empleados regist.</th>
+                                        <th>Emp. teóric.</th>
+                                        <th>Emp. regist.</th>
                                         <th>Estado</th>
                                         <th>Usuarios</th>
                                         <th>Suscripción</th>
