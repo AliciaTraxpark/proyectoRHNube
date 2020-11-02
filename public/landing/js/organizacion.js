@@ -71,57 +71,20 @@ $(document).ready(function () {
                 return moment(row.created_at).format('DD/MM/YYYY');
 
             } },
-           /*  {
-                data: "users",
-                "render": function (data, type, row) {
-                   return row.nombres;
-                }
-            }, */
             {
-                data: "celular",
+                data: "organi_nempleados",
                 "render": function (data, type, row) {
-
-                  /*   var nombres=row.nombres;
-                   /*  idsV=nombres.split(','); */
-/* var valores=row.celular;
-                        idsCelu=valores.split(',');
-                    var variableResult=[];
-                    $.each( idsV, function( index, value ){  */
-
-                      /*   $.each( idsCelu, function( index, value2 ){
-
-
-                        }) */
-/*
-                        variableResult1=  value+'<img src="landing/images/telefono-inteligente.svg" height="14">'+ row.celular;
-                        variableResult.push(variableResult1);
-
-
-        }) */
-        var cadena=[];
-        var nombres=row.nombres;
-        idsV=nombres.split(',');
-        var celu=row.celular;
-        idsC=celu.split(',');
-        var correo=row.correo;
-        corre=correo.split(',');
-        $.each( idsV, function( index, value2 ){
-            variableResult1=value2+'<br><img src="landing/images/telefono-inteligente.svg" height="14">'+idsC[index]+' - '+corre[index]+'<br>';
-            cadena.push(variableResult1);
-        })
-        return cadena;
-
-
+                   return row.organi_nempleados+' empleados' ;
                 }
             },
             {
-                data: "users",
+                data: "organi_nempleados",
                 "render": function (data, type, row) {
-                   return '<label style="font-style:oblique">Empleados de org.</label>'+row.organi_nempleados+'<br>'+
-                   '<label style="font-style:oblique">Empleados regist.</label>'+row.nemple ;
+                   return row.nemple+' empleados';
                 }
             },
-             { data: "users" ,
+
+            { data: "users" ,
                 "render": function (data, type, row) {
                     if(row.organi_estado==1){
                         return '<button class=" btn badge badge-soft-success" onclick="desactivarO('+row.organi_id+')">Activo</button>' ;
@@ -131,6 +94,32 @@ $(document).ready(function () {
                     }
 
                 }},
+            {
+                data: "celular",
+                "render": function (data, type, row) {
+                 /*var cadena=[];
+                var nombres=row.nombres;
+                idsV=nombres.split(',');
+                var celu=row.celular;
+                idsC=celu.split(',');
+                var correo=row.correo;
+                corre=correo.split(',');
+                $.each( idsV, function( index, value2 ){
+                    variableResult1=value2+'<br><img src="landing/images/telefono-inteligente.svg" height="14">'+idsC[index]+' - '+corre[index]+'<br>';
+                    cadena.push(variableResult1);
+                })
+               return cadena;*/
+               return '<button class="btnhora btn  btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;" onclick="verUsuarios('+row.organi_id+')" > <img src="landing/images/ver.svg" height="14" > ver</button>';
+                }
+            },
+            {
+                data: "celular",
+                "render": function (data, type, row) {
+               return '<button class="btnhora btn  btn-sm btn-rounded" style="color: #548ec7;border-color: #e7edf3; padding-left: 4px; padding-right: 4px;"  > <img src="landing/images/ver.svg" height="14" > ver</button>';
+                }
+            },
+
+
         ]
 
 
@@ -227,4 +216,129 @@ function desactivarO(id){
             }
         }
     });
+}
+function verUsuarios(idorgani){
+    $('#cardsUsuarios').empty();
+    $.ajax({
+        type: "POST",
+        url: "/superAdUsuario",
+        data: {idorgani},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+           401: function () {
+                location.reload();
+            },
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            htmlApe='';
+            $.each(data, function (index, usuario) {
+                if(usuario.rol_id==1){
+                htmlUs='<div class="col-xl-4 col-lg-6">'+
+                '<div class="card" style="border: 1px solid #dedede;">'+
+                    '<div class="card-body">'+
+                        '<div class="badge badge-secondary float-right">'+usuario.rol_nombre+'</div>'+
+                        '<p class="text-secondary font-size-12 mb-2">Tipo de usuario:</p>'+
+                        '<h5 style="font-size:13px!important"><a href="#" class="text-dark">'+usuario.perso_nombre+' '+usuario.perso_apPaterno+' '+usuario.perso_apMaterno+'</a></h5>'+
+                        '<p class="text-muted mb-4">'+usuario.email+'</p>'+
+                        '<div class="row">'+
+                        '<div class="col-md-3">'+
+                            '<a href="javascript: void(0);">'+
+                                '<img src="landing/images/usuario.svg" alt="" class="avatar-sm m-1 rounded-circle">'+
+                            '</a>'+
+                            '</div>'+
+                            '<div class="row col-md-9" style=" padding-right: 0px;padding-left: 16px;">'+
+                           '<label style="font-weight:600">Fecha de nac: &nbsp; </label>'+''+ moment(usuario.perso_fechaNacimiento).format('DD/MM/YYYY')+
+                           '<label style="font-weight:600">Género: </label>'+'&nbsp; '+ usuario.perso_sexo+'&nbsp;&nbsp; '+
+                           '<label style="font-weight:600">Celular: <i class="uil  uil-mobile-android-alt mr-1"></i> </label>'+' '+ usuario.perso_celular+
+                           '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="card-body border-top">'+
+                        '<div class="row align-items-center">'+
+                            '<div class="col-sm-auto">'+
+                                '<ul class="list-inline mb-0">'+
+                                    '<li class="list-inline-item pr-2">'+
+                                        '<a href="#" class="text-muted d-inline-block"'+
+                                            'data-toggle="tooltip" data-placement="top" title=""'+
+                                            'data-original-title="Due date">'+
+                                            '<i class="uil uil-calender mr-1"></i>Registrado: '+ moment(usuario.updated_at).format('DD/MM/YYYY')+
+                                        '</a>'+
+                                    '</li>'+
+
+                               '</ul>'+
+                            '</div>'+
+                            '<div class="col offset-sm-1">'+
+                                '<div class="progress mt-4 mt-sm-0" style="height: 5px;"'+
+                                    'data-toggle="tooltip" data-placement="top" title=""'+
+                                    'data-original-title="100% completed">'+
+                                    '<div class="progress-bar bg-secondary" role="progressbar" style="width: 100%;"'+
+                                        'aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>';}
+            else{
+                htmlUs='<div class="col-xl-4 col-lg-6">'+
+                '<div class="card" style="border: 1px solid #dedede;">'+
+                    '<div class="card-body">'+
+                        '<div class="badge badge-warning float-right">'+usuario.rol_nombre+'</div>'+
+                        '<p class="text-warning font-size-12 mb-2">Tipo de usuario:</p>'+
+                        '<h5 style="font-size:13px!important"><a href="#" class="text-dark">'+usuario.perso_nombre+' '+usuario.perso_apPaterno+' '+usuario.perso_apMaterno+'</a></h5>'+
+                        '<p class="text-muted mb-4">'+usuario.email+'</p>'+
+                        '<div class="row">'+
+                        '<div class="col-md-3">'+
+                            '<a href="javascript: void(0);">'+
+                                '<img src="landing/images/usuario.svg" alt="" class="avatar-sm m-1 rounded-circle">'+
+                            '</a>'+
+                            '</div>'+
+                            '<div class="row col-md-9" style=" padding-right: 0px;padding-left: 16px;">'+
+                           '<label style="font-weight:600">Fecha de nac: &nbsp; </label>'+''+ moment(usuario.perso_fechaNacimiento).format('DD/MM/YYYY')+
+                           '<label style="font-weight:600">Género: </label>'+'&nbsp; '+ usuario.perso_sexo+'&nbsp;&nbsp; '+
+                           '<label style="font-weight:600">Celular: <i class="uil  uil-mobile-android-alt mr-1"></i> </label>'+' '+ usuario.perso_celular+
+                           '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="card-body border-top">'+
+                        '<div class="row align-items-center">'+
+                            '<div class="col-sm-auto">'+
+                                '<ul class="list-inline mb-0">'+
+                                    '<li class="list-inline-item pr-2">'+
+                                        '<a href="#" class="text-muted d-inline-block"'+
+                                            'data-toggle="tooltip" data-placement="top" title=""'+
+                                            'data-original-title="Due date">'+
+                                            '<i class="uil uil-calender mr-1"></i>Registrado: '+ moment(usuario.updated_at).format('DD/MM/YYYY')+
+                                        '</a>'+
+                                    '</li>'+
+
+                               '</ul>'+
+                            '</div>'+
+                            '<div class="col offset-sm-1">'+
+                                '<div class="progress mt-4 mt-sm-0" style="height: 5px;"'+
+                                    'data-toggle="tooltip" data-placement="top" title=""'+
+                                    'data-original-title="100% completed">'+
+                                    '<div class="progress-bar bg-warning" role="progressbar" style="width: 100%;"'+
+                                        'aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>';
+            }
+            htmlApe=htmlApe+htmlUs;
+            });
+
+            $('#cardsUsuarios').append(htmlApe);
+
+        },
+        error: function () {}
+    });
+    $('#modalUsuario').modal('show');
 }

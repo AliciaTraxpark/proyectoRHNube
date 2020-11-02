@@ -413,7 +413,7 @@ Route::post('/sAdmintipoOrg', 'superAdmController@tipoOrg');
 Route::get('/organizaciones', 'OrganizacionesController@index');
 Route::post('/listaoOrganiS', 'OrganizacionesController@listaOrganizaciones');
 Route::post('/activacionOrg', 'OrganizacionesController@activacionOrg');
-
+Route::post('/superAdUsuario', 'OrganizacionesController@superAdUsuario');
 // BIBLIOTECA
 Route::get('/biblioteca', 'bibliotecaController@vista');
 

@@ -36,14 +36,14 @@ class superAdmController extends Controller
 
             $empleado = DB::table('empleado as e')
                 ->select(DB::raw('COUNT(e.emple_id) as totalE'))
-                ->where('e.emple_estado', '=', 1)
+               /*  ->where('e.emple_estado', '=', 1) */
                 ->get()->first();
 
                 $listaempleado = DB::table('empleado as e')
                 ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno','e.created_at','or.organi_razonSocial')
                 ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
-                ->where('e.emple_estado', '=', 1) ->latest()
+                /* ->where('e.emple_estado', '=', 1) */ ->latest()
                 ->take(6)
                 ->get();
 
@@ -66,7 +66,7 @@ class superAdmController extends Controller
             $organizacion1 = DB::table('organizacion as or')
             ->leftJoin('empleado as e','or.organi_id','=','e.organi_id')
             ->select('or.organi_razonSocial as category','or.organi_nempleados as first', DB::raw('IF(e.emple_id is null, 0, COUNT(e.emple_id)) as second'))
-            ->where('e.emple_estado',1)
+            /* ->where('e.emple_estado',1) */
             ->groupBy('or.organi_id')
             ->union($organizacion)
             ->paginate(7);
