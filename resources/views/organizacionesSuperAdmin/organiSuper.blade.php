@@ -76,7 +76,7 @@
     </div>
 </div>
 <div id="modalUsuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center " style="width: 900px!important;" >
+    <div class="modal-dialog  modal-lg d-flex modal-dialog-scrollable justify-content-center " style="width: 900px;" >
 
     <div class="modal-content">
        <div class="modal-header" style="background-color:#163552;">
