@@ -710,9 +710,6 @@ class EmpleadoController extends Controller
                 if (!isset($resultado[$empleado->emple_id])) {
                     $resultado[$empleado->emple_id] = $empleado;
                 }
-                if (!isset($resultado[$empleado->emple_id]->vinculacion)) {
-                    $resultado[$empleado->emple_id]->vinculacion = array();
-                }
             }
             return $resultado;
         }
@@ -782,31 +779,6 @@ class EmpleadoController extends Controller
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->groupBy('e.organi_id')
             ->get();
-        $vinculacion = DB::table('vinculacion as v')
-            ->join('modo as m', 'm.id', '=', 'v.idModo')
-            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
-            ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
-            ->select('v.id as idV', 'v.pc_mac as pc', 'v.envio as envio', 'v.hash as codigo', 'le.idEmpleado', 'le.licencia', 'le.id as idL', 'le.disponible', 'td.dispositivo_descripcion')
-            ->where('v.idEmpleado', '=', $idempleado)
-            ->get();
-        $vinculacionD = [];
-        foreach ($vinculacion as $lic) {
-            array_push($vinculacionD, array("idVinculacion" => $lic->idV, "pc" => $lic->pc, "idLicencia" => $lic->idL, "licencia" => $lic->licencia, "disponible" => $lic->disponible, "dispositivoD" => $lic->dispositivo_descripcion, "codigo" => $lic->codigo, "envio" => $lic->envio));
-        }
-        $empleados[0]->vinculacion = $vinculacionD;
-        // ? VINCULACIÓN DE RUTA
-        $vinculacionRuta = DB::table('vinculacion_ruta as vr')
-            ->join('modo as m', 'm.id', '=', 'vr.idModo')
-            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
-            ->select('vr.id as idV', 'vr.modelo as modelo', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'td.dispositivo_descripcion', 'vr.celular as numero')
-            ->where('vr.idEmpleado', '=', $idempleado)
-            ->get();
-        $vincRuta = [];
-        foreach ($vinculacionRuta as $vincR) {
-            array_push($vincRuta, array("idVinculacion" => $vincR->idV, "modelo" => $vincR->modelo, "dispositivoD" => $vincR->dispositivo_descripcion, "codigo" => $vincR->codigo, "envio" => $vincR->envio, "numero" => $vincR->numero));
-        }
-        $empleados[0]->vinculacionR = $vincRuta;
-        // ?
         $contrato = DB::table('contrato as c')
             ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
             ->leftJoin('condicion_pago as cp', 'cp.id', '=', 'c.id_condicionPago')
