@@ -42,22 +42,44 @@ class apiSeguimientoRutaContoller extends Controller
                         $actividad->estado = $act->estado;
                         array_push($respuesta, $actividad);
                     }
-                    //? GUARDANDO MODELO DE CELULAR
-                    $vinculacion_ruta->modelo = $request->get('modelo');
-                    $vinculacion_ruta->save();
-                    // ? GENERANDO TOKEN
-                    $factory = JWTFactory::customClaims([
-                        'sub' => env('API_id'),
-                    ]);
-                    $payload = $factory->make();
-                    $token = JWTAuth::encode($payload);
+                    // * VERIFICAR IMEI O ANDROID ID
+                    if (is_null($vinculacion_ruta->imei_androidID) == true) {
+                        //? GUARDANDO MODELO DE CELULAR
+                        $vinculacion_ruta->modelo = $request->get('modelo');
+                        $vinculacion_ruta->imei_androidID = $request->get('imei_id');
+                        $vinculacion_ruta->save();
+                        // ? GENERANDO TOKEN
+                        $factory = JWTFactory::customClaims([
+                            'sub' => env('API_id'),
+                        ]);
+                        $payload = $factory->make();
+                        $token = JWTAuth::encode($payload);
 
-                    return response()->json(array(
-                        "idEmpleado" => $empleado->emple_id,
-                        "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                        "actividades" => $respuesta,
-                        "token" => $token->get()
-                    ), 200);
+                        return response()->json(array(
+                            "idEmpleado" => $empleado->emple_id,
+                            "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                            "actividades" => $respuesta,
+                            "token" => $token->get()
+                        ), 200);
+                    } else {
+                        if ($vinculacion_ruta->imei_androidID == $request->get('imei_id')) {
+                            // ? GENERANDO TOKEN
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+
+                            return response()->json(array(
+                                "idEmpleado" => $empleado->emple_id,
+                                "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                "actividades" => $respuesta,
+                                "token" => $token->get()
+                            ), 200);
+                        }else{
+                            return response()->json("imeiId_erroneo", 400);
+                        }
+                    }
                 } else {
                     return response()->json("codigo_erroneo", 400);
                 }

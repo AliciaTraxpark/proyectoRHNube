@@ -216,6 +216,8 @@ class vinculacionDispositivoController extends Controller
         $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
         if ($vinculacion_ruta) {
             $vinculacion_ruta->celular = "+51" . $numero;
+            $vinculacion_ruta->modelo = NULL;
+            $vinculacion_ruta->imei_androidID = NULL;
             $vinculacion_ruta->save();
         }
         return response()->json($vinculacion_ruta, 200);
