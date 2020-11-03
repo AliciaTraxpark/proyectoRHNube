@@ -644,6 +644,75 @@ function dispositivosAndroid() {
     });
 
 }
+// ? CARGAR DISPOSITIVOS WINDOWS EN MODAL VER
+function dispositivoWindowsVer() {
+    var idEmpleado = $('#v_idV').val();
+
+    $('#v_tbodyDispositivo').empty();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/listaVW",
+        data: {
+            idE: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var containerVer = $('#ver_tbodyDispositivo');
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].dispositivoD == 'WINDOWS') {
+                    var trVer = `<tr id="trVer${data[i].idVinculacion}">
+                            <td>${data[i].dispositivoD}</td>
+                            <td> PC ${i}</td>
+                            <td>${data[i].licencia}</td>
+                            <td class="hidetext">${data[i].codigo}</td>
+                            <td id="enviadoW${data[i].idVinculacion}">${data[i].envio}</td>
+                            <td id="estado${data[i].idVinculacion}"></td>
+                            <td id="correoVer${data[i].idVinculacion}">
+                                <a><img src="landing/images/note.svg" height="20">
+                                </a>
+                            </td>
+                            <td id="inactivarVer${data[i].idVinculacion}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                            </tr>`;
+                }
+                containerVer.append(trVer);
+                //ESTADO DE LICENCIA
+                if (data[i].disponible == 'c') {
+                    $("#trVer" + data[i].idVinculacion).find("td:eq(5)").text("Creado");
+                }
+                if (data[i].disponible == 'e') {
+                    $("#trVer" + data[i].idVinculacion).find("td:eq(5)").text("Enviado");
+                }
+                if (data[i].disponible == 'a') {
+                    $("#trVer" + data[i].idVinculacion).find("td:eq(5)").text("Activado");
+                }
+                if (data[i].disponible == 'i') {
+                    $("#trVer" + data[i].idVinculacion).find("td:eq(5)").text("Inactivo");
+                    $('#inactivarVer' + data[i].idVinculacion).empty();
+                    $('#correoVer' + data[i].idVinculacion).empty();
+                    if (data[i].dispositivoD == 'WINDOWS') {
+                        var tdV = `<a><img src="landing/images/email (4).svg" height="20">
+                                            </a>`;
+                    } else {
+                        var tdV = `<input style="display: none;" id="android${data[i].idEmpleado}" value="${data[i].idVinculacion}">
+                                        <a><img src="landing/images/email (4).svg" height="20">
+                                        </a>`;
+                    }
+                    $('#correoVer' + data[i].idVinculacion).append(tdV);
+                }
+                // NOMBRE DE PC
+                if (data[i].pc != null) {
+                    $("#trVer" + data[i].idVinculacion).find("td:eq(1)").text(data[i].pc);
+                } else {
+                    $("#trVer" + data[i].idVinculacion).find("td:eq(1)").text("PC " + i);
+                }
+            }
+        },
+        error: function () { }
+    });
+}
 // ? VINCULACION DE MODO EN RUTA
 function vinculacionAndroidEditar() {
     var idEmpleado = $('#v_id').val();

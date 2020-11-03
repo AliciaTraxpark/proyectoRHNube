@@ -288,7 +288,7 @@ $(document).ready(function () {
             }
         }
         if (stepnumber == 3) {
-            
+
             console.log($("#selectCalendario").val());
             if ($("#selectCalendario").val() == "Asignar calendario") {
                 isStepValid = false;
@@ -721,6 +721,7 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-prev").hide();
         $("button.sw-btn-next").hide();
         $("#FinalizarEmpleadoVer").show();
+        dispositivoWindowsVer();
         $("#smartwizardVer :input").attr("disabled", false);
     }
 });

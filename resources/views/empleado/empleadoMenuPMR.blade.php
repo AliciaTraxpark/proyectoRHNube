@@ -4248,7 +4248,7 @@ use App\proyecto_empleado;
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card border">
-                                    <div class="card-header">
+                                    <div class="card-header" style="padding: 0.2rem 1rem;">
                                         <div class="row pb-1 pl-2">
                                             <div class="col">
                                                 <div class="custom-control custom-switch mb-2">
