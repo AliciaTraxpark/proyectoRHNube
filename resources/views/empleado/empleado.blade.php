@@ -1021,15 +1021,14 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Eliminar
-                                    empleado</h5>
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Dar de baja</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form class="form-horizontal">
-                                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Desea dar de baja
+                                    <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">¿Dar de baja
                                         al empleado?</h5>
                                 </form>
                             </div>
@@ -1043,7 +1042,7 @@ use Carbon\Carbon;
                                         <div class="col-md-2 text-right" style="padding-right: 38px;  ">
                                             <button type="button" id="confirmarE" name="confirmarE"
                                                 onclick="confirmarEliminacion()" style="background-color: #163552;"
-                                                class="btn btn-sm ">Eliminar</button>
+                                                class="btn btn-sm ">Aceptar</button>
                                         </div>
                                     </div>
                                 </div>

@@ -506,7 +506,7 @@
                     $('#file2').fileinput('destroy');
                     cargarFile2();
                 }
-                 
+
             },
             error: function () {}
         });
@@ -867,7 +867,7 @@ function verDEmpleado(idempleadoVer){
                 $('#modalEliminar').modal('hide');
                 RefreshTablaEmpleado();
                 $.notify({
-                    message: '\nEmpleado eliminado',
+                    message: '\nEl empleado se dio de baja',
                     icon: 'landing/images/bell.svg',
                 }, {
                     icon_type: 'image',
