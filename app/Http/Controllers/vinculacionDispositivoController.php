@@ -219,8 +219,8 @@ class vinculacionDispositivoController extends Controller
             $vinculacion_ruta->modelo = NULL;
             $vinculacion_ruta->imei_androidID = NULL;
             $vinculacion_ruta->save();
+            return response()->json($vinculacion_ruta, 200);
         }
-        return response()->json($vinculacion_ruta, 200);
     }
 
     public function listaVinculacionW(Request $request)
