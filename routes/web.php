@@ -298,8 +298,7 @@ Route::get('correoWindows', 'correosEmpleadoController@envioWindows');
 Route::get('envioMasivoW', 'correosEmpleadoController@envioMasivoWindows');
 Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
-Route::get('correoAndroid', 'correosEmpleadoController@envioAndroid');
-Route::get('empleadoAndroidMasivo', 'correosEmpleadoController@envioAndroidM');
+Route::get('smsAndroid', 'correosEmpleadoController@smsAndroid');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');
 Route::get('downloadx32/{code}', 'downloadController@downloadx32');

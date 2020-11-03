@@ -15,6 +15,7 @@ use App\persona;
 use App\User;
 use App\usuario_organizacion;
 use App\vinculacion;
+use App\vinculacion_ruta;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -74,73 +75,46 @@ class correosEmpleadoController extends Controller
         }
         return response()->json(null, 400);
     }
-    public function envioAndroid(Request $request)
+
+    public function smsAndroid(Request $request)
     {
-        $idEmpleado = $request->get('idEmpleado');
-        $idVinculacion = $request->get('idVinculacion');
-        $correoE = DB::table('empleado as e')
-            ->select('e.emple_Correo')
-            ->where('e.emple_id', '=', $idEmpleado)
-            ->get()->first();
-        if ($correoE->emple_Correo != "") {
-            $datos = [];
-            $datos["correo"] = $correoE->emple_Correo;
-            $email = array($datos["correo"]);
-            $codigoP = DB::table('empleado as e')
-                ->select('emple_persona', 'e.users_id')
-                ->where('e.emple_id', '=', $idEmpleado)
-                ->get()->first();
-            $codP = [];
-            $codP["id"] = $codigoP->emple_persona;
-            $persona = persona::find($codP["id"]);
-            $user = User::where('id', '=', $codigoP->users_id)->get()->first();
-
-            $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
-            Mail::to($email)->queue(new AndroidMail($persona, $organizacion));
-            $vinculacion = vinculacion::where('id', '=', $idVinculacion)->get()->first();
-            $envio = $vinculacion->envio;
-            $suma = $envio + 1;
-            $vinculacion->envio = $suma;
-            $vinculacion->save();
-            $licencia_empleado = licencia_empleado::findOrFail($vinculacion->idLicencia);
-            $licencia_empleado->disponible = 'e';
-            $licencia_empleado->save();
-            $respuesta = [];
-            $respuesta['envio'] = $vinculacion->envio;
-            $respuesta['disponible'] = $licencia_empleado->disponible;
-            return response()->json($respuesta, 200);
-        }
-        return response()->json(null, 400);
-    }
-
-    public function envioAndroidM(Request $request)
-    {
-        $idEmpleados = $request->ids;
-        $idEmp = explode(",", $idEmpleados);
-        $resultado = [];
-        $c = true;
-        foreach ($idEmp as $idEm) {
-            $empleado = empleado::where('emple_id', '=', $idEm)->get()->first();
-            $persona = persona::where('perso_id', '=', $empleado->emple_persona)->get()->first();
-            $correoE = DB::table('empleado as e')
-                ->select('e.emple_Correo')
-                ->where('e.emple_id', '=', $idEm)
-                ->get()->first();
-            if ($correoE->emple_Correo != "") {
-                $datos = [];
-                $datos["correo"] = $correoE->emple_Correo;
-                $email = array($datos["correo"]);
-                $user = User::where('id', '=', $empleado->users_id)->get()->first();
-
-                $organizacion = organizacion::where('organi_id', '=', session('sesionidorg'))->get()->first();
-                Mail::to($email)->queue(new AndroidMail($persona, $organizacion));
-                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+        $idV = $request->get('id');
+        $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
+        if (is_null($vinculacion_ruta->celular) === false) {
+            $mensaje = "RH nube - Codigo de validacion de Inicio:" . $vinculacion_ruta->hash;
+            $cel = explode("+", $vinculacion_ruta->celular);
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_FOLLOWLOCATION => TRUE,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => '{
+                "apiKey":2308,
+                "country":"PE",
+                "dial":38383,
+                "message":"' . $mensaje . '",
+                "msisdns":[' . $cel[1] . '],
+                "tag":"tag-prueba"
+            }',
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: application/json",
+                    "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                    "Cache-Control: no-cache"
+                ),
+            ));
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                return 1;
             } else {
-                $c = false;
-                array_push($resultado, array("Persona" => $persona, "Correo" => $c));
+                return response()->json($vinculacion_ruta, 200);
             }
+        } else {
+            return 0;
         }
-        return response()->json($resultado, 200);
     }
 
     public function envioMasivoWindows(Request $request)

@@ -525,21 +525,6 @@
                             </td>
                             <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
                             </tr>`;
-                    }else{
-                            var trA = `<tr id="trA${data[0].vinculacion[i].idVinculacion}">
-                                <td>${data[0].vinculacion[i].dispositivoD}</td>
-                                <td>Android</td>
-                                <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                                <td id="enviadoA${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                                <td id="sms${data[0].vinculacion[i].idVinculacion}">
-                                    <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
-                                    <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                                        src="landing/images/note.svg" height="20">
-                                    </a>
-                                </td>
-                                </tr>`;
-
                     }
                     container.append(tr);
                     // ESTADO DE LICENCIAS
@@ -591,7 +576,7 @@
                                 <td id="enviadoA${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].envio}</td>
                                 <td id="sms${data[0].vinculacionR[index].idVinculacion}">
                                     <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacionR[index].idVinculacion}">
-                                    <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    <a  onclick="javascript:smsAndroid(${data[0].vinculacionR[index].idVinculacion});" data-toggle="tooltip" data-placement="right" title="Enviar
                                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                                         src="landing/images/note.svg" height="20">
                                     </a>

@@ -560,7 +560,7 @@ function vinculacionAndroidEditar() {
                 <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoA${data.idVinculacion}">${data.envio}</td>
                 <td id="sms${data.idVinculacion}">
-                    <a  onclick="javascript:modalWindowsEditar(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    <a  onclick="javascript:smsAndroid(${data.idVinculacion});" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="landing/images/note.svg" height="20">
                 </a>
@@ -598,7 +598,7 @@ function modoAndroid(id) {
     $("#tdNumero" + id).on("click", function () {
         $(this).addClass("editable");
         $(this).html(
-            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="15" />'
+            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="9" />'
         );
         $(this).children().first().focus();
         $(this)
@@ -644,4 +644,111 @@ function modoAndroid(id) {
                 // actividad_empleado();
             });
     });
+}
+
+// ? ENVIAR SMS
+function enviarSms(id) {
+    console.log(id);
+    $.ajax({
+        type: "get",
+        url: "/smsAndroid",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 0) {
+                $.notifyClose();
+                $.notify({
+                    message: "\nRegistrar número de celular del empleado.",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-ver'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                if (data == 1) {
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nTenemos problemas con el servidor mensajeria.Comunicarse con nosotros",
+                        icon: 'admin/images/warning.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nSMS enviado.",
+                        icon: 'admin/images/checked.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
+            }
+        },
+        error: function () { }
+    });
+}
+
+// ? MODAL DE DECISION DE ENVIAR SMS
+function smsAndroid(id) {
+    alertify
+        .confirm(
+            "¿Desea enviar sms a empleado?",
+            function (e) {
+                if (e) {
+                    enviarSms(id);
+                }
+            }
+        )
+        .setting({
+            title: "Modificar Actividad",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                // actividad_empleado();
+            },
+        });
 }
