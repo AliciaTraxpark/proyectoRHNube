@@ -682,7 +682,7 @@ function vinculacionAndroidEditar() {
                 var tr = `<tr onclick="javascript:modoAndroid(${data.idVinculacion})">
                 <td>${data.dispositivo_descripcion}</td>
                 <td> CEL ${data.contar}</td>
-                <td id="tdNumero"${data.idVinculacion}>${data.numero}</td>
+                <td id="tdNumero${data.idVinculacion}">${data.numero}</td>
                 <td class="hidetext">${data.codigo}</td>
                 <td id="enviadoA${data.idVinculacion}">${data.envio}</td>
                 <td id="sms${data.idVinculacion}">
@@ -738,7 +738,7 @@ function modoAndroid(id) {
                     $(this).parent().removeClass("editable");
                     alertify
                         .confirm(
-                            "¿Desea modificar nombre de la actividad?",
+                            "¿Desea modificar número de celular?",
                             function (e) {
                                 if (e) {
                                     editarNumero(id, newContent);
@@ -746,7 +746,7 @@ function modoAndroid(id) {
                             }
                         )
                         .setting({
-                            title: "Modificar Actividad",
+                            title: "Modificar",
                             labels: {
                                 ok: "Aceptar",
                                 cancel: "Cancelar",
@@ -826,6 +826,7 @@ function enviarSms(id) {
                         spacing: 35
                     });
                 } else {
+                    dispositivosAndroid();
                     $.notifyClose();
                     $.notify({
                         message: "\nSMS enviado.",

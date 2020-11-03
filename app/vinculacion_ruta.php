@@ -17,7 +17,8 @@ class vinculacion_ruta extends Model
         'envio',
         'modelo',
         'idModo',
-        'celular'
+        'celular',
+        'imei_androidID'
     ];
     public $timestamps = false;
 }

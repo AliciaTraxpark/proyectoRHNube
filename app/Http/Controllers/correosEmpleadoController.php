@@ -110,6 +110,9 @@ class correosEmpleadoController extends Controller
             if ($err) {
                 return 1;
             } else {
+                $vinculacion_ruta->envio = $vinculacion_ruta->envio + 1;
+                $vinculacion_ruta->fecha_envio = Carbon::now();
+                $vinculacion_ruta->save();
                 return response()->json($vinculacion_ruta, 200);
             }
         } else {
