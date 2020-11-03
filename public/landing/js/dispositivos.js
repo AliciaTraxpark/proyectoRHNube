@@ -552,8 +552,13 @@ function dispositivosAndroid() {
                                 </td>
                                 </tr>`;
                 }
+                containerA.append(trA);
+                if(data[index].modelo !== null){
+                    $("#trA"+data[index].idV).find("td:eq(1)").text(data[index].modelo);
+                }else{
+                    $("#trA"+data[index].idV).find("td:eq(1)").text("CEL " + index);
+                }
             }
-            containerA.append(trA);
         },
         error: function () { }
     });

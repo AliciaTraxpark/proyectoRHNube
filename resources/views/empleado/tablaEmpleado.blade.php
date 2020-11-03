@@ -163,7 +163,7 @@
         </tr>
     </thead>
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
-        @foreach ($tabla_empleado as $tabla_empleados)
+                        @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
             <td class="text-center"><input type="checkbox" name="selec" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
@@ -212,25 +212,25 @@
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <div class="custom-control custom-switch mb-2">
-                            @if($tabla_empleados->estadoCR == true)
+                                                        @if($tabla_empleados->estadoCR == true)
                             <input type="checkbox" class="custom-control-input"
                                 id="customSwitchCRW{{$tabla_empleados->emple_id}}" checked>
-                            @else
+                                                            @else
                             <input type="checkbox" class="custom-control-input"
                                 id="customSwitchCRW{{$tabla_empleados->emple_id}}">
-                            @endif
+                                                                @endif
                             <label class="custom-control-label" for="customSwitchCRW{{$tabla_empleados->emple_id}}"
                                 style="font-weight: bold"></label>
                         </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @foreach($tabla_empleados->vinculacion as $tablaV)
-                        @if($tablaV["dispositivoD"] == "WINDOWS")
+                                                            @foreach($tabla_empleados->vinculacion as $tablaV)
+                                                            @if($tablaV["dispositivoD"] == "WINDOWS")
                         <div class="dropdown-item">
-                            @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
-                            'a')
+                                                                @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
+                                                                'a')
                             <div class="custom-control custom-switch mb-2">
-                                @if(empty($tablaV['pc']) === true)
+                                                                    @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
                                     onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
@@ -246,7 +246,7 @@
                             </div>
                             @else
                             <div class="custom-control custom-switch mb-2">
-                                @if(empty($tablaV['pc']) === true)
+                                                                            @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
@@ -300,19 +300,19 @@
     </tbody>
 </table>
 <script>
-    $('[data-toggle="tooltip"]').tooltip();
-    $('#enviarCorreosMasivos').hide();
-    $('#enviarAndroidMasivos').hide();
-    $('#enviarMasivo').hide();
-    $('#filter_col2').hide();
-    $('#filter_col3').hide();
-    $('#filter_col4').hide();
-    $('#filter_col5').hide();
-    $('#filter_col6').hide();
-    var seleccionarTodos = $('#selectT');
-    var table = $('#tablaEmpleado');
-    var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
-    var CheckBoxMarcados = 0;
+                                                                $('[data-toggle="tooltip"]').tooltip();
+                                                                $('#enviarCorreosMasivos').hide();
+                                                                $('#enviarAndroidMasivos').hide();
+                                                                $('#enviarMasivo').hide();
+                                                                $('#filter_col2').hide();
+                                                                $('#filter_col3').hide();
+                                                                $('#filter_col4').hide();
+                                                                $('#filter_col5').hide();
+                                                                $('#filter_col6').hide();
+                                                                var seleccionarTodos = $('#selectT');
+                                                                var table = $('#tablaEmpleado');
+                                                                var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
+                                                                var CheckBoxMarcados = 0;
 
     seleccionarTodos.on('click', function () {
         if (seleccionarTodos.is(":checked")) {
@@ -330,7 +330,7 @@
     });
 </script>
 <script>
-    function editarEmpleado(idempleado){
+                                                                function editarEmpleado(idempleado){
     $('#form-ver').modal();
     $( "#detallehorario_ed" ).empty();
     $('#smartwizard1').smartWizard("reset");
@@ -570,7 +570,7 @@
                         if(data[0].vinculacionR[index].dispositivoD == 'ANDROID'){
                             var trA = `<tr id="trA${data[0].vinculacionR[index].idVinculacion}" onclick="javascript:modoAndroid(${data[0].vinculacionR[index].idVinculacion})">
                                 <td>${data[0].vinculacionR[index].dispositivoD}</td>
-                                <td>Android</td>
+                                <td id="tdCel"></td>
                                 <td id="tdNumero${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].numero}</td>
                                 <td class="hidetext">${data[0].vinculacionR[index].codigo}</td>
                                 <td id="enviadoA${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].envio}</td>
@@ -583,8 +583,14 @@
                                 </td>
                                 </tr>`;
                         }
+                        containerA .append(trA);
+                        // MODELO DEL CELULAR
+                        if(data[0].vinculacionR[index].modelo != null){
+                            $("#trA"+data[0].vinculacionR[index].idVinculacion).find("td:eq(1)").text(data[0].vinculacionR[index].modelo);
+                        }else{
+                            $("#trA"+data[0].vinculacionR[index].idVinculacion).find("td:eq(1)").text("CEL " + i);
+                        }
                     }
-                    containerA .append(trA);
             },
             error: function () {}
         });
@@ -801,7 +807,7 @@ function verDEmpleado(idempleadoVer){
 }
 </script>
 <script>
-    function filterGlobal() {
+                                                                                                                        function filterGlobal() {
         $('#tablaEmpleado').DataTable().search(
             $('#global_filter').val(),
 
@@ -896,7 +902,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
 <script>
-    function eliminarEmpleado() {
+                                                                                                                        function eliminarEmpleado() {
         var allVals = [];
 
 
@@ -978,7 +984,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- CORREO MASIVO--}}
 <script>
-    function CorreosMasivos() {
+                                                                                                                            function CorreosMasivos() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
@@ -1074,7 +1080,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- ANDROID MASIVO--}}
 <script>
-    function androidMasivos() {
+                                                                                                                            function androidMasivos() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
@@ -1150,7 +1156,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- AMBAS PLATAFORMAS--}}
 <script>
-    function ambasPlataformas() {
+                                                                                                                            function ambasPlataformas() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
