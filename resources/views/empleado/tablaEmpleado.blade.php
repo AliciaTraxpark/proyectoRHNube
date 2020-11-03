@@ -813,7 +813,7 @@ function verDEmpleado(idempleadoVer){
         });
 
         // SELECT DEFECTO PARA BUSQUEDA
-        $('#select').val(5).trigger('change');
+        $('#select').val(4).trigger('change');
     });
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
