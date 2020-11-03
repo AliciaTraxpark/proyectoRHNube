@@ -220,4 +220,18 @@ class vinculacionDispositivoController extends Controller
         }
         return response()->json($vinculacion_ruta, 200);
     }
+
+    public function listaVinculacionA(Request $request)
+    {
+        $idempleado = $request->get('idE');
+        // ? VINCULACIÓN DE RUTA
+        $vinculacionRuta = DB::table('vinculacion_ruta as vr')
+            ->join('modo as m', 'm.id', '=', 'vr.idModo')
+            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+            ->select('vr.id as idV', 'vr.modelo as modelo', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'td.dispositivo_descripcion as dispositivoD', 'vr.celular as numero')
+            ->where('vr.idEmpleado', '=', $idempleado)
+            ->groupBy('vr.id')
+            ->get();
+        return response()->json($vinculacionRuta, 200);
+    }
 }

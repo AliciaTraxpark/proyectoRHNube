@@ -232,6 +232,7 @@ $('#v_CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindowsEditar);
 //*************************************************************************** */
 $('#tbodyDispositivo').empty();
 $('#v_tbodyDispositivo').empty();
+$('#v_tbodyDispositivoA').empty();
 //WINDOWS
 //MODAL WINDOWS
 function modalWindows(id) {
@@ -518,6 +519,46 @@ function controlPuerta(idPuerta) {
 
     }
 }
+// ? CARGAR DATOS EN EDITAR
+function dispositivosAndroid() {
+    var idEmpleado = $('#v_id').val();
+    $('#v_tbodyDispositivoA').empty();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/listaVA",
+        data: {
+            idE: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var containerA = $('#v_tbodyDispositivoA');
+            for (let index = 0; index < data.length; index++) {
+                if (data[index].dispositivoD == 'ANDROID') {
+                    var trA = `<tr id="trA${data[index].idV}" onclick="javascript:modoAndroid(${data[index].idV})">
+                                <td>${data[index].dispositivoD}</td>
+                                <td>Android</td>
+                                <td id="tdNumero${data[index].idV}">${data[index].numero}</td>
+                                <td class="hidetext">${data[index].codigo}</td>
+                                <td id="enviadoA${data[index].idV}">${data[index].envio}</td>
+                                <td id="sms${data[index].idV}">
+                                    <input style="display: none;" id="android${data[index].idEmpleado}" value="${data[index].idV}">
+                                    <a  onclick="javascript:smsAndroid(${data[index].idV});" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                        src="landing/images/note.svg" height="20">
+                                    </a>
+                                </td>
+                                </tr>`;
+                }
+            }
+            containerA.append(trA);
+        },
+        error: function () { }
+    });
+
+}
 // ? VINCULACION DE MODO EN RUTA
 function vinculacionAndroidEditar() {
     var idEmpleado = $('#v_id').val();
@@ -588,13 +629,14 @@ function editarNumero(id, numero) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        success: function (data) { },
+        success: function (data) {
+            dispositivosAndroid();
+        },
         error: function () { }
     });
 }
 // ? abrir input para editar número
 function modoAndroid(id) {
-    console.log(id);
     $("#tdNumero" + id).on("click", function () {
         $(this).addClass("editable");
         $(this).html(
@@ -631,7 +673,7 @@ function modoAndroid(id) {
                             closable: false,
                             transition: "zoom",
                             oncancel: function (closeEvent) {
-                                // actividad_empleado();
+                                dispositivosAndroid();
                             },
                         });
                 }
@@ -641,7 +683,7 @@ function modoAndroid(id) {
             .children()
             .first()
             .blur(function () {
-                // actividad_empleado();
+                dispositivosAndroid();
             });
     });
 }
@@ -717,6 +759,7 @@ function enviarSms(id) {
                             '</div>',
                         spacing: 35
                     });
+                    dispositivosAndroid()
                 }
             }
         },
@@ -748,7 +791,7 @@ function smsAndroid(id) {
             closable: false,
             transition: "zoom",
             oncancel: function (closeEvent) {
-                // actividad_empleado();
+                dispositivosAndroid();
             },
         });
 }
