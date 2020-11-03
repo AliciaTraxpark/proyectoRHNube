@@ -221,6 +221,30 @@ class vinculacionDispositivoController extends Controller
         return response()->json($vinculacion_ruta, 200);
     }
 
+    public function listaVinculacionW(Request $request)
+    {
+        $idempleado = $request->get('idE');
+        // ? VINCULACIÓN DE CONTROL REMOTO
+        $vinculacion = DB::table('vinculacion as v')
+            ->join('modo as m', 'm.id', '=', 'v.idModo')
+            ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
+            ->join('licencia_empleado as le', 'le.id', '=', 'v.idLicencia')
+            ->select(
+                'v.id as idVinculacion',
+                'v.pc_mac as pc',
+                'v.envio as envio',
+                'v.hash as codigo',
+                'le.idEmpleado',
+                'le.licencia as licencia',
+                'le.id as idLicencia',
+                'le.disponible as disponible',
+                'td.dispositivo_descripcion as dispositivoD'
+            )
+            ->where('v.idEmpleado', '=', $idempleado)
+            ->get();
+        return response()->json($vinculacion, 200);
+    }
+
     public function listaVinculacionA(Request $request)
     {
         $idempleado = $request->get('idE');

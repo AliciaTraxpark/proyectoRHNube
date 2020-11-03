@@ -648,6 +648,8 @@ $(document).ready(function () {
         if (stepNumber == 6) {
             $("button.sw-btn-prev").hide();
             $("button.sw-btn-next").hide();
+            dispositivosWindows();
+            dispositivosAndroid();
             $("#FinalizarEmpleadoEditar").show();
         }
     });

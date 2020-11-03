@@ -163,15 +163,16 @@
         </tr>
     </thead>
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
-                        @foreach ($tabla_empleado as $tabla_empleados)
+        @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
             <td class="text-center"><input type="checkbox" name="selec" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
-            <td class="text-center"><a  onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
-                    style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}"
-                        height="15"></a>&nbsp;<a data-toggle="tooltip" data-original-title="Dar de baja" data-placement="right" onclick="marcareliminar({{$tabla_empleados->emple_id}})"
-                    style="cursor: pointer"><img src="{{asset('landing/images/abajo.svg')}}" height="17"></a>&nbsp;
+            <td class="text-center"><a onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
+                    style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;<a
+                    data-toggle="tooltip" data-original-title="Dar de baja" data-placement="right"
+                    onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
+                        src="{{asset('landing/images/abajo.svg')}}" height="17"></a>&nbsp;
                 <a class="verEmpleado" onclick="verDEmpleado({{$tabla_empleados->emple_id}})" data-toggle="tooltip"
                     data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
                     pointer">
@@ -181,9 +182,9 @@
             {{--<td class="text-center">&nbsp;
                  @if (empty($tabla_empleados->emple_foto) === true)
                 <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
-                @else
-                <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
-                @endif
+            @else
+            <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
+            @endif
             </td>--}}
             <td class="text-center">
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
@@ -212,25 +213,25 @@
                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="cursor: pointer">
                         <div class="custom-control custom-switch mb-2">
-                                                        @if($tabla_empleados->estadoCR == true)
+                            @if($tabla_empleados->estadoCR == true)
                             <input type="checkbox" class="custom-control-input"
                                 id="customSwitchCRW{{$tabla_empleados->emple_id}}" checked>
-                                                            @else
+                            @else
                             <input type="checkbox" class="custom-control-input"
                                 id="customSwitchCRW{{$tabla_empleados->emple_id}}">
-                                                                @endif
+                            @endif
                             <label class="custom-control-label" for="customSwitchCRW{{$tabla_empleados->emple_id}}"
                                 style="font-weight: bold"></label>
                         </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            @foreach($tabla_empleados->vinculacion as $tablaV)
-                                                            @if($tablaV["dispositivoD"] == "WINDOWS")
+                        @foreach($tabla_empleados->vinculacion as $tablaV)
+                        @if($tablaV["dispositivoD"] == "WINDOWS")
                         <div class="dropdown-item">
-                                                                @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
-                                                                'a')
+                            @if($tablaV['disponible'] == 'c' || $tablaV['disponible'] == 'e' || $tablaV['disponible'] ==
+                            'a')
                             <div class="custom-control custom-switch mb-2">
-                                                                    @if(empty($tablaV['pc']) === true)
+                                @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}" checked
                                     onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
@@ -246,7 +247,7 @@
                             </div>
                             @else
                             <div class="custom-control custom-switch mb-2">
-                                                                            @if(empty($tablaV['pc']) === true)
+                                @if(empty($tablaV['pc']) === true)
                                 <input type="checkbox" class="custom-control-input"
                                     id="customSwitchCRDisp{{$tablaV['idVinculacion']}}"
                                     onclick="javasscript:estadoDispositivoCR({{$tabla_empleados->emple_id}},{{$tablaV['idVinculacion']}},'PC {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
@@ -300,7 +301,7 @@
     </tbody>
 </table>
 <script>
-                                                                $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
                                                                 $('#enviarCorreosMasivos').hide();
                                                                 $('#enviarAndroidMasivos').hide();
                                                                 $('#enviarMasivo').hide();
@@ -330,7 +331,7 @@
     });
 </script>
 <script>
-                                                                function editarEmpleado(idempleado){
+    function editarEmpleado(idempleado){
     $('#form-ver').modal();
     $( "#detallehorario_ed" ).empty();
     $('#smartwizard1').smartWizard("reset");
@@ -505,92 +506,7 @@
                     $('#file2').fileinput('destroy');
                     cargarFile2();
                 }
-                $('#v_tbodyDispositivo').empty();
-                var container = $('#v_tbodyDispositivo');
-
-                for (var i = 0; i < data[0].vinculacion.length; i++) {
-                    if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
-                            var tr = `<tr id="tr${data[0].vinculacion[i].idVinculacion}">
-                            <td>${data[0].vinculacion[i].dispositivoD}</td>
-                            <td> PC ${i}</td>
-                            <td>${data[0].vinculacion[i].licencia}</td>
-                            <td class="hidetext">${data[0].vinculacion[i].codigo}</td>
-                            <td id="enviadoW${data[0].vinculacion[i].idVinculacion}">${data[0].vinculacion[i].envio}</td>
-                            <td id="estado${data[0].vinculacion[i].idVinculacion}"></td>
-                            <td id="correo${data[0].vinculacion[i].idVinculacion}">
-                                <a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                                    src="landing/images/note.svg" height="20">
-                                </a>
-                            </td>
-                            <td id="inactivar${data[0].vinculacion[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[0].vinculacion[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
-                            </tr>`;
-                    }
-                    container.append(tr);
-                    // ESTADO DE LICENCIAS
-
-                    if(data[0].vinculacion[i].disponible == 'c'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Creado");
-                    }
-                    if(data[0].vinculacion[i].disponible == 'e'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Enviado");
-                    }
-                    if(data[0].vinculacion[i].disponible == 'a'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(5)").text("Activado");
-                    }
-                    if(data[0].vinculacion[i].disponible == 'i'){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(4)").text("Inactivo");
-                        $('#inactivar'+data[0].vinculacion[i].idVinculacion).empty();
-                        $('#correo' + data[0].vinculacion[i].idVinculacion).empty();
-                        if(data[0].vinculacion[i].dispositivoD == 'WINDOWS'){
-                                var td = `<a  onclick="javascript:modalWindowsEditar(${data[0].vinculacion[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                            correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
-                                                src="landing/images/email (4).svg" height="20">
-                                            </a>`;
-                        }else{
-                            var td = `<input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacion[i].idVinculacion}">
-                                        <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-                                        correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
-                                            src="landing/images/email (4).svg" height="20">
-                                        </a>`;
-                        }
-                        $('#correo' + data[0].vinculacion[i].idVinculacion).append(td);
-                    }
-
-                    // NOMBRE DE PC
-                    if(data[0].vinculacion[i].pc != null){
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text(data[0].vinculacion[i].pc);
-                    }else{
-                        $("#tr"+data[0].vinculacion[i].idVinculacion).find("td:eq(1)").text("PC " + i);
-                    }
-                }
-                 //VINCULACION MODO RUTA
-                 var containerA = $('#v_tbodyDispositivoA');
-                    for (let index = 0; index < data[0].vinculacionR.length; index++) {
-                        if(data[0].vinculacionR[index].dispositivoD == 'ANDROID'){
-                            var trA = `<tr id="trA${data[0].vinculacionR[index].idVinculacion}" onclick="javascript:modoAndroid(${data[0].vinculacionR[index].idVinculacion})">
-                                <td>${data[0].vinculacionR[index].dispositivoD}</td>
-                                <td id="tdCel"></td>
-                                <td id="tdNumero${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].numero}</td>
-                                <td class="hidetext">${data[0].vinculacionR[index].codigo}</td>
-                                <td id="enviadoA${data[0].vinculacionR[index].idVinculacion}">${data[0].vinculacionR[index].envio}</td>
-                                <td id="sms${data[0].vinculacionR[index].idVinculacion}">
-                                    <input style="display: none;" id="android${data[0].emple_id}" value="${data[0].vinculacionR[index].idVinculacion}">
-                                    <a  onclick="javascript:smsAndroid(${data[0].vinculacionR[index].idVinculacion});" data-toggle="tooltip" data-placement="right" title="Enviar
-                                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                                        src="landing/images/note.svg" height="20">
-                                    </a>
-                                </td>
-                                </tr>`;
-                        }
-                        containerA .append(trA);
-                        // MODELO DEL CELULAR
-                        if(data[0].vinculacionR[index].modelo != null){
-                            $("#trA"+data[0].vinculacionR[index].idVinculacion).find("td:eq(1)").text(data[0].vinculacionR[index].modelo);
-                        }else{
-                            $("#trA"+data[0].vinculacionR[index].idVinculacion).find("td:eq(1)").text("CEL " + i);
-                        }
-                    }
+                 
             },
             error: function () {}
         });
@@ -807,7 +723,7 @@ function verDEmpleado(idempleadoVer){
 }
 </script>
 <script>
-                                                                                                                        function filterGlobal() {
+    function filterGlobal() {
         $('#tablaEmpleado').DataTable().search(
             $('#global_filter').val(),
 
@@ -902,7 +818,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
 <script>
-                                                                                                                        function eliminarEmpleado() {
+    function eliminarEmpleado() {
         var allVals = [];
 
 
@@ -984,7 +900,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- CORREO MASIVO--}}
 <script>
-                                                                                                                            function CorreosMasivos() {
+    function CorreosMasivos() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
@@ -1080,7 +996,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- ANDROID MASIVO--}}
 <script>
-                                                                                                                            function androidMasivos() {
+    function androidMasivos() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));
@@ -1156,7 +1072,7 @@ function verDEmpleado(idempleadoVer){
 </script>
 {{-- AMBAS PLATAFORMAS--}}
 <script>
-                                                                                                                            function ambasPlataformas() {
+    function ambasPlataformas() {
         var correoEmpleado = [];
         $(".sub_chk:checked").each(function () {
             correoEmpleado.push($(this).attr('data-id'));

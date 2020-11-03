@@ -1,7 +1,7 @@
 //EDITAR
 $('#customSwitchC1').prop('checked', true);
 $('#bodyModoControlR').show();
-$('#bodyModoControlA').hide();
+$('#bodyModoControlRuta').hide();
 $('#customSwitchC1').on('change.bootstrapSwitch', function (event) {
     if (event.target.checked == true) {
         $('#bodyModoControlR').show();
@@ -440,6 +440,7 @@ function enviarCorreoWindowsEditar() {
                 cont.append(tdE);
             }
             container.append(td);
+            dispositivosWindows();
             $.notifyClose();
             $.notify({
                 message: "\nCorreo Enviado.",
@@ -519,7 +520,84 @@ function controlPuerta(idPuerta) {
 
     }
 }
-// ? CARGAR DATOS EN EDITAR
+// ? CARGAR DATOS DE DISPOSITIVOS WINDOWS EN EDITAR
+function dispositivosWindows() {
+    var idEmpleado = $('#v_id').val();
+
+    $('#v_tbodyDispositivo').empty();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/listaVW",
+        data: {
+            idE: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var container = $('#v_tbodyDispositivo');
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].dispositivoD == 'WINDOWS') {
+                    var tr = `<tr id="tr${data[i].idVinculacion}">
+                        <td>${data[i].dispositivoD}</td>
+                        <td> PC ${i}</td>
+                        <td>${data[i].licencia}</td>
+                        <td class="hidetext">${data[i].codigo}</td>
+                        <td id="enviadoW${data[i].idVinculacion}">${data[i].envio}</td>
+                        <td id="estado${data[i].idVinculacion}"></td>
+                        <td id="correo${data[i].idVinculacion}">
+                            <a  onclick="javascript:modalWindowsEditar(${data[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+                                src="landing/images/note.svg" height="20">
+                            </a>
+                        </td>
+                        <td id="inactivar${data[i].idVinculacion}"><a onclick="javascript:inactivarLicenciaWEditar(${data[i].idVinculacion})" class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                        </tr>`;
+                }
+                container.append(tr);
+                // ESTADO DE LICENCIAS
+
+                if (data[i].disponible == 'c') {
+                    $("#tr" + data[i].idVinculacion).find("td:eq(5)").text("Creado");
+                }
+                if (data[i].disponible == 'e') {
+                    $("#tr" + data[i].idVinculacion).find("td:eq(5)").text("Enviado");
+                }
+                if (data[i].disponible == 'a') {
+                    $("#tr" + data[i].idVinculacion).find("td:eq(5)").text("Activado");
+                }
+                if (data[i].disponible == 'i') {
+                    $("#tr" + data[i].idVinculacion).find("td:eq(4)").text("Inactivo");
+                    $('#inactivar' + data[i].idVinculacion).empty();
+                    $('#correo' + data[i].idVinculacion).empty();
+                    if (data[i].dispositivoD == 'WINDOWS') {
+                        var td = `<a  onclick="javascript:modalWindowsEditar(${data[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                        correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
+                                            src="landing/images/email (4).svg" height="20">
+                                        </a>`;
+                    } else {
+                        var td = `<input style="display: none;" id="android${data[i].idEmpleado}" value="${data[i].idVinculacion}">
+                                    <a  onclick="$('#v_androidEmpleado').modal();$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                                    correo empleado" data-original-title="Habilitar activación" style="cursor: pointer"><img
+                                        src="landing/images/email (4).svg" height="20">
+                                    </a>`;
+                    }
+                    $('#correo' + data[i].idVinculacion).append(td);
+                }
+
+                // NOMBRE DE PC
+                if (data[i].pc != null) {
+                    $("#tr" + data[i].idVinculacion).find("td:eq(1)").text(data[i].pc);
+                } else {
+                    $("#tr" + data[i].idVinculacion).find("td:eq(1)").text("PC " + i);
+                }
+            }
+        },
+        error: function () { }
+    });
+}
+// ? CARGAR DATOS DE DISPOSITIVOS ANDROID EN EDITAR
 function dispositivosAndroid() {
     var idEmpleado = $('#v_id').val();
     $('#v_tbodyDispositivoA').empty();
@@ -553,11 +631,13 @@ function dispositivosAndroid() {
                                 </tr>`;
                 }
                 containerA.append(trA);
-                if(data[index].modelo !== null){
-                    $("#trA"+data[index].idV).find("td:eq(1)").text(data[index].modelo);
-                }else{
-                    $("#trA"+data[index].idV).find("td:eq(1)").text("CEL " + index);
+                if (data[index].modelo !== null) {
+                    $("#trA" + data[index].idV).find("td:eq(1)").text(data[index].modelo);
+                } else {
+                    $("#trA" + data[index].idV).find("td:eq(1)").text("CEL " + index);
                 }
+                $('#customSwitchC2').prop('checked', true);
+                $('#bodyModoControlRuta').show();
             }
         },
         error: function () { }
