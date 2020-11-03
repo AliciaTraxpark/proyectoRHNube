@@ -78,3 +78,6 @@ Route::post("EmpleadoMovil", "apimovilController@EmpleadoMovil")->middleware('to
 Route::post("controladoresAct", "apimovilController@controladoresAct")->middleware('token')->middleware('apilogger');
 Route::post("marcacionMovil", "apimovilController@marcacionMovil")->middleware('token')->middleware('apilogger');
 Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
+
+// ? APIS DE MODO CONTROL RUTA
+Route::post("loginRuta", 'apiSeguimientoRutaContoller@login')->middleware('apilogger');
