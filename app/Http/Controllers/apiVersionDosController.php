@@ -684,4 +684,9 @@ class apiVersionDosController extends Controller
         }
         return response()->json("sin_dispositivo", 400);
     }
+    // ? UPDATE DE DOWNLOAND 64
+    public function updteDonwloand64()
+    {
+        return response()->download(app_path() . "/file/x64/RHnubeX64.zip");
+    }
 }
