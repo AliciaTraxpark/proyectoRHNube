@@ -139,6 +139,21 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
+    <li style="display: none">
+
+        <a href="javascript: void(0);">
+            <i data-feather="map-pin"></i>
+            <span>Modo: Control en ruta</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/ruta">Detalle Diario</a>
+            </li>
+        </ul>
+    </li>
+
     <li>
 
         <a href="javascript: void(0);">

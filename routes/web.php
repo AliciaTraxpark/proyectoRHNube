@@ -428,3 +428,6 @@ Route::get('/biblioteca', 'bibliotecaController@vista');
 Route::get('/politicas', function () {
     return view('politicas');
 })->name('politicas');
+
+// ? MODO CONTROL EN RUTA
+Route::get('ruta', 'controlRutaController@index');
