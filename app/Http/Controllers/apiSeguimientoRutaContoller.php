@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\actividad_empleado;
+use App\ubicacion;
+use App\ubicacion_ruta;
 use App\vinculacion_ruta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,7 +78,7 @@ class apiSeguimientoRutaContoller extends Controller
                                 "actividades" => $respuesta,
                                 "token" => $token->get()
                             ), 200);
-                        }else{
+                        } else {
                             return response()->json("imeiId_erroneo", 400);
                         }
                     }
@@ -88,5 +90,27 @@ class apiSeguimientoRutaContoller extends Controller
             }
         }
         return response()->json("empleado_no_exite", 400);
+    }
+
+    // ? PRUEBA DE REGISTRO DE LATITUD Y LONGITUD
+    public function registrarRuta(Request $request)
+    {
+        $ubicacion = new ubicacion();
+        $ubicacion->hora_ini = $request->get('hora_ini');
+        $ubicacion->hora_fin = $request->get('hora_fin');
+        $ubicacion->idHorario_dias = $request->get('horario_dias');
+        $ubicacion->idActividad = $request->get('idActividad');
+        $ubicacion->idEmpleado = $request->get('idEmpleado');
+        $ubicacion->save();
+
+        $idUbicacion = $ubicacion->id;
+
+        $ubicacion_ruta = new ubicacion_ruta();
+        $ubicacion_ruta->idUbicacion = $idUbicacion;
+        $ubicacion_ruta->ubicacion_ini = DB::raw("GeomFromText('POINT(" . $request->get('latitud_ini') . "  " . $request->get('longitud_ini') . ")')");
+        $ubicacion_ruta->ubicacion_fin = DB::raw("GeomFromText('POINT(" . $request->get('latitud_fin') . "  " . $request->get('longitud_fin') . ")')");
+        $ubicacion_ruta->save();
+
+        return response()->json($ubicacion, 200);
     }
 }
