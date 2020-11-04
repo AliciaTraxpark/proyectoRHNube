@@ -7,6 +7,10 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
 <div class="row page-title">
@@ -25,6 +29,48 @@
         </div>
     </div>
 </div>
+{{-- CONTENIDO DE VISTA --}}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row pt-4">
+            <div class="col-xl-5">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label pl-5 colR">Fecha:</label>
+                    <div class="input-group col-md-7 text-center colR" style="padding-left: 0px;padding-right: 0px;"
+                        id="fechaSelec">
+                        <input type="text" id="fecha" class="form-control" data-input>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text form-control flatpickr">
+                                <a class="input-button" data-toggle>
+                                    <i class="uil uil-calender"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-1"></div>
+            <div class="col-xl-5">
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label colR">Empleado:</label>
+                    <div class="col-lg-10 colR">
+                        <select id="empleado" data-plugin="customselect" class="form-control">
+                            <option value="" disabled selected>Seleccionar</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
+                <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                    onclick="javascript:buscarUbicaciones()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                        height="18"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12" id="card"></div>
+</div>
+{{-- FINALIZACION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -67,7 +113,13 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+<script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection
 @section('script-bottom')
 <!-- init js -->

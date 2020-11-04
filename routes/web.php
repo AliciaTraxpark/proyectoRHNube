@@ -431,3 +431,4 @@ Route::get('/politicas', function () {
 
 // ? MODO CONTROL EN RUTA
 Route::get('ruta', 'controlRutaController@index');
+Route::post('rutaU', 'controlRutaController@show');
