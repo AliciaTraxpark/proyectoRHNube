@@ -12,12 +12,24 @@ var fechaValue = $("#fechaSelec").flatpickr({
     allowInput: true,
   });
   $(function () {
+    $('#idempleado').select2({
+        placeholder: 'Seleccionar',
+    language: {
+        inputTooShort: function (e) {
+            return "Escribir nombre o apellido";
+        },
+        loadingMore: function () { return "Cargando más resultados…" },
+        noResults: function () { return "No se encontraron resultados" }
+    },
+        minimumInputLength: 2
+      });
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
     $( "#fechaInput" ).change();
-
+    cambiarF();
   });
 function cargartabla (fecha) {
+    idemp=$('#idempleado').val();
     $('#tableZoom').empty();
     $('#tableZoom').html(' <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">'+
     '<thead id="datosHtm" style=" background: #edf0f1;color: #6c757d;"></thead>'+
@@ -35,7 +47,7 @@ function cargartabla (fecha) {
         type: "POST",
         url: "/reporteTablaMarca",
         data: {
-           fecha
+           fecha,idemp
         },
         async:false,
         headers: {
@@ -88,7 +100,7 @@ function cargartabla (fecha) {
         type: "POST",
         url: "/reporteTablaMarca",
         data: {
-           fecha
+           fecha,idemp
         },
         async:false,
         headers: {
