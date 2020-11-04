@@ -9,6 +9,9 @@
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet.css') }}" rel="stylesheet"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -29,6 +32,9 @@
         </div>
     </div>
 </div>
+<style>
+    .mapid { height: 500px; }
+</style>
 {{-- CONTENIDO DE VISTA --}}
 <div class="row">
     <div class="col-md-12">
@@ -118,6 +124,9 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet.js')}}"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection

@@ -108,24 +108,10 @@ function onMostrarUbicaciones() {
                         var horaDelGrupo = data[index].horaUbicacion;
                         var hora = data[index].horaUbicacion;
                         var labelDelGrupo = horaDelGrupo + ":00:00" + "-" + (parseInt(horaDelGrupo) + 1) + ":00:00";
-                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div><div class="row pt-2">`;
+                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div><div class="row col-12 pt-2">`;
                         for (var j = 0; j < 6; j++) {
                             if (data[index].minutos[j] != undefined) {
-                                card = `<div class="col-2">
-                                            <div class="col-md-12">
-                                                <div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid">
-                                                    <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
-                                                </div>
-                                            </div>
-                                        </div>`;
-                                grupo += card;
-                            } else {
-                                card = `<div class="col-2">
-                                            <div class="col-md-12">
-                                                <div>
-                                                    <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
-                                                </div>
-                                            </div>
+                                card = `<div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid">
                                         </div>`;
                                 grupo += card;
                             }
@@ -146,18 +132,20 @@ function changeMapeo() {
 }
 
 function ubicacionesMapa(horayJ) {
-    var onlyHora = horayJ.split(",")[0];
-    var j = horayJ.split(",")[1];
-    ubicaciones = [];
-    datos.forEach((hora) => {
-        if (hora.horaUbicacion == onlyHora) {
-            ubicaciones = hora.minutos[j];
-        }
-    });
-    for (let index = 0; index < ubicaciones.length; index++) {
-        const element = ubicaciones[index].ubicaciones;
-        element.forEach(point => {
-            console.log(point);
-        });
-    }
+    // var onlyHora = horayJ.split(",")[0];
+    // var j = horayJ.split(",")[1];
+    // ubicaciones = [];
+    // datos.forEach((hora) => {
+    //     if (hora.horaUbicacion == onlyHora) {
+    //         ubicaciones = hora.minutos[j];
+    //     }
+    // });
+    // for (let index = 0; index < ubicaciones.length; index++) {
+    //     const element = ubicaciones[index].ubicaciones;
+    //     element.forEach(point => {
+    //         console.log(point);
+    //     });
+    // }
+
+    var map = L.map('mapid' + horayJ).setView([51.505, -0.09]);
 }
