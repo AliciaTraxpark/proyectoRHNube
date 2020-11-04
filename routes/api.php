@@ -83,3 +83,4 @@ Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware
 // ? APIS DE MODO CONTROL RUTA
 Route::post("loginRuta", 'apiSeguimientoRutaContoller@login')->middleware('apilogger');
 Route::post("ubicacion", 'apiSeguimientoRutaContoller@registrarRuta')->middleware('token')->middleware('apilogger');
+Route::post("listaActividadCRT", "apiSeguimientoRutaContoller@listaActividad")->middleware('token')->middleware('apilogger');
