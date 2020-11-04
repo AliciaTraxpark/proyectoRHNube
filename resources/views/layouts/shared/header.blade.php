@@ -142,10 +142,6 @@ use App\persona;
                         <i data-feather="edit" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
                         <span>Editar perfil</span>
                     </a>
-                    <a href="/delegarcontrol" class="dropdown-item notify-item">
-                        <i data-feather="corner-up-right" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
-                        <span>Delegar control</span>
-                    </a>
                     @endif
                     <a href="/soporte" class="dropdown-item notify-item">
                         <i data-feather="settings" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
@@ -155,6 +151,19 @@ use App\persona;
                         <i data-feather="mail" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
                         <span>Ticket de Sugerencia</span>
                     </a>
+                    @if ($usuario_organizacion[0]->rol_id==1)
+                    <a href="/delegarcontrol" class="dropdown-item notify-item">
+                        <i data-feather="corner-up-right" class="icon-dual icon-xs mr-2" style="color: #163552"></i>
+                        <span>Delegar control</span>
+                    </a>
+                    @endif
+
+                    <a href="/elegirorganizacion" class="dropdown-item
+                    notify-item">
+                    <i data-feather="arrow-up-left" class="icon-dual icon-xs
+                        mr-2" style="color: #163552"></i>
+                    <span>cambiar organizacion</span>
+                </a>
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item
                         notify-item">
@@ -162,12 +171,7 @@ use App\persona;
                             mr-2" style="color: #163552"></i>
                         <span>Cerrar sesión</span>
                     </a>
-                    <a href="/elegirorganizacion" class="dropdown-item
-                    notify-item">
-                    <i data-feather="arrow-up-left" class="icon-dual icon-xs
-                        mr-2" style="color: #163552"></i>
-                    <span>cambiar organizacion</span>
-                </a>
+
                 </div>
             </li>
         </ul>

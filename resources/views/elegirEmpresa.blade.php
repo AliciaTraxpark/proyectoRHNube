@@ -9,17 +9,19 @@ use App\invitado;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
-    <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+     {{--<link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">--}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 
 
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+
 
 </head>
 
@@ -57,6 +59,12 @@ use App\invitado;
         .body {
             background-color: #fbfbfb;
         }
+    .nav-link:hover svg,
+    .nav-link:focus svg,
+    .topnav-menu .nav-link:active svg {
+        color: #fff;
+    }
+
 
         @media (max-width: 767px) {
             .navbar {
@@ -89,7 +97,7 @@ use App\invitado;
             }
         }
     </style>
-    <header id="header-section">
+    <header id="header-section" style="    background: #163552;">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="container">
                 <div class="col-md-2">
@@ -102,11 +110,40 @@ use App\invitado;
                 </div>
                 <div class="col-md-4 text-right" style="padding-right: 0px;
 
-                left: 60px;">
-                    <div class="btn-group mt-2 mr-1">
+                left: 70px;">
+                <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
+                    <a  style="color: #fff!important" class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="false" aria-expanded="false">
+                        <span class="pro-user-name ml-1">
+                            <!-- <strong id="strongNombre" style="color:
+                                aliceblue;font-size:
+                                13px">Bienvenido(a), fgfg
+                            </strong>
+                            &nbsp;
+                            <img id="imgxs2"
+                                src="{{URL::asset('admin/assets//images/users/avatar-7.png')}}"
+                                class="avatar-xs rounded-circle mr-2" alt="Shreyu"
+                                /> -->
+                            <i data-feather="chevron-down"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" style="font-size:
+                        12.2px!important">
+                        <!-- item-->
+
+                        <!-- item-->
+                        <a href="{{ route('logout') }}" class="dropdown-item
+                            notify-item">
+                            <i data-feather="log-out" class="icon-dual icon-xs
+                                mr-2" style="color: #163552"></i>
+                            <span>Cerrar sesión</span>
+                        </a>
+                    </div>
+                </li>
+                    {{-- <div class="btn-group mt-2 mr-1">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" style="    background-color: #163552;">
-                            <i class="icon"><span data-feather="chevron-down"></span></i>
+                            aria-haspopup="true" aria-expanded="false" style=" border-color: #163552;   background-color: #163552;">
+                            <span class="pro-user-name ml-1"> <i data-feather="chevron-down"></i></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="{{ route('logout') }}" class="dropdown-item
@@ -117,7 +154,7 @@ use App\invitado;
                         </a>
 
                         </div>
-                    </div>
+                    </div> --}}
 
            {{--  <li class="dropdown d-lg-block" data-toggle="tooltip" data-placement="left" title="">
 
@@ -177,7 +214,7 @@ use App\invitado;
                                     <ul class="list-inline mb-0">
                                         <li class="list-inline-item pr-2">
                                             <a class="text-muted d-inline-block" data-toggle="tooltip"
-                                                data-placement="top" title="" data-original-title="Due date">
+                                                data-placement="top" title="" >
                                                 @php
                                                 $timestamp = strtotime( $organizaciones->created_at);
                                                 $fechaSola= date('d/m/Y', $timestamp );
@@ -210,16 +247,16 @@ use App\invitado;
 
         </div>
     </div>
-    <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
+   {{--  <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script> --}}
+{{--     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script> --}}
+{{--     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
-    <script src="{{asset('landing/js/landingpage.js')}}"></script>
+    <script src="{{asset('landing/js/landingpage.js')}}"></script> --}}
 
 
     <!-- Vendor js -->
-    {{-- <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script> --}}
-
+    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
     <!-- plugin js -->
 
     <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
