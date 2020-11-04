@@ -32,18 +32,6 @@ class apiSeguimientoRutaContoller extends Controller
             $vinculacion_ruta = vinculacion_ruta::where('id', '=', $idVinculacion)->get()->first();
             if ($vinculacion_ruta) {
                 if ($vinculacion_ruta->hash == $codigo) {
-                    // ? ACTIVIDADES DEL EMPLEADO -> POR AHORA ACTIVIDADES DE CONTROL REMOTO
-                    $respuesta = [];
-                    $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->get();
-                    foreach ($actividad_empleado as $act) {
-                        $actividad = DB::table('actividad as a')
-                            ->select('a.Activi_id', 'a.Activi_Nombre')
-                            ->where('a.Activi_id', '=', $act->idActividad)
-                            ->get()
-                            ->first();
-                        $actividad->estado = $act->estado;
-                        array_push($respuesta, $actividad);
-                    }
                     // * VERIFICAR IMEI O ANDROID ID
                     if (is_null($vinculacion_ruta->imei_androidID) == true) {
                         //? GUARDANDO MODELO DE CELULAR
@@ -60,7 +48,6 @@ class apiSeguimientoRutaContoller extends Controller
                         return response()->json(array(
                             "idEmpleado" => $empleado->emple_id,
                             "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                            "actividades" => $respuesta,
                             "token" => $token->get()
                         ), 200);
                     } else {
@@ -75,7 +62,6 @@ class apiSeguimientoRutaContoller extends Controller
                             return response()->json(array(
                                 "idEmpleado" => $empleado->emple_id,
                                 "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                "actividades" => $respuesta,
                                 "token" => $token->get()
                             ), 200);
                         } else {
@@ -112,5 +98,24 @@ class apiSeguimientoRutaContoller extends Controller
         $ubicacion_ruta->save();
 
         return response()->json($ubicacion, 200);
+    }
+
+    // ? LISTA DE ACTIVIDADES PARA CONTROL RUTA
+    public function listaActividad(Request $request)
+    {
+        // ? ACTIVIDADES DEL EMPLEADO -> POR AHORA ACTIVIDADES DE CONTROL REMOTO
+        $respuesta = [];
+        $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $request->get('idEmpleado'))->get();
+        foreach ($actividad_empleado as $act) {
+            $actividad = DB::table('actividad as a')
+                ->select('a.Activi_id', 'a.Activi_Nombre')
+                ->where('a.Activi_id', '=', $act->idActividad)
+                ->get()
+                ->first();
+            $actividad->estado = $act->estado;
+            array_push($respuesta, $actividad);
+        }
+
+        return response()->json($respuesta, 200);
     }
 }
