@@ -559,7 +559,11 @@ function calendario() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
 
                 }
                 else {

@@ -37,10 +37,8 @@ function calendario_edit() {
         },
         eventClick: function (info) {
             id = info.event.id;
-            console.log(info);
-            console.log(info.event.id);
-            console.log(info.event.title);
-            console.log(info.event.textColor);
+
+            console.log(info.event.extendedProps.horaAdic);
             var event = calendarioedit.getEventById(id);
            if(info.event.textColor=='111111' || info.event.textColor=='1' || info.event.textColor=='0'){
 
@@ -106,7 +104,12 @@ function calendario_edit() {
                 $(info.el).tooltip({  title: info.event.title});
            } else{
             if(info.event.borderColor=='#5369f8'){
-                $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                if(info.event.extendedProps.horaAdic==1){
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                } else{
+                    $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                }
+
 
             }
                 else{

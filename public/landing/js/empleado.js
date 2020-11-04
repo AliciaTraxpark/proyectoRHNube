@@ -155,7 +155,11 @@ function calendario() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
 
                 }
                 else {
@@ -414,8 +418,11 @@ function calendario_edit() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
-
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
                 }
                 else {
                     $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
@@ -1196,6 +1203,7 @@ function calendario2() {
             $('#nHorasAdic_re').hide();
             $("#selectHorario").trigger("change");
             $('#fueraHSwitch_re').prop('checked', true)
+            $('#fueraHSwitch_re').prop('disabled', false)
             $('#horAdicSwitch_re').prop('checked', false)
             $('#horCompSwitch_re').prop('checked', true)
             $("#horarioAsignar").modal("show");
@@ -1262,7 +1270,11 @@ function calendario2() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
 
                 }
                 else {
@@ -1556,7 +1568,11 @@ function calendario3() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
 
                 }
                 else {
@@ -1637,8 +1653,11 @@ function calendario4() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
-
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
                 }
                 else {
                     $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
@@ -1763,6 +1782,7 @@ function calendario2_ed() {
             $('#errorSel').hide();
             $("#selectHorario_ed").trigger("change");
             $('#fueraHSwitch').prop('checked', true)
+            $('#fueraHSwitch').prop('disabled', false)
             $('#horAdicSwitch').prop('checked', false)
             $('#horCompSwitch').prop('checked', true)
             $("#horarioAsignar_ed").modal("show");
@@ -1951,7 +1971,11 @@ function calendario2_ed() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    if(info.event.extendedProps.horaAdic==1){
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
+                    } else{
+                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    }
 
                 }
                 else {

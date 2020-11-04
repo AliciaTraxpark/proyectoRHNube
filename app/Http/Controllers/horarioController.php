@@ -158,7 +158,7 @@ class horarioController extends Controller
     }
     public function eventos()
     {
-        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI', 'horaF', 'borderColor'])
+        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI', 'horaF', 'borderColor','horaAdic'])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
             ->get();
