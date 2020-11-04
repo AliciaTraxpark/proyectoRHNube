@@ -57,20 +57,33 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
     <li>
 
-        @if ($usuario[0]->user_estado==0)
-        <a href="/empleado">
+        <a href="javascript: void(0);">
             <i data-feather="list"></i>
             <span>Gestión de empleado</span>
+            <span class="menu-arrow"></span>
         </a>
 
-        @else
-        <a href="/empleados">
-            <i data-feather="list"></i>
-            <span>Gestión de empleado</span>
-        </a>
-        @endif
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                @if ($usuario[0]->user_estado==0)
+                <a href="/empleado">
 
+                    <span>Empleados</span>
+                </a>
+
+                @else
+                <a href="/empleados">
+
+                    <span>Empleados</span>
+                </a>
+                @endif
+                <a href="/empleadosdeBaja">Empleados de baja</a>
+
+
+            </li>
+        </ul>
     </li>
+
     <li class="liNone">
 
         <a href="javascript: void(0);">

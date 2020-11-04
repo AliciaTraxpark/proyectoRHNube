@@ -775,7 +775,7 @@ class EmpleadoController extends Controller
                 'eve.id_calendario as idcalendar'
             )
             ->where('e.emple_id', '=', $idempleado)
-            ->where('e.emple_estado', '=', 1)
+           /*  ->where('e.emple_estado', '=', 1) */
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->groupBy('e.organi_id')
             ->get();
@@ -2055,5 +2055,82 @@ class EmpleadoController extends Controller
 
 
         return response()->json($tabla_empleado1, 200);
+    }
+
+    public function refresTablaAreBaja(Request $request)
+    {
+
+
+        $idarea = $request->idarea;
+        $arrayem = collect();
+        if ($idarea != null) {
+            foreach ($idarea as $idareas) {
+                $tabla_empleado1 = DB::table('empleado as e')
+                    ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                    ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+
+
+                    ->select(
+                        'e.emple_nDoc',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'a.area_descripcion',
+                        'cc.centroC_descripcion',
+                        'e.emple_id'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 0)
+                    ->where('e.emple_area', '=', $idareas)
+                    ->get();
+                    if($tabla_empleado1->isNotEmpty()){
+                        $arrayem->push($tabla_empleado1);
+                    }
+
+            }
+            $arrayem=array_flatten($arrayem);
+
+        } else {
+            $arrayem = DB::table('empleado as e')
+                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+
+
+                ->select(
+                    'e.emple_nDoc',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'e.emple_id'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 0)
+
+                ->get();
+
+        }
+        return response()->json($arrayem, 200);
+    }
+
+    public function darAltaEmpleado(Request $request){
+        $ids = $request->ids;
+
+        $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
+        //$empleado = empleado::find(explode(",",$ids))->first();
+
+        $array = array();
+        foreach ($empleado as $t) {
+            $t->emple_estado = 1;
+            $t->save();
+            $array[] = $t->emple_persona;
+        }
     }
 }

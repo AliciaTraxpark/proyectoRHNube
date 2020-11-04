@@ -150,6 +150,8 @@ Route::post('/empleado/asisPuerta', 'EmpleadoController@asisPuerta');
 Route::post('tablaempleado/refreshArea', 'EmpleadoController@refresTablaAre');
 Route::get('/empleadosdeBaja', 'EmpleadoController@empleadosBaja')->middleware('auth');
 Route::get('tablaempleado/refreshBaja', 'EmpleadoController@refresTablaEmpBaja');
+Route::post('tablaempleado/refreshAreaBaja', 'EmpleadoController@refresTablaAreBaja');
+Route::post('empleado/darAlta', 'EmpleadoController@darAltaEmpleado');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
