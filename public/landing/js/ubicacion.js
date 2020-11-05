@@ -134,6 +134,9 @@ function ubicacionesMapa(hora) {
         zoom: 13
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+    var respuesta = [];
+    var arrayDatos = [];
+    var val = {};
     // ? RECORRED DATOS PARA POPUP
     for (let index = 0; index < datos.length; index++) {
         for (var j = 0; j < 6; j++) {
@@ -142,34 +145,36 @@ function ubicacionesMapa(hora) {
                 for (var i = 0; i < ub.length; i++) {
                     const valor = ub[i].ubicaciones;
                     valor.forEach(element => {
-                        console.log(element);
-                        //? UBICACIÓN DE INICIO Y FINAL
-                        var inicio = L.marker([element.latitud_ini, element.longitud_ini]).bindPopup(ub[i].hora_ini),
-                            final = L.marker([element.latitud_fin, element.longitud_fin]).bindPopup(ub[i].hora_fin);
-                        var cities = L.layerGroup([inicio, final]).addTo(map);
                         // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
-                        map.fitBounds([
-                            [element.latitud_ini, element.longitud_ini],
-                            [element.latitud_fin, element.longitud_fin]
-                        ]);
-                        var control = L.Routing.control({
-                            waypoints: [
-                                L.latLng(element.latitud_ini, element.longitud_ini), //dirección obtenida del usuario
-                                L.latLng(element.latitud_fin, element.longitud_fin) //dirección fija de destino
-                            ],
-                            lineOptions: {
-                                styles: [
-                                    { color: '#892cdc', opacity: 0.8, weight: 4 }
-                                ],
-                            },
-                            routeWhileDragging: false,
-                            show: false,
-                            draggableWaypoints: false,//to set draggable option to false
-                            addWaypoints: false //disable adding new waypoints to the existing path
-                        }).addTo(map);
+                        arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ub[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ub[i].hora_fin);
                     });
                 }
             }
         }
     }
+    respuesta.push(arrayDatos);
+    console.log(respuesta);
+    var latlngArray = [];
+    // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+    for (let index = 0; index < respuesta[0].length; index++) {
+        var element = respuesta[0][index];
+        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
+        latlngArray.push(ltln);
+    }
+    var control = L.Routing.control({
+        createMarker: function (i, wp, nWps) {
+            return L.marker(wp.latLng)
+                .bindPopup('Hora: ' + respuesta[0][i].split(",")[2]);
+        },
+        waypoints: latlngArray,
+        lineOptions: {
+            styles: [
+                { color: '#892cdc', opacity: 0.8, weight: 4 }
+            ],
+        },
+        routeWhileDragging: false,
+        show: false,
+        draggableWaypoints: false,//to set draggable option to false
+        addWaypoints: false //disable adding new waypoints to the existing path
+    }).addTo(map);
 }
