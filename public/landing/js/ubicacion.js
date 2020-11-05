@@ -73,7 +73,7 @@ function buscarUbicaciones() {
         });
     }
 }
-var datos;
+var datos = {};
 // ? FUNCION DE BUSQUEDA
 function onMostrarUbicaciones() {
     var value = $("#empleado").val();
@@ -108,15 +108,11 @@ function onMostrarUbicaciones() {
                         var horaDelGrupo = data[index].horaUbicacion;
                         var hora = data[index].horaUbicacion;
                         var labelDelGrupo = horaDelGrupo + ":00:00" + "-" + (parseInt(horaDelGrupo) + 1) + ":00:00";
-                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div><div class="row col-12 pt-2">`;
-                        for (var j = 0; j < 6; j++) {
-                            if (data[index].minutos[j] != undefined) {
-                                card = `<div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid">
-                                        </div>`;
-                                grupo += card;
-                            }
-                        }
-                        grupo += `</div></div>`;
+                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div>`;
+                        card = `<div class="col-md-12"><div id="mapid${hora}" onchange="javascript:ubicacionesMapa('${hora}')" class="mapid">
+                                        </div></div>`;
+                        grupo += card;
+                        grupo += `</div>`;
                         container.append(grupo);
                     }
                     changeMapeo();
@@ -131,21 +127,36 @@ function changeMapeo() {
     $('.mapid').trigger("change");
 }
 
-function ubicacionesMapa(horayJ) {
-    // var onlyHora = horayJ.split(",")[0];
-    // var j = horayJ.split(",")[1];
-    // ubicaciones = [];
-    // datos.forEach((hora) => {
-    //     if (hora.horaUbicacion == onlyHora) {
-    //         ubicaciones = hora.minutos[j];
-    //     }
-    // });
-    // for (let index = 0; index < ubicaciones.length; index++) {
-    //     const element = ubicaciones[index].ubicaciones;
-    //     element.forEach(point => {
-    //         console.log(point);
-    //     });
-    // }
+function ubicacionesMapa(hora) {
 
-    var map = L.map('mapid' + horayJ).setView([51.505, -0.09]);
+    var map = L.map('mapid' + hora, {
+        center: new L.LatLng(-6.912092, -79.864314),
+        zoom: 10
+    });
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+    // ? RECORRED DATOS PARA POPUP
+    for (let index = 0; index < datos.length; index++) {
+        for (var j = 0; j < 6; j++) {
+            if (datos[index].minutos[j] != undefined) {
+                const ub = datos[index].minutos[j];
+                for (var i = 0; i < ub.length; i++) {
+                    const valor = ub[i].ubicaciones;
+                    valor.forEach(element => {
+                        console.log(element);
+                        //? UBICACIÓN DE INICIO Y FINAL
+                        var inicio = L.marker([element.latitud_ini, element.longitud_ini]).bindPopup(ub[i].hora_ini),
+                            final = L.marker([element.latitud_fin, element.longitud_fin]).bindPopup(ub[i].hora_fin);
+                        var cities = L.layerGroup([inicio, final]).addTo(map);
+                        // map.fitBounds([
+                        //     [element.latitud_ini, element.longitud_ini],
+                        //     [element.latitud_ini, element.longitud_ini]
+                        // ]);
+                        var corner1 = L.latLng(element.latitud_ini, element.longitud_ini),
+                            corner2 = L.latLng(element.latitud_ini, element.longitud_ini),
+                            bounds = L.latLngBounds(corner1, corner2);
+                    });
+                }
+            }
+        }
+    }
 }

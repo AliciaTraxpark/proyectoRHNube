@@ -60,10 +60,7 @@ class controlRutaController extends Controller
 
         foreach ($control_ruta as $cr) {
             $ubicaciones = DB::table('ubicacion_ruta as ur')
-                ->select(
-                    DB::raw('ST_AsText(ur.ubicacion_ini) as ubi_ini'),
-                    DB::raw('ST_AsText(ur.ubicacion_fin) as ubi_fin')
-                )
+                ->select('ur.latitud_ini', 'ur.longitud_ini', 'ur.latitud_fin', 'ur.longitud_fin')
                 ->where('ur.idUbicacion', '=', $cr->idUbicacion)
                 ->get();
             $datos = [];

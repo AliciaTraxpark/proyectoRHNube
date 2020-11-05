@@ -33,7 +33,14 @@
     </div>
 </div>
 <style>
-    .mapid { height: 500px; }
+    .mapid {
+        width: 100%;
+        height: 380px;
+        box-shadow: 5px 5px 5px #888;
+    }
+    .leaflet-control-attribution {
+        pointer-events: none !important;
+    }
 </style>
 {{-- CONTENIDO DE VISTA --}}
 <div class="row">
@@ -124,9 +131,10 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet.js')}}"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-src.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection

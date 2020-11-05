@@ -93,8 +93,10 @@ class apiSeguimientoRutaContoller extends Controller
 
         $ubicacion_ruta = new ubicacion_ruta();
         $ubicacion_ruta->idUbicacion = $idUbicacion;
-        $ubicacion_ruta->ubicacion_ini = DB::raw("GeomFromText('POINT(" . $request->get('latitud_ini') . "  " . $request->get('longitud_ini') . ")')");
-        $ubicacion_ruta->ubicacion_fin = DB::raw("GeomFromText('POINT(" . $request->get('latitud_fin') . "  " . $request->get('longitud_fin') . ")')");
+        $ubicacion_ruta->latitud_ini = $request->get('latitud_ini');
+        $ubicacion_ruta->longitud_ini = $request->get('longitud_ini');
+        $ubicacion_ruta->latitud_fin = $request->get('latitud_fin');
+        $ubicacion_ruta->longitud_fin = $request->get('longitud_fin');
         $ubicacion_ruta->save();
 
         return response()->json($ubicacion, 200);
