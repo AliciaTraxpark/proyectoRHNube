@@ -130,8 +130,8 @@ function changeMapeo() {
 function ubicacionesMapa(hora) {
 
     var map = L.map('mapid' + hora, {
-        center: new L.LatLng(37.17059, -3.60552),
-        zoom: 13
+        center: new L.LatLng(-12.0431800,  -77.0282400),
+        zoom: 10
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     var respuesta = [];
