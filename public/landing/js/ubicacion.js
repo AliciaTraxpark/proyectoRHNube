@@ -130,7 +130,7 @@ function changeMapeo() {
 function ubicacionesMapa(hora) {
 
     var map = L.map('mapid' + hora, {
-        center: new L.LatLng(-12.0431800,  -77.0282400),
+        center: new L.LatLng(-12.0431800, -77.0282400),
         zoom: 10
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
@@ -155,6 +155,7 @@ function ubicacionesMapa(hora) {
     respuesta.push(arrayDatos);
     console.log(respuesta);
     var latlngArray = [];
+    var popupArray = [];
     // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
     for (let index = 0; index < respuesta[0].length; index++) {
         var element = respuesta[0][index];
@@ -163,8 +164,10 @@ function ubicacionesMapa(hora) {
     }
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
-            return L.marker(wp.latLng)
+            var popup = L.marker(wp.latLng)
                 .bindPopup('Hora: ' + respuesta[0][i].split(",")[2]);
+            popupArray.push(popup);
+            return popup;
         },
         waypoints: latlngArray,
         lineOptions: {
@@ -176,5 +179,9 @@ function ubicacionesMapa(hora) {
         show: false,
         draggableWaypoints: false,//to set draggable option to false
         addWaypoints: false //disable adding new waypoints to the existing path
+    }).addTo(map);
+    var countriesJS = L.geoJson(countries, {
+        onEachFeature: popupArray,
+        style: style
     }).addTo(map);
 }
