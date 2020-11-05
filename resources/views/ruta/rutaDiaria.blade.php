@@ -12,6 +12,8 @@
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet.css') }}" rel="stylesheet"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css') }}" rel="stylesheet"
+    type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -38,8 +40,13 @@
         height: 380px;
         box-shadow: 5px 5px 5px #888;
     }
+
     .leaflet-control-attribution {
         pointer-events: none !important;
+    }
+
+    .leaflet-right .leaflet-routing-container.leaflet-routing-container-hide {
+        display: none;
     }
 </style>
 {{-- CONTENIDO DE VISTA --}}
@@ -135,6 +142,7 @@
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-src.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection

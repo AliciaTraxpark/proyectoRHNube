@@ -130,8 +130,8 @@ function changeMapeo() {
 function ubicacionesMapa(hora) {
 
     var map = L.map('mapid' + hora, {
-        center: new L.LatLng(-6.912092, -79.864314),
-        zoom: 10
+        center: new L.LatLng(37.17059, -3.60552),
+        zoom: 13
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     // ? RECORRED DATOS PARA POPUP
@@ -147,13 +147,26 @@ function ubicacionesMapa(hora) {
                         var inicio = L.marker([element.latitud_ini, element.longitud_ini]).bindPopup(ub[i].hora_ini),
                             final = L.marker([element.latitud_fin, element.longitud_fin]).bindPopup(ub[i].hora_fin);
                         var cities = L.layerGroup([inicio, final]).addTo(map);
-                        // map.fitBounds([
-                        //     [element.latitud_ini, element.longitud_ini],
-                        //     [element.latitud_ini, element.longitud_ini]
-                        // ]);
-                        var corner1 = L.latLng(element.latitud_ini, element.longitud_ini),
-                            corner2 = L.latLng(element.latitud_ini, element.longitud_ini),
-                            bounds = L.latLngBounds(corner1, corner2);
+                        // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+                        map.fitBounds([
+                            [element.latitud_ini, element.longitud_ini],
+                            [element.latitud_fin, element.longitud_fin]
+                        ]);
+                        var control = L.Routing.control({
+                            waypoints: [
+                                L.latLng(element.latitud_ini, element.longitud_ini), //dirección obtenida del usuario
+                                L.latLng(element.latitud_fin, element.longitud_fin) //dirección fija de destino
+                            ],
+                            lineOptions: {
+                                styles: [
+                                    { color: '#892cdc', opacity: 0.8, weight: 4 }
+                                ],
+                            },
+                            routeWhileDragging: false,
+                            show: false,
+                            draggableWaypoints: false,//to set draggable option to false
+                            addWaypoints: false //disable adding new waypoints to the existing path
+                        }).addTo(map);
                     });
                 }
             }
