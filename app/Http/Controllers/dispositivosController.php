@@ -177,46 +177,70 @@ class dispositivosController extends Controller
         ->where('organi_id','=',session('sesionidorg'))
         ->get()->first();
         $nombreOrga= $organizacion->organi_razonSocial;
-    return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga]);
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+           /*  ->where('e.emple_estado', '=', 1)    */
+
+            ->get();
+    return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga,'empleado'=>$empleados]);
  }
 
  public function reporteTabla(Request $request){
      $fechaR=$request->fecha;
     /*  dd($fechaR); */
+     $idemp=$request->idemp;
       $fecha=Carbon::create($fechaR);
       $año= $fecha->year;
       $mes= $fecha->month;
       $dia= $fecha->day;
       $ndia= $dia+1;
-     $marcaciones=DB::table('marcacion_movil as marcm')
-     ->select('marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
-     'cargo_descripcion' ,'marcm.organi_id')
-     ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
-     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-     ->where('marcm.organi_id','=',session('sesionidorg'))
-     /*      */
-     ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-     ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
-     ->groupBy('marcm.marcaMov_emple_id')
+      if($idemp==0 || $idemp==' '){
+        $marcaciones=DB::table('marcacion_movil as marcm')
+        ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
+        'cargo_descripcion' ,'marcm.organi_id')
+        ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
+        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+        ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->where('marcm.organi_id','=',session('sesionidorg'))
+        
+        /*      */
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+        ->groupBy('marcm.marcaMov_emple_id')
+           ->whereDate('marcaMov_fecha',$fecha)
+           ->orwhere(function($query) use ($fecha) {
+               $query->where('marcaMov_fecha', null)
+               ->whereDate('marcaMov_salida',$fecha)
 
-    /*   ->whereYear('marcaMov_fecha',$año)
-        ->whereMonth('marcaMov_fecha',$mes)
-        ->whereDay('marcaMov_fecha',$dia) */
-        ->whereDate('marcaMov_fecha',$fecha)
-        ->orwhere(function($query) use ($fecha) {
-            $query->where('marcaMov_fecha', null)
-            ->whereDate('marcaMov_salida',$fecha)
-            ->where('marcm.organi_id','=',session('sesionidorg'));
-        })
+               ->where('marcm.organi_id','=',session('sesionidorg'));
+           })
+       ->get() ;
+      } else{
+        $marcaciones=DB::table('marcacion_movil as marcm')
+        ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
+        'cargo_descripcion' ,'marcm.organi_id')
+        ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
+        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+        ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+        ->where('marcm.organi_id','=',session('sesionidorg'))
+        ->where('e.emple_id',$idemp)
+        /*      */
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+        ->groupBy('marcm.marcaMov_emple_id')
+           ->whereDate('marcaMov_fecha',$fecha)
+           ->orwhere(function($query) use ($fecha,$idemp) {
+               $query->where('marcaMov_fecha', null)
+               ->whereDate('marcaMov_salida',$fecha)
+               ->where('e.emple_id',$idemp)
+               ->where('marcm.organi_id','=',session('sesionidorg'));
+           })
+       ->get() ;
+      }
 
-    ->get() ;
 
-     /* $marcaciones1=$marcaciones->addSelect(DB::raw('(select marc2.marcaMov_fecha from marcacion_movil as marc2
-      where marc2.marcaMov_tipo=0 and marcm.marcaMov_emple_id=marc2.marcaMov_emple_id and
-      YEAR(marc2.marcaMov_fecha)= '.$año.' and MONTH(marc2.marcaMov_fecha)='.$mes.'
-      and( DAY(marc2.marcaMov_fecha)='.$dia.' or DAY(marc2.marcaMov_fecha)='.$ndia.' )) as final' ))
-     ->get(); */
+
 
 
      return json_encode($marcaciones);

@@ -91,6 +91,12 @@
             font-size: 12.2px;
             overflow-y: scroll;
         }
+        .select2-container .select2-selection--single{
+            height: 34px!important;
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered{
+            line-height: 31px;
+        }
 
     </style>
     <style>
@@ -127,7 +133,7 @@
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
-                                <input type="text" id="fechaInput" onchange="cambiarF()" class="form-control" data-input>
+                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -138,7 +144,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-8"><br></div>
+                    <div class="col-xl-7 col-sm-6">
+                        <div class="form-group   row">
+                            <label class="col-lg-3 col-form-label">Empleado</label>
+                            <div class="col-lg-9">
+                                <select id="idempleado" style="height: 50px!important" data-plugin="customselect"  class="form-control form-control-sm" data-placeholder="Seleccione empleado">
+                                    <option value="0" selected>Todos los empleados</option>
+                                    @foreach ($empleado as  $empleados)
+                                      <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}} {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
+                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;" onclick="javascript:cambiarF()"> <img src="{{asset('landing/images/loupe (1).svg')}}"  height="15"></button>
+                    </div>
+
                     {{-- <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label">Área:</label>
