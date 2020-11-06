@@ -71,6 +71,7 @@ function cargartabla (fecha) {
             '<th id="hEntrada">Hora de entrada</th>'+
             '<th id="hSalida">Hora de salida</th>'+
             '<th id="tSitio">Tiempo en sitio</th>'+
+            '<th >Tiempo total</th>'+
         '</tr>'
 
         $('#datosHtm').html(thead);
@@ -207,7 +208,8 @@ function cargartabla (fecha) {
            }
 
           //resta
-           if(dataA[i].final!=0 && dataA[i].final!=null && dataA[i].entrada!=0 &&  dataA[i].entrada!=null){
+
+          if(dataA[i].final!=0 && dataA[i].final!=null && dataA[i].entrada!=0 &&  dataA[i].entrada!=null){
 
 
 
@@ -231,7 +233,16 @@ function cargartabla (fecha) {
                         seconds='0'+seconds;
                     }
 
-                    cuerpo+=  '<td><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hours+':'+minutes+':'+seconds+'</a></td>';
+                    cuerpo+=  '<td ><input type="hidden" value= "'+hours+':'+minutes+':'+seconds+'" name="tiempoSit'+dataA[i].emple_id+'[]" id="tiempoSit'+dataA[i].emple_id+'"><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hours+':'+minutes+':'+seconds+'</a></td>';
+                    var idemp=dataA[i].emple_id;
+
+                    $.when($('input[name="tiempoSit'+idemp+'[]"]')!=null || $('input[name="tiempoSit'+idemp+'[]"]')!=' ' ).then(function( x ) {
+            var tiempoto=[];
+                     $('input[name="tiempoSit'+idemp+'[]"]').each(function () {
+                         tiempoto.push(($(this).val()));
+                      });
+ console.log(tiempoto);
+                      });
                     }
                     else{
                         cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>---</span></td> ';
@@ -245,7 +256,7 @@ function cargartabla (fecha) {
                 tfinalV=moment(nSalidas[b]);
                 tInicioV=moment(nEntradas[b]);
                 rrestaConsole=tfinalV[1]-tInicioV[1];
-                console.log('resta'+rrestaConsole);
+                /* console.log('resta'+rrestaConsole); */
                 if(tfinalV>=tInicioV && nEntradas[b]!=0 ){
                     tiempoV=tfinalV-tInicioV;
                 var secondsV = moment.duration(tiempoV).seconds();
@@ -261,7 +272,8 @@ function cargartabla (fecha) {
                 if(secondsV<10){
                     secondsV='0'+secondsV;
                 }
-                cuerpo+=  '<td><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hoursV+':'+minutesV+':'+secondsV+'</a></td>';
+                cuerpo+=  ' <td ><input type="hidden" value= "'+hoursV+':'+minutesV+':'+secondsV+'" name="tiempoSit'+dataA[i].emple_id+'[]" id="tiempoSit'+dataA[i].emple_id+'"><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hoursV+':'+minutesV+':'+secondsV+'</a></td>';
+
                 }  else{
                     cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>---</span></td> ';
                 }
@@ -274,16 +286,87 @@ function cargartabla (fecha) {
 
             cuerpoA=cuerpo+cuerpoA;
          }
+        /*  $('#pasandoV').val(dataA[i].emple_id);
+         var tiempoto1=[];
+         $.when($('input[name="tiempoSit'+dataA[i].emple_id+'[]"]')!=null || $('input[name="tiempoSit'+dataA[i].emple_id+'[]"]')!=' ').then(function( x ) {
+             var valorrec=$('#pasandoV').val();
+             console.log('valorando'+valorrec);
+            $('input[name="tiempoSit'+valorrec+'[]"]').each(function () {
+               tiempoto1.push(($(this).val()));
+
+            });
+            cuerpoC='<td>'+tiempoto1+
+            '</td>';
+            console.log('nopo'+cuerpoC);
+          }); */
 
 
+          cuerpoA+='<td id="TiempoTotal'+dataA[i].emple_id+'">'+dataA[i].emple_id+' </td>';
 
           tbody+=cuerpoA;
+
+
+   /*        var tbodyAña1;
+                    cambianteVal=dataA[i].emple_id;
+                $.when($('input[name="tiempoSit'+dataA[i].emple_id+'[]"]')!=null || $('input[name="tiempoSit'+dataA[i].emple_id+'[]"]')!=' ' ).then(function( x ) {
+                    console.log('canb'+cambianteVal);
+                    var tiempoto=[];
+
+                    $('input[name="tiempoSit'+dataA[i].emple_id+'[]"]').each(function () {
+                        tiempoto.push(($(this).val()));
+                     });
+                     tbodyAña= '<td>sdfghjhgfdsdfg'+tiempoto+'</td> ';
+                     tbodyAña1=tbodyAña+tbodyAña1;
+                    console.log('u'+tbodyAña);
+                  });
+
+                  tbody+=tbodyAña1; */
          tbody+='</tr>';
 
     tbodyTabla.push(tbody);
-    }
-    $('#tbodyD').html(tbodyTabla);
+  /*   if(tbodyTabla!=){
+        $('#TiempoTotal'+dataA[i].emple_id+'').html('derodillas');
+    } */
 
+    }
+
+    $('#tbodyD').html(tbodyTabla);
+ var valoresArray=[];
+    $.each(dataA, function (i, item) {
+
+        valoresArray.push(item.emple_id);
+
+        var tiempoto=[];
+ a=0;
+        $('input[name="tiempoSit'+item.emple_id+'[]"]').each(function () {
+
+            tiempoto.push(($(this).val()));
+            b=moment($(this).val());
+             a=a+moment.duration(b._i).asSeconds();
+
+
+
+            /* horaIndi= moment($(this).val()).format("HH:mm:ss"); */
+
+         });
+        var segundos = (Math.round(a % 0x3C)).toString();
+       var horas    = (Math.floor(a / 0xE10)).toString();
+       var minutos  = (Math.floor(a / 0x3C ) % 0x3C).toString();
+       if(horas<10){
+        horas='0'+horas;
+    }
+    if(minutos<10){
+        minutos='0'+minutos;
+    }
+
+    if(segundos<10){
+        segundos='0'+segundos;
+    }
+       console.log(horas+':'+minutos+':'+segundos);
+         $('#TiempoTotal'+item.emple_id+'').html('<a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+horas+':'+minutos+':'+segundos+'</a>');
+    });
+    console.log(valoresArray);
+   /*  var valorrec=$('#pasandoV').val(); */
     table =
     $("#tablaReport").DataTable({
 
@@ -364,126 +447,7 @@ function cargartabla (fecha) {
                     }],
                     paging: true
 
-      /*   ajax: {
-
-            type: "post",
-            url: "/reporteTablaMarca", */
-           /*  complete: function (data) {
-                dataD=data['responseJSON'];
- */
-
-               /*  $('#tablaReport>thead').append(
-               ' <tr>'+
-                    '<th></th>'+
-                    '<th>DNI</th>'+
-                    '<th>Nombre</th>'+
-                    '<th>Cargo</th>'+
-                    '<th>Hora de entrada</th>'+
-                    '<th>Hora de salida</th>'+
-                    '<th>Tiempo en sitio</th>'+
-                '</tr>'
-            ) */
-               /*  $.each(dataD, function (index, value1) {
-                    console.log(value1.emple_id);
-                    $('#nombreEmpleado').find('option[value="' + value1.emple_id + '"]').remove();
-
-
-                $('#nombreEmpleado').select2({});
-                 }) */
-           /*  }, */
-         /*    data:{fecha},
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-
-            "dataSrc": ""
-        }, */
-
-      /*   "columnDefs": [{
-            "searchable": false,
-            "orderable": false,
-            "targets": 0
-        }
-        ],
-        "order": [[1, 'asc']], */
-       /*  columns: [
-            { data: null },
-            {
-                data: "emple_nDoc",
-            },
-            { data: "emple_id" ,
-           "render": function (data, type, row) {
-
-                return row.perso_nombre+' '+row.perso_apPaterno+' '+row.perso_apMaterno+' ';
-
-            }},
-            { data: "cargo_descripcion" },
-
-            {
-                data: "entrada",
-                "render": function (data, type, row) {
-                    if(row.entrada!=0 ){
-                        return  '<img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+ moment(row.entrada).format("HH:mm:ss")+'';
-                   }
-                   else{
-                       return '<span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span> ';
-                   }
-                }
-            },
-
-            { data: "final" ,
-                "render": function (data, type, row) {
-                    tfinal=moment(row.final);
-                    tInicio=moment(row.entrada);
-                    if(row.entrada!=0 ){
-                        if(tfinal>=tInicio){
-
-                            return  '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+ moment(row.final).format("HH:mm:ss")+'';
-                           }
-                           else{
-                               return  '<span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span>';
-                           }
-                    } else{
-                        return  '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+ moment(row.final).format("HH:mm:ss")+'';
-                    }
-
-                }},
-            { data: "final" ,
-            "render": function (data, type, row) {
-                tfinal=moment(row.final);
-                    tInicio=moment(row.entrada);
-                    if(tfinal>=tInicio){
-                tiempo=tfinal-tInicio;
-
-            var seconds = moment.duration(tiempo).seconds();
-            var minutes = moment.duration(tiempo).minutes();
-            var hours = Math.trunc(moment.duration(tiempo).asHours());
-                        if(hours<10){
-                            hours='0'+hours;
-                        }
-                        if(minutes<10){
-                            minutes='0'+minutes;
-                        }
-
-                        if(seconds<10){
-                            seconds='0'+seconds;
-                        }
-
-               return '<a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hours+':'+minutes+':'+seconds+'</a>'   ;
-                }
-                else{
-                    return '---';
-                }
-            }},
-            { data: "cargo_descripcion" },
-            { data: "cargo_descripcion" },
-            { data: "cargo_descripcion" },
-            { data: "cargo_descripcion" },
-            { data: "cargo_descripcion" }, { data: "cargo_descripcion" },
-            {"render": function (data, type, row) {
-               return  {data: "cargo_descripcion"};
-            },}
-        ], */});
+   });
 
         },
         complete : function(){
@@ -496,12 +460,6 @@ function cargartabla (fecha) {
     });
 
 
-
-  /*   table.on('order.dt search.dt', function () {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw(); */
 
 };
 
