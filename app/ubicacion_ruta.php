@@ -11,8 +11,10 @@ class ubicacion_ruta extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'id',
-        'ubicacion_ini',
-        'ubicacion_fin',
+        'latitud_ini',
+        'longitud_ini',
+        'latitud_fin',
+        'longitud_fin',
         'idUbicacion'
     ];
     public $timestamps = false;

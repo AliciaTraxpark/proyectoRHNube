@@ -73,7 +73,7 @@ function buscarUbicaciones() {
         });
     }
 }
-var datos;
+var datos = {};
 // ? FUNCION DE BUSQUEDA
 function onMostrarUbicaciones() {
     var value = $("#empleado").val();
@@ -108,15 +108,11 @@ function onMostrarUbicaciones() {
                         var horaDelGrupo = data[index].horaUbicacion;
                         var hora = data[index].horaUbicacion;
                         var labelDelGrupo = horaDelGrupo + ":00:00" + "-" + (parseInt(horaDelGrupo) + 1) + ":00:00";
-                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div><div class="row col-12 pt-2">`;
-                        for (var j = 0; j < 6; j++) {
-                            if (data[index].minutos[j] != undefined) {
-                                card = `<div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid">
-                                        </div>`;
-                                grupo += card;
-                            }
-                        }
-                        grupo += `</div></div>`;
+                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div>`;
+                        card = `<div class="col-md-12"><div id="mapid${hora}" onchange="javascript:ubicacionesMapa('${hora}')" class="mapid">
+                                        </div></div>`;
+                        grupo += card;
+                        grupo += `</div>`;
                         container.append(grupo);
                     }
                     changeMapeo();
@@ -131,21 +127,54 @@ function changeMapeo() {
     $('.mapid').trigger("change");
 }
 
-function ubicacionesMapa(horayJ) {
-    // var onlyHora = horayJ.split(",")[0];
-    // var j = horayJ.split(",")[1];
-    // ubicaciones = [];
-    // datos.forEach((hora) => {
-    //     if (hora.horaUbicacion == onlyHora) {
-    //         ubicaciones = hora.minutos[j];
-    //     }
-    // });
-    // for (let index = 0; index < ubicaciones.length; index++) {
-    //     const element = ubicaciones[index].ubicaciones;
-    //     element.forEach(point => {
-    //         console.log(point);
-    //     });
-    // }
+function ubicacionesMapa(hora) {
 
-    var map = L.map('mapid' + horayJ).setView([51.505, -0.09]);
+    var map = L.map('mapid' + hora, {
+        center: new L.LatLng(-12.0431800,  -77.0282400),
+        zoom: 10
+    });
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+    var respuesta = [];
+    var arrayDatos = [];
+    var val = {};
+    // ? RECORRED DATOS PARA POPUP
+    for (let index = 0; index < datos.length; index++) {
+        for (var j = 0; j < 6; j++) {
+            if (datos[index].minutos[j] != undefined) {
+                const ub = datos[index].minutos[j];
+                for (var i = 0; i < ub.length; i++) {
+                    const valor = ub[i].ubicaciones;
+                    valor.forEach(element => {
+                        // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+                        arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ub[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ub[i].hora_fin);
+                    });
+                }
+            }
+        }
+    }
+    respuesta.push(arrayDatos);
+    console.log(respuesta);
+    var latlngArray = [];
+    // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+    for (let index = 0; index < respuesta[0].length; index++) {
+        var element = respuesta[0][index];
+        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
+        latlngArray.push(ltln);
+    }
+    var control = L.Routing.control({
+        createMarker: function (i, wp, nWps) {
+            return L.marker(wp.latLng)
+                .bindPopup('Hora: ' + respuesta[0][i].split(",")[2]);
+        },
+        waypoints: latlngArray,
+        lineOptions: {
+            styles: [
+                { color: '#892cdc', opacity: 0.8, weight: 4 }
+            ],
+        },
+        routeWhileDragging: false,
+        show: false,
+        draggableWaypoints: false,//to set draggable option to false
+        addWaypoints: false //disable adding new waypoints to the existing path
+    }).addTo(map);
 }
