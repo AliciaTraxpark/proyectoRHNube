@@ -84,3 +84,4 @@ Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware
 Route::post("loginRuta", 'apiSeguimientoRutaContoller@login')->middleware('apilogger');
 Route::post("ubicacion", 'apiSeguimientoRutaContoller@registrarRuta')->middleware('token')->middleware('apilogger');
 Route::post("listaActividadCRT", "apiSeguimientoRutaContoller@listaActividad")->middleware('token')->middleware('apilogger');
+Route::post("tiempo", "apiSeguimientoRutaContoller@tiempoRHbox")->middleware('token')->middleware('apilogger');

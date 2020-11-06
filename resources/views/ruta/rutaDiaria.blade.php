@@ -2,8 +2,6 @@
 
 
 @section('css')
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
@@ -14,6 +12,13 @@
     crossorigin="" />
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css') }}" rel="stylesheet"
     type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -35,10 +40,17 @@
     </div>
 </div>
 <style>
+    .carousel-control-prev-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+    }
+
+    .carousel-control-next-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    }
+
     .mapid {
         width: 100%;
-        height: 380px;
-        box-shadow: 5px 5px 5px #888;
+        height: 125px;
     }
 
     .leaflet-control-attribution {
@@ -138,11 +150,19 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-src.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-image.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/CryptoJS/md5.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/CryptoJS/enc-base64.js') }}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection
