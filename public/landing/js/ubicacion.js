@@ -95,7 +95,7 @@ function onMostrarPantallas() {
         $("#card").empty();
         console.log("ingreso");
         $.ajax({
-            url: "tareas/show",
+            url: "tareas/showP",
             method: "GET",
             data: {
                 value: value,
