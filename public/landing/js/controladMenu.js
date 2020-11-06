@@ -55,6 +55,14 @@ $(document).ready(function () {
     ],
            "order": [[ 1, 'asc' ]],
   columns: [
+    { data: "cont_estado",
+    "render": function (data, type, row) {
+
+           return '<a onclick="editarContra('+row.idControladores+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
+
+
+
+    } },
      { data: null },
      { data: "cont_codigo" },
      { data: "cont_nombres" },
@@ -89,10 +97,10 @@ $(document).ready(function () {
      { data: "cont_estado",
      "render": function (data, type, row) {
         if (row.cont_estado ==0) {
-             return '<a onclick="editarContra('+row.idControladores+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<span class="badge badge-soft-danger">Inactivo</span>';
+             return '<span class="badge badge-soft-danger">Inactivo</span>';
         }
         if (row.cont_estado ==1) {
-            return '<a onclick="editarContra('+row.idControladores+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<span class="badge badge-soft-info">Activo</span>';
+            return '<span class="badge badge-soft-info">Activo</span>';
        }
 
 
@@ -106,7 +114,7 @@ $(document).ready(function () {
    });
 
     table.on( 'order.dt search.dt', function () {
-   table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+   table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
        cell.innerHTML = i+1;
    } );
 } ).draw();

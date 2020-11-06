@@ -149,19 +149,21 @@
                                 incidencias</button> --}}
                         </div>
                     </div>
+
                     <div id="tabladiv"> <br>
                         <table id="tablaDips" class="table dt-responsive nowrap" style="font-size: 12.8px;">
                             <thead style=" background: #edf0f1;color: #6c757d;">
 
                                 <tr>
                                     <th></th>
+                                    <th></th>
                                     <th>Descrip. de ubicación</th>
                                     <th>Móvil vinculado</th>
                                     <th>Enviar SMS</th>
-                                    <th>Código/Nombre</th>
+                                    <th>Código Disp.</th>
                                     <th>Estado</th>
                                     <th>Sig. marcación</th>
-                                    <th>Tiempo de sincron.</th>
+                                    <th>T. de sincron.</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -396,7 +398,7 @@
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
-
+    <script> $("#tablaDips").css("width","100%");     </script>
 
 
 @endsection

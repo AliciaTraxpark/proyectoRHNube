@@ -116,6 +116,7 @@
 
                                 <tr>
                                     <th></th>
+                                    <th></th>
                                     <th>Código</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>

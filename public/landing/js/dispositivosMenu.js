@@ -55,6 +55,12 @@ $(document).ready(function () {
     ],
            "order": [[ 1, 'asc' ]],
   columns: [
+
+    { data: "dispo_codigoNombre",
+    "render": function (data, type, row) {
+           return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
+     } },
+
      { data: null },
      { data: "dispo_descripUbicacion" },
      { data: "dispo_movil"},
@@ -107,11 +113,15 @@ $(document).ready(function () {
       { data: "dispo_tSincro",
      "render": function (data, type, row) {
         if(row.dispo_estadoActivo==1){
-            return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<a title="Activado" onclick="" style="cursor: pointer">' +
-                        '<img src="/landing/images/permitir.svg" onclick="desactivarDispo('+row.idDispositivos+')"  height="22" width="35"> </a>';
+            return '<div class="custom-control custom-switch">'+
+            '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" checked>'+
+            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
+        '</div>';
         } else{
-            return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;<a title="Desactivado" onclick="" style="cursor: pointer">' +
-                        '<img src="/landing/images/desactivar.svg" onclick="activarDispo('+row.idDispositivos+')" height="22" width="35"> </a>';
+            return '<div class="custom-control custom-switch">'+
+            '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" >'+
+            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
+        '</div>';
         }
 
 
@@ -123,7 +133,7 @@ $(document).ready(function () {
    //$('#verf1').hide();
    //$('#tablaEmpleado tbody #tdC').css('display', 'none');
     table.on( 'order.dt search.dt', function () {
-   table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+   table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
        cell.innerHTML = i+1;
    } );
 } ).draw();
@@ -141,6 +151,16 @@ function isNumeric(evt) {
     if (!regex.test(key)) {
         theEvent.returnValue = false;
         if (theEvent.preventDefault) theEvent.preventDefault();
+    }
+}
+function switchEleg(id){
+    if( $('#customSwitDetalles'+id+'').is(':checked')) {
+        $('#customSwitDetalles'+id+'').prop('checked',false);
+        desactivarDispo(id);
+    }
+    else{
+        $('#customSwitDetalles'+id+'').prop('checked',true);
+        activarDispo(id);
     }
 }
 $(function() {
@@ -451,6 +471,7 @@ function desactivarDispo(idDisDesac){
             }
         },
         callback: function (result) {
+            if (result == true) {
             $.ajax({
                 type: "post",
                 url: "/desactivarDisposi",
@@ -474,7 +495,7 @@ function desactivarDispo(idDisDesac){
                 },
             });
 
-        }
+        } }
     });
 
 
