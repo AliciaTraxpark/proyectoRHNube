@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\actividad_empleado;
+use App\empleado;
 use App\ubicacion;
 use App\ubicacion_ruta;
 use App\vinculacion_ruta;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -123,5 +125,34 @@ class apiSeguimientoRutaContoller extends Controller
         }
 
         return response()->json($respuesta, 200);
+    }
+
+    // ? OBTENER TIRMPO DEL RHBOX Y HORA ACTUAL DEL SERVIDOR
+    public function tiempoRHbox(Request $request)
+    {
+        $empleado = empleado::findOrFail($request->get('idEmpleado'));
+        if ($empleado) {
+            $respuesta = [];
+            $fecha = Carbon::now();
+            //* OBTENER HORAS DEL EMPLEADO
+            $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+            $horas = DB::table('empleado as e')
+                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                ->select(
+                    DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
+                )
+                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                ->where('e.emple_id', '=', $request->get('idEmpleado'))
+                ->get()
+                ->first();
+            // * OBTENER HORA DEL SERVIDOR
+            $horaActual = $fecha->isoFormat('H:mm:s');
+            $respuesta["tiempo"] = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
+            $respuesta["horaActual"] = $horaActual;
+            return response()->json($respuesta, 200);
+        }
+        return response()->json("empleado_no_exite", 400);
     }
 }
