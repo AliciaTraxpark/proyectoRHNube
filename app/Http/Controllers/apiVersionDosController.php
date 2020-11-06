@@ -436,6 +436,8 @@ class apiVersionDosController extends Controller
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
                 $horario->pausas = $pausas;
+                $segundos = Carbon::createFromTimestampUTC($horario->horasObligadas)->secondsSinceMidnight();
+                $horario->horasObligadas = $segundos;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 if ($horario_dias->start == $fechaHoy) {
