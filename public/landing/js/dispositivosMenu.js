@@ -55,13 +55,13 @@ $(document).ready(function () {
     ],
            "order": [[ 1, 'asc' ]],
   columns: [
-    { data: null },
+
     { data: "dispo_codigoNombre",
     "render": function (data, type, row) {
            return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
      } },
 
-
+     { data: null },
      { data: "dispo_descripUbicacion" },
      { data: "dispo_movil"},
      { data: "dispo_estado",
@@ -115,12 +115,12 @@ $(document).ready(function () {
         if(row.dispo_estadoActivo==1){
             return '<div class="custom-control custom-switch">'+
             '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" checked>'+
-            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold">M</label>'+
+            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
         '</div>';
         } else{
             return '<div class="custom-control custom-switch">'+
             '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" >'+
-            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold">M</label>'+
+            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
         '</div>';
         }
 
@@ -133,7 +133,7 @@ $(document).ready(function () {
    //$('#verf1').hide();
    //$('#tablaEmpleado tbody #tdC').css('display', 'none');
     table.on( 'order.dt search.dt', function () {
-   table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+   table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
        cell.innerHTML = i+1;
    } );
 } ).draw();
