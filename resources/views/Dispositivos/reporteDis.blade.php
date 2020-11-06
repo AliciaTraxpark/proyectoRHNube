@@ -180,7 +180,12 @@
                 </div>
 
                 <div class="row justify-content-center">
-
+                    <div class="col-md-12">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles" onclick="javascript:cambiartabla()">
+                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar detalles</label>
+                        </div>
+                    </div>
                     <div id="tableZoom" class="col-md-12">
 
                             {{-- <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
