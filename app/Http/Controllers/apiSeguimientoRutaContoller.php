@@ -133,7 +133,7 @@ class apiSeguimientoRutaContoller extends Controller
         $empleado = empleado::findOrFail($request->get('idEmpleado'));
         if ($empleado) {
             $respuesta = [];
-            $fecha = Carbon::now();
+            $fecha = Carbon::now('America/Lima');
             //* OBTENER HORAS DEL EMPLEADO
             $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
             $horas = DB::table('empleado as e')
@@ -148,7 +148,7 @@ class apiSeguimientoRutaContoller extends Controller
                 ->get()
                 ->first();
             // * OBTENER HORA DEL SERVIDOR
-            $horaActual = $fecha->isoFormat('H:mm:s');
+            $horaActual = $fecha->timestamp;
             $respuesta["tiempo"] = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
             $respuesta["horaActual"] = $horaActual;
             return response()->json($respuesta, 200);
