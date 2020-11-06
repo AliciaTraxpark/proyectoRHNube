@@ -80,7 +80,7 @@ class apimovilController extends Controller
             $dispositivo1=dispositivos::where('dispo_movil','=',$nroMovil)
             ->get()->first();
             if($dispositivo1!=null){
-                return response()->json(array('status'=>400,'title' => 'Clave incorrecta',
+                return response()->json(array('status'=>400,'title' => 'Clave incorrecta o dispositivo no activo',
                 'detail' => 'Asegúrate de escribir la clave correcta'),400);
 
             } else{
