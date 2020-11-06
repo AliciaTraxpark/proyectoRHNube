@@ -497,6 +497,71 @@ class ControlController extends Controller
         return response()->json($control, 200);
     }
 
+    public function showConRuta(Request $request)
+    {
+
+        function controlRRJson($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $captura) {
+                $horaCaptura = explode(":", $captura->hora);
+                if (!isset($resultado[$horaCaptura[0]])) {
+                    $resultado[$horaCaptura[0]] = array("horaCaptura" => $horaCaptura[0], "minutos" => array());
+                }
+                if (!isset($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]])) {
+                    $resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]] = array();
+                }
+                array_push($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]], $captura);
+            }
+            return array_values($resultado);
+        }
+
+        $idempleado = $request->get('value');
+        $fecha = $request->get('fecha');
+        $control = DB::table('empleado as e')
+            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+            ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
+            ->join('promedio_captura as pc', 'pc.idCaptura', '=', 'cp.idCaptura')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'pc.idHorario')
+            ->select(
+                DB::raw('IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start))'),
+                'a.Activi_id',
+                'a.Activi_Nombre',
+                'a.estado',
+                'cp.idCaptura',
+                'cp.actividad',
+                'cp.hora_fin',
+                DB::raw('DATE(cp.hora_ini) as fecha'),
+                DB::raw('TIME(cp.hora_ini) as hora'),
+                'pc.promedio as prom',
+                'pc.tiempo_rango as rango',
+                DB::raw('TIME(cp.hora_ini) as hora_ini'),
+                DB::raw('TIME(cp.hora_fin) as hora_fin'),
+                'cp.actividad as tiempoA'
+            )
+            ->where(DB::raw('IF(hd.id is null, DATE(cp.hora_ini), DATE(hd.start))'), '=', $fecha)
+            ->where('e.emple_id', '=', $idempleado)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->orderBy('cp.hora_ini', 'asc')
+            ->get();
+        foreach ($control as $c) {
+            $capturas = DB::table('captura_imagen as ci')
+                ->select('ci.id as idImagen', 'ci.miniatura as imagen')
+                ->where('ci.idCaptura', '=', $c->idCaptura)
+                ->get();
+            $datos = [];
+            foreach ($capturas as $cp) {
+                array_push($datos, $cp);
+            }
+            $c->imagen = $datos;
+        }
+        $control = controlRRJson($control);
+        return response()->json($control, 200);
+    }
+
+
+
     public function apiMostrarCapturas($url)
     {
         $res = base64_decode($url);

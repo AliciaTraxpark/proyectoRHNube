@@ -157,7 +157,9 @@ function onMostrarPantallas() {
                 data-original-title=""></span></div><br><br><div class="container-fluid containerR"><div class="row rowResp">`;
                     for (var j = 0; j < 6; j++) {
                         if (data[index].minutos[j] != undefined) {
-                            var capturas = "";
+                            var capturas = `<div class = "carousel-item">
+                                                <div id="mapid${j}" onchange="javascript:ubicacionesMapa('${j}')" class="mapid"></div>
+                                            </div>`;
                             for (
                                 let indexMinutos = 0;
                                 indexMinutos < data[index].minutos[j].length;
@@ -186,13 +188,12 @@ function onMostrarPantallas() {
                                             var encr = CryptoJS.enc.Utf8.parse(rspI);
                                             var base64 = CryptoJS.enc.Base64.stringify(encr);
                                             capturas += `<div class = "carousel-item">
-                                    <img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
-                                    <div class="overlay">
-                                    <a class="info" onclick="zoom('${hora + "," + j
-                                                }')" style="color:#fdfdfd">
-                                    <i class="fa fa-eye"></i> Colección</a>
-                                    </div>
-                                </div>`;
+                                                            <img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
+                                                            <div class="overlay">
+                                                            <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
+                                                            <i class="fa fa-eye"></i> Colección</a>
+                                                            </div>
+                                                        </div>`;
                                         }
                                     }
                                 }
@@ -375,6 +376,7 @@ function onMostrarPantallas() {
                 var contE = `${enteroT}`;
                 $("#totalActivi").append(cont);
                 $("#totalH").append(contE);
+                changeMapeo();
             } else {
                 $("#card").empty();
                 if ($("#empleado").val() == null) {
@@ -487,53 +489,68 @@ function ubicacionesMapa(hora) {
         center: new L.LatLng(-12.0431800, -77.0282400),
         zoom: 15,
         minZoom: 10,
+        zoomOffset: 1
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     var respuesta = [];
     var arrayDatos = [];
     // ? RECORRED DATOS PARA POPUP
-    for (let index = 0; index < dato.length; index++) {
-        for (var j = 0; j < 6; j++) {
-            if (dato[index].minutos[j] != undefined) {
-                const ub = dato[index].minutos[j];
-                for (var i = 0; i < ub.length; i++) {
-                    const valor = ub[i].ubicaciones;
-                    valor.forEach(element => {
-                        // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
-                        arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ub[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ub[i].hora_fin);
-                    });
-                }
-            }
-        }
-    }
-    respuesta.push(arrayDatos);
-    console.log(respuesta);
-    var latlngArray = [];
-    var popupArray = [];
-    // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
-    for (let index = 0; index < respuesta[0].length; index++) {
-        var element = respuesta[0][index];
-        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
-        latlngArray.push(ltln);
-    }
+    // for (let index = 0; index < dato.length; index++) {
+    //     for (var j = 0; j < 6; j++) {
+    //         if (dato[index].minutos[j] != undefined) {
+    //             const ub = dato[index].minutos[j];
+    //             for (var i = 0; i < ub.length; i++) {
+    //                 const valor = ub[i].ubicaciones;
+    //                 valor.forEach(element => {
+    //                     // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+    //                     arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ub[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ub[i].hora_fin);
+    //                 });
+    //             }
+    //         }
+    //     }
+    // }
+    // respuesta.push(arrayDatos);
+    // console.log(respuesta);
+    // var latlngArray = [];
+    // var popupArray = [];
+    // // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+    // for (let index = 0; index < respuesta[0].length; index++) {
+    //     var element = respuesta[0][index];
+    //     var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
+    //     latlngArray.push(ltln);
+    // }
+    var newIcon = new L.Icon({
+        iconUrl: 'landing/images/placeholder.svg',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+    });
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
-            var popup = L.marker(wp.latLng)
-                .bindPopup('Hora: ' + respuesta[0][i].split(",")[2]);
-            popupArray.push(popup);
+            var popup = L.marker(wp.latLng, {
+                icon: newIcon // here pass the custom marker icon instance
+            })
+                .bindPopup('Hora: ' + i);
             return popup;
         },
-        waypoints: latlngArray,
+        waypoints:
+            [
+                L.latLng(-6.91209, -79.8643),
+                L.latLng(-6.90704, -79.8624)
+            ],
         lineOptions: {
             styles: [
-                { color: '#892cdc', opacity: 0.8, weight: 4 }
+                { color: '#892cdc', opacity: 0.8, weight: 1.5 }
             ],
         },
         routeWhileDragging: false,
         show: false,
         draggableWaypoints: false,//to set draggable option to false
         addWaypoints: false //disable adding new waypoints to the existing path
-    }).addTo(map);
+    }).addTo(map).on('routesfound', function (e) {
+        console.log(e.routes); // e.routes have length 2
+    });
+    map.locate({ setView: true, maxZoom: 16 });
 }
 
 // ? MOSTRAR IMAGENES GRANDES

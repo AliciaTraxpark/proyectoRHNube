@@ -50,8 +50,7 @@
 
     .mapid {
         width: 100%;
-        height: 130px;
-        box-shadow: 5px 5px 5px #888;
+        height: 125px;
     }
 
     .leaflet-control-attribution {
