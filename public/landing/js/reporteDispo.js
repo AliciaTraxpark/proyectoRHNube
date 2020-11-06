@@ -70,7 +70,7 @@ function cargartabla (fecha) {
             '<th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>'+
             '<th id="hEntrada">Hora de entrada</th>'+
             '<th id="hSalida">Hora de salida</th>'+
-            '<th id="tSitio">Tiempo en sitio</th>'+
+            '<th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>'+
             '<th >Tiempo total</th>'+
         '</tr>'
 
@@ -88,7 +88,7 @@ function cargartabla (fecha) {
              var e = $('#tSitio');
 
             for (var i = 0; i < nclonar-1; i++) {
-                $("<th>Hora de entrada</th><th>Hora de salida</th><th>Tiempo en sitio</th>").insertAfter(e);
+                $("<th>Hora de entrada</th><th>Hora de salida</th><th name='tiempoSitHi'>Tiempo en sitio</th>").insertAfter(e);
              }
         }
 
@@ -233,7 +233,7 @@ function cargartabla (fecha) {
                         seconds='0'+seconds;
                     }
 
-                    cuerpo+=  '<td ><input type="hidden" value= "'+hours+':'+minutes+':'+seconds+'" name="tiempoSit'+dataA[i].emple_id+'[]" id="tiempoSit'+dataA[i].emple_id+'"><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hours+':'+minutes+':'+seconds+'</a></td>';
+                    cuerpo+=  '<td name="tiempoSitHi" ><input type="hidden" value= "'+hours+':'+minutes+':'+seconds+'" name="tiempoSit'+dataA[i].emple_id+'[]" id="tiempoSit'+dataA[i].emple_id+'"><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hours+':'+minutes+':'+seconds+'</a></td>';
                     var idemp=dataA[i].emple_id;
 
                     $.when($('input[name="tiempoSit'+idemp+'[]"]')!=null || $('input[name="tiempoSit'+idemp+'[]"]')!=' ' ).then(function( x ) {
@@ -245,10 +245,10 @@ function cargartabla (fecha) {
                       });
                     }
                     else{
-                        cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>---</span></td> ';
+                        cuerpo+= '<td name="tiempoSitHi"><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>---</span></td> ';
                     }
                 } else{
-                    cuerpo+= '<td>--</td>';
+                    cuerpo+= '<td name="tiempoSitHi">--</td>';
                 }
 
             }else{
@@ -272,16 +272,16 @@ function cargartabla (fecha) {
                 if(secondsV<10){
                     secondsV='0'+secondsV;
                 }
-                cuerpo+=  ' <td ><input type="hidden" value= "'+hoursV+':'+minutesV+':'+secondsV+'" name="tiempoSit'+dataA[i].emple_id+'[]" id="tiempoSit'+dataA[i].emple_id+'"><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hoursV+':'+minutesV+':'+secondsV+'</a></td>';
+                cuerpo+=  ' <td name="tiempoSitHi" ><input type="hidden" value= "'+hoursV+':'+minutesV+':'+secondsV+'" name="tiempoSit'+dataA[i].emple_id+'[]" id="tiempoSit'+dataA[i].emple_id+'"><a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+hoursV+':'+minutesV+':'+secondsV+'</a></td>';
 
                 }  else{
-                    cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>---</span></td> ';
+                    cuerpo+= '<td name="tiempoSitHi"><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>---</span></td> ';
                 }
 
            }
 
            } else{
-            cuerpo+='<td>--</td>';
+            cuerpo+='<td name="tiempoSitHi">--</td>';
            }
 
             cuerpoA=cuerpo+cuerpoA;
@@ -367,6 +367,12 @@ function cargartabla (fecha) {
     });
     console.log(valoresArray);
    /*  var valorrec=$('#pasandoV').val(); */
+   if( $('#customSwitDetalles').is(':checked')) {
+    $('[name="tiempoSitHi"]').show();
+}
+else{
+    $('[name="tiempoSitHi"]').hide();
+}
     table =
     $("#tablaReport").DataTable({
 
@@ -473,4 +479,12 @@ function cambiarF(){
         /* $('#tablaReport').DataTable().destroy(); */
     }
     cargartabla(f2);
+}
+function cambiartabla(){
+    if( $('#customSwitDetalles').is(':checked')) {
+        $('[name="tiempoSitHi"]').show();
+    }
+    else{
+        $('[name="tiempoSitHi"]').hide();
+    }
 }
