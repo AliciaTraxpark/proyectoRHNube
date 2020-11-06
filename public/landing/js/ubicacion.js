@@ -109,8 +109,8 @@ function onMostrarUbicaciones() {
                         var hora = data[index].horaUbicacion;
                         var labelDelGrupo = horaDelGrupo + ":00:00" + "-" + (parseInt(horaDelGrupo) + 1) + ":00:00";
                         var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div>`;
-                        card = `<div class="col-md-12"><div id="mapid${hora}" onchange="javascript:ubicacionesMapa('${hora}')" class="mapid">
-                                        </div></div>`;
+                        card = `<div class="col-2"><div id="mapid${hora}" onchange="javascript:ubicacionesMapa('${hora}')" class="mapid">
+                                        </div> <div id="images"></div></div>`;
                         grupo += card;
                         grupo += `</div>`;
                         container.append(grupo);
@@ -131,7 +131,8 @@ function ubicacionesMapa(hora) {
 
     var map = L.map('mapid' + hora, {
         center: new L.LatLng(-12.0431800, -77.0282400),
-        zoom: 10
+        zoom: 15,
+        minZoom: 10,
     });
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     var respuesta = [];
@@ -180,8 +181,15 @@ function ubicacionesMapa(hora) {
         draggableWaypoints: false,//to set draggable option to false
         addWaypoints: false //disable adding new waypoints to the existing path
     }).addTo(map);
-    var countriesJS = L.geoJson(countries, {
-        onEachFeature: popupArray,
-        style: style
-    }).addTo(map);
+    // leafletImage(map, function (err, canvas) {
+    //     // now you have canvas
+    //     // example thing to do with that canvas:
+    //     var img = document.createElement('img');
+    //     var dimensions = map.getSize();
+    //     img.width = dimensions.x / 5;
+    //     img.height = dimensions.y / 5;
+    //     img.src = canvas.toDataURL();
+    //     document.getElementById('images').innerHTML = '';
+    //     document.getElementById('images').appendChild(img);
+    // });
 }

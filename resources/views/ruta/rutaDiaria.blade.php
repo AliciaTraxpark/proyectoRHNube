@@ -38,7 +38,7 @@
 <style>
     .mapid {
         width: 100%;
-        height: 380px;
+        height: 130px;
         box-shadow: 5px 5px 5px #888;
     }
 
@@ -144,7 +144,7 @@
 <script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-search.src.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-image.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection
