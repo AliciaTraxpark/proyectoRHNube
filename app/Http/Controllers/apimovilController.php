@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\dispo_nombres;
 use Illuminate\Http\Request;
 use App\dispositivos;
 use App\marcacion_movil;
@@ -38,6 +39,17 @@ class apimovilController extends Controller
                     ->where('dis.dispo_codigo', '=', $codigo)
                     ->get();
  */
+                   $nombreDs=DB::table('dispo_nombres')
+                   ->where('idDispositivos','=',$dispositivo->idDispositivos)
+                   ->where('dispo_CodigoNombre','=',$nombreDisp)
+                   ->get();
+                   if($nombreDs->isEmpty()){
+                    $dispo_nombre=new dispo_nombres();
+                    $dispo_nombre->dispo_CodigoNombre=$nombreDisp;
+                    $dispo_nombre->idDispositivos=$dispositivo->idDispositivos;
+                    $dispo_nombre->save();
+
+                   }
 
 
                     return response()->json(array('status'=>200,"dispositivo" =>$dispositivo,
@@ -51,8 +63,13 @@ class apimovilController extends Controller
                 if($dispositivo->dispo_estado==1){
                     $dispositivosAc = dispositivos::findOrFail($dispositivo->idDispositivos);
                     $dispositivosAc->dispo_estado=2;
-                    $dispositivosAc->dispo_codigoNombre=$nombreDisp;
+
                     $dispositivosAc->save();
+
+                    $dispo_nombre=new dispo_nombres();
+                    $dispo_nombre->dispo_CodigoNombre=$nombreDisp;
+                    $dispo_nombre->idDispositivos=$dispositivosAc->idDispositivos;
+                    $dispo_nombre->save();
                      $factory = JWTFactory::customClaims([
                         'sub' => env('API_id'),
                     ]);

@@ -18,7 +18,7 @@ class dispositivos extends Model
         'dispo_codigo',
         'dispo_estado',
         'organi_id',
-       'dispo_codigoNombre',
+       /* 'dispo_codigoNombre', */
        'dispo_Data',
        'dispo_Manu',
        'dispo_Scan',
