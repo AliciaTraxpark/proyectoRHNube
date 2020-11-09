@@ -10,6 +10,7 @@ use App\vinculacion_ruta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -87,23 +88,44 @@ class apiSeguimientoRutaContoller extends Controller
     // ? PRUEBA DE REGISTRO DE LATITUD Y LONGITUD
     public function registrarRuta(Request $request)
     {
-        $ubicacion = new ubicacion();
-        $ubicacion->hora_ini = $request->get('hora_ini');
-        $ubicacion->hora_fin = $request->get('hora_fin');
-        $ubicacion->idHorario_dias = $request->get('horario_dias');
-        $ubicacion->idActividad = $request->get('idActividad');
-        $ubicacion->idEmpleado = $request->get('idEmpleado');
-        $ubicacion->save();
+        foreach ($request->all() as $key => $atributo) {
+            $validacion = Validator::make($atributo, [
+                'hora_ini' => 'required',
+                'hora_fin' => 'required',
+                'idActividad' => 'required',
+                'idEmpleado' => 'required',
+                'latitud_ini' => 'required',
+                'longitud_ini' => 'required',
+                'latitud_fin' => 'required',
+                'longitud_fin' => 'required'
+            ], [
+                'required' => ':attribute es obligatorio'
+            ]);
+            if ($validacion->fails()) {
+                return response()->json($validacion->errors(), 400);
+            }
+        }
+        foreach ($request->all() as $ubicaciones) {
+            //? GUARDAR UBICACIONES
+            $ubicacion = new ubicacion();
+            $ubicacion->hora_ini = $ubicaciones['hora_ini'];
+            $ubicacion->hora_fin = $ubicaciones['hora_fin'];
+            $ubicacion->idHorario_dias = $ubicaciones['idHorario_dias'];
+            $ubicacion->idActividad = $ubicaciones['idActividad'];
+            $ubicacion->idEmpleado = $ubicaciones['idEmpleado'];
+            $ubicacion->save();
 
-        $idUbicacion = $ubicacion->id;
+            $idUbicacion = $ubicacion->id;
 
-        $ubicacion_ruta = new ubicacion_ruta();
-        $ubicacion_ruta->idUbicacion = $idUbicacion;
-        $ubicacion_ruta->latitud_ini = $request->get('latitud_ini');
-        $ubicacion_ruta->longitud_ini = $request->get('longitud_ini');
-        $ubicacion_ruta->latitud_fin = $request->get('latitud_fin');
-        $ubicacion_ruta->longitud_fin = $request->get('longitud_fin');
-        $ubicacion_ruta->save();
+            //? UBICACION RUTA
+            $ubicacion_ruta = new ubicacion_ruta();
+            $ubicacion_ruta->idUbicacion = $idUbicacion;
+            $ubicacion_ruta->latitud_ini = $ubicaciones['latitud_ini'];
+            $ubicacion_ruta->longitud_ini = $ubicaciones['longitud_ini'];
+            $ubicacion_ruta->latitud_fin = $ubicaciones['latitud_fin'];
+            $ubicacion_ruta->longitud_fin = $ubicaciones['longitud_fin'];
+            $ubicacion_ruta->save();
+        }
 
         return response()->json($ubicacion, 200);
     }
