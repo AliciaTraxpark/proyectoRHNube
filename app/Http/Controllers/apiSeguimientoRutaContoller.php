@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Undefined;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -110,7 +111,9 @@ class apiSeguimientoRutaContoller extends Controller
             $ubicacion = new ubicacion();
             $ubicacion->hora_ini = $ubicaciones['hora_ini'];
             $ubicacion->hora_fin = $ubicaciones['hora_fin'];
-            $ubicacion->idHorario_dias = $ubicaciones['idHorario_dias'];
+            if (isset($ubicaciones['idHorario_dias'])) {
+                $ubicacion->idHorario_dias = $ubicaciones['idHorario_dias'];
+            }
             $ubicacion->idActividad = $ubicaciones['idActividad'];
             $ubicacion->idEmpleado = $ubicaciones['idEmpleado'];
             $ubicacion->save();
