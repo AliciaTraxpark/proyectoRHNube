@@ -620,9 +620,23 @@ class ControlController extends Controller
             $menor = array();
             // ! INSERTAMOS EL MENOR TIEMPO DE UNO DE LOS ARRAYS 
             if ($control[0]["horaCaptura"] < $control_ruta[0]["horaUbicacion"]) {
-                $menor = array("hora" => $control[0]["horaCaptura"], "minuto");
+                $menor = array("hora" => $control[0]["horaCaptura"], "minuto" => array());
+                // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA
+                for ($i = 0; $i <= 6; $i++) {
+                    if (isset($control[0]["minutos"][$i])) { //* Busqueda si existe el minuto 
+                        // * Insertamos minutos de la hora en el array respuesta
+                        $menor["minuto"][$i] = array("captura" => $control[0]["minutos"][$i], "ubicacion" => array());
+                    }
+                }
             } else {
-                $menor = array("hora" => $control_ruta[0]["horaUbicacion"], "minuto");
+                $menor = array("hora" => $control_ruta[0]["horaUbicacion"], "minuto"  => array());
+                // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA
+                for ($i = 0; $i <= 6; $i++) {
+                    if (isset($control_ruta[0]["minutos"][$i])) { //* Busqueda si existe el minuto 
+                        // * Insertamos minutos de la hora en el array respuesta
+                        $menor["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[0]["minutos"][$i]);
+                    }
+                }
             }
             // ! *****************************************************************
             // TODO: RECORREMOS LOS DOS ARRAYS PARA AGRUPAR POR HORAS Y MINUTOS 
@@ -635,7 +649,7 @@ class ControlController extends Controller
                             $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array()); //* Insertamos hora en el array respuesta
                             // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
                             for ($i = 0; $i <= 6; $i++) {
-                                if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                if (isset($control[$index]["minutos"][$i])) { //* Busqueda si existe el minuto 
                                     // * Insertamos minutos de la hora en el array respuesta
                                     $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
                                 }
