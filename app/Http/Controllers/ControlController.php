@@ -635,10 +635,10 @@ class ControlController extends Controller
                                 }
                                 if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
                                     if (isset($control_ruta[$element]["minutos"][$i])) {
-                                        if (!isset($respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"])) {
-                                            $respuesta[sizeof($respuesta)]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                        if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                         } else {
-                                            $respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
                                         }
                                     }
                                 }
@@ -654,23 +654,46 @@ class ControlController extends Controller
                             }
                             if ($respuestaBusqueda == false) {
                                 $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array());
+                                // ? MINUTOS
+                                for ($i = 0; $i <= 6; $i++) {
+                                    //* CAPTURA 
+                                    if (isset($control[$index]["minutos"][$i])) {
+                                        $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                    }
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
+                                        if (isset($control[$index]["minutos"][$i])) {
+                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                            } else {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                            }
+                                        }
+                                        if (isset($control_ruta[$element]["minutos"][$i])) {
+                                            if (!isset($respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"])) {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                            } else {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     } else {
                         if (empty($respuesta)) {
                             $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
                             // ? MINUTOS
-                            for ($i = 0; $i <= 6; $i++) {
-                                //* CAPTURA 
+                            for ($i = 0; $i < 6; $i++) {
+                                //* UBICACION
                                 if (isset($control_ruta[$element]["minutos"][$i])) {
                                     $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                 }
                                 if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
                                     if (isset($control[$index]["minutos"][$i])) {
                                         if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
-                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control[$index]["minutos"][$i]);
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                         } else {
-                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control[$index]["minutos"][$i];
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
                                         }
                                     }
                                 }
@@ -686,6 +709,29 @@ class ControlController extends Controller
                             }
                             if ($respuestaBusqueda == false) {
                                 $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
+                                // ? MINUTOS
+                                for ($i = 0; $i < 6; $i++) {
+                                    //* UBICACION
+                                    if (isset($control_ruta[$element]["minutos"][$i])) {
+                                        $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                    }
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
+                                        if (isset($control[$index]["minutos"][$i])) {
+                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                            } else {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                            }
+                                        }
+                                        if (isset($control_ruta[$element]["minutos"][$i])) {
+                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                            } else {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
