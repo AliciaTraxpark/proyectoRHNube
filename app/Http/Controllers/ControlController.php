@@ -773,19 +773,44 @@ class ControlController extends Controller
                 $respuesta[sizeof($respuesta)] = $menor;
             }
             // **************************************************
+            $respuestaMostrar = array_reverse($respuesta);
+            dd($respuestaMostrar);
+            return response()->json($respuestaMostrar, 200);
+        } else {
+            // ? CUANDO SOLO HAY CAPTURAS
+            if (!empty($control)) {
+                foreach ($control as $CR) { //* Recorremos el array de capturas
+                    $respuesta[sizeof($respuesta)] = array("hora" => $CR["horaCaptura"], "minuto" => array()); //* Insertamos hora de captura en array a mostrar
+                    // ? MINUTOS
+                    for ($i = 0; $i < 6; $i++) {
+                        // * BUSCAR MINUTOS DE CAPTURAS
+                        if (isset($CR["minutos"][$i])) {
+                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $CR["minutos"][$i], "ubicacion" => array());
+                        }
+                    }
+                }
+                return response()->json($respuesta, 200);
+            } else { // ? CUANDO SOLO HAY UBICACIONES
+                foreach ($control_ruta as $CR) { //* Recorremos el array de ubicaciones
+                    $respuesta[sizeof($respuesta)] = array("hora" => $CR["horaUbicacion"], "minuto" => array()); //* Insertamos hora de captura en array a mostrar
+                    // ? MINUTOS
+                    for ($i = 0; $i < 6; $i++) {
+                        // * BUSCAR MINUTOS DE UBICACIONES
+                        if (isset($CR["minutos"][$i])) {
+                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $CR["minutos"][$i]);
+                        }
+                    }
+                }
+
+                return response()->json($respuesta, 200);
+            }
         }
         // * ***********************************************
-        $respuestaMostrar = array_reverse($respuesta);
-        dd($respuestaMostrar);
-        return response()->json($respuestaMostrar, 200);
     }
 
     public function apiMostrarCapturas($url)
     {
         $res = base64_decode($url);
-        // $decode = base64_decode($url);
-        // $input_encoding = 'iso-2022-jp';
-        // $res = iconv($input_encoding, 'UTF-8', $decode);
         $resultado = str_replace("-", "/", $res);
         $appPath = app_path($resultado);
         return Image::make($appPath)->response();
