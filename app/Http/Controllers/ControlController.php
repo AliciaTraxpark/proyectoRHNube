@@ -478,17 +478,12 @@ class ControlController extends Controller
             ->orderBy('cp.hora_ini', 'asc')
             ->get();
         foreach ($control as $c) {
-            // $capturas = captura_imagen::where('idCaptura', '=', $c->idCaptura)->get();
             $capturas = DB::table('captura_imagen as ci')
                 ->select('ci.id as idImagen', 'ci.miniatura as imagen')
                 ->where('ci.idCaptura', '=', $c->idCaptura)
                 ->get();
             $datos = [];
             foreach ($capturas as $cp) {
-                // dd(storage_path($cp->imagen));
-                // $url = base_path() . $cp->imagen;
-                // $cp->imagen = $url;
-                // dd($url);
                 array_push($datos, $cp);
             }
             $c->imagen = $datos;

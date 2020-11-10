@@ -133,8 +133,8 @@ function onMostrarPantallas() {
                 container.append(actividadDiaria);
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
-                    var horaDelGrupo = data[index].horaCaptura;
-                    var hora = data[index].horaCaptura;
+                    var horaDelGrupo = data[index].hora;
+                    var hora = data[index].hora;
                     var promedios = 0;
                     var promedio = 0;
                     var sumaRangosTotal = 0;
@@ -156,67 +156,55 @@ function onMostrarPantallas() {
                 data-original-title=""></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="promHoras" style="font-weight: bold;color:#163552;cursor:default" id="promHoras${$i}" data-toggle="tooltip" data-placement="right" title="Actividad por Hora"
                 data-original-title=""></span></div><br><br><div class="container-fluid containerR"><div class="row rowResp">`;
                     for (var j = 0; j < 6; j++) {
-                        if (data[index].minutos[j] != undefined) {
-                            var capturas = `<div class = "carousel-item">
-                                                <div id="mapid${j}" onchange="javascript:ubicacionesMapa('${j}')" class="mapid"></div>
-                                            </div>`;
+                        // TODO: Obtener datos del array minutos de dicha hora
+                        if (data[index].minuto[j] != undefined) {
+                            var capturas = "";
+                            // ? RECORREMOS EL ARRAY DE CAPTURAS
                             for (
                                 let indexMinutos = 0;
-                                indexMinutos < data[index].minutos[j].length;
+                                indexMinutos < data[index].minuto[j]["captura"].length;
                                 indexMinutos++
                             ) {
-                                if (data[index].minutos[j].length > 1) {
-                                    promedios =
-                                        promedios +
-                                        data[index].minutos[j][indexMinutos]
-                                            .tiempoA;
-                                    sumaRangos =
-                                        sumaRangos +
-                                        data[index].minutos[j][indexMinutos]
-                                            .rango;
-                                    sumaActividad = sumaActividad + data[index].minutos[j][indexMinutos].tiempoA;
-                                    hora_inicial =
-                                        data[index].minutos[j][0].hora_ini;
-                                    hora_final =
-                                        data[index].minutos[j][
-                                            data[index].minutos[j].length - 1
-                                        ].hora_fin;
-                                    for (let indexC = 0; indexC < data[index].minutos[j][indexMinutos].imagen.length; indexC++) {
-                                        if (data[index].minutos[j][indexMinutos].imagen[indexC].imagen != null) {
-                                            var imgR = data[index].minutos[j][indexMinutos].imagen[indexC].imagen;
-                                            var rspI = imgR.replace(/\//g, "-");
-                                            var encr = CryptoJS.enc.Utf8.parse(rspI);
-                                            var base64 = CryptoJS.enc.Base64.stringify(encr);
+                                if (data[index].minuto[j]["captura"].length > 1) {
+                                    promedios = promedios + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de promedios de grupos de imagenes
+                                    sumaRangos = sumaRangos + data[index].minuto[j]["captura"][indexMinutos].rango; //* suma de rangos de grupos de imagenes
+                                    sumaActividad = sumaActividad + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de actividad de grupos de imagenes
+                                    hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la primera imagen del grupo de imagenes
+                                    hora_final = data[index].minuto[j]["captura"][data[index].minuto[j].length - 1].hora_fin; //* hora final de la ultima imagen del grupo de imagenes
+                                    for (let indexC = 0; indexC < data[index].minuto[j]["captura"][indexMinutos].imagen.length; indexC++) { //* recorrer imagenes para insertar en el carrusel
+                                        if (data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen != null) { //* solo grupos que tienen imagenes
+                                            var imgR = data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen; //* obtener ruta de la imagen
+                                            var rspI = imgR.replace(/\//g, "-"); //* cambair carateres
+                                            var encr = CryptoJS.enc.Utf8.parse(rspI); //* encriptar ruta
+                                            var base64 = CryptoJS.enc.Base64.stringify(encr); //* convertir ruta en base 64
+                                            // TODO: Colocar imagenes en carrusel 
+                                            //* @parametro base64 tenemos la ruta de la imagen
+                                            //* @hora y @j variables que enviamos para el modal zoom
                                             capturas += `<div class = "carousel-item">
                                                             <img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
-                                                            <div class="overlay">
-                                                            <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
-                                                            <i class="fa fa-eye"></i> Colección</a>
-                                                            </div>
+                                                                <div class="overlay">
+                                                                <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
+                                                                <i class="fa fa-eye"></i> Colección</a>
+                                                                </div>
                                                         </div>`;
                                         }
                                     }
                                 }
                             }
-                            if (data[index].minutos[j].length == 1) {
-                                hora_inicial =
-                                    data[index].minutos[j][0].hora_ini;
-                                hora_final = data[index].minutos[j][0].hora_fin;
-                                var totalR = enteroTime(
-                                    data[index].minutos[j][0].rango
-                                );
-                                sumaRangosTotal += data[index].minutos[j][0].rango;
+                            if (data[index].minuto[j]["captura"].length == 1) { //* Solo encontramos una captura en el grupo de minutos
+                                hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la imagen
+                                hora_final = data[index].minuto[j]["captura"][0].hora_fin; //* hora final de la imagen
+                                var totalR = enteroTime(data[index].minuto[j]["captura"][0].rango); //* convertimos el rango en time
+                                sumaRangosTotal += data[index].minuto[j]["captura"][0].rango; //* sumar rangos
                                 totalCM = totalR;
-                                promedio = data[index].minutos[j][0].prom;
-                                sumaActividadTotal += data[index].minutos[j][0].tiempoA;
+                                promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
+                                sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
                             } else {
                                 sumaRangosTotal += sumaRangos;
                                 sumaActividadTotal += sumaActividad;
                                 var totalR = enteroTime(sumaRangos);
                                 totalCM = totalR;
-                                promedio = (
-                                    (promedios / sumaRangos) * 100
-                                ).toFixed(2);
+                                promedio = ((promedios / sumaRangos) * 100).toFixed(2);
                                 if (promedios == 0) {
                                     promedio = 0;
                                 }
@@ -224,127 +212,115 @@ function onMostrarPantallas() {
                                 sumaRangos = 0;
                                 sumaActividad = 0;
                             }
+                            //! Colores de las actividades
                             var nivel;
                             if (promedio >= 50) nivel = "green";
                             else if (promedio > 35) nivel = "#f3c623";
                             else nivel = "red";
-                            if (data[index].minutos[j][0].imagen.length) {
-
-                                var imgR = data[index].minutos[j][0].imagen[0].imagen;
-                                var rspI = imgR.replace(/\//g, "-");
-                                var encr = CryptoJS.enc.Utf8.parse(rspI);
-                                var base64 = CryptoJS.enc.Base64.stringify(encr);
+                            //! **************************************
+                            if (data[index].minuto[j]["captura"][0].imagen.length) { //* cuando tenemos imagenes 
+                                var imgR = data[index].minuto[j]["captura"][0].imagen[0].imagen; //* Obtener ruta de la imagen
+                                var rspI = imgR.replace(/\//g, "-"); //* Reemplazar caracteres de la ruta
+                                var encr = CryptoJS.enc.Utf8.parse(rspI); //* Encriptar ruta
+                                var base64 = CryptoJS.enc.Base64.stringify(encr); //* convertir en base 64
                                 card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;">
-                                    <div class="mb-0 text-center" style="padding-left: 0px;">
-                                        <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
-                                            aria-expanded="true" aria-controls="customaccorcollapseOne">
-                                        </a>
-                                        <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 4px;
-                                                padding-bottom: 4px;">
-                                                    <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
-                                        j
-                                    ][0].Activi_Nombre
-                                    } </h5>
-                                                </div><br>
-                                                <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
-                                                <div class="hovereffect">
-                                                    <div  id="myCarousel${hora + j
-                                    }" class = "carousel carousel-fade" data-ride = "carousel">
-                                                        <div class = "carousel-inner">
-                                                            <div class = "carousel-item active"><img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
-                                                            <div class="overlay">
-                                    <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
-                                    <i class="fa fa-eye"></i> Colección</a>
-                                    </div>
-                                    </div>
-                                    ${capturas}
-                                    </div>
-                                    <a class = "carousel-control-prev" href = "#myCarousel${hora + j}" role = "button" data-slide = "prev">
-                                                            <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
-                                                            <span class = "sr-only">Previous</span>
-                                                        </a>
-                                                        <a class = "carousel-control-next" href = "#myCarousel${hora + j}" role = "button" data-slide = "next">
-                                                            <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
-                                                            <span class = "sr-only">Next</span>
-                                                        </a>
+                                            <div class="mb-0 text-center" style="padding-left: 0px;">
+                                                <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
+                                                    aria-expanded="true" aria-controls="customaccorcollapseOne">
+                                                </a>
+                                                <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 4px;padding-bottom: 4px;">
+                                                                <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;">
+                                                                    <img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minuto[j]["captura"][0].Activi_Nombre}
+                                                                </h5>
+                                                            </div><br>
+                                                            <div class="col-md-12 col-sm-6" style="padding-left: 0px;;padding-right: 0px">
+                                                                <div class="hovereffect">
+                                                                    <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
+                                                                        <div class = "carousel-inner">
+                                                                            <div class = "carousel-item active">
+                                                                                <img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
+                                                                                <div class="overlay">
+                                                                                    <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
+                                                                                        <i class="fa fa-eye"></i>Colección
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            ${capturas}
+                                                                        </div>
+                                                                        <a class = "carousel-control-prev" href = "#myCarousel${hora + j}" role = "button" data-slide = "prev">
+                                                                            <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
+                                                                            <span class = "sr-only">Previous</span>
+                                                                        </a>
+                                                                        <a class = "carousel-control-next" href = "#myCarousel${hora + j}" role = "button" data-slide = "next">
+                                                                            <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
+                                                                            <span class = "sr-only">Next</span>
+                                                                         </a>
+                                                                    </div>
+                                                                </div>
+                                                                &nbsp;
+                                                                <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
+                                                                <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo" data-original-title="">
+                                                                    <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio} aria-valuemin="0" aria-valuemax="100">
+                                                                        ${promedio + "%"}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
+                                                            <br>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                &nbsp;
-                                                <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
-                                                <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
-                                                data-original-title="">
-                                                    <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
-                                                        aria-valuemin="0" aria-valuemax="100">${promedio + "%"
-                                    }</div>
-                                                </div>
-                                                </div>
-                                                <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
-                                                <br>
                                             </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>`;
+                                        </div>`;
                                 grupo += card;
-                            } else {
+                            } else { //* obtenemos data PERO capturas no 
                                 card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;">
-                                    <div class="mb-0 text-center" style="padding-left: 0px;">
-                                        <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
-                                            aria-expanded="true" aria-controls="customaccorcollapseOne">
-                                        </a>
-                                        <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;
-                                                padding-bottom: 4px;">
-                                                    <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;"><img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[
-                                        j
-                                    ][0].Activi_Nombre
-                                    } </h5>
-                                                </div><br>
-                                                <div class="col-md-12" style="padding-left: 0px;;padding-right: 0px">
-                                                <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;
-                                                padding-bottom: 4px;">
-                                                <img src="landing/images/3155773.png" height="100">
+                                            <div class="mb-0 text-center" style="padding-left: 0px;">
+                                                <a href="" class="col text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne" aria-expanded="true" aria-controls="customaccorcollapseOne"></a>
+                                                <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class=" text-center col-md-12 col-sm-6" style="padding-top: 4px;padding-bottom: 4px;">
+                                                                <h5 class="m-0 font-size-16" style="color:#1f4068;font-weight:bold;">
+                                                                    <img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minutos[j]["captura"][0].Activi_Nombre}
+                                                                </h5>
+                                                            </div><br>
+                                                            <div class="col-md-12" style="padding-left: 0px;;padding-right: 0px">
+                                                                <div class=" text-center col-md-12 col-sm-12" style="padding-top: 1px;padding-bottom: 4px;">
+                                                                    <img src="landing/images/3155773.png" height="100">
+                                                                </div>
+                                                                &nbsp;
+                                                                <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
+                                                                <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo" data-original-title="">
+                                                                    <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio} aria-valuemin="0" aria-valuemax="100">${promedio + "%"}</div>
+                                                                </div>
+                                                            </div>
+                                                            <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
+                                                            <br>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                &nbsp;
-                                                <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
-                                                <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo"
-                                                data-original-title="">
-                                                    <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio}
-                                                        aria-valuemin="0" aria-valuemax="100">${promedio + "%"
-                                    }</div>
-                                                </div>
-                                                </div>
-                                                <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
-                                                <br>
                                             </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>`;
+                                        </div>`;
                                 grupo += card;
                             }
                         } else {
                             card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;justify-content:center!important">
-                            <div class="mb-0" style="padding-top:70px">
-                                <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne"
-                                    aria-expanded="true" aria-controls="customaccorcollapseOne">
-                                </a>
-                                <div class="collapse show" aria-labelledby="customaccorheadingOne"
-                                    data-parent="#customaccordion_exa">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-6 text-center">
-                                        <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
-                                            <h5 class="m-0 font-size-14 mbResponsivo" style="color:#8888">Vacio</h5>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>`;
+                                        <div class="mb-0" style="padding-top:70px">
+                                            <a href="" class="text-dark" data-toggle="collapse" data-target="#customaccorcollapseOne" aria-expanded="true" aria-controls="customaccorcollapseOne"></a>
+                                            <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-6 text-center">
+                                                        <img src="landing/images/3155773.png" height="100" class="imgResponsiva">
+                                                        <h5 class="m-0 font-size-14 mbResponsivo" style="color:#8888">Vacio</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
                             grupo += card;
                         }
                     }
