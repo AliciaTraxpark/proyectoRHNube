@@ -13,7 +13,8 @@ class detallesActivacionController extends Controller
     {
         $vinculacion = vinculacion::where('id', '=', $request->get('idV'))->get()->first();
         if ($vinculacion) {
-            $empleado = empleado::where('emple_id', '=', $request->get('idE'))->get()->first();
+            $vinculacion->serieDisco = NULL;
+            $vinculacion->save();
             $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->get()->first();
             $licencia->disponible = 'i';
             $licencia->save();

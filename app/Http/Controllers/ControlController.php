@@ -500,7 +500,7 @@ class ControlController extends Controller
     public function showConRuta(Request $request)
     {
 
-        //? FUNCION PARA CAPTURA
+        //? FUNCION PARA UNIR CAPTURAS POR HORAS Y MINUTOS
         function controlRRJson($array)
         {
             $resultado = array();
@@ -517,8 +517,8 @@ class ControlController extends Controller
             }
             return array_values($resultado);
         }
-
-        // ? FUNCION PARA RUTA
+        // ? ********************************************
+        // ? FUNCION PARA UNIR RUTAS POR HORAS Y MINUTOS
         function controlRJson($array)
         {
             $resultado = array();
@@ -536,10 +536,10 @@ class ControlController extends Controller
 
             return array_values($resultado);
         }
-
+        // ? *********************************************
         $idempleado = $request->get('value');
         $fecha = $request->get('fecha');
-        // ? DATOS DE CAPTURAS
+        // ? RECUPERAR DATOS DE CAPTURAS POR FECHA INDICADA Y EMPLEADO
         $control = DB::table('empleado as e')
             ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
             ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
@@ -577,8 +577,10 @@ class ControlController extends Controller
             }
             $c->imagen = $datos;
         }
+        // ? REALIZAMOS UNION DE HORAS Y MINUTOS EN CAPTURA
         $control = controlRRJson($control);
-        // ? DATOS DE UBICACIONES
+        // ? **********************************************
+        // ? RECUPERAR DATOS DE UBICACIONES POR FECHA Y EMPLEADO DADO
         $control_ruta = DB::table('empleado as e')
             ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
             ->join('actividad as a', 'a.Activi_id', '=', 'u.idActividad')
@@ -609,33 +611,37 @@ class ControlController extends Controller
             }
             $cr->ubicaciones = $datos;
         }
+        // ? REALIZAMOS UNION DE HORAS Y MINUTOS EN UBICACION
         $control_ruta = controlRJson($control_ruta);
-
-        // dd($control, $control_ruta);
+        // * UNIR ARRAY CAPTURA Y UBICACION EN UNO 
         $respuesta = array();
-        // ? UNIR LOS DOS ARRAYS
+        // * CUANDO LOS DOS ARRAY TIENEN DATOS
         if (!empty($control) && !empty($control_ruta)) {
             $menor = array();
+            // ! INSERTAMOS EL MENOR TIEMPO DE UNO DE LOS ARRAYS 
             if ($control[0]["horaCaptura"] < $control_ruta[0]["horaUbicacion"]) {
                 $menor = array("hora" => $control[0]["horaCaptura"], "minuto");
             } else {
                 $menor = array("hora" => $control[0]["horaUbicacion"], "minuto");
             }
+            // ! *****************************************************************
+            // TODO: RECORREMOS LOS DOS ARRAYS PARA AGRUPAR POR HORAS Y MINUTOS 
             for ($index = sizeof($control) - 1; $index >= 0; $index--) {
                 for ($element = sizeof($control_ruta) - 1; $element >= 0; $element--) {
-                    // ? COMPARANDO POR HORAS
+                    // TODO: COMPARAMOS HORAS PARA ORDENAR DE MAYOR A MENOR
                     if ($control[$index]["horaCaptura"] > $control_ruta[$element]["horaUbicacion"]) {
+                        // TODO: PREGUNTAMOS SI EXISTE EL ARRAY $respuesta
                         if (empty($respuesta)) {
-                            $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array());
-                            // ? MINUTOS
+                            $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array()); //* Insertamos hora en el array respuesta
+                            // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
                             for ($i = 0; $i <= 6; $i++) {
-                                //* CAPTURA 
-                                if (isset($control[$index]["minutos"][$i])) {
-                                    $respuesta[sizeof($respuesta)]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                    // * Insertamos minutos de la hora en el array respuesta
+                                    $respuesta[sizeof($respuesta)]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array()); 
                                 }
-                                if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
-                                    if (isset($control_ruta[$element]["minutos"][$i])) {
-                                        if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
+                                if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
+                                    if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minuto
+                                        if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) { //* Bsuqueda de minuto en array respuesta
                                             $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                         } else {
                                             $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
@@ -643,32 +649,34 @@ class ControlController extends Controller
                                     }
                                 }
                             }
-                        } else {
+                            // ? ****************************************************
+                        } else { //* Hora de ubicacion es mayor  a la hora de captura 
                             $respuestaBusqueda = false;
+                            // * Realizamos buesqueda en el array respeusta para saber si esa hora fue insertada 
                             foreach ($respuesta as $key => $value) {
                                 if (isset($value["hora"])) {
                                     if ($value["hora"] == $control[$index]["horaCaptura"]) {
-                                        $respuestaBusqueda = true;
+                                        $respuestaBusqueda = true; //* Hora ya se encuentra registrada en el array respuesta
                                     }
                                 }
                             }
-                            if ($respuestaBusqueda == false) {
+                            if ($respuestaBusqueda == false) { //* Insertamos hora en array respuesta 
                                 $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array());
-                                // ? MINUTOS
+                                // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
                                 for ($i = 0; $i <= 6; $i++) {
-                                    //* CAPTURA 
-                                    if (isset($control[$index]["minutos"][$i])) {
+                                    if (isset($control[$index]["minutos"][$i])) {//* Busqueda de minutos 
+                                        // * Insertamos minutos de la hora en el array respuesta
                                         $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
                                     }
-                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
-                                        if (isset($control[$index]["minutos"][$i])) {
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {  //* Busqueda de la misma hora de capturas en ubicaciones
+                                        if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
                                             if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
                                             } else {
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
                                             }
                                         }
-                                        if (isset($control_ruta[$element]["minutos"][$i])) {
+                                        if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
                                             if (!isset($respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"])) {
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                             } else {
@@ -739,12 +747,11 @@ class ControlController extends Controller
             }
             $respuesta[sizeof($respuesta)] = $menor;
         }
+        // * ***********************************************
         $respuestaMostrar = array_reverse($respuesta);
         dd($respuestaMostrar);
         return response()->json($respuestaMostrar, 200);
     }
-
-
 
     public function apiMostrarCapturas($url)
     {
