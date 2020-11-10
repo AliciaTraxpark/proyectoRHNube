@@ -774,7 +774,6 @@ class ControlController extends Controller
             }
             // **************************************************
             $respuestaMostrar = array_reverse($respuesta);
-            dd($respuestaMostrar);
             return response()->json($respuestaMostrar, 200);
         } else {
             // ? CUANDO SOLO HAY CAPTURAS
