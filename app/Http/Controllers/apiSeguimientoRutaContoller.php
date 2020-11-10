@@ -71,19 +71,19 @@ class apiSeguimientoRutaContoller extends Controller
                                     "token" => $token->get()
                                 ), 200);
                             } else {
-                                return response()->json("imeiId_erroneo", 400);
+                                return response()->json(array("message" => "imeiId_erroneo"), 400);
                             }
                         }
                     } else {
-                        return response()->json("codigo_erroneo", 400);
+                        return response()->json(array("message" => "codigo_erroneo"), 400);
                     }
                 } else {
-                    return response()->json("sin_dispositivo", 400);
+                    return response()->json(array("message" => "sin_dispositivo"), 400);
                 }
             }
-            return response()->json("empleado_no_exite", 400);
+            return response()->json(array("message" => "empleado_no_exite"), 400);
         }
-        return response()->json("codigo_no_exite", 400);
+        return response()->json(array("message" => "codigo_no_exite"), 400);
     }
 
     // ? PRUEBA DE REGISTRO DE LATITUD Y LONGITUD
@@ -178,6 +178,6 @@ class apiSeguimientoRutaContoller extends Controller
             $respuesta["horaActual"] = $horaActual;
             return response()->json($respuesta, 200);
         }
-        return response()->json("empleado_no_exite", 400);
+        return response()->json(array("message" => "empleado_no_exite"), 400);
     }
 }
