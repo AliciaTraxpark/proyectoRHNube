@@ -637,7 +637,7 @@ class ControlController extends Controller
                             for ($i = 0; $i <= 6; $i++) {
                                 if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
                                     // * Insertamos minutos de la hora en el array respuesta
-                                    $respuesta[sizeof($respuesta)]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
                                 }
                                 if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
                                     if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minuto
