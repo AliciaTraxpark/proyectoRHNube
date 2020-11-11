@@ -155,10 +155,10 @@ function calendario() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
@@ -418,10 +418,10 @@ function calendario_edit() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
                 }
                 else {
@@ -657,10 +657,10 @@ function agregarHorarioSe() {
     var horarioA;
     if ($('#horAdicSwitch').prop('checked')) {
         horarioA = 1;
-        var nHoraAdic=$('#nHorasAdic').val();
+        var nHoraAdic = $('#nHorasAdic').val();
     } else {
         horarioA = 0;
-        var nHoraAdic=null;
+        var nHoraAdic = null;
     }
     var idempleado = $("#idempleado").val();
     var diasEntreFechas = function (desde, hasta) {
@@ -701,7 +701,7 @@ function agregarHorarioSe() {
             fechasArray: fechastart,
             hora: textSelec,
             idhorar: idhorar,
-            idempleado, fueraHora, horarioC, horarioA,nHoraAdic
+            idempleado, fueraHora, horarioC, horarioA, nHoraAdic
         },
         statusCode: {
             419: function () {
@@ -729,7 +729,7 @@ function abrirHorario_ed() {
     $('#divOtrodia_ed').hide();
     $('#divPausa_ed').hide();
     $('#inputPausa_ed').empty();
-    $('#horaOblig_ed').prop("disabled","disabled");
+    $('#horaOblig_ed').prop("disabled", "disabled");
     $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
@@ -749,7 +749,7 @@ function abrirHorario_ed() {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
 
     $('input[name="descPausa_ed[]"]').prop('required', false);
@@ -1270,10 +1270,10 @@ function calendario2() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
@@ -1322,7 +1322,7 @@ function abrirHorario() {
     $('#divOtrodia').hide();
     $('#divPausa').hide();
     $('#inputPausa').empty();
-    $('#horaOblig').prop("disabled","disabled");
+    $('#horaOblig').prop("disabled", "disabled");
     $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
@@ -1342,7 +1342,7 @@ function abrirHorario() {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
 
     $('input[name="descPausa[]"]').prop('required', false);
@@ -1454,10 +1454,10 @@ function agregarHorarioSe_regis() {
     var horarioA;
     if ($('#horAdicSwitch_re').prop('checked')) {
         horarioA = 1;
-        var nHoraAdic=$('#nHorasAdic_re').val();
+        var nHoraAdic = $('#nHorasAdic_re').val();
     } else {
         horarioA = 0;
-        var nHoraAdic=null;
+        var nHoraAdic = null;
     }
     var idhorar = $("#selectHorario").val();
     if (idhorar == null) {
@@ -1506,7 +1506,7 @@ function agregarHorarioSe_regis() {
             hora: textSelec,
 
             idhorar: idhorar,
-            idca, fueraHora, horarioC, horarioA,nHoraAdic
+            idca, fueraHora, horarioC, horarioA, nHoraAdic
         },
         statusCode: {
             419: function () {
@@ -1568,10 +1568,10 @@ function calendario3() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
@@ -1653,10 +1653,10 @@ function calendario4() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
                 }
                 else {
@@ -1971,10 +1971,10 @@ function calendario2_ed() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
@@ -5261,7 +5261,7 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia_ed').show();
-            $('#horaOblig_ed').prop("disabled",false);
+            $('#horaOblig_ed').prop("disabled", false);
             $('#horaOblig_ed').flatpickr({
                 enableTime: true,
                 noCalendar: true,
@@ -5274,19 +5274,19 @@ $(function () {
             var dateDesde = newDate(horaI.split(":"));
             var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde)/1000/60;
-            var horas = Math.floor(minutos/60);
+            var minutos = (dateHasta - dateDesde) / 1000 / 60;
+            var horas = Math.floor(minutos / 60);
             minutos = minutos % 60;
-           /*  console.log(prefijo(horas) + ':' + prefijo(minutos)); */
-            $('#horaOblig_ed').prop("disabled",false);
+            /*  console.log(prefijo(horas) + ':' + prefijo(minutos)); */
+            $('#horaOblig_ed').prop("disabled", false);
 
-            if($('#horaOblig_ed').val()==null || $('#horaOblig_ed').val()==''){
+            if ($('#horaOblig_ed').val() == null || $('#horaOblig_ed').val() == '') {
                 $('#horaOblig_ed').flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    defaultHour:"8"
+                    defaultHour: "8"
                 });
                 $('#horaOblig_ed').val("08:00");
 
@@ -5310,26 +5310,26 @@ $(function () {
                 dateFormat: "H:i",
                 time_24hr: true
             });
-            $('#horaOblig_ed').prop("disabled",false);
+            $('#horaOblig_ed').prop("disabled", false);
             $('#horaOblig_ed').val('');
             event.stopPropagation();
         } else {
             var dateDesde = newDate(horaI.split(":"));
             var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde)/1000/60;
-            var horas = Math.floor(minutos/60);
+            var minutos = (dateHasta - dateDesde) / 1000 / 60;
+            var horas = Math.floor(minutos / 60);
             minutos = minutos % 60;
 
-            $('#horaOblig_ed').prop("disabled",false);
+            $('#horaOblig_ed').prop("disabled", false);
             /* $('#horaOblig').val(prefijo(horas)); */
-            if($('#horaOblig_ed').val()==null || $('#horaOblig_ed').val()==''){
+            if ($('#horaOblig_ed').val() == null || $('#horaOblig_ed').val() == '') {
                 $('#horaOblig_ed').flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    defaultHour:"8"
+                    defaultHour: "8"
                 });
                 $('#horaOblig_ed').val("08:00");
 
@@ -5346,7 +5346,7 @@ $(function () {
 
         if (horaF < horaI) {
             $('#divOtrodia').show();
-            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').prop("disabled", false);
             $('#horaOblig').flatpickr({
                 enableTime: true,
                 noCalendar: true,
@@ -5359,19 +5359,19 @@ $(function () {
             var dateDesde = newDate(horaI.split(":"));
             var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde)/1000/60;
-            var horas = Math.floor(minutos/60);
+            var minutos = (dateHasta - dateDesde) / 1000 / 60;
+            var horas = Math.floor(minutos / 60);
             minutos = minutos % 60;
             console.log(prefijo(horas) + ':' + prefijo(minutos));
-            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').prop("disabled", false);
 
-            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
+            if ($('#horaOblig').val() == null || $('#horaOblig').val() == '') {
                 $('#horaOblig').flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    defaultHour:"8"
+                    defaultHour: "8"
                 });
                 $('#horaOblig').val("08:00");
 
@@ -5405,26 +5405,26 @@ $(function () {
                 dateFormat: "H:i",
                 time_24hr: true
             });
-            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').prop("disabled", false);
             $('#horaOblig').val('');
             event.stopPropagation();
         } else {
             var dateDesde = newDate(horaI.split(":"));
             var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde)/1000/60;
-            var horas = Math.floor(minutos/60);
+            var minutos = (dateHasta - dateDesde) / 1000 / 60;
+            var horas = Math.floor(minutos / 60);
             minutos = minutos % 60;
             console.log(prefijo(horas) + ':' + prefijo(minutos));
-            $('#horaOblig').prop("disabled",false);
+            $('#horaOblig').prop("disabled", false);
             /* $('#horaOblig').val(prefijo(horas)); */
-            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
+            if ($('#horaOblig').val() == null || $('#horaOblig').val() == '') {
                 $('#horaOblig').flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    defaultHour:"8"
+                    defaultHour: "8"
                 });
                 $('#horaOblig').val("08:00");
 
@@ -5475,68 +5475,68 @@ function addField() {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
-    var horafinal=$('#horaF_ed').val();
-    splih=horafinal.split(":");
+    var horafinal = $('#horaF_ed').val();
+    splih = horafinal.split(":");
     console.log(splih[0]);
-    $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
+    $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).prop("disabled", true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:splih[0]
+        defaultHour: splih[0]
     });;
     $(function () {
-        $(document).on('change', '#FinPausa_ed'+ newID, function (event) {
-            let horaF = $('#FinPausa_ed'+ newID).val();
-            let horaI = $('#InicioPausa_ed'+ newID).val();
+        $(document).on('change', '#FinPausa_ed' + newID, function (event) {
+            let horaF = $('#FinPausa_ed' + newID).val();
+            let horaI = $('#InicioPausa_ed' + newID).val();
 
-            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+            if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
                 $('#FinPausa_ed' + newID).val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango_ed').hide();
-             }
+            }
 
-                if (horaF < horaI) {
-                    $('#FinPausa_ed'+ newID).val('');
-                    $('#errorenPausas_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas_ed').hide();
-                }
+            if (horaF < horaI) {
+                $('#FinPausa_ed' + newID).val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
 
 
 
         });
     });
     $(function () {
-        $(document).on('change', '#InicioPausa_ed'+ newID, function (event) {
-            let horaF = $('#FinPausa_ed'+ newID).val();
-            let horaI = $('#InicioPausa_ed'+ newID).val();
-            $('#FinPausa_ed'+ newID).prop( "disabled",false);
-            if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+        $(document).on('change', '#InicioPausa_ed' + newID, function (event) {
+            let horaF = $('#FinPausa_ed' + newID).val();
+            let horaI = $('#InicioPausa_ed' + newID).val();
+            $('#FinPausa_ed' + newID).prop("disabled", false);
+            if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
-                $('#InicioPausa_ed'+ newID).val('');
+                $('#InicioPausa_ed' + newID).val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
-
-            if(horaF==null || horaF==''){
-
-            } else{
-            if (horaF < horaI) {
-                $('#InicioPausa_ed'+ newID).val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas').hide();
+                $('#fueraRango').hide();
             }
-        }
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if (horaF < horaI) {
+                    $('#InicioPausa_ed' + newID).val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            }
 
         });
     });
@@ -5608,68 +5608,68 @@ function addFieldRe() {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
-    var horafinal=$('#horaF').val();
-    splih=horafinal.split(":");
+    var horafinal = $('#horaF').val();
+    splih = horafinal.split(":");
     console.log(splih[0]);
-    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
+    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop("disabled", true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:splih[0]
+        defaultHour: splih[0]
     });;
     $(function () {
-        $(document).on('change', '#FinPausa'+ newID, function (event) {
-            let horaF = $('#FinPausa'+ newID).val();
-            let horaI = $('#InicioPausa'+ newID).val();
+        $(document).on('change', '#FinPausa' + newID, function (event) {
+            let horaF = $('#FinPausa' + newID).val();
+            let horaI = $('#InicioPausa' + newID).val();
 
-            if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
                 $('#FinPausa' + newID).val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-             }
+            }
 
-                if (horaF < horaI) {
-                    $('#FinPausa'+ newID).val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas').hide();
-                }
+            if (horaF < horaI) {
+                $('#FinPausa' + newID).val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
 
 
 
         });
     });
     $(function () {
-        $(document).on('change', '#InicioPausa'+ newID, function (event) {
-            let horaF = $('#FinPausa'+ newID).val();
-            let horaI = $('#InicioPausa'+ newID).val();
-            $('#FinPausa'+ newID).prop( "disabled",false);
-            if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
+        $(document).on('change', '#InicioPausa' + newID, function (event) {
+            let horaF = $('#FinPausa' + newID).val();
+            let horaI = $('#InicioPausa' + newID).val();
+            $('#FinPausa' + newID).prop("disabled", false);
+            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
 
-                $('#InicioPausa'+ newID).val('');
+                $('#InicioPausa' + newID).val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
-
-            if(horaF==null || horaF==''){
-
-            } else{
-            if (horaF < horaI) {
-                $('#InicioPausa'+ newID).val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas').hide();
+                $('#fueraRango').hide();
             }
-        }
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if (horaF < horaI) {
+                    $('#InicioPausa' + newID).val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            }
 
         });
     });
@@ -5805,7 +5805,38 @@ function stopVideoF() {
         $('#form-ver').modal('show');
     }
 }
-
+//* CALENDARIO
+function mostrarContenidoC() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
+    }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-videoC').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframeC');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideoC() {
+    var iframe = document.querySelector('#contenidoIframeC');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
 // * HORARIO
 function mostrarContenidoH() {
     // *OCULTAR FORMULARIO
@@ -5870,18 +5901,50 @@ function stopVideoA() {
         $('#form-ver').modal('show');
     }
 }
+// * DISPOSITIVO
+function mostrarContenidoD() {
+    // *OCULTAR FORMULARIO
+    console.log($('#form-registrar').is(':visible'));
+    if ($('#form-ver').is(':visible') === true) {
+        modalOculto = 2;
+        $('#form-ver').modal('hide');
+    }
+    if ($('#form-registrar').is(':visible') === true) {
+        modalOculto = 1;
+        $('#form-registrar').modal('hide');
+    }
+    //*ABRIR MODAL
+    $('#modal-videoD').modal();
+    // * PLAY DE VIDEO AL ABRIR MODAL
+    var iframe = document.querySelector('#contenidoIframeD');
+    var player = new Vimeo.Player(iframe);
+    player.play();
+}
+// ? PAUSAR VIDEO MANUALMENTE
+function stopVideoD() {
+    var iframe = document.querySelector('#contenidoIframeD');
+    var player = new Vimeo.Player(iframe);
+    player.unload();
+    // ! MOSTRAR MODAL OCULTO
+    if (modalOculto === 1) {
+        $('#form-registrar').modal('show');
+    }
+    if (modalOculto === 2) {
+        $('#form-ver').modal('show');
+    }
+}
 //VALIDACION PAUSAS
 $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+        if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
             $('#FinPausa').val('');
             $('#fueraRango').show();
             event.stopPropagation();
-         } else{
+        } else {
             $('#fueraRango').hide();
-         }
+        }
         if (horaF < horaI) {
             $('#FinPausa').val('');
             $('#errorenPausas').show();
@@ -5897,19 +5960,19 @@ $(function () {
     $(document).on('change', '#InicioPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        $('#FinPausa').prop( "disabled",false);
-         if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
+        $('#FinPausa').prop("disabled", false);
+        if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
 
             $('#InicioPausa').val('');
             $('#fueraRango').show();
             event.stopPropagation();
-         } else{
+        } else {
             $('#fueraRango').hide();
-         }
-         console.log(horaF);
-         if(horaF==null || horaF==''){
-            var horafinal1=$('#horaF').val();
-            splih1=horafinal1.split(":");
+        }
+        console.log(horaF);
+        if (horaF == null || horaF == '') {
+            var horafinal1 = $('#horaF').val();
+            splih1 = horafinal1.split(":");
             console.log(splih1[0]);
             console.log('nada me da');
             $('#FinPausa').val('').flatpickr({
@@ -5917,11 +5980,11 @@ $(function () {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
             console.log('secumple');
             if (horaF < horaI) {
                 $('#InicioPausa').val('');
@@ -5930,7 +5993,7 @@ $(function () {
             } else {
                 $('#errorenPausas').hide();
             }
-         }
+        }
 
 
     });
@@ -5941,13 +6004,13 @@ $(function () {
     $(document).on('change', '#FinPausa_ed', function (event) {
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
-        if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+        if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
             $('#FinPausa_ed').val('');
             $('#fueraRango_ed').show();
             event.stopPropagation();
-         } else{
+        } else {
             $('#fueraRango_ed').hide();
-         }
+        }
         if (horaF < horaI) {
             $('#FinPausa_ed').val('');
             $('#errorenPausas_ed').show();
@@ -5963,19 +6026,19 @@ $(function () {
     $(document).on('change', '#InicioPausa_ed', function (event) {
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
-        $('#FinPausa_ed').prop( "disabled",false);
-         if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+        $('#FinPausa_ed').prop("disabled", false);
+        if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
             $('#InicioPausa_ed').val('');
             $('#fueraRango_ed').show();
             event.stopPropagation();
-         } else{
+        } else {
             $('#fueraRango_ed').hide();
-         }
-         console.log(horaF);
-         if(horaF==null || horaF==''){
-            var horafinal1=$('#horaF_ed').val();
-            splih1=horafinal1.split(":");
+        }
+        console.log(horaF);
+        if (horaF == null || horaF == '') {
+            var horafinal1 = $('#horaF_ed').val();
+            splih1 = horafinal1.split(":");
             console.log(splih1[0]);
             console.log('nada me da');
             $('#FinPausa_ed').val('').flatpickr({
@@ -5983,11 +6046,11 @@ $(function () {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
             console.log('secumple');
             if (horaF < horaI) {
                 $('#InicioPausa_ed').val('');
@@ -5996,7 +6059,7 @@ $(function () {
             } else {
                 $('#errorenPausas_ed').hide();
             }
-         }
+        }
 
 
     });
@@ -6011,7 +6074,7 @@ $(function () {
             $('#fueraHSwitch').prop('checked', true);
             $('#fueraHSwitch').prop('disabled', true);
 
-        } else{
+        } else {
             $('#nHorasAdic').hide();
             $('#fueraHSwitch').prop('disabled', false);
         }
@@ -6028,7 +6091,7 @@ $(function () {
             $('#fueraHSwitch_re').prop('checked', true);
             $('#fueraHSwitch_re').prop('disabled', true);
 
-        } else{
+        } else {
             $('#nHorasAdic_re').hide();
             $('#fueraHSwitch_re').prop('disabled', false);
         }
