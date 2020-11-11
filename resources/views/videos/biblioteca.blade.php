@@ -155,7 +155,7 @@
                                 <a data-fancybox data-ratio="2" data-caption="Tu primera configiración en RH nube"
                                     href="https://player.vimeo.com/video/471518323?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
-                                        src="https://i.vimeocdn.com/video/980963155.webp?mw=360&mh=352"/>
+                                        src="https://i.vimeocdn.com/video/984981562.webp?mw=500&mh=281"/>
                                 </a>
                             </div>
 
@@ -169,7 +169,7 @@
                                     <a class="badge badge-soft-primary" onclick="javascript:primeraConfig()"
                                         style="cursor: pointer">
                                         <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
-                                        01:31
+                                        14:53
                                     </a>
                                 </div>
                             </div>
