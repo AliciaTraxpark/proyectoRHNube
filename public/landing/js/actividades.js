@@ -725,6 +725,53 @@ $('input.global_filter').on('keyup click change clear', function () {
 // **********************************
 
 //: Asignar actividades en area de forma masiva 
-function asignarActividadMasiso(){
-    
+//? Inicializar plugin
+$("#actividadesAsignar").select2({
+    placeholder: 'Seleccionar actividad',
+    tags: "true"
+});
+$("#areaAsignar").select2({
+    tags: "true"
+});
+$("#empleAsignar").select2({
+    tags: "true"
+});
+// ? **********************************
+
+//? Funcion para listar actividades
+function listaActividades() {
+    $("#actividadesAsignar").empty();
+    var container = $("#actividadesAsignar");
+    $.ajax({
+        async: false,
+        url: "/listActivi",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.idActividad}"> Actividad : ${element.nombre} </option>`;
+            });
+            console.log(option);
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+// ? ******************************
+
+function asignarActividadMasiso() {
+    $('#asignarPorArea').modal();
+    listaActividades();
 }

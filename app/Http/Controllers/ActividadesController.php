@@ -397,4 +397,16 @@ class ActividadesController extends Controller
             ->get();
         return response()->json($areas, 200);
     }
+
+    //? SELEC DE ACTIVIDADES
+    function listaActividades()
+    {
+        $actividades = DB::table('actividad as a')
+            ->select('a.Activi_id as idActividad', 'a.Activi_Nombre as nombre')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.estado', '=', 1)
+            ->get();
+
+        return response()->json($actividades, 200);
+    }
 }
