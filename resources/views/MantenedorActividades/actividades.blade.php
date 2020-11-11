@@ -10,8 +10,6 @@
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
-{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -91,6 +89,14 @@
     }
 
     /* FINALIZACION */
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #52565b;
+    }
+
     @media (max-width: 767.98px) {
 
         li.paginate_button.previous,
@@ -115,11 +121,13 @@
         }
     }
 </style>
+{{-- BOTONES DE ASIGNACION Y REGISTAR --}}
 <div class="row pr-3 pl-3 pt-5">
     <div class="col-md-6 text-left">
         <button type="button" class="btn btn-sm mt-1"
             style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
-            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">
+            onclick="javascript:asignarActividadMasiso()">
+            <img src="{{asset('landing/images/capas.svg')}}" class="mr-1" height="18">
             Asignar actividad
         </button>
     </div>
@@ -130,6 +138,8 @@
         </button>
     </div>
 </div>
+{{-- FINALIZACION --}}
+{{-- TABLA DE ACTIVIDADES --}}
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
@@ -152,12 +162,15 @@
         </div>
     </div>
 </div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE REGISTRAR ACTIVIDAD --}}
 <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="regactividadTarea"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  modal-xs d-flex justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Actividad
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar Actividad
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -227,6 +240,8 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION DE MODAL --}}
+{{-- MODAL DE EDITAR ACTIVIDAD --}}
 <div id="editactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editactividadTarea"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  modal-xs d-flex justify-content-center">
@@ -303,6 +318,8 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION --}}
+{{-- MODAL DE SESSION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -319,6 +336,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION --}}
 @if (Auth::user())
 <script>
     $(function() {

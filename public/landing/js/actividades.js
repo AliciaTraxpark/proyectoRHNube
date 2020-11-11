@@ -723,3 +723,8 @@ $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
 // **********************************
+
+//: Asignar actividades en area de forma masiva 
+function asignarActividadMasiso(){
+    
+}
