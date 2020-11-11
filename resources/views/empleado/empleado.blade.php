@@ -42,9 +42,10 @@ use Carbon\Carbon;
             width: 100%;
             height: 6px;
         }
-        .form-control:disabled{
-    background-color: #f1f0f0;
-}
+
+        .form-control:disabled {
+            background-color: #f1f0f0;
+        }
     </style>
 
 
@@ -125,9 +126,9 @@ use Carbon\Carbon;
                             data-aos="fade-left">
                             <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframe">
                                 <iframe id="contenidoIframe"
-                                    src="https://player.vimeo.com/video/472833228?title=0&byline=0&portrait=0"
+                                    src="https://player.vimeo.com/video/477794877?title=0&byline=0&portrait=0"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                    allow="autoplay; fullscreen"></iframe>
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
@@ -156,9 +157,9 @@ use Carbon\Carbon;
                             data-aos="fade-left">
                             <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeE">
                                 <iframe id="contenidoIframe"
-                                    src="https://player.vimeo.com/video/472833228?title=0&byline=0&portrait=0"
+                                    src="https://player.vimeo.com/video/477794018?title=0&byline=0&portrait=0"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                    allow="autoplay; fullscreen"></iframe>
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
@@ -187,9 +188,40 @@ use Carbon\Carbon;
                             data-aos="fade-left">
                             <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeF">
                                 <iframe id="contenidoIframe"
-                                    src="https://player.vimeo.com/video/472833622?title=0&byline=0&portrait=0"
+                                    src="https://player.vimeo.com/video/477793806?title=0&byline=0&portrait=0"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                    allow="autoplay; fullscreen"></iframe>
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO CALENDARIO--}}
+    <div class="modal fade" id="modal-videoC" tabindex="-1" role="dialog" aria-labelledby="modal-videoC"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideoC()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeC">
+                                <iframe id="contenidoIframe"
+                                    src="https://player.vimeo.com/video/477793882?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
@@ -218,9 +250,9 @@ use Carbon\Carbon;
                             data-aos="fade-left">
                             <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeH">
                                 <iframe id="contenidoIframe"
-                                    src="https://player.vimeo.com/video/472833750?title=0&byline=0&portrait=0"
+                                    src="https://player.vimeo.com/video/477792484?title=0&byline=0&portrait=0"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                    allow="autoplay; fullscreen"></iframe>
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
@@ -248,9 +280,41 @@ use Carbon\Carbon;
                         <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
                             data-aos="fade-left">
                             <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeA">
-                                <iframe src="https://player.vimeo.com/video/472834003?title=0&byline=0&portrait=0"
+                                <iframe id="contenidoIframeA"
+                                    src="https://player.vimeo.com/video/477792220?title=0&byline=0&portrait=0"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
-                                    allow="autoplay; fullscreen" id="contenidoIframeA"></iframe>
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            </div>
+                            <script src="https://player.vimeo.com/api/player.js"></script>
+                        </div>
+                    </div>
+                    {{-- FINALIZAR VIDEO --}}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {{-- FINAL DE MODAL --}}
+    {{-- MODAL DE VIDEO DISPOSITIVO--}}
+    <div class="modal fade" id="modal-videoD" tabindex="-1" role="dialog" aria-labelledby="modal-videoD"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:stopVideoD()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- VIDEO --}}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                            data-aos="fade-left">
+                            <div style="padding:53.91% 0 0 0;position:relative;" id="contenidoIframeD">
+                                <iframe id="contenidoIframeA"
+                                    src="https://player.vimeo.com/video/477791531?title=0&byline=0&portrait=0"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                    allow="autoplay; fullscreen" allowfullscreen></iframe>
                             </div>
                             <script src="https://player.vimeo.com/api/player.js"></script>
                         </div>
@@ -910,14 +974,14 @@ use Carbon\Carbon;
                             <div class="text-right"><br><br>
                                 <a href="{{('/horario')}}">
                                     @if (count($empleado) > 0)
-                                    <button id="btnContinuar"
-                                    class="boton btn btn-default mr-1">CONTINUAR</button>
+                                    <button id="btnContinuar" class="boton btn btn-default mr-1">CONTINUAR</button>
                                     @else
-                                    <button id="btnContinuar" disabled title="Registre al menos un empleado para poder continuar"
-                                class="boton btn btn-default mr-1">CONTINUAR</button>
+                                    <button id="btnContinuar" disabled
+                                        title="Registre al menos un empleado para poder continuar"
+                                        class="boton btn btn-default mr-1">CONTINUAR</button>
 
                                     @endif
-                                    </a>
+                                </a>
                             </div>
 
                         </div> <!-- end card body-->
@@ -1021,7 +1085,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Dar de baja</h5>
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Dar de
+                                    baja</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -2158,6 +2223,15 @@ use Carbon\Carbon;
                                         <div id="sw-default-step-1" class="setup-content"
                                             style="font-size: 12px!important">
                                             <div class="row">
+                                                <div class="col-12">
+                                                    <div class="float-md-right">
+                                                        <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
+                                                            data-placement="left" title="ver vídeo"
+                                                            data-original-title="ver vídeo">
+                                                            <img src="{{asset('landing/images/play.svg')}}" height="35">
+                                                        </a>
+                                                    </div>
+                                                </div>
                                                 <div class="col-4">
                                                     <input type="hidden" name="idEmpleado" id="idEmpleado">
                                                     <div class="form-group">
@@ -2569,6 +2643,17 @@ use Carbon\Carbon;
                                     <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <div class="float-md-right">
+                                                    <a onclick="javascript:mostrarContenidoC()" data-toggle="tooltip"
+                                                        data-placement="left" title="ver vídeo"
+                                                        data-original-title="ver vídeo">
+                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 @if (count($calendario) === 0)
                                                 <div class="col-md-12 text-center">
                                                     <h5>No existe calendarios registrados</h5>
@@ -2808,7 +2893,7 @@ use Carbon\Carbon;
                                                                         for="fueraHSwitch_re">Trabajar fuera de
                                                                         horario</label>
                                                                 </div>
-                                                               {{--  <div class="custom-control custom-switch mb-2">
+                                                                {{--  <div class="custom-control custom-switch mb-2">
                                                                     <input type="checkbox" class="custom-control-input"
                                                                         id="horCompSwitch_re">
                                                                     <label class="custom-control-label"
@@ -2816,12 +2901,19 @@ use Carbon\Carbon;
                                                                         compensable.</label>
                                                                 </div> --}}
                                                                 <div class="row">
-                                                                    <div class="custom-control custom-switch mb-2" style="left: 12px;">
-                                                                        <input type="checkbox" class="custom-control-input" id="horAdicSwitch_re">
-                                                                        <label class="custom-control-label" for="horAdicSwitch_re">Permite marcar horas adicionales.</label>
+                                                                    <div class="custom-control custom-switch mb-2"
+                                                                        style="left: 12px;">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input"
+                                                                            id="horAdicSwitch_re">
+                                                                        <label class="custom-control-label"
+                                                                            for="horAdicSwitch_re">Permite marcar horas
+                                                                            adicionales.</label>
 
                                                                     </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <select id="nHorasAdic_re" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
+                                                                    <select id="nHorasAdic_re"
+                                                                        style="display: none;bottom: 3px;"
+                                                                        class="form-control form-control-sm col-md-3">
                                                                         <option value="0.5">0.5 hora </option>
                                                                         <option value="1">1 hora </option>
                                                                         <option value="2">2 horas </option>
@@ -2856,7 +2948,7 @@ use Carbon\Carbon;
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal -->
-                                    <div id="horarioAgregar" class="modal fade"  role="dialog"
+                                    <div id="horarioAgregar" class="modal fade" role="dialog"
                                         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                             style="width: 600px;">
@@ -2993,7 +3085,14 @@ use Carbon\Carbon;
                                                                             <label class="custom-control-label"
                                                                                 for="SwitchPausa"
                                                                                 style="font-weight: bold;padding-top: 1px">Pausas
-                                                                                en el horario</label> &nbsp; <span id="fueraRango" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
+                                                                                en el horario</label> &nbsp; <span
+                                                                                id="fueraRango"
+                                                                                style="color: #80211e;display: none">Hora
+                                                                                no esta dentro de rango de
+                                                                                horario</span> <span id="errorenPausas"
+                                                                                style="color: #80211e;display: none">-
+                                                                                Fin de pausa debe ser mayor a inicio
+                                                                                pausa</span>
 
                                                                         </div>
                                                                     </div>
@@ -3145,6 +3244,15 @@ use Carbon\Carbon;
                                 </div>
                                 <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                                     <div class="row">
+                                        <div class="col-xl-12 pb-2">
+                                            <div class="float-md-right">
+                                                <a onclick="javascript:mostrarContenidoD()" data-toggle="tooltip"
+                                                    data-placement="left" title="ver vídeo"
+                                                    data-original-title="ver vídeo">
+                                                    <img src="{{asset('landing/images/play.svg')}}" height="40">
+                                                </a>
+                                            </div>
+                                        </div>
                                         <div class="col-xl-12">
                                             <div class="card">
                                                 <div class="card-header">
@@ -3259,6 +3367,15 @@ use Carbon\Carbon;
                             <div class="p-3" id="form-registrar">
                                 <div id="persona-step-1" style="font-size: 12px!important">
                                     <div class="row">
+                                        <div class="col-12">
+                                            <div class="float-md-right">
+                                                <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
+                                                    data-placement="left" title="ver vídeo"
+                                                    data-original-title="ver vídeo">
+                                                    <img src="{{asset('landing/images/play.svg')}}" height="35">
+                                                </a>
+                                            </div>
+                                        </div>
                                         <div class="col-4">
                                             <input type="hidden" name="v_id" id="v_id">
                                             <div class="form-group">
@@ -3653,6 +3770,16 @@ use Carbon\Carbon;
                             </div>
                             <div id="sw-default-step-4" style="font-size: 12px!important">
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="float-md-right">
+                                            <a onclick="javascript:mostrarContenidoC()" data-toggle="tooltip"
+                                                data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-12" id="MostrarCa_e" style="display: none">
                                         <div class="form-group row">
                                             <label style="font-weight: 600;font-size: 14px;"
@@ -3885,7 +4012,7 @@ use Carbon\Carbon;
                                                                     for="fueraHSwitch">Trabajar fuera de
                                                                     horario</label>
                                                             </div>
-                                                           {{--  <div class="custom-control custom-switch mb-2">
+                                                            {{--  <div class="custom-control custom-switch mb-2">
                                                                 <input type="checkbox" class="custom-control-input"
                                                                     id="horCompSwitch">
                                                                 <label class="custom-control-label"
@@ -3893,12 +4020,18 @@ use Carbon\Carbon;
                                                                     compensable.</label>
                                                             </div> --}}
                                                             <div class="row">
-                                                                <div class="custom-control custom-switch mb-2" style="left: 12px;">
-                                                                    <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                                                                    <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+                                                                <div class="custom-control custom-switch mb-2"
+                                                                    style="left: 12px;">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="horAdicSwitch">
+                                                                    <label class="custom-control-label"
+                                                                        for="horAdicSwitch">Permite marcar horas
+                                                                        adicionales.</label>
 
                                                                 </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                <select id="nHorasAdic" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
+                                                                <select id="nHorasAdic"
+                                                                    style="display: none;bottom: 3px;"
+                                                                    class="form-control form-control-sm col-md-3">
                                                                     <option value="0.5">0.5 hora </option>
                                                                     <option value="1">1 hora </option>
                                                                     <option value="2">2 horas </option>
@@ -3995,8 +4128,7 @@ use Carbon\Carbon;
 
                                                                             <input type="text"
                                                                                 class="form-control form-control-sm"
-                                                                                id="horaOblig_ed"
-                                                                                required>
+                                                                                id="horaOblig_ed" required>
                                                                             <div class="input-group-prepend ">
                                                                                 <div class="input-group-text form-control-sm"
                                                                                     style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -4073,7 +4205,14 @@ use Carbon\Carbon;
                                                                         <label class="custom-control-label"
                                                                             for="SwitchPausa_ed"
                                                                             style="font-weight: bold;padding-top: 1px">Pausas
-                                                                            en el horario</label> &nbsp;  <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
+                                                                            en el horario</label> &nbsp; <span
+                                                                            id="fueraRango_ed"
+                                                                            style="color: #80211e;display: none">Hora no
+                                                                            esta dentro de rango de horario</span> <span
+                                                                            id="errorenPausas_ed"
+                                                                            style="color: #80211e;display: none">- Fin
+                                                                            de pausa debe ser mayor a inicio
+                                                                            pausa</span>
 
                                                                     </div>
                                                                 </div>
@@ -4231,6 +4370,14 @@ use Carbon\Carbon;
                             </div>
                             <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
+                                    <div class="col-xl-12 pb-2">
+                                        <div class="float-md-right">
+                                            <a onclick="javascript:mostrarContenidoD()" data-toggle="tooltip"
+                                                data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
+                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
+                                            </a>
+                                        </div>
+                                    </div>
                                     <div class="col-xl-12">
                                         <div class="card">
                                             <div class="card-header">
