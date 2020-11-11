@@ -115,8 +115,15 @@
         }
     }
 </style>
-<div class="row pr-3">
-    <div class="col-md-12 text-right">
+<div class="row pr-3 pl-3 pt-5">
+    <div class="col-md-6 text-left">
+        <button type="button" class="btn btn-sm mt-1"
+            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
+            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">
+            Asignar actividad
+        </button>
+    </div>
+    <div class="col-md-6 text-right">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
             onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
             Actividad
@@ -127,13 +134,12 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
                     <thead style="background: #fafafa;" style="width:100%!important">
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Actividad</th>
-                            <th class="text-center">Código</th>
+                            <th>#</th>
+                            <th>Actividad</th>
+                            <th>Código</th>
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Asistencia en puerta</th>
                             <th class="text-center">En uso</th>

@@ -222,19 +222,19 @@ function actividadesOrganizacion() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += "<tr class=\"text-center\" onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
+                tr += "<tr onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
                 tr += "<td>" + data[index].Activi_Nombre + "</td>";
                 tr += "<td>" + data[index].codigoA + "</td>";
                 if (data[index].eliminacion == 0) {
                     if (data[index].controlRemoto == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\" checked disabled>\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
                             style=\"font-weight: bold\"></label>\
                         </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\" disabled>\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
@@ -242,14 +242,14 @@ function actividadesOrganizacion() {
                         </div></td>";
                     }
                     if (data[index].asistenciaPuerta == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" checked disabled>\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" disabled>\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
@@ -257,21 +257,21 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     if (data[index].respuesta === 'Si') {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     } else {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
+                    tr += "<td class=\"text-center\"><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
                 } else {
                     if (data[index].controlRemoto == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\" ><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\" checked>\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
                             style=\"font-weight: bold\"></label>\
                         </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\">\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
@@ -279,14 +279,14 @@ function actividadesOrganizacion() {
                         </div></td>";
                     }
                     if (data[index].asistenciaPuerta == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" checked>\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\">\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
@@ -294,11 +294,11 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     if (data[index].respuesta === 'Si') {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     } else {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td><a onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                    tr += "<td class=\"text-center\"><a onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
                                 </a>&nbsp;&nbsp;&nbsp;<a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
