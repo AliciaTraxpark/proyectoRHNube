@@ -233,7 +233,77 @@ class EmpleadoController extends Controller
             }
             return $resultado;
         }
-        $tabla_empleado1 = DB::table('empleado as e')
+        $invitadod = DB::table('invitado')
+        ->where('user_Invitado', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
+        ->where('rol_id', '=', 3)
+        ->get()->first();
+        if ($invitadod){
+            $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+            ->where('invem.area_id', '=', null)
+            ->where('invem.emple_id', '!=', null)
+            ->get()->first();
+           if($invitado_empleadoIn!=null){
+            $tabla_empleado1 = DB::table('empleado as e')
+            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->where('invi.estado', '=', 1)
+            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+            ->select(
+                'e.emple_nDoc',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto',
+                'e.asistencia_puerta'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+           }
+           else{
+            $tabla_empleado1 = DB::table('empleado as e')
+            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->where('invi.estado', '=', 1)
+            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+            ->select(
+                'e.emple_nDoc',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto',
+                'e.asistencia_puerta'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+           }
+        } else{
+            $tabla_empleado1 = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -257,6 +327,8 @@ class EmpleadoController extends Controller
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get();
+        }
+
         $vinculacionD = [];
         foreach ($tabla_empleado1 as $tab) {
             $vinculacion = DB::table('vinculacion as v')
@@ -314,7 +386,77 @@ class EmpleadoController extends Controller
             }
             return array_values($resultado);
         }
-        $tabla_empleado1 = DB::table('empleado as e')
+        $invitadod = DB::table('invitado')
+        ->where('user_Invitado', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
+        ->where('rol_id', '=', 3)
+        ->get()->first();
+        if ($invitadod){
+            $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+            ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+            ->where('invem.area_id', '=', null)
+            ->where('invem.emple_id', '!=', null)
+            ->get()->first();
+           if($invitado_empleadoIn!=null){
+            $tabla_empleado1 = DB::table('empleado as e')
+            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->where('invi.estado', '=', 1)
+            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+            ->select(
+                'e.emple_nDoc',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto',
+                'e.asistencia_puerta'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+           }
+           else{
+            $tabla_empleado1 = DB::table('empleado as e')
+            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+            ->where('invi.estado', '=', 1)
+            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+            ->select(
+                'e.emple_nDoc',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto',
+                'e.asistencia_puerta'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+           }
+        } else{
+            $tabla_empleado1 = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -338,6 +480,7 @@ class EmpleadoController extends Controller
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->where('e.emple_estado', '=', 1)
             ->get();
+        }
         $vinculacionD = [];
         foreach ($tabla_empleado1 as $tab) {
             $vinculacion = DB::table('vinculacion as v')
@@ -1022,12 +1165,32 @@ class EmpleadoController extends Controller
 
             $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
-                    return redirect('/dashboard');
+                    if( $invitadod->permiso_Emp==1){
+                   /*  $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+
+                    if($invitado_empleadoIn!=null){} */
+                    return view('empleado.empleadoMenu', [
+                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
+                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
+                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                    ]);
+                    } else{
+                          return redirect('/dashboard');
+                    }
+                   /*   */
+
+
                 } else {
                     return view('empleado.empleadoMenu', [
                         'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
@@ -1835,9 +1998,82 @@ class EmpleadoController extends Controller
         }
         $idarea = $request->idarea;
         $arrayem = collect();
+        $invitadod = DB::table('invitado')
+        ->where('user_Invitado', '=', Auth::user()->id)
+        ->where('organi_id', '=', session('sesionidorg'))
+        ->where('rol_id', '=', 3)
+        ->get()->first();
         if ($idarea != null) {
             foreach ($idarea as $idareas) {
-                $tabla_empleado1 = DB::table('empleado as e')
+                if ($invitadod){
+                    $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                    if($invitado_empleadoIn!=null){
+                        $tabla_empleado1 = DB::table('empleado as e')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                        ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                        ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->select(
+                            'e.emple_nDoc',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'a.area_descripcion',
+                            'cc.centroC_descripcion',
+                            'e.emple_id',
+                            'md.idTipoModo as dispositivo',
+                            'e.emple_foto',
+                            'e.asistencia_puerta'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.emple_area', '=', $idareas)
+                        ->get();
+                    }
+                    else {
+                        $tabla_empleado1 = DB::table('empleado as e')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                        ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                        ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->select(
+                            'e.emple_nDoc',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'a.area_descripcion',
+                            'cc.centroC_descripcion',
+                            'e.emple_id',
+                            'md.idTipoModo as dispositivo',
+                            'e.emple_foto',
+                            'e.asistencia_puerta'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.emple_area', '=', $idareas)
+                        ->get();
+                    }
+                        }
+                    else{
+                        $tabla_empleado1 = DB::table('empleado as e')
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -1862,6 +2098,8 @@ class EmpleadoController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->where('e.emple_area', '=', $idareas)
                     ->get();
+                    }
+
                 $arrayem->push($tabla_empleado1);
             }
 

@@ -48,12 +48,16 @@ class apimovilController extends Controller
                     $dispo_nombre->dispo_CodigoNombre=$nombreDisp;
                     $dispo_nombre->idDispositivos=$dispositivo->idDispositivos;
                     $dispo_nombre->save();
+                    return response()->json(array('status'=>200,"dispositivo" =>$dispositivo,
+                    "disponombre" =>$dispo_nombre,"token" =>$token->get()));
 
+                   } else{
+                    return response()->json(array('status'=>200,"dispositivo" =>$dispositivo,
+                    "disponombre" =>$nombreDs,"token" =>$token->get()));
                    }
 
 
-                    return response()->json(array('status'=>200,"dispositivo" =>$dispositivo,
-                    "token" =>$token->get()));
+
                 } else{
                     return response()->json(array('status'=>400,'title' => 'Clave incorrecta',
                     'detail' => 'Asegúrate de escribir la clave correcta'),400);
@@ -88,7 +92,7 @@ class apimovilController extends Controller
 
 
                     return response()->json(array('status'=>200,"dispositivo" =>$dispositivosAc,
-                    "token" =>$token->get()));
+                    "disponombre" =>$dispo_nombre,"token" =>$token->get()));
                     /* return response()->json($dispositivo,200);     */
                 }
             }

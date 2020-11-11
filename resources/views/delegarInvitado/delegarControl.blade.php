@@ -186,8 +186,16 @@
                                             required>
                                     </div>
                                 </div>
+
+                                <div class="col-md-8 " id="divAdminPersona">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="AlcaAdminCheck">
+                                        <label class="form-check-label" for="AlcaAdminCheck"
+                                            style="margin-top: 2px;font-style: oblique;">Permitir agregar y ver nuevos empleados</label><br><br>
+                                    </div>
+                                </div>
                                 <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px">
-                                    <div class="col-md-8 ">
+                                    <div class="col-md-8 " id="divDash">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="dashboardCheck">
                                             <label class="form-check-label" for="dashboardCheck"
@@ -195,59 +203,81 @@
                                                 general</label><br><br>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 form-check"
-                                                style="display: flex;justify-content: space-between;">
-                                                <label>Empleado(s):</label>
-                                                <div class="form-check" style="padding-right: 10px">
-                                                    <input type="checkbox" style="font-size: 11.4px"
-                                                        class="form-check-input" id="selectTodoCheck">
-                                                    <label class="form-check-label" for="selectTodoCheck"
-                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                        todos.</label>
+                                    <div class="col-md-6 text-left">
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="switchEmpS" checked
+                                               >
+                                            <label class="custom-control-label" for="switchEmpS"
+                                                style="font-weight: bold">Seleccionar por empleado</label>
+                                        </div>
+                                    </div>
+                                    <div id="divEmpleado">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 form-check"
+                                                    style="display: flex;justify-content: space-between;">
+                                                    <label>Empleado(s):</label>
+                                                    <div class="form-check" style="padding-right: 10px">
+                                                        <input type="checkbox" style="font-size: 11.4px"
+                                                            class="form-check-input" id="selectTodoCheck">
+                                                        <label class="form-check-label" for="selectTodoCheck"
+                                                            style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                                            todos.</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-12">
-                                        <select class="form-control wide" data-plugin="customselect" multiple
-                                            id="nombreEmpleado">
-                                            @foreach ($empleado as $empleados)
-                                            <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
-                                                {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        <br><br>
+                                        <div class="col-md-12">
+                                            <select class="form-control wide" data-plugin="customselect" multiple
+                                                id="nombreEmpleado">
+                                                @foreach ($empleado as $empleados)
+                                                <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
+                                                    {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <br><br>
+                                        </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 form-check"
-                                                style="display: flex;justify-content: space-between;">
-                                                <label for="">Seleccionar por area(s):</label>
-                                                <div class="form-check" style="padding-right: 10px">
-                                                    <input type="checkbox" style="font-size: 11.4px"
-                                                        class="form-check-input" id="selectAreaCheck">
-                                                    <label class="form-check-label" for="selectAreaCheck"
-                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                        todas.</label>
+                                    <div class="col-md-6 text-left">
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="switchAreaS"
+                                               >
+                                            <label class="custom-control-label" for="switchAreaS"
+                                                style="font-weight: bold">Seleccionar por area</label>
+                                        </div>
+                                    </div>
+                                    <div id="divArea">
+
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 form-check"
+                                                    style="display: flex;justify-content: space-between;">
+                                                    <label for="">Seleccionar por area(s):</label>
+                                                    <div class="form-check" style="padding-right: 10px">
+                                                        <input type="checkbox" style="font-size: 11.4px"
+                                                            class="form-check-input" id="selectAreaCheck">
+                                                        <label class="form-check-label" for="selectAreaCheck"
+                                                            style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                                            todas.</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <select data-plugin="customselect" multiple id="selectArea" name="selectArea"
-                                            class="form-control" data-placeholder="seleccione">
+                                        <div class="col-md-12">
+                                            <select data-plugin="customselect" multiple id="selectArea" name="selectArea"
+                                                class="form-control" data-placeholder="seleccione">
 
-                                            @foreach ($area as $areas)
-                                            <option value="{{ $areas->idarea }}">Area : {{ $areas->descripcion }}.
-                                            </option>
-                                            @endforeach
+                                                @foreach ($area as $areas)
+                                                <option value="{{ $areas->idarea }}">Area : {{ $areas->descripcion }}.
+                                                </option>
+                                                @endforeach
 
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                     </div>

@@ -28,7 +28,7 @@ class delegarInvController extends Controller
         $this->middleware(['auth', 'verified']);
     }
     // */
-   
+
     public function index(){
         if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
             return redirect('/elegirorganizacion');
@@ -57,7 +57,7 @@ class delegarInvController extends Controller
             )
             ->get();
             $area = DB::table('area as ar')
-            ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area')
+           /*  ->join('empleado as em', 'ar.area_id', '=', 'em.emple_area') */
             ->where('ar.organi_id','=',session('sesionidorg'))
             ->select(
                 'ar.area_id as idarea',
@@ -109,7 +109,7 @@ class delegarInvController extends Controller
         $emailInv=$request->emailInv;
         $idEmpleado=$request->idEmpleado;
         $dash=$request->dash;
-
+        $permisoEmp=$request->permisoEmp;
         $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
         $invitado->organi_id =  session('sesionidorg');
@@ -119,6 +119,7 @@ class delegarInvController extends Controller
         $invitado->users_id =Auth::user()->id;
         $invitado->dashboard =$dash;
         $invitado->estado_condic=1;
+        $invitado->permiso_Emp=$permisoEmp;
         $invitado->save();
 
         foreach($idEmpleado as $idEmpleados){
@@ -364,7 +365,7 @@ class delegarInvController extends Controller
 
     }
 
-   public function editarInviI(Request$request ){
+   public function editarInviI(Request $request ){
     $idinvitado=$request->idinvitado;
     $idEmpleado=$request->idEmpleado;
     $dash_ed=$request->dash_ed;
@@ -434,4 +435,32 @@ class delegarInvController extends Controller
     }
 
    }
+
+   public function registrarInvitadoAreas(Request $request){
+
+    $emailInv=$request->emailInv;
+    $idarea=$request->idareas;
+    $dash=$request->dash;
+    $permisoEmp=$request->permisoEmp;
+    $organi = organizacion::find(session('sesionidorg'));
+    $invitado = new invitado();
+    $invitado->organi_id =  session('sesionidorg');
+    $invitado->rol_id =3;
+    $invitado->email_inv = $emailInv;
+    $invitado->estado =0;
+    $invitado->users_id =Auth::user()->id;
+    $invitado->dashboard =$dash;
+    $invitado->estado_condic=1;
+    $invitado->permiso_Emp=$permisoEmp;
+    $invitado->save();
+
+    foreach($idarea as $idareas){
+        $invitado_empleado = new invitado_empleado();
+        $invitado_empleado->idinvitado = $invitado->idinvitado;
+        $invitado_empleado->area_id = $idareas;
+        $invitado_empleado->save();
+    }
+    Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
+
+}
 }
