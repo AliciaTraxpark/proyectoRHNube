@@ -62,16 +62,32 @@
     }
 
     .alertify .ajs-footer .ajs-buttons .ajs-button {
-        min-height: 32px;
-        min-width: 80px;
+        min-height: 28px;
+        min-width: 75px;
     }
 
     .ajs-cancel {
-        font-size: 11px !important;
+        font-size: 12px !important;
     }
 
     .ajs-ok {
-        font-size: 11px !important;
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
     }
 
     /* FINALIZACION */

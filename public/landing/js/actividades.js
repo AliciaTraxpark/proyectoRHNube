@@ -191,7 +191,7 @@ function eliminarActividad(id) {
             }
         })
         .setting({
-            title: "Eliminar Actividad",
+            title: "Eliminar actividad",
             labels: {
                 ok: "Aceptar",
                 cancel: "Cancelar",
