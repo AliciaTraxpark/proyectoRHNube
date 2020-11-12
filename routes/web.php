@@ -376,6 +376,7 @@ Route::post('/verificarInvitadoreg', 'delegarInvController@verificarInvitadoreg'
 Route::post('/datosInvitado', 'delegarInvController@datosInvitado');
 Route::post('/editarInviAdm', 'delegarInvController@editarInviAdm');
 Route::post('/editarInviI', 'delegarInvController@editarInviI');
+Route::post('/editarInviArea', 'delegarInvController@editarInviArea');
 Route::post('/cambInvitadoswit', 'delegarInvController@cambInvitadoswit');
 Route::post('/notificarInv', 'delegarInvController@notificarInv');
 
