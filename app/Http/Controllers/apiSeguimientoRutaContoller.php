@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\actividad_empleado;
 use App\empleado;
+use App\Mail\SoporteApi;
+use App\Mail\SugerenciaApi;
+use App\persona;
 use App\ubicacion;
 use App\ubicacion_ruta;
 use App\vinculacion_ruta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Undefined;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -179,5 +183,78 @@ class apiSeguimientoRutaContoller extends Controller
             return response()->json($respuesta, 200);
         }
         return response()->json(array("message" => "empleado_no_exite"), 400);
+    }
+
+    //? API DE HORARIO
+    public function horario(Request $request)
+    {
+        $respuesta = [];
+        $horario_empleado = DB::table('empleado as e')
+            ->where('e.emple_id', '=', $request->get('idEmpleado'))
+            ->get()
+            ->first();
+        if ($horario_empleado) {
+            $horario = DB::table('horario_empleado as he')
+                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
+                ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->get();
+
+            foreach ($horario as $resp) {
+                $horario_dias = DB::table('horario_dias  as hd')
+                    ->select(DB::raw('DATE(hd.start) as start'), 'hd.id')
+                    ->where('hd.id', '=', $resp->horario_dias_id)
+                    ->get()->first();
+                $horario = DB::table('horario as h')
+                    ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas', 'h.horario_tolerancia as tolerancia_inicio', 'h.horario_toleranciaF as tolerancia_final')
+                    ->where('h.horario_id', '=', $resp->horario_horario_id)
+                    ->get()->first();
+                $pausas = DB::table('pausas_horario as ph')
+                    ->select('ph.pausH_descripcion as decripcion', 'ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
+                    ->where('ph.horario_id', '=', $horario->horario_id)
+                    ->get();
+                $horario->idHorario_dias = $horario_dias->id;
+                $horario->horarioCompensable = $resp->horarioComp;
+                $horario->fueraHorario = $resp->fuera_horario;
+                $horario->horaAdicional = $resp->horaAdic;
+                $horario->pausas = $pausas;
+                $segundos = Carbon::createFromTimestampUTC($horario->horasObligadas)->secondsSinceMidnight();
+                $horario->horasObligadas = $segundos;
+                $fecha = Carbon::now();
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                if ($horario_dias->start == $fechaHoy) {
+                    array_push($respuesta, $horario);
+                }
+            }
+            return response()->json($respuesta, 200);
+        }
+        return response()->json(array("message" => "Empleado no encontrado"), 400);
+    }
+
+    //? TICKET DE SUGERENCIA
+    public function ticketSoporte(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $tipo = $request->get('tipo');
+        $contenido = $request->get('contenido');
+        $asunto = $request->get('asunto');
+        $celular = $request->get('celular');
+
+        $empleado = empleado::findOrFail($idEmpleado);
+        if ($empleado) {
+            $persona = persona::findOrFail($empleado->emple_persona);
+            $email = "info@rhnube.com.pe";
+
+            if ($tipo == "soporte") {
+
+                Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular));
+                return response()->json(array("mensaje" => "Correo Enviado con éxito"), 200);
+            }
+            if ($tipo == "sugerencia") {
+                Mail::to($email)->queue(new SugerenciaApi($contenido, $persona, $asunto, $celular));
+                return response()->json(array("mensaje" => "Correo Enviado con éxito"), 200);
+            }
+        }
+
+        return response()->json(array("mensaje" => "Empleado no se encuentra registrado."), 400);
     }
 }
