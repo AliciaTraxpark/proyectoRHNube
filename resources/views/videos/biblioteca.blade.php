@@ -185,7 +185,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
-                                <a data-fancybox data-ratio="2" data-caption="Tu primera configiración en RH nube"
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Datos personales"
                                     href="https://player.vimeo.com/video/477794877?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
                                         src="https://i.vimeocdn.com/video/992351379.webp?mw=500&mh=281" />
@@ -202,7 +202,7 @@
                                     <a class="badge badge-soft-primary" onclick="javascript:datosPersonales()"
                                         style="cursor: pointer">
                                         <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
-                                        14:53
+                                        01:16
                                     </a>
                                 </div>
                             </div>
@@ -218,7 +218,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
-                                <a data-fancybox data-ratio="2" data-caption="Tu primera configiración en RH nube"
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Empresarial"
                                     href="https://player.vimeo.com/video/477794018?title=0&byline=0&portrait=0">
                                     <img class="card-img-top img-fluid"
                                         src="https://i.vimeocdn.com/video/992351951.webp?mw=500&mh=281" />
@@ -228,14 +228,179 @@
                             <div class="col-md-8 pl-4">
                                 <p class="card-text pt-3" style="font-weight: bold">
                                     <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
-                                    Gestión empleado - Datos Empresarial
+                                    Gestión empleado - Empresarial
                                 </p>
                                 <span>En menos de 2 minutos</span>
                                 <div class="row pl-3 pt-3">
                                     <a class="badge badge-soft-primary" onclick="javascript:datosEmpresarial()"
                                         style="cursor: pointer">
                                         <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
-                                        14:53
+                                        04:33
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Foto"
+                                    href="https://player.vimeo.com/video/477793806?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/992352893.webp?mw=500&mh=281" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Gestión empleado - Foto
+                                </p>
+                                <span>En menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:datosFoto()"
+                                        style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        00:19
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Calendario"
+                                    href="https://player.vimeo.com/video/477793882?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/992352289.webp?mw=500&mh=281" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Gestión empleado - Calendario
+                                </p>
+                                <span>En menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:datosCalendario()"
+                                        style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        00:49
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Horario"
+                                    href="https://player.vimeo.com/video/477792484?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/992353502.webp?mw=500&mh=281" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Gestión empleado - Horario
+                                </p>
+                                <span>En menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:datosHorario()"
+                                        style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        03:57
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Actividades"
+                                    href="https://player.vimeo.com/video/477792220?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/992354118.webp?mw=500&mh=281" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Gestión empleado - Actividades
+                                </p>
+                                <span>En menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:datosActividades()"
+                                        style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        00:41
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pr-5 pl-5 pb-3">
+            <div class="col-md-12">
+                <div class="card border"
+                    style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 2px dashed #5369F8;">
+                                <a data-fancybox data-ratio="2" data-caption="Gestión empleado - Dispositivos"
+                                    href="https://player.vimeo.com/video/477791531?title=0&byline=0&portrait=0">
+                                    <img class="card-img-top img-fluid"
+                                        src="https://i.vimeocdn.com/video/992354535.webp?mw=500&mh=281" />
+                                </a>
+                            </div>
+
+                            <div class="col-md-8 pl-4">
+                                <p class="card-text pt-3" style="font-weight: bold">
+                                    <img src="{{asset('landing/images/star.svg')}}" height="18" class="mr-2">
+                                    Gestión empleado - Dispositivos
+                                </p>
+                                <span>En menos de 2 minutos</span>
+                                <div class="row pl-3 pt-3">
+                                    <a class="badge badge-soft-primary" onclick="javascript:datosDispositivos()"
+                                        style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play (2).svg')}}" height="18" class="mr-2">
+                                        01:55
                                     </a>
                                 </div>
                             </div>
