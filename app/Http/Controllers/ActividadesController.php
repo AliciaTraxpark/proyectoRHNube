@@ -468,24 +468,7 @@ class ActividadesController extends Controller
             ->where('a.Activi_id', '=', $actividad)
             ->get();
 
-        //? Comparamos los empleados de la actividad y los nuevos empleados
-        for ($index = 0; $index < sizeof($actividadEmpleado); $index++) {
-            $estado = true;
-            for ($element = 0; $element < sizeof($empleados); $element++) {
-                if ($actividadEmpleado[$index]->idEmpleado == $empleados[$element]) {
-                    $estado = false; //? si lo encuentra no cambiamos estado
-                }
-            }
-            if ($estado) { //? si el estado no cambio a FALSE entonces inactivamos esta actividad para el empleado
-                $actividad_empleado = actividad_empleado::where('id', '=', $actividadEmpleado[$index]->id)->get()->first();
-                $actividad_empleado->estado = 0;
-                $actividad_empleado->save();
-            }
-        }
-
         //? Comparamos los nuevos empleados con los empelados con actividad
-
-        // dd(sizeof($empleados));
         for ($index = 0; $index < sizeof($empleados); $index++) {
             $estado = true;
             for ($element = 0; $element < sizeof($actividadEmpleado); $element++) {
@@ -500,6 +483,21 @@ class ActividadesController extends Controller
                 $actividad_empleado->idEmpleado = $empleados[$index];
                 $actividad_empleado->estado = 1;
                 $actividad_empleado->eliminacion = 1;
+                $actividad_empleado->save();
+            }
+        }
+
+        //? Comparamos los empleados de la actividad y los nuevos empleados
+        for ($index = 0; $index < sizeof($actividadEmpleado); $index++) {
+            $estado = true;
+            for ($element = 0; $element < sizeof($empleados); $element++) {
+                if ($actividadEmpleado[$index]->idEmpleado == $empleados[$element]) {
+                    $estado = false; //? si lo encuentra no cambiamos estado
+                }
+            }
+            if ($estado) { //? si el estado no cambio a FALSE entonces inactivamos esta actividad para el empleado
+                $actividad_empleado = actividad_empleado::where('id', '=', $actividadEmpleado[$index]->id)->get()->first();
+                $actividad_empleado->estado = 0;
                 $actividad_empleado->save();
             }
         }
