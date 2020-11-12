@@ -17,7 +17,8 @@ class invitado extends Model
         'users_id',
         'user_Invitado',
         'dashboard',
-        'estado_condic'
+        'estado_condic',
+        'permiso_Emp'
 
     ];
 

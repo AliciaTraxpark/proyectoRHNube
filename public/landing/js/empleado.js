@@ -5938,20 +5938,41 @@ $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+        if($('#horaI').val() > $('#horaF').val()){
+            if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+                $('#FinPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+             if (horaI > horaF) {
+               /*  $('#FinPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation(); */
+            } else {
+                $('#errorenPausas').hide();
+            }
+        }
+        else{
+           if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
             $('#FinPausa').val('');
             $('#fueraRango').show();
             event.stopPropagation();
-        } else {
+         } else{
             $('#fueraRango').hide();
-        }
-        if (horaF < horaI) {
+         }
+         if (horaF < horaI) {
             $('#FinPausa').val('');
             $('#errorenPausas').show();
             event.stopPropagation();
         } else {
             $('#errorenPausas').hide();
         }
+        }
+
+
 
 
     });
@@ -5960,19 +5981,35 @@ $(function () {
     $(document).on('change', '#InicioPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        $('#FinPausa').prop("disabled", false);
-        if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
+        $('#FinPausa').prop( "disabled",false);
+        if($('#horaI').val() > $('#horaF').val()){
+
+            if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
+            console.log('moostrando fuera rango 11/11');
+                $('#InicioPausa').val('');
+                $('#fueraRango').show();
+
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+        } else
+        {
+            if(horaI<$('#horaI').val() || horaI>$('#horaF').val() ){
 
             $('#InicioPausa').val('');
             $('#fueraRango').show();
             event.stopPropagation();
-        } else {
+         } else{
             $('#fueraRango').hide();
+         }
         }
-        console.log(horaF);
-        if (horaF == null || horaF == '') {
-            var horafinal1 = $('#horaF').val();
-            splih1 = horafinal1.split(":");
+
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+            var horafinal1=$('#horaF').val();
+            splih1=horafinal1.split(":");
             console.log(splih1[0]);
             console.log('nada me da');
             $('#FinPausa').val('').flatpickr({
@@ -5980,12 +6017,13 @@ $(function () {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour: splih1[0]
+                defaultHour:splih1[0]
             });
 
-        }
-        else {
+         }
+         else{
             console.log('secumple');
+            if($('#horaI').val() < $('#horaF').val()){
             if (horaF < horaI) {
                 $('#InicioPausa').val('');
                 $('#errorenPausas').show();
@@ -5993,7 +6031,11 @@ $(function () {
             } else {
                 $('#errorenPausas').hide();
             }
+        } else
+        {
+            $('#errorenPausas').hide();
         }
+         }
 
 
     });

@@ -11,7 +11,8 @@ class invitado_empleado extends Model
     protected $fillable = [
         'idinvitado_empleado',
         'idinvitado',
-        'emple_id'
+        'emple_id',
+        'area_id'
     ];
     public $timestamps = false;
 }

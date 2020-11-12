@@ -219,6 +219,27 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
 
     @endif
+    @if ($invitadod->permiso_Emp==1)
+    <li>
+        <a href="javascript: void(0);">
+            <i data-feather="list"></i>
+            <span>Gestión de empleado</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/empleados">
+
+                    <span>Empleados</span>
+                </a>
+               
+            </li>
+        </ul>
+    </li>
+
+
+    @endif
 
 
 

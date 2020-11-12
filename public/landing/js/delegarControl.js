@@ -9,6 +9,22 @@ function abrirRegist(){
     $("#selectArea > option").prop("selected", false);
     $("#selectArea").trigger("change");
     $('#btnGu').prop('disabled',false);
+    $('#switchEmpS').prop('checked', true);
+    $('#nombreEmpleado').prop('disabled', false);
+    $('#switchAreaS').prop('checked', false);
+    $('#selectArea').prop('disabled', true);
+    $('#divArea').hide();
+    $('#divEmpleado').show();
+    $("#selectTodoCheck").prop('checked', false);
+    $("#selectAreaCheck").prop('checked', false);
+    $("#AlcaAdminCheck").prop('checked', false);
+    $("#divDash").show();
+    $('#switchEmpS').prop('disabled', false);
+    $('#switchAreaS').prop('disabled', false);
+
+        $("#selectArea").prop("required", false);
+        $("#divAdminPersona").show();
+
     $('#agregarInvitado').modal('show');
 }
 
@@ -135,42 +151,84 @@ function registrarInvit() {
                     },
                 });
             } else {
+
                 $('#btnGu').prop('disabled',true);
                 var dash;
                 if ($("#dashboardCheck").is(":checked")) {
                      dash=1;} else{
                      dash=0;
                     }
-                $.ajax({
-                    type: "post",
-                    url: "/registrarInvitado",
-                    data: {
-                        emailInv,
-                        idEmpleado,dash
-                    },
-                    statusCode: {
-                        419: function () {
-                            location.reload();
-                        },
-                    },
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    success: function (data) {
-                        $('#tablaInvit').load(location.href + " #tablaInvit>*");
-                        $('#agregarInvitado').modal('hide');
-                        var dialog = bootbox.dialog({
-                            message: "Invitado registrado con exito",
-                            closeButton: false
-                        });
-                        setTimeout(function(){
-                            dialog.modal('hide')
-                        }, 1000);
-                    },
-                    error: function (data) {
-                        alert("Ocurrio un error");
-                    },
-                });
+                 var permisoEmp;
+                 if ($("#AlcaAdminCheck").is(":checked")) {
+                    permisoEmp=1;} else{
+                        permisoEmp=0;
+                   }
+                    if ($('#switchEmpS').prop('checked')) {
+                            $.ajax({
+                                type: "post",
+                                url: "/registrarInvitado",
+                                data: {
+                                    emailInv,
+                                    idEmpleado,dash,permisoEmp
+                                },
+                                statusCode: {
+                                    419: function () {
+                                        location.reload();
+                                    },
+                                },
+                                headers: {
+                                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                                },
+                                success: function (data) {
+                                    $('#tablaInvit').load(location.href + " #tablaInvit>*");
+                                    $('#agregarInvitado').modal('hide');
+                                    var dialog = bootbox.dialog({
+                                        message: "Invitado registrado con exito",
+                                        closeButton: false
+                                    });
+                                    setTimeout(function(){
+                                        dialog.modal('hide')
+                                    }, 1000);
+                                },
+                                error: function (data) {
+                                    alert("Ocurrio un error");
+                                },
+                            });
+                        }
+                        else{
+                            idareas = $("#selectArea").val();
+                            console.log(idareas);
+                            $.ajax({
+                                type: "post",
+                                url: "/registrarInvitadoArea",
+                                data: {
+                                    emailInv,
+                                    idareas,dash,permisoEmp
+                                },
+                                statusCode: {
+                                    419: function () {
+                                        location.reload();
+                                    },
+                                },
+                                headers: {
+                                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                                },
+                                success: function (data) {
+                                    $('#tablaInvit').load(location.href + " #tablaInvit>*");
+                                    $('#agregarInvitado').modal('hide');
+                                    var dialog = bootbox.dialog({
+                                        message: "Invitado registrado con exito",
+                                        closeButton: false
+                                    });
+                                    setTimeout(function(){
+                                        dialog.modal('hide')
+                                    }, 1000);
+                                },
+                                error: function (data) {
+                                    alert("Ocurrio un error");
+                                },
+                            });
+                        }
             }
            }
         },
@@ -185,10 +243,16 @@ function registrarInvit() {
 $("#adminCheck").click(function () {
     if ($("#adminCheck").is(":checked")) {
         $("#divInvitado").hide();
-        $("#nombreEmpleado").prop("required", false);
+         $("#nombreEmpleado").prop("required", false);
+         $("#selectArea").prop("required", false);
+        $("#divDash").hide();
+        $("#divAdminPersona").hide();
     } else {
-        $("#nombreEmpleado").prop("required", true);
+         $("#nombreEmpleado").prop("required", true);
         $("#divInvitado").show();
+        $("#divDash").show();
+        $("#divAdminPersona").show();
+
     }
 });
 ///ver datos de invitado en editar
@@ -455,7 +519,7 @@ function cambioswitch(idinvitado){
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                         },
                         success: function (data) {
-                           
+
                         },
                         error: function (data) {
                             alert("Ocurrio un error");
@@ -494,3 +558,50 @@ function cambioswitch(idinvitado){
     }
 
 }
+
+/////////cambios en switch
+$('#switchEmpS').change(function (event) {
+    if ($('#switchEmpS').prop('checked')) {
+        $('#switchAreaS').prop('checked', false);
+        $('#selectArea').prop('disabled', true);
+        $('#nombreEmpleado').prop('disabled', false);
+        $("#selectArea > option").prop("selected", false);
+        $("#selectArea").trigger("change");
+        $('#divArea').hide();
+        $('#divEmpleado').show();
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+        $("#selectTodoCheck").prop('checked', false);
+
+
+    }
+    else{
+        $('#selectArea').prop('disabled', false);
+        $('#divEmpleado').hide();
+    }
+});
+
+$('#switchAreaS').change(function (event) {
+    if ($('#switchAreaS').prop('checked')) {
+        $('#switchEmpS').prop('checked', false);
+        $('#nombreEmpleado').prop('disabled', true);
+        $('#selectArea').prop('disabled', false);
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+        $('#divEmpleado').hide();
+        $('#divArea').show();
+        $("#selectAreaCheck").prop('checked', false);
+        $("#nombreEmpleado").prop("required", false);
+        $("#selectArea").prop("required", true);
+    }
+    else{
+        $('#nombreEmpleado').prop('disabled', false);
+        $('#divArea').hide();
+    }
+});
+
+/////////////////////////////
+$(function() {
+
+});
+

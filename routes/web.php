@@ -365,6 +365,7 @@ Route::get('/showNotificaciones', 'NotificacionController@showNotificaciones');
 Route::get('/delegarcontrol', 'delegarInvController@index');
 Route::post('/empleAreaIn', 'delegarInvController@empleAreaIn');
 Route::post('/registrarInvitado', 'delegarInvController@registrarInvitado');
+Route::post('/registrarInvitadoArea', 'delegarInvController@registrarInvitadoAreas');
 Route::post('/registrarInvitadoAdm', 'delegarInvController@registrarInvitadoAdm');
 Route::post('/registroinvitadoBD', 'delegarInvController@registroInvitado');
 Route::post('/verificaremCla', 'delegarInvController@validaremailC');
