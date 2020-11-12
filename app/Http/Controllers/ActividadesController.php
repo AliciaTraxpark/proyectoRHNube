@@ -386,7 +386,7 @@ class ActividadesController extends Controller
         return response()->json($empleados, 200);
     }
 
-    // ? SELECT DE ÁREAS EN MODAL EDITAR
+    // ? SELECT DE ÁREAS EN ASIGNAR ACTIVIDAD
     function listaAreasEdit()
     {
         $areas = DB::table('empleado as e')
@@ -408,5 +408,50 @@ class ActividadesController extends Controller
             ->get();
 
         return response()->json($actividades, 200);
+    }
+
+    //? SELECT DE EMPLEADOS CON ÁREAS
+
+    function empleadosConAreas(Request $request)
+    {
+        $idEmpleados = $request->get('empleados');
+        $idAreas = $request->get('areas');
+
+        // : Cuando los dos array tienen datos
+        if (!is_null($idEmpleados) && !is_null($idAreas)) {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->leftJoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->whereIn('e.emple_id', $idEmpleados)
+                ->orWhereIn('e.emple_area', $idAreas)
+                ->get();
+
+            return response()->json($empleados, 200);
+        }
+        //: Cuando solo hay datos en empleados
+        if (!is_null($idEmpleados)) {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->whereIn('e.emple_id', $idEmpleados)
+                ->get();
+
+            return response()->json($empleados, 200);
+        }
+        //: Cuando solo hay datos de areas
+        if (!is_null($idAreas)) {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->leftJoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->WhereIn('e.emple_area', $idAreas)
+                ->get();
+
+            return response()->json($empleados, 200);
+        }
     }
 }

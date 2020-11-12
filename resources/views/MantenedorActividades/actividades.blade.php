@@ -334,7 +334,7 @@
 {{-- MODAL DE ASIGNACION POR AREAS --}}
 <div id="asignarPorArea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="asignarPorArea"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-xs d-flex justify-content-center">
+    <div class="modal-dialog  modal-lg justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -356,7 +356,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-2">
+                            <div class="row pt-3">
                                 <div class="col-md-12">
                                     <label class="mb-0">Asignar por área</label>
                                     <select id="areaAsignar" data-plugin="customselect"
@@ -365,11 +365,20 @@
                                 </div>
                             </div>
                             <div class="row pt-2">
-                                <div class="col-md-12">
+                                <div class="col-md-12 text-left">
                                     <div class="form-group mb-0 mt-3">
                                         <input type="checkbox" id="checkboxFechaI" name="FechaI">
-                                        <label for="" class="mb-0">Fecha Indefinida</label>
+                                        <label for="" class="mb-0">Asignar a todos los empleados</label>
+                                        <div class="float-right mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara empleados con esta actividad asignada
+                                            </span>
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <select id="empleAsignar" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple">
                                     </select>

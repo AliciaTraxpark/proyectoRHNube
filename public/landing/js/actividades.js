@@ -770,8 +770,118 @@ function listaActividades() {
     });
 }
 // ? ******************************
-
 function asignarActividadMasiso() {
     $('#asignarPorArea').modal();
     listaActividades();
 }
+
+// ? *****************************
+//: funcion de change
+$("#actividadesAsignar").on("change", function () {
+    var idA = $(this).val();
+    $("#empleAsignar").empty();
+    var container = $("#empleAsignar");
+    $.ajax({
+        async: false,
+        url: "/empleadoActiv",
+        method: "GET",
+        data: {
+            idA: idA
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data[0].select.forEach(element => {
+                option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            data[0].noSelect.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            container.append(option);
+            listaAreas();
+        },
+        error: function () { },
+    });
+});
+
+//: Función para obtener las áreas 
+function listaAreas() {
+    $("#areaAsignar").empty();
+    var container = $("#areaAsignar");
+    $.ajax({
+        async: false,
+        url: "/listaAreasE",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
+            });
+            console.log(option);
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+
+//: Funcion para mostrar empleados por áreas 
+$("#areaAsignar").on("change", function () {
+    var empleados = $("#empleAsignar").val();
+    var areas = $("#areaAsignar").val();
+    $("#empleAsignar").empty();
+    var container = $("#empleAsignar");
+    $.ajax({
+        async: false,
+        url: "/empleadoConAreas",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            areas: areas
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+            });
+            console.log(option);
+            container.append(option);
+            $("#empleAsignar").val(empleados).trigger('change');
+        },
+        error: function () { },
+    });
+});
