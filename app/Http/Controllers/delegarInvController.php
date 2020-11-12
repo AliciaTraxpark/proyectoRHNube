@@ -369,7 +369,7 @@ class delegarInvController extends Controller
     $idinvitado=$request->idinvitado;
     $idEmpleado=$request->idEmpleado;
     $dash_ed=$request->dash_ed;
-
+    $permisoEmp_ed=$request->permisoEmp_ed;
     $invitado = invitado::find( $idinvitado);
     if($invitado->rol_id==3){
         ///delete all emp
@@ -386,7 +386,7 @@ class delegarInvController extends Controller
         ///
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
-           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed]);
+           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed]);
 
     }
     else{
@@ -399,7 +399,7 @@ class delegarInvController extends Controller
 
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
-           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed]);
+           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed]);
 
            $usuario_organizacion =DB::table('usuario_organizacion')
            ->where('user_id', '=', $invitado->user_Invitado )
@@ -462,5 +462,47 @@ class delegarInvController extends Controller
     }
     Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
+}
+public function editarInviArea(Request $request){
+    $idinvitado=$request->idinvitado;
+    $idareas_edit=$request->idareas_edit;
+    $dash_ed=$request->dash_ed;
+    $permisoEmp_ed=$request->permisoEmp_ed;
+    $invitado = invitado::find( $idinvitado);
+    if($invitado->rol_id==3){
+        ///delete all emp
+       $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
+       $invitado_empleado->each->delete();
+        ////copiar empleado
+       foreach($idareas_edit as $idareas_edits){
+        $invitado_empleado = new invitado_empleado();
+        $invitado_empleado->idinvitado = $invitado->idinvitado;
+        $invitado_empleado->area_id = $idareas_edits;
+
+        $invitado_empleado->save();
+        }
+        ///
+        $invitadoAct  = DB::table('invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed]);
+
+    }
+    else{
+        foreach($idareas_edit as $idareas_edits){
+            $invitado_empleado = new invitado_empleado();
+            $invitado_empleado->idinvitado = $invitado->idinvitado;
+            $invitado_empleado->area_id = $idareas_edits;
+            $invitado_empleado->save();
+        }
+
+        $invitadoAct  = DB::table('invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed]);
+
+           $usuario_organizacion =DB::table('usuario_organizacion')
+           ->where('user_id', '=', $invitado->user_Invitado )
+           ->where('organi_id', '=', session('sesionidorg'))
+           ->update(['rol_id' => 3]);
+    }
 }
 }

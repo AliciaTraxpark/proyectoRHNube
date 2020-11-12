@@ -46,7 +46,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illiminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
-
+use App\invitado_empleado;
 class EmpleadoController extends Controller
 {
     /**
@@ -582,7 +582,27 @@ class EmpleadoController extends Controller
         $empleado->emple_foto = '';
         $empleado->save();
         $idempleado = $empleado->emple_id;
-
+        ///////////////// SI USUARIO ES INVITADO
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+                ->where('uso.organi_id', '=', session('sesionidorg'))
+                ->where('uso.user_id', '=', Auth::user()->id)
+                ->get()->first();
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+                $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+                ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                ->get()->first();}
+                if($invitado_empleadoIn!=null){
+                    $invitado_empleado = new invitado_empleado();
+                    $invitado_empleado->idinvitado = $invitado->idinvitado;
+                    $invitado_empleado->emple_id = $empleado->emple_id;
+                    $invitado_empleado->save();
+                }
+                ///////////////////////////////////
         // BUSCAR ACTIVIDAD DE CONTROL REMOTO EN ORGANIZACION
         $actividad = actividad::where('organi_id', '=', session('sesionidorg'))->where('controlRemoto', '=', 1)->get()->first();
 

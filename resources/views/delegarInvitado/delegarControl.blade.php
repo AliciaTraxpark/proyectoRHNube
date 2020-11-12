@@ -330,6 +330,13 @@
                                             id="emailInvi_edit" required>
                                     </div>
                                 </div>
+                                <div class="col-md-8 " id="divAdminPersona_edit">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="AlcaAdminCheck_edit">
+                                        <label class="form-check-label" for="AlcaAdminCheck_edit"
+                                            style="margin-top: 2px;font-style: oblique;">Permitir agregar y ver nuevos empleados</label><br><br>
+                                    </div>
+                                </div>
                                 <div id="divInvitado_edit" class="col-md-12"
                                     style="padding-left: 0px;padding-right: 0px">
                                     <div class="col-md-8 ">
@@ -340,44 +347,66 @@
                                                 general</label><br><br>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 form-check" style="padding-left: 4px;">
-                                                <label for="" class="col-md-10">Empleado(s):</label>
-                                                <input type="checkbox" style="font-size: 11.4px"
-                                                    class="form-check-input" id="selectTodoCheck_edit">
-                                                <label class="form-check-label" for="selectTodoCheck_edit"
-                                                    style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                    todos.</label>
+                                    <div class="col-md-6 text-left">
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="switchEmpS_edit"
+                                               >
+                                            <label class="custom-control-label" for="switchEmpS_edit"
+                                                style="font-weight: bold">Seleccionar por empleado</label>
+                                        </div>
+                                    </div>
+                                    <div id=divEmpleado_edit>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                                    <label for="" class="col-md-10">Empleado(s):</label>
+                                                    <input type="checkbox" style="font-size: 11.4px"
+                                                        class="form-check-input" id="selectTodoCheck_edit">
+                                                    <label class="form-check-label" for="selectTodoCheck_edit"
+                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                                        todos.</label>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <select class="form-control wide" data-plugin="customselect" multiple
+                                                id="nombreEmpleado_edit">
+                                                @foreach ($empleado as $empleados)
+                                                <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
+                                                    {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <br><br>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <select class="form-control wide" data-plugin="customselect" multiple
-                                            id="nombreEmpleado_edit">
-                                            @foreach ($empleado as $empleados)
-                                            <option value="{{ $empleados->emple_id }}">{{ $empleados->perso_nombre }}
-                                                {{ $empleados->perso_apPaterno }} {{ $empleados->perso_apMaterno }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        <br><br>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 form-check" style="padding-left: 4px;">
-                                                <label for="" class="col-md-10">Seleccionar por area(s):</label>
-                                                <input type="checkbox" style="font-size: 11.4px"
-                                                    class="form-check-input" id="selectAreaCheck_edit">
-                                                <label class="form-check-label" for="selectAreaCheck_edit"
-                                                    style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                    todas.</label>
-                                            </div>
+
+
+                                    <div class="col-md-6 text-left">
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="switchAreaS_edit"
+                                               >
+                                            <label class="custom-control-label" for="switchAreaS_edit"
+                                                style="font-weight: bold">Seleccionar por area</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <select data-plugin="customselect" multiple id="selectArea_edit"
+
+                                    <div  id="divArea_edit">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                                    <label for="" class="col-md-10">Seleccionar por area(s):</label>
+                                                    <input type="checkbox" style="font-size: 11.4px"
+                                                        class="form-check-input" id="selectAreaCheck_edit">
+                                                    <label class="form-check-label" for="selectAreaCheck_edit"
+                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
+                                                        todas.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <select data-plugin="customselect" multiple id="selectArea_edit"
                                             name="selectArea_edit" class="form-control" data-placeholder="seleccione">
 
                                             @foreach ($area as $areas)
@@ -386,6 +415,8 @@
                                             @endforeach
 
                                         </select>
+                                        </div>
+
                                     </div>
                                 </div>
 

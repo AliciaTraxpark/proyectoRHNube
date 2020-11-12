@@ -283,23 +283,48 @@ function editarInv(idi){
              if(data[0].rol_id==1){
                 $('#adminCheck_edit').prop('checked', true);
                 $("#divInvitado_edit").hide();
+                $("#divAdminPersona_edit").hide();
                 $("#nombreEmpleado_edit").prop("required", false);
 
             }
             else{
                 $('#adminCheck_edit').prop('checked', false);
                 $("#divInvitado_edit").show();
+                $("#divAdminPersona_edit").show();
                 $("#nombreEmpleado_edit").prop("required", true);
+                if(data[0].emple_id!=null){
+                    $('#divEmpleado_edit').show();
+                    $('#switchEmpS_edit').prop('checked', true);
+                    $('#switchAreaS_edit').prop('checked', false);
                 $.each( data, function( index, value ){
-                    $("#nombreEmpleado_edit option[value='"+ value.emple_id +"']").prop("selected","selected");
-                    $("#nombreEmpleado_edit").trigger("change");
-                });
+                $("#nombreEmpleado_edit option[value='"+ value.emple_id +"']").prop("selected","selected");
+                $("#nombreEmpleado_edit").trigger("change");
+                $("#nombreEmpleado_edit").prop('disabled',false);
+                 });
+                  $('#divArea_edit').hide();
+                }
+                else{
+                    $('#switchEmpS_edit').prop('checked', false);
+                    $('#switchAreaS_edit').prop('checked', true);
+                    $('#divArea_edit').show();
+                    $.each( data, function( index, value ){
+                        $("#selectArea_edit option[value='"+ value.area_id +"']").prop("selected","selected");
+                        $("#selectArea_edit").trigger("change");
+                         });
+                    $('#divEmpleado_edit').hide();
+                }
+
 
             }
             if(data[0].dashboard==1){
                 $('#dashboardCheck_edit').prop('checked', true);
             }else{
                 $('#dashboardCheck_edit').prop('checked', false);
+            }
+            if(data[0].permiso_Emp==1){
+                $('#AlcaAdminCheck_edit').prop('checked', true);
+            }else{
+                $('#AlcaAdminCheck_edit').prop('checked', false);
             }
             $("#agregarInvitado_edit").modal('show');
         },
@@ -315,9 +340,36 @@ $("#adminCheck_edit").click(function () {
     if ($("#adminCheck_edit").is(":checked")) {
         $("#divInvitado_edit").hide();
         $("#nombreEmpleado_edit").prop("required", false);
+        $("#selectArea_edit").prop("required", false);
+        $("#divAdminPersona_edit").hide();
+        $("#divEmpleado_edit").hide();
     } else {
+        if($("#switchAreaS_edit").is(":checked")){
+            $("#switchAreaS_edit").prop("checked", true);
+            $('#divArea_edit').show();
+            $("#switchEmpS_edit").prop("checked", false);
+                $('#divEmpleado_edit').hide();
+        }
+        else{
+            $("#switchAreaS_edit").prop("checked", false);
+            $('#divArea_edit').hide();
+            if($("#switchEmpS_edit").is(":checked")){
+                $("#switchEmpS_edit").prop("checked", true);
+                $('#divEmpleado_edit').show();
+            }
+            else{
+                $('#divEmpleado_edit').hide();
+            }
+
+        }
         $("#nombreEmpleado_edit").prop("required", true);
         $("#divInvitado_edit").show();
+        $("#divAdminPersona_edit").show();
+
+
+
+
+        $("#nombreEmpleado_edit").prop("disabled", false);
     }
 });
 //select all empleados_edit
@@ -424,39 +476,80 @@ function registrarInvit_edit()
 }  else {
 
     var dash_ed;
+    var permisoEmp_ed;
     if ($("#dashboardCheck_edit").is(":checked")) {
         dash_ed=1;} else{
             dash_ed=0;
         }
-    $.ajax({
-        type: "post",
-        url: "/editarInviI",
-        data: { idinvitado,
-            idEmpleado,dash_ed
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $('#tablaInvit').load(location.href + " #tablaInvit>*");
-            $('#agregarInvitado_edit').modal('hide');
-            var dialog = bootbox.dialog({
-                message: "Invitado editado correctamente",
-                closeButton: false
+        if ($("#AlcaAdminCheck_edit").is(":checked")) {
+            permisoEmp_ed=1;} else{
+                permisoEmp_ed=0;
+           }
+           if ($('#switchEmpS_edit').prop('checked')) {
+            $.ajax({
+                type: "post",
+                url: "/editarInviI",
+                data: { idinvitado,
+                    idEmpleado,dash_ed,permisoEmp_ed
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    },
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                success: function (data) {
+                    $('#tablaInvit').load(location.href + " #tablaInvit>*");
+                    $('#agregarInvitado_edit').modal('hide');
+                    var dialog = bootbox.dialog({
+                        message: "Invitado editado correctamente",
+                        closeButton: false
+                    });
+                    setTimeout(function(){
+                        dialog.modal('hide')
+                    }, 1000);
+                },
+                error: function (data) {
+                    alert("Ocurrio un error");
+                },
             });
-            setTimeout(function(){
-                dialog.modal('hide')
-            }, 1000);
-        },
-        error: function (data) {
-            alert("Ocurrio un error");
-        },
-    });
+           } else{
+            if ($('#switchAreaS_edit').prop('checked')) {
+                idareas_edit = $("#selectArea_edit").val();
+                $.ajax({
+                    type: "post",
+                    url: "/editarInviArea",
+                    data: { idinvitado,
+                        idareas_edit,dash_ed,permisoEmp_ed
+                    },
+                    statusCode: {
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        $('#tablaInvit').load(location.href + " #tablaInvit>*");
+                        $('#agregarInvitado_edit').modal('hide');
+                        var dialog = bootbox.dialog({
+                            message: "Invitado editado correctamente",
+                            closeButton: false
+                        });
+                        setTimeout(function(){
+                            dialog.modal('hide')
+                        }, 1000);
+                    },
+                    error: function (data) {
+                        alert("Ocurrio un error");
+                    },
+                });
+            }
+           }
+
 }
 
 
@@ -601,6 +694,46 @@ $('#switchAreaS').change(function (event) {
 });
 
 /////////////////////////////
+/////////cambios en switch en editar
+$('#switchEmpS_edit').change(function (event) {
+    if ($('#switchEmpS_edit').prop('checked')) {
+        $('#switchAreaS_edit').prop('checked', false);
+        $('#selectArea_edit').prop('disabled', true);
+        $('#nombreEmpleado_edit').prop('disabled', false);
+        $("#selectArea_edit > option").prop("selected", false);
+        $("#selectArea_edit").trigger("change");
+        $('#divArea_edit').hide();
+        $('#divEmpleado_edit').show();
+        $("#nombreEmpleado_edit > option").prop("selected", false);
+        $("#nombreEmpleado_edit").trigger("change");
+        $("#selectTodoCheck_edit").prop('checked', false);
+
+
+    }
+    else{
+        $('#selectArea_edit').prop('disabled', false);
+        $('#divEmpleado_edit').hide();
+    }
+});
+
+$('#switchAreaS_edit').change(function (event) {
+    if ($('#switchAreaS_edit').prop('checked')) {
+        $('#switchEmpS_edit').prop('checked', false);
+        $('#nombreEmpleado_edit').prop('disabled', true);
+        $('#selectArea_edit').prop('disabled', false);
+        $("#nombreEmpleado_edit > option").prop("selected", false);
+        $("#nombreEmpleado_edit").trigger("change");
+        $('#divEmpleado_edit').hide();
+        $('#divArea_edit').show();
+        $("#selectAreaCheck_edit").prop('checked', false);
+        $("#nombreEmpleado_edit").prop("required", false);
+        $("#selectArea_edit").prop("required", true);
+    }
+    else{
+        $('#nombreEmpleado_edit').prop('disabled', false);
+        $('#divArea_edit').hide();
+    }
+});
 $(function() {
 
 });
