@@ -463,7 +463,7 @@ class ActividadesController extends Controller
 
         //: BUSCAMOS LOS EMPLEADOS DE LA ACTIVIDAD
         $actividadEmpleado = DB::table('actividad as a')
-            ->leftJoin('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
+            ->join('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
             ->select('ae.idEmpleado', 'ae.id', 'ae.estado')
             ->where('a.Activi_id', '=', $actividad)
             ->get();

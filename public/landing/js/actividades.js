@@ -772,6 +772,8 @@ function listaActividades() {
 // ? ******************************
 function asignarActividadMasiso() {
     $('#asignarPorArea').modal();
+    $("#empleAsignar").empty();
+    $("#areaAsignar").empty();
     listaActividades();
 }
 
