@@ -368,7 +368,7 @@
                             <div class="row pt-2">
                                 <div class="col-md-12 text-left">
                                     <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="checkboxFechaI" name="FechaI">
+                                        <input type="checkbox" id="checkboxEmpleados" name="FechaI">
                                         <label for="" class="mb-0">Asignar a todos los empleados</label>
                                         <div class="float-right mb-0">
                                             <span style="font-size: 11px;">

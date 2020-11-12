@@ -804,7 +804,7 @@ $("#actividadesAsignar").on("change", function () {
         },
         success: function (data) {
             console.log(data);
-            var option = `<option value="" disabled>Seleccionar</option>`;
+            var option = "";
             data[0].select.forEach(element => {
                 option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
             });
@@ -853,7 +853,7 @@ function listaAreas() {
 
 //: Funcion para mostrar empleados por áreas 
 $("#areaAsignar").on("change", function () {
-    var empleados = $("#empleAsignar").val();
+    var empleados = EmpleadosDeActividad;
     var areas = $("#areaAsignar").val();
     $("#empleAsignar").empty();
     var container = $("#empleAsignar");
@@ -878,13 +878,17 @@ $("#areaAsignar").on("change", function () {
         },
         success: function (data) {
             console.log(data);
-            var option = `<option value="" disabled>Seleccionar</option>`;
+            var option = "";
             data.forEach(element => {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
             });
             console.log(option);
             container.append(option);
             $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
+            if ($('#checkboxEmpleados').is(':checked')) {
+                $("#empleAsignar > option").prop("selected", "selected");
+                $("#empleAsignar").trigger("change");
+            }
         },
         error: function () { },
     });
@@ -941,3 +945,13 @@ function asignarActividadEmpleado() {
         error: function () { },
     });
 }
+
+//? Todos los empleados
+$('#checkboxEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#empleAsignar > option").prop("selected", "selected");
+        $("#empleAsignar").trigger("change");
+    } else {
+        $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
+    }
+});

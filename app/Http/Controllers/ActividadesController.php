@@ -394,6 +394,7 @@ class ActividadesController extends Controller
             ->select('a.area_id', 'a.area_descripcion')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->groupBy('a.area_id')
             ->get();
         return response()->json($areas, 200);
     }
@@ -436,7 +437,6 @@ class ActividadesController extends Controller
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
-                ->whereIn('e.emple_id', $idEmpleados)
                 ->get();
 
             return response()->json($empleados, 200);
