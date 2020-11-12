@@ -406,6 +406,7 @@ class ActividadesController extends Controller
             ->select('a.Activi_id as idActividad', 'a.Activi_Nombre as nombre')
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
+            ->where('a.eliminacion', '=', 1)
             ->get();
 
         return response()->json($actividades, 200);
