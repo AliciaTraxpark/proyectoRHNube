@@ -28,3 +28,17 @@ function primeraConfig() {
         src: 'https://player.vimeo.com/video/471518323?title=0&byline=0&portrait=0'
     });
 }
+
+//: GESTION DE EMPLEADO - REGISTRAR DATOS PERSONA
+function datosPersonales() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/477794877?title=0&byline=0&portrait=0'
+    });
+}
+
+// : GESTION DE EMPLEADO - RESGISTRAR DATOS EMPRESARIAL
+function datosEmpresarial(){
+    $.fancybox.open({
+        src : 'https://player.vimeo.com/video/477794018?title=0&byline=0&portrait=0'
+    });
+}

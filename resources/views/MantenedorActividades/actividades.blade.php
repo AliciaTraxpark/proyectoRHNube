@@ -10,8 +10,6 @@
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
-{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,19 +60,47 @@
     }
 
     .alertify .ajs-footer .ajs-buttons .ajs-button {
-        min-height: 32px;
-        min-width: 80px;
+        min-height: 28px;
+        min-width: 75px;
     }
 
     .ajs-cancel {
-        font-size: 11px !important;
+        font-size: 12px !important;
     }
 
     .ajs-ok {
-        font-size: 11px !important;
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
     }
 
     /* FINALIZACION */
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #52565b;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        overflow-y: scroll;
+    }
+
     @media (max-width: 767.98px) {
 
         li.paginate_button.previous,
@@ -97,27 +123,45 @@
             display: flex !important;
             flex-flow: column !important;
         }
+
+        .rowResponsive {
+            padding-top: 0rem !important;
+        }
+
+        .colResponsive {
+            width: 50% !important;
+        }
     }
 </style>
-<div class="row pr-3">
-    <div class="col-md-12 text-right">
+{{-- BOTONES DE ASIGNACION Y REGISTAR --}}
+<div class="row pr-3 pl-3 pt-3 rowResponsive">
+    <div class="col-md-6 text-left colResponsive">
+        <button type="button" class="btn btn-sm mt-1"
+            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
+            onclick="javascript:asignarActividadMasiso()">
+            <img src="{{asset('landing/images/capas.svg')}}" class="mr-1" height="18">
+            Asignar actividad
+        </button>
+    </div>
+    <div class="col-md-6 text-right colResponsive">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
             onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
             Actividad
         </button>
     </div>
 </div>
+{{-- FINALIZACION --}}
+{{-- TABLA DE ACTIVIDADES --}}
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-
                 <table id="actividades" class="table nowrap" style="font-size: 13px!important;width:100%;">
                     <thead style="background: #fafafa;" style="width:100%!important">
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Actividad</th>
-                            <th class="text-center">Código</th>
+                            <th>#</th>
+                            <th>Actividad</th>
+                            <th>Código</th>
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Asistencia en puerta</th>
                             <th class="text-center">En uso</th>
@@ -130,12 +174,15 @@
         </div>
     </div>
 </div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE REGISTRAR ACTIVIDAD --}}
 <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="regactividadTarea"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  modal-xs d-flex justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Registrar Actividad
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar Actividad
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -205,6 +252,8 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION DE MODAL --}}
+{{-- MODAL DE EDITAR ACTIVIDAD --}}
 <div id="editactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editactividadTarea"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  modal-xs d-flex justify-content-center">
@@ -281,6 +330,83 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION --}}
+{{-- MODAL DE ASIGNACION POR AREAS --}}
+<div id="asignarPorArea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="asignarPorArea"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Asignar actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:asignarActividadEmpleado()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="mb-0">Seleccionar Actividad</label>
+                                    <select id="actividadesAsignar" data-plugin="customselect" class="form-control"
+                                        required>
+                                        <option value="" disabled selected>Seleccionar actividad</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col-md-12">
+                                    <label class="mb-0">Asignar por área</label>
+                                    <select id="areaAsignar" data-plugin="customselect"
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-md-12 text-left">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="checkboxEmpleados" name="FechaI">
+                                        <label for="" class="mb-0">Asignar a todos los empleados</label>
+                                        <div class="float-right mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara empleados con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select id="empleAsignar" data-plugin="customselect"
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple"
+                                        required>
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarModo()">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION DE MODAL --}}
+{{-- MODAL DE SESSION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -297,6 +423,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{{-- FINALIZACION --}}
 @if (Auth::user())
 <script>
     $(function() {

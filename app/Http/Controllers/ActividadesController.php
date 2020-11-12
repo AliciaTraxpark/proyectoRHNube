@@ -386,7 +386,7 @@ class ActividadesController extends Controller
         return response()->json($empleados, 200);
     }
 
-    // ? SELECT DE ÁREAS EN MODAL EDITAR
+    // ? SELECT DE ÁREAS EN ASIGNAR ACTIVIDAD
     function listaAreasEdit()
     {
         $areas = DB::table('empleado as e')
@@ -394,7 +394,115 @@ class ActividadesController extends Controller
             ->select('a.area_id', 'a.area_descripcion')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->groupBy('a.area_id')
             ->get();
         return response()->json($areas, 200);
+    }
+
+    //? SELEC DE ACTIVIDADES
+    function listaActividades()
+    {
+        $actividades = DB::table('actividad as a')
+            ->select('a.Activi_id as idActividad', 'a.Activi_Nombre as nombre')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('a.estado', '=', 1)
+            ->where('a.eliminacion', '=', 1)
+            ->get();
+
+        return response()->json($actividades, 200);
+    }
+
+    //? SELECT DE EMPLEADOS CON ÁREAS
+
+    function empleadosConAreas(Request $request)
+    {
+        $idEmpleados = $request->get('empleados');
+        $idAreas = $request->get('areas');
+
+        // : Cuando los dos array tienen datos
+        if (!is_null($idEmpleados) && !is_null($idAreas)) {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->leftJoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->whereIn('e.emple_id', $idEmpleados)
+                ->orWhereIn('e.emple_area', $idAreas)
+                ->get();
+
+            return response()->json($empleados, 200);
+        }
+        //: Cuando solo hay datos en empleados
+        if (!is_null($idEmpleados)) {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
+
+            return response()->json($empleados, 200);
+        }
+        //: Cuando solo hay datos de areas
+        if (!is_null($idAreas)) {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->leftJoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->WhereIn('e.emple_area', $idAreas)
+                ->get();
+
+            return response()->json($empleados, 200);
+        }
+    }
+
+    // ? FUNCION DE ASIGNAR ACTIVIDADES POR AREAS
+    public function asignacionPorAreas(Request $request)
+    {
+        $empleados = $request->get('empleados');
+        $actividad = $request->get('idActividad');
+
+        //: BUSCAMOS LOS EMPLEADOS DE LA ACTIVIDAD
+        $actividadEmpleado = DB::table('actividad as a')
+            ->join('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
+            ->select('ae.idEmpleado', 'ae.id', 'ae.estado')
+            ->where('a.Activi_id', '=', $actividad)
+            ->get();
+
+        //? Comparamos los nuevos empleados con los empelados con actividad
+        for ($index = 0; $index < sizeof($empleados); $index++) {
+            $estado = true;
+            for ($element = 0; $element < sizeof($actividadEmpleado); $element++) {
+                if ($empleados[$index] == $actividadEmpleado[$element]->idEmpleado) {
+                    $estado = false;
+                }
+            }
+
+            if ($estado) {
+                $actividad_empleado = new actividad_empleado();
+                $actividad_empleado->idActividad = $actividad;
+                $actividad_empleado->idEmpleado = $empleados[$index];
+                $actividad_empleado->estado = 1;
+                $actividad_empleado->eliminacion = 1;
+                $actividad_empleado->save();
+            }
+        }
+
+        //? Comparamos los empleados de la actividad y los nuevos empleados
+        for ($index = 0; $index < sizeof($actividadEmpleado); $index++) {
+            $estado = true;
+            for ($element = 0; $element < sizeof($empleados); $element++) {
+                if ($actividadEmpleado[$index]->idEmpleado == $empleados[$element]) {
+                    $estado = false; //? si lo encuentra no cambiamos estado
+                }
+            }
+            if ($estado) { //? si el estado no cambio a FALSE entonces inactivamos esta actividad para el empleado
+                $actividad_empleado = actividad_empleado::where('id', '=', $actividadEmpleado[$index]->id)->get()->first();
+                $actividad_empleado->estado = 0;
+                $actividad_empleado->save();
+            }
+        }
+
+        return response()->json($empleados, 200);
     }
 }

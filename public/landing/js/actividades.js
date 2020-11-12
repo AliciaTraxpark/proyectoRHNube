@@ -191,7 +191,7 @@ function eliminarActividad(id) {
             }
         })
         .setting({
-            title: "Eliminar Actividad",
+            title: "Eliminar actividad",
             labels: {
                 ok: "Aceptar",
                 cancel: "Cancelar",
@@ -222,19 +222,19 @@ function actividadesOrganizacion() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += "<tr class=\"text-center\" onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
+                tr += "<tr onclick=\"return cambiarEstadoActividad(" + data[index].Activi_id + ")\"><td>" + (index + 1) + "</td>";
                 tr += "<td>" + data[index].Activi_Nombre + "</td>";
                 tr += "<td>" + data[index].codigoA + "</td>";
                 if (data[index].eliminacion == 0) {
                     if (data[index].controlRemoto == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\" checked disabled>\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
                             style=\"font-weight: bold\"></label>\
                         </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\" disabled>\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
@@ -242,14 +242,14 @@ function actividadesOrganizacion() {
                         </div></td>";
                     }
                     if (data[index].asistenciaPuerta == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" checked disabled>\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" disabled>\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
@@ -257,21 +257,21 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     if (data[index].respuesta === 'Si') {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     } else {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
+                    tr += "<td class=\"text-center\"><a class=\"badge badge-soft-primary mr-2\">Predeterminado</a></td>";
                 } else {
                     if (data[index].controlRemoto == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\" ><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\" checked>\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
                             style=\"font-weight: bold\"></label>\
                         </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\">\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
@@ -279,14 +279,14 @@ function actividadesOrganizacion() {
                         </div></td>";
                     }
                     if (data[index].asistenciaPuerta == 1) {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\" checked>\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     } else {
-                        tr += "<td><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\">\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
@@ -294,11 +294,11 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     if (data[index].respuesta === 'Si') {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     } else {
-                        tr += "<td style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
+                        tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td><a onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                    tr += "<td class=\"text-center\"><a onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
                                 </a>&nbsp;&nbsp;&nbsp;<a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
@@ -723,3 +723,235 @@ $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
 // **********************************
+
+//: Asignar actividades en area de forma masiva 
+//? Inicializar plugin
+$("#actividadesAsignar").select2({
+    placeholder: 'Seleccionar actividad',
+    tags: "true"
+});
+$("#areaAsignar").select2({
+    tags: "true"
+});
+$("#empleAsignar").select2({
+    tags: "true"
+});
+// ? **********************************
+
+//? Funcion para listar actividades
+function listaActividades() {
+    $("#actividadesAsignar").empty();
+    var container = $("#actividadesAsignar");
+    $.ajax({
+        async: false,
+        url: "/listActivi",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.idActividad}"> Actividad : ${element.nombre} </option>`;
+            });
+            console.log(option);
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+// ? ******************************
+function asignarActividadMasiso() {
+    $('#asignarPorArea').modal();
+    $("#empleAsignar").empty();
+    $("#areaAsignar").empty();
+    listaActividades();
+}
+
+// ? *****************************
+var EmpleadosDeActividad;
+//: funcion de change
+$("#actividadesAsignar").on("change", function () {
+    var idA = $(this).val();
+    $("#empleAsignar").empty();
+    var container = $("#empleAsignar");
+    $.ajax({
+        async: false,
+        url: "/empleadoActiv",
+        method: "GET",
+        data: {
+            idA: idA
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = "";
+            data[0].select.forEach(element => {
+                option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            data[0].noSelect.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            container.append(option);
+            EmpleadosDeActividad = $('#empleAsignar').val();
+            listaAreas();
+        },
+        error: function () { },
+    });
+});
+
+//: Función para obtener las áreas 
+function listaAreas() {
+    $("#areaAsignar").empty();
+    var container = $("#areaAsignar");
+    $.ajax({
+        async: false,
+        url: "/listaAreasE",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
+            });
+            console.log(option);
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+
+//: Funcion para mostrar empleados por áreas 
+$("#areaAsignar").on("change", function () {
+    var empleados = EmpleadosDeActividad;
+    var areas = $("#areaAsignar").val();
+    $("#empleAsignar").empty();
+    var container = $("#empleAsignar");
+    $.ajax({
+        async: false,
+        url: "/empleadoConAreas",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            areas: areas
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = "";
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+            });
+            console.log(option);
+            container.append(option);
+            $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
+            if ($('#checkboxEmpleados').is(':checked')) {
+                $("#empleAsignar > option").prop("selected", "selected");
+                $("#empleAsignar").trigger("change");
+            }
+        },
+        error: function () { },
+    });
+});
+
+function asignarActividadEmpleado() {
+    var empleados = $("#empleAsignar").val();
+    var actividad = $("#actividadesAsignar").val();
+    $.ajax({
+        async: false,
+        url: "/asignacionActividadE",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            idActividad: actividad
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#asignarPorArea').modal('toggle');
+            $("#empleAsignar").empty();
+            $("#areaAsignar").empty();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nAsignación exitosa.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
+    });
+}
+
+//? Todos los empleados
+$('#checkboxEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#empleAsignar > option").prop("selected", "selected");
+        $("#empleAsignar").trigger("change");
+    } else {
+        $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
+    }
+});
