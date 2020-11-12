@@ -224,6 +224,7 @@ Route::get('/empleadoActivReg', 'ActividadesController@listaEmpleadoReg');
 Route::get('/listaAreasE', 'ActividadesController@listaAreasEdit');
 Route::get('/listActivi', 'ActividadesController@listaActividades');
 Route::post('/empleadoConAreas', 'ActividadesController@empleadosConAreas');
+Route::post('/asignacionActividadE', 'ActividadesController@asignacionPorAreas');
 //carga masiva de fotos
 Route::post('/subirfoto', 'CargaMasivaFotoController@subirfoto');
 

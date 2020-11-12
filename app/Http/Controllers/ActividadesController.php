@@ -454,4 +454,56 @@ class ActividadesController extends Controller
             return response()->json($empleados, 200);
         }
     }
+
+    // ? FUNCION DE ASIGNAR ACTIVIDADES POR AREAS
+    public function asignacionPorAreas(Request $request)
+    {
+        $empleados = $request->get('empleados');
+        $actividad = $request->get('idActividad');
+
+        //: BUSCAMOS LOS EMPLEADOS DE LA ACTIVIDAD
+        $actividadEmpleado = DB::table('actividad as a')
+            ->leftJoin('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
+            ->select('ae.idEmpleado', 'ae.id', 'ae.estado')
+            ->where('a.Activi_id', '=', $actividad)
+            ->get();
+
+        //? Comparamos los empleados de la actividad y los nuevos empleados
+        for ($index = 0; $index < sizeof($actividadEmpleado); $index++) {
+            $estado = true;
+            for ($element = 0; $element < sizeof($empleados); $element++) {
+                if ($actividadEmpleado[$index]->idEmpleado == $empleados[$element]) {
+                    $estado = false; //? si lo encuentra no cambiamos estado
+                }
+            }
+            if ($estado) { //? si el estado no cambio a FALSE entonces inactivamos esta actividad para el empleado
+                $actividad_empleado = actividad_empleado::where('id', '=', $actividadEmpleado[$index]->id)->get()->first();
+                $actividad_empleado->estado = 0;
+                $actividad_empleado->save();
+            }
+        }
+
+        //? Comparamos los nuevos empleados con los empelados con actividad
+
+        // dd(sizeof($empleados));
+        for ($index = 0; $index < sizeof($empleados); $index++) {
+            $estado = true;
+            for ($element = 0; $element < sizeof($actividadEmpleado); $element++) {
+                if ($empleados[$index] == $actividadEmpleado[$element]->idEmpleado) {
+                    $estado = false;
+                }
+            }
+
+            if ($estado) {
+                $actividad_empleado = new actividad_empleado();
+                $actividad_empleado->idActividad = $actividad;
+                $actividad_empleado->idEmpleado = $empleados[$index];
+                $actividad_empleado->estado = 1;
+                $actividad_empleado->eliminacion = 1;
+                $actividad_empleado->save();
+            }
+        }
+
+        return response()->json($empleados, 200);
+    }
 }

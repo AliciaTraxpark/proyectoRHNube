@@ -885,3 +885,32 @@ $("#areaAsignar").on("change", function () {
         error: function () { },
     });
 });
+
+function asignarActividadEmpleado() {
+    var empleados = $("#empleAsignar").val();
+    var actividad = $("#actividadesAsignar").val();
+    $.ajax({
+        async: false,
+        url: "/asignacionActividadE",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            idActividad: actividad
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#asignarPorArea').modal('toggle');
+        },
+        error: function () { },
+    });
+}

@@ -347,11 +347,12 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:editarActividadTarea()">
+                        <form action="javascript:asignarActividadEmpleado()">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="mb-0">Seleccionar Actividad</label>
-                                    <select id="actividadesAsignar" data-plugin="customselect" class="form-control">
+                                    <select id="actividadesAsignar" data-plugin="customselect" class="form-control"
+                                        required>
                                         <option value="" disabled selected>Seleccionar actividad</option>
                                     </select>
                                 </div>
@@ -380,7 +381,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <select id="empleAsignar" data-plugin="customselect"
-                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple"
+                                        required>
                                     </select>
                                 </div>
                             </div>
