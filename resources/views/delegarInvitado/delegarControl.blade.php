@@ -213,6 +213,9 @@
                                     </div>
                                     <div id="divEmpleado">
                                         <div class="col-md-12">
+
+                                        </div>
+                                        <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-12 form-check"
                                                     style="display: flex;justify-content: space-between;">
