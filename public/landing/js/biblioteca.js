@@ -29,16 +29,51 @@ function primeraConfig() {
     });
 }
 
-//: GESTION DE EMPLEADO - REGISTRAR DATOS PERSONA
+//: GESTION DE EMPLEADO - DATOS PERSONA
 function datosPersonales() {
     $.fancybox.open({
         src: 'https://player.vimeo.com/video/477794877?title=0&byline=0&portrait=0'
     });
 }
 
-// : GESTION DE EMPLEADO - RESGISTRAR DATOS EMPRESARIAL
-function datosEmpresarial(){
+// : GESTION DE EMPLEADO - EMPRESARIAL
+function datosEmpresarial() {
     $.fancybox.open({
-        src : 'https://player.vimeo.com/video/477794018?title=0&byline=0&portrait=0'
+        src: 'https://player.vimeo.com/video/477794018?title=0&byline=0&portrait=0'
+    });
+}
+
+//: GESTION DE EMPLEADO - FOTO
+function datosFoto() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/477793806?title=0&byline=0&portrait=0'
+    });
+}
+
+// : GESTION DE EMPLEADO - CALENDARIO
+function datosCalendario() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/477793882?title=0&byline=0&portrait=0'
+    });
+}
+
+//: GESTION DE EMPLEADO - HORARIO
+function datosHorario() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/477792484?title=0&byline=0&portrait=0'
+    });
+}
+
+//: GESTION DE EMPLEADO - ACTIVIDADES
+function datosActividades() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/477792220?title=0&byline=0&portrait=0'
+    });
+}
+
+//: GESTION DE EMPLEADO - DISPOSITIVOS
+function datosDispositivos() {
+    $.fancybox.open({
+        src: 'https://player.vimeo.com/video/477791531?title=0&byline=0&portrait=0'
     });
 }

@@ -227,7 +227,7 @@ class apiSeguimientoRutaContoller extends Controller
             }
             return response()->json($respuesta, 200);
         }
-        return response()->json(array("message" => "Empleado no encontrado"), 400);
+        return response()->json(array("message" => "empleado_no_exite"), 400);
     }
 
     //? TICKET DE SUGERENCIA
@@ -247,14 +247,14 @@ class apiSeguimientoRutaContoller extends Controller
             if ($tipo == "soporte") {
 
                 Mail::to($email)->queue(new SoporteApi($contenido, $persona, $asunto, $celular));
-                return response()->json(array("mensaje" => "Correo Enviado con éxito"), 200);
+                return response()->json(array("mensaje" => "correo_enviado_con_éxito"), 200);
             }
             if ($tipo == "sugerencia") {
                 Mail::to($email)->queue(new SugerenciaApi($contenido, $persona, $asunto, $celular));
-                return response()->json(array("mensaje" => "Correo Enviado con éxito"), 200);
+                return response()->json(array("mensaje" => "correo_Enviado_con_éxito"), 200);
             }
         }
 
-        return response()->json(array("mensaje" => "Empleado no se encuentra registrado."), 400);
+        return response()->json(array("mensaje" => "empleado_no_exite"), 400);
     }
 }
