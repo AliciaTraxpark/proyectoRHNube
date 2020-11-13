@@ -315,8 +315,24 @@ function onMostrarPantallas() {
                                 }
                             } else {
                                 if (data[index].minuto[j]["ubicacion"][0] != undefined) {
-                                    card = `<div class="col-2">
-                                                <div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid"></div>
+                                    card = `<div class="col-2 columResponsiva" style="margin-left: 0px!important;margin-right: 0px!important">
+                                                <div class="mb-0 text-center" style="padding-left: 0px;padding-top: 15px;">
+                                                    <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
+                                                        <div class="row">
+                                                            <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 6px;padding-bottom: 6px;">
+                                                                <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;">
+                                                                    <img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minuto[j]["ubicacion"][0].Activi_Nombre}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-md-12 col-sm-12" style="padding-left: 0px;padding-right: 0px">
+                                                            <div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid"></div>
+                                                        </div>
+                                                        &nbsp;
+                                                        <label style="font-size: 12px" for="">${data[index].minuto[j]["ubicacion"][0].hora_ini} - ${data[index].minuto[j]["ubicacion"][0].hora_fin}</label>
+                                                    </div>
+                                                </div>
                                             </div>`;
                                     grupo += card;
 
