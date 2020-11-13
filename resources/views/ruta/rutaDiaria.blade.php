@@ -60,6 +60,19 @@
     .leaflet-right .leaflet-routing-container.leaflet-routing-container-hide {
         display: none;
     }
+
+    .leaflet-pane {
+        z-index: 0;
+    }
+
+    .leaflet-top,
+    .leaflet-bottom {
+        z-index: 0;
+    }
+
+    .leaflet-control {
+        z-index: 0;
+    }
 </style>
 {{-- CONTENIDO DE VISTA --}}
 <div class="row">
