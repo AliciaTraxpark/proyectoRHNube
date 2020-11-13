@@ -4224,9 +4224,9 @@ use App\proyecto_empleado;
                                                         style="font-size: 13px!important;">
                                                         <thead style="background: #fafafa;font-size: 14px">
                                                             <tr>
-                                                                <th>Tipo Dispositivo</th>
+                                                                <th>Dispositivo</th>
                                                                 <th>Nombre</th>
-                                                                <th>Activación de Dispositivo</th>
+                                                                <th>Activación</th>
                                                                 <th>Codigo</th>
                                                                 <th>Enviado</th>
                                                                 <th>Estado</th>
@@ -4270,7 +4270,7 @@ use App\proyecto_empleado;
                                                         style="font-size: 13px!important;">
                                                         <thead style="background: #fafafa;font-size: 14px">
                                                             <tr>
-                                                                <th>Tipo Dispositivo</th>
+                                                                <th>Dispositivo</th>
                                                                 <th>Nombre</th>
                                                                 <th>Número</th>
                                                                 <th>Codigo</th>
