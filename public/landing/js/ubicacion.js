@@ -319,7 +319,7 @@ function onMostrarPantallas() {
                                                 <div class="mb-0 text-center" style="padding-left: 0px;padding-top: 15px;">
                                                     <div class="collapse show" aria-labelledby="customaccorheadingOne" data-parent="#customaccordion_exa">
                                                         <div class="row">
-                                                            <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 6px;padding-bottom: 6px;">
+                                                            <div class=" text-center col-md-12 col-sm-6 columnTextR" style="padding-top: 8px;padding-bottom: 6px;">
                                                                 <h5 class="m-0 font-size-16 h5Responsive" style="color:#1f4068;font-weight:bold;">
                                                                     <img src="landing/images/2143150.png" class="mr-2" height="20"/>${data[index].minuto[j]["ubicacion"][0].Activi_Nombre}
                                                                 </h5>
@@ -547,7 +547,7 @@ function ubicacionesMapa(horayJ) {
             ],
         lineOptions: {
             styles: [
-                { color: '#f56a79', opacity: 0.8, weight: 2 }
+                { color: '#f56a79', opacity: 0.8, weight: 4 }
             ],
         },
         routeWhileDragging: true,
