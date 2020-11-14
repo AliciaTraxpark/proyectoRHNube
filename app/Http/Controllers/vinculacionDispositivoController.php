@@ -53,6 +53,7 @@ class vinculacionDispositivoController extends Controller
             $vinculacion->envio = 0;
             $vinculacion->idModo = $idModo;
             $vinculacion->celular = $celular->numero;
+            $vinculacion->actividad = 50;
             $vinculacion->save();
 
             $idVinculacion = $vinculacion->id;
@@ -223,6 +224,21 @@ class vinculacionDispositivoController extends Controller
         }
     }
 
+    public function editarActividadV(Request $request)
+    {
+        $idV = $request->get('id');
+        $actividad = $request->get('actividad');
+
+        // dd($actividad);
+        $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
+        if ($vinculacion_ruta) {
+            $vinculacion_ruta->actividad = $actividad;
+            $vinculacion_ruta->save();
+
+            return response()->json($vinculacion_ruta, 200);
+        }
+    }
+
     public function listaVinculacionW(Request $request)
     {
         $idempleado = $request->get('idE');
@@ -254,7 +270,7 @@ class vinculacionDispositivoController extends Controller
         $vinculacionRuta = DB::table('vinculacion_ruta as vr')
             ->join('modo as m', 'm.id', '=', 'vr.idModo')
             ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
-            ->select('vr.id as idV', 'vr.modelo as modelo', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'td.dispositivo_descripcion as dispositivoD', 'vr.celular as numero')
+            ->select('vr.id as idV', 'vr.modelo as modelo', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'td.dispositivo_descripcion as dispositivoD', 'vr.celular as numero', 'vr.actividad as actividad')
             ->where('vr.idEmpleado', '=', $idempleado)
             ->groupBy('vr.id')
             ->get();

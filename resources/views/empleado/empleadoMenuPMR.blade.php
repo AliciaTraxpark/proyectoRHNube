@@ -49,6 +49,10 @@ use App\proyecto_empleado;
     .form-control:disabled {
         background-color: #f1f0f0;
     }
+
+    .borderColor {
+        border: 5px solid red;
+    }
 </style>
 
 
@@ -4274,6 +4278,7 @@ use App\proyecto_empleado;
                                                                 <th>Nombre</th>
                                                                 <th>Número</th>
                                                                 <th>Codigo</th>
+                                                                <th>Actividad (%)</th>
                                                                 <th>Enviado</th>
                                                                 <th></th>
                                                             </tr>

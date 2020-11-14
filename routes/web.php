@@ -299,6 +299,7 @@ Route::get('vinculacionAndroid', 'vinculacionDispositivoController@vinculacionAn
 Route::get('vinculacionWindows', 'vinculacionDispositivoController@vinculacionWindows');
 Route::get('vinculacionControlRemoto', 'vinculacionDispositivoController@vinculacionWindowsTabla');
 Route::post('celularVinculacion', 'vinculacionDispositivoController@editarNumeroV');
+Route::post('actividadVinculacion', 'vinculacionDispositivoController@editarActividadV');
 Route::get('listaVW', 'vinculacionDispositivoController@listaVinculacionW');
 Route::get('listaVA', 'vinculacionDispositivoController@listaVinculacionA');
 //WINDOWS
