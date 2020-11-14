@@ -58,6 +58,7 @@ class apiSeguimientoRutaContoller extends Controller
                             return response()->json(array(
                                 "idEmpleado" => $empleado->emple_id,
                                 "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                "idVinculacion" => $vinculacion_ruta->id,
                                 "token" => $token->get()
                             ), 200);
                         } else {
@@ -72,6 +73,7 @@ class apiSeguimientoRutaContoller extends Controller
                                 return response()->json(array(
                                     "idEmpleado" => $empleado->emple_id,
                                     "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                    "idVinculacion" => $vinculacion_ruta->id,
                                     "token" => $token->get()
                                 ), 200);
                             } else {
@@ -94,6 +96,7 @@ class apiSeguimientoRutaContoller extends Controller
     public function registrarRuta(Request $request)
     {
         foreach ($request->all() as $key => $atributo) {
+            $errores = [];
             $validacion = Validator::make($atributo, [
                 'hora_ini' => 'required',
                 'hora_fin' => 'required',
@@ -102,39 +105,97 @@ class apiSeguimientoRutaContoller extends Controller
                 'latitud_ini' => 'required',
                 'longitud_ini' => 'required',
                 'latitud_fin' => 'required',
-                'longitud_fin' => 'required'
+                'longitud_fin' => 'required',
+                'idVinculacion' => 'required'
             ], [
                 'required' => ':attribute es obligatorio'
             ]);
+            // dd($validacion->errors());
             if ($validacion->fails()) {
-                return response()->json($validacion->errors(), 400);
+                //: ARRAY DE ERRORES
+                // dd($validacion->failed());
+                if (isset($validacion->failed()["hora_ini"])) {
+                    array_push($errores, array("campo" => "hora_ini", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["hora_fin"])) {
+                    array_push($errores, array("campo" => "hora_fin", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idActividad"])) {
+                    array_push($errores, array("campo" => "idActividad", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idEmpleado"])) {
+                    array_push($errores, array("campo" => "idEmpleado", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["latitud_ini"])) {
+                    array_push($errores, array("campo" => "latitud_ini", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["longitud_ini"])) {
+                    array_push($errores, array("campo" => "longitud_ini", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["latitud_fin"])) {
+                    array_push($errores, array("campo" => "latitud_fin", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["longitud_fin"])) {
+                    array_push($errores, array("campo" => "longitud_fin", "mensaje" => "Es obligatorio"));
+                }
+                if (isset($validacion->failed()["idVinculacion"])) {
+                    array_push($errores, array("campo" => "idVinculacion", "mensaje" => "Es obligatorio"));
+                }
+                return response()->json(array("errores" => $errores), 400);
             }
         }
+        //: ARRAY DE RESPUESTA
+        $respuesta = [];
         foreach ($request->all() as $ubicaciones) {
-            //? GUARDAR UBICACIONES
-            $ubicacion = new ubicacion();
-            $ubicacion->hora_ini = $ubicaciones['hora_ini'];
-            $ubicacion->hora_fin = $ubicaciones['hora_fin'];
-            if (isset($ubicaciones['idHorario_dias'])) {
-                $ubicacion->idHorario_dias = $ubicaciones['idHorario_dias'];
+            //: OBTENER ACTIVIDAD PARA LA UBICACION
+            $vinculacion_ruta = vinculacion_ruta::where('id', '=', $ubicaciones['idVinculacion'])->get()->first();
+            if ($vinculacion_ruta) { //: Ingersamos si encontramos la vinculación
+                //: Bsucar coincidencias de ubicaciones -> por motivos de bucles
+                $buscarUbicacion = ubicacion::where('hora_ini', '=', $ubicaciones['hora_ini'])->where('hora_fin', '=', $ubicaciones['hora_fin'])
+                    ->where('idEmpleado', '=', $ubicaciones['idEmpleado'])->get()->first();
+                if (!$buscarUbicacion) {
+                    //? GUARDAR UBICACIONES
+                    $ubicacion = new ubicacion();
+                    $ubicacion->hora_ini = $ubicaciones['hora_ini'];
+                    $ubicacion->hora_fin = $ubicaciones['hora_fin'];
+                    if (isset($ubicaciones['idHorario_dias'])) {
+                        $ubicacion->idHorario_dias = $ubicaciones['idHorario_dias'];
+                    }
+                    $ubicacion->idActividad = $ubicaciones['idActividad'];
+                    $ubicacion->idEmpleado = $ubicaciones['idEmpleado'];
+                    $ubicacion->actividad_ubicacion = $vinculacion_ruta->actividad;
+                    $ubicacion->save();
+
+                    $idUbicacion = $ubicacion->id;
+
+                    //? UBICACION RUTA
+                    $ubicacion_ruta = new ubicacion_ruta();
+                    $ubicacion_ruta->idUbicacion = $idUbicacion;
+                    $ubicacion_ruta->latitud_ini = $ubicaciones['latitud_ini'];
+                    $ubicacion_ruta->longitud_ini = $ubicaciones['longitud_ini'];
+                    $ubicacion_ruta->latitud_fin = $ubicaciones['latitud_fin'];
+                    $ubicacion_ruta->longitud_fin = $ubicaciones['longitud_fin'];
+                    $ubicacion_ruta->save();
+                } else {
+                    //? UBICACION RUTA
+                    $ubicacion_ruta = new ubicacion_ruta();
+                    $ubicacion_ruta->idUbicacion = $buscarUbicacion->id;
+                    $ubicacion_ruta->latitud_ini = $ubicaciones['latitud_ini'];
+                    $ubicacion_ruta->longitud_ini = $ubicaciones['longitud_ini'];
+                    $ubicacion_ruta->latitud_fin = $ubicaciones['latitud_fin'];
+                    $ubicacion_ruta->longitud_fin = $ubicaciones['longitud_fin'];
+                    $ubicacion_ruta->save();
+                }
+            } else {
+                array_push($respuesta, array("message" => "vinculacion_erroneo", "array" => $ubicaciones));
             }
-            $ubicacion->idActividad = $ubicaciones['idActividad'];
-            $ubicacion->idEmpleado = $ubicaciones['idEmpleado'];
-            $ubicacion->save();
-
-            $idUbicacion = $ubicacion->id;
-
-            //? UBICACION RUTA
-            $ubicacion_ruta = new ubicacion_ruta();
-            $ubicacion_ruta->idUbicacion = $idUbicacion;
-            $ubicacion_ruta->latitud_ini = $ubicaciones['latitud_ini'];
-            $ubicacion_ruta->longitud_ini = $ubicaciones['longitud_ini'];
-            $ubicacion_ruta->latitud_fin = $ubicaciones['latitud_fin'];
-            $ubicacion_ruta->longitud_fin = $ubicaciones['longitud_fin'];
-            $ubicacion_ruta->save();
         }
 
-        return response()->json($ubicacion, 200);
+        if (sizeof($respuesta) == 0) {
+            return response()->json($request->all(), 200);
+        } else {
+            return response()->json(array("errores" => $respuesta), 400);
+        }
     }
 
     // ? LISTA DE ACTIVIDADES PARA CONTROL RUTA

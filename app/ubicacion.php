@@ -15,7 +15,8 @@ class ubicacion extends Model
         'hora_fin',
         'idHorario_dias',
         'idActividad',
-        'idEmpleado'
+        'idEmpleado',
+        'actividad_ubicacion'
     ];
     public $timestamps = false;
 }
