@@ -13,6 +13,7 @@
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/easy-button.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
@@ -74,6 +75,32 @@
         z-index: 0;
     }
 </style>
+{{-- MODAL DE PRUEBA --}}
+<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
+                    de Imagenes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="esperaImg" class="text-center" style="display: none">
+                    <img src="{{asset('landing/images/punt.gif')}}" height="80">
+                </div>
+                <div class="row">
+                    <div id="zoom" class="col-xl-12 text-center album">
+                        <hr class="my-5" />
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION --}}
 {{-- CONTENIDO DE VISTA --}}
 <div class="row">
     <div class="col-md-12">
@@ -170,7 +197,7 @@
 <script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-image.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/easy-button.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>

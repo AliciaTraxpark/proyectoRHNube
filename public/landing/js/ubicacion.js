@@ -562,6 +562,9 @@ function ubicacionesMapa(horayJ) {
     }).addTo(map).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
     });
+    L.easyButton('fa-external-link', function (btn, map) {
+        $('#modalZoom').modal();
+    }).addTo(map);
 }
 
 // ? MOSTRAR IMAGENES GRANDES
