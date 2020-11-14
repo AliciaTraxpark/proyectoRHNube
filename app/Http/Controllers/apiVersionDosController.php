@@ -197,8 +197,6 @@ class apiVersionDosController extends Controller
             $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
             $captura_imagen = new captura_imagen();
             $captura_imagen->idCaptura = $capturaBuscar->idCaptura;
-            // $captura_imagen->miniatura = $request->get('miniatura');
-            // $captura_imagen->imagen = $request->get('imagen');
             $captura_imagen->miniatura = $nombreM;
             $captura_imagen->imagen = $nombreI;
             $captura_imagen->save();
@@ -222,8 +220,6 @@ class apiVersionDosController extends Controller
 
             $captura_imagen = new captura_imagen();
             $captura_imagen->idCaptura = $idCaptura;
-            // $captura_imagen->miniatura = $request->get('miniatura');
-            // $captura_imagen->imagen = $request->get('imagen');
             $captura_imagen->miniatura = $nombreM;
             $captura_imagen->imagen = $nombreI;
             $captura_imagen->save();
@@ -234,26 +230,20 @@ class apiVersionDosController extends Controller
             $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
             $idHorario_dias = $idHorario;
             //RESTA POR FECHA HORA DE   CAPTURAS
-            // $fecha = Carbon::create($capturaRegistrada->hora_ini)->format('H:i:s');
-            // $explo = explode(":", $fecha);
-            // $calSegund = $explo[0] * 3600 + $explo[1] * 60 + $explo[2];
-            // $fecha1 = Carbon::create($capturaRegistrada->hora_fin)->format('H:i:s');
-            // $explo1 = explode(":", $fecha1);
-            // $calSegund1 = $explo1[0] * 3600 + $explo1[1] * 60 + $explo1[2];
-            // $totalP = $calSegund1 - $calSegund;
             $fecha = Carbon::parse($capturaRegistrada->hora_ini);
             $fecha1 = Carbon::parse($capturaRegistrada->hora_fin);
-            $totalP = $fecha1->diffInSeconds($fecha);
             // ACTIVIDAD DE CAPTURA
             $activ = $capturaRegistrada->actividad;
             //VALIDACION DE CERO
-            if ($totalP == 0) {
-                $round = 0;
-            } else {
+            if ($fecha1->gt($fecha)) {
                 //PROMEDIO
+                $totalP = $fecha1->diffInSeconds($fecha);
                 $promedio = floatval($activ / $totalP);
                 $promedioFinal = $promedio * 100;
                 $round = round($promedioFinal, 2);
+            } else {
+                $totalP = 0;
+                $round = 0;
             }
             $promedio_captura = new promedio_captura();
             $promedio_captura->idCaptura = $idCaptura;
@@ -472,7 +462,7 @@ class apiVersionDosController extends Controller
                     ->where('h.horario_id', '=', $resp->horario_horario_id)
                     ->get()->first();
                 $pausas = DB::table('pausas_horario as ph')
-                    ->select('ph.pausH_descripcion as decripcion','ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
+                    ->select('ph.pausH_descripcion as decripcion', 'ph.pausH_Inicio as pausaI', 'ph.pausH_Fin as pausaF')
                     ->where('ph.horario_id', '=', $horario->horario_id)
                     ->get();
                 $horario->idHorario_dias = $horario_dias->id;
