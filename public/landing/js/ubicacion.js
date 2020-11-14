@@ -115,6 +115,7 @@ function onMostrarPantallas() {
                 $("#espera").show();
             }
         }).then(function (data) {
+            console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
             class="mr-2 imgR" height="220" /> <br> <label for=""
             style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
