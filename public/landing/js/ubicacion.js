@@ -493,25 +493,10 @@ function ubicacionesMapa(horayJ) {
     var map = L.map('mapid' + horayJ).fitWorld();
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         tileSize: 512,
-        zoom: 12,
         minZoom: 10,
         zoomOffset: -1
     }).addTo(map);
     // ? RECORRED DATOS PARA POPUP
-    // for (let index = 0; index < dato.length; index++) {
-    //     for (var j = 0; j < 6; j++) {
-    //         if (dato[index].minutos[j] != undefined) {
-    //             const ub = dato[index].minutos[j];
-    //             for (var i = 0; i < ub.length; i++) {
-    //                 const valor = ub[i].ubicaciones;
-    //                 valor.forEach(element => {
-    //                     // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
-    //                     arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ub[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ub[i].hora_fin);
-    //                 });
-    //             }
-    //         }
-    //     }
-    // }
     arrayDatos = [];
     respuesta = [];
     for (let index = 0; index < dato.length; index++) {
