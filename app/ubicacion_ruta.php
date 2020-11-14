@@ -15,7 +15,8 @@ class ubicacion_ruta extends Model
         'longitud_ini',
         'latitud_fin',
         'longitud_fin',
-        'idUbicacion'
+        'idUbicacion',
+        'rango'
     ];
     public $timestamps = false;
 }

@@ -163,7 +163,17 @@ class apiSeguimientoRutaContoller extends Controller
                     }
                     $ubicacion->idActividad = $ubicaciones['idActividad'];
                     $ubicacion->idEmpleado = $ubicaciones['idEmpleado'];
-                    $ubicacion->actividad_ubicacion = $vinculacion_ruta->actividad;
+                    //: validacion de hora final sea mayor  a hora inicial
+                    $fecha = Carbon::parse($ubicaciones['hora_ini']);
+                    $fecha1 = Carbon::parse($ubicaciones['hora_fin']);
+                    //: ***************************************************
+                    if ($fecha1->gt($fecha)) {
+                        $ubicacion->actividad_ubicacion = $vinculacion_ruta->actividad;
+                        $ubicacion->rango = $fecha1->diffInSeconds($fecha);
+                    } else {
+                        $ubicacion->actividad_ubicacion = 0;
+                        $ubicacion->rango = 0;
+                    }
                     $ubicacion->save();
 
                     $idUbicacion = $ubicacion->id;
