@@ -215,6 +215,8 @@ function onMostrarPantallas() {
                                     sumaActividad = 0;
                                 } else {
                                     promedio = data[index].minuto[j]["ubicacion"][0].actividad;
+                                    var totalR = enteroTime(data[index].minuto[j]["ubicacion"][0].rango);
+                                    totalCM = totalR;
                                 }
                             }
                             //! Colores de las actividades
