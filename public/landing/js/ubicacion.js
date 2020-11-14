@@ -213,6 +213,8 @@ function onMostrarPantallas() {
                                     promedios = 0;
                                     sumaRangos = 0;
                                     sumaActividad = 0;
+                                } else {
+                                    promedio = data[index].minuto[j]["ubicacion"][0].actividad;
                                 }
                             }
                             //! Colores de las actividades
@@ -329,6 +331,12 @@ function onMostrarPantallas() {
                                                         </div>
                                                         &nbsp;
                                                         <label style="font-size: 12px" for="">${data[index].minuto[j]["ubicacion"][0].hora_ini} - ${data[index].minuto[j]["ubicacion"][0].hora_fin}</label>
+                                                        <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo" data-original-title="">
+                                                            <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio} aria-valuemin="0" aria-valuemax="100">
+                                                                ${promedio + "%"}
+                                                            </div>
+                                                        </div>
+                                                        <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
                                                     </div>
                                                 </div>
                                             </div>`;
