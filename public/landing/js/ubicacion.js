@@ -84,7 +84,6 @@ function enteroTime(tiempo) {
     return hour + ':' + minute + ':' + second;
 }
 var dato = {};
-var datos;
 var promedioHoras = 0;
 // ? FUNCION DE BUSQUEDA CAPTURAS
 function onMostrarPantallas() {
@@ -115,12 +114,11 @@ function onMostrarPantallas() {
                 $("#espera").show();
             }
         }).then(function (data) {
-            console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
             class="mr-2 imgR" height="220" /> <br> <label for=""
             style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
             $("#espera").hide();
-            datos = data;
+            dato = data;
             if (data.length != 0) {
                 var container = $("#card");
                 var $i = 0;
@@ -157,7 +155,6 @@ function onMostrarPantallas() {
                         // TODO: Obtener datos del array minutos de dicha hora
                         if (data[index].minuto[j] != undefined) {
                             var capturas = "";
-                            console.log(data[index].minuto[j]["captura"].length);
                             // ? RECORREMOS EL ARRAY DE CAPTURAS
                             for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
                                 if (data[index].minuto[j]["captura"].length > 1) {
@@ -491,12 +488,8 @@ function changeMapeo() {
 
 function ubicacionesMapa(horayJ) {
 
-    // var map = L.map('mapid' + horayJ, {
-    //     center: new L.LatLng(-12.0431800, -77.0282400),
-    //     zoom: 15,
-    //     minZoom: 10,
-    //     zoomOffset: -1
-    // });
+    var onlyHora = horayJ.split(",")[0];
+    var min = horayJ.split(",")[1];
     var map = L.map('mapid' + horayJ).fitWorld();
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         tileSize: 512,
@@ -504,8 +497,6 @@ function ubicacionesMapa(horayJ) {
         minZoom: 10,
         zoomOffset: -1
     }).addTo(map);
-    var respuesta = [];
-    var arrayDatos = [];
     // ? RECORRED DATOS PARA POPUP
     // for (let index = 0; index < dato.length; index++) {
     //     for (var j = 0; j < 6; j++) {
@@ -521,31 +512,47 @@ function ubicacionesMapa(horayJ) {
     //         }
     //     }
     // }
-    // respuesta.push(arrayDatos);
+    arrayDatos = [];
+    respuesta = [];
+    for (let index = 0; index < dato.length; index++) {
+        if (dato[index].hora == onlyHora) {
+            for (var j = 0; j < 6; j++) {
+                // console.log(dato[index].minuto[j], min);
+                if (j == min) {
+                    const ubicacion = dato[index].minuto[j].ubicacion;
+                    for (var i = 0; i < ubicacion.length; i++) {
+                        const valor = ubicacion[i].ubicaciones;
+                        valor.forEach(element => {
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ubicacion[i].hora_fin);
+                        });
+                    }
+                }
+            }
+        }
+    }
+    respuesta.push(arrayDatos);
     // console.log(respuesta);
-    // var latlngArray = [];
-    // var popupArray = [];
-    // // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
-    // for (let index = 0; index < respuesta[0].length; index++) {
-    //     var element = respuesta[0][index];
-    //     var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
-    //     latlngArray.push(ltln);
-    // }
+    var latlngArray = [];
+    var popupArray = [];
+    // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
+    for (let index = 0; index < respuesta[0].length; index++) {
+        var element = respuesta[0][index];
+        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
+        latlngArray.push(ltln);
+    }
+    // console.log(latlngArray);
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
             var popup = L.marker(wp.latLng)
-                .bindPopup('Hora: ' + i);
+                .bindPopup('Hora: ' + respuesta[0][i].split(",")[2]);
+            popupArray.push(respuesta[0][i].split(",")[2]);
             return popup;
         },
         router: L.Routing.osrmv1({
             serviceUrl: `https://router.project-osrm.org/route/v1/`
         }),
-        waypoints:
-            [
-                L.latLng(-6.91209, -79.8643),
-                L.latLng(-6.90704, -79.8624)
-            ],
+        waypoints: latlngArray,
         lineOptions: {
             styles: [
                 { color: '#f56a79', opacity: 0.8, weight: 4 }
