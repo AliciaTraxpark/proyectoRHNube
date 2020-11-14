@@ -6,6 +6,7 @@ use App\actividad_empleado;
 use App\empleado;
 use App\Mail\SoporteApi;
 use App\Mail\SugerenciaApi;
+use App\organizacion;
 use App\persona;
 use App\ubicacion;
 use App\ubicacion_ruta;
@@ -54,8 +55,9 @@ class apiSeguimientoRutaContoller extends Controller
                             ]);
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
-
+                            $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                             return response()->json(array(
+                                "corte" => $organizacion->corteCaptura,
                                 "idEmpleado" => $empleado->emple_id,
                                 "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                 "idVinculacion" => $vinculacion_ruta->id,
@@ -69,8 +71,9 @@ class apiSeguimientoRutaContoller extends Controller
                                 ]);
                                 $payload = $factory->make();
                                 $token = JWTAuth::encode($payload);
-
+                                $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
                                 return response()->json(array(
+                                    "corte" => $organizacion->corteCaptura,
                                     "idEmpleado" => $empleado->emple_id,
                                     "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                     "idVinculacion" => $vinculacion_ruta->id,
