@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\controladores;
 use App\dispo_nombres;
 use Illuminate\Http\Request;
 use App\dispositivos;
@@ -10,6 +11,9 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SoporteApiMovil;
+use App\Mail\SugerenciaApiMovil;
 class apimovilController extends Controller
 {
     //ACTIVACION DISPOSITIVO
@@ -278,5 +282,33 @@ class apimovilController extends Controller
             'detail' => 'No se encontro empleados relacionados con este dispositivo'),400);
         }
 
+    }
+
+    public function ticketSoporte(Request $request)
+    {
+        $idControlador = $request->get('idControlador');
+        $tipo = $request->get('tipo');
+        $contenido = $request->get('contenido');
+        $asunto = $request->get('asunto');
+        $celular = $request->get('celular');
+
+
+        $controlador = controladores::findOrFail($idControlador);
+        if ($controlador) {
+            $controlador = controladores::findOrFail($idControlador);
+            $email = "info@rhnube.com.pe";
+
+            if ($tipo == "soporte") {
+
+                Mail::to($email)->queue(new SoporteApiMovil($contenido, $controlador, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+            if ($tipo == "sugerencia") {
+                Mail::to($email)->queue(new SugerenciaApiMovil($contenido, $controlador, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+        }
+
+        return response()->json("Controlador no se encuentra registrado.", 400);
     }
 }
