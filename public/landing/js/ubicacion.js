@@ -539,7 +539,7 @@ function ubicacionesMapa(horayJ) {
             return popup;
         },
         router: L.Routing.osrmv1({
-            serviceUrl: `http://router.project-osrm.org/route/v1/`
+            serviceUrl: `https://router.project-osrm.org/route/v1/`
         }),
         waypoints:
             [
