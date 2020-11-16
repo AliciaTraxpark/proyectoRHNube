@@ -496,6 +496,7 @@ function changeMapeo() {
     $('.mapid').trigger("change");
 }
 var arrayRecorrido = [];
+var mapGlogal = {};
 function ubicacionesMapa(horayJ) {
 
     var onlyHora = horayJ.split(",")[0];
@@ -551,7 +552,6 @@ function ubicacionesMapa(horayJ) {
         var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
         latlngArray.push(ltln);
     }
-    console.log(latlngArray);
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -590,6 +590,7 @@ function ubicacionesMapa(horayJ) {
 
     }).addTo(map);
 }
+
 //: FUNCION MOSTRAR RECORRIDO
 function recorrido(hora) {
     $('#modalRuta').modal();
@@ -606,33 +607,44 @@ function recorrido(hora) {
         }
     });
     var map = L.map('mapRecorrido', {
-        center: [51.505, -0.09],
-        zoom: 13
+        minZoom: 12,
+        zoomOffset: -1,
+        center: [51.505, -0.09]
     });
+    mapGlogal = map;
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
             var popup = L.marker(wp.latLng)
-                .bindPopup('Hora: ' + popupArray);
+                .bindPopup('Hora: ' + popupArray[i]);
             return popup;
         },
+        router: L.Routing.osrmv1({
+            serviceUrl: `https://router.project-osrm.org/route/v1/`
+        }),
         waypoints: latlngArrayRecorrido,
         lineOptions: {
             styles: [
-                { color: '#f56a79', opacity: 0.8, weight: 4 }
+                { color: '#f56a79', opacity: 0.8, weight: 8 }
             ],
         },
-        routeWhileDragging: true,
         show: false,
         draggableWaypoints: false,//to set draggable option to false
         addWaypoints: false, //disable adding new waypoints to the existing path
         fitSelectedRoutes: true,
-        useZoomParameter: true
+        useZoomParameter: true,
+        routeWhileDragging: true
     }).addTo(map).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
+    }).on('routeselected', function (e) {
+        var route = e.route;
+        console.log(JSON.stringify(route.inputWaypoints, null, 2));
     });
 }
 //: ***************************
+$('#mapRecorrido').on('shown.bs.modal', function (e) {
+    mapGlogal.invalidateSize(true);
+});
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
