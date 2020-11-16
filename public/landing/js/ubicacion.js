@@ -495,7 +495,7 @@ function onMostrarUbicaciones() {
 function changeMapeo() {
     $('.mapid').trigger("change");
 }
-
+var arrayRecorrido = [];
 function ubicacionesMapa(horayJ) {
 
     var onlyHora = horayJ.split(",")[0];
@@ -526,7 +526,23 @@ function ubicacionesMapa(horayJ) {
         }
     }
     respuesta.push(arrayDatos);
-    // console.log(respuesta);
+    //: Guardar datos para recorrido por hora
+    if (arrayRecorrido.length == 0) { //* agregar normal si el array esta vacio
+        let recorrido = { "hora": onlyHora, "recorrido": arrayDatos };
+        arrayRecorrido.push(recorrido);
+    } else {
+        arrayRecorrido.forEach(element => {
+            if (!element.hora.includes(onlyHora)) {
+                let recorrido = { "hora": onlyHora, "recorrido": arrayDatos };
+                arrayRecorrido.push(recorrido);
+            } else {
+                arrayDatos.forEach(ubicacion => {
+                    element.recorrido.push(ubicacion);
+                });
+            }
+        });
+    }
+    //: **************************************************************
     var latlngArray = [];
     var popupArray = [];
     // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
@@ -535,7 +551,6 @@ function ubicacionesMapa(horayJ) {
         var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
         latlngArray.push(ltln);
     }
-    // console.log(latlngArray);
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -562,11 +577,19 @@ function ubicacionesMapa(horayJ) {
     }).addTo(map).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
     });
-    L.easyButton('fa-external-link', function (btn, map) {
-        $('#modalZoom').modal();
-    }).addTo(map);
-}
+    L.easyButton({
+        states: [{
+            stateName: 'zoom-to-modal',
+            icon: 'fa-external-link',
+            title: 'ver recorrido',
+            onClick: function (btn, map) {
+                $('#modalZoom').modal();
+            }
+        }]
 
+    }).addTo(map);
+    console.log(arrayRecorrido);
+}
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
