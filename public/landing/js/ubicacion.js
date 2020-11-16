@@ -551,6 +551,7 @@ function ubicacionesMapa(horayJ) {
         var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
         latlngArray.push(ltln);
     }
+    console.log(latlngArray);
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -583,13 +584,55 @@ function ubicacionesMapa(horayJ) {
             icon: 'fa-external-link',
             title: 'ver recorrido',
             onClick: function (btn, map) {
-                $('#modalZoom').modal();
+                recorrido(onlyHora);
             }
         }]
 
     }).addTo(map);
-    console.log(arrayRecorrido);
 }
+//: FUNCION MOSTRAR RECORRIDO
+function recorrido(hora) {
+    $('#modalRuta').modal();
+    //* buscar hora en el array
+    var popupArray = [];
+    var latlngArrayRecorrido = [];
+    arrayRecorrido.forEach(element => {
+        if (element.hora == hora) {
+            element.recorrido.forEach(index => {
+                var ltln = L.latLng(index.split(",")[0], index.split(",")[1]);
+                latlngArrayRecorrido.push(ltln);
+                popupArray.push(index.split(",")[2]);
+            });
+        }
+    });
+    var map = L.map('mapRecorrido', {
+        center: [51.505, -0.09],
+        zoom: 13
+    });
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+    var control = L.Routing.control({
+        createMarker: function (i, wp, nWps) {
+            var popup = L.marker(wp.latLng)
+                .bindPopup('Hora: ' + popupArray);
+            return popup;
+        },
+        waypoints: latlngArrayRecorrido,
+        lineOptions: {
+            styles: [
+                { color: '#f56a79', opacity: 0.8, weight: 4 }
+            ],
+        },
+        routeWhileDragging: true,
+        show: false,
+        draggableWaypoints: false,//to set draggable option to false
+        addWaypoints: false, //disable adding new waypoints to the existing path
+        fitSelectedRoutes: true,
+        useZoomParameter: true
+    }).addTo(map).on('routesfound', function (e) {
+        console.log(e.routes); // e.routes have length 2
+    });
+}
+//: ***************************
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
