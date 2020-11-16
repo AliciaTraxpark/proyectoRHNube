@@ -595,13 +595,13 @@ class EmpleadoController extends Controller
                     ->get()->first();
                 $invitado_empleadoIn=DB::table('invitado_empleado as invem')
                 ->where('invem.idinvitado', '=',  $invitado->idinvitado)
-                ->get()->first();}
+                ->get()->first();
                 if($invitado_empleadoIn!=null){
                     $invitado_empleado = new invitado_empleado();
                     $invitado_empleado->idinvitado = $invitado->idinvitado;
                     $invitado_empleado->emple_id = $empleado->emple_id;
                     $invitado_empleado->save();
-                }
+                }}
                 ///////////////////////////////////
         // BUSCAR ACTIVIDAD DE CONTROL REMOTO EN ORGANIZACION
         $actividad = actividad::where('organi_id', '=', session('sesionidorg'))->where('controlRemoto', '=', 1)->get()->first();
