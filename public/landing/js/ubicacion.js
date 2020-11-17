@@ -666,9 +666,11 @@ function recorrido(hora) {
     });
     mapGlobal.invalidateSize();
 }
-// $('#modalRuta').on('shown.bs.modal', function () {
-//     L.Util.requestAnimFrame(map.invalidateSize, map, !1, map._container);
-// });
+$('#modalRuta').on('shown.bs.modal', function () {
+    window.setTimeout(function () {
+        mapGlobal.invalidateSize();
+    }, 1000);
+});
 //: ***************************
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
