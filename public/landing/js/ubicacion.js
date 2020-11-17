@@ -579,26 +579,26 @@ function ubicacionesMapa(horayJ) {
     }).addTo(map).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
     });
-    // L.easyButton({
-    //     states: [{
-    //         stateName: 'zoom-to-modal',
-    //         icon: 'fa-external-link',
-    //         title: 'ver recorrido',
-    //         onClick: function (btn, map) {
-    //             recorrido(onlyHora);
-    //         }
-    //     }]
+    L.easyButton({
+        states: [{
+            stateName: 'zoom-to-modal',
+            icon: 'fa-external-link',
+            title: 'ver recorrido',
+            onClick: function (btn, map) {
+                recorrido(onlyHora);
+            }
+        }]
 
-    // }).addTo(map);
-    L.control.fullscreen({
-        position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
-        title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
-        titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
-        content: null, // change the content of the button, can be HTML, default null
-        forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
-        forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
-        fullscreenElement: false // Dom element to render in full screen, false by default, fallback to map._container
     }).addTo(map);
+    // L.control.fullscreen({
+    //     position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
+    //     title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
+    //     titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
+    //     content: null, // change the content of the button, can be HTML, default null
+    //     forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
+    //     forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
+    //     fullscreenElement: false // Dom element to render in full screen, false by default, fallback to map._container
+    // }).addTo(map);
 }
 function initializingMap() // call this method before you initialize your map.
 {
@@ -609,6 +609,10 @@ function initializingMap() // call this method before you initialize your map.
 }
 //: FUNCION MOSTRAR RECORRIDO
 function recorrido(hora) {
+    $('#bodyMap').empty();
+    var container = $('#bodyMap');
+    var divMap = `<div id="mapRecorrido" class="mapRecorrido"></div>`;
+    container.append(divMap);
     $('#modalRuta').modal();
     //* buscar hora en el array
     var popupArray = [];
@@ -623,14 +627,12 @@ function recorrido(hora) {
         }
     });
     initializingMap();
-    if (controlGlobal.options != undefined) {
-        mapGlobal.invalidateSize();
-    }
     mapGlobal = L.map('mapRecorrido', {
         minZoom: 12,
         zoomOffset: -1,
-        center: [51.505, -0.09]
+        center: [51.505, -0.09],
     });
+    mapGlobal.invalidateSize();
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapGlobal);
     controlGlobal = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -659,7 +661,11 @@ function recorrido(hora) {
         var route = e.route;
         console.log(JSON.stringify(route.inputWaypoints, null, 2));
     });
+    mapGlobal.invalidateSize();
 }
+// $('#modalRuta').on('shown.bs.modal', function () {
+//     L.Util.requestAnimFrame(map.invalidateSize, map, !1, map._container);
+// });
 //: ***************************
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {

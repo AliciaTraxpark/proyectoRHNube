@@ -77,14 +77,15 @@
     }
 
     #mapRecorrido {
-        width: 100%;
-        height: 180px;
+        padding: 0;
+        width: auto;
+        height: 360px;
     }
 </style>
 {{-- MODAL DE PRUEBA --}}
 <div id="modalRuta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalRuta" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">
@@ -95,8 +96,8 @@
                 </button>
             </div>
             <div class="modal-body p-0">
-                <div class="col-md-12 col-sm-12 p-0">
-                    <div id="mapRecorrido" class="mapRecorrido"></div>
+                <div class="col-md-12 col-sm-12 p-0" id="bodyMap">
+                    {{-- <div id="mapRecorrido" class="mapRecorrido"></div> --}}
                 </div>
             </div>
         </div><!-- /.modal-content -->
