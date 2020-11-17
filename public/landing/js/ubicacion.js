@@ -614,6 +614,9 @@ function recorrido(hora) {
     var divMap = `<div id="mapRecorrido" class="mapRecorrido"></div>`;
     container.append(divMap);
     $('#modalRuta').modal();
+    //: Horas en modal
+    $('#horaIRecorrido').text(parseInt(hora) + ":00:00");
+    $('#horaFRecorrido').text((parseInt(hora) + 1) + ":00:00");
     //* buscar hora en el array
     var popupArray = [];
     var latlngArrayRecorrido = [];

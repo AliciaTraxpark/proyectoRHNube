@@ -89,7 +89,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">
-                    Recorrido de las <input type="text" id="horaIRecorrido"> - <input type="text" id="horaFRecorrido">
+                    Recorrido de las <label id="horaIRecorrido"></label> - <label id="horaFRecorrido"></label>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
