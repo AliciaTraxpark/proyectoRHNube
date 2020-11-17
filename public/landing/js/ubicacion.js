@@ -579,16 +579,25 @@ function ubicacionesMapa(horayJ) {
     }).addTo(map).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
     });
-    L.easyButton({
-        states: [{
-            stateName: 'zoom-to-modal',
-            icon: 'fa-external-link',
-            title: 'ver recorrido',
-            onClick: function (btn, map) {
-                recorrido(onlyHora);
-            }
-        }]
+    // L.easyButton({
+    //     states: [{
+    //         stateName: 'zoom-to-modal',
+    //         icon: 'fa-external-link',
+    //         title: 'ver recorrido',
+    //         onClick: function (btn, map) {
+    //             recorrido(onlyHora);
+    //         }
+    //     }]
 
+    // }).addTo(map);
+    L.control.fullscreen({
+        position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
+        title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
+        titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
+        content: null, // change the content of the button, can be HTML, default null
+        forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
+        forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
+        fullscreenElement: false // Dom element to render in full screen, false by default, fallback to map._container
     }).addTo(map);
 }
 function initializingMap() // call this method before you initialize your map.
@@ -613,13 +622,10 @@ function recorrido(hora) {
             });
         }
     });
-    // console.log(popupArray);
     initializingMap();
-    // if (controlGlobal.options != undefined) {
-    //     // mapGlobal.remove();
-    //     $('#mapRecorrido').empty();
-    //     mapGlobal = {};
-    // }
+    if (controlGlobal.options != undefined) {
+        mapGlobal.invalidateSize();
+    }
     mapGlobal = L.map('mapRecorrido', {
         minZoom: 12,
         zoomOffset: -1,

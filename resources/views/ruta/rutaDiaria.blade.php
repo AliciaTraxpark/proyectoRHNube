@@ -14,6 +14,7 @@
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/leaflet/easy-button.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
@@ -199,6 +200,7 @@
 <script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/easy-button.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
