@@ -553,6 +553,7 @@ function ubicacionesMapa(horayJ) {
         var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
         latlngArray.push(ltln);
     }
+
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -567,7 +568,7 @@ function ubicacionesMapa(horayJ) {
         waypoints: latlngArray,
         lineOptions: {
             styles: [
-                { color: '#f56a79', opacity: 0.8, weight: 4 }
+                { color: '#ffe05d', opacity: 1, weight: 4 }
             ],
         },
         routeWhileDragging: true,
@@ -640,7 +641,7 @@ function recorrido(hora) {
         waypoints: latlngArrayRecorrido,
         lineOptions: {
             styles: [
-                { color: '#f56a79', opacity: 0.8, weight: 8 }
+                { color: '#ffe05d', opacity: 1, weight: 8 }
             ],
         },
         show: false,

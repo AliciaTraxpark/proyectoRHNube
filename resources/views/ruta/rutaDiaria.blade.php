@@ -79,7 +79,7 @@
     #mapRecorrido {
         padding: 0;
         width: auto;
-        height: 360px;
+        height: 480px;
     }
 </style>
 {{-- MODAL DE PRUEBA --}}
