@@ -496,7 +496,8 @@ function changeMapeo() {
     $('.mapid').trigger("change");
 }
 var arrayRecorrido = [];
-var mapGlogal = {};
+var mapGlobal = {};
+var controlGlobal = {};
 function ubicacionesMapa(horayJ) {
 
     var onlyHora = horayJ.split(",")[0];
@@ -590,7 +591,13 @@ function ubicacionesMapa(horayJ) {
 
     }).addTo(map);
 }
-
+function initializingMap() // call this method before you initialize your map.
+{
+    var container = L.DomUtil.get('mapRecorrido');
+    if (container != null) {
+        container._leaflet_id = null;
+    }
+}
 //: FUNCION MOSTRAR RECORRIDO
 function recorrido(hora) {
     $('#modalRuta').modal();
@@ -606,14 +613,20 @@ function recorrido(hora) {
             });
         }
     });
-    var map = L.map('mapRecorrido', {
+    // console.log(popupArray);
+    initializingMap();
+    // if (controlGlobal.options != undefined) {
+    //     // mapGlobal.remove();
+    //     $('#mapRecorrido').empty();
+    //     mapGlobal = {};
+    // }
+    mapGlobal = L.map('mapRecorrido', {
         minZoom: 12,
         zoomOffset: -1,
         center: [51.505, -0.09]
     });
-    mapGlogal = map;
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-    var control = L.Routing.control({
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapGlobal);
+    controlGlobal = L.Routing.control({
         createMarker: function (i, wp, nWps) {
             var popup = L.marker(wp.latLng)
                 .bindPopup('Hora: ' + popupArray[i]);
@@ -634,7 +647,7 @@ function recorrido(hora) {
         fitSelectedRoutes: true,
         useZoomParameter: true,
         routeWhileDragging: true
-    }).addTo(map).on('routesfound', function (e) {
+    }).addTo(mapGlobal).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
     }).on('routeselected', function (e) {
         var route = e.route;
@@ -642,9 +655,6 @@ function recorrido(hora) {
     });
 }
 //: ***************************
-$('#mapRecorrido').on('shown.bs.modal', function (e) {
-    mapGlogal.invalidateSize(true);
-});
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
