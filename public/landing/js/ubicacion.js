@@ -186,7 +186,7 @@ function onMostrarPantallas() {
                             }
                             //: Colocar ubicaiones en carrusel
                             if (data[index].minuto[j]["captura"].length != 0) {
-                                for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
+                                if (data[index].minuto[j]["ubicacion"].length != 0) {
                                     capturas += `<div class = "carousel-item">
                                                     <img src="landing/images/map.svg" height="120" width="160" class="img-responsive">
                                                         <div class="overlay">
@@ -194,6 +194,11 @@ function onMostrarPantallas() {
                                                             <i class="fa fa-map-marker"></i> Recorrido</a>
                                                         </div>
                                                 </div>`;
+                                }
+                                for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
+                                    promedios += data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
+                                    sumaRangos += sumaRangos + data[index].minuto[j]["ubicacion"][indexMinutos].rango;
+                                    sumaActividad += data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                 }
                             }
                             //: ******************************************************
@@ -205,6 +210,15 @@ function onMostrarPantallas() {
                                 totalCM = totalR;
                                 promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
                                 sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
+                                if (data[index].minuto[j]["ubicacion"].length == 1) {
+                                    sumaRang = data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango;
+                                    sumaActiv = data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad;
+                                    promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
+                                    sumaRangosTotal += data[index].minuto[j]["ubicacion"][0].rango;
+                                    sumaActividadTotal += data[index].minuto[j]["ubicacion"][0].actividad;
+                                    var totalR = enteroTime(sumaRang);
+                                    totalCM = totalR;
+                                }
                             } else {
                                 if (data[index].minuto[j]["captura"].length != 0) { //: Validar solor tiene mas de unacaptura en el grupo de minutos
                                     sumaRangosTotal += sumaRangos;
@@ -370,6 +384,7 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div></div><br>`;
                     container.append(grupo);
+                    console.log(sumaActividadTotal, sumaRangosTotal);
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(
                         2
                     );
