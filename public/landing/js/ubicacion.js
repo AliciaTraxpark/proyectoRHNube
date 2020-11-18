@@ -643,7 +643,7 @@ function recorrido(hora) {
         waypoints: latlngArrayRecorrido,
         lineOptions: {
             styles: [
-                { color: '#ffe05d', opacity: 1, weight: 8 }
+                { color: '#ffe05d', opacity: 0.6, weight: 8 }
             ],
         },
         show: false,

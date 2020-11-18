@@ -86,7 +86,7 @@
 <div id="modalRuta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalRuta" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 900px">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">
                     Recorrido de las <label id="horaIRecorrido"></label> - <label id="horaFRecorrido"></label>
