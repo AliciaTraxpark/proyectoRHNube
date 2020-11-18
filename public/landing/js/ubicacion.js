@@ -114,6 +114,7 @@ function onMostrarPantallas() {
                 $("#espera").show();
             }
         }).then(function (data) {
+            console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
             class="mr-2 imgR" height="220" /> <br> <label for=""
             style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
@@ -162,7 +163,7 @@ function onMostrarPantallas() {
                                     sumaRangos = sumaRangos + data[index].minuto[j]["captura"][indexMinutos].rango; //* suma de rangos de grupos de imagenes
                                     sumaActividad = sumaActividad + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de actividad de grupos de imagenes
                                     hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la primera imagen del grupo de imagenes
-                                    hora_final = data[index].minuto[j]["captura"][data[index].minuto[j].length - 1].hora_fin; //* hora final de la ultima imagen del grupo de imagenes
+                                    hora_final = data[index].minuto[j]["captura"][data[index].minuto[j]["captura"].length - 1].hora_fin; //* hora final de la ultima imagen del grupo de imagenes
                                     for (let indexC = 0; indexC < data[index].minuto[j]["captura"][indexMinutos].imagen.length; indexC++) { //* recorrer imagenes para insertar en el carrusel
                                         if (data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen != null) { //* solo grupos que tienen imagenes
                                             var imgR = data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen; //* obtener ruta de la imagen
