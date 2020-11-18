@@ -495,7 +495,6 @@ function onMostrarUbicaciones() {
 function changeMapeo() {
     $('.mapid').trigger("change");
 }
-var arrayRecorrido = [];
 var mapGlobal = {};
 var controlGlobal = {};
 function ubicacionesMapa(horayJ) {
@@ -514,7 +513,6 @@ function ubicacionesMapa(horayJ) {
     for (let index = 0; index < dato.length; index++) {
         if (dato[index].hora == onlyHora) {
             for (var j = 0; j < 6; j++) {
-                // console.log(dato[index].minuto[j], min);
                 if (j == min) {
                     const ubicacion = dato[index].minuto[j].ubicacion;
                     for (var i = 0; i < ubicacion.length; i++) {
@@ -528,23 +526,6 @@ function ubicacionesMapa(horayJ) {
         }
     }
     respuesta.push(arrayDatos);
-    //: Guardar datos para recorrido por hora
-    if (arrayRecorrido.length == 0) { //* agregar normal si el array esta vacio
-        let recorrido = { "hora": onlyHora, "recorrido": arrayDatos };
-        arrayRecorrido.push(recorrido);
-    } else {
-        arrayRecorrido.forEach(element => {
-            if (!element.hora.includes(onlyHora)) {
-                let recorrido = { "hora": onlyHora, "recorrido": arrayDatos };
-                arrayRecorrido.push(recorrido);
-            } else {
-                arrayDatos.forEach(ubicacion => {
-                    element.recorrido.push(ubicacion);
-                });
-            }
-        });
-    }
-    //: **************************************************************
     var latlngArray = [];
     var popupArray = [];
     // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
@@ -610,17 +591,32 @@ function recorrido(hora) {
     $('#horaIRecorrido').text(parseInt(hora) + ":00:00");
     $('#horaFRecorrido').text((parseInt(hora) + 1) + ":00:00");
     //* buscar hora en el array
+    var arrayDatos = [];
+    var respuesta = [];
+    for (let index = 0; index < dato.length; index++) {
+        if (dato[index].hora == hora) {
+            for (let j = 0; j < 6; j++) {
+                if (dato[index].minuto[j] != undefined) {
+                    const ubicacion = dato[index].minuto[j].ubicacion;
+                    for (var i = 0; i < ubicacion.length; i++) {
+                        const valor = ubicacion[i].ubicaciones;
+                        valor.forEach(element => {
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ubicacion[i].hora_fin)
+                        });
+                    }
+                }
+            }
+        }
+    }
+    respuesta.push(arrayDatos);
     var popupArray = [];
     var latlngArrayRecorrido = [];
-    arrayRecorrido.forEach(element => {
-        if (element.hora == hora) {
-            element.recorrido.forEach(index => {
-                var ltln = L.latLng(index.split(",")[0], index.split(",")[1]);
-                latlngArrayRecorrido.push(ltln);
-                popupArray.push(index.split(",")[2]);
-            });
-        }
-    });
+    for (let index = 0; index < respuesta[0].length; index++) {
+        var element = respuesta[0][index];
+        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
+        latlngArrayRecorrido.push(ltln);
+        popupArray.push(element.split(",")[2]);
+    }
     initializingMap();
     mapGlobal = L.map('mapRecorrido', {
         minZoom: 12,
