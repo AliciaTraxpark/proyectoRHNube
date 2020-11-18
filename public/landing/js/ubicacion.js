@@ -187,7 +187,7 @@ function onMostrarPantallas() {
                             if (data[index].minuto[j]["captura"].length != 0) {
                                 for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
                                     capturas += `<div class = "carousel-item">
-                                                    <img src="landing/images/map.svg" height="120" class="img-responsive">
+                                                    <img src="landing/images/map.svg" height="120" width="160" class="img-responsive">
                                                         <div class="overlay">
                                                             <a class="info" onclick="recorrido('${hora}')" style="color:#fdfdfd">
                                                             <i class="fa fa-eye"></i> Recorrido</a>
