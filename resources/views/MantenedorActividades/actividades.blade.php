@@ -361,14 +361,14 @@
                                 <div class="col-md-12">
                                     <label class="mb-0">Asignar por área</label>
                                     <select id="areaAsignar" data-plugin="customselect"
-                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple" disabled>
                                     </select>
                                 </div>
                             </div>
                             <div class="row pt-2">
                                 <div class="col-md-12 text-left">
                                     <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="checkboxEmpleados" name="FechaI">
+                                        <input type="checkbox" id="checkboxEmpleados" name="FechaI" disabled>
                                         <label for="" class="mb-0">Asignar a todos los empleados</label>
                                         <div class="float-right mb-0">
                                             <span style="font-size: 11px;">
@@ -382,7 +382,7 @@
                                 <div class="col-md-12">
                                     <select id="empleAsignar" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple"
-                                        required>
+                                        required disabled>
                                     </select>
                                 </div>
                             </div>

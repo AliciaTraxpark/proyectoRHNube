@@ -556,6 +556,9 @@ function limpiarModo() {
     $('#e_codigoTarea').val("");
     $('#e_customCR').prop("checked", false);
     $('#e_customAP').prop("checked", false);
+    $('#areaAsignar').attr("disabled", true);
+    $('#checkboxEmpleados').attr("disabled", true);
+    $('#empleAsignar').attr("disabled", true);
 }
 
 function cambiarEstadoActividad(id) {
@@ -781,6 +784,9 @@ function asignarActividadMasiso() {
 var EmpleadosDeActividad;
 //: funcion de change
 $("#actividadesAsignar").on("change", function () {
+    $('#areaAsignar').attr("disabled", false);
+    $('#checkboxEmpleados').attr("disabled", false);
+    $('#empleAsignar').attr("disabled", false);
     var idA = $(this).val();
     $("#empleAsignar").empty();
     var container = $("#empleAsignar");
@@ -920,6 +926,10 @@ function asignarActividadEmpleado() {
             $('#asignarPorArea').modal('toggle');
             $("#empleAsignar").empty();
             $("#areaAsignar").empty();
+            $('#areaAsignar').attr("disabled", true);
+            $('#checkboxEmpleados').attr("disabled", true);
+            $('#empleAsignar').attr("disabled", true);
+            $('#checkboxEmpleados').prop('checked', false);
             $.notifyClose();
             $.notify(
                 {
