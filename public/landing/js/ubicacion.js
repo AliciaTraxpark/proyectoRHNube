@@ -219,7 +219,7 @@ function onMostrarPantallas() {
                                     sumaRangos = 0;
                                     sumaActividad = 0;
                                 } else {
-                                    promedio = data[index].minuto[j]["ubicacion"][0].actividad;
+                                    promedio = ((data[index].minuto[j]["ubicacion"][0].actividad / data[index].minuto[j]["ubicacion"][0].rango) * 100).toFixed(2);
                                     var totalR = enteroTime(data[index].minuto[j]["ubicacion"][0].rango);
                                     totalCM = totalR;
                                 }
