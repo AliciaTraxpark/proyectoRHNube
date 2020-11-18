@@ -212,6 +212,12 @@ function onMostrarPantallas() {
                                 sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
                                 var verDetalle = "";
                                 if (data[index].minuto[j]["ubicacion"].length == 1) {
+                                    if (data[index].minuto[j]["ubicacion"][0].hora_ini < data[index].minuto[j]["captura"][0].hora_ini) {
+                                        hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
+                                    }
+                                    if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
+                                        hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
+                                    }
                                     sumaRang = data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango;
                                     sumaActiv = data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad;
                                     promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
