@@ -171,7 +171,9 @@ class apiSeguimientoRutaContoller extends Controller
                     $fecha1 = Carbon::parse($ubicaciones['hora_fin']);
                     //: ***************************************************
                     if ($fecha1->gt($fecha)) {
-                        $ubicacion->actividad_ubicacion = $vinculacion_ruta->actividad;
+                        $promedio = floatval($fecha1->diffInSeconds($fecha) * $vinculacion_ruta->actividad);
+                        $activi = round(($promedio / 100), 2);
+                        $ubicacion->actividad_ubicacion = $activi;
                         $ubicacion->rango = $fecha1->diffInSeconds($fecha);
                     } else {
                         $ubicacion->actividad_ubicacion = 0;
