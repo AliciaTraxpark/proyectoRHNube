@@ -210,6 +210,7 @@ function onMostrarPantallas() {
                                 totalCM = totalR;
                                 promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
                                 sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
+                                var verDetalle = "";
                                 if (data[index].minuto[j]["ubicacion"].length == 1) {
                                     sumaRang = data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango;
                                     sumaActiv = data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad;
@@ -218,6 +219,7 @@ function onMostrarPantallas() {
                                     sumaActividadTotal += data[index].minuto[j]["ubicacion"][0].actividad;
                                     var totalR = enteroTime(sumaRang);
                                     totalCM = totalR;
+                                    var verDetalle = `<img src="admin/images/warning.svg" height="18" onclick="detalleRango('${hora + "," + j}')">`;
                                 }
                             } else {
                                 if (data[index].minuto[j]["captura"].length != 0) { //: Validar solor tiene mas de unacaptura en el grupo de minutos
@@ -298,6 +300,8 @@ function onMostrarPantallas() {
                                                                 </div>
                                                             </div>
                                                             <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
+                                                            <br>
+                                                            <span>${verDetalle}</span>
                                                             <br>
                                                         </div>
                                                     </div>
@@ -692,6 +696,47 @@ $('#modalRuta').on('shown.bs.modal', function () {
     }, 1000);
 });
 //: ***************************
+//: Detalle de rangos
+function detalleRango(horayJ) {
+    var onlyHora = horayJ.split(",")[0];
+    var min = horayJ.split(",")[1];
+    console.log(min);
+    //: HORAS DE LAS UBICACIONES
+    var horaInicio_ubicacion;
+    var horaFin_ubicacion;
+    var rangoUbicacion;
+    //: **************************
+    //: HORAS DE LAS CAPTURAS
+    var horaInicio_captura;
+    var horaFin_captura;
+    var rangoCaptura;
+    //: **************************
+    for (let index = 0; index < dato.length; index++) {
+        if (dato[index].hora == onlyHora) {
+            for (var j = 0; j < 6; j++) {
+                if (j == min) {
+                    const ubicacion = dato[index].minuto[j].ubicacion;
+                    for (var i = 0; i < ubicacion.length; i++) {
+                        horaInicio_ubicacion = ubicacion[i].hora_ini;
+                        horaFin_ubicacion = ubicacion[i].hora_fin;
+                        rangoUbicacion = enteroTime(ubicacion[i].rango);
+                    }
+                    const captura = dato[index].minuto[j].captura;
+                    for (var m = 0; m < captura.length; m++) {
+                        horaInicio_captura = captura[m].hora_ini;
+                        horaFin_captura = captura[m].hora_fin;
+                        rangoCaptura = enteroTime(captura[m].rango);
+                    }
+                }
+            }
+        }
+    }
+    alertify.alert('Descripcion de rangos',
+        '<span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;' + horaInicio_ubicacion + ' - ' + horaFin_ubicacion + '&nbsp;&nbsp;<a class=\"badge badge-soft-primary\">' + rangoUbicacion + '</a></span><br>\
+        <span><i class="fa fa-laptop"></i>&nbsp;&nbsp;' + horaInicio_captura + ' - ' + horaFin_captura + '&nbsp;&nbsp;<a class=\"badge badge-soft-primary\">' + rangoCaptura + '</a></span>'
+    );
+}
+//: ******************
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
