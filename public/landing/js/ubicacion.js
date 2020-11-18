@@ -554,6 +554,8 @@ function ubicacionesMapa(horayJ) {
         latlngArray.push(ltln);
     }
 
+    //: API DE ENRUTAMIENTO
+    mapboxRouting = L.Routing.mapbox('pk.eyJ1IjoiZ2FieXJvc21lcmkiLCJhIjoiY2tobTVkazEyMTV5dDJ5bzc2MmE4OWZtZSJ9.2jqmQl43ljmcZSP02R4Rew', { profile: 'mapbox/walking' });
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -562,9 +564,7 @@ function ubicacionesMapa(horayJ) {
             popupArray.push(respuesta[0][i].split(",")[2]);
             return popup;
         },
-        router: L.Routing.osrmv1({
-            serviceUrl: `https://router.project-osrm.org/route/v1/`
-        }),
+        router: mapboxRouting,
         waypoints: latlngArray,
         lineOptions: {
             styles: [
@@ -629,15 +629,16 @@ function recorrido(hora) {
     });
     mapGlobal.invalidateSize();
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapGlobal);
+    //: API DE ENRUTAMIENTO
+    mapboxRouting = L.Routing.mapbox('pk.eyJ1IjoiZ2FieXJvc21lcmkiLCJhIjoiY2tobTVkazEyMTV5dDJ5bzc2MmE4OWZtZSJ9.2jqmQl43ljmcZSP02R4Rew', { profile: 'mapbox/walking' });
+    //: *********************************************************************************************************
     controlGlobal = L.Routing.control({
         createMarker: function (i, wp, nWps) {
             var popup = L.marker(wp.latLng)
                 .bindPopup('Hora: ' + popupArray[i]);
             return popup;
         },
-        router: L.Routing.osrmv1({
-            serviceUrl: `https://router.project-osrm.org/route/v1/`
-        }),
+        router: mapboxRouting,
         waypoints: latlngArrayRecorrido,
         lineOptions: {
             styles: [
