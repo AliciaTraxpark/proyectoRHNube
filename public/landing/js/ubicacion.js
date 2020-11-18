@@ -190,7 +190,7 @@ function onMostrarPantallas() {
                                                     <img src="landing/images/map.svg" height="120" width="160" class="img-responsive">
                                                         <div class="overlay">
                                                             <a class="info" onclick="recorrido('${hora}')" style="color:#fdfdfd">
-                                                            <i class="fa fa-eye"></i> Recorrido</a>
+                                                            <i class="fa fa-map-marker"></i> Recorrido</a>
                                                         </div>
                                                 </div>`;
                                 }
