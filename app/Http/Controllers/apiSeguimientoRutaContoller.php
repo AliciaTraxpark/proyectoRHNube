@@ -259,6 +259,7 @@ class apiSeguimientoRutaContoller extends Controller
                     DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(u.rango)), "%H:%i:%s") as Total_Envio')
                 )
                 ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                ->where('e.emple_id', '=', $request->get('idEmpleado'))
                 ->get()
                 ->first();
             $horasRHbox->Total_Envio = $horasRHbox->Total_Envio == null ? "00:00:00" : $horasRHbox->Total_Envio;
