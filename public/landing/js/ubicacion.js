@@ -243,7 +243,11 @@ function onMostrarPantallas() {
                                 } else {
                                     sumaRangosTotal += data[index].minuto[j]["ubicacion"][0].rango;
                                     sumaActividadTotal += data[index].minuto[j]["ubicacion"][0].actividad;
-                                    promedio = ((data[index].minuto[j]["ubicacion"][0].actividad / data[index].minuto[j]["ubicacion"][0].rango) * 100).toFixed(2);
+                                    if (data[index].minuto[j]["ubicacion"][0].rango != 0) {
+                                        promedio = ((data[index].minuto[j]["ubicacion"][0].actividad / data[index].minuto[j]["ubicacion"][0].rango) * 100).toFixed(2);
+                                    } else {
+                                        promedio = 0;
+                                    }
                                     var totalR = enteroTime(data[index].minuto[j]["ubicacion"][0].rango);
                                     totalCM = totalR;
                                 }
