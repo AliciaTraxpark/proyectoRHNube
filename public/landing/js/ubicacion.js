@@ -581,7 +581,7 @@ function ubicacionesMapa(horayJ) {
         waypoints: latlngArray,
         lineOptions: {
             styles: [
-                { color: '#ffe05d', opacity: 1, weight: 4 }
+                { color: '#ec0101', opacity: 1, weight: 4 }
             ],
         },
         routeWhileDragging: true,
@@ -670,7 +670,7 @@ function recorrido(hora) {
         waypoints: latlngArrayRecorrido,
         lineOptions: {
             styles: [
-                { color: '#ffe05d', opacity: 0.6, weight: 8 }
+                { color: '#ec0101', opacity: 0.6, weight: 8 }
             ],
         },
         show: false,
