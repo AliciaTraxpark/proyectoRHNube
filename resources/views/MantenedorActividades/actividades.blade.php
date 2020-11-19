@@ -233,12 +233,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-3">
+                            <div class="row pt-3" style="display: none">
                                 <div class="col-md-12">
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="reg_customGlobal">
-                                        <label class="custom-control-label" for="reg_customGlobal" style="font-weight: bold"
-                                            data-toggle="tooltip" data-placement="right"
+                                        <label class="custom-control-label" for="reg_customGlobal"
+                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
                                             title="Actividad será asignada para todos los nuevos empleados">
                                             Actividad global
                                         </label>
@@ -323,7 +323,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-3">
+                            <div class="row pt-3" style="display: none">
                                 <div class="col-md-12">
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="edit_customGlobal">
@@ -411,7 +411,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-3">
+                            <div class="row pt-3" style="display: none">
                                 <div class="col-md-12">
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="customGlobal" disabled>

@@ -371,7 +371,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="row pt-3">
+                            <div class="row pt-3" style="display: none">
                                 <div class="col-md-12">
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="edit_customGlobalE">
@@ -455,7 +455,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="row pt-3">
+                            <div class="row pt-3" style="display: none">
                                 <div class="col-md-12">
                                     <div class="custom-control custom-switch mb-1">
                                         <input type="checkbox" class="custom-control-input" id="reg_customGlobalE">
