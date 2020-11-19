@@ -559,6 +559,8 @@ function limpiarModo() {
     $('#areaAsignar').attr("disabled", true);
     $('#checkboxEmpleados').attr("disabled", true);
     $('#empleAsignar').attr("disabled", true);
+    $('#customGlobal').prop("checked", false);
+    $('#customGlobal').attr("disabled", true);
 }
 
 function cambiarEstadoActividad(id) {
@@ -662,7 +664,6 @@ function empleadoLista(id) {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled>Seleccionar</option>`;
             data[0].select.forEach(element => {
                 option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
@@ -700,7 +701,6 @@ function empleadoListaReg() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled>Seleccionar</option>`;
             data.forEach(element => {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
@@ -761,12 +761,10 @@ function listaActividades() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled selected>Seleccionar</option>`;
             data.forEach(element => {
                 option += `<option value="${element.idActividad}"> Actividad : ${element.nombre} </option>`;
             });
-            console.log(option);
             container.append(option);
         },
         error: function () { },
@@ -822,6 +820,11 @@ $("#actividadesAsignar").on("change", function () {
             });
             container.append(option);
             EmpleadosDeActividad = $('#empleAsignar').val();
+            if (data[0].global === 1) {
+                $('#customGlobal').prop("checked", true);
+            } else {
+                $('#customGlobal').prop("checked", false);
+            }
             listaAreas();
         },
         error: function () { },
@@ -848,12 +851,10 @@ function listaAreas() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled>Seleccionar</option>`;
             data.forEach(element => {
                 option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
             });
-            console.log(option);
             container.append(option);
         },
         error: function () { },
@@ -886,12 +887,10 @@ $("#areaAsignar").on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = "";
             data.forEach(element => {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
             });
-            console.log(option);
             container.append(option);
             $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
             if ($('#checkboxEmpleados').is(':checked')) {

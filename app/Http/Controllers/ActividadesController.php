@@ -333,6 +333,9 @@ class ActividadesController extends Controller
         $respuesta = [];
         $empleadoSA = [];
         $idActividad = $request->get('idA');
+        //* ESTADO DE GLOBAL
+        $global = actividad::findOrFail($idActividad);
+        //* *******************
         // EMPLEADOS ASIGNADOS A DICHA ACTIVIDAD
         $empleadosA = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
@@ -366,7 +369,7 @@ class ActividadesController extends Controller
         }
         // ****************
         // DATOS PARA RESULTADO
-        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA));
+        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA, "global" => $global->global));
         // dd($respuesta);
 
         return response()->json($respuesta, 200);
