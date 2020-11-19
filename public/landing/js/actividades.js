@@ -346,6 +346,7 @@ function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
     var empleados = $("#reg_empleados").val();
+    var global;
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -356,6 +357,11 @@ function registrarActividadTarea() {
     } else {
         var asistenciaPuerta = 0;
     }
+    if ($('#reg_customGlobal').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         type: "POST",
         url: "/registrarActvO",
@@ -364,7 +370,8 @@ function registrarActividadTarea() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados: empleados
+            empleados: empleados,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -568,6 +575,7 @@ function limpiarModo() {
     $('#empleAsignar').attr("disabled", true);
     $('#customGlobal').prop("checked", false);
     $('#customGlobal').attr("disabled", true);
+    $('#reg_customGlobal').prop("checked", false);
 }
 
 function cambiarEstadoActividad(id) {

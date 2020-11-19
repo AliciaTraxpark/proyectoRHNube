@@ -99,6 +99,7 @@ class ActividadesController extends Controller
         $actividad->asistenciaPuerta = $request->get('ap');
         $actividad->organi_id = session('sesionidorg');
         $actividad->codigoActividad = $request->get('codigo');
+        $actividad->global = $request->get('global');
         $actividad->save();
 
         $idActividad = $actividad->Activi_id;
