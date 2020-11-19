@@ -699,7 +699,7 @@ function recorrido(hora) {
 $('#modalRuta').on('shown.bs.modal', function () {
     window.setTimeout(function () {
         mapGlobal.invalidateSize();
-    }, 1000);
+    }, 1);
 });
 //: ***************************
 //: Detalle de rangos
