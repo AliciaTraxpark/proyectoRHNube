@@ -461,6 +461,14 @@ class ActividadesController extends Controller
     {
         $empleados = $request->get('empleados');
         $actividad = $request->get('idActividad');
+        $global = $request->get('global');
+
+        //: ESTADO GLOBAL DE LA ACTIVIDAD
+        $actividadB = actividad::findOrFail($actividad);
+        if ($actividadB) {
+            $actividadB->global = $global;
+            $actividadB->save();
+        }
 
         //: BUSCAMOS LOS EMPLEADOS DE LA ACTIVIDAD
         $actividadEmpleado = DB::table('actividad as a')

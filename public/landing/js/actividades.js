@@ -784,9 +784,12 @@ function asignarActividadMasiso() {
 var EmpleadosDeActividad;
 //: funcion de change
 $("#actividadesAsignar").on("change", function () {
+    //: ACTIVAR FORMULARIO
     $('#areaAsignar').attr("disabled", false);
     $('#checkboxEmpleados').attr("disabled", false);
     $('#empleAsignar').attr("disabled", false);
+    $('#customGlobal').attr("disabled", false);
+    //: ******************************************
     var idA = $(this).val();
     $("#empleAsignar").empty();
     var container = $("#empleAsignar");
@@ -903,13 +906,20 @@ $("#areaAsignar").on("change", function () {
 function asignarActividadEmpleado() {
     var empleados = $("#empleAsignar").val();
     var actividad = $("#actividadesAsignar").val();
+    var global;
+    if ($('#customGlobal').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         async: false,
         url: "/asignacionActividadE",
         method: "POST",
         data: {
             empleados: empleados,
-            idActividad: actividad
+            idActividad: actividad,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -926,10 +936,13 @@ function asignarActividadEmpleado() {
             $('#asignarPorArea').modal('toggle');
             $("#empleAsignar").empty();
             $("#areaAsignar").empty();
+            //: DESACTIVAMOS FORMULARIO
             $('#areaAsignar').attr("disabled", true);
             $('#checkboxEmpleados').attr("disabled", true);
             $('#empleAsignar').attr("disabled", true);
-            $('#checkboxEmpleados').prop('checked', false);
+            $('#checkboxEmpleados').prop('checked', true);
+            $('#customGlobal').attr("disabled", true);
+            //: ************************************************
             $.notifyClose();
             $.notify(
                 {
