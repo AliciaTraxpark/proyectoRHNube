@@ -18,7 +18,11 @@ class invitado extends Model
         'user_Invitado',
         'dashboard',
         'estado_condic',
-        'permiso_Emp'
+        'permiso_Emp',
+        'verTodosEmps',
+        'modoCR',
+        'gestionActiv',
+        'asistePuerta'
 
     ];
 
