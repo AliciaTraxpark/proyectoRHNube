@@ -79,6 +79,7 @@ function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
     var idA = $('#idActiv').val();
     var empleados = $('#empleados').val();
+    var global;
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -89,6 +90,11 @@ function editarActividadTarea() {
     } else {
         var asistenciaPuerta = 0;
     }
+    if ($('#edit_customGlobal').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         type: "GET",
         url: "/registrarEditar",
@@ -97,7 +103,8 @@ function editarActividadTarea() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados: empleados
+            empleados: empleados,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -672,6 +679,11 @@ function empleadoLista(id) {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
             });
             container.append(option);
+            if (data[0].global === 1) {
+                $('#edit_customGlobal').prop("checked", true);
+            } else {
+                $('#edit_customGlobal').prop("checked", false);
+            }
         },
         error: function () { },
     });
@@ -810,7 +822,6 @@ $("#actividadesAsignar").on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = "";
             data[0].select.forEach(element => {
                 option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;

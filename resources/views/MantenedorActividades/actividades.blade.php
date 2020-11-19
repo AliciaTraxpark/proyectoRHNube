@@ -311,6 +311,18 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row pt-3">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-switch mb-1">
+                                        <input type="checkbox" class="custom-control-input" id="edit_customGlobal">
+                                        <label class="custom-control-label" for="edit_customGlobal"
+                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
+                                            title="Actividad será asignada para todos los nuevos empleados">
+                                            Actividad global
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -393,7 +405,7 @@
                                         <input type="checkbox" class="custom-control-input" id="customGlobal" disabled>
                                         <label class="custom-control-label" for="customGlobal" style="font-weight: bold"
                                             data-toggle="tooltip" data-placement="right"
-                                            title="Actividad será asignada también para nuevos empleados">
+                                            title="Actividad será asignada para todos los nuevos empleados">
                                             Actividad global
                                         </label>
                                     </div>

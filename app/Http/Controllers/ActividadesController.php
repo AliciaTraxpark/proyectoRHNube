@@ -153,6 +153,7 @@ class ActividadesController extends Controller
             $actividad->codigoActividad = $request->get('codigo');
             $actividad->controlRemoto = $request->get('cr');
             $actividad->asistenciaPuerta = $request->get('ap');
+            $actividad->global = $request->get('global');
             $actividad->save();
 
             // ACTUALIZACION ACTIVIDADES DE EMPLEADOS
