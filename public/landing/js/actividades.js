@@ -79,6 +79,7 @@ function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
     var idA = $('#idActiv').val();
     var empleados = $('#empleados').val();
+    var global;
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -89,6 +90,11 @@ function editarActividadTarea() {
     } else {
         var asistenciaPuerta = 0;
     }
+    if ($('#edit_customGlobal').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         type: "GET",
         url: "/registrarEditar",
@@ -97,7 +103,8 @@ function editarActividadTarea() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados: empleados
+            empleados: empleados,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -339,6 +346,7 @@ function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
     var empleados = $("#reg_empleados").val();
+    var global;
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -349,6 +357,11 @@ function registrarActividadTarea() {
     } else {
         var asistenciaPuerta = 0;
     }
+    if ($('#reg_customGlobal').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         type: "POST",
         url: "/registrarActvO",
@@ -357,7 +370,8 @@ function registrarActividadTarea() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados: empleados
+            empleados: empleados,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -556,6 +570,12 @@ function limpiarModo() {
     $('#e_codigoTarea').val("");
     $('#e_customCR').prop("checked", false);
     $('#e_customAP').prop("checked", false);
+    $('#areaAsignar').attr("disabled", true);
+    $('#checkboxEmpleados').attr("disabled", true);
+    $('#empleAsignar').attr("disabled", true);
+    $('#customGlobal').prop("checked", false);
+    $('#customGlobal').attr("disabled", true);
+    $('#reg_customGlobal').prop("checked", false);
 }
 
 function cambiarEstadoActividad(id) {
@@ -659,7 +679,6 @@ function empleadoLista(id) {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled>Seleccionar</option>`;
             data[0].select.forEach(element => {
                 option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
@@ -668,6 +687,11 @@ function empleadoLista(id) {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
             });
             container.append(option);
+            if (data[0].global === 1) {
+                $('#edit_customGlobal').prop("checked", true);
+            } else {
+                $('#edit_customGlobal').prop("checked", false);
+            }
         },
         error: function () { },
     });
@@ -697,7 +721,6 @@ function empleadoListaReg() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled>Seleccionar</option>`;
             data.forEach(element => {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
@@ -758,12 +781,10 @@ function listaActividades() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled selected>Seleccionar</option>`;
             data.forEach(element => {
                 option += `<option value="${element.idActividad}"> Actividad : ${element.nombre} </option>`;
             });
-            console.log(option);
             container.append(option);
         },
         error: function () { },
@@ -781,6 +802,12 @@ function asignarActividadMasiso() {
 var EmpleadosDeActividad;
 //: funcion de change
 $("#actividadesAsignar").on("change", function () {
+    //: ACTIVAR FORMULARIO
+    $('#areaAsignar').attr("disabled", false);
+    $('#checkboxEmpleados').attr("disabled", false);
+    $('#empleAsignar').attr("disabled", false);
+    $('#customGlobal').attr("disabled", false);
+    //: ******************************************
     var idA = $(this).val();
     $("#empleAsignar").empty();
     var container = $("#empleAsignar");
@@ -803,7 +830,6 @@ $("#actividadesAsignar").on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = "";
             data[0].select.forEach(element => {
                 option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
@@ -813,6 +839,11 @@ $("#actividadesAsignar").on("change", function () {
             });
             container.append(option);
             EmpleadosDeActividad = $('#empleAsignar').val();
+            if (data[0].global === 1) {
+                $('#customGlobal').prop("checked", true);
+            } else {
+                $('#customGlobal').prop("checked", false);
+            }
             listaAreas();
         },
         error: function () { },
@@ -839,12 +870,10 @@ function listaAreas() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = `<option value="" disabled>Seleccionar</option>`;
             data.forEach(element => {
                 option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
             });
-            console.log(option);
             container.append(option);
         },
         error: function () { },
@@ -877,12 +906,10 @@ $("#areaAsignar").on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var option = "";
             data.forEach(element => {
                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
             });
-            console.log(option);
             container.append(option);
             $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
             if ($('#checkboxEmpleados').is(':checked')) {
@@ -897,13 +924,20 @@ $("#areaAsignar").on("change", function () {
 function asignarActividadEmpleado() {
     var empleados = $("#empleAsignar").val();
     var actividad = $("#actividadesAsignar").val();
+    var global;
+    if ($('#customGlobal').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         async: false,
         url: "/asignacionActividadE",
         method: "POST",
         data: {
             empleados: empleados,
-            idActividad: actividad
+            idActividad: actividad,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -920,6 +954,13 @@ function asignarActividadEmpleado() {
             $('#asignarPorArea').modal('toggle');
             $("#empleAsignar").empty();
             $("#areaAsignar").empty();
+            //: DESACTIVAMOS FORMULARIO
+            $('#areaAsignar').attr("disabled", true);
+            $('#checkboxEmpleados').attr("disabled", true);
+            $('#empleAsignar').attr("disabled", true);
+            $('#checkboxEmpleados').prop('checked', true);
+            $('#customGlobal').attr("disabled", true);
+            //: ************************************************
             $.notifyClose();
             $.notify(
                 {

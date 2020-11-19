@@ -171,7 +171,9 @@ class apiSeguimientoRutaContoller extends Controller
                     $fecha1 = Carbon::parse($ubicaciones['hora_fin']);
                     //: ***************************************************
                     if ($fecha1->gt($fecha)) {
-                        $ubicacion->actividad_ubicacion = $vinculacion_ruta->actividad;
+                        $promedio = floatval($fecha1->diffInSeconds($fecha) * $vinculacion_ruta->actividad);
+                        $activi = round(($promedio / 100), 2);
+                        $ubicacion->actividad_ubicacion = $activi;
                         $ubicacion->rango = $fecha1->diffInSeconds($fecha);
                     } else {
                         $ubicacion->actividad_ubicacion = 0;
@@ -237,9 +239,9 @@ class apiSeguimientoRutaContoller extends Controller
         if ($empleado) {
             $respuesta = [];
             $fecha = Carbon::now('America/Lima');
-            //* OBTENER HORAS DEL EMPLEADO
+            //* OBTENER HORAS DEL EMPLEADO EN RHBOX
             $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-            $horas = DB::table('empleado as e')
+            $horasRHbox = DB::table('empleado as e')
                 ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                 ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
                 ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
@@ -250,9 +252,25 @@ class apiSeguimientoRutaContoller extends Controller
                 ->where('e.emple_id', '=', $request->get('idEmpleado'))
                 ->get()
                 ->first();
+            $horasRuta = DB::table('empleado as e')
+                ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('horario_dias as h', 'h.id', '=', 'u.idHorario_dias')
+                ->select(
+                    DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(u.rango)), "%H:%i:%s") as Total_Envio')
+                )
+                ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                ->get()
+                ->first();
+            $horasRHbox->Total_Envio = $horasRHbox->Total_Envio == null ? "00:00:00" : $horasRHbox->Total_Envio;
+            $horasRuta->Total_Envio = $horasRuta->Total_Envio == null ? "00:00:00" : $horasRuta->Total_Envio;
+            $horaRH = date($horasRHbox->Total_Envio);
+            $explode = explode(":", $horaRH);
+            $horaRuta = date($horasRuta->Total_Envio);
+            $sumaHoras = strtotime('+' . $explode[0] . 'hours ' . $explode[1] . 'minute ' . $explode[2] . 'second', strtotime($horaRuta));
+            $resultado = date('H:i:s', $sumaHoras);
             // * OBTENER HORA DEL SERVIDOR
             $horaActual = $fecha->timestamp;
-            $respuesta["tiempo"] = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
+            $respuesta["tiempo"] = $resultado;
             $respuesta["horaActual"] = $horaActual;
             return response()->json($respuesta, 200);
         }

@@ -114,6 +114,7 @@ function onMostrarPantallas() {
                 $("#espera").show();
             }
         }).then(function (data) {
+            console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
             class="mr-2 imgR" height="220" /> <br> <label for=""
             style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
@@ -162,7 +163,7 @@ function onMostrarPantallas() {
                                     sumaRangos = sumaRangos + data[index].minuto[j]["captura"][indexMinutos].rango; //* suma de rangos de grupos de imagenes
                                     sumaActividad = sumaActividad + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de actividad de grupos de imagenes
                                     hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la primera imagen del grupo de imagenes
-                                    hora_final = data[index].minuto[j]["captura"][data[index].minuto[j].length - 1].hora_fin; //* hora final de la ultima imagen del grupo de imagenes
+                                    hora_final = data[index].minuto[j]["captura"][data[index].minuto[j]["captura"].length - 1].hora_fin; //* hora final de la ultima imagen del grupo de imagenes
                                     for (let indexC = 0; indexC < data[index].minuto[j]["captura"][indexMinutos].imagen.length; indexC++) { //* recorrer imagenes para insertar en el carrusel
                                         if (data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen != null) { //* solo grupos que tienen imagenes
                                             var imgR = data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen; //* obtener ruta de la imagen
@@ -185,10 +186,19 @@ function onMostrarPantallas() {
                             }
                             //: Colocar ubicaiones en carrusel
                             if (data[index].minuto[j]["captura"].length != 0) {
-                                for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
+                                if (data[index].minuto[j]["ubicacion"].length != 0) {
                                     capturas += `<div class = "carousel-item">
-                                                    <img src="landing/images/map.svg" height="120" class="img-responsive">
+                                                    <img src="landing/images/map.svg" height="120" width="160" class="img-responsive">
+                                                        <div class="overlay">
+                                                            <a class="info" onclick="recorrido('${hora}')" style="color:#fdfdfd">
+                                                            <i class="fa fa-map-marker"></i> Recorrido</a>
+                                                        </div>
                                                 </div>`;
+                                }
+                                for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
+                                    promedios += data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
+                                    sumaRangos += sumaRangos + data[index].minuto[j]["ubicacion"][indexMinutos].rango;
+                                    sumaActividad += data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                 }
                             }
                             //: ******************************************************
@@ -200,6 +210,23 @@ function onMostrarPantallas() {
                                 totalCM = totalR;
                                 promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
                                 sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
+                                var verDetalle = "";
+                                if (data[index].minuto[j]["ubicacion"].length == 1) {
+                                    if (data[index].minuto[j]["ubicacion"][0].hora_ini < data[index].minuto[j]["captura"][0].hora_ini) {
+                                        hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
+                                    }
+                                    if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
+                                        hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
+                                    }
+                                    sumaRang = data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango;
+                                    sumaActiv = data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad;
+                                    promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
+                                    sumaRangosTotal += data[index].minuto[j]["ubicacion"][0].rango;
+                                    sumaActividadTotal += data[index].minuto[j]["ubicacion"][0].actividad;
+                                    var totalR = enteroTime(sumaRang);
+                                    totalCM = totalR;
+                                    var verDetalle = `<img src="admin/images/warning.svg" height="18" onclick="detalleRango('${hora + "," + j}')">`;
+                                }
                             } else {
                                 if (data[index].minuto[j]["captura"].length != 0) { //: Validar solor tiene mas de unacaptura en el grupo de minutos
                                     sumaRangosTotal += sumaRangos;
@@ -214,7 +241,11 @@ function onMostrarPantallas() {
                                     sumaRangos = 0;
                                     sumaActividad = 0;
                                 } else {
-                                    promedio = data[index].minuto[j]["ubicacion"][0].actividad;
+                                    sumaRangosTotal += data[index].minuto[j]["ubicacion"][0].rango;
+                                    sumaActividadTotal += data[index].minuto[j]["ubicacion"][0].actividad;
+                                    promedio = ((data[index].minuto[j]["ubicacion"][0].actividad / data[index].minuto[j]["ubicacion"][0].rango) * 100).toFixed(2);
+                                    var totalR = enteroTime(data[index].minuto[j]["ubicacion"][0].rango);
+                                    totalCM = totalR;
                                 }
                             }
                             //! Colores de las actividades
@@ -275,6 +306,8 @@ function onMostrarPantallas() {
                                                                 </div>
                                                             </div>
                                                             <label style="font-size: 12px;font-style: italic; bold;color:#1f4068;" for="">Tiempo transcurrido ${totalCM} </label>
+                                                            <br>
+                                                            <span>${verDetalle}</span>
                                                             <br>
                                                         </div>
                                                     </div>
@@ -363,6 +396,7 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div></div><br>`;
                     container.append(grupo);
+                    console.log(sumaActividadTotal, sumaRangosTotal);
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(
                         2
                     );
@@ -493,7 +527,8 @@ function onMostrarUbicaciones() {
 function changeMapeo() {
     $('.mapid').trigger("change");
 }
-
+var mapGlobal = {};
+var controlGlobal = {};
 function ubicacionesMapa(horayJ) {
 
     var onlyHora = horayJ.split(",")[0];
@@ -510,7 +545,6 @@ function ubicacionesMapa(horayJ) {
     for (let index = 0; index < dato.length; index++) {
         if (dato[index].hora == onlyHora) {
             for (var j = 0; j < 6; j++) {
-                // console.log(dato[index].minuto[j], min);
                 if (j == min) {
                     const ubicacion = dato[index].minuto[j].ubicacion;
                     for (var i = 0; i < ubicacion.length; i++) {
@@ -524,7 +558,6 @@ function ubicacionesMapa(horayJ) {
         }
     }
     respuesta.push(arrayDatos);
-    // console.log(respuesta);
     var latlngArray = [];
     var popupArray = [];
     // ? DIBUJAR MAPA DEL USUARIO SEGUN SUS POSICIONES
@@ -533,7 +566,9 @@ function ubicacionesMapa(horayJ) {
         var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
         latlngArray.push(ltln);
     }
-    // console.log(latlngArray);
+
+    //: API DE ENRUTAMIENTO
+    mapboxRouting = L.Routing.mapbox('pk.eyJ1IjoiZ2FieXJvc21lcmkiLCJhIjoiY2tobTVkazEyMTV5dDJ5bzc2MmE4OWZtZSJ9.2jqmQl43ljmcZSP02R4Rew', { profile: 'mapbox/walking' });
     //: Este es usando routes
     var control = L.Routing.control({
         createMarker: function (i, wp, nWps) {
@@ -542,13 +577,11 @@ function ubicacionesMapa(horayJ) {
             popupArray.push(respuesta[0][i].split(",")[2]);
             return popup;
         },
-        router: L.Routing.osrmv1({
-            serviceUrl: `https://router.project-osrm.org/route/v1/`
-        }),
+        router: mapboxRouting,
         waypoints: latlngArray,
         lineOptions: {
             styles: [
-                { color: '#f56a79', opacity: 0.8, weight: 4 }
+                { color: '#ec0101', opacity: 1, weight: 4 }
             ],
         },
         routeWhileDragging: true,
@@ -560,8 +593,156 @@ function ubicacionesMapa(horayJ) {
     }).addTo(map).on('routesfound', function (e) {
         console.log(e.routes); // e.routes have length 2
     });
-}
+    L.easyButton({
+        states: [{
+            stateName: 'zoom-to-modal',
+            icon: 'fa-external-link',
+            title: 'ver recorrido',
+            onClick: function (btn, map) {
+                recorrido(onlyHora);
+            }
+        }]
 
+    }).addTo(map);
+}
+function initializingMap() // call this method before you initialize your map.
+{
+    var container = L.DomUtil.get('mapRecorrido');
+    if (container != null) {
+        container._leaflet_id = null;
+    }
+}
+//: FUNCION MOSTRAR RECORRIDO
+function recorrido(hora) {
+    $('#bodyMap').empty();
+    var container = $('#bodyMap');
+    var divMap = `<div id="mapRecorrido" class="mapRecorrido"></div>`;
+    container.append(divMap);
+    $('#modalRuta').modal();
+    //: Horas en modal
+    $('#horaIRecorrido').text(parseInt(hora) + ":00:00");
+    $('#horaFRecorrido').text((parseInt(hora) + 1) + ":00:00");
+    //* buscar hora en el array
+    var arrayDatos = [];
+    var respuesta = [];
+    for (let index = 0; index < dato.length; index++) {
+        if (dato[index].hora == hora) {
+            for (let j = 0; j < 6; j++) {
+                if (dato[index].minuto[j] != undefined) {
+                    const ubicacion = dato[index].minuto[j].ubicacion;
+                    for (var i = 0; i < ubicacion.length; i++) {
+                        const valor = ubicacion[i].ubicaciones;
+                        valor.forEach(element => {
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ubicacion[i].hora_fin)
+                        });
+                    }
+                }
+            }
+        }
+    }
+    respuesta.push(arrayDatos);
+    var popupArray = [];
+    var latlngArrayRecorrido = [];
+    for (let index = 0; index < respuesta[0].length; index++) {
+        var element = respuesta[0][index];
+        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
+        latlngArrayRecorrido.push(ltln);
+        popupArray.push(element.split(",")[2]);
+    }
+    initializingMap();
+    mapGlobal = L.map('mapRecorrido', {
+        minZoom: 12,
+        zoomOffset: -1,
+        center: [51.505, -0.09],
+    });
+    mapGlobal.invalidateSize();
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapGlobal);
+    //: API DE ENRUTAMIENTO
+    mapboxRouting = L.Routing.mapbox('pk.eyJ1IjoiZ2FieXJvc21lcmkiLCJhIjoiY2tobTVkazEyMTV5dDJ5bzc2MmE4OWZtZSJ9.2jqmQl43ljmcZSP02R4Rew', { profile: 'mapbox/walking' });
+    //: *********************************************************************************************************
+    controlGlobal = L.Routing.control({
+        createMarker: function (i, wp, nWps) {
+            var popup = L.marker(wp.latLng)
+                .bindPopup('Hora: ' + popupArray[i]);
+            return popup;
+        },
+        router: mapboxRouting,
+        waypoints: latlngArrayRecorrido,
+        lineOptions: {
+            styles: [
+                { color: '#ec0101', opacity: 0.6, weight: 8 }
+            ],
+        },
+        show: false,
+        draggableWaypoints: false,//to set draggable option to false
+        addWaypoints: false, //disable adding new waypoints to the existing path
+        fitSelectedRoutes: true,
+        useZoomParameter: true,
+        routeWhileDragging: true
+    }).addTo(mapGlobal).on('routesfound', function (e) {
+        console.log(e.routes); // e.routes have length 2
+    }).on('routeselected', function (e) {
+        var route = e.route;
+        console.log(JSON.stringify(route.inputWaypoints, null, 2));
+    });
+    L.control.fullscreen({
+        position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
+        title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
+        titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
+        content: null, // change the content of the button, can be HTML, default null
+        forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
+        forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
+        fullscreenElement: false // Dom element to render in full screen, false by default, fallback to map._container
+    }).addTo(mapGlobal);
+    mapGlobal.invalidateSize();
+}
+$('#modalRuta').on('shown.bs.modal', function () {
+    window.setTimeout(function () {
+        mapGlobal.invalidateSize();
+    }, 1000);
+});
+//: ***************************
+//: Detalle de rangos
+function detalleRango(horayJ) {
+    var onlyHora = horayJ.split(",")[0];
+    var min = horayJ.split(",")[1];
+    console.log(min);
+    //: HORAS DE LAS UBICACIONES
+    var horaInicio_ubicacion;
+    var horaFin_ubicacion;
+    var rangoUbicacion;
+    //: **************************
+    //: HORAS DE LAS CAPTURAS
+    var horaInicio_captura;
+    var horaFin_captura;
+    var rangoCaptura;
+    //: **************************
+    for (let index = 0; index < dato.length; index++) {
+        if (dato[index].hora == onlyHora) {
+            for (var j = 0; j < 6; j++) {
+                if (j == min) {
+                    const ubicacion = dato[index].minuto[j].ubicacion;
+                    for (var i = 0; i < ubicacion.length; i++) {
+                        horaInicio_ubicacion = ubicacion[i].hora_ini;
+                        horaFin_ubicacion = ubicacion[i].hora_fin;
+                        rangoUbicacion = enteroTime(ubicacion[i].rango);
+                    }
+                    const captura = dato[index].minuto[j].captura;
+                    for (var m = 0; m < captura.length; m++) {
+                        horaInicio_captura = captura[m].hora_ini;
+                        horaFin_captura = captura[m].hora_fin;
+                        rangoCaptura = enteroTime(captura[m].rango);
+                    }
+                }
+            }
+        }
+    }
+    alertify.alert('Descripcion de rangos',
+        '<span><i class="fa fa-laptop"></i>&nbsp;&nbsp;' + horaInicio_captura + ' - ' + horaFin_captura + '&nbsp;&nbsp;<a class=\"badge badge-soft-primary\">' + rangoCaptura + '</a></span><br>\
+        <span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;' + horaInicio_ubicacion + ' - ' + horaFin_ubicacion + '&nbsp;&nbsp;<a class=\"badge badge-soft-primary\">' + rangoUbicacion + '</a></span><br>'
+    );
+}
+//: ******************
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];

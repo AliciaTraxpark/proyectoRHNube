@@ -13,6 +13,8 @@
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/easy-button.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
@@ -20,6 +22,11 @@
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+{{-- plugin de ALERTIFY --}}
+<link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+<!-- Semantic UI theme -->
+<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
@@ -73,7 +80,35 @@
     .leaflet-control {
         z-index: 0;
     }
+
+    #mapRecorrido {
+        padding: 0;
+        width: auto;
+        height: 480px;
+    }
 </style>
+{{-- MODAL DE PRUEBA --}}
+<div id="modalRuta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalRuta" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">
+                    Recorrido de las <label id="horaIRecorrido"></label> - <label id="horaFRecorrido"></label>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="col-md-12 col-sm-12 p-0" id="bodyMap">
+                    {{-- <div id="mapRecorrido" class="mapRecorrido"></div> --}}
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION --}}
 {{-- CONTENIDO DE VISTA --}}
 <div class="row">
     <div class="col-md-12">
@@ -170,12 +205,14 @@
 <script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-image.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/easy-button.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/CryptoJS/md5.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/CryptoJS/enc-base64.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{asset('landing/js/ubicacion.js')}}"></script>
 @endsection

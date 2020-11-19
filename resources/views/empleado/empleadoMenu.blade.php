@@ -326,7 +326,7 @@ use App\proyecto_empleado;
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Registrar Actividad
+                    Registrar actividad
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="$('#form-ver').modal('show');javascript:limpiarModo()">
@@ -371,6 +371,18 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
+                            <div class="row pt-3" style="display: none">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-switch mb-1">
+                                        <input type="checkbox" class="custom-control-input" id="edit_customGlobalE">
+                                        <label class="custom-control-label" for="edit_customGlobalE"
+                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
+                                            title="Actividad será asignada para todos los nuevos empleados">
+                                            Actividad global
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -398,7 +410,7 @@ use App\proyecto_empleado;
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Registrar Actividad
+                    Registrar actividad
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="$('#form-registrar').modal('show');javascript:limpiarModo()">
@@ -440,6 +452,18 @@ use App\proyecto_empleado;
                                         <label class="custom-control-label" for="customAPFR"
                                             style="font-weight: bold">Asistencia en
                                             Puerta</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-3" style="display: none">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-switch mb-1">
+                                        <input type="checkbox" class="custom-control-input" id="reg_customGlobalE">
+                                        <label class="custom-control-label" for="reg_customGlobalE"
+                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
+                                            title="Actividad será asignada para todos los nuevos empleados">
+                                            Actividad global
+                                        </label>
                                     </div>
                                 </div>
                             </div>

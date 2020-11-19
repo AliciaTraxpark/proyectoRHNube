@@ -979,6 +979,7 @@ function registrarActividad() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
     var empleados = null;
+    var global;
     if ($('#customCRGE').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -989,6 +990,11 @@ function registrarActividad() {
     } else {
         var asistenciaPuerta = 0;
     }
+    if ($('#edit_customGlobalE').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         type: "POST",
         url: "/registrarActvO",
@@ -997,7 +1003,8 @@ function registrarActividad() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados: empleados
+            empleados: empleados,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1203,6 +1210,7 @@ function registrarActividadFR() {
     var nombre = $("#reg_nombreTarea").val();
     var codigo = $("#reg_codigoTarea").val();
     var empleados = null;
+    var global;
     if ($('#customCRFR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
@@ -1213,6 +1221,11 @@ function registrarActividadFR() {
     } else {
         var asistenciaPuerta = 0;
     }
+    if ($('#reg_customGlobalE').is(":checked") == true) {
+        global = 1;
+    } else {
+        global = 0;
+    }
     $.ajax({
         type: "POST",
         url: "/registrarActvO",
@@ -1221,7 +1234,8 @@ function registrarActividadFR() {
             cr: controlRemoto,
             ap: asistenciaPuerta,
             codigo: codigo,
-            empleados: empleados
+            empleados: empleados,
+            global: global
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

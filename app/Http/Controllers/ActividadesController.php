@@ -99,6 +99,7 @@ class ActividadesController extends Controller
         $actividad->asistenciaPuerta = $request->get('ap');
         $actividad->organi_id = session('sesionidorg');
         $actividad->codigoActividad = $request->get('codigo');
+        $actividad->global = $request->get('global');
         $actividad->save();
 
         $idActividad = $actividad->Activi_id;
@@ -153,6 +154,7 @@ class ActividadesController extends Controller
             $actividad->codigoActividad = $request->get('codigo');
             $actividad->controlRemoto = $request->get('cr');
             $actividad->asistenciaPuerta = $request->get('ap');
+            $actividad->global = $request->get('global');
             $actividad->save();
 
             // ACTUALIZACION ACTIVIDADES DE EMPLEADOS
@@ -333,6 +335,9 @@ class ActividadesController extends Controller
         $respuesta = [];
         $empleadoSA = [];
         $idActividad = $request->get('idA');
+        //* ESTADO DE GLOBAL
+        $global = actividad::findOrFail($idActividad);
+        //* *******************
         // EMPLEADOS ASIGNADOS A DICHA ACTIVIDAD
         $empleadosA = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
@@ -366,7 +371,7 @@ class ActividadesController extends Controller
         }
         // ****************
         // DATOS PARA RESULTADO
-        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA));
+        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA, "global" => $global->global));
         // dd($respuesta);
 
         return response()->json($respuesta, 200);
@@ -461,6 +466,14 @@ class ActividadesController extends Controller
     {
         $empleados = $request->get('empleados');
         $actividad = $request->get('idActividad');
+        $global = $request->get('global');
+
+        //: ESTADO GLOBAL DE LA ACTIVIDAD
+        $actividadB = actividad::findOrFail($actividad);
+        if ($actividadB) {
+            $actividadB->global = $global;
+            $actividadB->save();
+        }
 
         //: BUSCAMOS LOS EMPLEADOS DE LA ACTIVIDAD
         $actividadEmpleado = DB::table('actividad as a')
