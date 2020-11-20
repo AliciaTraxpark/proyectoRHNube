@@ -1013,10 +1013,22 @@ use App\proyecto_empleado;
                             class="btn btn-sm btn-primary delete_all">
                             Eliminar
                         </button>
+                        @if (isset($agregarEmp))
+                         @if ($agregarEmp==1)
+                         <button class="btn btn-sm btn-primary" id="formNuevoE"
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">
+                            Nuevo
+                        </button>
+                         @else
+
+                         @endif
+                        @else
                         <button class="btn btn-sm btn-primary" id="formNuevoE"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">
                             Nuevo
                         </button>
+                        @endif
+
                     </div>
                     {{-- FINALIZACION --}}
                     {{-- BUSQUEDA PARA TABLA --}}
@@ -4259,10 +4271,22 @@ use App\proyecto_empleado;
                                                             <img src="{{asset('landing/images/play.svg')}}" height="40">
                                                         </a>
                                                     </div>
+                                                    @if (isset($GestActEmp))
+                                                    @if ($GestActEmp==1)
                                                     <button type="button" class="btn btn-sm mt-1"
+                                                    style="background-color: #163552;"
+                                                    onclick="$('#actividadTarea').modal()">+Asignar actividad
+                                                   </button>
+                                                    @else
+
+                                                    @endif
+                                                   @else
+                                                   <button type="button" class="btn btn-sm mt-1"
                                                         style="background-color: #163552;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
+                                                   @endif
+
                                                 </div>
                                             </div>
                                             <div class="row pt-3">
@@ -4447,13 +4471,28 @@ use App\proyecto_empleado;
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
                 <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:cerrarVer()">
+                    @if (isset($modifEmp))
+                    @if ($modifEmp==1)
                     <span class="badge float-left pr-4 pt-0">
                         <a style="color: #f0f0f0"
                             onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
                             <img src="{{asset('admin/images/edit.svg')}}" height="15">
                             <span style="font-weight: bold">Editar Empleado</span>
                         </a>
-                    </span>
+                      </span>
+                    @else
+
+                    @endif
+                   @else
+                   <span class="badge float-left pr-4 pt-0">
+                    <a style="color: #f0f0f0"
+                        onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                        <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                        <span style="font-weight: bold">Editar Empleado</span>
+                    </a>
+                  </span>
+                   @endif
+
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -4974,6 +5013,65 @@ use App\proyecto_empleado;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+{{-- visibilidad de editar --}}
+@if (isset($modifEmp))
+@if ($modifEmp==1)
+<style>
+    a[name="editarEName"] {
+  display: inline;
+}
+</style>
+@else
+<style>
+    a[name="editarEName"] {
+        display: none;
+}
+</style>
+{{-- <script>
+document.getElementsByName("editarEName").remove();
+</script> --}}
+@endif
+@else
+<style>
+    a[name="editarEName"] {
+  display: inline;
+}
+</style>
+@endif
+
+{{-- visibilidad de dar de baja --}}
+@if (isset($bajaEmp))
+@if ($bajaEmp==1)
+<style>
+    a[name="dBajaName"] {
+  display: inline;
+}
+</style>
+@else
+<style>
+    a[name="dBajaName"] {
+  display: none;
+}
+</style>
+@endif
+@else
+<style>
+    a[name="dBajaName"] {
+  display: inline;
+}
+</style>
+@endif
+
+{{-- visibilidad de switch --}}
+@if (isset($GestActEmp))
+@if ($GestActEmp==1)
+<input type="hidden" id="gestActI" value="1">
+@else
+<input type="hidden" id="gestActI" value="0">
+@endif
+@else
+<input type="hidden" id="gestActI" value="1">
+@endif
 </div>
 @endsection
 @section('script')

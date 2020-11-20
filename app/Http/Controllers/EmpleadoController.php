@@ -1192,18 +1192,15 @@ class EmpleadoController extends Controller
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     if( $invitadod->permiso_Emp==1){
-                   /*  $invitado_empleadoIn=DB::table('invitado_empleado as invem')
-                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                    ->where('invem.area_id', '=', null)
-                    ->where('invem.emple_id', '!=', null)
-                    ->get()->first();
-
-                    if($invitado_empleadoIn!=null){} */
+                        $permiso_invitado = DB::table('permiso_invitado')
+                        ->where('idinvitado', '=', $invitadod->idinvitado)
+                        ->get()->first();
                     return view('empleado.empleadoMenu', [
                         'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
                         'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
                         'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
+                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago,'agregarEmp'=>$permiso_invitado->agregarEmp,
+                        'modifEmp'=>$permiso_invitado->modifEmp,'bajaEmp'=>$permiso_invitado->bajaEmp,'GestActEmp'=>$permiso_invitado->GestActEmp
                     ]);
                     } else{
                           return redirect('/dashboard');

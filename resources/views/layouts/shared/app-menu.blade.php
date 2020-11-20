@@ -233,7 +233,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                     <span>Empleados</span>
                 </a>
-               
+
             </li>
         </ul>
     </li>
@@ -241,15 +241,41 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
     @endif
 
+    @if ($invitadod->gestionActiv==1)
+    <li>
+        <a href="/actividad">
+            <i data-feather="layers"></i>
+            <span>Actividades</span>
+        </a>
+    </li>
+    @endif
 
 
+    <li>
+        @if ($invitadod->asistePuerta==1)
+        <a href="javascript: void(0);">
+            <i data-feather="check-circle"></i>
+            <span>Modo: Asistencia en puerta</span>
+            <span class="menu-arrow"></span>
+        </a>
 
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/dispositivos">Dispositivos</a>
+                <a href="/controladores">Controladores</a>
+                <a href="/reporteAsistencia">Reporte de asistencia</a>
+
+            </li>
+        </ul>
+    </li>
+    @endif
     <!-- <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
             <span>Asignar tarea</span>
         </a>
     </li> -->
+    @if ($invitadod->modoCR==1)
     <li>
 
         <a href="javascript: void(0);">
@@ -267,5 +293,6 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+    @endif
 </ul>
 @endif
