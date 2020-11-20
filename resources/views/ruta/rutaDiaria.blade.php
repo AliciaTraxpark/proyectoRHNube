@@ -86,6 +86,63 @@
         width: auto;
         height: 480px;
     }
+
+    @media (max-width: 767.98px) {
+        .colR {
+            padding-left: 0% !important;
+            padding-right: 2% !important;
+        }
+
+        .btnR {
+            text-align: center !important;
+        }
+
+        .imgR {
+            margin-left: 15% !important;
+        }
+
+        .alertR {
+            width: 60%;
+        }
+
+        .containerR {
+            overflow: auto !important;
+            display: flex !important;
+        }
+
+        .rowResp {
+            overflow: auto !important;
+            white-space: normal !important;
+            max-width: 100% !important;
+            display: flex !important;
+        }
+
+        .columResponsiva {
+            padding-right: 2% !important;
+            padding-left: 2% !important;
+            max-width: 50% !important;
+            flex: 100% !important;
+        }
+
+        .columnTextR {
+            padding-right: 0% !important;
+            padding-left: 0% !important;
+            max-width: 100% !important;
+        }
+
+        .h5Responsive {
+            font-size: 14px !important;
+        }
+
+        .rowResponsivo {
+            justify-content: center !important;
+        }
+
+        .mbResponsivo {
+            padding-top: 15% !important;
+        }
+
+    }
 </style>
 {{-- MODAL DE UBICACION --}}
 <div id="modalRuta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalRuta" aria-hidden="true"
