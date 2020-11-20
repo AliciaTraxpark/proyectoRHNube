@@ -20,7 +20,6 @@
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
     }}" rel="stylesheet" />
@@ -53,6 +52,18 @@
         min-width: 50% !important;
         min-height: 50% !important;
         font-size: small !important;
+    }
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #52565b;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        overflow-y: scroll;
     }
 
     @media (max-width: 767.98px) {
