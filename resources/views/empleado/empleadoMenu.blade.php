@@ -983,6 +983,8 @@ use App\proyecto_empleado;
     <div class="col-md-7">
         <h4 class="header-title mt-0 "></i>Empleados</h4>
     </div>
+    @if (isset($agregarEmp))
+    @if ($agregarEmp==1)
     <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
             <button class="btn btn-outline-secondary btn-sm">
@@ -996,6 +998,25 @@ use App\proyecto_empleado;
             Carga masiva fotos
         </button>
     </div>
+    @else
+
+    @endif
+    @else
+    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
+        <a href="{{ '/empleado/cargar' }}">
+            <button class="btn btn-outline-secondary btn-sm">
+                <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
+                Carga masiva emp.
+            </button>
+        </a>
+        &nbsp;&nbsp;
+        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF">
+            <img src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">
+            Carga masiva fotos
+        </button>
+    </div>
+    @endif
+
 </div>
 {{-- FINAIZACION --}}
 @endsection
@@ -1008,11 +1029,24 @@ use App\proyecto_empleado;
                 <div class="row">
                     {{-- BOTONES --}}
                     <div class=" col-md-12 text-right btnResponsive">
+                        @if (isset($bajaEmp))
+                         @if ($bajaEmp==1)
+                         <button onclick="eliminarEmpleado()"
+                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
+                            class="btn btn-sm btn-primary delete_all">
+                            Eliminar
+                        </button>
+                         @else
+
+                         @endif
+                        @else
                         <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all">
                             Eliminar
                         </button>
+                        @endif
+
                         @if (isset($agregarEmp))
                          @if ($agregarEmp==1)
                          <button class="btn btn-sm btn-primary" id="formNuevoE"

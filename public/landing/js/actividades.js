@@ -305,9 +305,9 @@ function actividadesOrganizacion() {
                     } else {
                         tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td class=\"text-center\"><a onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                    tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
-                                </a>&nbsp;&nbsp;&nbsp;<a onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                                </a>&nbsp;&nbsp;&nbsp;<a name=\"deletePermiso\" onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
                                  </a></td>";
                 }
@@ -320,6 +320,16 @@ function actividadesOrganizacion() {
 
         }
     });
+    var valorswitch=$('#modifActI').val();
+    var valorBaja=$('#bajaActI').val();
+    if(valorswitch==0){
+        $('input[type=checkbox]').prop('disabled', true);
+                $('[name="aedit"]').hide();
+    }
+    if(valorBaja==0){
+                $('[name="deletePermiso"]').hide();
+    }
+
 }
 actividadesOrganizacion();
 function recuperarActividad(id) {
@@ -747,7 +757,7 @@ $('input.global_filter').on('keyup click change clear', function () {
 });
 // **********************************
 
-//: Asignar actividades en area de forma masiva 
+//: Asignar actividades en area de forma masiva
 //? Inicializar plugin
 $("#actividadesAsignar").select2({
     placeholder: 'Seleccionar actividad',
@@ -850,7 +860,7 @@ $("#actividadesAsignar").on("change", function () {
     });
 });
 
-//: Función para obtener las áreas 
+//: Función para obtener las áreas
 function listaAreas() {
     $("#areaAsignar").empty();
     var container = $("#areaAsignar");
@@ -880,7 +890,7 @@ function listaAreas() {
     });
 }
 
-//: Funcion para mostrar empleados por áreas 
+//: Funcion para mostrar empleados por áreas
 $("#areaAsignar").on("change", function () {
     var empleados = EmpleadosDeActividad;
     var areas = $("#areaAsignar").val();

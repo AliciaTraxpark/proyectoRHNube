@@ -19,7 +19,7 @@ class dispositivosController extends Controller
         $this->middleware(['auth', 'verified']);
     }
     public function index(){
-
+         
         return view('Dispositivos.dispositivos');
     }
     public function store(Request $request){
@@ -203,7 +203,7 @@ class dispositivosController extends Controller
         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
         ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->where('marcm.organi_id','=',session('sesionidorg'))
-        
+
         /*      */
         ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
         ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
