@@ -87,7 +87,7 @@
         height: 480px;
     }
 </style>
-{{-- MODAL DE PRUEBA --}}
+{{-- MODAL DE UBICACION --}}
 <div id="modalRuta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalRuta" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-lg">
@@ -103,6 +103,32 @@
             <div class="modal-body p-0">
                 <div class="col-md-12 col-sm-12 p-0" id="bodyMap">
                     {{-- <div id="mapRecorrido" class="mapRecorrido"></div> --}}
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION --}}
+{{-- MODAL DE ZOOM DE IMAGENES --}}
+<div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
+                    de Imagenes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="esperaImg" class="text-center" style="display: none">
+                    <img src="{{asset('landing/images/punt.gif')}}" height="80">
+                </div>
+                <div class="row">
+                    <div id="zoom" class="col-xl-12 text-center album">
+                        <hr class="my-5" />
+                    </div>
                 </div>
             </div>
         </div><!-- /.modal-content -->

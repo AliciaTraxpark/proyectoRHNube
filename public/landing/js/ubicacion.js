@@ -63,7 +63,6 @@ $("#empleado").on("select2:opening", function () {
 function buscarUbicaciones() {
     var empleado = $("#empleado").val();
     if (empleado != null) {
-        // onMostrarUbicaciones();
         onMostrarPantallas();
     } else {
         $.notifyClose();
@@ -114,7 +113,6 @@ function onMostrarPantallas() {
                 $("#espera").show();
             }
         }).then(function (data) {
-            console.log(data);
             var vacio = `<img id="VacioImg" style="margin-left:28%" src="admin/images/search-file.svg"
             class="mr-2 imgR" height="220" /> <br> <label for=""
             style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>`;
@@ -400,7 +398,6 @@ function onMostrarPantallas() {
                     }
                     grupo += `</div></div><br>`;
                     container.append(grupo);
-                    console.log(sumaActividadTotal, sumaRangosTotal);
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(
                         2
                     );
@@ -480,53 +477,6 @@ function onMostrarPantallas() {
         });
     }
 }
-// ? FUNCION DE BUSQUEDA
-function onMostrarUbicaciones() {
-    var value = $("#empleado").val();
-    var fecha = $("#fecha").val();
-    if (value != null) {
-        $("#card").empty();
-        $.ajax({
-            async: false,
-            url: "rutaU",
-            method: "POST",
-            data: {
-                value: value,
-                fecha: fecha
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                    location.reload();
-                }*/
-            },
-            success: function (data) {
-                dato = data;
-                if (data.length != 0) {
-                    var container = $("#card");
-                    for (let index = 0; index < data.length; index++) {
-                        var horaDelGrupo = data[index].horaUbicacion;
-                        var hora = data[index].horaUbicacion;
-                        var labelDelGrupo = horaDelGrupo + ":00:00" + "-" + (parseInt(horaDelGrupo) + 1) + ":00:00";
-                        var grupo = `<div class="row p-3"><div class="row col-12 pt-2"><span>${labelDelGrupo}</span></div>`;
-                        card = `<div class="col-2"><div id="mapid${hora}" onchange="javascript:ubicacionesMapa('${hora}')" class="mapid">
-                                        </div> <div id="images"></div></div>`;
-                        grupo += card;
-                        grupo += `</div>`;
-                        container.append(grupo);
-                    }
-                    changeMapeo();
-                }
-            },
-            error: function () { },
-        });
-    }
-}
 
 function changeMapeo() {
     $('.mapid').trigger("change");
@@ -594,9 +544,7 @@ function ubicacionesMapa(horayJ) {
         addWaypoints: false, //disable adding new waypoints to the existing path
         fitSelectedRoutes: true,
         useZoomParameter: true
-    }).addTo(map).on('routesfound', function (e) {
-        console.log(e.routes); // e.routes have length 2
-    });
+    }).addTo(map);
     L.easyButton({
         states: [{
             stateName: 'zoom-to-modal',
@@ -683,12 +631,7 @@ function recorrido(hora) {
         fitSelectedRoutes: true,
         useZoomParameter: true,
         routeWhileDragging: true
-    }).addTo(mapGlobal).on('routesfound', function (e) {
-        console.log(e.routes); // e.routes have length 2
-    }).on('routeselected', function (e) {
-        var route = e.route;
-        console.log(JSON.stringify(route.inputWaypoints, null, 2));
-    });
+    }).addTo(mapGlobal);
     L.control.fullscreen({
         position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
         title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
@@ -710,7 +653,6 @@ $('#modalRuta').on('shown.bs.modal', function () {
 function detalleRango(horayJ) {
     var onlyHora = horayJ.split(",")[0];
     var min = horayJ.split(",")[1];
-    console.log(min);
     //: HORAS DE LAS UBICACIONES
     var horaInicio_ubicacion;
     var horaFin_ubicacion;
@@ -752,9 +694,9 @@ function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
     var j = horayJ.split(",")[1];
     capturas = [];
-    datos.forEach((hora) => {
-        if (hora.horaCaptura == onlyHora) {
-            capturas = hora.minutos[j];
+    dato.forEach((hora) => {
+        if (hora.hora == onlyHora) {
+            capturas = hora.minuto[j].captura;
         }
     });
     var carusel = "";
