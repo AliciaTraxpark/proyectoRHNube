@@ -348,6 +348,7 @@ function empleadosControlRemoto() {
       // }
     },
     success: function (data) {
+      console.log(data);
       datos = data;
       var tr = "";
       for (let index = 0; index < data.length; index++) {
