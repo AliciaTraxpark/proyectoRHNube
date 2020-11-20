@@ -438,7 +438,7 @@ Route::get('/politicas', function () {
 
 // ? MODO CONTROL EN RUTA
 Route::get('ruta', 'controlRutaController@index');
-Route::post('rutaU', 'controlRutaController@show');
+Route::get('rutaReporte', 'controlRutaController@indexReporte');
 
 //INCIDENCIAS
 Route::get('/incidencias', 'incidenciasController@index');
