@@ -643,6 +643,7 @@ function recorrido(hora) {
     }).addTo(mapGlobal);
     mapGlobal.invalidateSize();
 }
+//: Alinear mapeo
 $('#modalRuta').on('shown.bs.modal', function () {
     window.setTimeout(function () {
         mapGlobal.invalidateSize();
