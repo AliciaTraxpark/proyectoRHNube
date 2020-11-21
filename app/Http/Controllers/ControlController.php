@@ -667,7 +667,7 @@ class ControlController extends Controller
             foreach ($array as $captura) {
                 $horaCaptura = explode(":", $captura->hora);
                 if (!isset($resultado[$horaCaptura[0]])) {
-                    $resultado[$horaCaptura[0]] = array("horaCaptura" => $horaCaptura[0], "minutos" => array());
+                    $resultado[$horaCaptura[0]] = array("horaCaptura" => $horaCaptura[0], "fecha" => $captura->fecha, "minutos" => array());
                 }
                 if (!isset($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]])) {
                     $resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]] = array();
@@ -685,7 +685,7 @@ class ControlController extends Controller
             foreach ($array as $ubicacion) {
                 $horaUbicacion = explode(":", $ubicacion->hora);
                 if (!isset($resultado[$horaUbicacion[0]])) {
-                    $resultado[$horaUbicacion[0]] = array("horaUbicacion" => $horaUbicacion[0], "minutos" => array());
+                    $resultado[$horaUbicacion[0]] = array("horaUbicacion" => $horaUbicacion[0], "fecha" => $ubicacion->fecha, "minutos" => array());
                 }
                 if (!isset($resultado[$horaUbicacion[0]]["minutos"][$horaUbicacion[1][0]])) {
                     $resultado[$horaUbicacion[0]]["minutos"][$horaUbicacion[1][0]] = array();
@@ -778,6 +778,7 @@ class ControlController extends Controller
         $respuesta = array();
         // * CUANDO LOS DOS ARRAY TIENEN DATOS
         if (!empty($control) && !empty($control_ruta)) {
+            // dd($control, $control_ruta);
             $menor = array();
             // ! INSERTAMOS EL MENOR TIEMPO DE UNO DE LOS ARRAYS 
             if ($control[0]["horaCaptura"] < $control_ruta[0]["horaUbicacion"]) {
@@ -805,54 +806,19 @@ class ControlController extends Controller
                 for ($element = sizeof($control_ruta) - 1; $element >= 0; $element--) {
                     // TODO: COMPARAMOS HORAS PARA ORDENAR DE MAYOR A MENOR
                     if ($control[$index]["horaCaptura"] > $control_ruta[$element]["horaUbicacion"]) {
-                        // TODO: PREGUNTAMOS SI SE ENCUENTRA VACIO EL ARRAY $respuesta
-                        if (empty($respuesta)) {
-                            $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array()); //* Insertamos hora en el array respuesta
-                            // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
-                            for ($i = 0; $i <= 6; $i++) {
-                                if (isset($control[$index]["minutos"][$i])) { //* Busqueda si existe el minuto 
-                                    // * Insertamos minutos de la hora en el array respuesta
-                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
-                                }
-                                if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
-                                    if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minuto
-                                        if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) { //* Bsuqueda de minuto en array respuesta
-                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
-                                        } else {
-                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
-                                        }
-                                    }
-                                }
-                            }
-                            // ? ****************************************************
-                        } else { // TODO: EL ARRAY CONTIENE DATOS
-                            $respuestaBusqueda = false;
-                            // * Realizamos buesqueda en el array respuesta para saber si esa hora fue insertada 
-                            foreach ($respuesta as $key => $value) {
-                                if (isset($value["hora"])) {
-                                    if ($value["hora"] == $control[$index]["horaCaptura"]) {
-                                        $respuestaBusqueda = true; //* Hora ya se encuentra registrada en el array respuesta
-                                    }
-                                }
-                            }
-                            if ($respuestaBusqueda == false) { //* Insertamos hora en array respuesta 
-                                $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array());
+                        if (date($control[$index]["fecha"]) >= date($control_ruta[$element]["fecha"])) {
+                            // TODO: PREGUNTAMOS SI SE ENCUENTRA VACIO EL ARRAY $respuesta
+                            if (empty($respuesta)) {
+                                $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array()); //* Insertamos hora en el array respuesta
                                 // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
                                 for ($i = 0; $i <= 6; $i++) {
-                                    if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                    if (isset($control[$index]["minutos"][$i])) { //* Busqueda si existe el minuto 
                                         // * Insertamos minutos de la hora en el array respuesta
                                         $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
                                     }
-                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {  //* Busqueda de la misma hora de capturas en ubicaciones
-                                        if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
-                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
-                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
-                                            } else {
-                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
-                                            }
-                                        }
-                                        if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
-                                            if (!isset($respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"])) {
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
+                                        if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minuto
+                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) { //* Bsuqueda de minuto en array respuesta
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                             } else {
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
@@ -860,46 +826,55 @@ class ControlController extends Controller
                                         }
                                     }
                                 }
-                            }
-                        }
-                    } else { //* Hora de ubicacion es mayor  a la hora de captura 
-                        // TODO: PREGUNTAMOS SI SE ENCUENTRA VACIO EL ARRAY $respuesta
-                        if (empty($respuesta)) {
-                            $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
-                            // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
-                            for ($i = 0; $i < 6; $i++) {
-                                if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
-                                    // * Insertamos minutos de la hora en el array respuesta
-                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                // ? ****************************************************
+                            } else { // TODO: EL ARRAY CONTIENE DATOS
+                                $respuestaBusqueda = true;
+                                // * Realizamos buesqueda en el array respuesta para saber si esa hora fue insertada 
+                                foreach ($respuesta as $key => $value) {
+                                    if (isset($value["hora"])) {
+                                        if ($value["hora"] == $control[$index]["horaCaptura"]) {
+                                            $respuestaBusqueda = false; //* Hora ya se encuentra registrada en el array respuesta
+                                        }
+                                    }
                                 }
-                                if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
-                                    if (isset($control[$index]["minutos"][$i])) {
-                                        if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                if ($respuestaBusqueda) { //* Insertamos hora en array respuesta 
+                                    $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array());
+                                    // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
+                                    for ($i = 0; $i <= 6; $i++) {
+                                        if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                            // * Insertamos minutos de la hora en el array respuesta
                                             $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
-                                        } else {
-                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                        }
+                                        if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {  //* Busqueda de la misma hora de capturas en ubicaciones
+                                            if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                                if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                                }
+                                            }
+                                            if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
+                                                if (!isset($respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                        } else { // TODO: EL ARRAY CONTIENE DATOS
-                            $respuestaBusqueda = false;
-                            foreach ($respuesta as $key => $value) {
-                                if (isset($value["hora"])) {
-                                    if ($value["hora"] == $control_ruta[$element]["horaUbicacion"]) {
-                                        $respuestaBusqueda = true;
-                                    }
-                                }
-                            }
-                            if ($respuestaBusqueda == false) {
+                        } else {
+                            // TODO: PREGUNTAMOS SI SE ENCUENTRA VACIO EL ARRAY $respuesta
+                            if (empty($respuesta)) {
                                 $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
-                                // ? MINUTOS
+                                // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
                                 for ($i = 0; $i < 6; $i++) {
-                                    //* UBICACION
-                                    if (isset($control_ruta[$element]["minutos"][$i])) {
+                                    if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
+                                        // * Insertamos minutos de la hora en el array respuesta
                                         $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                     }
-                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
                                         if (isset($control[$index]["minutos"][$i])) {
                                             if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
@@ -907,11 +882,154 @@ class ControlController extends Controller
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
                                             }
                                         }
+                                    }
+                                }
+                            } else { // TODO: EL ARRAY CONTIENE DATOS
+                                $respuestaBusqueda = false;
+                                foreach ($respuesta as $key => $value) {
+                                    if (isset($value["hora"])) {
+                                        if ($value["hora"] == $control_ruta[$element]["horaUbicacion"]) {
+                                            $respuestaBusqueda = true;
+                                        }
+                                    }
+                                }
+                                if ($respuestaBusqueda == false) {
+                                    $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
+                                    // ? MINUTOS
+                                    for ($i = 0; $i < 6; $i++) {
+                                        //* UBICACION
                                         if (isset($control_ruta[$element]["minutos"][$i])) {
-                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                        }
+                                        if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
+                                            if (isset($control[$index]["minutos"][$i])) {
+                                                if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                                }
+                                            }
+                                            if (isset($control_ruta[$element]["minutos"][$i])) {
+                                                if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else { //* Hora de ubicacion es mayor  a la hora de captura 
+                        if (date($control[$index]["fecha"]) > date($control_ruta[$element]["fecha"])) { //: preguntamos por la fecha
+                            if (empty($respuesta)) {
+                                $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array()); //* Insertamos hora en el array respuesta
+                                // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
+                                for ($i = 0; $i <= 6; $i++) {
+                                    if (isset($control[$index]["minutos"][$i])) { //* Busqueda si existe el minuto 
+                                        // * Insertamos minutos de la hora en el array respuesta
+                                        $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                    }
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
+                                        if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minuto
+                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) { //* Bsuqueda de minuto en array respuesta
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
                                             } else {
                                                 $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                            }
+                                        }
+                                    }
+                                }
+                                // ? ****************************************************
+                            } else { // TODO: EL ARRAY CONTIENE DATOS
+                                $respuestaBusqueda = false;
+                                // * Realizamos buesqueda en el array respuesta para saber si esa hora fue insertada 
+                                foreach ($respuesta as $key => $value) {
+                                    if (isset($value["hora"])) {
+                                        if ($value["hora"] == $control[$index]["horaCaptura"]) {
+                                            $respuestaBusqueda = true; //* Hora ya se encuentra registrada en el array respuesta
+                                        }
+                                    }
+                                }
+                                if ($respuestaBusqueda == false) { //* Insertamos hora en array respuesta 
+                                    $respuesta[sizeof($respuesta)] = array("hora" => $control[$index]["horaCaptura"], "minuto" => array());
+                                    // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
+                                    for ($i = 0; $i <= 6; $i++) {
+                                        if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                            // * Insertamos minutos de la hora en el array respuesta
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                        }
+                                        if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {  //* Busqueda de la misma hora de capturas en ubicaciones
+                                            if (isset($control[$index]["minutos"][$i])) { //* Busqueda de minutos 
+                                                if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                                }
+                                            }
+                                            if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
+                                                if (!isset($respuesta[sizeof($respuesta)]["minuto"][$i]["ubicacion"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            // TODO: PREGUNTAMOS SI SE ENCUENTRA VACIO EL ARRAY $respuesta
+                            if (empty($respuesta)) {
+                                $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
+                                // ? BUSQUEDA PARA INSERTAR POR MINUTOS EN HORA 
+                                for ($i = 0; $i < 6; $i++) {
+                                    if (isset($control_ruta[$element]["minutos"][$i])) { //* Busqueda de minutos 
+                                        // * Insertamos minutos de la hora en el array respuesta
+                                        $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                    }
+                                    if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) { //* Busqueda de la misma hora de capturas en ubicaciones
+                                        if (isset($control[$index]["minutos"][$i])) {
+                                            if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                            } else {
+                                                $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                            }
+                                        }
+                                    }
+                                }
+                            } else { // TODO: EL ARRAY CONTIENE DATOS
+                                $respuestaBusqueda = true;
+                                foreach ($respuesta as $key => $value) {
+                                    if (isset($value["hora"])) {
+                                        if ($value["hora"] == $control_ruta[$element]["horaUbicacion"]) {
+                                            $respuestaBusqueda = false;
+                                        }
+                                    }
+                                }
+                                if ($respuestaBusqueda) {
+                                    $respuesta[sizeof($respuesta)] = array("hora" => $control_ruta[$element]["horaUbicacion"], "minuto" => array());
+                                    // ? MINUTOS
+                                    for ($i = 0; $i < 6; $i++) {
+                                        //* UBICACION
+                                        if (isset($control_ruta[$element]["minutos"][$i])) {
+                                            $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => array(), "ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                        }
+                                        if ($control[$index]["horaCaptura"] ==  $control_ruta[$element]["horaUbicacion"]) {
+                                            if (isset($control[$index]["minutos"][$i])) {
+                                                if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("captura" => $control[$index]["minutos"][$i], "ubicacion" => array());
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["captura"] = $control[$index]["minutos"][$i];
+                                                }
+                                            }
+                                            if (isset($control_ruta[$element]["minutos"][$i])) {
+                                                if (!isset($respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"])) {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i] = array("ubicacion" => $control_ruta[$element]["minutos"][$i]);
+                                                } else {
+                                                    $respuesta[sizeof($respuesta) - 1]["minuto"][$i]["ubicacion"] = $control_ruta[$element]["minutos"][$i];
+                                                }
                                             }
                                         }
                                     }
