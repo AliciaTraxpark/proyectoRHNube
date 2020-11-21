@@ -19,8 +19,35 @@ class dispositivosController extends Controller
         $this->middleware(['auth', 'verified']);
     }
     public function index(){
-         
-        return view('Dispositivos.dispositivos');
+        $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if( $invitadod->asistePuerta==1){
+                        $permiso_invitado = DB::table('permiso_invitado')
+                        ->where('idinvitado', '=', $invitadod->idinvitado)
+                        ->get()->first();
+                    return view('Dispositivos.dispositivos', [
+                        'verPuerta'=>$permiso_invitado->verPuerta,'agregarPuerta'=>$permiso_invitado->agregarPuerta,'modifPuerta'=>$permiso_invitado->modifPuerta
+                    ]);
+                    } else{
+                          return redirect('/dashboard');
+                    }
+                   /*   */
+
+
+                } else {
+                    return view('Dispositivos.dispositivos');
+                }
+            }
+            else{
+                return view('Dispositivos.dispositivos');
+            }
+
     }
     public function store(Request $request){
 

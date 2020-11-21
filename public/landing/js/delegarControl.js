@@ -30,6 +30,7 @@ function abrirRegist(){
         $('#verCheckPuerta').prop('required',false);
         $("#divAsisPu").show();
         $("#divControlRe").show();
+        $("#divReporteAsis").show();
         $("#divGestActivi").show();
     $('#agregarInvitado').modal('show');
 }
@@ -187,6 +188,12 @@ function registrarInvit() {
                             switchCRemo=0;
                        }
 
+                    var swReporteAsis;
+                    if ($("#ReporteAsistCheck").is(":checked")) {
+                        swReporteAsis=1;} else{
+                            swReporteAsis=0;
+                       }
+
                     var checkTodoEmp;
                     if ($("#TodoECheck").is(":checked")) {
                         checkTodoEmp=1;} else{
@@ -262,7 +269,7 @@ function registrarInvit() {
                                     emailInv,
                                     idEmpleado,dash,permisoEmp,agregarEmp, modifEmp, bajaEmp, gActiEmp, agregarActi, modifActi,
                                     bajaActi, verPuerta, agregPuerta, ModifPuerta, switchActividades, switchasisPuerta,switchCRemo,
-                                    checkTodoEmp
+                                    checkTodoEmp,swReporteAsis
                                 },
                                 statusCode: {
                                     419: function () {
@@ -298,7 +305,7 @@ function registrarInvit() {
                                     emailInv,
                                     idareas,dash,permisoEmp, agregarEmp, modifEmp, bajaEmp, gActiEmp, agregarActi, modifActi,
                                     bajaActi, verPuerta, agregPuerta, ModifPuerta, switchActividades, switchasisPuerta,
-                                    switchCRemo, checkTodoEmp
+                                    switchCRemo, checkTodoEmp,swReporteAsis
                                 },
                                 statusCode: {
                                     419: function () {
@@ -347,6 +354,7 @@ $("#adminCheck").click(function () {
         $("#opcionesActiv").hide();
         $("#divAsisPu").hide();
         $("#divControlRe").hide();
+        $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
         $('#verCheckPuerta').prop('required',false);
     } else {
@@ -358,6 +366,7 @@ $("#adminCheck").click(function () {
         $("#opcionesActiv").show();
         $("#divAsisPu").show();
         $("#divControlRe").show();
+        $("#divReporteAsis").show();
         $("#divGestActivi").show();
         $("#opcionesAPuerta").show();
     }
@@ -392,6 +401,13 @@ function editarInv(idi){
                 $("#divInvitado_edit").hide();
                 $("#divAdminPersona_edit").hide();
                 $("#nombreEmpleado_edit").prop("required", false);
+                $("#divDash_edit").hide();
+                $("#divGestActivi_edit").hide();
+                $("#opcionesActiv_edit").hide();
+                $("#divAsisPu_edit").hide();
+                $("#opcionesAPuerta_edit").hide();
+                $("#divControlRe_edit").hide();
+                $("#divReporteAsis_edit").hide();
 
             }
             else{
@@ -450,6 +466,14 @@ $("#adminCheck_edit").click(function () {
         $("#selectArea_edit").prop("required", false);
         $("#divAdminPersona_edit").hide();
         $("#divEmpleado_edit").hide();
+        $("#divDash_edit").hide();
+        $("#divGestActivi_edit").hide();
+        $("#opcionesActiv_edit").hide();
+        $("#divAsisPu_edit").hide();
+        $("#opcionesAPuerta_edit").hide();
+        $("#divControlRe_edit").hide();
+        $("#divReporteAsis_edit").hide();
+
     } else {
         if($("#switchAreaS_edit").is(":checked")){
             $("#switchAreaS_edit").prop("checked", true);
@@ -891,6 +915,54 @@ $("#TodoECheck").click(function () {
     }
 });
 ////////////////////////////////////////////
+
+
+////////////////////////////////////////
+$('#AlcaAdminCheck_edit').change(function (event) {
+    if ($('#AlcaAdminCheck_edit').prop('checked')) {
+        $('#opcionesGE_edit').show();
+    }
+    else{
+        $('#opcionesGE_edit').hide();
+    }
+});
+////////////////////////////////////////////
+
+////////////////////////////////////////
+$('#gestActiCheck_edit').change(function (event) {
+    if ($('#gestActiCheck_edit').prop('checked')) {
+        $('#opcionesActiv_edit').show();
+    }
+    else{
+        $('#opcionesActiv_edit').hide();
+    }
+});
+////////////////////////////////////////////
+////////////////////////////////////////
+$('#asistPuertaCheck_edit').change(function (event) {
+    if ($('#asistPuertaCheck_edit').prop('checked')) {
+        $('#opcionesAPuerta_edit').show();
+        $('#verCheckPuerta_edit').prop('required',true);
+
+    }
+    else{
+        $('#opcionesAPuerta_edit').hide();
+        $('#verCheckPuerta_edit').prop('required',false);
+
+    }
+});
+////////////////////////////////////////////
+$("#TodoECheck_edit").click(function () {
+    if ($("#TodoECheck_edit").is(":checked")) {
+        $('#nombreEmpleado_edit').prop('required',false);
+        $("#divEmpleado_edit").hide();
+    } else {
+        $('#nombreEmpleado_edit').prop('required',true);
+        $("#divEmpleado_edit").show();
+    }
+});
+////////////////////////////////////////////
+
 $(function() {
 
 });

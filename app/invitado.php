@@ -22,7 +22,8 @@ class invitado extends Model
         'verTodosEmps',
         'modoCR',
         'gestionActiv',
-        'asistePuerta'
+        'asistePuerta',
+        'reporteAsisten'
 
     ];
 

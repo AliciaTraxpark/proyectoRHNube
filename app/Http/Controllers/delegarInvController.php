@@ -115,6 +115,7 @@ class delegarInvController extends Controller
         $switchasisPuerta=$request->switchasisPuerta;
         $switchCRemo=$request->switchCRemo;
         $checkTodoEmp=$request->checkTodoEmp;
+        $swReporteAsis=$request->swReporteAsis;
 
         $agregarEmp=$request->agregarEmp;
         $modifEmp=$request->modifEmp;
@@ -141,6 +142,7 @@ class delegarInvController extends Controller
         $invitado->gestionActiv=$switchActividades;
         $invitado->asistePuerta=$switchasisPuerta;
         $invitado->verTodosEmps=$checkTodoEmp;
+        $invitado->reporteAsisten=$swReporteAsis;
         $invitado->save();
         if($checkTodoEmp!=1){
         foreach($idEmpleado as $idEmpleados){
@@ -505,6 +507,7 @@ class delegarInvController extends Controller
     $switchasisPuerta=$request->switchasisPuerta;
     $switchCRemo=$request->switchCRemo;
     $checkTodoEmp=$request->checkTodoEmp;
+    $swReporteAsis=$request->swReporteAsis;
 
     $agregarEmp=$request->agregarEmp;
     $modifEmp=$request->modifEmp;
@@ -531,6 +534,7 @@ class delegarInvController extends Controller
     $invitado->gestionActiv=$switchActividades;
     $invitado->asistePuerta=$switchasisPuerta;
     $invitado->verTodosEmps=$checkTodoEmp;
+    $invitado->reporteAsisten=$swReporteAsis;
     $invitado->save();
 
     if($checkTodoEmp!=1){
