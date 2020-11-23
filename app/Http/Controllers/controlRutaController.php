@@ -290,6 +290,48 @@ class controlRutaController extends Controller
                 ->where('e.emple_estado', '=', 1)
                 ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_ini)'))
                 ->get();
+
+            function agruparEmpleadosCaptura($array)
+            {
+                $resultado = array();
+                foreach ($array as $empleado) {
+                    $hora = explode(":", $empleado->hora_ini);
+                    $fechaA = $empleado->dia;
+                    if (!isset($resultado[$empleado->emple_id])) {
+                        $resultado[$empleado->emple_id] = array("empleado" => $empleado->emple_id, "datos" => array());
+                    }
+                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA])) {
+                        $resultado[$empleado->emple_id]["datos"][$fechaA] = array();
+                    }
+                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$hora[1][0]])) {
+                        $resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$hora[1][0]] = array();
+                    }
+                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$hora[1][0]], $empleado);
+                }
+                return array_values($resultado);
+            }
+            $sqlCaptura = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
+        if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+            $tiempoDiaCaptura = DB::table('empleado as e')
+                ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
+                ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                ->select(
+                    'e.emple_id',
+                    DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start)) as fecha'),
+                    DB::raw('TIME(cp.hora_ini) as hora_ini'),
+                    DB::raw('TIME(cp.hora_fin) as hora_fin'),
+                    DB::raw($sqlCaptura),
+                    'cp.actividad',
+                    'promedio.tiempo_rango'
+                )
+                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '>=', $fechaF[0])
+                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '<=', $fechaF[1])
+                ->orderBy('cp.hora_ini', 'asc')
+                ->get();
+            $tiempoDiaCaptura = agruparEmpleadosCaptura($tiempoDiaCaptura);
+            dd($tiempoDiaCaptura);
             // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
@@ -311,8 +353,14 @@ class controlRutaController extends Controller
 
             foreach ($empleados as $empleado) {
                 array_push($respuesta, array(
-                    "id" => $empleado->emple_id, "nombre" => $empleado->nombre, "apPaterno" => $empleado->apPaterno,
-                    "apMaterno" => $empleado->apMaterno, "horas" => $horas, "fechaF" => $dias, "sumaActividad" => $sumaActividad, "sumaRango" => $sumaRango
+                    "id" => $empleado->emple_id,
+                    "nombre" => $empleado->nombre,
+                    "apPaterno" => $empleado->apPaterno,
+                    "apMaterno" => $empleado->apMaterno,
+                    "horas" => $horas,
+                    "fechaF" => $dias,
+                    "sumaActividad" => $sumaActividad,
+                    "sumaRango" => $sumaRango
                 ));
             }
             for ($j = 0; $j < sizeof($respuesta); $j++) {
