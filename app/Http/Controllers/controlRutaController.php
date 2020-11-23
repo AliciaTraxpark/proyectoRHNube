@@ -311,7 +311,7 @@ class controlRutaController extends Controller
                 return array_values($resultado);
             }
             $sqlCaptura = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
-        if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+            if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             $tiempoDiaCaptura = DB::table('empleado as e')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                 ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
@@ -331,7 +331,28 @@ class controlRutaController extends Controller
                 ->orderBy('cp.hora_ini', 'asc')
                 ->get();
             $tiempoDiaCaptura = agruparEmpleadosCaptura($tiempoDiaCaptura);
-            dd($tiempoDiaCaptura);
+            // dd($tiempoDiaCaptura);
+            $sqlUbicacion = "IF(h.id is null, if(DATEDIFF('" . $fechaF[1] . "' , DATE(u.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "', DATE(u.hora_ini)) , DAY(DATE(u.hora_ini)) ) ,
+            if(DATEDIFF('" . $fechaF[1] . "', DATE(h.start)) >= 0, DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+            $tiempoDiaUbicacion = DB::table('empleado as e')
+                ->leftJoin('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                ->join('actividad as a', 'a.Activi_id', '=', 'u.idActividad')
+                ->leftJoin('horario_dias as h', 'h.id', '=', 'u.idHorario_dias')
+                ->select(
+                    'e.emple_id',
+                    DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start)) as fecha'),
+                    DB::raw('TIME(u.hora_ini) as hora_ini'),
+                    DB::raw('TIME(u.hora_fin) as hora_fin'),
+                    DB::raw($sqlUbicacion),
+                    'u.actividad_ubicacion',
+                    'u.rango'
+                )
+                ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '>=', $fechaF[0])
+                ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '<=', $fechaF[1])
+                ->orderBy('u.hora_ini', 'asc')
+                ->get();
+            $tiempoDiaUbicacion = agruparEmpleadosCaptura($tiempoDiaUbicacion);
+            dd($tiempoDiaUbicacion);
             // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
