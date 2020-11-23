@@ -288,7 +288,7 @@ class apiSeguimientoRutaContoller extends Controller
             ->first();
         if ($horario_empleado) {
             $horario = DB::table('horario_empleado as he')
-                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
+                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic', 'he.nHoraAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->get();
 
@@ -309,8 +309,13 @@ class apiSeguimientoRutaContoller extends Controller
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
+                $horario->numeroHorasAdicional = $resp->nHoraAdic == null ? 0 : $resp->nHoraAdic;
+                foreach ($pausas as $p) {
+                    $p->pausaI = $p->pausaI == null ? 0 : $p->pausaI;
+                    $p->pausaF = $p->pausaF == null ? 0 : $p->pausaF;
+                }
                 $horario->pausas = $pausas;
-                $segundos = Carbon::createFromTimestampUTC($horario->horasObligadas)->secondsSinceMidnight();
+                $segundos = Carbon::parse($horario->horasObligadas)->isoFormat('hh:mm:ss');
                 $horario->horasObligadas = $segundos;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
