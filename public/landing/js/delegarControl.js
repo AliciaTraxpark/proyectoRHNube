@@ -415,15 +415,22 @@ function editarInv(idi){
                 $("#divInvitado_edit").show();
                 $("#divAdminPersona_edit").show();
                 $("#nombreEmpleado_edit").prop("required", true);
-                if(data[0].emple_id!=null){
-                    $('#divEmpleado_edit').show();
+                if(data[0].verTodosEmps==1){
+                    $('#TodoECheck_edit').prop('checked', true);
                     $('#switchEmpS_edit').prop('checked', true);
+                    $('#divEmpleado_edit').hide();
+                }
+                else{
+                    if(data[0].emple_id!=null){
+
+                    $('#switchEmpS_edit').prop('checked', true);
+                    $('#divEmpleado_edit').show();
                     $('#switchAreaS_edit').prop('checked', false);
-                $.each( data, function( index, value ){
-                $("#nombreEmpleado_edit option[value='"+ value.emple_id +"']").prop("selected","selected");
-                $("#nombreEmpleado_edit").trigger("change");
-                $("#nombreEmpleado_edit").prop('disabled',false);
-                 });
+                        $.each( data, function( index, value ){
+                        $("#nombreEmpleado_edit option[value='"+ value.emple_id +"']").prop("selected","selected");
+                        $("#nombreEmpleado_edit").trigger("change");
+                        $("#nombreEmpleado_edit").prop('disabled',false);
+                        });
                   $('#divArea_edit').hide();
                 }
                 else{
@@ -436,6 +443,8 @@ function editarInv(idi){
                          });
                     $('#divEmpleado_edit').hide();
                 }
+                }
+
 
 
             }
@@ -444,11 +453,135 @@ function editarInv(idi){
             }else{
                 $('#dashboardCheck_edit').prop('checked', false);
             }
+            ////////PERMISO GESTION EMPLEADO
             if(data[0].permiso_Emp==1){
                 $('#AlcaAdminCheck_edit').prop('checked', true);
+                $('#opcionesGE_edit').show();
+
+                //agregar emp permiso
+                if(data[0].agregarEmp==1){
+                    $('#AgregarCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#AgregarCheckG_edit').prop('checked', false);
+                }
+
+                //modificar emp permiso
+                if(data[0].modifEmp==1){
+                    $('#ModifCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#ModifCheckG_edit').prop('checked', false);
+                }
+
+                //baja emp permiso
+                if(data[0].bajaEmp==1){
+                    $('#BajaCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#BajaCheckG_edit').prop('checked', false);
+                }
+
+                //gestion acti emp permiso
+                if(data[0].GestActEmp==1){
+                    $('#ActivCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#ActivCheckG_edit').prop('checked', false);
+                }
+
             }else{
                 $('#AlcaAdminCheck_edit').prop('checked', false);
+                $('#opcionesGE_edit').hide();
             }
+            //////////////////////////////
+            ////////PERMISO GESTION ACTIV
+            if(data[0].gestionActiv==1){
+                $('#gestActiCheck_edit').prop('checked', true);
+                $('#opcionesActiv_edit').show();
+
+                //agregar activ permiso
+                if(data[0].agregarActi==1){
+                    $('#AgregarCheckActiv_edit').prop('checked', true);
+                }
+                else{
+                    $('#AgregarCheckActiv_edit').prop('checked', false);
+                }
+
+                //modificar activ permiso
+                if(data[0].modifActi==1){
+                    $('#ModifCheckActiv_edit').prop('checked', true);
+                }
+                else{
+                    $('#ModifCheckActiv_edit').prop('checked', false);
+                }
+
+                //baja activ permiso
+                if(data[0].bajaActi==1){
+                    $('#BajaCheckActiv_edit').prop('checked', true);
+                }
+                else{
+                    $('#BajaCheckActiv_edit').prop('checked', false);
+                }
+
+                ////////PERMISO ASIST PUERTA
+            if(data[0].asistePuerta==1){
+                $('#asistPuertaCheck_edit').prop('checked', true);
+                $("#verCheckPuerta_edit").prop("required", true);
+                $('#opcionesAPuerta_edit').show();
+
+                //ver permiso mod puerta
+                if(data[0].verPuerta==1){
+                    $('#verCheckPuerta_edit').prop('checked', true);
+                }
+                else{
+                    $('#verCheckPuerta_edit').prop('checked', false);
+                }
+
+                //agregar  permiso mod puerta
+                if(data[0].agregarPuerta==1){
+                    $('#AgregarCheckPuerta_edit').prop('checked', true);
+                }
+                else{
+                    $('#AgregarCheckPuerta_edit').prop('checked', false);
+                }
+
+                //modificar permiso mod puerta
+                if(data[0].modifPuerta==1){
+                    $('#ModifCheckPuerta_edit').prop('checked', true);
+                }
+                else{
+                    $('#ModifCheckPuerta_edit').prop('checked', false);
+                }
+
+            }else{
+                $('#asistPuertaCheck_edit').prop('checked', false);
+                $("#verCheckPuerta_edit").prop("required", false);
+                $('#opcionesAPuerta_edit').hide();
+            }
+            //////////////////////////////
+
+            }else{
+                $('#gestActiCheck_edit').prop('checked', false);
+                $('#opcionesActiv_edit').hide();
+            }
+            //////////////////////////////
+            //reporte asistencia
+            if(data[0].reporteAsisten==1){
+                $('#ReporteAsistCheck_edit').prop('checked', true);
+            }
+            else{
+                $('#ReporteAsistCheck_edit').prop('checked', false);
+            }
+
+            //modo CR
+            if(data[0].modoCR==1){
+                $('#ControlReCheck_edit').prop('checked', true);
+            }
+            else{
+                $('#ControlReCheck_edit').prop('checked', false);
+            }
+
             $("#agregarInvitado_edit").modal('show');
         },
         error: function (data) {
@@ -473,6 +606,7 @@ $("#adminCheck_edit").click(function () {
         $("#opcionesAPuerta_edit").hide();
         $("#divControlRe_edit").hide();
         $("#divReporteAsis_edit").hide();
+        $("#opcionesGE_edit").hide();
 
     } else {
         if($("#switchAreaS_edit").is(":checked")){
@@ -843,12 +977,14 @@ $('#switchEmpS_edit').change(function (event) {
         $("#nombreEmpleado_edit > option").prop("selected", false);
         $("#nombreEmpleado_edit").trigger("change");
         $("#selectTodoCheck_edit").prop('checked', false);
+        $('#divTodoECheck_edit').show();
 
 
     }
     else{
         $('#selectArea_edit').prop('disabled', false);
         $('#divEmpleado_edit').hide();
+        $('#divTodoECheck_edit').hide();
     }
 });
 

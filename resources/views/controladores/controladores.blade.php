@@ -101,14 +101,22 @@
                 color: #222222;   padding-left:0px; padding-right: 20px; ">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                     <div class="row">
+                        @if (isset($agregarPuerta))
+                         @if ($agregarPuerta==1)
+                         <div class=" col-md-6 col-xl-6 text-left">
+                            <button class="btn btn-sm btn-primary" onclick="NuevoContr()"
+                                style="background-color: #183b5d;border-color:#62778c">+ Nuevo Controlador</button>
+                        </div>
+                         @else
+
+                         @endif
+                        @else
                         <div class=" col-md-6 col-xl-6 text-left">
                             <button class="btn btn-sm btn-primary" onclick="NuevoContr()"
                                 style="background-color: #183b5d;border-color:#62778c">+ Nuevo Controlador</button>
-
-                            {{-- <button class="btn btn-sm btn-primary"
-                                id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar
-                                incidencias</button> --}}
                         </div>
+                        @endif
+
                     </div>
                     <div id="tabladiv"> <br>
                         <table id="tablaContr" class="table dt-responsive nowrap" style="font-size: 12.8px;">
@@ -332,6 +340,16 @@
 
         </div>
     </div>
+    {{-- modificar --}}
+@if (isset($modifPuerta))
+@if ($modifPuerta==1)
+<input type="hidden" id="modifContPer" value="1">
+@else
+<input type="hidden" id="modifContPer" value="0">
+@endif
+@else
+<input type="hidden" id="modifContPer" value="1">
+@endif
 @endsection
 @section('script')
     <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>

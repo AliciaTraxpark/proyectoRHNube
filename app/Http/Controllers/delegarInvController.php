@@ -386,6 +386,7 @@ class delegarInvController extends Controller
         $invitado=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->join('invitado_empleado as inve','i.idinvitado','=','inve.idinvitado')
+        ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
         ->get();
         $invitado2=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)

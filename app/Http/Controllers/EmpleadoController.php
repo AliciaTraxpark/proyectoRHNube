@@ -239,7 +239,33 @@ class EmpleadoController extends Controller
         ->where('rol_id', '=', 3)
         ->get()->first();
         if ($invitadod){
-            $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+            if ($invitadod->verTodosEmps == 1) {
+                $tabla_empleado1 = DB::table('empleado as e')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+            ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+            ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+            ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+
+            ->select(
+                'e.emple_nDoc',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'c.cargo_descripcion',
+                'a.area_descripcion',
+                'cc.centroC_descripcion',
+                'e.emple_id',
+                'md.idTipoModo as dispositivo',
+                'e.emple_foto',
+                'e.asistencia_puerta'
+            )
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+            } else {
+                $invitado_empleadoIn=DB::table('invitado_empleado as invem')
             ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
             ->where('invem.area_id', '=', null)
             ->where('invem.emple_id', '!=', null)
@@ -302,6 +328,8 @@ class EmpleadoController extends Controller
             ->where('e.emple_estado', '=', 1)
             ->get();
            }
+            }
+
         } else{
             $tabla_empleado1 = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -392,7 +420,33 @@ class EmpleadoController extends Controller
         ->where('rol_id', '=', 3)
         ->get()->first();
         if ($invitadod){
-            $invitado_empleadoIn=DB::table('invitado_empleado as invem')
+            if ($invitadod->verTodosEmps == 1) {
+                $tabla_empleado1 = DB::table('empleado as e')
+                ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
+                ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+
+                ->select(
+                    'e.emple_nDoc',
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    'c.cargo_descripcion',
+                    'a.area_descripcion',
+                    'cc.centroC_descripcion',
+                    'e.emple_id',
+                    'md.idTipoModo as dispositivo',
+                    'e.emple_foto',
+                    'e.asistencia_puerta'
+                )
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->get();
+            } else {
+                $invitado_empleadoIn=DB::table('invitado_empleado as invem')
             ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
             ->where('invem.area_id', '=', null)
             ->where('invem.emple_id', '!=', null)
@@ -455,6 +509,8 @@ class EmpleadoController extends Controller
             ->where('e.emple_estado', '=', 1)
             ->get();
            }
+            }
+
         } else{
             $tabla_empleado1 = DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
