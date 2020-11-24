@@ -78,8 +78,8 @@ use App\persona;
             @if (count($istaOrganizacion) > 0)
              <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organizacion">
                 <div class="btn-group mt-3">
-                <button type="button" class="btn btn-secondary dropdown-toggle" style="font-size: 14px!important;
-                font-weight: 700; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;"
+                <button type="button" class="btn  dropdown-toggle" style="font-size: 14px!important;
+                font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;"
                     data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">{{$organizacion->organi_razonSocial}} <i class="icon"><span data-feather="chevron-down"></span></i></button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -90,7 +90,7 @@ use App\persona;
                 </div>
             </div><!-- /btn-group -->
 
-            </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </li>
 
 
             @endif
@@ -108,7 +108,7 @@ use App\persona;
                         rgb(255, 255, 255)"> |</strong>
                          @endif
 
-                        &nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span class="badge badge-pill"
                         style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
                             src="{{asset('landing/images/modo.svg')}}" height="20" class="mr-1">Beta
