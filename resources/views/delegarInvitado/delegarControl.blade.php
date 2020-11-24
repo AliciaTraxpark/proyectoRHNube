@@ -484,7 +484,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="AlcaAdminCheck_edit">
                                         <label class="custom-control-label" for="AlcaAdminCheck_edit"
-                                            style="margin-top: 2px;font-style: oblique;">Gestión de empleados</label><br><br>
+                                            style="margin-top: 2px;font-style: oblique;">Gestión de empleados</label><br>
                                     </div>
                                 </div>
 

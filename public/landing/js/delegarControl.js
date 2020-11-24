@@ -480,6 +480,7 @@ function editarInv(idi) {
                 if (data[0].verTodosEmps == 1) {
                     $("#TodoECheck_edit").prop("checked", true);
                     $("#switchEmpS_edit").prop("checked", true);
+                    $("#nombreEmpleado_edit").prop("required", false);
                     $("#divEmpleado_edit").hide();
                 } else {
                     if (data[0].emple_id != null) {
@@ -662,6 +663,31 @@ $("#adminCheck_edit").click(function () {
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
     } else {
+        //gest emp
+        if ($("#AlcaAdminCheck_edit").is(":checked")) {
+            $('#opcionesGE_edit').show();
+        }
+        else{
+            $('#opcionesGE_edit').hide();
+        }
+
+        //gest act
+        if ($("#gestActiCheck_edit").is(":checked")) {
+            $('#opcionesActiv_edit').show();
+        }
+        else{
+            $('#opcionesActiv_edit').hide();
+        }
+
+        //gest asist pu
+        if ($("#asistPuertaCheck_edit").is(":checked")) {
+            $('#opcionesAPuerta_edit').show();
+        }
+        else{
+            $('#opcionesAPuerta_edit').hide();
+        }
+
+
         if ($("#switchAreaS_edit").is(":checked")) {
             $("#switchAreaS_edit").prop("checked", true);
             $("#divArea_edit").show();
@@ -680,8 +706,23 @@ $("#adminCheck_edit").click(function () {
         $("#nombreEmpleado_edit").prop("required", true);
         $("#divInvitado_edit").show();
         $("#divAdminPersona_edit").show();
+        $("#divDash_edit").show();
 
+                $("#divGestActivi_edit").show();
+                $("#divControlRe_edit").show();
+                $("#divAsisPu_edit").show();
+                $("#divReporteAsis_edit").show();
+
+                $("#divAdminPersona_edit").show();
         $("#nombreEmpleado_edit").prop("disabled", false);
+
+        if ($("#TodoECheck_edit").is(":checked")) {
+            $("#nombreEmpleado_edit").prop("required", false);
+            $("#divEmpleado_edit").hide();
+        }
+        else{
+
+        }
     }
 });
 //select all empleados_edit
