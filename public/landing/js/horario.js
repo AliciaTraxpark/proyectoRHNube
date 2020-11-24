@@ -2146,6 +2146,13 @@ function editarHorarioLista(idsedit) {
                                 event.stopPropagation();
                              } else{
                                 $('#fueraRango_ed').hide();
+                                if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                                    $('#errorenPausas_ed').show();
+                                    $('#FinPausa_edReg').val('');
+                                }
+                                else{
+                                    $('#errorenPausas_ed').hide();
+                                }
                              }
                             if (horaF < horaI) {
                                 $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
@@ -2729,6 +2736,13 @@ function addField() {
                     event.stopPropagation();
                  } else{
                     $('#fueraRango').hide();
+                    if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                        $('#errorenPausas').show();
+                        $('#FinPausa').val('');
+                    }
+                    else{
+                        $('#errorenPausas').hide();
+                    }
                  }
 
                  if (horaI > horaF) {
@@ -2983,6 +2997,13 @@ function addField_ed() {
                 event.stopPropagation();
              } else{
                 $('#fueraRango_ed').hide();
+                if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                    $('#errorenPausas_ed').show();
+                    $('#FinPausa_ed').val('');
+                }
+                else{
+                    $('#errorenPausas_ed').hide();
+                }
              }
 
                 if (horaF < horaI) {
@@ -3068,6 +3089,14 @@ $(function () {
                 event.stopPropagation();
              } else{
                 $('#fueraRango').hide();
+                if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                    $('#errorenPausas').show();
+                    $('#FinPausa').val('');
+                }
+                else{
+                    $('#errorenPausas').hide();
+                }
+
              }
 
              if (horaI > horaF) {
@@ -3175,6 +3204,13 @@ $(function () {
             event.stopPropagation();
          } else{
             $('#fueraRango_ed').hide();
+            if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                $('#errorenPausas_ed').show();
+                $('#FinPausa_ed').val('');
+            }
+            else{
+                $('#errorenPausas_ed').hide();
+            }
          }
         if (horaF < horaI) {
             $('#FinPausa_ed').val('');
