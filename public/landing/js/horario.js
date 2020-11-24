@@ -2148,7 +2148,7 @@ function editarHorarioLista(idsedit) {
                                 $('#fueraRango_ed').hide();
                                 if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
                                     $('#errorenPausas_ed').show();
-                                    $('#FinPausa_edReg').val('');
+                                    $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
                                 }
                                 else{
                                     $('#errorenPausas_ed').hide();
@@ -2738,7 +2738,7 @@ function addField() {
                     $('#fueraRango').hide();
                     if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
                         $('#errorenPausas').show();
-                        $('#FinPausa').val('');
+                        $('#FinPausa' + newID).val('');
                     }
                     else{
                         $('#errorenPausas').hide();
@@ -2999,7 +2999,7 @@ function addField_ed() {
                 $('#fueraRango_ed').hide();
                 if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
                     $('#errorenPausas_ed').show();
-                    $('#FinPausa_ed').val('');
+                    $('#FinPausa_ed' + newID).val('');
                 }
                 else{
                     $('#errorenPausas_ed').hide();
