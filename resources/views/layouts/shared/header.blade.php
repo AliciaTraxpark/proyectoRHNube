@@ -90,7 +90,7 @@ use App\persona;
                 </div>
             </div><!-- /btn-group -->
 
-            </li>
+            </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
             @endif
@@ -104,7 +104,7 @@ use App\persona;
                     12px" ;></span>&nbsp;  @if (count($istaOrganizacion) == 0) <strong id="strongOrganizacion" style="color:
                     rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</strong>
-                        @else &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:
+                        @else  <strong style="color:
                         rgb(255, 255, 255)"> |</strong>
                          @endif
 
