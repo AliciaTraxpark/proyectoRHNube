@@ -241,7 +241,7 @@ class apiSeguimientoRutaContoller extends Controller
             $respuesta = [];
             $fecha = Carbon::now('America/Lima');
             //* OBTENER HORAS DEL EMPLEADO EN RHBOX
-            $fechaHoy = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
+            $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
             $horasRHbox = DB::table('empleado as e')
                 ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                 ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
@@ -271,7 +271,7 @@ class apiSeguimientoRutaContoller extends Controller
             $sumaHoras = strtotime('+' . $explode[0] . 'hours ' . $explode[1] . 'minute ' . $explode[2] . 'second', strtotime($horaRuta));
             $resultado = date('H:i:s', $sumaHoras);
             // * OBTENER HORA DEL SERVIDOR
-            $horaActual = $fechaHoy;
+            $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');;
             $respuesta["tiempo"] = $resultado;
             $respuesta["horaActual"] = $horaActual;
             return response()->json($respuesta, 200);
