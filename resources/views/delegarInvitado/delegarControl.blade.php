@@ -226,7 +226,7 @@
                                                     style="margin-top: 2px;">Modificar</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-3" >
+                                        <div class="col-md-2" >
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="BajaCheckG">
                                                 <label class="form-check-label" for="BajaCheckG"
@@ -511,7 +511,7 @@
                                                     style="margin-top: 2px;">Modificar</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-3" >
+                                        <div class="col-md-2" >
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="BajaCheckG_edit">
                                                 <label class="form-check-label" for="BajaCheckG_edit"
