@@ -26,6 +26,14 @@ use App\persona;
             margin-left: 10% !important;
         }
     }
+    .dropdown-item{
+        padding: 0.15rem 1.5rem!important;
+    }
+ .dropdown-menu-right> a:hover{
+  background: rgb(236, 236, 236)!important;
+
+}
+
 </style>
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom" style="padding-left: 0px;">
     <div class="container-fluid pb-3 pt-3 contResponsive">
@@ -55,18 +63,52 @@ use App\persona;
         $organizacion=organizacion::where('organi_id','=',
         session('sesionidorg'))->first();
         $persona=persona::where('perso_id','=',$usuario->perso_id)->first();
+
+        $istaOrganizacion = DB::table('organizacion as o')
+            ->join('usuario_organizacion as uo', 'o.organi_id', '=', 'uo.organi_id')
+            ->join('rol as r', 'uo.rol_id', '=', 'r.rol_id')
+            ->where('uo.user_id','=',Auth::user()->id)
+            ->where('o.organi_id','!=',session('sesionidorg'))
+            ->get();
         @endphp
 
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu
             float-right mb-0">
 
-            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="Organizacion">
+            @if (count($istaOrganizacion) > 0)
+             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organizacion">
+                <div class="btn-group mt-3">
+                <button type="button" class="btn btn-secondary dropdown-toggle" style="font-size: 14px!important;
+                font-weight: 700; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;"
+                    data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">{{$organizacion->organi_razonSocial}} <i class="icon"><span data-feather="chevron-down"></span></i></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    @foreach ($istaOrganizacion as $istaOrganizaciones)
+                    <a class="dropdown-item" style="font-size: 12px;cursor: pointer;" onclick="ingresarOrganiza({{$istaOrganizaciones->organi_id}})">
+                        {{$istaOrganizaciones->organi_razonSocial}}</a>
+                    @endforeach
+                </div>
+            </div><!-- /btn-group -->
+
+            </li>
+
+
+            @endif
+
+
+            <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
+
                 <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <span style="color: aliceblue;font-size:
-                    12px" ;></span>&nbsp; <strong id="strongOrganizacion" style="color:
+                    12px" ;></span>&nbsp;  @if (count($istaOrganizacion) == 0) <strong id="strongOrganizacion" style="color:
                     rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</strong> &nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</strong>
+                        @else <strong style="color:
+                        rgb(255, 255, 255)"> |</strong>
+                         @endif
+
+                        &nbsp;&nbsp;&nbsp;
                     <span class="badge badge-pill"
                         style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
                             src="{{asset('landing/images/modo.svg')}}" height="20" class="mr-1">Beta
@@ -227,6 +269,30 @@ use App\persona;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- end Topbar -->
+<script>
+    function ingresarOrganiza(idorganiza){
+    $.ajax({
+        type: "post",
+        async:false,
+        url: "/enviarIDorg",
+        data: {
+            idorganiza
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            location.reload();
+            },
+    });
+
+}
+</script>
 @section('script')
 <script src="{{asset('landing/js/editarPerfil.js')}}"></script>
 @endsection
