@@ -167,6 +167,30 @@ function onMostrarPantallas() {
                             // ? RECORREMOS EL ARRAY DE CAPTURAS
                             for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
                                 if (data[index].minuto[j]["captura"].length > 1) {
+                                    if (data[index].minuto[j]["ubicacion"].length != 0) {
+                                        for (let minutosUbicacion = 0; minutosUbicacion < data[index].minuto[j]["ubicacion"].length; minutosUbicacion++) {
+                                            if (data[index].minuto[j]["captura"][indexMinutos].hora_ini < data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_ini) {
+                                                var horaInicioNow = data[index].minuto[j]["captura"][indexMinutos].hora_ini;
+                                                var horaFinNow = data[index].minuto[j]["captura"][indexMinutos].hora_fin;
+                                                var horaCompararNow = data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_ini;
+                                                var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                                if (resp) {
+                                                    //* OBTENEMOS LA NUEVA ACTIVIDAD
+                                                    var actividadNueva = parseFloat((data[index].minuto[j]["captura"][indexMinutos].tiempoA + data[index].minuto[j]["ubicacion"][minutosUbicacion].actividad) / 2);
+                                                    promedios = promedios + actividadNueva;
+                                                    //* OBTENEMOS EL NUEVO RANGO
+                                                    var rangoNuevo = parseFloat((data[index].minuto[j]["captura"][indexMinutos].rango + data[index].minuto[j]["ubicacion"][minutosUbicacion].rango) / 2);
+                                                    sumaRangos = sumaRangos + rangoNuevo;
+                                                    //* VALORES NECESARIOS PASAR
+                                                    sumaActividad = sumaActividad + actividadNueva;
+                                                    hora_inicial = data[index].minuto[j]["captura"][indexMinutos].hora_ini;
+                                                    if (data[index].minuto[j]["captura"][indexMinutos].hora_fin > data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin) {
+                                                        hora_final = data[index].minuto[j]["captura"][indexMinutos].hora_fin
+                                                    } else hora_final = data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin;
+                                                }
+                                            }
+                                        }
+                                    }
                                     promedios = promedios + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de promedios de grupos de imagenes
                                     sumaRangos = sumaRangos + data[index].minuto[j]["captura"][indexMinutos].rango; //* suma de rangos de grupos de imagenes
                                     sumaActividad = sumaActividad + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de actividad de grupos de imagenes
