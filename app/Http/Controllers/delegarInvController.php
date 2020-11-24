@@ -383,6 +383,10 @@ class delegarInvController extends Controller
 
     public function datosInvitado(Request $request){
         $idinvitado=$request->idi;
+
+        $invitadoG=DB::table('invitado as i')
+        ->where('i.idinvitado','=', $idinvitado)->get()->first();
+
         $invitado=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->join('invitado_empleado as inve','i.idinvitado','=','inve.idinvitado')
@@ -391,15 +395,22 @@ class delegarInvController extends Controller
         $invitado2=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->get();
+        $invitado3=DB::table('invitado as i')
+        ->where('i.idinvitado','=', $idinvitado)
+        ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
+        ->get();
 
 
-        if(!$invitado->isEmpty()){
-            return $invitado;
-        }
-        else{
+        if($invitadoG->rol_id==1){
             return $invitado2;
-        }
 
+        } else{
+            if($invitadoG->verTodosEmps==1){
+                return $invitado3;
+            } else{
+                return $invitado;
+            }
+        }
 
     }
 
@@ -415,9 +426,13 @@ class delegarInvController extends Controller
             $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
             $invitado_empleado->each->delete();
 
+            DB::table('permiso_invitado')->where('idinvitado', '=', $idinvitado)->delete();
+
             $invitadoAct  = DB::table('invitado')
             ->where('idinvitado', '=',  $idinvitado)
                ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> 1]);
+
+
 
                $usuario_organizacion =DB::table('usuario_organizacion')
                ->where('user_id', '=', $invitado->user_Invitado )
@@ -432,11 +447,30 @@ class delegarInvController extends Controller
     $idEmpleado=$request->idEmpleado;
     $dash_ed=$request->dash_ed;
     $permisoEmp_ed=$request->permisoEmp_ed;
+
+    $switchActividades_ed=$request->switchActividades_ed;
+    $switchasisPuerta_ed=$request->switchasisPuerta_ed;
+    $switchCRemo_ed=$request->switchCRemo_ed;
+    $swReporteAsis_ed=$request->swReporteAsis_ed;
+    $checkTodoEmp_ed=$request->checkTodoEmp_ed;
+
+    $agregarEmp_ed=$request->agregarEmp_ed;
+    $modifEmp_ed=$request->modifEmp_ed;
+    $bajaEmp_ed=$request->bajaEmp_ed;
+    $gActiEmp_ed=$request->gActiEmp_ed;
+    $agregarActi_ed=$request->agregarActi_ed;
+    $modifActi_ed=$request->modifActi_ed;
+    $bajaActi_ed=$request->bajaActi_ed;
+    $verPuerta_ed=$request->verPuerta_ed;
+    $agregPuerta_ed=$request->agregPuerta_ed;
+    $ModifPuerta_ed=$request->ModifPuerta_ed;
+
     $invitado = invitado::find( $idinvitado);
     if($invitado->rol_id==3){
         ///delete all emp
        $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
        $invitado_empleado->each->delete();
+       if($checkTodoEmp_ed==0){
         ////copiar empleado
        foreach($idEmpleado as $idEmpleados){
         $invitado_empleado = new invitado_empleado();
@@ -445,28 +479,82 @@ class delegarInvController extends Controller
         $invitado->estado_condic=1;
         $invitado_empleado->save();
         }
+      }
+
         ///
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
-           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed]);
+           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
+           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,
+           'reporteAsisten'=> $swReporteAsis_ed ]);
 
+           //actualizar permiso invitado
+           $permisoActu  = DB::table('permiso_invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
+           'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
+           'bajaActi'=>$bajaActi_ed,
+           'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
     }
     else{
+        if($checkTodoEmp_ed==0){
         foreach($idEmpleado as $idEmpleados){
             $invitado_empleado = new invitado_empleado();
             $invitado_empleado->idinvitado = $invitado->idinvitado;
             $invitado_empleado->emple_id = $idEmpleados;
             $invitado_empleado->save();
         }
-
+       }
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
-           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed]);
+           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
+           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,
+           'reporteAsisten'=> $swReporteAsis_ed]);
 
            $usuario_organizacion =DB::table('usuario_organizacion')
            ->where('user_id', '=', $invitado->user_Invitado )
            ->where('organi_id', '=', session('sesionidorg'))
            ->update(['rol_id' => 3]);
+           ////////////////////////////////////////////////////////////////
+           $permiso_invitado= new permiso_invitado();
+        $permiso_invitado->idinvitado =$invitado->idinvitado;
+        if($permisoEmp_ed==1){
+        $permiso_invitado->agregarEmp=$agregarEmp_ed;
+        $permiso_invitado->modifEmp=$modifEmp_ed;
+        $permiso_invitado->bajaEmp=$bajaEmp_ed;
+        $permiso_invitado->GestActEmp=$gActiEmp_ed;
+        }
+        else{
+            $permiso_invitado->agregarEmp=0;
+            $permiso_invitado->modifEmp=0;
+            $permiso_invitado->bajaEmp=0;
+            $permiso_invitado->GestActEmp=0;
+        }
+
+        if($switchActividades_ed==1){
+        $permiso_invitado->agregarActi=$agregarActi_ed;
+        $permiso_invitado->modifActi=$modifActi_ed;
+        $permiso_invitado->bajaActi=$bajaActi_ed;
+        } else{
+        $permiso_invitado->agregarActi=0;
+        $permiso_invitado->modifActi=0;
+        $permiso_invitado->bajaActi=0;
+        }
+
+        if($switchasisPuerta_ed==1){
+            $permiso_invitado->verPuerta=$verPuerta_ed;
+            $permiso_invitado->agregarPuerta=$agregPuerta_ed;
+            $permiso_invitado->modifPuerta=$ModifPuerta_ed;
+        } else{
+            $permiso_invitado->verPuerta=0;
+            $permiso_invitado->agregarPuerta=0;
+            $permiso_invitado->modifPuerta=0;
+        }
+
+        $permiso_invitado->save();
+           ////////////////////////////////////////////////////////////////
     }
    }
 
@@ -590,11 +678,30 @@ public function editarInviArea(Request $request){
     $idareas_edit=$request->idareas_edit;
     $dash_ed=$request->dash_ed;
     $permisoEmp_ed=$request->permisoEmp_ed;
+
+    $switchActividades_ed=$request->switchActividades_ed;
+    $switchasisPuerta_ed=$request->switchasisPuerta_ed;
+    $switchCRemo_ed=$request->switchCRemo_ed;
+    $swReporteAsis_ed=$request->swReporteAsis_ed;
+    $checkTodoEmp_ed=$request->checkTodoEmp_ed;
+
+    $agregarEmp_ed=$request->agregarEmp_ed;
+    $modifEmp_ed=$request->modifEmp_ed;
+    $bajaEmp_ed=$request->bajaEmp_ed;
+    $gActiEmp_ed=$request->gActiEmp_ed;
+    $agregarActi_ed=$request->agregarActi_ed;
+    $modifActi_ed=$request->modifActi_ed;
+    $bajaActi_ed=$request->bajaActi_ed;
+    $verPuerta_ed=$request->verPuerta_ed;
+    $agregPuerta_ed=$request->agregPuerta_ed;
+    $ModifPuerta_ed=$request->ModifPuerta_ed;
+
     $invitado = invitado::find( $idinvitado);
     if($invitado->rol_id==3){
         ///delete all emp
        $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
        $invitado_empleado->each->delete();
+       if($checkTodoEmp_ed==0){
         ////copiar empleado
        foreach($idareas_edit as $idareas_edits){
         $invitado_empleado = new invitado_empleado();
@@ -603,28 +710,82 @@ public function editarInviArea(Request $request){
 
         $invitado_empleado->save();
         }
+    }
         ///
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
-           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed]);
+           ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
+           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,
+           'reporteAsisten'=> $swReporteAsis_ed ]);
+           //actualizar permiso invitado
+           $permisoActu  = DB::table('permiso_invitado')
+        ->where('idinvitado', '=',  $idinvitado)
+           ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
+           'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
+           'bajaActi'=>$bajaActi_ed,
+           'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
 
     }
     else{
+        if($checkTodoEmp_ed==0){
         foreach($idareas_edit as $idareas_edits){
             $invitado_empleado = new invitado_empleado();
             $invitado_empleado->idinvitado = $invitado->idinvitado;
             $invitado_empleado->area_id = $idareas_edits;
             $invitado_empleado->save();
         }
+    }
 
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
-           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed]);
+           ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
+           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,
+           'reporteAsisten'=> $swReporteAsis_ed]);
 
            $usuario_organizacion =DB::table('usuario_organizacion')
            ->where('user_id', '=', $invitado->user_Invitado )
            ->where('organi_id', '=', session('sesionidorg'))
            ->update(['rol_id' => 3]);
+           ////////////////////////////////////////////////////////////////
+           $permiso_invitado= new permiso_invitado();
+        $permiso_invitado->idinvitado =$invitado->idinvitado;
+        if($permisoEmp_ed==1){
+        $permiso_invitado->agregarEmp=$agregarEmp_ed;
+        $permiso_invitado->modifEmp=$modifEmp_ed;
+        $permiso_invitado->bajaEmp=$bajaEmp_ed;
+        $permiso_invitado->GestActEmp=$gActiEmp_ed;
+        }
+        else{
+            $permiso_invitado->agregarEmp=0;
+            $permiso_invitado->modifEmp=0;
+            $permiso_invitado->bajaEmp=0;
+            $permiso_invitado->GestActEmp=0;
+        }
+
+        if($switchActividades_ed==1){
+        $permiso_invitado->agregarActi=$agregarActi_ed;
+        $permiso_invitado->modifActi=$modifActi_ed;
+        $permiso_invitado->bajaActi=$bajaActi_ed;
+        } else{
+        $permiso_invitado->agregarActi=0;
+        $permiso_invitado->modifActi=0;
+        $permiso_invitado->bajaActi=0;
+        }
+
+        if($switchasisPuerta_ed==1){
+            $permiso_invitado->verPuerta=$verPuerta_ed;
+            $permiso_invitado->agregarPuerta=$agregPuerta_ed;
+            $permiso_invitado->modifPuerta=$ModifPuerta_ed;
+        } else{
+            $permiso_invitado->verPuerta=0;
+            $permiso_invitado->agregarPuerta=0;
+            $permiso_invitado->modifPuerta=0;
+        }
+
+        $permiso_invitado->save();
+           ////////////////////////////////////////////////////////////////
     }
 }
 }

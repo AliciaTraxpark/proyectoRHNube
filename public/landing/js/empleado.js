@@ -5498,6 +5498,13 @@ function addField() {
                 event.stopPropagation();
             } else {
                 $('#fueraRango_ed').hide();
+                if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                    $('#errorenPausas_ed').show();
+                    $('#FinPausa_ed' + newID).val('');
+                }
+                else{
+                    $('#errorenPausas_ed').hide();
+                }
             }
 
             if (horaF < horaI) {
@@ -5631,6 +5638,13 @@ function addFieldRe() {
                 event.stopPropagation();
             } else {
                 $('#fueraRango').hide();
+                if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                    $('#errorenPausas').show();
+                    $('#FinPausa' + newID).val('');
+                }
+                else{
+                    $('#errorenPausas').hide();
+                }
             }
 
             if (horaF < horaI) {
@@ -5945,6 +5959,13 @@ $(function () {
                 event.stopPropagation();
              } else{
                 $('#fueraRango').hide();
+                if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                    $('#errorenPausas').show();
+                    $('#FinPausa').val('');
+                }
+                else{
+                    $('#errorenPausas').hide();
+                }
              }
 
              if (horaI > horaF) {
@@ -6052,6 +6073,13 @@ $(function () {
             event.stopPropagation();
         } else {
             $('#fueraRango_ed').hide();
+            if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                $('#errorenPausas_ed').show();
+                $('#FinPausa_ed').val('');
+            }
+            else{
+                $('#errorenPausas_ed').hide();
+            }
         }
         if (horaF < horaI) {
             $('#FinPausa_ed').val('');
