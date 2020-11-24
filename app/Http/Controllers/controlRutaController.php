@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -318,6 +319,7 @@ class controlRutaController extends Controller
         }
 
         $respuesta = [];
+        $unir = [];
 
         if (sizeof($empleados) > 0) {
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
@@ -410,11 +412,56 @@ class controlRutaController extends Controller
                 ->orderBy('u.hora_ini', 'asc')
                 ->get();
             $tiempoDiaUbicacion = agruparEmpleadosCaptura($tiempoDiaUbicacion);
-            dd($tiempoDiaUbicacion);
+            dd($tiempoDiaCaptura, $tiempoDiaUbicacion);
             // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
             $diff = $date1->diff($date2);
+            //? FUNCION DE RANGOS DE HORAS
+            function checkHora($hora_ini, $hora_fin, $hora_now)
+            {
+                $horaI = Carbon::parse($hora_ini);
+                $horaF = Carbon::parse($hora_fin);
+                $horaN = Carbon::parse($hora_now);
+
+                if ($horaN->gte($horaI) && $horaN->lt($horaF)) {
+                    return true;
+                } else return false;
+            }
+            //? UNIR DATOS EN UNO SOLO
+            for ($i = 0; $i < sizeof($tiempoDiaCaptura); $i++) {
+                for ($j = 0; $j < sizeof($tiempoDiaUbicacion); $j++) {
+                    if ($tiempoDiaCaptura[$i]["empleado"] == $tiempoDiaUbicacion[$j]["empleado"]) {
+                        for ($d = 0; $d < $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
+                            //* Buscamos si existe esos dias en los 2 arrays
+                            if (isset($tiempoDiaCaptura[$i]["datos"][$d]) && isset($tiempoDiaUbicacion[$j]["datos"][$d])) {
+                                $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
+                                $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
+                                for ($hora = 0; $hora < 24; $hora++) { //* Recorremos en formato de 24 horas
+                                    if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) {
+                                        //* Recorremos en formato minutos 
+                                        for ($m = 0; $m < 6; $m++) {
+                                            if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) {
+                                                foreach ($horaCaptura[$hora]["minuto"][$m] as $key => $value) {
+                                                    foreach ($horaUbicacion[$hora]["minuto"][$m] as $keyU => $valueU) {
+                                                        if ($value["hora_ini"] < $valueU["hora_ini"]) {
+                                                            $resp = checkHora($value["hora_ini"], $value["hora_fin"], $valueU["hora_ini"]);
+                                                            if($resp){
+                                                                
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //? **********************
             //Array
             $horas = array();
             $dias = array();
@@ -442,18 +489,19 @@ class controlRutaController extends Controller
                     "sumaRango" => $sumaRango
                 ));
             }
-            for ($j = 0; $j < sizeof($respuesta); $j++) {
-                for ($i = 0; $i < sizeof($horasTrabajadas); $i++) {
-                    if ($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id) {
-                        $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
-                        $respuesta[$j]["sumaActividad"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaA == null ? "0" : $horasTrabajadas[$i]->sumaA;
-                        $respuesta[$j]["sumaRango"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaR == null ? "0" : $horasTrabajadas[$i]->sumaR;
-                    }
-                }
-                $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
-                $respuesta[$j]['sumaActividad'] = array_reverse($respuesta[$j]['sumaActividad']);
-                $respuesta[$j]['sumaRango'] = array_reverse($respuesta[$j]['sumaRango']);
-            }
+            // for ($j = 0; $j < sizeof($respuesta); $j++) {
+            //     for ($i = 0; $i < sizeof($horasTrabajadas); $i++) {
+            //         if ($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id) {
+            //             $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
+            //             $respuesta[$j]["sumaActividad"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaA == null ? "0" : $horasTrabajadas[$i]->sumaA;
+            //             $respuesta[$j]["sumaRango"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaR == null ? "0" : $horasTrabajadas[$i]->sumaR;
+            //         }
+            //     }
+            //     $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
+            //     $respuesta[$j]['sumaActividad'] = array_reverse($respuesta[$j]['sumaActividad']);
+            //     $respuesta[$j]['sumaRango'] = array_reverse($respuesta[$j]['sumaRango']);
+            // }
+
         }
         return response()->json($respuesta, 200);
     }
