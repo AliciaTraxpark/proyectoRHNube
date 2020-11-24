@@ -1034,7 +1034,7 @@ use App\proyecto_empleado;
                          <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all">
-                            Eliminar
+                            Dar de baja
                         </button>
                          @else
 
@@ -1043,7 +1043,7 @@ use App\proyecto_empleado;
                         <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all">
-                            Eliminar
+                            Dar de baja
                         </button>
                         @endif
 
