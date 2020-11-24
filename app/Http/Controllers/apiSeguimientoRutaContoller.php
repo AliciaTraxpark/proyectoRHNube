@@ -271,7 +271,7 @@ class apiSeguimientoRutaContoller extends Controller
             $sumaHoras = strtotime('+' . $explode[0] . 'hours ' . $explode[1] . 'minute ' . $explode[2] . 'second', strtotime($horaRuta));
             $resultado = date('H:i:s', $sumaHoras);
             // * OBTENER HORA DEL SERVIDOR
-            $horaActual = $fecha->timestamp;
+            $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');;
             $respuesta["tiempo"] = $resultado;
             $respuesta["horaActual"] = $horaActual;
             return response()->json($respuesta, 200);
