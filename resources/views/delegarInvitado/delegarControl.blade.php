@@ -584,11 +584,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12" id="opcionesAPuerta_edit" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                <div class="col-md-12" id="opcionesAPuerta_edit" style="padding-top: 10px; font-style: oblique; display:none ;  padding-bottom: 15px;" >
                                     <div class="row">
                                         <div class="col-md-1 col-xl-2" >
                                             <div class="form-check">
-                                                <input type="checkbox" name="opPuertaN" class="form-check-input" id="verCheckPuerta_edit">
+                                                <input type="checkbox"  class="form-check-input" id="verCheckPuerta_edit">
                                                 <label class="form-check-label" for="verCheckPuerta_edit"
                                                     style="margin-top: 2px;">Ver</label>
                                             </div>
