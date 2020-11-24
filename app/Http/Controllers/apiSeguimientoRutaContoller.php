@@ -12,6 +12,7 @@ use App\ubicacion;
 use App\ubicacion_ruta;
 use App\vinculacion_ruta;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -287,15 +288,19 @@ class apiSeguimientoRutaContoller extends Controller
             ->get()
             ->first();
         if ($horario_empleado) {
-            $horario = DB::table('horario_empleado as he')
-                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
+            $fecha = Carbon::now();
+            $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+            $horarioG = DB::table('horario_empleado as he')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic', 'he.nHoraAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                 ->get();
-
-            foreach ($horario as $resp) {
+            foreach ($horarioG as $resp) {
                 $horario_dias = DB::table('horario_dias  as hd')
                     ->select(DB::raw('DATE(hd.start) as start'), 'hd.id')
                     ->where('hd.id', '=', $resp->horario_dias_id)
+                    ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                     ->get()->first();
                 $horario = DB::table('horario as h')
                     ->select('h.horario_id', 'h.horario_descripcion', 'h.horaI', 'h.horaF', 'h.horasObliga as horasObligadas', 'h.horario_tolerancia as tolerancia_inicio', 'h.horario_toleranciaF as tolerancia_final')
@@ -309,11 +314,14 @@ class apiSeguimientoRutaContoller extends Controller
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
+                $horario->numeroHorasAdicional = $resp->nHoraAdic == null ? 0 : $resp->nHoraAdic;
+                foreach ($pausas as $p) {
+                    $p->pausaI = $p->pausaI == null ? 0 : $p->pausaI;
+                    $p->pausaF = $p->pausaF == null ? 0 : $p->pausaF;
+                }
                 $horario->pausas = $pausas;
-                $segundos = Carbon::createFromTimestampUTC($horario->horasObligadas)->secondsSinceMidnight();
-                $horario->horasObligadas = $segundos;
-                $fecha = Carbon::now();
-                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                $horaN = DateTime::createFromFormat("H:i:s", $horario->horasObligadas);
+                $horario->horasObligadas = $horaN->format("H") * 60 + $horaN->format("i") + $horaN->format("s") / 60;
                 if ($horario_dias->start == $fechaHoy) {
                     array_push($respuesta, $horario);
                 }
