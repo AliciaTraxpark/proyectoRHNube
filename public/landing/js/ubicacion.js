@@ -175,7 +175,7 @@ function onMostrarPantallas() {
                                     for (let indexC = 0; indexC < data[index].minuto[j]["captura"][indexMinutos].imagen.length; indexC++) { //* recorrer imagenes para insertar en el carrusel
                                         if (data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen != null) { //* solo grupos que tienen imagenes
                                             var imgR = data[index].minuto[j]["captura"][indexMinutos].imagen[indexC].imagen; //* obtener ruta de la imagen
-                                            var rspI = imgR.replace(/\//g, "-"); //* cambair carateres
+                                            var rspI = imgR.replace(/\//g, "-"); //* cambiar carateres
                                             var encr = CryptoJS.enc.Utf8.parse(rspI); //* encriptar ruta
                                             var base64 = CryptoJS.enc.Base64.stringify(encr); //* convertir ruta en base 64
                                             // TODO: Colocar imagenes en carrusel 
@@ -294,19 +294,6 @@ function onMostrarPantallas() {
                                     promedios = 0;
                                     sumaRangos = 0;
                                     sumaActividad = 0;
-                                }
-                                else {
-                                    if (data[index].minuto[j]["captura"].length == 0) {
-                                        sumaRangosTotal += data[index].minuto[j]["ubicacion"][0].rango;
-                                        sumaActividadTotal += data[index].minuto[j]["ubicacion"][0].actividad;
-                                        if (data[index].minuto[j]["ubicacion"][0].rango != 0) {
-                                            promedio = ((data[index].minuto[j]["ubicacion"][0].actividad / data[index].minuto[j]["ubicacion"][0].rango) * 100).toFixed(2);
-                                        } else {
-                                            promedio = 0;
-                                        }
-                                        var totalR = enteroTime(data[index].minuto[j]["ubicacion"][0].rango);
-                                        totalCM = totalR;
-                                    }
                                 }
                             }
                             //! Colores de las actividades
