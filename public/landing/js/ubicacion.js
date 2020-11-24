@@ -170,6 +170,7 @@ function onMostrarPantallas() {
                                     if (data[index].minuto[j]["ubicacion"].length != 0) {
                                         for (let minutosUbicacion = 0; minutosUbicacion < data[index].minuto[j]["ubicacion"].length; minutosUbicacion++) {
                                             if (data[index].minuto[j]["captura"][indexMinutos].hora_ini < data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_ini) {
+                                                console.log(data[index].minuto[j]["captura"][indexMinutos].hora_ini, data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_ini);
                                                 var horaInicioNow = data[index].minuto[j]["captura"][indexMinutos].hora_ini;
                                                 var horaFinNow = data[index].minuto[j]["captura"][indexMinutos].hora_fin;
                                                 var horaCompararNow = data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_ini;
@@ -202,6 +203,7 @@ function onMostrarPantallas() {
                                                     } else hora_final = data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin;
                                                 }
                                             } else {
+                                                console.log(data[index].minuto[j]["captura"][indexMinutos].hora_ini, data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_ini);
                                                 var horaInicioNow = data[index].minuto[j]["ubicacion"][indexMinutos].hora_ini;
                                                 var horaFinNow = data[index].minuto[j]["ubicacion"][indexMinutos].hora_fin;
                                                 var horaCompararNow = data[index].minuto[j]["captura"][minutosUbicacion].hora_ini;
@@ -523,7 +525,6 @@ function onMostrarPantallas() {
                     grupo += `</div></div><br>`;
                     container.append(grupo);
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(2);
-                    console.log(sumaActividadTotal, sumaRangosTotal, totalActividadRango);
                     var span = "";
                     span += `${totalActividadRango}%`;
                     $("#promHoras" + $i).append(span);
