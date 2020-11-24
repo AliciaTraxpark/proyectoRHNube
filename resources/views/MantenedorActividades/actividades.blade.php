@@ -135,6 +135,26 @@
 </style>
 {{-- BOTONES DE ASIGNACION Y REGISTAR --}}
 <div class="row pr-3 pl-3 pt-3 rowResponsive">
+    @if (isset($agregarActi))
+        @if ($agregarActi==1)
+        <div class="col-md-6 text-left colResponsive">
+            <button type="button" class="btn btn-sm mt-1"
+                style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
+                onclick="javascript:asignarActividadMasiso()">
+                <img src="{{asset('landing/images/capas.svg')}}" class="mr-1" height="18">
+                Asignar actividad
+            </button>
+        </div>
+        <div class="col-md-6 text-right colResponsive">
+            <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
+                Actividad
+            </button>
+        </div>
+        @else
+
+        @endif
+    @else
     <div class="col-md-6 text-left colResponsive">
         <button type="button" class="btn btn-sm mt-1"
             style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
@@ -149,6 +169,8 @@
             Actividad
         </button>
     </div>
+    @endif
+
 </div>
 {{-- FINALIZACION --}}
 {{-- TABLA DE ACTIVIDADES --}}
@@ -461,6 +483,26 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {{-- FINALIZACION --}}
+{{-- visibilidad de switch --}}
+@if (isset($modifActi))
+@if ($modifActi==1)
+<input type="hidden" id="modifActI" value="1">
+@else
+<input type="hidden" id="modifActI" value="0">
+@endif
+@else
+<input type="hidden" id="modifActI" value="1">
+@endif
+{{-- permiso de dar de baja --}}
+@if (isset($bajaActi))
+@if ($bajaActi==1)
+<input type="hidden" id="bajaActI" value="1">
+@else
+<input type="hidden" id="bajaActI" value="0">
+@endif
+@else
+<input type="hidden" id="bajaActI" value="1">
+@endif
 @if (Auth::user())
 <script>
     $(function() {

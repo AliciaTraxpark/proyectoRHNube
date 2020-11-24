@@ -57,9 +57,13 @@ $(document).ready(function () {
   columns: [
     { data: "cont_estado",
     "render": function (data, type, row) {
-
+        var variablePermiso=$('#modifContPer').val();
+        if(variablePermiso==1){
            return '<a onclick="editarContra('+row.idControladores+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
-
+        }
+        else{
+            return '';
+        }
 
 
     } },

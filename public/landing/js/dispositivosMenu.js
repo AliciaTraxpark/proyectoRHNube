@@ -58,7 +58,15 @@ $(document).ready(function () {
 
     { data: "dispo_codigoNombre",
     "render": function (data, type, row) {
-           return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
+            var variablePermiso=$('#modifDisPer').val();
+            if(variablePermiso==1){
+
+               return '<a onclick="editarDispo('+row.idDispositivos+')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>';
+            }
+            else{
+                return '';
+            }
+
      } },
 
      { data: null },
@@ -112,17 +120,34 @@ $(document).ready(function () {
       }},
       { data: "dispo_tSincro",
      "render": function (data, type, row) {
-        if(row.dispo_estadoActivo==1){
-            return '<div class="custom-control custom-switch">'+
-            '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" checked>'+
-            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
-        '</div>';
-        } else{
-            return '<div class="custom-control custom-switch">'+
-            '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" >'+
-            '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
-        '</div>';
-        }
+        var variablePermiso2=$('#modifDisPer').val();
+        if(variablePermiso2==1){
+            if(row.dispo_estadoActivo==1){
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" checked>'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
+            '</div>';
+            } else{
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" >'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'" onclick="switchEleg('+row.idDispositivos+')" style="font-weight: bold"></label>'+
+            '</div>';
+            }
+           }
+           else{
+            if(row.dispo_estadoActivo==1){
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" checked disabled>'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'"  style="font-weight: bold"></label>'+
+            '</div>';
+            } else{
+                return '<div class="custom-control custom-switch">'+
+                '<input type="checkbox" class="custom-control-input" id="customSwitDetalles'+row.idDispositivos+'" disabled>'+
+                '<label class="custom-control-label" for="customSwitDetalles'+row.idDispositivos+'"  style="font-weight: bold"></label>'+
+            '</div>';
+            }
+           }
+
 
 
       }},
@@ -137,6 +162,7 @@ $(document).ready(function () {
        cell.innerHTML = i+1;
    } );
 } ).draw();
+
 });
 function maxLengthCheck(object) {
     if (object.value.length > object.maxLength)

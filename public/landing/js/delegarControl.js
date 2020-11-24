@@ -24,7 +24,14 @@ function abrirRegist(){
 
         $("#selectArea").prop("required", false);
         $("#divAdminPersona").show();
-
+        $('#opcionesGE').hide();
+        $('#opcionesActiv').hide();
+        $('#opcionesAPuerta').hide();
+        $('#verCheckPuerta').prop('required',false);
+        $("#divAsisPu").show();
+        $("#divControlRe").show();
+        $("#divReporteAsis").show();
+        $("#divGestActivi").show();
     $('#agregarInvitado').modal('show');
 }
 
@@ -163,13 +170,106 @@ function registrarInvit() {
                     permisoEmp=1;} else{
                         permisoEmp=0;
                    }
+                   var  switchActividades;
+                   if ($("#gestActiCheck").is(":checked")) {
+                    switchActividades=1;} else{
+                        switchActividades=0;
+                   }
+
+                    var switchasisPuerta;
+                    if ($("#asistPuertaCheck").is(":checked")) {
+                        switchasisPuerta=1;} else{
+                            switchasisPuerta=0;
+                       }
+
+                    var switchCRemo;
+                    if ($("#ControlReCheck").is(":checked")) {
+                        switchCRemo=1;} else{
+                            switchCRemo=0;
+                       }
+
+                    var swReporteAsis;
+                    if ($("#ReporteAsistCheck").is(":checked")) {
+                        swReporteAsis=1;} else{
+                            swReporteAsis=0;
+                       }
+
+                    var checkTodoEmp;
+                    if ($("#TodoECheck").is(":checked")) {
+                        checkTodoEmp=1;} else{
+                            checkTodoEmp=0;
+                       }
+                   /////////////////////////////////////
+                   var agregarEmp;
+                    var modifEmp;
+                     var bajaEmp;
+                      var gActiEmp;
+                   var agregarActi;
+                    var modifActi;
+                    var bajaActi;
+                   var verPuerta;
+                    var agregPuerta;
+                     var ModifPuerta;
+
+                   if ($("#AgregarCheckG").is(":checked")) {
+                    agregarEmp=1;} else{
+                        agregarEmp=0;
+                   }
+
+                   if ($("#ModifCheckG").is(":checked")) {
+                    modifEmp=1;} else{
+                        modifEmp=0;
+                   }
+
+                   if ($("#BajaCheckG").is(":checked")) {
+                    bajaEmp=1;} else{
+                        bajaEmp=0;
+                   }
+
+                   if ($("#ActivCheckG").is(":checked")) {
+                    gActiEmp=1;} else{
+                        gActiEmp=0;
+                   }
+
+                   if ($("#AgregarCheckActiv").is(":checked")) {
+                    agregarActi=1;} else{
+                        agregarActi=0;
+                   }
+
+                   if ($("#ModifCheckActiv").is(":checked")) {
+                    modifActi=1;} else{
+                        modifActi=0;
+                   }
+
+                   if ($("#BajaCheckActiv").is(":checked")) {
+                    bajaActi=1;} else{
+                        bajaActi=0;
+                   }
+
+                   if ($("#verCheckPuerta").is(":checked")) {
+                    verPuerta=1;} else{
+                        verPuerta=0;
+                   }
+
+                   if ($("#AgregarCheckPuerta").is(":checked")) {
+                    agregPuerta=1;} else{
+                        agregPuerta=0;
+                   }
+
+                   if ($("#ModifCheckPuerta").is(":checked")) {
+                    ModifPuerta=1;} else{
+                        ModifPuerta=0;
+                   }
+                   /////////////////////////////////////
                     if ($('#switchEmpS').prop('checked')) {
                             $.ajax({
                                 type: "post",
                                 url: "/registrarInvitado",
                                 data: {
                                     emailInv,
-                                    idEmpleado,dash,permisoEmp
+                                    idEmpleado,dash,permisoEmp,agregarEmp, modifEmp, bajaEmp, gActiEmp, agregarActi, modifActi,
+                                    bajaActi, verPuerta, agregPuerta, ModifPuerta, switchActividades, switchasisPuerta,switchCRemo,
+                                    checkTodoEmp,swReporteAsis
                                 },
                                 statusCode: {
                                     419: function () {
@@ -203,7 +303,9 @@ function registrarInvit() {
                                 url: "/registrarInvitadoArea",
                                 data: {
                                     emailInv,
-                                    idareas,dash,permisoEmp
+                                    idareas,dash,permisoEmp, agregarEmp, modifEmp, bajaEmp, gActiEmp, agregarActi, modifActi,
+                                    bajaActi, verPuerta, agregPuerta, ModifPuerta, switchActividades, switchasisPuerta,
+                                    switchCRemo, checkTodoEmp,swReporteAsis
                                 },
                                 statusCode: {
                                     419: function () {
@@ -247,12 +349,26 @@ $("#adminCheck").click(function () {
          $("#selectArea").prop("required", false);
         $("#divDash").hide();
         $("#divAdminPersona").hide();
+        $("#opcionesGE").hide();
+        $("#divGestActivi").hide();
+        $("#opcionesActiv").hide();
+        $("#divAsisPu").hide();
+        $("#divControlRe").hide();
+        $("#divReporteAsis").hide();
+        $("#opcionesAPuerta").hide();
+        $('#verCheckPuerta').prop('required',false);
     } else {
          $("#nombreEmpleado").prop("required", true);
         $("#divInvitado").show();
         $("#divDash").show();
         $("#divAdminPersona").show();
-
+        $("#opcionesGE").show();
+        $("#opcionesActiv").show();
+        $("#divAsisPu").show();
+        $("#divControlRe").show();
+        $("#divReporteAsis").show();
+        $("#divGestActivi").show();
+        $("#opcionesAPuerta").show();
     }
 });
 ///ver datos de invitado en editar
@@ -285,6 +401,13 @@ function editarInv(idi){
                 $("#divInvitado_edit").hide();
                 $("#divAdminPersona_edit").hide();
                 $("#nombreEmpleado_edit").prop("required", false);
+                $("#divDash_edit").hide();
+                $("#divGestActivi_edit").hide();
+                $("#opcionesActiv_edit").hide();
+                $("#divAsisPu_edit").hide();
+                $("#opcionesAPuerta_edit").hide();
+                $("#divControlRe_edit").hide();
+                $("#divReporteAsis_edit").hide();
 
             }
             else{
@@ -292,15 +415,22 @@ function editarInv(idi){
                 $("#divInvitado_edit").show();
                 $("#divAdminPersona_edit").show();
                 $("#nombreEmpleado_edit").prop("required", true);
-                if(data[0].emple_id!=null){
-                    $('#divEmpleado_edit').show();
+                if(data[0].verTodosEmps==1){
+                    $('#TodoECheck_edit').prop('checked', true);
                     $('#switchEmpS_edit').prop('checked', true);
+                    $('#divEmpleado_edit').hide();
+                }
+                else{
+                    if(data[0].emple_id!=null){
+
+                    $('#switchEmpS_edit').prop('checked', true);
+                    $('#divEmpleado_edit').show();
                     $('#switchAreaS_edit').prop('checked', false);
-                $.each( data, function( index, value ){
-                $("#nombreEmpleado_edit option[value='"+ value.emple_id +"']").prop("selected","selected");
-                $("#nombreEmpleado_edit").trigger("change");
-                $("#nombreEmpleado_edit").prop('disabled',false);
-                 });
+                        $.each( data, function( index, value ){
+                        $("#nombreEmpleado_edit option[value='"+ value.emple_id +"']").prop("selected","selected");
+                        $("#nombreEmpleado_edit").trigger("change");
+                        $("#nombreEmpleado_edit").prop('disabled',false);
+                        });
                   $('#divArea_edit').hide();
                 }
                 else{
@@ -313,6 +443,8 @@ function editarInv(idi){
                          });
                     $('#divEmpleado_edit').hide();
                 }
+                }
+
 
 
             }
@@ -321,11 +453,135 @@ function editarInv(idi){
             }else{
                 $('#dashboardCheck_edit').prop('checked', false);
             }
+            ////////PERMISO GESTION EMPLEADO
             if(data[0].permiso_Emp==1){
                 $('#AlcaAdminCheck_edit').prop('checked', true);
+                $('#opcionesGE_edit').show();
+
+                //agregar emp permiso
+                if(data[0].agregarEmp==1){
+                    $('#AgregarCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#AgregarCheckG_edit').prop('checked', false);
+                }
+
+                //modificar emp permiso
+                if(data[0].modifEmp==1){
+                    $('#ModifCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#ModifCheckG_edit').prop('checked', false);
+                }
+
+                //baja emp permiso
+                if(data[0].bajaEmp==1){
+                    $('#BajaCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#BajaCheckG_edit').prop('checked', false);
+                }
+
+                //gestion acti emp permiso
+                if(data[0].GestActEmp==1){
+                    $('#ActivCheckG_edit').prop('checked', true);
+                }
+                else{
+                    $('#ActivCheckG_edit').prop('checked', false);
+                }
+
             }else{
                 $('#AlcaAdminCheck_edit').prop('checked', false);
+                $('#opcionesGE_edit').hide();
             }
+            //////////////////////////////
+            ////////PERMISO GESTION ACTIV
+            if(data[0].gestionActiv==1){
+                $('#gestActiCheck_edit').prop('checked', true);
+                $('#opcionesActiv_edit').show();
+
+                //agregar activ permiso
+                if(data[0].agregarActi==1){
+                    $('#AgregarCheckActiv_edit').prop('checked', true);
+                }
+                else{
+                    $('#AgregarCheckActiv_edit').prop('checked', false);
+                }
+
+                //modificar activ permiso
+                if(data[0].modifActi==1){
+                    $('#ModifCheckActiv_edit').prop('checked', true);
+                }
+                else{
+                    $('#ModifCheckActiv_edit').prop('checked', false);
+                }
+
+                //baja activ permiso
+                if(data[0].bajaActi==1){
+                    $('#BajaCheckActiv_edit').prop('checked', true);
+                }
+                else{
+                    $('#BajaCheckActiv_edit').prop('checked', false);
+                }
+
+                ////////PERMISO ASIST PUERTA
+            if(data[0].asistePuerta==1){
+                $('#asistPuertaCheck_edit').prop('checked', true);
+                $("#verCheckPuerta_edit").prop("required", true);
+                $('#opcionesAPuerta_edit').show();
+
+                //ver permiso mod puerta
+                if(data[0].verPuerta==1){
+                    $('#verCheckPuerta_edit').prop('checked', true);
+                }
+                else{
+                    $('#verCheckPuerta_edit').prop('checked', false);
+                }
+
+                //agregar  permiso mod puerta
+                if(data[0].agregarPuerta==1){
+                    $('#AgregarCheckPuerta_edit').prop('checked', true);
+                }
+                else{
+                    $('#AgregarCheckPuerta_edit').prop('checked', false);
+                }
+
+                //modificar permiso mod puerta
+                if(data[0].modifPuerta==1){
+                    $('#ModifCheckPuerta_edit').prop('checked', true);
+                }
+                else{
+                    $('#ModifCheckPuerta_edit').prop('checked', false);
+                }
+
+            }else{
+                $('#asistPuertaCheck_edit').prop('checked', false);
+                $("#verCheckPuerta_edit").prop("required", false);
+                $('#opcionesAPuerta_edit').hide();
+            }
+            //////////////////////////////
+
+            }else{
+                $('#gestActiCheck_edit').prop('checked', false);
+                $('#opcionesActiv_edit').hide();
+            }
+            //////////////////////////////
+            //reporte asistencia
+            if(data[0].reporteAsisten==1){
+                $('#ReporteAsistCheck_edit').prop('checked', true);
+            }
+            else{
+                $('#ReporteAsistCheck_edit').prop('checked', false);
+            }
+
+            //modo CR
+            if(data[0].modoCR==1){
+                $('#ControlReCheck_edit').prop('checked', true);
+            }
+            else{
+                $('#ControlReCheck_edit').prop('checked', false);
+            }
+
             $("#agregarInvitado_edit").modal('show');
         },
         error: function (data) {
@@ -343,6 +599,15 @@ $("#adminCheck_edit").click(function () {
         $("#selectArea_edit").prop("required", false);
         $("#divAdminPersona_edit").hide();
         $("#divEmpleado_edit").hide();
+        $("#divDash_edit").hide();
+        $("#divGestActivi_edit").hide();
+        $("#opcionesActiv_edit").hide();
+        $("#divAsisPu_edit").hide();
+        $("#opcionesAPuerta_edit").hide();
+        $("#divControlRe_edit").hide();
+        $("#divReporteAsis_edit").hide();
+        $("#opcionesGE_edit").hide();
+
     } else {
         if($("#switchAreaS_edit").is(":checked")){
             $("#switchAreaS_edit").prop("checked", true);
@@ -665,12 +930,17 @@ $('#switchEmpS').change(function (event) {
         $("#nombreEmpleado > option").prop("selected", false);
         $("#nombreEmpleado").trigger("change");
         $("#selectTodoCheck").prop('checked', false);
+        $('#TodoECheck').prop('checked', false);
+        $('#nombreEmpleado').prop('required',true);
+        $('#divTodoECheck').show();
 
 
     }
     else{
         $('#selectArea').prop('disabled', false);
         $('#divEmpleado').hide();
+        $('#divTodoECheck').hide();
+
     }
 });
 
@@ -707,12 +977,14 @@ $('#switchEmpS_edit').change(function (event) {
         $("#nombreEmpleado_edit > option").prop("selected", false);
         $("#nombreEmpleado_edit").trigger("change");
         $("#selectTodoCheck_edit").prop('checked', false);
+        $('#divTodoECheck_edit').show();
 
 
     }
     else{
         $('#selectArea_edit').prop('disabled', false);
         $('#divEmpleado_edit').hide();
+        $('#divTodoECheck_edit').hide();
     }
 });
 
@@ -734,6 +1006,99 @@ $('#switchAreaS_edit').change(function (event) {
         $('#divArea_edit').hide();
     }
 });
+////////////////////////////////////////
+$('#AlcaAdminCheck').change(function (event) {
+    if ($('#AlcaAdminCheck').prop('checked')) {
+        $('#opcionesGE').show();
+    }
+    else{
+        $('#opcionesGE').hide();
+    }
+});
+////////////////////////////////////////////
+
+////////////////////////////////////////
+$('#gestActiCheck').change(function (event) {
+    if ($('#gestActiCheck').prop('checked')) {
+        $('#opcionesActiv').show();
+    }
+    else{
+        $('#opcionesActiv').hide();
+    }
+});
+////////////////////////////////////////////
+////////////////////////////////////////
+$('#asistPuertaCheck').change(function (event) {
+    if ($('#asistPuertaCheck').prop('checked')) {
+        $('#opcionesAPuerta').show();
+        $('#verCheckPuerta').prop('required',true);
+
+    }
+    else{
+        $('#opcionesAPuerta').hide();
+        $('#verCheckPuerta').prop('required',false);
+
+    }
+});
+////////////////////////////////////////////
+$("#TodoECheck").click(function () {
+    if ($("#TodoECheck").is(":checked")) {
+        $('#nombreEmpleado').prop('required',false);
+        $("#divEmpleado").hide();
+    } else {
+        $('#nombreEmpleado').prop('required',true);
+        $("#divEmpleado").show();
+    }
+});
+////////////////////////////////////////////
+
+
+////////////////////////////////////////
+$('#AlcaAdminCheck_edit').change(function (event) {
+    if ($('#AlcaAdminCheck_edit').prop('checked')) {
+        $('#opcionesGE_edit').show();
+    }
+    else{
+        $('#opcionesGE_edit').hide();
+    }
+});
+////////////////////////////////////////////
+
+////////////////////////////////////////
+$('#gestActiCheck_edit').change(function (event) {
+    if ($('#gestActiCheck_edit').prop('checked')) {
+        $('#opcionesActiv_edit').show();
+    }
+    else{
+        $('#opcionesActiv_edit').hide();
+    }
+});
+////////////////////////////////////////////
+////////////////////////////////////////
+$('#asistPuertaCheck_edit').change(function (event) {
+    if ($('#asistPuertaCheck_edit').prop('checked')) {
+        $('#opcionesAPuerta_edit').show();
+        $('#verCheckPuerta_edit').prop('required',true);
+
+    }
+    else{
+        $('#opcionesAPuerta_edit').hide();
+        $('#verCheckPuerta_edit').prop('required',false);
+
+    }
+});
+////////////////////////////////////////////
+$("#TodoECheck_edit").click(function () {
+    if ($("#TodoECheck_edit").is(":checked")) {
+        $('#nombreEmpleado_edit').prop('required',false);
+        $("#divEmpleado_edit").hide();
+    } else {
+        $('#nombreEmpleado_edit').prop('required',true);
+        $("#divEmpleado_edit").show();
+    }
+});
+////////////////////////////////////////////
+
 $(function() {
 
 });

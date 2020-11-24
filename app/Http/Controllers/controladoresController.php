@@ -6,6 +6,8 @@ use App\controladores;
 use App\dispositivo_controlador;
 use App\dispositivos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class controladoresController extends Controller
 {
@@ -20,7 +22,34 @@ class controladoresController extends Controller
         } else{
         $dispositivo=dispositivos::where('organi_id','=',session('sesionidorg'))
         ->get();
-        return view('controladores.controladores',['dispositivo' => $dispositivo]);
+
+        $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if( $invitadod->asistePuerta==1){
+                        $permiso_invitado = DB::table('permiso_invitado')
+                        ->where('idinvitado', '=', $invitadod->idinvitado)
+                        ->get()->first();
+                        return view('controladores.controladores',['dispositivo' => $dispositivo,
+                        'verPuerta'=>$permiso_invitado->verPuerta,'agregarPuerta'=>$permiso_invitado->agregarPuerta,'modifPuerta'=>$permiso_invitado->modifPuerta]);
+                    } else{
+                          return redirect('/dashboard');
+                    }
+                   /*   */
+
+
+                } else {
+                    return view('controladores.controladores',['dispositivo' => $dispositivo]);
+                }
+            }
+            else{
+                return view('controladores.controladores',['dispositivo' => $dispositivo]);
+            }
         }
     }
     public function store(Request $request){

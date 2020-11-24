@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CorreoInvitado;
 use App\Mail\CorreoActivacion;
 use App\Mail\CorreoMail;
+use App\permiso_invitado;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Mockery\Undefined;
@@ -110,6 +111,23 @@ class delegarInvController extends Controller
         $idEmpleado=$request->idEmpleado;
         $dash=$request->dash;
         $permisoEmp=$request->permisoEmp;
+        $switchActividades=$request->switchActividades;
+        $switchasisPuerta=$request->switchasisPuerta;
+        $switchCRemo=$request->switchCRemo;
+        $checkTodoEmp=$request->checkTodoEmp;
+        $swReporteAsis=$request->swReporteAsis;
+
+        $agregarEmp=$request->agregarEmp;
+        $modifEmp=$request->modifEmp;
+        $bajaEmp=$request->bajaEmp;
+        $gActiEmp=$request->gActiEmp;
+        $agregarActi=$request->agregarActi;
+        $modifActi=$request->modifActi;
+        $bajaActi=$request->bajaActi;
+        $verPuerta=$request->verPuerta;
+        $agregPuerta=$request->agregPuerta;
+        $ModifPuerta=$request->ModifPuerta;
+
         $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
         $invitado->organi_id =  session('sesionidorg');
@@ -120,14 +138,57 @@ class delegarInvController extends Controller
         $invitado->dashboard =$dash;
         $invitado->estado_condic=1;
         $invitado->permiso_Emp=$permisoEmp;
+        $invitado->modoCR=$switchCRemo;
+        $invitado->gestionActiv=$switchActividades;
+        $invitado->asistePuerta=$switchasisPuerta;
+        $invitado->verTodosEmps=$checkTodoEmp;
+        $invitado->reporteAsisten=$swReporteAsis;
         $invitado->save();
-
+        if($checkTodoEmp!=1){
         foreach($idEmpleado as $idEmpleados){
             $invitado_empleado = new invitado_empleado();
             $invitado_empleado->idinvitado = $invitado->idinvitado;
             $invitado_empleado->emple_id = $idEmpleados;
             $invitado_empleado->save();
         }
+       }
+        $permiso_invitado= new permiso_invitado();
+        $permiso_invitado->idinvitado =$invitado->idinvitado;
+        if($permisoEmp==1){
+        $permiso_invitado->agregarEmp=$agregarEmp;
+        $permiso_invitado->modifEmp=$modifEmp;
+        $permiso_invitado->bajaEmp=$bajaEmp;
+        $permiso_invitado->GestActEmp=$gActiEmp;
+        }
+        else{
+            $permiso_invitado->agregarEmp=0;
+            $permiso_invitado->modifEmp=0;
+            $permiso_invitado->bajaEmp=0;
+            $permiso_invitado->GestActEmp=0;
+        }
+
+        if($switchActividades==1){
+        $permiso_invitado->agregarActi=$agregarActi;
+        $permiso_invitado->modifActi=$modifActi;
+        $permiso_invitado->bajaActi=$bajaActi;
+        } else{
+        $permiso_invitado->agregarActi=0;
+        $permiso_invitado->modifActi=0;
+        $permiso_invitado->bajaActi=0;
+        }
+
+        if($switchasisPuerta==1){
+            $permiso_invitado->verPuerta=$verPuerta;
+            $permiso_invitado->agregarPuerta=$agregPuerta;
+            $permiso_invitado->modifPuerta=$ModifPuerta;
+        } else{
+            $permiso_invitado->verPuerta=0;
+            $permiso_invitado->agregarPuerta=0;
+            $permiso_invitado->modifPuerta=0;
+        }
+
+        $permiso_invitado->save();
+
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
     }
@@ -325,6 +386,7 @@ class delegarInvController extends Controller
         $invitado=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->join('invitado_empleado as inve','i.idinvitado','=','inve.idinvitado')
+        ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
         ->get();
         $invitado2=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
@@ -442,6 +504,23 @@ class delegarInvController extends Controller
     $idarea=$request->idareas;
     $dash=$request->dash;
     $permisoEmp=$request->permisoEmp;
+    $switchActividades=$request->switchActividades;
+    $switchasisPuerta=$request->switchasisPuerta;
+    $switchCRemo=$request->switchCRemo;
+    $checkTodoEmp=$request->checkTodoEmp;
+    $swReporteAsis=$request->swReporteAsis;
+
+    $agregarEmp=$request->agregarEmp;
+    $modifEmp=$request->modifEmp;
+    $bajaEmp=$request->bajaEmp;
+    $gActiEmp=$request->gActiEmp;
+    $agregarActi=$request->agregarActi;
+    $modifActi=$request->modifActi;
+    $bajaActi=$request->bajaActi;
+    $verPuerta=$request->verPuerta;
+    $agregPuerta=$request->agregPuerta;
+    $ModifPuerta=$request->ModifPuerta;
+
     $organi = organizacion::find(session('sesionidorg'));
     $invitado = new invitado();
     $invitado->organi_id =  session('sesionidorg');
@@ -452,14 +531,57 @@ class delegarInvController extends Controller
     $invitado->dashboard =$dash;
     $invitado->estado_condic=1;
     $invitado->permiso_Emp=$permisoEmp;
+    $invitado->modoCR=$switchCRemo;
+    $invitado->gestionActiv=$switchActividades;
+    $invitado->asistePuerta=$switchasisPuerta;
+    $invitado->verTodosEmps=$checkTodoEmp;
+    $invitado->reporteAsisten=$swReporteAsis;
     $invitado->save();
 
+    if($checkTodoEmp!=1){
     foreach($idarea as $idareas){
         $invitado_empleado = new invitado_empleado();
         $invitado_empleado->idinvitado = $invitado->idinvitado;
         $invitado_empleado->area_id = $idareas;
         $invitado_empleado->save();
     }
+  }
+
+    $permiso_invitado= new permiso_invitado();
+        $permiso_invitado->idinvitado =$invitado->idinvitado;
+        if($permisoEmp==1){
+            $permiso_invitado->agregarEmp=$agregarEmp;
+            $permiso_invitado->modifEmp=$modifEmp;
+            $permiso_invitado->bajaEmp=$bajaEmp;
+            $permiso_invitado->GestActEmp=$gActiEmp;
+            }
+            else{
+                $permiso_invitado->agregarEmp=0;
+                $permiso_invitado->modifEmp=0;
+                $permiso_invitado->bajaEmp=0;
+                $permiso_invitado->GestActEmp=0;
+            }
+
+            if($switchActividades==1){
+                $permiso_invitado->agregarActi=$agregarActi;
+                $permiso_invitado->modifActi=$modifActi;
+                $permiso_invitado->bajaActi=$bajaActi;
+                } else{
+                $permiso_invitado->agregarActi=0;
+                $permiso_invitado->modifActi=0;
+                $permiso_invitado->bajaActi=0;
+                }
+                if($switchasisPuerta==1){
+                    $permiso_invitado->verPuerta=$verPuerta;
+                    $permiso_invitado->agregarPuerta=$agregPuerta;
+                    $permiso_invitado->modifPuerta=$ModifPuerta;
+                } else{
+                    $permiso_invitado->verPuerta=0;
+                    $permiso_invitado->agregarPuerta=0;
+                    $permiso_invitado->modifPuerta=0;
+                }
+        $permiso_invitado->save();
+
     Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
 }

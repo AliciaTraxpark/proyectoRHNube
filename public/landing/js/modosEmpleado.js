@@ -61,6 +61,8 @@ function actividadEmp() {
             if (data != 0) {
                 var container = $("#tablaBodyTarea");
                 var td = "";
+                var valorIn=$('#gestActI').val();
+                console.log('valorIn=='+valorIn);
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return editarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
@@ -72,16 +74,34 @@ function actividadEmp() {
                                 <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
                             </div></td><td></td></tr>`;
                         } else {
-                            td += `<td><div class="custom-control custom-switch">
+                            if(valorIn==1){
+                                td += `<td><div class="custom-control custom-switch">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
                                 <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
                             </div></td><td></td></tr>`;
+                            }
+                            else{
+                                td += `<td><div class="custom-control custom-switch">
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
+                                <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
+                            </div></td><td></td></tr>`;
+                            }
+
                         }
                     } else {
+                        if(valorIn==1){
                         td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
                       </div></td><td></td></tr>`;
+                        }
+                        else
+                        {
+                            td += `<td><div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
+                            <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
+                          </div></td><td></td></tr>`;
+                        }
                     }
                 }
                 container.append(td);
@@ -1436,7 +1456,7 @@ function recuperarActividadFR(id) {
 
 }
 // ***********************************************************************************************************
-// LIMPIEZA DE MODAL 
+// LIMPIEZA DE MODAL
 function limpiarModo() {
     $('#nombreTarea').val("");
     $('#codigoTarea').val("");

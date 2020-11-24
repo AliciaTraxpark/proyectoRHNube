@@ -10,7 +10,7 @@ function leertabla() {
         $("#tabladiv").html(data);
         $("#espera").hide();
         $("#tabladiv").show();
-        
+
     });
 }
 
@@ -52,13 +52,13 @@ function RefreshTablaEmpleadoArea() {
                         </td>";
                 tbody +=
                     '<td class="text-center">\
-                                <a  onclick="javascript:editarEmpleado(' +
+                                <a name="editarEName" onclick="javascript:editarEmpleado(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
                                 <img src="/admin/images/edit.svg" height="15">\
                                 </a>\
                                 &nbsp;&nbsp;&nbsp;\
-                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
+                                <a data-toggle="tooltip" name="dBajaName" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
                                     <img src="/landing/images/abajo.svg" height="17">\
@@ -420,13 +420,13 @@ function RefreshTablaEmpleado() {
                         </td>";
                 tbody +=
                     '<td class="text-center">\
-                                <a  onclick="javascript:editarEmpleado(' +
+                                <a name="editarEName"  onclick="javascript:editarEmpleado(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
                                 <img src="/admin/images/edit.svg" height="15">\
                                 </a>\
                                 &nbsp;&nbsp;&nbsp;\
-                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
+                                <a data-toggle="tooltip" name="dBajaName" data-placement="right" data-original-title="Dar de baja" onclick="javascript:marcareliminar(' +
                     data[i].emple_id +
                     ')" style="cursor: pointer">\
                                     <img src="/landing/images/abajo.svg" height="17">\

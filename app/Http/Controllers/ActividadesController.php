@@ -7,7 +7,7 @@ use App\actividad_empleado;
 use App\captura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 class ActividadesController extends Controller
 {
     public function __construct()
@@ -57,7 +57,35 @@ class ActividadesController extends Controller
 
     public function actividades()
     {
-        return view('MantenedorActividades.actividades');
+        $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if( $invitadod->gestionActiv==1){
+                        $permiso_invitado = DB::table('permiso_invitado')
+                        ->where('idinvitado', '=', $invitadod->idinvitado)
+                        ->get()->first();
+                    return view('MantenedorActividades.actividades', [
+                        'agregarActi'=>$permiso_invitado->agregarActi,'modifActi'=>$permiso_invitado->modifActi,'bajaActi'=>$permiso_invitado->bajaActi
+                    ]);
+                    } else{
+                          return redirect('/dashboard');
+                    }
+                   /*   */
+
+
+                } else {
+                    return view('MantenedorActividades.actividades');
+                }
+            }
+            else{
+                return view('MantenedorActividades.actividades');
+            }
+
     }
 
     public function actividadesOrganizaciones()
@@ -357,7 +385,7 @@ class ActividadesController extends Controller
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
         // ******************
-        // SEPARAR EMPLEADOS 
+        // SEPARAR EMPLEADOS
         for ($index = 0; $index < sizeof($empleados); $index++) {
             $estado = false;
             foreach ($empleadosA as $ae) {
