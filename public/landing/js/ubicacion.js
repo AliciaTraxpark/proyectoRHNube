@@ -187,6 +187,19 @@ function onMostrarPantallas() {
                                                     if (data[index].minuto[j]["captura"][indexMinutos].hora_fin > data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin) {
                                                         hora_final = data[index].minuto[j]["captura"][indexMinutos].hora_fin
                                                     } else hora_final = data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin;
+                                                } else {
+                                                    //* OBTENEMOS LA NUEVA ACTIVIDAD
+                                                    var actividadNueva = data[index].minuto[j]["captura"][indexMinutos].tiempoA + data[index].minuto[j]["ubicacion"][minutosUbicacion].actividad;
+                                                    promedios = promedios + actividadNueva;
+                                                    //* OBTENEMOS EL NUEVO RANGO
+                                                    var rangoNuevo = data[index].minuto[j]["captura"][indexMinutos].rango + data[index].minuto[j]["ubicacion"][minutosUbicacion].rango;
+                                                    sumaRangos = sumaRangos + rangoNuevo;
+                                                    //* VALORES NECESARIOS PASAR
+                                                    sumaActividad = sumaActividad + actividadNueva;
+                                                    hora_inicial = data[index].minuto[j]["captura"][indexMinutos].hora_ini;
+                                                    if (data[index].minuto[j]["captura"][indexMinutos].hora_fin > data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin) {
+                                                        hora_final = data[index].minuto[j]["captura"][indexMinutos].hora_fin
+                                                    } else hora_final = data[index].minuto[j]["ubicacion"][minutosUbicacion].hora_fin;
                                                 }
                                             }
                                         }
