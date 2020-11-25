@@ -92,8 +92,11 @@ class HomeController extends Controller
     }
 
     public function enviarIDorg(Request $request){
+        session()->forget('sesionidorg');
+
         $vars= $request->idorganiza;
-        session(['sesionidorg' => $vars]);
+        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        session(['sesionidorg' => $vars]);}
 
       /*   return redirect(route('dashboard')); */
     }

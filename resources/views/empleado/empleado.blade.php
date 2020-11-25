@@ -919,7 +919,7 @@ use Carbon\Carbon;
 
                                     <button onclick="eliminarEmpleado()" id=""
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
-                                        class="btn btn-sm btn-primary delete_all" data-url="">Eliminar
+                                        class="btn btn-sm btn-primary delete_all" data-url="">Dar de baja
                                     </button>
                                     {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}

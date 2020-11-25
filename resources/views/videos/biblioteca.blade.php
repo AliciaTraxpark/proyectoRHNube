@@ -10,6 +10,7 @@
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css')}}" rel="stylesheet"
     type="text/css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
 <div class="row page-title">

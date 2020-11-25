@@ -7,6 +7,7 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
 <style>
