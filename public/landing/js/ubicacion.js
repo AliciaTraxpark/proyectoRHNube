@@ -397,7 +397,38 @@ function onMostrarPantallas() {
                                     sumaActividad = 0;
                                 }
                             }
-                            
+                            if (data[index].minuto[j]["captura"].length == 0) {
+                                if (data[index].minuto[j]["ubicacion"].length != 0) {
+                                    if (data[index].minuto[j]["ubicacion"].length == 1) {
+                                        sumaRang = parseFloat(data[index].minuto[j]["ubicacion"][0].rango);
+                                        sumaActiv = parseFloat(data[index].minuto[j]["ubicacion"][0].actividad);
+                                        promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
+                                        sumaRangosTotal += sumaRang;
+                                        sumaActividadTotal += sumaActiv;
+                                        var totalR = enteroTime(sumaRang);
+                                        totalCM = totalR;
+                                    } else {
+                                        for (let indexMinutos = 0; data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
+                                            promedios = promedios + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
+                                            sumaRangos = sumaRangos + data[index].minuto[j]["ubicacion"][indexMinutos].rango;
+                                            sumaActividad = sumaActividad + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
+                                            hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
+                                            hora_final = data[index].minuto[j]["ubicacion"][data[index].minuto[j]["ubicacion"].length - 1].hora_fin;
+                                        }
+                                        sumaRangosTotal += sumaRangos;
+                                        sumaActividadTotal += sumaActividad;
+                                        var totalR = enteroTime(sumaRangos);
+                                        totalCM = totalR;
+                                        promedio = ((promedios / sumaRangos) * 100).toFixed(2);
+                                        if (promedios == 0) {
+                                            promedio = 0;
+                                        }
+                                        promedios = 0;
+                                        sumaRangos = 0;
+                                        sumaActividad = 0;
+                                    }
+                                }
+                            }
                             //! Colores de las actividades
                             var nivel;
                             if (promedio >= 50) nivel = "green";
