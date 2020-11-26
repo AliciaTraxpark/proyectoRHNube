@@ -33,6 +33,8 @@ function abrirRegist() {
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
     $("#verCheckPuerta").prop("disabled", false);
+     $("#spanBooCk").hide();
+    $("#spanChEmple").hide();
     $("#agregarInvitado").modal("show");
 }
 
@@ -672,7 +674,8 @@ function editarInv(idi) {
             } else {
                 $("#ControlReCheck_edit").prop("checked", false);
             }
-
+            $("#spanBooCk_edit").hide();
+            $("#spanChEmple_edit").hide();
             $("#agregarInvitado_edit").modal("show");
         },
         error: function (data) {
