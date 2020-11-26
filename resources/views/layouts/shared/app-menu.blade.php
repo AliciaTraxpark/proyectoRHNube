@@ -253,29 +253,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
     @endif
 
- @if ($invitadod->asistePuerta==1)
-    <li>
-        <a href="javascript: void(0);">
-            <i data-feather="check-circle"></i>
-            <span>Modo: Asistencia en puerta</span>
-            <span class="menu-arrow"></span>
-        </a>
 
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                @if ($permiso_invitado->verPuerta==1)
-                <a href="/dispositivos">Dispositivos</a>
-                <a href="/controladores">Controladores</a>
-                @endif
-                @if ($invitadod->reporteAsisten==1)
-                <a href="/reporteAsistencia">Reporte de asistencia</a>
-                @endif
-
-            </li>
-        </ul>
-    </li>
-
-    @endif
     <!-- <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
@@ -300,6 +278,30 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+    @endif
+
+    @if ($invitadod->asistePuerta==1)
+    <li>
+        <a href="javascript: void(0);">
+            <i data-feather="check-circle"></i>
+            <span>Modo: Asistencia en puerta</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                @if ($permiso_invitado->verPuerta==1)
+                <a href="/dispositivos">Dispositivos</a>
+                <a href="/controladores">Controladores</a>
+                @endif
+                @if ($invitadod->reporteAsisten==1)
+                <a href="/reporteAsistencia">Reporte de asistencia</a>
+                @endif
+
+            </li>
+        </ul>
+    </li>
+
     @endif
 </ul>
 @endif
