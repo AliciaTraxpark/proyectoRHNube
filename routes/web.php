@@ -440,6 +440,7 @@ Route::get('/politicas', function () {
 Route::get('ruta', 'controlRutaController@index');
 Route::get('rutaReporte', 'controlRutaController@indexReporte');
 Route::get('/reporteConRuta', 'controlRutaController@reporte');
+Route::get('/personalizadoRuta', 'controlRutaController@reportePersonalizadoRuta');
 
 //INCIDENCIAS
 Route::get('/incidencias', 'incidenciasController@index');
