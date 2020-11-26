@@ -32,6 +32,7 @@ function abrirRegist() {
     $("#divControlRe").show();
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
+    $("#verCheckPuerta").prop("disabled", false);
     $("#agregarInvitado").modal("show");
 }
 
@@ -104,6 +105,7 @@ $("#selectArea").change(function (e) {
 
 ///funcion registrar invitado
 function registrarInvit() {
+
     var booCheck;
     if ($("#asistPuertaCheck").is(":checked")) {
         if(!$("#verCheckPuerta").is(":checked") &&  !$("#AgregarCheckPuerta").is(":checked") &&
@@ -124,6 +126,13 @@ function registrarInvit() {
     }
     var emailInv = $("#emailInvi").val();
     var idEmpleado = $("#nombreEmpleado").val();
+    if (!$("#switchEmpS").is(":checked") && !$("#switchAreaS").is(":checked") ) {
+
+        $('#spanChEmple').show();
+        return false;
+    } else{
+        $('#spanChEmple').hide();
+    }
     $.ajax({
         type: "post",
         url: "/verificarEmaD",
@@ -451,6 +460,7 @@ $("#adminCheck").click(function () {
 function editarInv(idi) {
     $("#btnGu_edit").prop("disabled", false);
     $("#verCheckPuerta_edit").attr("required", false);
+    $("#verCheckPuerta_edit").prop("disabled", false);
     $.ajax({
         type: "post",
         url: "/datosInvitado",
@@ -616,6 +626,7 @@ function editarInv(idi) {
                     $("#asistPuertaCheck_edit").prop("checked", true);
                   /*   $("#verCheckPuerta_edit").prop("required", true); */
                     $("#opcionesAPuerta_edit").show();
+                    $("#divReporteAsis_edit").show();
 
                     //ver permiso mod puerta
                     if (data[0].verPuerta == 1) {
@@ -627,6 +638,7 @@ function editarInv(idi) {
                     //agregar  permiso mod puerta
                     if (data[0].agregarPuerta == 1) {
                         $("#AgregarCheckPuerta_edit").prop("checked", true);
+                        $("#verCheckPuerta_edit").prop("disabled", true);
                     } else {
                         $("#AgregarCheckPuerta_edit").prop("checked", false);
                     }
@@ -634,12 +646,13 @@ function editarInv(idi) {
                     //modificar permiso mod puerta
                     if (data[0].modifPuerta == 1) {
                         $("#ModifCheckPuerta_edit").prop("checked", true);
+                        $("#verCheckPuerta_edit").prop("disabled", true);
                     } else {
                         $("#ModifCheckPuerta_edit").prop("checked", false);
                     }
                 } else {
                     $("#opcionesAPuerta_edit").hide();
-
+                    $("#divReporteAsis_edit").hide();
                     $("#verCheckPuerta_edit").attr("required", false);
                     $("#asistPuertaCheck_edit").prop("checked", false);
                 }
@@ -703,9 +716,11 @@ $("#adminCheck_edit").click(function () {
         //gest asist pu
         if ($("#asistPuertaCheck_edit").is(":checked")) {
             $('#opcionesAPuerta_edit').show();
+            $('#divReporteAsis_edit').show();
         }
         else{
             $('#opcionesAPuerta_edit').hide();
+            $('#divReporteAsis_edit').hide();
         }
 
 
@@ -834,7 +849,13 @@ function registrarInvit_edit() {
     else{
         $('#spanBooCk_edit').hide();
     }
+    if (!$("#switchEmpS_edit").is(":checked") && !$("#switchAreaS_edit").is(":checked") ) {
 
+        $('#spanChEmple_edit').show();
+        return false;
+    } else{
+        $('#spanChEmple_edit').hide();
+    }
     var idinvitado = $("#idInv").val();
     var idEmpleado = $("#nombreEmpleado_edit").val();
     if ($("#adminCheck_edit").is(":checked")) {
@@ -1201,6 +1222,7 @@ $("#switchEmpS").change(function (event) {
     } else {
         $("#selectArea").prop("disabled", false);
         $("#divEmpleado").hide();
+        $("#nombreEmpleado").prop("required", false);
         $("#divTodoECheck").hide();
     }
 });
@@ -1221,6 +1243,7 @@ $("#switchAreaS").change(function (event) {
         $("#TodoECheck").prop("checked", false);
     } else {
         $("#nombreEmpleado").prop("disabled", false);
+        $("#selectArea").prop("required", false);
         $("#divArea").hide();
     }
 });
@@ -1242,6 +1265,7 @@ $("#switchEmpS_edit").change(function (event) {
         $("#divTodoECheck_edit").show();
     } else {
         $("#selectArea_edit").prop("disabled", false);
+        $("#nombreEmpleado_edit").prop("required", false);
         $("#divEmpleado_edit").hide();
         $("#divTodoECheck_edit").hide();
     }
@@ -1263,6 +1287,7 @@ $("#switchAreaS_edit").change(function (event) {
         $("#TodoECheck_edit").prop("checked", false);
     } else {
         $("#nombreEmpleado_edit").prop("disabled", false);
+        $("#selectArea_edit").prop("required", false);
         $("#divArea_edit").hide();
     }
 });
@@ -1332,10 +1357,12 @@ $("#gestActiCheck_edit").change(function (event) {
 $("#asistPuertaCheck_edit").change(function (event) {
     if ($("#asistPuertaCheck_edit").prop("checked")) {
         $("#opcionesAPuerta_edit").show();
+        $("#divReporteAsis_edit").show();
        /*  $("#verCheckPuerta_edit").prop("required", true); */
     } else {
         $("#opcionesAPuerta_edit").hide();
         $('#spanBooCk_edit').hide();
+        $("#divReporteAsis_edit").hide();
       /*   $("#verCheckPuerta_edit").prop("required", false); */
     }
 });
@@ -1352,3 +1379,61 @@ $("#TodoECheck_edit").click(function () {
 ////////////////////////////////////////////
 
 $(function () {});
+$("#AgregarCheckPuerta").change(function (event) {
+    if ($("#AgregarCheckPuerta").prop("checked")) {
+        $("#verCheckPuerta").prop("checked",true);
+        $("#verCheckPuerta").prop("disabled",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta").prop("checked")) {
+             $("#verCheckPuerta").prop("disabled",true);
+        } else{
+            $("#verCheckPuerta").prop("disabled",false);
+        }
+
+
+    }
+});
+
+$("#ModifCheckPuerta").change(function (event) {
+    if ($("#ModifCheckPuerta").prop("checked")) {
+        $("#verCheckPuerta").prop("checked",true);
+        $("#verCheckPuerta").prop("disabled",true);
+    }
+    else{
+        if ($("#AgregarCheckPuerta").prop("checked")) {
+            $("#verCheckPuerta").prop("disabled",true);
+       } else{
+           $("#verCheckPuerta").prop("disabled",false);
+       }
+
+    }
+});
+///edit
+$("#AgregarCheckPuerta_edit").change(function (event) {
+    if ($("#AgregarCheckPuerta_edit").prop("checked")) {
+        $("#verCheckPuerta_edit").prop("checked",true);
+        $("#verCheckPuerta_edit").prop("disabled",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta_edit").prop("checked")) {
+            $("#verCheckPuerta_edit").prop("disabled",true);
+       } else{
+           $("#verCheckPuerta_edit").prop("disabled",false);
+       }
+    }
+});
+
+$("#ModifCheckPuerta_edit").change(function (event) {
+    if ($("#ModifCheckPuerta_edit").prop("checked")) {
+        $("#verCheckPuerta_edit").prop("checked",true);
+        $("#verCheckPuerta_edit").prop("disabled",true);
+    }
+    else{
+        if ($("#AgregarCheckPuerta_edit").prop("checked")) {
+            $("#verCheckPuerta_edit").prop("disabled",true);
+       } else{
+           $("#verCheckPuerta_edit").prop("disabled",false);
+       }
+    }
+});
