@@ -408,6 +408,7 @@ function onMostrarPantallas() {
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
                                     } else {
+                                        console.log(data[index].minuto[j]["ubicacion"]);
                                         for (let indexMinutos = 0; data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
                                             promedios = promedios + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                             sumaRangos = sumaRangos + data[index].minuto[j]["ubicacion"][indexMinutos].rango;
