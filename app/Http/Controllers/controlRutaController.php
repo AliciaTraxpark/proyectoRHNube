@@ -552,9 +552,10 @@ class controlRutaController extends Controller
                 'u.id',
                 'u.hora_ini',
                 'u.hora_fin',
-                'u.actividad_ubicacion',
+                'u.actividad_ubicacion as actividad',
                 DB::raw("CASE WHEN(ur.idUbicacion) IS NULL THEN 0 ELSE COUNT('ur.idCaptura') END AS cantidadU"),
-                DB::raw("CASE WHEN(u.idHorario_dias) IS NULL THEN 0 ELSE DATE(hd.start) END AS horario")
+                DB::raw("CASE WHEN(u.idHorario_dias) IS NULL THEN 0 ELSE DATE(hd.start) END AS horario"),
+                DB::raw('TIME_FORMAT(SEC_TO_TIME(u.rango), "%H:%i:%s") as rango')
             )
             ->where('u.idEmpleado', '=', $idEmpleado)
             ->where(DB::raw('DATE(u.hora_ini)'), '=', $fecha)
@@ -563,7 +564,7 @@ class controlRutaController extends Controller
 
         $dispositivos = DB::table('vinculacion_ruta as vr')
             ->select(
-                DB::raw("CASE WHEN (u.modelo) IS NULL THEN 0 ELSE u.modelo END AS nombreCel")
+                DB::raw("CASE WHEN (vr.modelo) IS NULL THEN 0 ELSE vr.modelo END AS nombreCel")
             )
             ->where('vr.idEmpleado', '=', $idEmpleado)
             ->groupBy('vr.id')
