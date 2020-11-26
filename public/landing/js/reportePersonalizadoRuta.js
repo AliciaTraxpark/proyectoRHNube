@@ -165,7 +165,7 @@ function reporteEmpleado() {
                     if (data.ubicacion[i].horario === '0') {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-success\">Sin horario</a></td>';
                     } else {
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\"><i class="uil uil-calender"></i>&nbsp;' + data.captura[i].horario + '</a></td>';
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\"><i class="uil uil-calender"></i>&nbsp;' + data.ubicacion[i].horario + '</a></td>';
                     }
                     html_tr += '<td class="text-center">' + data.ubicacion[i].actividad + '</td>';
                     html_tr += '<td class="text-center">' + data.ubicacion[i].cantidadU + '</td></tr>';
