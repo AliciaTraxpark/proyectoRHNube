@@ -207,6 +207,9 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     ->where('user_Invitado','=',Auth::user()->id)
     ->where('organi_id','=',session('sesionidorg'))
     ->get()->first();
+    $permiso_invitado=DB::table('permiso_invitado')
+    ->where('idinvitado','=',$invitadod->idinvitado)
+    ->get()->first();
     @endphp
     @if ($invitadod->dashboard==1)
     <li>
@@ -251,44 +254,6 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     @endif
 
 
-    <li>
-        @if ($invitadod->asistePuerta==1)
-        <a href="javascript: void(0);">
-            <i data-feather="check-circle"></i>
-            <span>Modo: Asistencia en puerta</span>
-            <span class="menu-arrow"></span>
-        </a>
-
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                <a href="/dispositivos">Dispositivos</a>
-                <a href="/controladores">Controladores</a>
-                @if ($invitadod->reporteAsisten==1)
-                <a href="/reporteAsistencia">Reporte de asistencia</a>
-                @endif
-
-            </li>
-        </ul>
-    </li>
-    @else
-    @if ($invitadod->reporteAsisten==1)
-    <li>
-
-        <a href="javascript: void(0);">
-            <i data-feather="check-circle"></i>
-            <span>Modo: Asistencia en puerta</span>
-            <span class="menu-arrow"></span>
-        </a>
-
-        <ul class="nav-second-level" aria-expanded="false">
-            <li>
-                <a href="/reporteAsistencia">Reporte de asistencia</a>
-
-            </li>
-        </ul>
-    </li>
-    @endif
-    @endif
     <!-- <li>
         <a href="/proyecto">
             <i data-feather="briefcase"></i>
@@ -313,6 +278,30 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             </li>
         </ul>
     </li>
+    @endif
+
+    @if ($invitadod->asistePuerta==1)
+    <li>
+        <a href="javascript: void(0);">
+            <i data-feather="check-circle"></i>
+            <span>Modo: Asistencia en puerta</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                @if ($permiso_invitado->verPuerta==1)
+                <a href="/dispositivos">Dispositivos</a>
+                <a href="/controladores">Controladores</a>
+                @endif
+                @if ($invitadod->reporteAsisten==1)
+                <a href="/reporteAsistencia">Reporte de asistencia</a>
+                @endif
+
+            </li>
+        </ul>
+    </li>
+
     @endif
 </ul>
 @endif

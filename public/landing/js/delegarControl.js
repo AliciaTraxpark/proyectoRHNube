@@ -32,6 +32,9 @@ function abrirRegist() {
     $("#divControlRe").show();
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
+    $("#verCheckPuerta").prop("disabled", false);
+     $("#spanBooCk").hide();
+    $("#spanChEmple").hide();
     $("#agregarInvitado").modal("show");
 }
 
@@ -104,8 +107,34 @@ $("#selectArea").change(function (e) {
 
 ///funcion registrar invitado
 function registrarInvit() {
+
+    var booCheck;
+    if ($("#asistPuertaCheck").is(":checked")) {
+        if(!$("#verCheckPuerta").is(":checked") &&  !$("#AgregarCheckPuerta").is(":checked") &&
+        !$("#ModifCheckPuerta").is(":checked")  && !$("#ReporteAsistCheck").is(":checked") ){
+            booCheck=0;
+        }
+        else{
+            booCheck=1;
+        }
+    }
+    if(booCheck==0){
+        console.log('se detiene todo');
+        $('#spanBooCk').show();
+        return false;
+    }
+    else{
+        $('#spanBooCk').hide();
+    }
     var emailInv = $("#emailInvi").val();
     var idEmpleado = $("#nombreEmpleado").val();
+    if (!$("#switchEmpS").is(":checked") && !$("#switchAreaS").is(":checked") ) {
+
+        $('#spanChEmple').show();
+        return false;
+    } else{
+        $('#spanChEmple').hide();
+    }
     $.ajax({
         type: "post",
         url: "/verificarEmaD",
@@ -416,20 +445,24 @@ $("#adminCheck").click(function () {
         $("#nombreEmpleado").prop("required", true);
         $("#divInvitado").show();
         $("#divDash").show();
+        $("#AlcaAdminCheck").prop("checked", false);
+        $("#gestActiCheck").prop("checked", false);
+        $("#asistPuertaCheck").prop("checked", false);
         $("#divAdminPersona").show();
-        $("#opcionesGE").show();
-        $("#opcionesActiv").show();
+
+
         $("#divAsisPu").show();
         $("#divControlRe").show();
         $("#divReporteAsis").show();
         $("#divGestActivi").show();
-        $("#opcionesAPuerta").show();
+
     }
 });
 ///ver datos de invitado en editar
 function editarInv(idi) {
     $("#btnGu_edit").prop("disabled", false);
     $("#verCheckPuerta_edit").attr("required", false);
+    $("#verCheckPuerta_edit").prop("disabled", false);
     $.ajax({
         type: "post",
         url: "/datosInvitado",
@@ -593,8 +626,9 @@ function editarInv(idi) {
                 ////////PERMISO ASIST PUERTA
                 if (data[0].asistePuerta == 1) {
                     $("#asistPuertaCheck_edit").prop("checked", true);
-                    $("#verCheckPuerta_edit").prop("required", true);
+                  /*   $("#verCheckPuerta_edit").prop("required", true); */
                     $("#opcionesAPuerta_edit").show();
+                    $("#divReporteAsis_edit").show();
 
                     //ver permiso mod puerta
                     if (data[0].verPuerta == 1) {
@@ -606,6 +640,7 @@ function editarInv(idi) {
                     //agregar  permiso mod puerta
                     if (data[0].agregarPuerta == 1) {
                         $("#AgregarCheckPuerta_edit").prop("checked", true);
+                        $("#verCheckPuerta_edit").prop("disabled", true);
                     } else {
                         $("#AgregarCheckPuerta_edit").prop("checked", false);
                     }
@@ -613,12 +648,13 @@ function editarInv(idi) {
                     //modificar permiso mod puerta
                     if (data[0].modifPuerta == 1) {
                         $("#ModifCheckPuerta_edit").prop("checked", true);
+                        $("#verCheckPuerta_edit").prop("disabled", true);
                     } else {
                         $("#ModifCheckPuerta_edit").prop("checked", false);
                     }
                 } else {
                     $("#opcionesAPuerta_edit").hide();
-
+                    $("#divReporteAsis_edit").hide();
                     $("#verCheckPuerta_edit").attr("required", false);
                     $("#asistPuertaCheck_edit").prop("checked", false);
                 }
@@ -638,7 +674,8 @@ function editarInv(idi) {
             } else {
                 $("#ControlReCheck_edit").prop("checked", false);
             }
-
+            $("#spanBooCk_edit").hide();
+            $("#spanChEmple_edit").hide();
             $("#agregarInvitado_edit").modal("show");
         },
         error: function (data) {
@@ -682,9 +719,11 @@ $("#adminCheck_edit").click(function () {
         //gest asist pu
         if ($("#asistPuertaCheck_edit").is(":checked")) {
             $('#opcionesAPuerta_edit').show();
+            $('#divReporteAsis_edit').show();
         }
         else{
             $('#opcionesAPuerta_edit').hide();
+            $('#divReporteAsis_edit').hide();
         }
 
 
@@ -794,6 +833,32 @@ $("#selectArea_edit").change(function (e) {
     }
 });
 function registrarInvit_edit() {
+    var booCheck_edit;
+
+    if ($("#asistPuertaCheck_edit").is(":checked")) {
+        if(!$("#verCheckPuerta_edit").is(":checked") &&  !$("#AgregarCheckPuerta_edit").is(":checked") &&
+        !$("#ModifCheckPuerta_edit").is(":checked")  && !$("#ReporteAsistCheck_edit").is(":checked") ){
+            booCheck_edit=0;
+        }
+        else{
+            booCheck_edit=1;
+        }
+    }
+    if(booCheck_edit==0){
+        console.log('se detiene todo');
+        $('#spanBooCk_edit').show();
+        return false;
+    }
+    else{
+        $('#spanBooCk_edit').hide();
+    }
+    if (!$("#switchEmpS_edit").is(":checked") && !$("#switchAreaS_edit").is(":checked") ) {
+
+        $('#spanChEmple_edit').show();
+        return false;
+    } else{
+        $('#spanChEmple_edit').hide();
+    }
     var idinvitado = $("#idInv").val();
     var idEmpleado = $("#nombreEmpleado_edit").val();
     if ($("#adminCheck_edit").is(":checked")) {
@@ -1160,6 +1225,7 @@ $("#switchEmpS").change(function (event) {
     } else {
         $("#selectArea").prop("disabled", false);
         $("#divEmpleado").hide();
+        $("#nombreEmpleado").prop("required", false);
         $("#divTodoECheck").hide();
     }
 });
@@ -1180,6 +1246,7 @@ $("#switchAreaS").change(function (event) {
         $("#TodoECheck").prop("checked", false);
     } else {
         $("#nombreEmpleado").prop("disabled", false);
+        $("#selectArea").prop("required", false);
         $("#divArea").hide();
     }
 });
@@ -1201,6 +1268,7 @@ $("#switchEmpS_edit").change(function (event) {
         $("#divTodoECheck_edit").show();
     } else {
         $("#selectArea_edit").prop("disabled", false);
+        $("#nombreEmpleado_edit").prop("required", false);
         $("#divEmpleado_edit").hide();
         $("#divTodoECheck_edit").hide();
     }
@@ -1222,6 +1290,7 @@ $("#switchAreaS_edit").change(function (event) {
         $("#TodoECheck_edit").prop("checked", false);
     } else {
         $("#nombreEmpleado_edit").prop("disabled", false);
+        $("#selectArea_edit").prop("required", false);
         $("#divArea_edit").hide();
     }
 });
@@ -1248,10 +1317,12 @@ $("#gestActiCheck").change(function (event) {
 $("#asistPuertaCheck").change(function (event) {
     if ($("#asistPuertaCheck").prop("checked")) {
         $("#opcionesAPuerta").show();
-        $("#verCheckPuerta").prop("required", true);
+
+       /*  $("#verCheckPuerta").prop("required", true); */
     } else {
         $("#opcionesAPuerta").hide();
-        $("#verCheckPuerta").prop("required", false);
+        $('#spanBooCk').hide();
+     /*    $("#verCheckPuerta").prop("required", false); */
     }
 });
 ////////////////////////////////////////////
@@ -1289,10 +1360,13 @@ $("#gestActiCheck_edit").change(function (event) {
 $("#asistPuertaCheck_edit").change(function (event) {
     if ($("#asistPuertaCheck_edit").prop("checked")) {
         $("#opcionesAPuerta_edit").show();
-        $("#verCheckPuerta_edit").prop("required", true);
+        $("#divReporteAsis_edit").show();
+       /*  $("#verCheckPuerta_edit").prop("required", true); */
     } else {
         $("#opcionesAPuerta_edit").hide();
-        $("#verCheckPuerta_edit").prop("required", false);
+        $('#spanBooCk_edit').hide();
+        $("#divReporteAsis_edit").hide();
+      /*   $("#verCheckPuerta_edit").prop("required", false); */
     }
 });
 ////////////////////////////////////////////
@@ -1308,3 +1382,61 @@ $("#TodoECheck_edit").click(function () {
 ////////////////////////////////////////////
 
 $(function () {});
+$("#AgregarCheckPuerta").change(function (event) {
+    if ($("#AgregarCheckPuerta").prop("checked")) {
+        $("#verCheckPuerta").prop("checked",true);
+        $("#verCheckPuerta").prop("disabled",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta").prop("checked")) {
+             $("#verCheckPuerta").prop("disabled",true);
+        } else{
+            $("#verCheckPuerta").prop("disabled",false);
+        }
+
+
+    }
+});
+
+$("#ModifCheckPuerta").change(function (event) {
+    if ($("#ModifCheckPuerta").prop("checked")) {
+        $("#verCheckPuerta").prop("checked",true);
+        $("#verCheckPuerta").prop("disabled",true);
+    }
+    else{
+        if ($("#AgregarCheckPuerta").prop("checked")) {
+            $("#verCheckPuerta").prop("disabled",true);
+       } else{
+           $("#verCheckPuerta").prop("disabled",false);
+       }
+
+    }
+});
+///edit
+$("#AgregarCheckPuerta_edit").change(function (event) {
+    if ($("#AgregarCheckPuerta_edit").prop("checked")) {
+        $("#verCheckPuerta_edit").prop("checked",true);
+        $("#verCheckPuerta_edit").prop("disabled",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta_edit").prop("checked")) {
+            $("#verCheckPuerta_edit").prop("disabled",true);
+       } else{
+           $("#verCheckPuerta_edit").prop("disabled",false);
+       }
+    }
+});
+
+$("#ModifCheckPuerta_edit").change(function (event) {
+    if ($("#ModifCheckPuerta_edit").prop("checked")) {
+        $("#verCheckPuerta_edit").prop("checked",true);
+        $("#verCheckPuerta_edit").prop("disabled",true);
+    }
+    else{
+        if ($("#AgregarCheckPuerta_edit").prop("checked")) {
+            $("#verCheckPuerta_edit").prop("disabled",true);
+       } else{
+           $("#verCheckPuerta_edit").prop("disabled",false);
+       }
+    }
+});

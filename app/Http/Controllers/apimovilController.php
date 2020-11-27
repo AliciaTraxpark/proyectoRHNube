@@ -139,6 +139,31 @@ class apimovilController extends Controller
 
 
     }
+    //CTIVIDADES
+    public function ActivMovil(Request $request){
+        $organi_id=$request->organi_id;
+        $actividades = DB::table('actividad as a')
+            ->select(
+                'a.Activi_id',
+                'a.Activi_Nombre',
+                'a.organi_id',
+                'a.codigoActividad'
+            )
+            ->where('a.organi_id', '=', $organi_id)
+            ->where('a.estado', '=', 1)
+            ->where('a.asistenciaPuerta', '=', 1)
+            ->get();
+
+        if($actividades!=null){
+             return response()->json(array('status'=>200,"actividades"=>$actividades));
+        }
+        else{
+            return response()->json(array('status'=>400,'title' => 'Actividades no encontradas',
+            'detail' => 'No se encontro actividades en esta organizacion'),400);
+        }
+
+
+    }
     public function controladoresAct(Request $request){
         $organi_id=$request->organi_id;
         $idDispo=$request->idDispo;

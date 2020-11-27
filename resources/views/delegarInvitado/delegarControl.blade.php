@@ -287,7 +287,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck">
                                         <label class="custom-control-label" for="ControlReCheck"
-                                            style="margin-top: 2px;">Modo Control remoto</label><br>
+                                            style="margin-top: 2px;">Modo: Control remoto</label><br>
                                     </div>
                                 </div>
 
@@ -295,11 +295,15 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="asistPuertaCheck">
                                         <label class="custom-control-label" for="asistPuertaCheck"
-                                            style="margin-top: 2px;">Gestión de modo control en puerta</label><br>
+                                            style="margin-top: 2px;">Modo: Asistencia en puerta &nbsp; &nbsp; <span id="spanBooCk"
+                                            style="display: none;color:#911818">Seleccione al menos una opcion.</span></label>  <br>
                                     </div>
                                 </div>
                                 <div class="col-md-12" id="opcionesAPuerta" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">Dispositivos y controladores:</label>
+                                        </div>
                                         <div class="col-md-1 col-xl-2" >
                                             <div class="form-check">
                                                 <input type="checkbox" name="opPuertaN" class="form-check-input" id="verCheckPuerta">
@@ -309,7 +313,7 @@
                                         </div>
                                         <div class="col-md-2" >
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="AgregarCheckPuerta">
+                                                <input type="checkbox"  class="form-check-input" id="AgregarCheckPuerta">
                                                 <label class="form-check-label" for="AgregarCheckPuerta"
                                                     style="margin-top: 2px;">Agregar</label>
                                             </div>
@@ -321,23 +325,26 @@
                                                     style="margin-top: 2px;">Modificar</label>
                                             </div>
                                         </div>
-
+                                        <br><br>
+                                        <div class="col-md-8 " id="divReporteAsis"  >
+                                            <label for="">Reporte de asistencia:</label>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ReporteAsistCheck">
+                                                <label class="form-check-label" for="ReporteAsistCheck"
+                                                    style="margin-top: 2px;">Ver  </label><br>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
-                                <div class="col-md-8 " id="divReporteAsis"  style="padding-top: 10px;">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="ReporteAsistCheck">
-                                        <label class="custom-control-label" for="ReporteAsistCheck"
-                                            style="margin-top: 2px;">Reporte de asistencia de modo control en puerta </label><br>
-                                    </div>
-                                </div>
 
 
-                                <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px;padding-top: 10px">
+
+                                <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px;padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
 
                                     <div class="col-md-12">
-                                        <label for="">Limitar alcance a:</label>
+                                        <label for="">Limitar alcance a: &nbsp; <span id="spanChEmple"
+                                            style="display: none;color:#911818">*Eliga un modo de seleccion de empleados.</span></label>
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
@@ -572,7 +579,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck_edit">
                                         <label class="custom-control-label" for="ControlReCheck_edit"
-                                            style="margin-top: 2px;">Modo Control remoto</label><br>
+                                            style="margin-top: 2px;">Modo: Control remoto</label><br>
                                     </div>
                                 </div>
 
@@ -580,12 +587,16 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="asistPuertaCheck_edit">
                                         <label class="custom-control-label" for="asistPuertaCheck_edit"
-                                            style="margin-top: 2px;">Gestión de modo control en puerta</label><br>
+                                            style="margin-top: 2px;">Modo: Asistencia en puerta &nbsp; &nbsp; <span id="spanBooCk_edit"
+                                            style="display: none;color:#911818">Seleccione al menos una opcion.</span></label><br>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12" id="opcionesAPuerta_edit" style="padding-top: 10px; font-style: oblique; display:none ;  padding-bottom: 15px;" >
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">Dispositivos y controladores</label>
+                                        </div>
                                         <div class="col-md-1 col-xl-2" >
                                             <div class="form-check">
                                                 <input type="checkbox"  class="form-check-input" id="verCheckPuerta_edit">
@@ -607,23 +618,25 @@
                                                     style="margin-top: 2px;">Modificar</label>
                                             </div>
                                         </div>
-
-
+                                        <br><br>
+                                        <div class="col-md-8 " id="divReporteAsis_edit"  >
+                                            <label for="">Reporte de asistencia:</label>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ReporteAsistCheck_edit">
+                                                <label class="form-check-label" for="ReporteAsistCheck_edit"
+                                                    style="margin-top: 2px;">Ver</label><br>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-8 " id="divReporteAsis_edit"  style="padding-top: 10px;">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="ReporteAsistCheck_edit">
-                                        <label class="custom-control-label" for="ReporteAsistCheck_edit"
-                                            style="margin-top: 2px;">Reporte de asistencia de modo control en puerta</label><br>
-                                    </div>
-                                </div>
+
 
 
                                 <div id="divInvitado_edit" class="col-md-12"
-                                    style="padding-left: 0px;padding-right: 0px; padding-top: 10px">
+                                    style="padding-left: 0px;padding-right: 0px; padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
                                     <div class="col-md-12">
-                                        <label for="">Limitar alcance a:</label>
+                                        <label for="">Limitar alcance a: &nbsp; <span id="spanChEmple_edit"
+                                            style="display: none;color:#911818">*Eliga un modo de seleccion de empleados.</span></label>
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
