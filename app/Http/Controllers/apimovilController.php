@@ -171,7 +171,7 @@ class apimovilController extends Controller
         $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
         ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
         ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
-        ->select('con.idControladores','con.cont_codigo','con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno','con.cont_correo',
+        ->select('con.idControladores','con.cont_codigo','con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno',
         'con.cont_estado')
         ->where('dis.idDispositivos', '=',$idDispo)
         ->where('dis.organi_id', '=',$organi_id)
