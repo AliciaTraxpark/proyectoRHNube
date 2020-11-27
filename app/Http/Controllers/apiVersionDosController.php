@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
@@ -154,6 +155,45 @@ class apiVersionDosController extends Controller
 
     public function captura(Request $request)
     {
+        //? VALIDACION DE BACKEND
+        $validacion = Validator::make($request->all(), [
+            'idEmpleado' => 'required',
+            'hora_ini' => 'required',
+            'hora_fin' => 'required',
+            'actividad' => 'required',
+            'miniatura' => 'required',
+            'imagen' => 'required',
+            'idActividad' => 'required'
+        ], [
+            'required' => ':attribute es obligatorio'
+        ]);
+        $errores = [];
+        if ($validacion->fails()) {
+            // dd($validacion->errors());
+            if (isset($validacion->failed()['idEmpleado'])) {
+                array_push($errores, array("campo" => 'idEmpleado', "mensaje" => 'idEmpleado es obligatorio'));
+            }
+            if (isset($validacion->failed()['hora_ini'])) {
+                array_push($errores, array("campo" => 'hora_ini', "mensaje" => 'hora_ini es obligatorio'));
+            }
+            if (isset($validacion->failed()['hora_fin'])) {
+                array_push($errores, array("campo" => 'hora_fin', "mensaje" => 'hora_fin es obligatorio'));
+            }
+            if (isset($validacion->failed()['actividad'])) {
+                array_push($errores, array("campo" => 'actividad', "mensaje" => 'actividad es obligatorio'));
+            }
+            if (isset($validacion->failed()['miniatura'])) {
+                array_push($errores, array("campo" => 'miniatura', "mensaje" => 'miniatura es obligatorio'));
+            }
+            if (isset($validacion->failed()['imagen'])) {
+                array_push($errores, array("campo" => 'imagen', "mensaje" => 'imagen es obligatorio'));
+            }
+            if (isset($validacion->failed()['idActividad'])) {
+                array_push($errores, array("campo" => 'idActividad', "mensaje" => 'idActividad es obligatorio'));
+            }
+            return response()->json(array("errores" => $errores), 404);
+        }
+
         function carpetaImg($miniatura, $idEmpleado, $horaI, $nombre)
         {
             $orgCarpeta = DB::table('empleado as e')
