@@ -352,7 +352,7 @@ class controlRutaController extends Controller
             {
                 $resultado = array();
                 foreach ($array as $empleado) {
-                    $hora = explode(":", $empleado->hora_ini);
+                    $hora = array_map('intval', explode(":", $empleado->hora_ini));
                     $fechaA = $empleado->dia;
                     if (!isset($resultado[$empleado->emple_id])) {
                         $resultado[$empleado->emple_id] = array("empleado" => $empleado->emple_id, "datos" => array());
@@ -360,10 +360,11 @@ class controlRutaController extends Controller
                     if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA])) {
                         $resultado[$empleado->emple_id]["datos"][$fechaA] = array();
                     }
-                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$hora[1][0]])) {
-                        $resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$hora[1][0]] = array();
+                    $sub = substr($hora[1], 0, 1);
+                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub])) {
+                        $resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub] = array();
                     }
-                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$hora[1][0]], $empleado);
+                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub], $empleado);
                 }
                 return array_values($resultado);
             }
@@ -409,7 +410,7 @@ class controlRutaController extends Controller
                 ->orderBy('u.hora_ini', 'asc')
                 ->get();
             $tiempoDiaUbicacion = agruparEmpleadosCaptura($tiempoDiaUbicacion);
-            dd($tiempoDiaCaptura, $tiempoDiaUbicacion);
+            // dd($tiempoDiaCaptura, $tiempoDiaUbicacion);
             // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
@@ -438,12 +439,25 @@ class controlRutaController extends Controller
                                     if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) {
                                         //* Recorremos en formato minutos 
                                         for ($m = 0; $m < 6; $m++) {
-                                            if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) {
-                                                foreach ($horaCaptura[$hora]["minuto"][$m] as $key => $value) {
-                                                    foreach ($horaUbicacion[$hora]["minuto"][$m] as $keyU => $valueU) {
-                                                        if ($value["hora_ini"] < $valueU["hora_ini"]) {
-                                                            $resp = checkHora($value["hora_ini"], $value["hora_fin"], $valueU["hora_ini"]);
-                                                            if ($resp) {
+                                            if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
+                                                $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                    //* RECORREMOS ARRAY DE MINUTOS EN UBICACIÓN
+                                                    for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU) {
+                                                        //* FORMATO DE MINUTOS CON CARBON
+                                                        $carbonCaptura = Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini)->isoFormat("HH:mm");
+                                                        $carbonUbicacion = Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini)->isoFormat("HH:mm");
+                                                        //* BUSCAR CON MINUTOS IGUALES
+                                                        if ($carbonCaptura == $carbonUbicacion) {
+                                                            //* PARAMETROS PARA ENVIAR A FUNCION
+                                                            $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
+                                                            $horaFinRango = $arrayMinutoCaptura[$indexMinutosU]->hora_fin;
+                                                            $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
+                                                            //* **************************************************************
+                                                            $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                            if ($check) {
                                                             }
                                                         }
                                                     }
