@@ -548,6 +548,61 @@ class controlRutaController extends Controller
                                 // array_push($capturaUbicacion[$i]["datos"][$d], $diffRango, $diffActividad);
                                 $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
                                 $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
+                            } else {
+                                if (isset($tiempoDiaCaptura[$i]["datos"][$d])) {
+                                    $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
+                                    for ($hora = 0; $hora < 24; $hora++) {
+                                        if (isset($horaCaptura[$hora])) {
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horaCaptura[$hora]["minuto"][$m])) {
+                                                    $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                    for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                        $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                        $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    //* UNIR DATOS EN NUEVO ARRAY
+                                    if (!isset($capturaUbicacion[$i]["empleado"])) {
+                                        $capturaUbicacion[$i]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                    }
+                                    if (!isset($capturaUbicacion[$i]["datos"][$d])) {
+                                        $capturaUbicacion[$i]["datos"][$d] = array();
+                                    }
+                                    // array_push($capturaUbicacion[$i]["datos"][$d], $diffRango, $diffActividad);
+                                    $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
+                                    $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
+                                } else {
+                                    if (isset($tiempoDiaUbicacion[$j]["datos"][$d])) {
+                                        $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
+                                        for ($hora = 0; $hora < 24; $hora++) {
+                                            if (isset($horaUbicacion[$hora])) {
+                                                for ($m = 0; $m < 6; $m++) {
+                                                    if (isset($horaUbicacion[$hora]["minuto"][$m])) {
+                                                        $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                        for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                            $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //* UNIR DATOS EN NUEVO ARRAY
+                                        if (!isset($capturaUbicacion[$i]["empleado"])) {
+                                            $capturaUbicacion[$i]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                        }
+                                        if (!isset($capturaUbicacion[$i]["datos"][$d])) {
+                                            $capturaUbicacion[$i]["datos"][$d] = array();
+                                        }
+                                        // array_push($capturaUbicacion[$i]["datos"][$d], $diffRango, $diffActividad);
+                                        $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
+                                        $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
+                                    }
+                                }
                             }
                         }
                     }
