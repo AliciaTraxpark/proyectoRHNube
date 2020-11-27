@@ -208,9 +208,31 @@ class dispositivosController extends Controller
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
            /*  ->where('e.emple_estado', '=', 1)    */
-
             ->get();
-    return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga,'empleado'=>$empleados]);
+            $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if( $invitadod->reporteAsisten==1){
+
+                        return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga,'empleado'=>$empleados]);
+                    } else{
+                          return redirect('/dashboard');
+                    }
+                   /*   */
+
+
+                } else {
+                    return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga,'empleado'=>$empleados]);
+                }
+            }
+            else{
+                return view('Dispositivos.reporteDis',['organizacion'=>$nombreOrga,'empleado'=>$empleados]);
+            }
+
  }
 
  public function reporteTabla(Request $request){
