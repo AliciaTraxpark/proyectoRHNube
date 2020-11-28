@@ -459,7 +459,6 @@ class controlRutaController extends Controller
                                                             $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
                                                             $diffRango = $diffRango + $nuevoRango;
                                                             $diffActividad = $diffActividad + $nuevaActividad;
-                                                            // dd($d, $diffRango, $diffActividad);
                                                         } else {
                                                             if ($carbonCaptura < $carbonUbicacion) {
                                                                 //* PARAMETROS PARA ENVIAR A FUNCION
@@ -528,7 +527,6 @@ class controlRutaController extends Controller
                                                         }
                                                     }
                                                     if ($valorIngreso) {
-                                                        // dd($d, $arrayMinutoUbicacion[$indexMinutosU], $arrayMinutoUbicacion[$indexMinutosU]->rango, $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion);
                                                         $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
                                                         $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
                                                     }
@@ -539,7 +537,7 @@ class controlRutaController extends Controller
                                                     //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
                                                     for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
                                                         $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
-                                                        $diffActividad = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                        $diffActividad = $diffActividad  + $arrayMinutoCaptura[$indexMinutosC]->actividad;
                                                     }
                                                 } else {
                                                     if (isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparar si existe solo el minuto en ubicación
@@ -590,8 +588,6 @@ class controlRutaController extends Controller
                                 if (!isset($capturaUbicacion[$i]["datos"][$d])) {
                                     $capturaUbicacion[$i]["datos"][$d] = array();
                                 }
-                                // dd($d, $diffRango, $diffActividad);
-                                // array_push($capturaUbicacion[$i]["datos"][$d], $diffRango, $diffActividad);
                                 $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
                                 $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
                             } else {
@@ -618,7 +614,6 @@ class controlRutaController extends Controller
                                     if (!isset($capturaUbicacion[$i]["datos"][$d])) {
                                         $capturaUbicacion[$i]["datos"][$d] = array();
                                     }
-                                    // array_push($capturaUbicacion[$i]["datos"][$d], $diffRango, $diffActividad);
                                     $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
                                     $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
                                 } else {
@@ -644,7 +639,6 @@ class controlRutaController extends Controller
                                         if (!isset($capturaUbicacion[$i]["datos"][$d])) {
                                             $capturaUbicacion[$i]["datos"][$d] = array();
                                         }
-                                        // array_push($capturaUbicacion[$i]["datos"][$d], $diffRango, $diffActividad);
                                         $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
                                         $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
                                     }
