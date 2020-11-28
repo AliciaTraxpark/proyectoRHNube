@@ -702,6 +702,7 @@ class controlRutaController extends Controller
                     }
                 }
             }
+            return response()->json($capturaUbicacion, 200);
             //* **********************
             //* ARRAYS
             $horas = array();
@@ -747,7 +748,8 @@ class controlRutaController extends Controller
                 $respuesta[$j]["sumaRango"] = array_reverse($respuesta[$j]["sumaRango"]);
             }
         }
-        return response()->json($respuesta, 200);
+
+        // return response()->json($respuesta, 200);
     }
 
     //* REPORTE PERSONALIZADO
