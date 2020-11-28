@@ -635,17 +635,19 @@ class controlRutaController extends Controller
                         for ($d = 0; $d < $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
                             $diffRango = 0;
                             $diffActividad = 0;
-                            //* Buscamos si existe esos dias en los 2 arrays
+                            //* Buscamos si existe el dia en el array
                             if (isset($tiempoDiaCaptura[$i]["datos"][$d])) {
+                                $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
                                 for ($hora = 0; $hora < 24; $hora++) {
-                                    $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
-                                    //* RECORREMOS EN FORMATO MINUTOS
-                                    for ($m = 0; $m < 6; $m++) {
-                                        if (isset($horaCaptura[$hora]["minuto"][$m])) {
-                                            $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
-                                            for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
-                                                $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
-                                                $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                    if (isset($horaCaptura[$hora])) {
+                                        //* RECORREMOS EN FORMATO MINUTOS
+                                        for ($m = 0; $m < 6; $m++) {
+                                            if (isset($horaCaptura[$hora]["minuto"][$m])) {
+                                                $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                    $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                    $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                }
                                             }
                                         }
                                     }
@@ -659,6 +661,43 @@ class controlRutaController extends Controller
                                 }
                                 $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
                                 $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
+                            }
+                        }
+                    }
+                } else {
+                    if (sizeof($tiempoDiaUbicacion) != 0) {
+                        for ($i = 0; $i < sizeof($tiempoDiaUbicacion); $i++) {
+                            for ($d = 0; $d < $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
+                                $diffRango = 0;
+                                $diffActividad = 0;
+                                //* Buscamos si existe el dia en el array
+                                if (isset($tiempoDiaUbicacion[$i]["datos"][$d])) {
+                                    $horaUbicacion = $tiempoDiaUbicacion[$i]["datos"][$d];
+                                    //* RECORREMOS EN FORMATO DE HORAS
+                                    for ($hora = 0; $hora < 24; $hora++) {
+                                        if (isset($horaUbicacion[$hora])) {
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horaUbicacion[$hora]["minuto"][$m])) {
+                                                    $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                    for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                        $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                        $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    //* UNIR DATOS EN NUEVO ARRAY
+                                    if (!isset($capturaUbicacion[$i]["empleado"])) {
+                                        $capturaUbicacion[$i]["empleado"] = $tiempoDiaUbicacion[$i]["empleado"];
+                                    }
+                                    if (!isset($capturaUbicacion[$i]["datos"][$d])) {
+                                        $capturaUbicacion[$i]["datos"][$d] = array();
+                                    }
+                                    $capturaUbicacion[$i]["datos"][$d]["rango"] = $diffRango;
+                                    $capturaUbicacion[$i]["datos"][$d]["actividad"] = $diffActividad;
+                                }
                             }
                         }
                     }
