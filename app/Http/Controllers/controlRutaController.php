@@ -387,6 +387,7 @@ class controlRutaController extends Controller
                 ->orderBy('u.hora_ini', 'asc')
                 ->get();
             $tiempoDiaUbicacion = agruparEmpleadosCaptura($tiempoDiaUbicacion);
+            return response()->json(array($tiempoDiaCaptura, $tiempoDiaUbicacion), 200);
             //: ***************************************************************************************
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
@@ -702,7 +703,6 @@ class controlRutaController extends Controller
                     }
                 }
             }
-            return response()->json($capturaUbicacion, 200);
             //* **********************
             //* ARRAYS
             $horas = array();
