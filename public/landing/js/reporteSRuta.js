@@ -124,16 +124,21 @@ function sumarHora(a, b) {
     b = b.split(":").reverse();
     let acumulado = 0;
     let sumaAcumulado;
+    let tiempo;
     let suma = parseInt(a[0]) + parseInt(b[0]);
     sumaAcumulado = acumular60(suma, acumulado);
-    resultado.push(sumaAcumulado[0]);
+    tiempo = (sumaAcumulado[0] < 10) ? '0' + sumaAcumulado[0] : sumaAcumulado[0];
+    resultado.push(tiempo);
     suma = parseInt(a[1]) + parseInt(b[1]) + sumaAcumulado[1];
     acumulado = 0;
     sumaAcumulado = acumular60(suma, acumulado);
-    resultado.push(sumaAcumulado[0]);
+    tiempo = (sumaAcumulado[0] < 10) ? '0' + sumaAcumulado[0] : sumaAcumulado[0];
+    resultado.push(tiempo);
     suma = parseInt(a[2]) + parseInt(b[2]) + sumaAcumulado[1];
-    resultado.push(suma);
+    tiempo = (suma < 10) ? '0' + suma : suma;
+    resultado.push(tiempo);
     resultado.reverse();
+    console.log(resultado);
     return resultado.join(":");
 }
 //: funcion para calcular promedio
@@ -214,7 +219,6 @@ function onSelectFechas() {
         },
         success: function (data) {
             if (data.length > 0) {
-                console.log(data);
                 $('#VacioImg').hide();
                 var nombre = [];
                 var horas = [];
@@ -239,7 +243,6 @@ function onSelectFechas() {
                     var sumaRTotal = data[i].sumaRango.reduce(function (a, b) {
                         return sumarTotales(a, b);
                     });
-                    console.log(sumaATotal, sumaRTotal);
                     for (let j = 0; j < data[i].horas.length; j++) {
                         // TABLA DEFAULT
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
@@ -625,7 +628,6 @@ function cambiarTabla() {
     $("#customSwitchD").on("change.bootstrapSwitch", function (
         event
     ) {
-        console.log(event.target.checked);
         if (event.target.checked == true) {
             dato = $('#fecha').val();
             tableActividad.columns.adjust().draw(true);

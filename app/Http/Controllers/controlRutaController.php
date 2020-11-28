@@ -394,6 +394,7 @@ class controlRutaController extends Controller
                     return true;
                 } else return false;
             }
+            //? ******************************************
             $capturaUbicacion = []; //* GUARDAR NUEVA DATA 
             //? UNIR DATOS EN UNO SOLO
             for ($i = 0; $i < sizeof($tiempoDiaCaptura); $i++) {
