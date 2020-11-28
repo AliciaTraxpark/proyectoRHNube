@@ -20,6 +20,7 @@
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{
     URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
     }}" rel="stylesheet" />
