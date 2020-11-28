@@ -49,7 +49,27 @@ class HomeController extends Controller
 
         if($invitadod){
             if ($invitadod->dashboard==0){
-                return redirect('/tareas');
+
+                if ($invitadod->permiso_Emp==1){
+                    return redirect('/empleados');
+                } else{
+                    if ($invitadod->gestionActiv==1){
+                        return redirect('/actividad');
+                    } else{
+                        if ($invitadod->modoCR==1){
+                            return redirect('/controlRemoto');
+                        } else{
+                            if ($invitadod->asistePuerta==1){
+                                if ($invitadod->reporteAsisten==1){
+                                    return redirect('/reporteAsistencia');
+                                }
+                                else{
+                                    return redirect('/dispositivos');
+                                }
+                            }
+                        }
+                    }
+                }
             }
             else{
                 return view('dashboard', ['variable' => $variable]);

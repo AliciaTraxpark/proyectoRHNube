@@ -21,7 +21,7 @@ function abrirRegist() {
     $("#divDash").show();
     $("#switchEmpS").prop("disabled", false);
     $("#switchAreaS").prop("disabled", false);
-
+    $('#divParaSelec').hide();
     $("#selectArea").prop("required", false);
     $("#divAdminPersona").show();
     $("#opcionesGE").hide();
@@ -109,7 +109,7 @@ $("#selectArea").change(function (e) {
 function registrarInvit() {
 
     var booCheck;
-    if ($("#asistPuertaCheck").is(":checked")) {
+    if ($("#asistPuertaCheck").is(":checked")  &&  !$("#adminCheck").is(":checked")) {
         if(!$("#verCheckPuerta").is(":checked") &&  !$("#AgregarCheckPuerta").is(":checked") &&
         !$("#ModifCheckPuerta").is(":checked")  && !$("#ReporteAsistCheck").is(":checked") ){
             booCheck=0;
@@ -128,13 +128,25 @@ function registrarInvit() {
     }
     var emailInv = $("#emailInvi").val();
     var idEmpleado = $("#nombreEmpleado").val();
-    if (!$("#switchEmpS").is(":checked") && !$("#switchAreaS").is(":checked") ) {
+    if (!$("#switchEmpS").is(":checked") && !$("#switchAreaS").is(":checked") &&  !$("#adminCheck").is(":checked") ) {
 
         $('#spanChEmple').show();
         return false;
     } else{
         $('#spanChEmple').hide();
     }
+
+    ///////////////////////////////////////////////
+
+    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
+
+        $('#divParaSelec').show();
+        return false;
+    } else{
+        $('#divParaSelec').hide();
+    }
+    //////////////////////////////////////////7
+
     $.ajax({
         type: "post",
         url: "/verificarEmaD",
@@ -441,6 +453,7 @@ $("#adminCheck").click(function () {
         $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
         $("#verCheckPuerta").prop("required", false);
+        $("#divParaSelec").hide();
     } else {
         $("#nombreEmpleado").prop("required", true);
         $("#divInvitado").show();
@@ -463,6 +476,7 @@ function editarInv(idi) {
     $("#btnGu_edit").prop("disabled", false);
     $("#verCheckPuerta_edit").attr("required", false);
     $("#verCheckPuerta_edit").prop("disabled", false);
+    $('#divParaSelec_edit').hide();
     $.ajax({
         type: "post",
         url: "/datosInvitado",
@@ -699,6 +713,7 @@ $("#adminCheck_edit").click(function () {
         $("#divControlRe_edit").hide();
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
+        $("#divParaSelec_edit").hide();
     } else {
         //gest emp
         if ($("#AlcaAdminCheck_edit").is(":checked")) {
@@ -835,7 +850,7 @@ $("#selectArea_edit").change(function (e) {
 function registrarInvit_edit() {
     var booCheck_edit;
 
-    if ($("#asistPuertaCheck_edit").is(":checked")) {
+    if ($("#asistPuertaCheck_edit").is(":checked") &&  !$("#adminCheck_edit").is(":checked")) {
         if(!$("#verCheckPuerta_edit").is(":checked") &&  !$("#AgregarCheckPuerta_edit").is(":checked") &&
         !$("#ModifCheckPuerta_edit").is(":checked")  && !$("#ReporteAsistCheck_edit").is(":checked") ){
             booCheck_edit=0;
@@ -852,13 +867,23 @@ function registrarInvit_edit() {
     else{
         $('#spanBooCk_edit').hide();
     }
-    if (!$("#switchEmpS_edit").is(":checked") && !$("#switchAreaS_edit").is(":checked") ) {
+    if (!$("#switchEmpS_edit").is(":checked") && !$("#switchAreaS_edit").is(":checked")  &&  !$("#adminCheck_edit").is(":checked")) {
 
         $('#spanChEmple_edit').show();
         return false;
     } else{
         $('#spanChEmple_edit').hide();
     }
+     ///////////////////////////////////////////////
+
+     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
+
+        $('#divParaSelec_edit').show();
+        return false;
+    } else{
+        $('#divParaSelec_edit').hide();
+    }
+    //////////////////////////////////////////7
     var idinvitado = $("#idInv").val();
     var idEmpleado = $("#nombreEmpleado_edit").val();
     if ($("#adminCheck_edit").is(":checked")) {

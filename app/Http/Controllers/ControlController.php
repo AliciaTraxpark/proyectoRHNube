@@ -85,7 +85,31 @@ class ControlController extends Controller
                     ->get();
             }
 
-            return view('tareas.tareas', ['empleado' => $empleado]);
+
+           /*  return view('tareas.tareas', ['empleado' => $empleado]); */
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if( $invitadod->modoCR==1){
+
+                        return view('tareas.tareas', ['empleado' => $empleado]);
+                    } else{
+                          return redirect('/dashboard');
+                    }
+                   /*   */
+
+
+                } else {
+                    return view('tareas.tareas', ['empleado' => $empleado]);
+                }
+            }
+            else{
+                return view('tareas.tareas', ['empleado' => $empleado]);
+            }
         }
     }
 
@@ -169,8 +193,31 @@ class ControlController extends Controller
                 ->where('c.organi_id', '=', session('sesionidorg'))
                 ->get();
 
+                $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
-            return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                if ($invitadod) {
+                    if ($invitadod->rol_id != 1) {
+                        if( $invitadod->modoCR==1){
+
+                            return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                        } else{
+                              return redirect('/dashboard');
+                        }
+                       /*   */
+
+
+                    } else {
+                        return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                    }
+                }
+                else{
+                    return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                }
+
         }
     }
 
@@ -255,8 +302,34 @@ class ControlController extends Controller
                 ->where('c.organi_id', '=', session('sesionidorg'))
                 ->get();
 
+                $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
+           /*  return view('dashboardCR', ['areas' => $areas]); */
+
+           if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                if( $invitadod->modoCR==1){
+
+                    return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                } else{
+                      return redirect('/dashboard');
+                }
+               /*   */
+
+
+            } else {
+                return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+            }
+        }
+        else{
             return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+        }
+
+
         }
     }
 

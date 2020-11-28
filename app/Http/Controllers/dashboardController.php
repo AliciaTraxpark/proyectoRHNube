@@ -822,7 +822,34 @@ class dashboardController extends Controller
                 ->select('a.area_id', 'a.area_descripcion')
                 ->where('a.organi_id', '=', session('sesionidorg'))
                 ->get();
+
+                $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+           /*  return view('dashboardCR', ['areas' => $areas]); */
+
+           if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                if( $invitadod->modoCR==1){
+
+                    return view('dashboardCR', ['areas' => $areas]);
+                } else{
+                      return redirect('/dashboard');
+                }
+               /*   */
+
+
+            } else {
+                return view('dashboardCR', ['areas' => $areas]);
+            }
+        }
+        else{
             return view('dashboardCR', ['areas' => $areas]);
+        }
+
         }
     }
     public function globalControlRemoto(Request $request)

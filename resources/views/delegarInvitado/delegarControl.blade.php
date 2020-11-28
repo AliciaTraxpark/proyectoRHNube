@@ -185,7 +185,10 @@
                                             administrador</label>
                                     </div>
                                 </div>
-
+                                <div class="col-md-12" style="top: 10px; display: none" id="divParaSelec">
+                                   <span
+                                    style="color:#911818">*Eliga al menos una opcion.</span>
+                                </div>
                                 <div class="col-md-8 " id="divDash">
                                    <br>
                                     <div class="custom-control custom-switch">
@@ -479,15 +482,20 @@
                                             administrador</label><br><br>
                                     </div>
                                 </div>
+                                <div class="col-md-12" style="
+                                display: none" id="divParaSelec_edit">
+                                    <span
+                                     style="color:#911818">*Eliga al menos una opcion.</span>
+                                 </div>
                                 <div class="col-md-8 " id="divDash_edit">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="dashboardCheck_edit">
                                         <label class="custom-control-label" for="dashboardCheck_edit"
                                             style="margin-top: 2px;font-style: oblique;">Ver Dashboard
-                                            general</label><br><br>
+                                            general</label><br>
                                     </div>
                                 </div>
-                                <div class="col-md-8 " id="divAdminPersona_edit">
+                                <div class="col-md-8 " id="divAdminPersona_edit" style="padding-top: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="AlcaAdminCheck_edit">
                                         <label class="custom-control-label" for="AlcaAdminCheck_edit"
