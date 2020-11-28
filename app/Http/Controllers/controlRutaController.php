@@ -523,14 +523,12 @@ class controlRutaController extends Controller
                                                                 $horaFinRango = $arrayMinutoCaptura[$indexMinutosC]->hora_fin;
                                                                 $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
                                                                 $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                dd($horaInicioRango, $horaFinRango, $horaNowRango, $check, $arrayMinutoUbicacion[$indexMinutosU], $arrayMinutoCaptura[$indexMinutosC]);
                                                                 if ($check) $valorIngreso = !$check;
                                                             }
                                                         }
                                                     }
-                                                    dd($valorIngreso, $arrayMinutoUbicacion[$indexMinutosU],);
                                                     if ($valorIngreso) {
-                                                        dd($d, $arrayMinutoUbicacion[$indexMinutosU], $arrayMinutoUbicacion[$indexMinutosU]->rango, $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion);
+                                                        // dd($d, $arrayMinutoUbicacion[$indexMinutosU], $arrayMinutoUbicacion[$indexMinutosU]->rango, $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion);
                                                         $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
                                                         $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
                                                     }
