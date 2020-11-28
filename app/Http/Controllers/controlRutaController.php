@@ -705,7 +705,6 @@ class controlRutaController extends Controller
                     }
                 }
             }
-            return response()->json(array($capturaUbicacion), 200);
             //* **********************
             //* ARRAYS
             $horas = array();
@@ -752,7 +751,7 @@ class controlRutaController extends Controller
             }
         }
 
-        // return response()->json($respuesta, 200);
+        return response()->json($respuesta, 200);
     }
 
     //* REPORTE PERSONALIZADO
