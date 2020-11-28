@@ -120,16 +120,21 @@ function sumarHora(a, b) {
     b = b.split(":").reverse();
     let acumulado = 0;
     let sumaAcumulado;
+    let tiempo;
     let suma = parseInt(a[0]) + parseInt(b[0]);
     sumaAcumulado = acumular60(suma, acumulado);
-    resultado.push(sumaAcumulado[0]);
+    tiempo = (sumaAcumulado[0] < 10) ? '0' + sumaAcumulado[0] : sumaAcumulado[0];
+    resultado.push(tiempo);
     suma = parseInt(a[1]) + parseInt(b[1]) + sumaAcumulado[1];
     acumulado = 0;
     sumaAcumulado = acumular60(suma, acumulado);
-    resultado.push(sumaAcumulado[0]);
+    tiempo = (sumaAcumulado[0] < 10) ? '0' + sumaAcumulado[0] : sumaAcumulado[0];
+    resultado.push(tiempo);
     suma = parseInt(a[2]) + parseInt(b[2]) + sumaAcumulado[1];
-    resultado.push(suma);
+    tiempo = (suma < 10) ? '0' + suma : suma;
+    resultado.push(tiempo);
     resultado.reverse();
+    console.log(resultado);
     return resultado.join(":");
 }
 
