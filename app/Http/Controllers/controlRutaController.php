@@ -438,8 +438,7 @@ class controlRutaController extends Controller
                                 $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
                                 $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
                                 for ($hora = 0; $hora < 24; $hora++) { //* Recorremos en formato de 24 horas
-                                    if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) {
-                                        // dd($horaCaptura[$hora], $horaUbicacion[$hora]);
+                                    if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) { //* CAPTURA Y UBICACION CONTIENE LA MISMA HORA
                                         //* Recorremos en formato minutos 
                                         for ($m = 0; $m < 6; $m++) {
                                             if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
@@ -468,12 +467,11 @@ class controlRutaController extends Controller
                                                                 $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
                                                                 //* **************************************************************
                                                                 $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                $valorIngreso = !$check;
                                                                 //* ***************************************************************
                                                                 if ($check) {
+                                                                    $valorIngreso = !$check;
                                                                     $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
                                                                     $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
-                                                                    // dd($arrayMinutoCaptura[$indexMinutosC]->actividad, $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion);
                                                                     $diffRango = $diffRango + $nuevoRango;
                                                                     $diffActividad = $diffActividad + $nuevaActividad;
                                                                 }
@@ -484,12 +482,12 @@ class controlRutaController extends Controller
                                                                 $horaNowRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
                                                                 //* ***************************************************************
                                                                 $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                $valorIngreso = !$check;
+                                                                // dd($carbonCaptura, $carbonUbicacion, $valorIngreso);
                                                                 //* ****************************************************************
                                                                 if ($check) {
+                                                                    $valorIngreso = !$check;
                                                                     $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
                                                                     $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
-                                                                    // dd($arrayMinutoCaptura[$indexMinutosC]->actividad, $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion);
                                                                     $diffRango = $diffRango + $nuevoRango;
                                                                     $diffActividad = $diffActividad + $nuevaActividad;
                                                                 }
@@ -519,19 +517,65 @@ class controlRutaController extends Controller
                                                                 $horaFinRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_fin;
                                                                 $horaNowRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
                                                                 $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                $valorIngreso = !$check;
+                                                                if ($check) $valorIngreso = !$check;
                                                             } else {
                                                                 $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
                                                                 $horaFinRango = $arrayMinutoUbicacion[$indexMinutosC]->hora_fin;
                                                                 $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
                                                                 $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                $valorIngreso = !$check;
+                                                                if ($check) $valorIngreso = !$check;
                                                             }
                                                         }
                                                     }
                                                     if ($valorIngreso) {
                                                         $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
                                                         $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                    }
+                                                }
+                                            } else {
+                                                if (isset($horaCaptura[$hora]["minuto"][$m])) { //* Comparar si existe solo el minuto en captura
+                                                    $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                    //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                    for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                        $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                        $diffActividad = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                    }
+                                                } else {
+                                                    if (isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparar si existe solo el minuto en ubicación
+                                                        $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                        //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
+                                                        for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                            $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        if (isset($horaCaptura[$hora])) { //* BUSCAMOS SI SOLO CAPTURA CONTIENE ESA HORA
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horaCaptura[$hora]["minuto"][$m])) { //* COMPARAR SI EXISTE EL MINUTO
+                                                    $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                    //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                    for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                        $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                        $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            if (isset($horaUbicacion[$hora])) { //* BUSCAMOS SI SOLO UBICACION CONTIENE ESA HORA
+                                                //* RECORREMOS EN FORMATO MINUTOS
+                                                for ($m = 0; $m < 6; $m++) {
+                                                    if (isset($horaUbicacion[$hora]["minuto"][$m])) { //* COMPARAR SI EXISTE EL MINUTO
+                                                        $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                        //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
+                                                        for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                            $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                        }
                                                     }
                                                 }
                                             }
