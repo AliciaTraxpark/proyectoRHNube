@@ -65,7 +65,6 @@ class controlRutaController extends Controller
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
-
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                         ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                         ->where('invem.area_id', '=', null)
@@ -129,6 +128,7 @@ class controlRutaController extends Controller
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
+
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                             ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                             ->where('invem.area_id', '=', null)
@@ -262,7 +262,6 @@ class controlRutaController extends Controller
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
-
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                             ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                             ->where('invem.area_id', '=', null)
