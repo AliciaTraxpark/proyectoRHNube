@@ -843,7 +843,6 @@ class controlRutaController extends Controller
                     }
                 }
             }
-            dd($capturaUbicacion);
             //* **********************
             //* ARRAYS
             $horas = array();
@@ -889,7 +888,7 @@ class controlRutaController extends Controller
                 $respuesta[$j]["sumaRango"] = array_reverse($respuesta[$j]["sumaRango"]);
             }
         }
-
+        dd($capturaUbicacion, $respuesta);
         return response()->json($respuesta, 200);
     }
 
