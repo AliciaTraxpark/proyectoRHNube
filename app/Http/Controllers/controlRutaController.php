@@ -65,7 +65,6 @@ class controlRutaController extends Controller
                         ->groupBy('e.emple_id')
                         ->get();
                 } else {
-
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                         ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                         ->where('invem.area_id', '=', null)
@@ -129,6 +128,7 @@ class controlRutaController extends Controller
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
+
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                             ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                             ->where('invem.area_id', '=', null)
@@ -262,7 +262,6 @@ class controlRutaController extends Controller
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
-
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                             ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                             ->where('invem.area_id', '=', null)
@@ -316,43 +315,14 @@ class controlRutaController extends Controller
         }
 
         $respuesta = [];
-        $unir = [];
 
         if (sizeof($empleados) > 0) {
-            $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
-        if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
-            // DB::enableQueryLog();
-            $horasTrabajadas = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
-                ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
-                ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
-                ->select(
-                    'e.emple_id',
-                    'p.perso_nombre',
-                    'p.perso_apPaterno',
-                    'p.perso_apMaterno',
-                    DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start)) as fecha'),
-                    DB::raw('TIME(cp.hora_ini) as hora_ini'),
-                    DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio'),
-                    DB::raw('SUM(cp.actividad) as sumaA'),
-                    DB::raw('SUM(promedio.tiempo_rango) as sumaR'),
-                    DB::raw($sql),
-                    DB::raw('DATE(cp.hora_fin) as fecha_captura')
-                )
-                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '>=', $fechaF[0])
-                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '<=', $fechaF[1])
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_ini)'))
-                ->get();
-
+            //* FUNCION PARA AGRUPAR CAPTURAS POR FECHA , HORAS Y MINUTOS
             function agruparEmpleadosCaptura($array)
             {
                 $resultado = array();
                 foreach ($array as $empleado) {
-                    $hora = array_map('intval', explode(":", $empleado->hora_ini));
+                    $hora = explode(":", $empleado->hora_ini);
                     $fechaA = $empleado->dia;
                     if (!isset($resultado[$empleado->emple_id])) {
                         $resultado[$empleado->emple_id] = array("empleado" => $empleado->emple_id, "datos" => array());
@@ -360,16 +330,23 @@ class controlRutaController extends Controller
                     if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA])) {
                         $resultado[$empleado->emple_id]["datos"][$fechaA] = array();
                     }
+                    $horaInteger = intval($hora[0]);
                     $sub = substr($hora[1], 0, 1);
-                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub])) {
-                        $resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub] = array();
+                    $subInteger = intval($sub);
+                    // dd($hora, $sub, $horaInteger, $subInteger);
+                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$horaInteger]["minuto"][$subInteger])) {
+                        $resultado[$empleado->emple_id]["datos"][$fechaA][$horaInteger]["minuto"][$subInteger] = array();
                     }
-                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub], $empleado);
+                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$horaInteger]["minuto"][$subInteger], $empleado);
                 }
                 return array_values($resultado);
             }
+            //* *********************************************************************************************************
+            //* QUERY CONDICIONAL DE CAPTURA DE FECHA E HORARIO
             $sqlCaptura = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
             if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+            //* ************************************************
+            //: OBTENIENDO DATOS DE CAPTURAS
             $tiempoDiaCaptura = DB::table('empleado as e')
                 ->leftJoin('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                 ->join('actividad as a', 'a.Activi_id', '=', 'cp.idActividad')
@@ -389,9 +366,12 @@ class controlRutaController extends Controller
                 ->orderBy('cp.hora_ini', 'asc')
                 ->get();
             $tiempoDiaCaptura = agruparEmpleadosCaptura($tiempoDiaCaptura);
-            // dd($tiempoDiaCaptura);
+            //: *************************************************************
+            //* QUERY CONDICIONAL DE UBICACION DE FECHA E HORARIO
             $sqlUbicacion = "IF(h.id is null, if(DATEDIFF('" . $fechaF[1] . "' , DATE(u.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "', DATE(u.hora_ini)) , DAY(DATE(u.hora_ini)) ) ,
             if(DATEDIFF('" . $fechaF[1] . "', DATE(h.start)) >= 0, DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+            //* ******************************************************************
+            //: OBTENIENDO DATOS DE UBICACION
             $tiempoDiaUbicacion = DB::table('empleado as e')
                 ->leftJoin('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
                 ->join('actividad as a', 'a.Activi_id', '=', 'u.idActividad')
@@ -410,12 +390,12 @@ class controlRutaController extends Controller
                 ->orderBy('u.hora_ini', 'asc')
                 ->get();
             $tiempoDiaUbicacion = agruparEmpleadosCaptura($tiempoDiaUbicacion);
-            // dd($tiempoDiaCaptura, $tiempoDiaUbicacion);
-            // dd(DB::getQueryLog());
+            // dd($tiempoDiaCaptura);
+            //: ***************************************************************************************
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
             $diff = $date1->diff($date2);
-            //? FUNCION DE RANGOS DE HORAS
+            //* FUNCION DE RANGOS DE HORAS
             function checkHora($hora_ini, $hora_fin, $hora_now)
             {
                 $horaI = Carbon::parse($hora_ini);
@@ -426,41 +406,304 @@ class controlRutaController extends Controller
                     return true;
                 } else return false;
             }
-            //? UNIR DATOS EN UNO SOLO
-            for ($i = 0; $i < sizeof($tiempoDiaCaptura); $i++) {
-                for ($j = 0; $j < sizeof($tiempoDiaUbicacion); $j++) {
-                    if ($tiempoDiaCaptura[$i]["empleado"] == $tiempoDiaUbicacion[$j]["empleado"]) {
-                        for ($d = 0; $d < $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
-                            //* Buscamos si existe esos dias en los 2 arrays
-                            if (isset($tiempoDiaCaptura[$i]["datos"][$d]) && isset($tiempoDiaUbicacion[$j]["datos"][$d])) {
-                                $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
-                                $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
-                                for ($hora = 0; $hora < 24; $hora++) { //* Recorremos en formato de 24 horas
-                                    if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) {
-                                        //* Recorremos en formato minutos 
-                                        for ($m = 0; $m < 6; $m++) {
-                                            if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
-                                                $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
-                                                $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
-                                                //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
-                                                for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
-                                                    //* RECORREMOS ARRAY DE MINUTOS EN UBICACIÓN
-                                                    for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU) {
-                                                        //* FORMATO DE MINUTOS CON CARBON
-                                                        $carbonCaptura = Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini)->isoFormat("HH:mm");
-                                                        $carbonUbicacion = Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini)->isoFormat("HH:mm");
-                                                        //* BUSCAR CON MINUTOS IGUALES
-                                                        if ($carbonCaptura == $carbonUbicacion) {
-                                                            //* PARAMETROS PARA ENVIAR A FUNCION
-                                                            $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
-                                                            $horaFinRango = $arrayMinutoCaptura[$indexMinutosU]->hora_fin;
-                                                            $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
-                                                            //* **************************************************************
-                                                            $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                            if ($check) {
+            //* ******************************************
+            $capturaUbicacion = []; //* GUARDAR NUEVA DATA 
+            //* UNIR DATOS EN UNO SOLO
+            //TODO-> SOLO SI @tiempoDiaCaptura y @tiempoDiaUbicacion CONTIENEN DATOS
+            if (sizeof($tiempoDiaCaptura) != 0 && sizeof($tiempoDiaUbicacion) != 0) {
+                for ($i = 0; $i < sizeof($tiempoDiaCaptura); $i++) {
+                    for ($j = 0; $j < sizeof($tiempoDiaUbicacion); $j++) {
+                        if ($tiempoDiaCaptura[$i]["empleado"] == $tiempoDiaUbicacion[$j]["empleado"]) {
+                            for ($d = 0; $d <= $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
+                                $diffRango = 0;
+                                $diffActividad = 0;
+                                //* Buscamos si existe esos dias en los 2 arrays
+                                if (isset($tiempoDiaCaptura[$i]["datos"][$d]) && isset($tiempoDiaUbicacion[$j]["datos"][$d])) {
+                                    $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
+                                    $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
+                                    for ($hora = 0; $hora < 24; $hora++) { //* Recorremos en formato de 24 horas
+                                        if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) { //* CAPTURA Y UBICACION CONTIENE LA MISMA HORA
+                                            //* Recorremos en formato minutos 
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
+                                                    $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                    $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                    //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                    for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                        $valorIngreso = true;
+                                                        //* RECORREMOS ARRAY DE MINUTOS EN UBICACIÓN
+                                                        for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                            //* FORMATO DE MINUTOS CON CARBON
+                                                            $carbonCaptura = Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini)->isoFormat("HH:mm");
+                                                            $carbonUbicacion = Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini)->isoFormat("HH:mm");
+                                                            //* BUSCAR CON MINUTOS IGUALES
+                                                            if ($carbonCaptura == $carbonUbicacion) {
+                                                                $valorIngreso = false;
+                                                                $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
+                                                                $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
+                                                                $diffRango = $diffRango + $nuevoRango;
+                                                                $diffActividad = $diffActividad + $nuevaActividad;
+                                                            } else {
+                                                                if ($carbonCaptura < $carbonUbicacion) {
+                                                                    //* PARAMETROS PARA ENVIAR A FUNCION
+                                                                    $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
+                                                                    $horaFinRango = $arrayMinutoCaptura[$indexMinutosC]->hora_fin;
+                                                                    $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
+                                                                    //* **************************************************************
+                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                                    //* ***************************************************************
+                                                                    if ($check) {
+                                                                        $valorIngreso = !$check;
+                                                                        $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
+                                                                        $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
+                                                                        $diffRango = $diffRango + $nuevoRango;
+                                                                        $diffActividad = $diffActividad + $nuevaActividad;
+                                                                    }
+                                                                } else {
+                                                                    //* PARAMETROS PARA ENVIAR A FUNCION
+                                                                    $horaInicioRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
+                                                                    $horaFinRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_fin;
+                                                                    $horaNowRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
+                                                                    //* ***************************************************************
+                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                                    //* ****************************************************************
+                                                                    if ($check) {
+                                                                        $valorIngreso = !$check;
+                                                                        $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
+                                                                        $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
+                                                                        $diffRango = $diffRango + $nuevoRango;
+                                                                        $diffActividad = $diffActividad + $nuevaActividad;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        if ($valorIngreso) {
+                                                            $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                        }
+                                                    }
+                                                    //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
+                                                    for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                        $valorIngreso = true;
+                                                        //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                        for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                            //* FORMATO DE MINUTOS CON CARBON
+                                                            $carbonUbicacion = Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini)->isoFormat("HH:mm");
+                                                            $carbonCaptura = Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini)->isoFormat("HH:mm");
+                                                            //* BUSCAR MINUTOS IGUALES
+                                                            if ($carbonUbicacion == $carbonCaptura) {
+                                                                $valorIngreso = false;
+                                                            } else {
+                                                                if ($carbonUbicacion < $carbonCaptura) {
+                                                                    //* PARAMETROS PARA ENVIAR A FUNCION
+                                                                    $horaInicioRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
+                                                                    $horaFinRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_fin;
+                                                                    $horaNowRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
+                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                                    if ($check) $valorIngreso = !$check;
+                                                                } else {
+                                                                    $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
+                                                                    $horaFinRango = $arrayMinutoCaptura[$indexMinutosC]->hora_fin;
+                                                                    $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
+                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                                    if ($check) $valorIngreso = !$check;
+                                                                }
+                                                            }
+                                                        }
+                                                        if ($valorIngreso) {
+                                                            $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (isset($horaCaptura[$hora]["minuto"][$m])) { //* Comparar si existe solo el minuto en captura
+                                                        $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                        //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                        for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                            $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                            $diffActividad = $diffActividad  + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                        }
+                                                    } else {
+                                                        if (isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparar si existe solo el minuto en ubicación
+                                                            $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                            //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
+                                                            for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                                $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                                $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
                                                             }
                                                         }
                                                     }
+                                                }
+                                            }
+                                        } else {
+                                            if (isset($horaCaptura[$hora])) { //* BUSCAMOS SI SOLO CAPTURA CONTIENE ESA HORA
+                                                //* RECORREMOS EN FORMATO MINUTOS
+                                                for ($m = 0; $m < 6; $m++) {
+                                                    if (isset($horaCaptura[$hora]["minuto"][$m])) { //* COMPARAR SI EXISTE EL MINUTO
+                                                        $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                        //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                        for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                            $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                if (isset($horaUbicacion[$hora])) { //* BUSCAMOS SI SOLO UBICACION CONTIENE ESA HORA
+                                                    //* RECORREMOS EN FORMATO MINUTOS
+                                                    for ($m = 0; $m < 6; $m++) {
+                                                        if (isset($horaUbicacion[$hora]["minuto"][$m])) { //* COMPARAR SI EXISTE EL MINUTO
+                                                            $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                            //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
+                                                            for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                                $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                                $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (sizeof($capturaUbicacion) == 0) {
+                                        //* UNIR DATOS EN NUEVO ARRAY
+                                        if (!isset($capturaUbicacion[0]["empleado"])) {
+                                            $capturaUbicacion[0]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                        }
+                                        if (!isset($capturaUbicacion[0]["datos"][$d])) {
+                                            $capturaUbicacion[0]["datos"][$d] = array();
+                                        }
+                                        $capturaUbicacion[0]["datos"][$d]["rango"] = $diffRango;
+                                        $capturaUbicacion[0]["datos"][$d]["actividad"] = $diffActividad;
+                                    } else {
+                                        $encontradoCU = true;
+                                        $idEmpleado = $tiempoDiaCaptura[$i]["empleado"];
+                                        for ($indexNuevo = 0; $indexNuevo < sizeof($capturaUbicacion); $indexNuevo++) {
+                                            if ($capturaUbicacion[$indexNuevo]["empleado"] == $idEmpleado) {
+                                                $encontradoCU = false;
+                                                if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                                }
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                            }
+                                        }
+                                        if ($encontradoCU) {
+                                            $indexNuevo = sizeof($capturaUbicacion);
+                                            //* UNIR DATOS EN NUEVO ARRAY
+                                            if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                                $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                            }
+                                            if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                            }
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                        }
+                                    }
+                                } else {
+                                    if (isset($tiempoDiaCaptura[$i]["datos"][$d])) {
+                                        $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
+                                        for ($hora = 0; $hora < 24; $hora++) {
+                                            if (isset($horaCaptura[$hora])) {
+                                                //* RECORREMOS EN FORMATO MINUTOS
+                                                for ($m = 0; $m < 6; $m++) {
+                                                    if (isset($horaCaptura[$hora]["minuto"][$m])) {
+                                                        $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                        for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                            $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                            $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (sizeof($capturaUbicacion) == 0) {
+                                            //* UNIR DATOS EN NUEVO ARRAY
+                                            if (!isset($capturaUbicacion[0]["empleado"])) {
+                                                $capturaUbicacion[0]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                            }
+                                            if (!isset($capturaUbicacion[0]["datos"][$d])) {
+                                                $capturaUbicacion[0]["datos"][$d] = array();
+                                            }
+                                            $capturaUbicacion[0]["datos"][$d]["rango"] = $diffRango;
+                                            $capturaUbicacion[0]["datos"][$d]["actividad"] = $diffActividad;
+                                        } else {
+                                            $encontradoCU = true;
+                                            $idEmpleado = $tiempoDiaCaptura[$i]["empleado"];
+                                            for ($indexNuevo = 0; $indexNuevo < sizeof($capturaUbicacion); $indexNuevo++) {
+                                                if ($capturaUbicacion[$indexNuevo]["empleado"] == $idEmpleado) {
+                                                    $encontradoCU = false;
+                                                    if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                        $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                                    }
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                                }
+                                            }
+                                            if ($encontradoCU) {
+                                                $indexNuevo = sizeof($capturaUbicacion);
+                                                //* UNIR DATOS EN NUEVO ARRAY
+                                                if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                                    $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                                }
+                                                if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                                }
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                            }
+                                        }
+                                    } else {
+                                        if (isset($tiempoDiaUbicacion[$j]["datos"][$d])) {
+                                            $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
+                                            for ($hora = 0; $hora < 24; $hora++) {
+                                                if (isset($horaUbicacion[$hora])) {
+                                                    for ($m = 0; $m < 6; $m++) {
+                                                        if (isset($horaUbicacion[$hora]["minuto"][$m])) {
+                                                            $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                            for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                                $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                                $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if (sizeof($capturaUbicacion) == 0) {
+                                                //* UNIR DATOS EN NUEVO ARRAY
+                                                if (!isset($capturaUbicacion[0]["empleado"])) {
+                                                    $capturaUbicacion[0]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                                }
+                                                if (!isset($capturaUbicacion[0]["datos"][$d])) {
+                                                    $capturaUbicacion[0]["datos"][$d] = array();
+                                                }
+                                                $capturaUbicacion[0]["datos"][$d]["rango"] = $diffRango;
+                                                $capturaUbicacion[0]["datos"][$d]["actividad"] = $diffActividad;
+                                            } else {
+                                                $encontradoCU = true;
+                                                $idEmpleado = $tiempoDiaCaptura[$i]["empleado"];
+                                                for ($indexNuevo = 0; $indexNuevo < sizeof($capturaUbicacion); $indexNuevo++) {
+                                                    if ($capturaUbicacion[$indexNuevo]["empleado"] == $idEmpleado) {
+                                                        $encontradoCU = false;
+                                                        if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                            $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                                        }
+                                                        $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                                        $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                                    }
+                                                }
+                                                if ($encontradoCU) {
+                                                    $indexNuevo = sizeof($capturaUbicacion);
+                                                    //* UNIR DATOS EN NUEVO ARRAY
+                                                    if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                                        $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                                    }
+                                                    if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                        $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                                    }
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
                                                 }
                                             }
                                         }
@@ -470,9 +713,138 @@ class controlRutaController extends Controller
                         }
                     }
                 }
+            } else { //TODO -> SOLO SI @tiempoDiaCaptura CONTIENE DATOS
+                if (sizeof($tiempoDiaCaptura) != 0) {
+                    for ($i = 0; $i < sizeof($tiempoDiaCaptura); $i++) {
+                        $indexNuevo = sizeof($capturaUbicacion);
+                        for ($d = 0; $d <= $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
+                            $diffRango = 0;
+                            $diffActividad = 0;
+                            //* Buscamos si existe el dia en el array
+                            if (isset($tiempoDiaCaptura[$i]["datos"][$d])) {
+                                $horaCaptura = $tiempoDiaCaptura[$i]["datos"][$d];
+                                for ($hora = 0; $hora < 24; $hora++) {
+                                    if (isset($horaCaptura[$hora])) {
+                                        //* RECORREMOS EN FORMATO MINUTOS
+                                        for ($m = 0; $m < 6; $m++) {
+                                            if (isset($horaCaptura[$hora]["minuto"][$m])) {
+                                                $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
+                                                for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                    $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                    $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if (sizeof($capturaUbicacion) == 0) {
+                                    //* UNIR DATOS EN NUEVO ARRAY
+                                    if (!isset($capturaUbicacion[0]["empleado"])) {
+                                        $capturaUbicacion[0]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                    }
+                                    if (!isset($capturaUbicacion[0]["datos"][$d])) {
+                                        $capturaUbicacion[0]["datos"][$d] = array();
+                                    }
+                                    $capturaUbicacion[0]["datos"][$d]["rango"] = $diffRango;
+                                    $capturaUbicacion[0]["datos"][$d]["actividad"] = $diffActividad;
+                                } else {
+                                    $encontradoCU = true;
+                                    $idEmpleado = $tiempoDiaCaptura[$i]["empleado"];
+                                    for ($indexNuevo = 0; $indexNuevo < sizeof($capturaUbicacion); $indexNuevo++) {
+                                        if ($capturaUbicacion[$indexNuevo]["empleado"] == $idEmpleado) {
+                                            $encontradoCU = false;
+                                            if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                            }
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                        }
+                                    }
+                                    if ($encontradoCU) {
+                                        $indexNuevo = sizeof($capturaUbicacion);
+                                        //* UNIR DATOS EN NUEVO ARRAY
+                                        if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                            $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                        }
+                                        if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                        }
+                                        $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                        $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (sizeof($tiempoDiaUbicacion) != 0) {
+                        for ($i = 0; $i < sizeof($tiempoDiaUbicacion); $i++) {
+                            $indexNuevo = sizeof($capturaUbicacion);
+                            for ($d = 0; $d <= $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
+                                $diffRango = 0;
+                                $diffActividad = 0;
+                                //* Buscamos si existe el dia en el array
+                                if (isset($tiempoDiaUbicacion[$i]["datos"][$d])) {
+                                    $horaUbicacion = $tiempoDiaUbicacion[$i]["datos"][$d];
+                                    //* RECORREMOS EN FORMATO DE HORAS
+                                    for ($hora = 0; $hora < 24; $hora++) {
+                                        if (isset($horaUbicacion[$hora])) {
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horaUbicacion[$hora]["minuto"][$m])) {
+                                                    $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                    for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                        $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                        $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (sizeof($capturaUbicacion) == 0) {
+                                        //* UNIR DATOS EN NUEVO ARRAY
+                                        if (!isset($capturaUbicacion[0]["empleado"])) {
+                                            $capturaUbicacion[0]["empleado"] = $tiempoDiaUbicacion[$i]["empleado"];;
+                                        }
+                                        if (!isset($capturaUbicacion[0]["datos"][$d])) {
+                                            $capturaUbicacion[0]["datos"][$d] = array();
+                                        }
+                                        $capturaUbicacion[0]["datos"][$d]["rango"] = $diffRango;
+                                        $capturaUbicacion[0]["datos"][$d]["actividad"] = $diffActividad;
+                                    } else {
+                                        $encontradoCU = true;
+                                        $idEmpleado = $tiempoDiaUbicacion[$i]["empleado"];
+                                        for ($indexNuevo = 0; $indexNuevo < sizeof($capturaUbicacion); $indexNuevo++) {
+                                            if ($capturaUbicacion[$indexNuevo]["empleado"] == $idEmpleado) {
+                                                $encontradoCU = false;
+                                                if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                    $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                                }
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                            }
+                                        }
+                                        if ($encontradoCU) {
+                                            $indexNuevo = sizeof($capturaUbicacion);
+                                            //* UNIR DATOS EN NUEVO ARRAY
+                                            if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                                $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaUbicacion[$i]["empleado"];
+                                            }
+                                            if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
+                                                $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
+                                            }
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
+                                            $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            //? **********************
-            //Array
+            //* **********************
+            //* ARRAYS
             $horas = array();
             $dias = array();
             $sumaActividad = array();
@@ -486,7 +858,6 @@ class controlRutaController extends Controller
 
                 array_push($dias, date('Y-m-j', $dia));
             }
-
             foreach ($empleados as $empleado) {
                 array_push($respuesta, array(
                     "id" => $empleado->emple_id,
@@ -499,20 +870,25 @@ class controlRutaController extends Controller
                     "sumaRango" => $sumaRango
                 ));
             }
-            // for ($j = 0; $j < sizeof($respuesta); $j++) {
-            //     for ($i = 0; $i < sizeof($horasTrabajadas); $i++) {
-            //         if ($respuesta[$j]["id"] == $horasTrabajadas[$i]->emple_id) {
-            //             $respuesta[$j]["horas"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->Total_Envio == null ? "00:00:00" : $horasTrabajadas[$i]->Total_Envio;
-            //             $respuesta[$j]["sumaActividad"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaA == null ? "0" : $horasTrabajadas[$i]->sumaA;
-            //             $respuesta[$j]["sumaRango"][$horasTrabajadas[$i]->dia] = $horasTrabajadas[$i]->sumaR == null ? "0" : $horasTrabajadas[$i]->sumaR;
-            //         }
-            //     }
-            //     $respuesta[$j]['horas'] = array_reverse($respuesta[$j]['horas']);
-            //     $respuesta[$j]['sumaActividad'] = array_reverse($respuesta[$j]['sumaActividad']);
-            //     $respuesta[$j]['sumaRango'] = array_reverse($respuesta[$j]['sumaRango']);
-            // }
-
+            for ($j = 0; $j < sizeof($respuesta); $j++) {
+                for ($i = 0; $i < sizeof($capturaUbicacion); $i++) {
+                    if ($respuesta[$j]["id"] == $capturaUbicacion[$i]["empleado"]) {
+                        $datos = $capturaUbicacion[$i]["datos"];
+                        for ($h = 0; $h <= $diff->days; $h++) {
+                            if (isset($datos[$h])) {
+                                $respuesta[$j]["horas"][$h] = $datos[$h]["rango"] == 0 ? "00:00:00" : gmdate('H:i:s', $datos[$h]["rango"]);
+                                $respuesta[$j]["sumaActividad"][$h] = $datos[$h]["actividad"] == 0 ? "0" : $datos[$h]["actividad"];
+                                $respuesta[$j]["sumaRango"][$h] = $datos[$h]["rango"] == 0 ? "0" : $datos[$h]["rango"];
+                            }
+                        }
+                    }
+                }
+                $respuesta[$j]["horas"] = array_reverse($respuesta[$j]["horas"]);
+                $respuesta[$j]["sumaActividad"] = array_reverse($respuesta[$j]["sumaActividad"]);
+                $respuesta[$j]["sumaRango"] = array_reverse($respuesta[$j]["sumaRango"]);
+            }
         }
+        // dd($capturaUbicacion, $respuesta);
         return response()->json($respuesta, 200);
     }
 
