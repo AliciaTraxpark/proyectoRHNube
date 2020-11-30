@@ -272,8 +272,19 @@
                                                     <select data-plugin="customselect" multiple="multiple" id="selectLectura"
                                                     class="form-control"  required>
                                                     <option class="" value="1">Manual</option>
-                                                    <option class="" value="2">Scanner</option>
+                                                    <option class="" value="2">Escáner</option>
                                                     <option class="" value="3">Cámara</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Seleccione controlador(es):</label>
+                                                    <select data-plugin="customselect" multiple="multiple" id="selectControlador" data-placeholder="Seleccione controlador"
+                                                    class="form-control"  >
+                                                    @foreach ($controladores as $cont)
+                                                <option class="" value="{{$cont->idControladores}}">{{$cont->cont_nombres}} {{$cont->cont_ApPaterno}} {{$cont->cont_ApMaterno}}</option>
+                                                    @endforeach
                                                 </select>
                                                 </div>
                                             </div>
@@ -358,18 +369,30 @@
                                                         required>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-12">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Seleccione tipo de lectura:</label>
                                                     <select data-plugin="customselect" multiple="multiple" id="selectLectura_ed"
                                                     class="form-control form-control-sm"  required>
                                                     <option class="" value="1">Manual</option>
-                                                    <option class="" value="2">Scanner</option>
+                                                    <option class="" value="2">Escáner</option>
                                                     <option class="" value="3">Cámara</option>
                                                 </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="">Seleccione controlador(es):</label>
+                                                    <select data-plugin="customselect" multiple="multiple" id="selectControlador_ed" data-placeholder="Seleccione controlador"
+                                                    class="form-control"  >
+                                                    @foreach ($controladores as $cont)
+                                                <option class="" value="{{$cont->idControladores}}">{{$cont->cont_nombres}} {{$cont->cont_ApPaterno}} {{$cont->cont_ApMaterno}}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
+                                            </div>
+
                                         </div>
                                 </div>
                             </div>

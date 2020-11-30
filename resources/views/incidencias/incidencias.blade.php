@@ -262,7 +262,7 @@
                                                     <select data-plugin="customselect" multiple="multiple" id="selectLectura"
                                                     class="form-control"  required>
                                                     <option class="" value="1">Manual</option>
-                                                    <option class="" value="2">Scanner</option>
+                                                    <option class="" value="2">Escáner</option>
                                                     <option class="" value="3">Cámara</option>
                                                 </select>
                                                 </div>
@@ -355,7 +355,7 @@
                                                     <select data-plugin="customselect" multiple="multiple" id="selectLectura_ed"
                                                     class="form-control form-control-sm"  required>
                                                     <option class="" value="1">Manual</option>
-                                                    <option class="" value="2">Scanner</option>
+                                                    <option class="" value="2">Escáner</option>
                                                     <option class="" value="3">Cámara</option>
                                                 </select>
                                                 </div>

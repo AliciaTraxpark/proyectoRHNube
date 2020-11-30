@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\dispositivo_controlador;
 use App\dispositivos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -25,6 +26,11 @@ class dispositivosController extends Controller
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
+
+        $controladores = DB::table('controladores')
+        ->where('organi_id', '=', session('sesionidorg'))
+        ->where('cont_estado', '=', 1)
+        ->get();
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
                     if( $invitadod->asistePuerta==1){
@@ -32,7 +38,7 @@ class dispositivosController extends Controller
                         ->where('idinvitado', '=', $invitadod->idinvitado)
                         ->get()->first();
                     return view('Dispositivos.dispositivos', [
-                        'verPuerta'=>$permiso_invitado->verPuerta,'agregarPuerta'=>$permiso_invitado->agregarPuerta,'modifPuerta'=>$permiso_invitado->modifPuerta
+                        'verPuerta'=>$permiso_invitado->verPuerta,'agregarPuerta'=>$permiso_invitado->agregarPuerta,'modifPuerta'=>$permiso_invitado->modifPuerta,'controladores'=>$controladores
                     ]);
                     } else{
                           return redirect('/dashboard');
@@ -41,11 +47,11 @@ class dispositivosController extends Controller
 
 
                 } else {
-                    return view('Dispositivos.dispositivos');
+                    return view('Dispositivos.dispositivos',['controladores'=>$controladores]);
                 }
             }
             else{
-                return view('Dispositivos.dispositivos');
+                return view('Dispositivos.dispositivos',['controladores'=>$controladores]);
             }
 
     }
@@ -77,6 +83,19 @@ class dispositivosController extends Controller
         }
 
         $dispositivos->save();
+
+        $contro=$request->idContro;
+        if($contro!=null){
+            foreach($contro as $contros){
+            $dispositivo_controlador=new dispositivo_controlador();
+            $dispositivo_controlador->idDispositivos=$dispositivos->idDispositivos;
+            $dispositivo_controlador->idControladores=$contros;
+            $dispositivo_controlador->organi_id=session('sesionidorg');
+            $dispositivo_controlador->save();
+            }
+        }
+
+
 
         if($request->smsCh==1){
             $dispositivosAc = dispositivos::findOrFail($dispositivos->idDispositivos);
@@ -298,8 +317,11 @@ class dispositivosController extends Controller
 
  public function datosDispoEditar(Request $request){
      $idDispo=$request->id;
-     $dispositivo=dispositivos::where('organi_id','=',session('sesionidorg'))
-     ->where('idDispositivos',$idDispo)->get()->first();
+     $dispositivo=dispositivos::where('dispositivos.organi_id','=',session('sesionidorg'))
+     ->leftJoin('dispositivo_controlador as dc','dispositivos.idDispositivos','=','dc.idDispositivos')
+     ->where('dispositivos.idDispositivos',$idDispo)
+     ->select('dispositivos.idDispositivos','dispo_descripUbicacion','dispo_movil','dispo_tSincro','dispo_tMarca',
+     'dispo_Data','dispo_Manu','dispo_Scan','dispo_Cam','idControladores')->get();
         return $dispositivo;
  }
 
@@ -322,8 +344,23 @@ class dispositivosController extends Controller
             $dispositivos->dispo_Cam=1;
         }
     }
-
     $dispositivos->save();
+
+    $idcont_id=$request->idcont_id;
+    $borrarDispo = dispositivo_controlador::where('idDispositivos', '=', $request->idDisposEd_ed)
+    ->where('organi_id','=',session('sesionidorg'))->get();
+    if($borrarDispo){
+        $borrarDispo->each->delete();
+    }
+    if($idcont_id!=null){
+        foreach($idcont_id as $contros){
+        $dispositivo_controlador=new dispositivo_controlador();
+        $dispositivo_controlador->idDispositivos=$request->idDisposEd_ed;
+        $dispositivo_controlador->idControladores=$contros;
+        $dispositivo_controlador->organi_id=session('sesionidorg');
+        $dispositivo_controlador->save();
+        }
+    }
 
  }
 
