@@ -240,6 +240,7 @@ function NuevoDispo(){
     $("#errorMovil").hide();
     $("#frmHorNuevo")[0].reset();
     $('#selectLectura').val('').trigger("change");
+    $('#selectControlador').val('').trigger("change");
 $('#nuevoDispositivo').modal('show');
 }
 function RegistraDispo(){
@@ -250,8 +251,9 @@ function RegistraDispo(){
     var tMarcac=$('#smarcacion').val();
     var tData=$('#tiempoData').val();
     var lectura=$('#selectLectura').val();
+    var idContro= $('#selectControlador').val();
+    var smsCh;
 
-    var smsCh
    if($('#smsCheck').is(':checked') ){
     smsCh=1;
    } else{
@@ -278,7 +280,7 @@ function RegistraDispo(){
                 type: "post",
                 url: "/dispoStore",
                 data: {
-                    descripccionUb,numeroM,tSincron,tMarcac,smsCh,tData,lectura
+                    descripccionUb,numeroM,tSincron,tMarcac,smsCh,tData,lectura,idContro
                 },
                 statusCode: {
                     419: function () {
@@ -415,6 +417,7 @@ function comprobarMovil() {
 }
 function editarDispo(id){
     $('#selectLectura_ed').val('').trigger("change");
+    $('#selectControlador_ed').val('').trigger("change");
     $.ajax({
         type: "post",
         url: "/datosDispoEditar",
@@ -425,26 +428,30 @@ function editarDispo(id){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $('#idDisposi').val(data.idDispositivos)
-            $('#descripcionDis_ed').val(data.dispo_descripUbicacion);
-            $('#numeroMovil_ed').val(data.dispo_movil.substr(2));
-            $('#tiempoSin_ed').val(data.dispo_tSincro);
-            $('#smarcacion_ed').val(data.dispo_tMarca);
-            $('#tiempoData_ed').val(data.dispo_Data);
+            $('#idDisposi').val(data[0].idDispositivos)
+            $('#descripcionDis_ed').val(data[0].dispo_descripUbicacion);
+            $('#numeroMovil_ed').val(data[0].dispo_movil.substr(2));
+            $('#tiempoSin_ed').val(data[0].dispo_tSincro);
+            $('#smarcacion_ed').val(data[0].dispo_tMarca);
+            $('#tiempoData_ed').val(data[0].dispo_Data);
             var seleccionadosLe=[];
-            if(data.dispo_Manu==1){
+            if(data[0].dispo_Manu==1){
                 seleccionadosLe.push('1');
             }
-            if(data.dispo_Scan==1){
+            if(data[0].dispo_Scan==1){
                 seleccionadosLe.push('2');
             }
-            if(data.dispo_Cam==1){
+            if(data[0].dispo_Cam==1){
                 seleccionadosLe.push('3');
             }
             $.each( seleccionadosLe, function( index, value ){
              $("#selectLectura_ed > option[value='"+value+"']").prop("selected","selected");
             $("#selectLectura_ed").trigger("change");
             });
+            $.each( data, function( index, value ){
+                $("#selectControlador_ed > option[value='"+value.idControladores+"']").prop("selected","selected");
+               $("#selectControlador_ed").trigger("change");
+               });
             $('#editarDispositivo').modal('show');
         },
     });
@@ -457,13 +464,14 @@ function reditarDispo(){
     var tMarca_ed=$('#smarcacion_ed').val();
     var tData_ed=$('#tiempoData_ed').val();
     var lectura_ed=$('#selectLectura_ed').val();
+    var idcont_id=$('#selectControlador_ed').val();
     var idDisposEd_ed= $('#idDisposi').val();
     $.ajax({
         type: "post",
         url: "/actualizarDispos",
         data: {
             descripccionUb_ed,numeroM_ed,tSincron_ed,tMarca_ed,tData_ed,lectura_ed,
-            idDisposEd_ed
+            idDisposEd_ed,idcont_id
         },
         statusCode: {
             419: function () {
