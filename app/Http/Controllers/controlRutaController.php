@@ -390,7 +390,7 @@ class controlRutaController extends Controller
                 ->orderBy('u.hora_ini', 'asc')
                 ->get();
             $tiempoDiaUbicacion = agruparEmpleadosCaptura($tiempoDiaUbicacion);
-            dd($tiempoDiaCaptura);
+            // dd($tiempoDiaCaptura);
             //: ***************************************************************************************
             $date1 = new DateTime($fechaF[0]);
             $date2 = new DateTime($fechaF[1]);
@@ -843,6 +843,7 @@ class controlRutaController extends Controller
                     }
                 }
             }
+            dd($tiempoDiaCaptura);
             //* **********************
             //* ARRAYS
             $horas = array();
