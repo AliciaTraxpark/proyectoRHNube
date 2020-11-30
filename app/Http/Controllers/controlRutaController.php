@@ -322,7 +322,7 @@ class controlRutaController extends Controller
             {
                 $resultado = array();
                 foreach ($array as $empleado) {
-                    $hora = array_map('intval', explode(":", $empleado->hora_ini));
+                    $hora = explode(":", $empleado->hora_ini);
                     $fechaA = $empleado->dia;
                     if (!isset($resultado[$empleado->emple_id])) {
                         $resultado[$empleado->emple_id] = array("empleado" => $empleado->emple_id, "datos" => array());
@@ -330,11 +330,14 @@ class controlRutaController extends Controller
                     if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA])) {
                         $resultado[$empleado->emple_id]["datos"][$fechaA] = array();
                     }
+                    $horaInteger = intval($hora[0]);
                     $sub = substr($hora[1], 0, 1);
-                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub])) {
-                        $resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub] = array();
+                    $subInteger = intval($sub);
+                    // dd($hora, $sub, $horaInteger, $subInteger);
+                    if (!isset($resultado[$empleado->emple_id]["datos"][$fechaA][$horaInteger]["minuto"][$subInteger])) {
+                        $resultado[$empleado->emple_id]["datos"][$fechaA][$horaInteger]["minuto"][$subInteger] = array();
                     }
-                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$hora[0]]["minuto"][$sub], $empleado);
+                    array_push($resultado[$empleado->emple_id]["datos"][$fechaA][$horaInteger]["minuto"][$subInteger], $empleado);
                 }
                 return array_values($resultado);
             }
