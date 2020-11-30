@@ -843,7 +843,7 @@ class controlRutaController extends Controller
                     }
                 }
             }
-            dd($tiempoDiaCaptura);
+            dd($capturaUbicacion);
             //* **********************
             //* ARRAYS
             $horas = array();
