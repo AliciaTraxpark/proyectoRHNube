@@ -888,7 +888,7 @@ class controlRutaController extends Controller
                 $respuesta[$j]["sumaRango"] = array_reverse($respuesta[$j]["sumaRango"]);
             }
         }
-        dd($capturaUbicacion, $respuesta);
+        // dd($capturaUbicacion, $respuesta);
         return response()->json($respuesta, 200);
     }
 
