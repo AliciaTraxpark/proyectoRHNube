@@ -408,10 +408,9 @@ class controlRutaController extends Controller
             //TODO-> SOLO SI @tiempoDiaCaptura y @tiempoDiaUbicacion CONTIENEN DATOS
             if (sizeof($tiempoDiaCaptura) != 0 && sizeof($tiempoDiaUbicacion) != 0) {
                 for ($i = 0; $i < sizeof($tiempoDiaCaptura); $i++) {
-                    // $indexNuevo = sizeof($capturaUbicacion);
                     for ($j = 0; $j < sizeof($tiempoDiaUbicacion); $j++) {
                         if ($tiempoDiaCaptura[$i]["empleado"] == $tiempoDiaUbicacion[$j]["empleado"]) {
-                            for ($d = 0; $d < $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
+                            for ($d = 0; $d <= $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
                                 $diffRango = 0;
                                 $diffActividad = 0;
                                 //* Buscamos si existe esos dias en los 2 arrays
@@ -421,7 +420,7 @@ class controlRutaController extends Controller
                                     for ($hora = 0; $hora < 24; $hora++) { //* Recorremos en formato de 24 horas
                                         if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) { //* CAPTURA Y UBICACION CONTIENE LA MISMA HORA
                                             //* Recorremos en formato minutos 
-                                            for ($m = 0; $m < 6; $m++) {
+                                            for ($m = 0; $m <= 6; $m++) {
                                                 if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
                                                     $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
                                                     $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
@@ -535,7 +534,7 @@ class controlRutaController extends Controller
                                         } else {
                                             if (isset($horaCaptura[$hora])) { //* BUSCAMOS SI SOLO CAPTURA CONTIENE ESA HORA
                                                 //* RECORREMOS EN FORMATO MINUTOS
-                                                for ($m = 0; $m < 6; $m++) {
+                                                for ($m = 0; $m <= 6; $m++) {
                                                     if (isset($horaCaptura[$hora]["minuto"][$m])) { //* COMPARAR SI EXISTE EL MINUTO
                                                         $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
                                                         //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
@@ -548,7 +547,7 @@ class controlRutaController extends Controller
                                             } else {
                                                 if (isset($horaUbicacion[$hora])) { //* BUSCAMOS SI SOLO UBICACION CONTIENE ESA HORA
                                                     //* RECORREMOS EN FORMATO MINUTOS
-                                                    for ($m = 0; $m < 6; $m++) {
+                                                    for ($m = 0; $m <= 6; $m++) {
                                                         if (isset($horaUbicacion[$hora]["minuto"][$m])) { //* COMPARAR SI EXISTE EL MINUTO
                                                             $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
                                                             //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
@@ -604,7 +603,7 @@ class controlRutaController extends Controller
                                         for ($hora = 0; $hora < 24; $hora++) {
                                             if (isset($horaCaptura[$hora])) {
                                                 //* RECORREMOS EN FORMATO MINUTOS
-                                                for ($m = 0; $m < 6; $m++) {
+                                                for ($m = 0; $m <= 6; $m++) {
                                                     if (isset($horaCaptura[$hora]["minuto"][$m])) {
                                                         $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
                                                         for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
@@ -656,7 +655,7 @@ class controlRutaController extends Controller
                                             $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
                                             for ($hora = 0; $hora < 24; $hora++) {
                                                 if (isset($horaUbicacion[$hora])) {
-                                                    for ($m = 0; $m < 6; $m++) {
+                                                    for ($m = 0; $m <= 6; $m++) {
                                                         if (isset($horaUbicacion[$hora]["minuto"][$m])) {
                                                             $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
                                                             for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
@@ -723,7 +722,7 @@ class controlRutaController extends Controller
                                 for ($hora = 0; $hora < 24; $hora++) {
                                     if (isset($horaCaptura[$hora])) {
                                         //* RECORREMOS EN FORMATO MINUTOS
-                                        for ($m = 0; $m < 6; $m++) {
+                                        for ($m = 0; $m <= 6; $m++) {
                                             if (isset($horaCaptura[$hora]["minuto"][$m])) {
                                                 $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
                                                 for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
@@ -787,7 +786,7 @@ class controlRutaController extends Controller
                                     for ($hora = 0; $hora < 24; $hora++) {
                                         if (isset($horaUbicacion[$hora])) {
                                             //* RECORREMOS EN FORMATO MINUTOS
-                                            for ($m = 0; $m < 6; $m++) {
+                                            for ($m = 0; $m <= 6; $m++) {
                                                 if (isset($horaUbicacion[$hora]["minuto"][$m])) {
                                                     $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
                                                     for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
