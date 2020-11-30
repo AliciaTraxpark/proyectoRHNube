@@ -161,7 +161,107 @@ class controlRutaController extends Controller
         // ? REALIZAMOS UNION DE HORAS Y MINUTOS EN UBICACION
         $control_ruta = controlRJson($control_ruta);
         // * UNIR ARRAY CAPTURA Y UBICACION EN UNO
+        //* FUNCION DE BUSQUEDA DE HORA EN ARRAY NUEVO
+        function busquedaHora($array, $hora)
+        {
+            foreach ($array as $key => $value) {
+                if ($value["hora"] == $hora) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        //* ******************************************
+        // TODO -> NUEVA FORMA DE UNIR
+        // dd($control, $control_ruta);
         $respuesta = array();
+        $fechaIgual = array();
+        $fechaDiferente = array();
+        if (!empty($control) && !empty($control_ruta)) {
+            //* RECORREMSO EN FORMATO HORAS
+            for ($hora = 0; $hora < 24; $hora++) {
+                $ingresoHora = true;
+                for ($index = 0; $index < sizeof($control); $index++) {
+                    for ($element = 0; $element < sizeof($control_ruta); $element++) {
+                        //* BUSCAMOS SI TIENEN ESA MISMA HORA LOS DOS ARRAYS
+                        if ($control[$index]["horaCaptura"] == $hora && $control_ruta[$element]["horaUbicacion"] == $hora) {
+                            $ingresoHora = false;
+                            if (date($control[$index]["fecha"]) == date($fecha)) {
+                                if (empty($fechaIgual)) {
+                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => array()));
+                                } else {
+                                    $busqueda = busquedaHora($fechaIgual, $hora);
+                                    if ($busqueda) {
+                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => array()));
+                                    }
+                                }
+                            } else {
+                                if (empty($fechaDiferente)) {
+                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => array()));
+                                } else {
+                                    $busqueda = busquedaHora($fechaDiferente, $hora);
+                                    if ($busqueda) {
+                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => array()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if ($ingresoHora) {
+                        if ($control[$index]["horaCaptura"] == $hora) { //* BUSCAMOS SI CAPTURA TIENE ESA HORA
+                            $ingresoHora = false;
+                            if (date($control[$index]["fecha"]) == date($fecha)) {
+                                if (empty($fechaIgual)) {
+                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => array()));
+                                } else {
+                                    $busqueda = busquedaHora($fechaIgual, $hora);
+                                    if ($fechaIgual) {
+                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => array()));
+                                    }
+                                }
+                            } else {
+                                if (empty($fechaDiferente)) {
+                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => array()));
+                                } else {
+                                    $busqueda = busquedaHora($fechaDiferente, $hora);
+                                    if ($fechaDiferente) {
+                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => array()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($ingresoHora) {
+                    for ($element = 0; $element < sizeof($control_ruta); $element++) {
+                        if ($control_ruta[$element]["horaUbicacion"] == $hora) { //* BUSCAMOS SI UBICACION TIENE ESA HORA
+                            if (date($control_ruta[$element]["fecha"]) == date($fecha)) {
+                                if (empty($fechaIgual)) {
+                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => array()));
+                                } else {
+                                    $busqueda = busquedaHora($fechaIgual, $hora);
+                                    if ($busqueda) {
+                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => array()));
+                                    }
+                                }
+                            } else {
+                                if (empty($fechaDiferente)) {
+                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => array()));
+                                } else {
+                                    $busqueda = busquedaHora($fechaDiferente, $hora);
+                                    if ($busqueda) {
+                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => array()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $respuesta = array_merge($respuesta,$fechaIgual, $fechaDiferente);
+            dd($fechaIgual, $fechaDiferente, $respuesta);
+        }
+        // TODO ***********************
         // * CUANDO LOS DOS ARRAY TIENEN DATOS
         if (!empty($control) && !empty($control_ruta)) {
             $menor = array();
