@@ -86,7 +86,7 @@ class ControlController extends Controller
             }
 
 
-           /*  return view('tareas.tareas', ['empleado' => $empleado]); */
+            /*  return view('tareas.tareas', ['empleado' => $empleado]); */
             $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
                 ->where('rol_id', '=', 3)
@@ -94,20 +94,17 @@ class ControlController extends Controller
                 ->get()->first();
             if ($invitadod) {
                 if ($invitadod->rol_id != 1) {
-                    if( $invitadod->modoCR==1){
+                    if ($invitadod->modoCR == 1) {
 
                         return view('tareas.tareas', ['empleado' => $empleado]);
-                    } else{
-                          return redirect('/dashboard');
+                    } else {
+                        return redirect('/dashboard');
                     }
-                   /*   */
-
-
+                    /*   */
                 } else {
                     return view('tareas.tareas', ['empleado' => $empleado]);
                 }
-            }
-            else{
+            } else {
                 return view('tareas.tareas', ['empleado' => $empleado]);
             }
         }
@@ -193,31 +190,27 @@ class ControlController extends Controller
                 ->where('c.organi_id', '=', session('sesionidorg'))
                 ->get();
 
-                $invitadod = DB::table('invitado')
+            $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
                 ->where('rol_id', '=', 3)
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
-                if ($invitadod) {
-                    if ($invitadod->rol_id != 1) {
-                        if( $invitadod->modoCR==1){
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if ($invitadod->modoCR == 1) {
 
-                            return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
-                        } else{
-                              return redirect('/dashboard');
-                        }
-                       /*   */
-
-
-                    } else {
                         return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                    } else {
+                        return redirect('/dashboard');
                     }
-                }
-                else{
+                    /*   */
+                } else {
                     return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
                 }
-
+            } else {
+                return view('tareas.reporteSemanal', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+            }
         }
     }
 
@@ -302,34 +295,29 @@ class ControlController extends Controller
                 ->where('c.organi_id', '=', session('sesionidorg'))
                 ->get();
 
-                $invitadod = DB::table('invitado')
+            $invitadod = DB::table('invitado')
                 ->where('user_Invitado', '=', Auth::user()->id)
                 ->where('rol_id', '=', 3)
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
-           /*  return view('dashboardCR', ['areas' => $areas]); */
+            /*  return view('dashboardCR', ['areas' => $areas]); */
 
-           if ($invitadod) {
-            if ($invitadod->rol_id != 1) {
-                if( $invitadod->modoCR==1){
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if ($invitadod->modoCR == 1) {
 
+                        return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
+                    } else {
+                        return redirect('/dashboard');
+                    }
+                    /*   */
+                } else {
                     return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
-                } else{
-                      return redirect('/dashboard');
                 }
-               /*   */
-
-
             } else {
                 return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
             }
-        }
-        else{
-            return view('tareas.reporteMensual', ['empleado' => $empleado, 'areas' => $areas, 'cargos' => $cargos]);
-        }
-
-
         }
     }
 
@@ -554,51 +542,50 @@ class ControlController extends Controller
 
                     if ($invitado->verTodosEmps == 1) {
                         $empleados = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.emple_estado', '=', 1)
-                        ->whereIn('e.emple_cargo', $cargo)
-                        ->groupBy('e.emple_id')
-                        ->get();
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_estado', '=', 1)
+                            ->whereIn('e.emple_cargo', $cargo)
+                            ->groupBy('e.emple_id')
+                            ->get();
                     } else {
                         $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                        ->where('invem.idinvitado', '=',  $invitado->idinvitado)
-                        ->where('invem.area_id', '=', null)
-                        ->where('invem.emple_id', '!=', null)
-                        ->get()->first();
-                    if ($invitado_empleadoIn != null) {
-                        $empleados = DB::table('empleado as e')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_estado', '=', 1)
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                            ->whereIn('e.emple_cargo', $cargo)
-                            ->groupBy('e.emple_id')
-                            ->get();
-                    } else {
-                        $empleados = DB::table('empleado as e')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_estado', '=', 1)
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                            ->whereIn('e.emple_cargo', $cargo)
-                            ->groupBy('e.emple_id')
-                            ->get();
+                            ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->whereIn('e.emple_cargo', $cargo)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        } else {
+                            $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->whereIn('e.emple_cargo', $cargo)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        }
                     }
-                    }
-
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -619,56 +606,55 @@ class ControlController extends Controller
                         ->where('in.user_Invitado', '=', Auth::user()->id)
                         ->get()->first();
 
-                        if ($invitado->verTodosEmps == 1) {
-                            $empleados = DB::table('empleado as e')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_estado', '=', 1)
-                            ->whereIn('e.emple_area', $area)
-                            ->whereIn('e.emple_cargo', $cargo)
-                            ->groupBy('e.emple_id')
-                            ->get();
-                        } else {
-                            $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                        ->where('invem.idinvitado', '=',  $invitado->idinvitado)
-                        ->where('invem.area_id', '=', null)
-                        ->where('invem.emple_id', '!=', null)
-                        ->get()->first();
-                    if ($invitado_empleadoIn != null) {
+                    if ($invitado->verTodosEmps == 1) {
                         $empleados = DB::table('empleado as e')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_area', $area)
                             ->whereIn('e.emple_cargo', $cargo)
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
-                        $empleados = DB::table('empleado as e')
-                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                            ->where('e.organi_id', '=', session('sesionidorg'))
-                            ->where('e.emple_estado', '=', 1)
-                            ->whereIn('e.emple_area', $area)
-                            ->whereIn('e.emple_cargo', $cargo)
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                            ->groupBy('e.emple_id')
-                            ->get();
-                    }
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_estado', '=', 1)
+                                ->whereIn('e.emple_area', $area)
+                                ->whereIn('e.emple_cargo', $cargo)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        } else {
+                            $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_estado', '=', 1)
+                                ->whereIn('e.emple_area', $area)
+                                ->whereIn('e.emple_cargo', $cargo)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->groupBy('e.emple_id')
+                                ->get();
                         }
-
+                    }
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -842,13 +828,16 @@ class ControlController extends Controller
 
             foreach ($array as $captura) {
                 $horaCaptura = explode(":", $captura->hora);
-                if (!isset($resultado[$horaCaptura[0]])) {
-                    $resultado[$horaCaptura[0]] = array("horaCaptura" => $horaCaptura[0], "fecha" => $captura->fecha, "minutos" => array());
+                $horaInteger = intval($horaCaptura[0]);
+                $sub = substr($horaCaptura[1], 0, 1);
+                $subInteger = intval($sub);
+                if (!isset($resultado[$horaInteger])) {
+                    $resultado[$horaInteger] = array("horaCaptura" => $horaInteger, "fecha" => $captura->fecha, "minutos" => array());
                 }
-                if (!isset($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]])) {
-                    $resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]] = array();
+                if (!isset($resultado[$horaInteger]["minutos"][$subInteger])) {
+                    $resultado[$horaInteger]["minutos"][$subInteger] = array();
                 }
-                array_push($resultado[$horaCaptura[0]]["minutos"][$horaCaptura[1][0]], $captura);
+                array_push($resultado[$horaInteger]["minutos"][$subInteger], $captura);
             }
             return array_values($resultado);
         }
@@ -860,13 +849,16 @@ class ControlController extends Controller
 
             foreach ($array as $ubicacion) {
                 $horaUbicacion = explode(":", $ubicacion->hora);
-                if (!isset($resultado[$horaUbicacion[0]])) {
-                    $resultado[$horaUbicacion[0]] = array("horaUbicacion" => $horaUbicacion[0], "fecha" => $ubicacion->fecha, "minutos" => array());
+                $horaInteger = intval($horaUbicacion[0]);
+                $sub = substr($horaUbicacion[1], 0, 1);
+                $subInteger = intval($sub);
+                if (!isset($resultado[$horaInteger])) {
+                    $resultado[$horaUbicacion[0]] = array("horaUbicacion" => $horaInteger, "fecha" => $ubicacion->fecha, "minutos" => array());
                 }
-                if (!isset($resultado[$horaUbicacion[0]]["minutos"][$horaUbicacion[1][0]])) {
-                    $resultado[$horaUbicacion[0]]["minutos"][$horaUbicacion[1][0]] = array();
+                if (!isset($resultado[$horaInteger]["minutos"][$subInteger])) {
+                    $resultado[$horaInteger]["minutos"][$subInteger] = array();
                 }
-                array_push($resultado[$horaUbicacion[0]]["minutos"][$horaUbicacion[1][0]], $ubicacion);
+                array_push($resultado[$horaInteger]["minutos"][$subInteger], $ubicacion);
             }
 
             return array_values($resultado);
