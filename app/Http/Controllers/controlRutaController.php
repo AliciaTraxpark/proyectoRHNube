@@ -400,20 +400,9 @@ class controlRutaController extends Controller
                 //* RECORREMOS EN FORMATO DE HORAS
                 for ($hora = 0; $hora < 24; $hora++) {
                     for ($index = 0; $index < sizeof($control); $index++) {
-                        if (date($control[$index]["fecha"]) == date($fecha)) {
-                            if (empty($fechaIgual)) {
-                                $arrayMinuto = [];
-                                //* RECORREMOS EN FORMATO MINUTOS
-                                for ($minuto = 0; $minuto < 6; $minuto++) {
-                                    if (isset($control[$index]["minutos"][$minuto])) {
-                                        $arrayMinuto[$minuto]["captura"] = $control[$index]["minutos"][$minuto];
-                                        $arrayMinuto[$minuto]["ubicacion"] = array();
-                                    }
-                                }
-                                array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
-                            } else {
-                                $busqueda = busquedaHora($fechaIgual, $hora);
-                                if ($fechaIgual) {
+                        if ($control[$index]["horaCaptura"] == $hora) { //* BUSCAMOS SI CAPTURA TIENE ESA HORA
+                            if (date($control[$index]["fecha"]) == date($fecha)) {
+                                if (empty($fechaIgual)) {
                                     $arrayMinuto = [];
                                     //* RECORREMOS EN FORMATO MINUTOS
                                     for ($minuto = 0; $minuto < 6; $minuto++) {
@@ -423,22 +412,22 @@ class controlRutaController extends Controller
                                         }
                                     }
                                     array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
-                                }
-                            }
-                        } else {
-                            if (empty($fechaDiferente)) {
-                                $arrayMinuto = [];
-                                //* RECORREMOS EN FORMATO MINUTOS
-                                for ($minuto = 0; $minuto < 6; $minuto++) {
-                                    if (isset($control[$index]["minutos"][$minuto])) {
-                                        $arrayMinuto[$minuto]["captura"] = $control[$index]["minutos"][$minuto];
-                                        $arrayMinuto[$minuto]["ubicacion"] = array();
+                                } else {
+                                    $busqueda = busquedaHora($fechaIgual, $hora);
+                                    if ($fechaIgual) {
+                                        $arrayMinuto = [];
+                                        //* RECORREMOS EN FORMATO MINUTOS
+                                        for ($minuto = 0; $minuto < 6; $minuto++) {
+                                            if (isset($control[$index]["minutos"][$minuto])) {
+                                                $arrayMinuto[$minuto]["captura"] = $control[$index]["minutos"][$minuto];
+                                                $arrayMinuto[$minuto]["ubicacion"] = array();
+                                            }
+                                        }
+                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
                                     }
                                 }
-                                array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
                             } else {
-                                $busqueda = busquedaHora($fechaDiferente, $hora);
-                                if ($fechaDiferente) {
+                                if (empty($fechaDiferente)) {
                                     $arrayMinuto = [];
                                     //* RECORREMOS EN FORMATO MINUTOS
                                     for ($minuto = 0; $minuto < 6; $minuto++) {
@@ -448,6 +437,19 @@ class controlRutaController extends Controller
                                         }
                                     }
                                     array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                } else {
+                                    $busqueda = busquedaHora($fechaDiferente, $hora);
+                                    if ($fechaDiferente) {
+                                        $arrayMinuto = [];
+                                        //* RECORREMOS EN FORMATO MINUTOS
+                                        for ($minuto = 0; $minuto < 6; $minuto++) {
+                                            if (isset($control[$index]["minutos"][$minuto])) {
+                                                $arrayMinuto[$minuto]["captura"] = $control[$index]["minutos"][$minuto];
+                                                $arrayMinuto[$minuto]["ubicacion"] = array();
+                                            }
+                                        }
+                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    }
                                 }
                             }
                         }
