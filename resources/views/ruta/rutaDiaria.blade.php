@@ -2,31 +2,30 @@
 
 
 @section('css')
-<link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet.css') }}" rel="stylesheet"
+<link href="{{URL::asset('admin/assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')}}" rel="stylesheet" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/leaflet.css')}}" rel="stylesheet"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
-<link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css') }}" rel="stylesheet"
-    type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/leaflet/easy-button.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css') }}" rel="stylesheet"
-    type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/easy-button.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/Control.FullScreen.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/fancybox-master/jquery.fancybox.min.css') }}" rel="stylesheet"
     type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/css/notify.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/css/prettify.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/css/zoom.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet"
+    type="text/css" />
 {{-- plugin de ALERTIFY --}}
-<link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
-{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+<link href="{{URL::asset('admin/assets/libs/alertify/alertify.css')}}" rel="stylesheet" type="text/css" />
 <!-- Semantic UI theme -->
-<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/alertify/default.css')}}" rel="stylesheet" type="text/css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
@@ -230,8 +229,18 @@
                         height="18"></button>
             </div>
         </div>
+        <div id="espera" class="text-center" style="display: none">
+            <img src="{{asset('landing/images/loading.gif')}}" height="100">
+        </div>
     </div>
-    <div class="col-xl-12" id="card"></div>
+    <div class="col-xl-12" id="card">
+        <br>
+        <img id="VacioImg" style="margin-left:28%" src="{{URL::asset('admin/images/search-file.svg')}}"
+            class="mr-2 imgR" height="220" />
+        <br>
+        <label for="" style="margin-left:30%;color:#7d7d7d" class="imgR">Realize una
+            búsqueda para ver Actividad</label>
+    </div>
 </div>
 {{-- FINALIZACION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"

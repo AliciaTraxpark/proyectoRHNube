@@ -1,5 +1,17 @@
 // ? CONFIGURACION DE IDIOMA DE SELECT
 $.fn.select2.defaults.set('language', 'es');
+var notify = $.notifyDefaults({
+    icon_type: "image",
+    newest_on_top: true,
+    delay: 4000,
+    template:
+        '<div data-notify="container" class="col-xs-10 col-sm-2 text-center alert alertR" style="background-color: #fcf8e3;" role="alert">' +
+        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
+        "</div>",
+});
 // ? CONFIGURACION DE FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
     mode: "single",
@@ -170,7 +182,7 @@ function onMostrarPantallas() {
                                 if (data[index].minuto[j]["ubicacion"].length != 0) {
                                     //: COLOCAR IMAGENES EN CARRUSEL
                                     capturas += `<div class = "carousel-item">
-                                                <img src="landing/images/map.svg" height="120" width="160" class="img-responsive">
+                                                <img src="landing/images/GEO.gif" height="120" width="160" class="img-responsive">
                                                     <div class="overlay">
                                                         <a class="info" onclick="recorrido('${hora}')" style="color:#fdfdfd">
                                                         <i class="fa fa-map-marker"></i> Recorrido</a>
@@ -582,6 +594,7 @@ function onMostrarPantallas() {
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(2);
                     var span = "";
                     span += `${totalActividadRango}%`;
+                    console.log(sumaActividadTotal, sumaRangosTotal, totalActividadRango);
                     $("#promHoras" + $i).append(span);
                     var spanH = "";
                     var valorH = enteroTime(sumaRangosTotal);
@@ -611,6 +624,8 @@ function onMostrarPantallas() {
                     $.notify({
                         message: "Elegir empleado.",
                         icon: "admin/images/warning.svg",
+                    }, {
+                        delay: 10000,
                     });
                 }
                 if ($("#fecha").val() == "") {
@@ -631,6 +646,8 @@ function onMostrarPantallas() {
                     $.notify({
                         message: "No se encontratron capturas.",
                         icon: "admin/images/warning.svg",
+                    }, {
+                        delay: 10000,
                     });
                 }
             }
