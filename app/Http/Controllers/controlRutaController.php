@@ -46,9 +46,9 @@ class controlRutaController extends Controller
 
             foreach ($array as $captura) {
                 $horaCaptura = explode(":", $captura->hora);
-                $horaInteger = intval($horaCaptura[0]);
+                $horaInteger = intval($horaCaptura[0]); //* CONVERTIR STRING A ENTERO
                 $sub = substr($horaCaptura[1], 0, 1);
-                $subInteger = intval($sub);
+                $subInteger = intval($sub); //* CONVERTIR STRING  A ENTERO
                 if (!isset($resultado[$horaInteger])) {
                     $resultado[$horaInteger] = array("horaCaptura" => $horaInteger, "fecha" => $captura->fecha, "minutos" => array());
                 }
@@ -67,9 +67,9 @@ class controlRutaController extends Controller
 
             foreach ($array as $ubicacion) {
                 $horaUbicacion = explode(":", $ubicacion->hora);
-                $horaInteger = intval($horaUbicacion[0]);
+                $horaInteger = intval($horaUbicacion[0]); //* CONVERTIR STRING A ENTERO
                 $sub = substr($horaUbicacion[1], 0, 1);
-                $subInteger = intval($sub);
+                $subInteger = intval($sub); //* CONVERTIR STRING A ENTERO
                 if (!isset($resultado[$horaInteger])) {
                     $resultado[$horaInteger] = array("horaUbicacion" => $horaInteger, "fecha" => $ubicacion->fecha, "minutos" => array());
                 }
@@ -160,7 +160,6 @@ class controlRutaController extends Controller
         }
         // ? REALIZAMOS UNION DE HORAS Y MINUTOS EN UBICACION
         $control_ruta = controlRJson($control_ruta);
-        // * UNIR ARRAY CAPTURA Y UBICACION EN UNO
         //* FUNCION DE BUSQUEDA DE HORA EN ARRAY NUEVO
         function busquedaHora($array, $hora)
         {
@@ -175,9 +174,9 @@ class controlRutaController extends Controller
         // TODO -> NUEVA FORMA DE UNIR
         // dd($control, $control_ruta);
         $respuesta = array();
-        $fechaIgual = array();
-        $fechaDiferente = array();
-        if (!empty($control) && !empty($control_ruta)) {
+        $fechaIgual = array(); //* ARRAYS CON FECHA DE BUSQUEDA
+        $fechaDiferente = array(); //* ARRAYS CON FECHA DIFERENTE 
+        if (!empty($control) && !empty($control_ruta)) { //* CUANDO LOS DOS ARRAYS CONTIENE DATOS
             //* RECORREMOS EN FORMATO HORAS
             for ($hora = 0; $hora < 24; $hora++) {
                 $ingresoHora = true;
@@ -521,7 +520,6 @@ class controlRutaController extends Controller
             }
         }
         // TODO ***********************
-        // * ***********************************************
     }
 
     public function reporte(Request $request)
