@@ -582,6 +582,7 @@ function onMostrarPantallas() {
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(2);
                     var span = "";
                     span += `${totalActividadRango}%`;
+                    console.log(sumaActividadTotal, sumaRangosTotal, totalActividadRango);
                     $("#promHoras" + $i).append(span);
                     var spanH = "";
                     var valorH = enteroTime(sumaRangosTotal);
