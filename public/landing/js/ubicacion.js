@@ -1,5 +1,17 @@
 // ? CONFIGURACION DE IDIOMA DE SELECT
 $.fn.select2.defaults.set('language', 'es');
+var notify = $.notifyDefaults({
+    icon_type: "image",
+    newest_on_top: true,
+    delay: 4000,
+    template:
+        '<div data-notify="container" class="col-xs-10 col-sm-2 text-center alert alertR" style="background-color: #fcf8e3;" role="alert">' +
+        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
+        "</div>",
+});
 // ? CONFIGURACION DE FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
     mode: "single",
@@ -612,6 +624,8 @@ function onMostrarPantallas() {
                     $.notify({
                         message: "Elegir empleado.",
                         icon: "admin/images/warning.svg",
+                    }, {
+                        delay: 10000,
                     });
                 }
                 if ($("#fecha").val() == "") {
@@ -632,6 +646,8 @@ function onMostrarPantallas() {
                     $.notify({
                         message: "No se encontratron capturas.",
                         icon: "admin/images/warning.svg",
+                    }, {
+                        delay: 10000,
                     });
                 }
             }
