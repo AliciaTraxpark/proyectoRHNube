@@ -227,6 +227,7 @@ class apimovilController extends Controller
                 ->where('mv.marcaMov_salida', '=',null )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
                 ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                ->orderby('marcaMov_id','DESC')->take(1)
                 ->get();
 
             if($marcacion_movil1->isEmpty()){
@@ -257,6 +258,7 @@ class apimovilController extends Controller
                 ->where('mv.marcaMov_salida', '=',null )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
                 ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                ->orderby('marcaMov_id','DESC')->take(1)
                 ->update(['mv.marcaMov_salida' => $req['fechaMarcacion']]);
 
             }
