@@ -182,7 +182,7 @@ function onMostrarPantallas() {
                                 if (data[index].minuto[j]["ubicacion"].length != 0) {
                                     //: COLOCAR IMAGENES EN CARRUSEL
                                     capturas += `<div class = "carousel-item">
-                                                <img src="landing/images/map.svg" height="120" width="160" class="img-responsive">
+                                                <img src="landing/images/GEO.gif" height="120" width="160" class="img-responsive">
                                                     <div class="overlay">
                                                         <a class="info" onclick="recorrido('${hora}')" style="color:#fdfdfd">
                                                         <i class="fa fa-map-marker"></i> Recorrido</a>
