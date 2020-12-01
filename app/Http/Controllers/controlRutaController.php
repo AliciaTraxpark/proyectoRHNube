@@ -1210,6 +1210,7 @@ class controlRutaController extends Controller
                         }
                     }
                     if ($busquedaEmpleado) {
+                        $arrayDatos = [];
                         //* RECORREMOS LA CANTIDAD DE DIAS DEL RANGO
                         for ($d = 0; $d <= $diff->days; $d++) {
                             $diffRango = 0;
@@ -1232,31 +1233,89 @@ class controlRutaController extends Controller
                                         }
                                     }
                                 }
-                                if (sizeof($capturaUbicacion) == 0) {
-                                    //* UNIR DATOS EN NUEVO ARRAY
-                                    if (!isset($capturaUbicacion[0]["empleado"])) {
-                                        $capturaUbicacion[0]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
-                                    }
-                                    if (!isset($capturaUbicacion[0]["datos"][$d])) {
-                                        $capturaUbicacion[0]["datos"][$d] = array();
-                                    }
-                                    $capturaUbicacion[0]["datos"][$d]["rango"] = $diffRango;
-                                    $capturaUbicacion[0]["datos"][$d]["actividad"] = $diffActividad;
-                                } else {
-                                    $idEmpleado = $tiempoDiaCaptura[$i]["empleado"];
-                                    $respuestaFuncion = busquedaEmpleadoA($capturaUbicacion, $idEmpleado);
-                                    if ($respuestaFuncion) {
-                                        $indexNuevo = sizeof($capturaUbicacion);
-                                        //* UNIR DATOS EN NUEVO ARRAY
-                                        if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
-                                            $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                if (!isset($arrayDatos[$d])) {
+                                    $arrayDatos[$d]["rango"] = $diffRango;
+                                    $arrayDatos[$d]["actividad"] = $diffActividad;
+                                }
+                            }
+                        }
+                        if (sizeof($capturaUbicacion) == 0) {
+                            //* UNIR DATOS EN NUEVO ARRAY
+                            if (!isset($capturaUbicacion[0]["empleado"])) {
+                                $capturaUbicacion[0]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                            }
+                            if (!isset($capturaUbicacion[0]["datos"])) {
+                                $capturaUbicacion[0]["datos"] = $arrayDatos;
+                            }
+                        } else {
+                            $idEmpleado = $tiempoDiaCaptura[$i]["empleado"];
+                            $respuestaFuncion = busquedaEmpleadoA($capturaUbicacion, $idEmpleado);
+                            if ($respuestaFuncion) {
+                                $indexNuevo = sizeof($capturaUbicacion);
+                                //* UNIR DATOS EN NUEVO ARRAY
+                                if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                    $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaCaptura[$i]["empleado"];
+                                }
+                                if (!isset($capturaUbicacion[$indexNuevo]["datos"])) {
+                                    $capturaUbicacion[$indexNuevo]["datos"] = $arrayDatos;
+                                }
+                            }
+                        }
+                    }
+                }
+                //* BUSCAMOS EMPLEADOS DE UBICACION QUE NO ESTAN EN ARRAY NUEVO
+                for ($j = 0; $j < sizeof($tiempoDiaUbicacion); $j++) {
+                    $idEmpleado = $tiempoDiaUbicacion[$j]["empleado"];
+                    $respuestaFuncion = busquedaEmpleadoA($capturaUbicacion, $idEmpleado);
+                    if ($respuestaFuncion) {
+                        $arrayDatos = [];
+                        //* RECORREMOS LA CANTIDAD DE DIAS DEL RANGO
+                        for ($d = 0; $d <= $diff->days; $d++) {
+                            $diffRango = 0;
+                            $diffActividad = 0;
+                            //* BUSCAMOS SI EXISTE ESE DIA EN EL ARRAY
+                            if (isset($tiempoDiaUbicacion[$j]["datos"][$d])) {
+                                $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
+                                //* RECORREMOS EN FORMATO HORAS
+                                for ($hora = 0; $hora < 24; $hora++) {
+                                    if (isset($horaUbicacion[$hora])) {
+                                        //* RECORREMOS EN FORMATO MINUTOS
+                                        for ($m = 0; $m < 6; $m++) {
+                                            if (isset($horaUbicacion[$hora]["minuto"][$m])) {
+                                                $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
+                                                for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
+                                                    $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                    $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                }
+                                            }
                                         }
-                                        if (!isset($capturaUbicacion[$indexNuevo]["datos"][$d])) {
-                                            $capturaUbicacion[$indexNuevo]["datos"][$d] = array();
-                                        }
-                                        $capturaUbicacion[$indexNuevo]["datos"][$d]["rango"] = $diffRango;
-                                        $capturaUbicacion[$indexNuevo]["datos"][$d]["actividad"] = $diffActividad;
                                     }
+                                }
+                                if (!isset($arrayDatos[$d])) {
+                                    $arrayDatos[$d]["rango"] = $diffRango;
+                                    $arrayDatos[$d]["actividad"] = $diffActividad;
+                                }
+                            }
+                        }
+                        if (sizeof($capturaUbicacion) == 0) {
+                            //* UNIR DATOS EN NUEVO ARRAY
+                            if (!isset($capturaUbicacion[0]["empleado"])) {
+                                $capturaUbicacion[0]["empleado"] = $tiempoDiaUbicacion[$j]["empleado"];
+                            }
+                            if (!isset($capturaUbicacion[0]["datos"])) {
+                                $capturaUbicacion[0]["datos"] = $arrayDatos;
+                            }
+                        } else {
+                            $idEmpleado = $tiempoDiaUbicacion[$j]["empleado"];
+                            $respuestaFuncion = busquedaEmpleadoA($capturaUbicacion, $idEmpleado);
+                            if ($respuestaFuncion) {
+                                $indexNuevo = sizeof($capturaUbicacion);
+                                //* UNIR DATOS EN NUEVO ARRAY
+                                if (!isset($capturaUbicacion[$indexNuevo]["empleado"])) {
+                                    $capturaUbicacion[$indexNuevo]["empleado"] = $tiempoDiaUbicacion[$j]["empleado"];
+                                }
+                                if (!isset($capturaUbicacion[$indexNuevo]["datos"])) {
+                                    $capturaUbicacion[$indexNuevo]["datos"] = $arrayDatos;
                                 }
                             }
                         }
