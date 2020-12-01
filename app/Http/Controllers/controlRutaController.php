@@ -205,7 +205,7 @@ class controlRutaController extends Controller
                                             }
                                         }
                                     }
-                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaIgual, $hora);
                                     if ($busqueda) {
@@ -227,7 +227,7 @@ class controlRutaController extends Controller
                                                 }
                                             }
                                         }
-                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             } else {
@@ -250,7 +250,7 @@ class controlRutaController extends Controller
                                             }
                                         }
                                     }
-                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaDiferente, $hora);
                                     if ($busqueda) {
@@ -272,7 +272,7 @@ class controlRutaController extends Controller
                                                 }
                                             }
                                         }
-                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             }
@@ -291,7 +291,7 @@ class controlRutaController extends Controller
                                             $arrayMinuto[$minuto]["ubicacion"] = array();
                                         }
                                     }
-                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaIgual, $hora);
                                     if ($fechaIgual) {
@@ -303,7 +303,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = array();
                                             }
                                         }
-                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             } else {
@@ -316,7 +316,7 @@ class controlRutaController extends Controller
                                             $arrayMinuto[$minuto]["ubicacion"] = array();
                                         }
                                     }
-                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaDiferente, $hora);
                                     if ($fechaDiferente) {
@@ -328,7 +328,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = array();
                                             }
                                         }
-                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             }
@@ -348,7 +348,7 @@ class controlRutaController extends Controller
                                             $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                         }
                                     }
-                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaIgual, $hora);
                                     if ($busqueda) {
@@ -360,7 +360,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                             }
                                         }
-                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             } else {
@@ -373,7 +373,7 @@ class controlRutaController extends Controller
                                             $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                         }
                                     }
-                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaDiferente, $hora);
                                     if ($busqueda) {
@@ -385,7 +385,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                             }
                                         }
-                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             }
@@ -411,7 +411,7 @@ class controlRutaController extends Controller
                                             $arrayMinuto[$minuto]["ubicacion"] = array();
                                         }
                                     }
-                                    array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaIgual, $hora);
                                     if ($fechaIgual) {
@@ -423,7 +423,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = array();
                                             }
                                         }
-                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             } else {
@@ -436,7 +436,7 @@ class controlRutaController extends Controller
                                             $arrayMinuto[$minuto]["ubicacion"] = array();
                                         }
                                     }
-                                    array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                    array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                 } else {
                                     $busqueda = busquedaHora($fechaDiferente, $hora);
                                     if ($fechaDiferente) {
@@ -448,7 +448,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = array();
                                             }
                                         }
-                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control[$index]["fecha"]), "minuto" => $arrayMinuto));
                                     }
                                 }
                             }
@@ -472,7 +472,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                             }
                                         }
-                                        array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                     } else {
                                         $busqueda = busquedaHora($fechaIgual, $hora);
                                         if ($busqueda) {
@@ -484,7 +484,7 @@ class controlRutaController extends Controller
                                                     $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                                 }
                                             }
-                                            array_push($fechaIgual, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                            array_push($fechaIgual, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                         }
                                     }
                                 } else {
@@ -497,7 +497,7 @@ class controlRutaController extends Controller
                                                 $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                             }
                                         }
-                                        array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                        array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                     } else {
                                         $busqueda = busquedaHora($fechaDiferente, $hora);
                                         if ($busqueda) {
@@ -509,7 +509,7 @@ class controlRutaController extends Controller
                                                     $arrayMinuto[$minuto]["ubicacion"] = $control_ruta[$element]["minutos"][$minuto];
                                                 }
                                             }
-                                            array_push($fechaDiferente, array("hora" => $hora, "minuto" => $arrayMinuto));
+                                            array_push($fechaDiferente, array("hora" => $hora, "fecha" => date($control_ruta[$element]["fecha"]), "minuto" => $arrayMinuto));
                                         }
                                     }
                                 }
