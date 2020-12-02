@@ -399,6 +399,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = hora_inicioU;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
+                                                console.log(nuevaActividadRango, data[index].minuto[j]["captura"][0].actividad);
                                                 sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
@@ -412,7 +413,6 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                console.log(nuevaActividadRango, data[index].minuto[j]["captura"][0].actividad);
                                                 sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
