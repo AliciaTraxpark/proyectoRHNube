@@ -6168,3 +6168,18 @@ $(function () {
 
     });
 });
+var fechaValue = $("#fechaSelec").flatpickr({
+    mode: "single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "d/m/Y",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+  });
+  $(function () {
+  f = moment().format("YYYY-MM-DD");
+  fechaValue.setDate(f);
+  $( "#fechaInput" ).change();
+  })

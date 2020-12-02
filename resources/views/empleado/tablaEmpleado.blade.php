@@ -334,6 +334,7 @@
     function editarEmpleado(idempleado){
     $('#form-ver').modal();
     $( "#detallehorario_ed" ).empty();
+    $( "#editar_tbodyHistorial" ).empty();
     $('#smartwizard1').smartWizard("reset");
     $('#MostrarCa_e').hide();
     $('#calendarInv_ed').hide();
@@ -414,6 +415,48 @@
                 "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
                 " Borrar </button> </div></div></div>"); */
                     }
+                },
+                error: function () {}
+            });
+
+            $.ajax({
+                type:"POST",
+                url: "/empleado/historial",
+                data: {
+                    idempleado:value
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+                    var containerVer = $('#editar_tbodyHistorial');
+            for (var i = 0; i < data.length; i++) {
+
+                    var trVer = '<tr>';
+
+
+                        if(data[i].histo_Falta!=null){
+                            trVer+=  '<td><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].histo_Falta).format('DD/MM/YYYY')+'</td>';
+                        } else{
+                            trVer+=  '<td>--</td>';
+                        }
+                        if(data[i].histo_Fbaja!=null){
+                            trVer+=  '<td><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].histo_Fbaja).format('DD/MM/YYYY') +'</td>';
+                        } else{
+                            trVer+=  '<td>--</td>';
+                        }
+
+
+                            trVer+= '</tr>';
+
+                containerVer.append(trVer);
+
+            }
                 },
                 error: function () {}
             });
@@ -515,6 +558,7 @@
 function verDEmpleado(idempleadoVer){
     $('#verEmpleadoDetalles').modal();
     $( "#detallehorario_ed" ).empty();
+    $( "#ver_tbodyHistorial" ).empty();
         $('#smartwizard1').smartWizard("reset");
         $('#smartwizardVer').smartWizard("reset");
         $('#MostrarCa_e').hide();
@@ -585,6 +629,47 @@ function verDEmpleado(idempleadoVer){
                 "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
                 " Borrar horarios </button> </div></div></div>"); */
                     }
+                },
+                error: function () {}
+            });
+            $.ajax({
+                type:"POST",
+                url: "/empleado/historial",
+                data: {
+                    idempleado:value
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+                    var containerVer = $('#ver_tbodyHistorial');
+            for (var i = 0; i < data.length; i++) {
+
+                    var trVer = '<tr>';
+
+
+                        if(data[i].histo_Falta!=null){
+                            trVer+=  '<td><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].histo_Falta).format('DD/MM/YYYY')+'</td>';
+                        } else{
+                            trVer+=  '<td>--</td>';
+                        }
+                        if(data[i].histo_Fbaja!=null){
+                            trVer+=  '<td><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].histo_Fbaja).format('DD/MM/YYYY') +'</td>';
+                        } else{
+                            trVer+=  '<td>--</td>';
+                        }
+
+
+                            trVer+= '</tr>';
+
+                containerVer.append(trVer);
+
+            }
                 },
                 error: function () {}
             });
@@ -775,7 +860,7 @@ function verDEmpleado(idempleadoVer){
 
     function confirmarEliminacion() {
         var allVals = [];
-
+        var fechaBaja=$('#fechaInput').val();
 
         $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
@@ -796,7 +881,7 @@ function verDEmpleado(idempleadoVer){
                     location.reload();
                 }
             },
-            data: 'ids=' + join_selected_values,
+            data: {ids:join_selected_values,fechaBaja} ,
             success: function (data) {
 
                 $('#modalEliminar').modal('hide');
