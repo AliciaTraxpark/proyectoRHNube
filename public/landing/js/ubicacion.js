@@ -358,7 +358,7 @@ function onMostrarPantallas() {
                                             var horaFinNow = data[index].minuto[j]["captura"][0].hora_fin;
                                             var horaCompararNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
-                                            console.log(horaInicial, resp);
+                                            console.log(hora_inicial, resp);
                                             if (resp) {
                                                 sumaRang = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
