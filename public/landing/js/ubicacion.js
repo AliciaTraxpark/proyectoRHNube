@@ -359,7 +359,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = Math.round(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
+                                                sumaRang = parseFloat(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
                                                 promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                                 sumaRangosTotal += sumaRang;
