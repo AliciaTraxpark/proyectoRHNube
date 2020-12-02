@@ -421,7 +421,7 @@ function onMostrarPantallas() {
                                                     nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
                                                 }
                                             }
-                                            if (hora_final < data[index].minuto[j]["ubicacion"][minutosU]) hora_final = data[index].minuto[j]["ubicacion"][minutosU];
+                                            if (hora_final < data[index].minuto[j]["ubicacion"][minutosU]) hora_final = data[index].minuto[j]["ubicacion"][minutosU].hora_fin;
 
                                         }
                                         sumaRang = nuevoRangoRango;
