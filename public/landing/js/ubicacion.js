@@ -401,8 +401,7 @@ function onMostrarPantallas() {
                                             if (resp) {
                                                 console.log(nuevaActividadRango, data[index].minuto[j]["captura"][0].actividad);
                                                 sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
-                                                sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
-                                                console.log(sumActiv);
+                                                sumaActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
                                                 sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
                                                 sumaActiv = parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad);
