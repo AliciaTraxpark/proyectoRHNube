@@ -1013,9 +1013,6 @@ class controlRutaController extends Controller
                                                             $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
                                                             $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
                                                         }
-                                                        if ($tiempoDiaUbicacion[$j]["empleado"] == 2 && $d == 6) {
-                                                            dd($diffRango, $diffActividad);
-                                                        }
                                                     }
                                                 } else {
                                                     if (isset($horaCaptura[$hora]["minuto"][$m])) { //* Comparar si existe solo el minuto en captura
