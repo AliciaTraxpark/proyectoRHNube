@@ -272,7 +272,7 @@ function onMostrarPantallas() {
                                         }
                                     }
                                     arrayHoras = arrayHoras.concat(arrayMomentaneo);
-                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
+                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                 }
                             }
                             if (arrayHoras.length != 0) {
@@ -295,7 +295,6 @@ function onMostrarPantallas() {
                                         if (nuevaHoraFinalRango < arrayHoras[element].split(",")[1]) nuevaHoraFinalRango = arrayHoras[element].split(",")[1];
                                         nuevaActividadRango = nuevaActividadRango + parseFloat(arrayHoras[element].split(",")[2]);
                                         nuevoRangoRango = nuevoRangoRango + parseFloat(arrayHoras[element].split(",")[3]);
-                                        console.log(nuevaActividadRango);
                                     } else {
                                         if (nuevoRangoRango != 0) {
                                             var mediaPonderadoActividad = parseFloat((nuevaActividadRango + parseFloat(arrayHoras[element].split(",")[2])) / 2);
@@ -339,7 +338,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             } else {
                                                 sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
@@ -348,7 +347,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             }
                                             if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
@@ -367,7 +366,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             } else {
                                                 sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
@@ -376,12 +375,63 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             }
                                             if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
                                             } else hora_final = data[index].minuto[j]["captura"][0].hora_fin;
                                         }
+                                    } else {
+                                        var nuevaActividadRango = 0;
+                                        var nuevoRangoRango = 0;
+                                        hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
+                                        for (let minutosU = 0; minutosU < data[index].minuto[j]["ubicacion"].length; minutosU++) {
+                                            if (data[index].minuto[j]["captura"][0].hora_ini < data[index].minuto[j]["ubicacion"][minutosU].hora_ini) {
+                                                hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la imagen
+                                                var horaInicioNow = data[index].minuto[j]["captura"][0].hora_ini;
+                                                var horaFinNow = data[index].minuto[j]["captura"][0].hora_fin;
+                                                var horaCompararNow = data[index].minuto[j]["ubicacion"][minutosU].hora_ini;
+                                                var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                                if (resp) {
+                                                    var mediaPonderadoActividad = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
+                                                    nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
+                                                    var mediaPonderadoRango = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
+                                                    nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
+                                                } else {
+                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
+                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
+                                                    nuevaActividadRango = nuevaActividadRango + sumaActividadRango;
+                                                    nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
+                                                }
+                                            } else {
+                                                hora_inicial = data[index].minuto[j]["ubicacion"][minutosU].hora_ini; //* hora inicial de la imagen
+                                                var horaInicioNow = data[index].minuto[j]["ubicacion"][minutosU].hora_ini;
+                                                var horaFinNow = data[index].minuto[j]["ubicacion"][minutosU].hora_fin;
+                                                var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
+                                                var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                                if (resp) {
+                                                    var mediaPonderadoActividad = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
+                                                    nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
+                                                    var mediaPonderadoRango = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
+                                                    nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
+                                                } else {
+                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
+                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
+                                                    nuevaActividadRango = nuevaActividadRango + sumaActividadRango;
+                                                    nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
+                                                }
+                                            }
+                                            if (hora_final < data[index].minuto[j]["ubicacion"][minutosU]) hora_final = data[index].minuto[j]["ubicacion"][minutosU];
+
+                                        }
+                                        sumaRang = nuevoRangoRango;
+                                        sumaActiv = nuevaActividadRango;
+                                        promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
+                                        sumaRangosTotal += sumaRang;
+                                        sumaActividadTotal += sumaActiv;
+                                        var totalR = enteroTime(sumaRang);
+                                        totalCM = totalR;
+                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                     }
                                 }
                             } else {
@@ -410,9 +460,7 @@ function onMostrarPantallas() {
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
                                     } else {
-                                        console.log(data[index].minuto[j]["ubicacion"]);
                                         for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
-                                            console.log(data[index].minuto[j]["ubicacion"][indexMinutos]);
                                             promedios = promedios + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                             sumaRangos = sumaRangos + data[index].minuto[j]["ubicacion"][indexMinutos].rango;
                                             sumaActividad = sumaActividad + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
@@ -584,7 +632,6 @@ function onMostrarPantallas() {
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(2);
                     var span = "";
                     span += `${totalActividadRango}%`;
-                    console.log(sumaActividadTotal, sumaRangosTotal, totalActividadRango);
                     $("#promHoras" + $i).append(span);
                     var spanH = "";
                     var valorH = enteroTime(sumaRangosTotal);
@@ -753,86 +800,30 @@ function initializingMap() // call this method before you initialize your map.
 function recorrido(horayJ) {
     var hora = horayJ.split(",")[0];
     var min = horayJ.split(",")[1];
-    var fecha = horayJ.split(",")[2];
-    $('#bodyMap').empty();
-    var container = $('#bodyMap');
-    var divMap = `<div id="mapRecorrido" class="mapRecorrido"></div>`;
-    container.append(divMap);
-    $('#modalRuta').modal();
-    //: Horas en modal
-    $('#horaIRecorrido').text(parseInt(hora) + ":00:00");
-    $('#horaFRecorrido').text((parseInt(hora) + 1) + ":00:00");
     //* buscar hora en el array
     var arrayDatos = [];
     var respuesta = [];
     for (let index = 0; index < dato.length; index++) {
-        if (dato[index].hora <= parseInt(hora)) {
-            if (moment(dato[index].fecha, "DD-MM-YYYY") <= moment(fecha, "DD-MM-YYYY")) {
-                for (let j = 0; j <= parseInt(min); j++) {
-                    if (dato[index].minuto[j] != undefined) {
-                        const ubicacion = dato[index].minuto[j].ubicacion;
-                        for (var i = 0; i < ubicacion.length; i++) {
-                            const valor = ubicacion[i].ubicaciones;
-                            valor.forEach(element => {
-                                arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[i].hora_ini, element.latitud_fin + "," + element.longitud_fin + "," + ubicacion[i].hora_fin)
-                            });
-                        }
+        if (dato[index].hora === parseInt(hora)) {
+            for (let j = 0; j < 6; j++) {
+                if (j == parseInt(min)) {
+                    const ubicacion = dato[index].minuto[j].ubicacion;
+                    for (var i = 0; i < ubicacion.length; i++) {
+                        const valor = ubicacion[i].ubicaciones;
+                        valor.forEach(element => {
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[i].hora_ini)
+                        });
                     }
                 }
             }
         }
     }
     respuesta.push(arrayDatos);
-    console.log(respuesta);
-    var popupArray = [];
-    var latlngArrayRecorrido = [];
-    for (let index = 0; index < respuesta[0].length; index++) {
-        var element = respuesta[0][index];
-        var ltln = L.latLng(element.split(",")[0], element.split(",")[1]);
-        latlngArrayRecorrido.push(ltln);
-        popupArray.push(element.split(",")[2]);
-    }
-    initializingMap();
-    mapGlobal = L.map('mapRecorrido', {
-        minZoom: 12,
-        zoomOffset: -1,
-        center: [51.505, -0.09],
-    });
-    mapGlobal.invalidateSize();
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapGlobal);
-    //: API DE ENRUTAMIENTO
-    mapboxRouting = L.Routing.mapbox('pk.eyJ1IjoiZ2FieXJvc21lcmkiLCJhIjoiY2tobTVkazEyMTV5dDJ5bzc2MmE4OWZtZSJ9.2jqmQl43ljmcZSP02R4Rew', { profile: 'mapbox/walking' });
-    //: *********************************************************************************************************
-    controlGlobal = L.Routing.control({
-        createMarker: function (i, wp, nWps) {
-            var popup = L.marker(wp.latLng)
-                .bindPopup('Hora: ' + popupArray[i]);
-            return popup;
-        },
-        router: mapboxRouting,
-        waypoints: latlngArrayRecorrido,
-        lineOptions: {
-            styles: [
-                { color: '#ec0101', opacity: 0.6, weight: 8 }
-            ],
-        },
-        show: false,
-        draggableWaypoints: false,//to set draggable option to false
-        addWaypoints: false, //disable adding new waypoints to the existing path
-        fitSelectedRoutes: true,
-        useZoomParameter: true,
-        routeWhileDragging: true
-    }).addTo(mapGlobal);
-    L.control.fullscreen({
-        position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
-        title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
-        titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
-        content: null, // change the content of the button, can be HTML, default null
-        forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
-        forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
-        fullscreenElement: false // Dom element to render in full screen, false by default, fallback to map._container
-    }).addTo(mapGlobal);
-    mapGlobal.invalidateSize();
+    var index = arrayDatos.length - 1;
+    var latitud = arrayDatos[index].split(",")[0];
+    var longitud = arrayDatos[index].split(",")[1];
+    var urlGoogle = 'https://maps.google.com/?q=' + latitud + ',' + longitud + '';
+    window.open(urlGoogle, '_blank');
 }
 //: Alinear mapeo
 $('#modalRuta').on('shown.bs.modal', function () {
