@@ -359,7 +359,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = parseFloat(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
+                                                sumaRang = parseInt(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
                                                 promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                                 sumaRangosTotal += sumaRang;
@@ -368,7 +368,7 @@ function onMostrarPantallas() {
                                                 totalCM = totalR;
                                                 var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             } else {
-                                                sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
+                                                sumaRang = parseInt(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
                                                 promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                                 sumaRangosTotal += sumaRang;
@@ -419,9 +419,10 @@ function onMostrarPantallas() {
                                                 sumaActiv = parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad);
                                             }
                                         }
-                                        if (hora_finalU > data[index].minuto[j]["captura"][0].hora_fin) hora_final = hora_finalU
-                                        else hora_final = data[index].minuto[j]["captura"][0].hora_fin
+                                        if (hora_finalU > data[index].minuto[j]["captura"][0].hora_fin) hora_final = hora_finalU;
+                                        else hora_final = data[index].minuto[j]["captura"][0].hora_fin;
                                         promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
+                                        console.log(sumaActiv, sumaRang, promedio);
                                         sumaRangosTotal += sumaRang;
                                         sumaActividadTotal += sumaActiv;
                                         var totalR = enteroTime(sumaRang);
