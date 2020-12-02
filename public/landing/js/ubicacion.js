@@ -319,6 +319,7 @@ function onMostrarPantallas() {
                                     hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la imagen
                                     hora_final = data[index].minuto[j]["captura"][0].hora_fin; //* hora final de la imagen
                                     var totalR = enteroTime(data[index].minuto[j]["captura"][0].rango); //* convertimos el rango en time
+                                    console.log(data[index].minuto[j]["captura"][0].hora_ini, data[index].minuto[j]["captura"][0].hora_fin, data[index].minuto[j]["captura"][0].rango);
                                     sumaRangosTotal += data[index].minuto[j]["captura"][0].rango; //* sumar rangos
                                     totalCM = totalR;
                                     promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
