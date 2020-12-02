@@ -359,7 +359,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = parseInt(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
+                                                sumaRang = Math.round(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
                                                 promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                                 sumaRangosTotal += sumaRang;
@@ -368,7 +368,7 @@ function onMostrarPantallas() {
                                                 totalCM = totalR;
                                                 var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             } else {
-                                                sumaRang = parseInt(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
+                                                sumaRang = Math.round(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
                                                 promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                                 sumaRangosTotal += sumaRang;
@@ -400,7 +400,7 @@ function onMostrarPantallas() {
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
                                                 console.log(nuevaActividadRango, data[index].minuto[j]["captura"][0].actividad);
-                                                sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
+                                                sumaRang = Math.round((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumaActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
                                                 sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
@@ -413,10 +413,10 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
+                                                sumaRang = Math.round((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
-                                                sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
+                                                sumaRang = Math.round(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
                                                 sumaActiv = parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad);
                                             }
                                         }
