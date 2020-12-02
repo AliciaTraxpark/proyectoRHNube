@@ -1063,9 +1063,9 @@ class controlRutaController extends Controller
                                                 }
                                             }
                                         }
-                                        if ($tiempoDiaUbicacion[$j]["empleado"] == 2) {
-                                            dd($diffRango, $diffActividad);
-                                        }
+                                    }
+                                    if ($tiempoDiaUbicacion[$j]["empleado"] == 2) {
+                                        dd($diffRango, $diffActividad);
                                     }
                                     if (sizeof($capturaUbicacion) == 0) {
                                         //* UNIR DATOS EN NUEVO ARRAY
