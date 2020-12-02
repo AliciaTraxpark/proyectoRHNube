@@ -180,6 +180,7 @@ function onMostrarPantallas() {
                             var arrayHoras = [];
                             // ? RECORREMOS EL ARRAY DE CAPTURAS
                             for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
+                                var verDetalle = ``;
                                 if (data[index].minuto[j]["captura"].length > 1) {
                                     if (data[index].minuto[j]["ubicacion"].length != 0) {
                                         //: FORMAR ARRAY
