@@ -139,7 +139,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
-    <li style="display: none">
+    <li>
 
         <a href="javascript: void(0);">
             <i data-feather="map-pin"></i>
@@ -150,6 +150,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         <ul class="nav-second-level" aria-expanded="false">
             <li>
                 <a href="/ruta">Detalle Diario</a>
+                <a href="/rutaReporte">Reporte Semanal</a>
             </li>
         </ul>
     </li>
