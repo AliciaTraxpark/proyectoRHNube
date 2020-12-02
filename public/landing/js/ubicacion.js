@@ -765,7 +765,7 @@ function recorrido(horayJ) {
                     for (var i = 0; i < ubicacion.length; i++) {
                         const valor = ubicacion[i].ubicaciones;
                         valor.forEach(element => {
-                            arrayDatos.push(element.latitud_fin + "," + element.longitud_fin + "," + ubicacion[i].hora_fin)
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[i].hora_ini)
                         });
                     }
                 }
