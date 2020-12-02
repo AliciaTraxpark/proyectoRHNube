@@ -295,7 +295,6 @@ function onMostrarPantallas() {
                                         if (nuevaHoraFinalRango < arrayHoras[element].split(",")[1]) nuevaHoraFinalRango = arrayHoras[element].split(",")[1];
                                         nuevaActividadRango = nuevaActividadRango + parseFloat(arrayHoras[element].split(",")[2]);
                                         nuevoRangoRango = nuevoRangoRango + parseFloat(arrayHoras[element].split(",")[3]);
-                                        console.log(nuevaActividadRango);
                                     } else {
                                         if (nuevoRangoRango != 0) {
                                             var mediaPonderadoActividad = parseFloat((nuevaActividadRango + parseFloat(arrayHoras[element].split(",")[2])) / 2);
@@ -319,7 +318,6 @@ function onMostrarPantallas() {
                                     hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la imagen
                                     hora_final = data[index].minuto[j]["captura"][0].hora_fin; //* hora final de la imagen
                                     var totalR = enteroTime(data[index].minuto[j]["captura"][0].rango); //* convertimos el rango en time
-                                    console.log(data[index].minuto[j]["captura"][0].hora_ini, data[index].minuto[j]["captura"][0].hora_fin, data[index].minuto[j]["captura"][0].rango);
                                     sumaRangosTotal += data[index].minuto[j]["captura"][0].rango; //* sumar rangos
                                     totalCM = totalR;
                                     promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
@@ -360,6 +358,7 @@ function onMostrarPantallas() {
                                             var horaFinNow = data[index].minuto[j]["captura"][0].hora_fin;
                                             var horaCompararNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                            console.log(horaInicial, resp);
                                             if (resp) {
                                                 sumaRang = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
@@ -411,9 +410,7 @@ function onMostrarPantallas() {
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
                                     } else {
-                                        console.log(data[index].minuto[j]["ubicacion"]);
                                         for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
-                                            console.log(data[index].minuto[j]["ubicacion"][indexMinutos]);
                                             promedios = promedios + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                             sumaRangos = sumaRangos + data[index].minuto[j]["ubicacion"][indexMinutos].rango;
                                             sumaActividad = sumaActividad + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
@@ -585,7 +582,6 @@ function onMostrarPantallas() {
                     totalActividadRango = ((sumaActividadTotal / sumaRangosTotal) * 100).toFixed(2);
                     var span = "";
                     span += `${totalActividadRango}%`;
-                    console.log(sumaActividadTotal, sumaRangosTotal, totalActividadRango);
                     $("#promHoras" + $i).append(span);
                     var spanH = "";
                     var valorH = enteroTime(sumaRangosTotal);
@@ -759,7 +755,6 @@ function recorrido(horayJ) {
     var respuesta = [];
     for (let index = 0; index < dato.length; index++) {
         if (dato[index].hora === parseInt(hora)) {
-            console.log(dato[index]);
             for (let j = 0; j < 6; j++) {
                 if (j == parseInt(min)) {
                     const ubicacion = dato[index].minuto[j].ubicacion;
@@ -774,7 +769,6 @@ function recorrido(horayJ) {
         }
     }
     respuesta.push(arrayDatos);
-    console.log(arrayDatos);
     var index = arrayDatos.length - 1;
     var latitud = arrayDatos[index].split(",")[0];
     var longitud = arrayDatos[index].split(",")[1];
