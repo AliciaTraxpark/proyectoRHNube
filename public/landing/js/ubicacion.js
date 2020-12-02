@@ -782,6 +782,7 @@ function recorrido(horayJ) {
         }
     }
     respuesta.push(arrayDatos);
+    console.log(respuesta);
     var popupArray = [];
     var latlngArrayRecorrido = [];
     for (let index = 0; index < respuesta[0].length; index++) {
