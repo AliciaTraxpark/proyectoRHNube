@@ -223,7 +223,6 @@ function onMostrarPantallas() {
                                             arrayHoras.push(nuevaHoraI + "," + nuevaHoraF + "," + nuevaActividad + "," + nuevoRango);
                                         }
                                         //: *****************************************************
-                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
                                     } else {
                                         promedios = promedios + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de promedios de grupos de imagenes
                                         sumaRangos = sumaRangos + data[index].minuto[j]["captura"][indexMinutos].rango; //* suma de rangos de grupos de imagenes
@@ -272,6 +271,7 @@ function onMostrarPantallas() {
                                         }
                                     }
                                     arrayHoras = arrayHoras.concat(arrayMomentaneo);
+                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j + "," + fecha}')">`;
                                 }
                             }
                             if (arrayHoras.length != 0) {
@@ -322,7 +322,6 @@ function onMostrarPantallas() {
                                     totalCM = totalR;
                                     promedio = data[index].minuto[j]["captura"][0].prom; //* obtener promedio
                                     sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
-                                    var verDetalle = "";
                                 } else {
                                     if (data[index].minuto[j]["ubicacion"].length == 1) {
                                         if (data[index].minuto[j]["ubicacion"][0].hora_ini < data[index].minuto[j]["captura"][0].hora_ini) {
