@@ -399,7 +399,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = hora_inicioU;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = parseFloat((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2).toFixed(0);
+                                                sumaRang = parseFloat((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
                                                 sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
