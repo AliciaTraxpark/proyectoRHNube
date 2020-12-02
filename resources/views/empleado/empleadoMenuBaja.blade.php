@@ -75,6 +75,7 @@ use App\proyecto_empleado;
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 {{--  --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -116,9 +117,7 @@ use App\proyecto_empleado;
         margin-right: 2px;
     }
 
-    .flatpickr-calendar {
-        width: 125px !important;
-    }
+
 
     .btn-outline-secondary {
         border-color: #e3eaef;
@@ -3350,6 +3349,52 @@ use App\proyecto_empleado;
 
 
 </div>
+{{-- MODAL DE ALTA --}}
+<div id="modalAlta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAlta"
+aria-hidden="true" data-backdrop="static">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="background-color:#163552;">
+            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                Dar de alta </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+
+                <div class="col-xl-12">
+                    <div class="form-group row">
+                        <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de alta de empleado(s) :</label>
+                        <div class="input-group col-md-5 text-center" style="padding-left: 0px;padding-right: 0px;top: 10px;"
+                            id="fechaSelec">
+                            <input type="text" id="fechaInput"  class="col-md-12 form-control" data-input>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text form-control flatpickr">
+                                    <a class="input-button" data-toggle>
+                                        <i class="uil uil-calender"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+
+                        <button type="button" id="cerrarE" class="btn btn-light btn-sm "
+                            data-dismiss="modal">Cancelar</button>
+
+                        <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarAlta()"
+                            style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+
+
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @endsection
 @section('script')
 <script>
@@ -3627,8 +3672,9 @@ function altaEmpleado() {
     bootbox.alert("Por favor seleccione una fila");
             return false;
         } else {
+            $('#modalAlta').modal('show');
 
-            bootbox.confirm({
+         /*    bootbox.confirm({
         title: "Dar de alta",
         message:
             "¿Esta seguro que desea dar de alta a este empleado?",
@@ -3659,9 +3705,9 @@ function altaEmpleado() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             statusCode: {
-                /*401: function () {
+                401: function () {
                     location.reload();
-                },*/
+                },
                 419: function () {
                     location.reload();
                 }
@@ -3692,35 +3738,63 @@ function altaEmpleado() {
                 alert(data.responseText);
             }
         });
-               /*  $.ajax({
-                    type: "post",
-                    url: "/empleado/darAlta",
-                    data: {
-                        mescale,
-                        aniocalen,
-                    },
-                    statusCode: {
-                        419: function () {
-                            location.reload();
-                        },
-                    },
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    success: function (data) {
 
-                    },
-                    error: function (data) {
-                        alert("Ocurrio un error");
-                    },
-                }); */
             }
         },
-    });
+    }); */
 
         }
+
+    }
+    function confirmarAlta(){
+        var allVals = [];
+        var fechaBaja=$('#fechaInput').val();
+        $(".sub_chk:checked").each(function () {
+            allVals.push($(this).attr('data-id'));
+        });
+        var join_selected_values = allVals.join(",");
+        var table = $('#tablaEmpleado').DataTable();
+        $.ajax({
+            url: "/empleado/darAlta",
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                419: function () {
+                    location.reload();
+                }
+            },
+            data: {ids:join_selected_values,fechaBaja} ,
+            success: function (data) {
+
+
+                RefreshTablaEmpleado();
+                $('#modalAlta').modal('hide');
+                $.notify({
+                    message: '\nEl empleado(s) se dio de alta',
+                    icon: 'admin/images/checked.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #ffffff;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#289c26;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
 
     }
 $('#selectarea').on("change", function (e) {
@@ -3935,6 +4009,7 @@ function RefreshTablaEmpleadoBajaArea() {
 <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
 <script src="{{ asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
  <script src="{{ asset('landing/js/smartwizard.js') }}"></script>
@@ -3949,6 +4024,21 @@ function RefreshTablaEmpleadoBajaArea() {
     URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
     }}"></script>
      <script>
+         var fechaValue = $("#fechaSelec").flatpickr({
+    mode: "single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "d/m/Y",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+  });
+  $(function () {
+  f = moment().format("YYYY-MM-DD");
+  fechaValue.setDate(f);
+  $( "#fechaInput" ).change();
+  })
          function calendario3() {
     var calendarEl = document.getElementById("calendar3");
     calendarEl.innerHTML = "";

@@ -75,6 +75,7 @@ use App\proyecto_empleado;
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 {{--  --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -731,8 +732,8 @@ use App\proyecto_empleado;
         margin-right: 2px;
     }
 
-    .flatpickr-calendar {
-        width: 125px !important;
+     .flatpickr-calendar {
+        max-width: 90%;
     }
 
     .btn-outline-secondary {
@@ -1224,24 +1225,34 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <h5 class="modal-title" id="myModalLabel" style="font-size: 15px">
-                            ¿Dar de baja al empleado?
-                        </h5>
+
+                        <div class="col-xl-12">
+                            <div class="form-group row">
+                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de baja o cese de empleado(s) :</label>
+                                <div class="input-group col-md-5 text-center" style="padding-left: 0px;padding-right: 0px;top: 10px;"
+                                    id="fechaSelec">
+                                    <input type="text" id="fechaInput"  class="col-md-12 form-control" data-input>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control flatpickr">
+                                            <a class="input-button" data-toggle>
+                                                <i class="uil uil-calender"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-10 text-right" style="padding-left: 50px">
-                                <button type="button" id="cerrarE" class="btn btn-light btn-sm"
+
+                                <button type="button" id="cerrarE" class="btn btn-light btn-sm "
                                     data-dismiss="modal">Cancelar</button>
-                            </div>
-                            <div class="col-md-2 text-right" style="padding-right: 38px;  ">
+
                                 <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
-                                    style="background-color: #163552;" class="btn btn-sm ">Aceptar</button>
-                            </div>
-                        </div>
-                    </div>
+                                    style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+
+
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -3408,6 +3419,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Actividades</a></li>
                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                        <li><a href="#sw-default-step-8">Historial</a></li>
                     </ul>
                     <input type="hidden" id="estadoP" value="false">
                     <input type="hidden" id="estadoE" value="false">
@@ -4490,6 +4502,28 @@ use App\proyecto_empleado;
                                 </div>
                             </div> --}}
                         </div>
+                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
+                            <div class="col-md-12">
+                                <label for="">Historial de empleado de altas y bajas</label>
+                            </div>
+
+                           <div class="col-xl-12 col-sm-12">
+                            <div class="table-responsive-xl">
+                                <table id="editar_tablaHistorial" class="table"
+                                    style="font-size: 13px!important;">
+                                    <thead style="background: #fafafa;">
+                                        <tr>
+                                            <th>Fecha de alta</th>
+                                            <th>Fecha de baja</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="editar_tbodyHistorial"
+                                        style="background:#ffffff;color: #585858;font-size: 12px">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4540,6 +4574,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Actividades</a></li>
                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                        <li><a href="#sw-default-step-8">Historial</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
@@ -4925,6 +4960,28 @@ use App\proyecto_empleado;
                                 </div>
                             </div> --}}
                         </div>
+                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
+                            <div class="col-md-12">
+                                <label for="">Historial de empleado de altas y bajas</label>
+                            </div>
+
+                           <div class="col-xl-12 col-sm-12">
+                            <div class="table-responsive-xl">
+                                <table id="ver_tablaHistorial" class="table"
+                                    style="font-size: 13px!important;">
+                                    <thead style="background: #fafafa;">
+                                        <tr>
+                                            <th>Fecha de alta</th>
+                                            <th>Fecha de baja</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ver_tbodyHistorial"
+                                        style="background:#ffffff;color: #585858;font-size: 12px">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -5047,6 +5104,7 @@ use App\proyecto_empleado;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
 {{-- visibilidad de editar --}}
 @if (isset($modifEmp))
 @if ($modifEmp==1)
@@ -5156,6 +5214,7 @@ document.getElementsByName("editarEName").remove();
 <script src="{{ asset('admin/packages/interaction/main.js') }}"></script>
 <script src="{{ asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
 <script src="{{ asset('landing/js/smartwizard.js') }}"></script>

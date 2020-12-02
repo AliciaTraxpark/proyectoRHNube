@@ -37,6 +37,7 @@ use App\eventos_usuario;
 use App\eventos_empleado_temp;
 use App\horario;
 use App\eventos_empleado;
+use App\historial_empleado;
 use App\incidencia_dias;
 use App\horario_dias;
 use App\pausas_horario;
@@ -638,6 +639,7 @@ class EmpleadoController extends Controller
         $empleado->emple_foto = '';
         $empleado->save();
         $idempleado = $empleado->emple_id;
+        
         ///////////////// SI USUARIO ES INVITADO
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
                 ->where('uso.organi_id', '=', session('sesionidorg'))
@@ -948,6 +950,7 @@ class EmpleadoController extends Controller
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
             ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+         /*    ->leftJoin('historial_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado') */
 
             ->select(
                 'e.emple_id',
@@ -1187,7 +1190,7 @@ class EmpleadoController extends Controller
     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-
+        $fechaBaja = $request->fechaBaja;
         $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
         //$empleado = empleado::find(explode(",",$ids))->first();
 
@@ -1197,6 +1200,16 @@ class EmpleadoController extends Controller
             $t->save();
             $array[] = $t->emple_persona;
         }
+        $arrayEmp = array();
+        $arrayEmp[]=explode(",", $ids);
+
+        foreach ($arrayEmp[0] as $emp) {
+            $historial_empleado = new historial_empleado();
+            $historial_empleado->emple_id =  $emp;
+            $historial_empleado->histo_Fbaja = $fechaBaja;
+            $historial_empleado->save();
+        }
+
     }
     public function indexMenu()
     {
@@ -2529,7 +2542,7 @@ class EmpleadoController extends Controller
 
     public function darAltaEmpleado(Request $request){
         $ids = $request->ids;
-
+        $fechaBaja = $request->fechaBaja;
         $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
         //$empleado = empleado::find(explode(",",$ids))->first();
 
@@ -2539,5 +2552,28 @@ class EmpleadoController extends Controller
             $t->save();
             $array[] = $t->emple_persona;
         }
+        $arrayEmp = array();
+        $arrayEmp[]=explode(",", $ids);
+        foreach ($arrayEmp[0] as $emp) {
+        $historial_empleado = DB::table('historial_empleado') ->where('emple_id',$emp)->where('histo_Falta',null)
+        ->where('histo_Fbaja','!=',null)->get()->first();
+       if($historial_empleado!=null){
+        $historial_empleadoGu=historial_empleado::findOrFail($historial_empleado->idhistorial_empleado);
+        $historial_empleadoGu->histo_Falta = $fechaBaja;
+        $historial_empleadoGu->save();
+       } else{
+        $historial_empleadoN = new historial_empleado();
+        $historial_empleadoN->emple_id =  $emp;
+        $historial_empleadoN->histo_Falta = $fechaBaja;
+        $historial_empleadoN->save();
+       }
+
+        }
+    }
+    public function historialEmpleado(Request $request){
+        $idempleado=$request->idempleado;
+        $historial_empleado = DB::table('historial_empleado') ->where('emple_id',$idempleado)->get();
+        return $historial_empleado;
+
     }
 }
