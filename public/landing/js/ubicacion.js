@@ -382,8 +382,8 @@ function onMostrarPantallas() {
                                             } else hora_final = data[index].minuto[j]["captura"][0].hora_fin;
                                         }
                                     } else {
-                                        var nuevaActividadRango = 0;
-                                        var nuevoRangoRango = 0;
+                                        var nuevaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad);
+                                        var nuevoRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango);
                                         hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
                                         for (let minutosU = 0; minutosU < data[index].minuto[j]["ubicacion"].length; minutosU++) {
                                             if (data[index].minuto[j]["captura"][0].hora_ini < data[index].minuto[j]["ubicacion"][minutosU].hora_ini) {
@@ -393,13 +393,13 @@ function onMostrarPantallas() {
                                                 var horaCompararNow = data[index].minuto[j]["ubicacion"][minutosU].hora_ini;
                                                 var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                                 if (resp) {
-                                                    var mediaPonderadoActividad = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
+                                                    var mediaPonderadoActividad = parseFloat((nuevaActividadRango + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
                                                     nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
-                                                    var mediaPonderadoRango = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
+                                                    var mediaPonderadoRango = parseFloat((nuevoRangoRango + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
                                                     nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
                                                 } else {
-                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
-                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
+                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
+                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
                                                     nuevaActividadRango = nuevaActividadRango + sumaActividadRango;
                                                     nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
                                                 }
@@ -410,13 +410,13 @@ function onMostrarPantallas() {
                                                 var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
                                                 var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                                 if (resp) {
-                                                    var mediaPonderadoActividad = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
+                                                    var mediaPonderadoActividad = parseFloat((nuevaActividadRango + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
                                                     nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
-                                                    var mediaPonderadoRango = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
+                                                    var mediaPonderadoRango = parseFloat((nuevoRangoRango + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
                                                     nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
                                                 } else {
-                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
-                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
+                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
+                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
                                                     nuevaActividadRango = nuevaActividadRango + sumaActividadRango;
                                                     nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
                                                 }
