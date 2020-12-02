@@ -912,9 +912,6 @@ class controlRutaController extends Controller
                     for ($j = 0; $j < sizeof($tiempoDiaUbicacion); $j++) {
                         //* BUSCAMOS SI EL EMPLEADO SE ENCUENTRA TAMBIEN EN ARRAY DE UBICACION
                         if ($tiempoDiaCaptura[$i]["empleado"] == $tiempoDiaUbicacion[$j]["empleado"]) {
-                            if ($tiempoDiaUbicacion[$j]["empleado"] == 2) {
-                                dd($tiempoDiaCaptura[$i], $tiempoDiaUbicacion[$j]);
-                            }
                             $busquedaEmpleado = false;
                             for ($d = 0; $d <= $diff->days; $d++) { //* Recorremos la cantidad de días por el rango
                                 $diffRango = 0;
@@ -1065,6 +1062,9 @@ class controlRutaController extends Controller
                                                     }
                                                 }
                                             }
+                                        }
+                                        if ($tiempoDiaUbicacion[$j]["empleado"] == 2) {
+                                            dd($diffRango, $diffActividad);
                                         }
                                     }
                                     if (sizeof($capturaUbicacion) == 0) {
