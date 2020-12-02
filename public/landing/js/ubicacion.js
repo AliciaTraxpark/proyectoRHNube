@@ -358,7 +358,6 @@ function onMostrarPantallas() {
                                             var horaFinNow = data[index].minuto[j]["captura"][0].hora_fin;
                                             var horaCompararNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
-                                            console.log(hora_inicial, resp);
                                             if (resp) {
                                                 sumaRang = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
@@ -382,6 +381,57 @@ function onMostrarPantallas() {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
                                             } else hora_final = data[index].minuto[j]["captura"][0].hora_fin;
                                         }
+                                    } else {
+                                        var nuevaActividadRango = 0;
+                                        var nuevoRangoRango = 0;
+                                        hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
+                                        for (let minutosU = 0; minutosU < data[index].minuto[j]["ubicacion"].length; minutosU++) {
+                                            if (data[index].minuto[j]["captura"][0].hora_ini < data[index].minuto[j]["ubicacion"][minutosU].hora_ini) {
+                                                hora_inicial = data[index].minuto[j]["captura"][0].hora_ini; //* hora inicial de la imagen
+                                                var horaInicioNow = data[index].minuto[j]["captura"][0].hora_ini;
+                                                var horaFinNow = data[index].minuto[j]["captura"][0].hora_fin;
+                                                var horaCompararNow = data[index].minuto[j]["ubicacion"][minutosU].hora_ini;
+                                                var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                                if (resp) {
+                                                    var mediaPonderadoActividad = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
+                                                    nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
+                                                    var mediaPonderadoRango = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
+                                                    nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
+                                                } else {
+                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
+                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
+                                                    nuevaActividadRango = nuevaActividadRango + sumaActividadRango;
+                                                    nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
+                                                }
+                                            } else {
+                                                hora_inicial = data[index].minuto[j]["ubicacion"][minutosU].hora_ini; //* hora inicial de la imagen
+                                                var horaInicioNow = data[index].minuto[j]["ubicacion"][minutosU].hora_ini;
+                                                var horaFinNow = data[index].minuto[j]["ubicacion"][minutosU].hora_fin;
+                                                var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
+                                                var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                                if (resp) {
+                                                    var mediaPonderadoActividad = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad)) / 2);
+                                                    nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
+                                                    var mediaPonderadoRango = parseFloat((parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango)) / 2);
+                                                    nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
+                                                } else {
+                                                    var sumaActividadRango = parseFloat(data[index].minuto[j]["captura"][0].actividad) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].actividad);
+                                                    var sumaRangoRango = parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][minutosU].rango);
+                                                    nuevaActividadRango = nuevaActividadRango + sumaActividadRango;
+                                                    nuevoRangoRango = nuevoRangoRango + sumaRangoRango;
+                                                }
+                                            }
+                                            if (hora_final < data[index].minuto[j]["ubicacion"][minutosU]) hora_final = data[index].minuto[j]["ubicacion"][minutosU];
+
+                                        }
+                                        sumaRang = nuevoRangoRango;
+                                        sumaActiv = nuevaActividadRango;
+                                        promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
+                                        sumaRangosTotal += sumaRang;
+                                        sumaActividadTotal += sumaActiv;
+                                        var totalR = enteroTime(sumaRang);
+                                        totalCM = totalR;
+                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                     }
                                 }
                             } else {
