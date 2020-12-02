@@ -331,7 +331,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
+                                                sumaRang = Math.round(parseFloat(parseFloat(data[index].minuto[j]["captura"][0].rango) + parseFloat(data[index].minuto[j]["ubicacion"][0].rango)) / 2);
                                                 sumaActiv = (parseFloat(parseFloat(data[index].minuto[j]["captura"][0].tiempoA) + parseFloat(data[index].minuto[j]["ubicacion"][0].actividad)) / 2);
                                                 promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                                 sumaRangosTotal += sumaRang;
@@ -393,6 +393,7 @@ function onMostrarPantallas() {
                                             nuevoRangoRango = nuevoRangoRango + data[index].minuto[j]["ubicacion"][minutosU].rango;
                                         }
                                         if (data[index].minuto[j]["captura"][0].hora_ini < hora_inicioU) {
+                                            hora_inicial = data[index].minuto[j]["captura"][0].hora_ini;
                                             var horaInicioNow = data[index].minuto[j]["captura"][0].hora_ini;
                                             var horaFinNow = data[index].minuto[j]["captura"][0].hora_fin;
                                             var horaCompararNow = hora_inicioU;
@@ -405,6 +406,7 @@ function onMostrarPantallas() {
                                                 sumaActiv = parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad);
                                             }
                                         } else {
+                                            hora_inicial = hora_inicioU;
                                             var horaInicioNow = hora_inicioU;
                                             var horaFinNow = hora_finalU;
                                             var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
@@ -417,6 +419,8 @@ function onMostrarPantallas() {
                                                 sumaActiv = parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad);
                                             }
                                         }
+                                        if (hora_finalU > data[index].minuto[j]["captura"][0].hora_fin) hora_final = hora_finalU
+                                        else hora_final = data[index].minuto[j]["captura"][0].hora_fin
                                         promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
                                         sumaRangosTotal += sumaRang;
                                         sumaActividadTotal += sumaActiv;
