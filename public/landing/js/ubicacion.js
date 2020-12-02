@@ -399,8 +399,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = hora_inicioU;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = parseFloat((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2).toFixed();
-                                                console.log(sumaRang);
+                                                sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
                                                 sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
@@ -413,7 +412,7 @@ function onMostrarPantallas() {
                                             var horaCompararNow = data[index].minuto[j]["captura"][0].hora_ini;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                sumaRang = Math.round((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
+                                                sumaRang = parseInt((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
                                                 sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
