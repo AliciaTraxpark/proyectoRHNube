@@ -193,6 +193,7 @@
 {{-- FINALIZACION --}}
 {{-- CONTENIDO DE VISTA --}}
 <div class="row">
+    <a id="googleOculto"></a>
     <div class="col-md-12">
         <div class="row pt-4">
             <div class="col-xl-5">
