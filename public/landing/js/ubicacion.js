@@ -148,11 +148,11 @@ function onMostrarPantallas() {
                 var promedioDiaria = 0;
                 var actividadDiaria = `<div class="row justify-content-center p-3"><div class="col-xl-4 text-center"><span style="font-weight: bold;color:#163552;cursor:default;font-size:14px;"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="20"/>Actividad Diaria | <span id="totalActivi"></span> - <span id="totalH"></span></span></div></div>`;
                 container.append(actividadDiaria);
+                var ultimoRecorrido = "";
                 for (let index = 0; index < data.length; index++) {
                     $("#promHoras" + $i).empty();
                     var horaDelGrupo = data[index].hora;
                     var hora = data[index].hora;
-                    var fecha = data[index].fecha;
                     var promedios = 0;
                     var promedio = 0;
                     var sumaRangosTotal = 0;
@@ -177,7 +177,7 @@ function onMostrarPantallas() {
                         // TODO: Obtener datos del array minutos de dicha hora
                         if (data[index].minuto[j] != undefined) {
                             var capturas = "";
-                            var arrayHoras = [];
+                            var imagenUbicacion = "";
                             // ? RECORREMOS EL ARRAY DE CAPTURAS
                             for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
                                 var verDetalle = ``;
@@ -230,6 +230,8 @@ function onMostrarPantallas() {
                                         if (moment(nuevaHoraFinUbicacion, "hh:mm:ss") < horaFinUbicacionFormat) nuevaHoraFinUbicacion = horaFinUbicacionFormat;
                                         nuevaActividadUbicacion = nuevaActividadUbicacion + data[index].minuto[j]["ubicacion"][minutosU].actividad;
                                         nuevoRangoUbicacion = nuevoRangoUbicacion + data[index].minuto[j]["ubicacion"][minutosU].rango;
+                                        var ubicaciones = data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"].length;
+                                        ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                     }
                                     for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
                                         var horaInicioCapturaFormat = moment(data[index].minuto[j]["captura"][indexMinutos].hora_ini, "hh:mm:ss");
@@ -292,6 +294,8 @@ function onMostrarPantallas() {
                                     sumaActividadTotal += data[index].minuto[j]["captura"][0].tiempoA; //* obtener suma de las actividades
                                 } else {
                                     if (data[index].minuto[j]["ubicacion"].length == 1) {
+                                        var ubicaciones = data[index].minuto[j]["ubicacion"][0]["ubicaciones"].length;
+                                        ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                         if (data[index].minuto[j]["ubicacion"][0].hora_ini < data[index].minuto[j]["captura"][0].hora_ini) {
                                             hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var horaInicioNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
@@ -359,6 +363,8 @@ function onMostrarPantallas() {
                                             if (hora_finalU < data[index].minuto[j]["ubicacion"][minutosU]) hora_finalU = data[index].minuto[j]["ubicacion"][minutosU].hora_fin;
                                             nuevaActividadRango = nuevaActividadRango + data[index].minuto[j]["ubicacion"][minutosU].actividad;
                                             nuevoRangoRango = nuevoRangoRango + data[index].minuto[j]["ubicacion"][minutosU].rango;
+                                            var ubicaciones = data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"].length;
+                                            ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                         }
                                         if (data[index].minuto[j]["captura"][0].hora_ini < hora_inicioU) {
                                             hora_inicial = data[index].minuto[j]["captura"][0].hora_ini;
@@ -415,6 +421,11 @@ function onMostrarPantallas() {
                             }
                             if (data[index].minuto[j]["captura"].length == 0) {
                                 if (data[index].minuto[j]["ubicacion"].length != 0) {
+                                    if (ultimoRecorrido != '') {
+                                        var floatlatitud = parseFloat(ultimoRecorrido.split(",")[0]);
+                                        var floatlongitud = parseFloat(ultimoRecorrido.split(",")[1]);
+                                        console.log(floatlatitud);
+                                    }
                                     if (data[index].minuto[j]["ubicacion"].length == 1) {
                                         sumaRang = parseFloat(data[index].minuto[j]["ubicacion"][0].rango);
                                         sumaActiv = parseFloat(data[index].minuto[j]["ubicacion"][0].actividad);
@@ -423,6 +434,21 @@ function onMostrarPantallas() {
                                         sumaActividadTotal += sumaActiv;
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
+                                        //* COMPARAR LATITUDES Y LONGITUDES FINALES
+                                        var ubicaciones = data[index].minuto[j]["ubicacion"][0]["ubicaciones"].length;
+                                        if (ultimoRecorrido != '') {
+                                            if (floatlatitud == data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini &&
+                                                floatlongitud == data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini) {
+                                                imagenUbicacion = `<img src="landing/images/ubicacion.gif" height="120" width="150" class="img-responsive">`;
+                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            } else {
+                                                imagenUbicacion = `<img src="landing/images/loader.gif" height="120" width="200" class="img-responsive">`;
+                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            }
+                                        } else {
+                                            imagenUbicacion = `<img src="landing/images/loader.gif" height="120" width="200" class="img-responsive">`;
+                                            ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                        }
                                     } else {
                                         for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
                                             promedios = promedios + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
@@ -430,6 +456,21 @@ function onMostrarPantallas() {
                                             sumaActividad = sumaActividad + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                             hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             hora_final = data[index].minuto[j]["ubicacion"][data[index].minuto[j]["ubicacion"].length - 1].hora_fin;
+                                        }
+                                        var lengthUbicacion = data[index].minuto[j]["ubicacion"].length;
+                                        var ubicaciones = data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"].length;
+                                        if (ultimoRecorrido != '') {
+                                            if (floatlatitud == data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini &&
+                                                floatlongitud == data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini) {
+                                                imagenUbicacion = `<img src="landing/images/ubicacion.gif" height="120" width="150" class="img-responsive">`;
+                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            } else {
+                                                imagenUbicacion = `<img src="landing/images/loader.gif" height="120" width="200" class="img-responsive">`;
+                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            }
+                                        } else {
+                                            imagenUbicacion = `<img src="landing/images/loader.gif" height="120" width="200" class="img-responsive">`;
+                                            ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                         }
                                         sumaRangosTotal += sumaRangos;
                                         sumaActividadTotal += sumaActividad;
@@ -560,7 +601,7 @@ function onMostrarPantallas() {
                                                             <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
                                                                 <div class = "carousel-inner">
                                                                     <div class = "carousel-item active">
-                                                                        <img src="landing/images/loader.gif" height="120" width="200" class="img-responsive">
+                                                                            ${imagenUbicacion}
                                                                             <div class="overlay">
                                                                                 <a class="info" onclick="recorrido('${hora + "," + j}')" style="color:#fdfdfd">
                                                                                     <i class="fa fa-map-marker"></i> Recorrido</a>
