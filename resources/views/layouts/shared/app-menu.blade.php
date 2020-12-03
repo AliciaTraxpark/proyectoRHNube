@@ -143,7 +143,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
         <a href="javascript: void(0);">
             <i data-feather="map-pin"></i>
-            <span>Modo: Control en ruta</span>
+            <span>Modo: Control en Ruta</span>
             <span class="menu-arrow"></span>
         </a>
 
