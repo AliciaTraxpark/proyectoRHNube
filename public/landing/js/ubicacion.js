@@ -478,7 +478,7 @@ function onMostrarPantallas() {
                                                                                 <img src="mostrarMiniatura/${base64}" height="120" width="200" class="img-responsive">
                                                                                 <div class="overlay">
                                                                                     <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
-                                                                                        <i class="fa fa-eye"></i>Colección
+                                                                                        <i class="fa fa-eye"></i> Colección
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -556,8 +556,27 @@ function onMostrarPantallas() {
                                                             </div>
                                                         </div>
                                                         <br>
-                                                        <div class="col-md-12 col-sm-12" style="padding-left: 0px;padding-right: 0px">
-                                                            <div id="mapid${hora + "," + j}" onchange="javascript:ubicacionesMapa('${hora + "," + j}')" class="mapid"></div>
+                                                        <div class="hovereffect">
+                                                            <div  id="myCarousel${hora + j}" class = "carousel carousel-fade" data-ride = "carousel">
+                                                                <div class = "carousel-inner">
+                                                                    <div class = "carousel-item active">
+                                                                        <img src="landing/images/loader.gif" height="120" width="200" class="img-responsive">
+                                                                            <div class="overlay">
+                                                                                <a class="info" onclick="recorrido('${hora + "," + j}')" style="color:#fdfdfd">
+                                                                                    <i class="fa fa-map-marker"></i> Recorrido</a>
+                                                                                </a>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                                <a class = "carousel-control-prev" href = "#myCarousel${hora + j}" role = "button" data-slide = "prev">
+                                                                    <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
+                                                                    <span class = "sr-only">Previous</span>
+                                                                </a>
+                                                                <a class = "carousel-control-next" href = "#myCarousel${hora + j}" role = "button" data-slide = "next">
+                                                                    <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
+                                                                    <span class = "sr-only">Next</span>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                         &nbsp;
                                                         <label style="font-size: 12px" for="">${data[index].minuto[j]["ubicacion"][0].hora_ini} - ${data[index].minuto[j]["ubicacion"][0].hora_fin}</label>
