@@ -927,91 +927,85 @@ class controlRutaController extends Controller
                                                 if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
                                                     $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];
                                                     $arrayMinutoUbicacion = $horaUbicacion[$hora]["minuto"][$m];
-                                                    //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
-                                                    for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
-                                                        $valorIngreso = true;
-                                                        //* RECORREMOS ARRAY DE MINUTOS EN UBICACIÓN
-                                                        for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
-                                                            //* FORMATO DE MINUTOS CON CARBON
-                                                            $carbonCaptura = Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini)->isoFormat("HH:mm");
-                                                            $carbonUbicacion = Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini)->isoFormat("HH:mm");
-                                                            //* BUSCAR CON MINUTOS IGUALES
-                                                            if ($carbonCaptura == $carbonUbicacion) {
-                                                                $valorIngreso = false;
-                                                                $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
-                                                                $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
-                                                                $diffRango = $diffRango + $nuevoRango;
-                                                                $diffActividad = $diffActividad + $nuevaActividad;
-                                                            } else {
-                                                                if ($carbonCaptura < $carbonUbicacion) {
-                                                                    //* PARAMETROS PARA ENVIAR A FUNCION
-                                                                    $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
-                                                                    $horaFinRango = $arrayMinutoCaptura[$indexMinutosC]->hora_fin;
-                                                                    $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
-                                                                    //* **************************************************************
-                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                    //* ***************************************************************
-                                                                    if ($check) {
-                                                                        $valorIngreso = !$check;
-                                                                        $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
-                                                                        $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
-                                                                        $diffRango = $diffRango + $nuevoRango;
-                                                                        $diffActividad = $diffActividad + $nuevaActividad;
-                                                                    }
-                                                                } else {
-                                                                    //* PARAMETROS PARA ENVIAR A FUNCION
-                                                                    $horaInicioRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
-                                                                    $horaFinRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_fin;
-                                                                    $horaNowRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
-                                                                    //* ***************************************************************
-                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                    //* ****************************************************************
-                                                                    if ($check) {
-                                                                        $valorIngreso = !$check;
-                                                                        $nuevaActividad = (($arrayMinutoCaptura[$indexMinutosC]->actividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion) / 2);
-                                                                        $nuevoRango = (($arrayMinutoCaptura[$indexMinutosC]->tiempo_rango + $arrayMinutoUbicacion[$indexMinutosU]->rango) / 2);
-                                                                        $diffRango = $diffRango + $nuevoRango;
-                                                                        $diffActividad = $diffActividad + $nuevaActividad;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        if ($valorIngreso) {
-                                                            $diffRango = $diffRango + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
-                                                            $diffActividad = $diffActividad + $arrayMinutoCaptura[$indexMinutosC]->actividad;
-                                                        }
+                                                    //* DATOS NUEVOS EN UBICACION
+                                                    if (sizeof($arrayMinutoUbicacion) != 0) {
+                                                        $horaInicioUbicacion = "23:59:59";
+                                                        $horaFinUbicacion = "00:00:00";
+                                                        $actividadUbicacion = 0;
+                                                        $rangoUbicacion = 0;
+                                                    }
+                                                    //* DATOS NUEVOS EN CAPTURA
+                                                    if (sizeof($arrayMinutoCaptura) != 0) {
+                                                        $horaInicioCaptura = "23:59:59";
+                                                        $horaFinCaptura = "00:00:00";
+                                                        $actividadCaptura = 0;
+                                                        $rangoCaptura = 0;
                                                     }
                                                     //* RECORREMOS ARRAY DE MINUTOS EN UBICACION
                                                     for ($indexMinutosU = 0; $indexMinutosU < sizeof($arrayMinutoUbicacion); $indexMinutosU++) {
-                                                        $valorIngreso = true;
-                                                        //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
-                                                        for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
-                                                            //* FORMATO DE MINUTOS CON CARBON
-                                                            $carbonUbicacion = Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini)->isoFormat("HH:mm");
-                                                            $carbonCaptura = Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini)->isoFormat("HH:mm");
-                                                            //* BUSCAR MINUTOS IGUALES
-                                                            if ($carbonUbicacion == $carbonCaptura) {
-                                                                $valorIngreso = false;
+                                                        if (Carbon::parse($horaInicioUbicacion) > Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_ini))
+                                                            $horaInicioUbicacion = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
+                                                        if (Carbon::parse($horaFinUbicacion) < Carbon::parse($arrayMinutoUbicacion[$indexMinutosU]->hora_fin))
+                                                            $horaFinUbicacion = $arrayMinutoUbicacion[$indexMinutosU]->hora_fin;
+                                                        $actividadUbicacion = $actividadUbicacion + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                        $rangoUbicacion = $rangoUbicacion + $arrayMinutoUbicacion[$indexMinutosU]->rango;
+                                                    }
+                                                    //* RECORREMOS ARRAY DE MINUTOS EN CAPTURA
+                                                    for ($indexMinutosC = 0; $indexMinutosC < sizeof($arrayMinutoCaptura); $indexMinutosC++) {
+                                                        if (Carbon::parse($horaInicioCaptura) > Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_ini))
+                                                            $horaInicioCaptura = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
+                                                        if (Carbon::parse($horaFinCaptura) < Carbon::parse($arrayMinutoCaptura[$indexMinutosC]->hora_fin))
+                                                            $horaFinCaptura = $arrayMinutoCaptura[$indexMinutosC]->hora_fin;
+                                                        $actividadCaptura = $actividadCaptura + $arrayMinutoCaptura[$indexMinutosC]->actividad;
+                                                        $rangoCaptura = $rangoCaptura + $arrayMinutoCaptura[$indexMinutosC]->tiempo_rango;
+                                                    }
+                                                    if (sizeof($arrayMinutoCaptura) != 0 && sizeof($arrayMinutoUbicacion) != 0) {
+                                                        if (Carbon::parse($horaInicioCaptura) < Carbon::parse($horaInicioUbicacion)) {
+                                                            //* PARAMETROS PARA ENVIAR A FUNCION
+                                                            $horaInicioRango = $horaInicioCaptura;
+                                                            $horaFinRango = $horaFinCaptura;
+                                                            $horaNowRango = $horaInicioUbicacion;
+                                                            //* *********************************
+                                                            $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                            if ($check) {
+                                                                $nuevaActividad = ($actividadUbicacion + $actividadCaptura) / 2;
+                                                                $diffActividad = $diffActividad + $nuevaActividad;
+                                                                $nuevoRango = ($rangoUbicacion + $rangoCaptura) / 2;
+                                                                $diffRango = $diffRango + $nuevoRango;
                                                             } else {
-                                                                if ($carbonUbicacion < $carbonCaptura) {
-                                                                    //* PARAMETROS PARA ENVIAR A FUNCION
-                                                                    $horaInicioRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
-                                                                    $horaFinRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_fin;
-                                                                    $horaNowRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
-                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                    if ($check) $valorIngreso = !$check;
-                                                                } else {
-                                                                    $horaInicioRango = $arrayMinutoCaptura[$indexMinutosC]->hora_ini;
-                                                                    $horaFinRango = $arrayMinutoCaptura[$indexMinutosC]->hora_fin;
-                                                                    $horaNowRango = $arrayMinutoUbicacion[$indexMinutosU]->hora_ini;
-                                                                    $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                    if ($check) $valorIngreso = !$check;
-                                                                }
+                                                                $nuevaActividad = ($actividadUbicacion + $actividadCaptura);
+                                                                $diffActividad = $diffActividad + $nuevaActividad;
+                                                                $nuevoRango = ($rangoUbicacion + $rangoCaptura);
+                                                                $diffRango = $diffRango + $nuevoRango;
+                                                            }
+                                                        } else {
+                                                            //* PARAMETROS PARA ENVIAR A FUNCION
+                                                            $horaInicioRango = $horaInicioUbicacion;
+                                                            $horaFinRango = $horaFinUbicacion;
+                                                            $horaNowRango = $horaInicioCaptura;
+                                                            //* *********************************
+                                                            $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                            if ($check) {
+                                                                $nuevaActividad = ($actividadUbicacion + $actividadCaptura) / 2;
+                                                                $diffActividad = $diffActividad + $nuevaActividad;
+                                                                $nuevoRango = ($rangoUbicacion + $rangoCaptura) / 2;
+                                                                $diffRango = $diffRango + $nuevoRango;
+                                                            } else {
+                                                                $nuevaActividad = ($actividadUbicacion + $actividadCaptura);
+                                                                $diffActividad = $diffActividad + $nuevaActividad;
+                                                                $nuevoRango = ($rangoUbicacion + $rangoCaptura);
+                                                                $diffRango = $diffRango + $nuevoRango;
                                                             }
                                                         }
-                                                        if ($valorIngreso) {
-                                                            $diffRango = $diffRango + $arrayMinutoUbicacion[$indexMinutosU]->rango;
-                                                            $diffActividad = $diffActividad + $arrayMinutoUbicacion[$indexMinutosU]->actividad_ubicacion;
+                                                    } else {
+                                                        if (sizeof($arrayMinutoCaptura) != 0) {
+                                                            $diffActividad = $diffActividad + $actividadCaptura;
+                                                            $diffRango = $diffRango + $rangoCaptura;
+                                                        } else {
+                                                            if (sizeof($arrayMinutoUbicacion) != 0) {
+                                                                $diffActividad = $diffActividad + $actividadUbicacion;
+                                                                $diffRango = $diffRango + $rangoUbicacion;
+                                                            }
                                                         }
                                                     }
                                                 } else {

@@ -182,49 +182,7 @@ function onMostrarPantallas() {
                             for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
                                 var verDetalle = ``;
                                 if (data[index].minuto[j]["captura"].length > 1) {
-                                    if (data[index].minuto[j]["ubicacion"].length != 0) {
-                                        //: FORMAR ARRAY
-                                        for (let indexUbicacion = 0; indexUbicacion < data[index].minuto[j]["ubicacion"].length; indexUbicacion++) {
-                                            var minutoCaptura = moment(data[index].minuto[j]["captura"][indexMinutos].hora_ini, "hh:mm:ss").format("hh:mm");
-                                            var minutoUbicacion = moment(data[index].minuto[j]["ubicacion"][indexUbicacion].hora_ini, "hh:mm:ss").format("hh:mm");
-                                            if (minutoCaptura == minutoUbicacion) {
-                                                //* NUEVOS RANGOS Y ACTIVIDAD
-                                                var nuevaActividad = parseFloat((data[index].minuto[j]["captura"][indexMinutos].tiempoA + data[index].minuto[j]["ubicacion"][indexUbicacion].actividad) / 2);
-                                                var nuevoRango = parseFloat((data[index].minuto[j]["captura"][indexMinutos].rango + data[index].minuto[j]["ubicacion"][indexUbicacion].rango) / 2);
-                                                //* ***********************************************************************************************
-                                                //* NUEVA HORA DE INICIO
-                                                var nuevaHoraI = data[index].minuto[j]["captura"][indexMinutos].hora_ini;
-                                                if (data[index].minuto[j]["ubicacion"][indexUbicacion].hora_ini < data[index].minuto[j]["captura"][indexMinutos].hora_ini) {
-                                                    nuevaHoraI = data[index].minuto[j]["ubicacion"][indexUbicacion].hora_ini;
-                                                }
-                                                //* ********************************************************************************
-                                                //* NUEVA HORA DE FIN
-                                                var nuevaHoraF = data[index].minuto[j]["captura"][indexMinutos].hora_fin;
-                                                if (data[index].minuto[j]["ubicacion"][indexUbicacion].hora_fin < data[index].minuto[j]["captura"][indexMinutos].hora_fin) {
-                                                    nuevaHoraF = data[index].minuto[j]["ubicacion"][indexUbicacion].hora_fin;
-                                                }
-                                                arrayHoras.push(nuevaHoraI + "," + nuevaHoraF + "," + nuevaActividad + "," + nuevoRango);
-                                            }
-                                        }
-                                        //: ******************************************************
-                                        //: INSERTAR LOS TIEMPOS DE CAPTURA QUE NO SE ENCUENTRAN EN EL ARRAY
-                                        var minutoCaptura = moment(data[index].minuto[j]["captura"][indexMinutos].hora_ini, "hh:mm:ss").format("hh:mm");
-                                        var noEncontrado = true;
-                                        for (let indexA = 0; indexA < arrayHoras.length; indexA++) {
-                                            var horayMinutoComparar = moment(arrayHoras[indexA].split(",")[0], "hh:mm:ss").format("hh:mm");
-                                            if (minutoCaptura == horayMinutoComparar) {
-                                                noEncontrado = false;
-                                            }
-                                        }
-                                        if (noEncontrado) {
-                                            var nuevaActividad = data[index].minuto[j]["captura"][indexMinutos].tiempoA;
-                                            var nuevoRango = data[index].minuto[j]["captura"][indexMinutos].rango;
-                                            var nuevaHoraI = data[index].minuto[j]["captura"][indexMinutos].hora_ini;
-                                            var nuevaHoraF = data[index].minuto[j]["captura"][indexMinutos].hora_fin;
-                                            arrayHoras.push(nuevaHoraI + "," + nuevaHoraF + "," + nuevaActividad + "," + nuevoRango);
-                                        }
-                                        //: *****************************************************
-                                    } else {
+                                    if (data[index].minuto[j]["ubicacion"].length == 0) {
                                         promedios = promedios + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de promedios de grupos de imagenes
                                         sumaRangos = sumaRangos + data[index].minuto[j]["captura"][indexMinutos].rango; //* suma de rangos de grupos de imagenes
                                         sumaActividad = sumaActividad + data[index].minuto[j]["captura"][indexMinutos].tiempoA; //* suma de actividad de grupos de imagenes
@@ -253,65 +211,75 @@ function onMostrarPantallas() {
                             }
                             if (data[index].minuto[j]["captura"].length > 1) {
                                 if (data[index].minuto[j]["ubicacion"].length != 0) {
-                                    var arrayMomentaneo = [];
+                                    //* NUEVA DATA DE UBICACIONES
+                                    var nuevaHoraInicioUbicacion = "23:00:00";
+                                    var nuevaHoraFinUbicacion = "00:00:00";
+                                    var nuevaActividadUbicacion = 0;
+                                    var nuevoRangoUbicacion = 0;
+                                    //* **************************
+                                    //* NUEVA DATA DE CAPTURAS
+                                    var nuevaHoraInicioCaptura = "23:00:00";
+                                    var nuevaHoraFinCaptura = "00:00:00";
+                                    var nuevaActividadCaptura = 0;
+                                    var nuevoRangoCaptura = 0;
+                                    //* **************************
                                     for (let minutosU = 0; minutosU < data[index].minuto[j]["ubicacion"].length; minutosU++) {
-                                        var minutoUbicacion = moment(data[index].minuto[j]["ubicacion"][minutosU].hora_ini, "hh:mm:ss").format("hh:mm");
-                                        var valorNoEncontrado = true;
-                                        for (let indexArray = 0; indexArray < arrayHoras.length; indexArray++) {
-                                            var minutoArray = moment(arrayHoras[indexArray].split(",")[0], "hh:mm:ss").format("hh:mm");
-                                            if (minutoUbicacion == minutoArray) {
-                                                valorNoEncontrado = false;
-                                            }
+                                        var horaInicioUbicacionFormat = moment(data[index].minuto[j]["ubicacion"][minutosU].hora_ini, "hh:mm:ss");
+                                        var horaFinUbicacionFormat = moment(data[index].minuto[j]["ubicacion"][minutosU].hora_fin, "hh:mm:ss");
+                                        if (moment(nuevaHoraInicioUbicacion, "hh:mm:ss") > horaInicioUbicacionFormat) nuevaHoraInicioUbicacion = horaInicioUbicacionFormat;
+                                        if (moment(nuevaHoraFinUbicacion, "hh:mm:ss") < horaFinUbicacionFormat) nuevaHoraFinUbicacion = horaFinUbicacionFormat;
+                                        nuevaActividadUbicacion = nuevaActividadUbicacion + data[index].minuto[j]["ubicacion"][minutosU].actividad;
+                                        nuevoRangoUbicacion = nuevoRangoUbicacion + data[index].minuto[j]["ubicacion"][minutosU].rango;
+                                    }
+                                    for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
+                                        var horaInicioCapturaFormat = moment(data[index].minuto[j]["captura"][indexMinutos].hora_ini, "hh:mm:ss");
+                                        var horaFinCapturaFormat = moment(data[index].minuto[j]["captura"][indexMinutos].hora_fin, "hh:mm:ss");
+                                        if (moment(nuevaHoraInicioCaptura, "hh:mm:ss") > horaInicioCapturaFormat) nuevaHoraInicioCaptura = horaInicioCapturaFormat;
+                                        if (moment(nuevaHoraFinCaptura, "hh:mm:ss") < horaFinCapturaFormat) nuevaHoraFinCaptura = horaFinCapturaFormat;
+                                        nuevaActividadCaptura = nuevaActividadCaptura + data[index].minuto[j]["captura"][indexMinutos].tiempoA;
+                                        nuevoRangoCaptura = nuevoRangoCaptura + data[index].minuto[j]["captura"][indexMinutos].rango;
+                                    }
+                                    if (nuevaHoraInicioCaptura < nuevaHoraInicioUbicacion) {
+                                        var horaInicioNow = nuevaHoraInicioCaptura;
+                                        var horaFinNow = nuevaHoraFinCaptura;
+                                        var horaCompararNow = nuevaHoraInicioUbicacion;
+                                        var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                        if (resp) {
+                                            sumaRang = parseFloat((parseFloat(nuevoRangoCaptura) + parseFloat(nuevoRangoUbicacion)) / 2);
+                                            sumaActiv = parseFloat((parseFloat(nuevaActividadCaptura) + parseFloat(nuevaActividadUbicacion)) / 2);
+                                        } else {
+                                            sumaRang = parseFloat(nuevoRangoCaptura) + parseFloat(nuevoRangoUbicacion);
+                                            sumaActiv = parseFloat(nuevaActividadCaptura) + parseFloat(nuevaActividadUbicacion);
                                         }
-                                        if (valorNoEncontrado) {
-                                            var nuevaActividad = data[index].minuto[j]["ubicacion"][minutosU].actividad;
-                                            var nuevoRango = data[index].minuto[j]["ubicacion"][minutosU].rango;
-                                            var nuevaHoraI = data[index].minuto[j]["ubicacion"][minutosU].hora_ini;
-                                            var nuevaHoraF = data[index].minuto[j]["ubicacion"][minutosU].hora_fin;
-                                            arrayMomentaneo.push(nuevaHoraI + "," + nuevaHoraF + "," + nuevaActividad + "," + nuevoRango);
+                                    } else {
+                                        var horaInicioNow = nuevaHoraInicioUbicacion;
+                                        var horaFinNow = nuevaHoraFinUbicacion;
+                                        var horaCompararNow = nuevaHoraInicioCaptura;
+                                        var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
+                                        if (resp) {
+                                            sumaRang = parseFloat((parseFloat(nuevoRangoCaptura) + parseFloat(nuevoRangoUbicacion)) / 2);
+                                            sumaActiv = parseFloat((parseFloat(nuevaActividadCaptura) + parseFloat(nuevaActividadUbicacion)) / 2);
+                                            totalCM = totalR;
+                                        } else {
+                                            sumaRang = parseFloat(nuevoRangoCaptura) + parseFloat(nuevoRangoUbicacion);
+                                            sumaActiv = parseFloat(nuevaActividadCaptura) + parseFloat(nuevaActividadUbicacion);
                                         }
                                     }
-                                    arrayHoras = arrayHoras.concat(arrayMomentaneo);
+                                    sumaRangos += sumaRang;
+                                    sumaActividad += sumaActiv;
+                                    promedios += sumaActiv;
+                                    if (moment(nuevaHoraInicioCaptura, "hh:mm:ss") < moment(nuevaHoraInicioUbicacion, "hh:mm:ss")) {
+                                        hora_inicial = moment(nuevaHoraFinCaptura, "hh:mm:ss").format("hh:mm:ss");
+                                    } else {
+                                        hora_inicial = moment(nuevaHoraInicioUbicacion, "hh:mm:ss").format("hh:mm:ss");
+                                    }
+                                    if (moment(nuevaHoraFinCaptura, "hh:mm:ss") > moment(nuevaHoraFinUbicacion, "hh:mm:ss")) {
+                                        hora_final = moment(nuevaHoraFinCaptura, "hh:mm:ss").format("hh:mm:ss");
+                                    } else {
+                                        hora_final = moment(nuevaHoraFinUbicacion, "hh:mm:ss").format("hh:mm:ss");
+                                    }
                                     var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                 }
-                            }
-                            if (arrayHoras.length != 0) {
-                                var copiaArray = arrayHoras;
-                                var nuevaHoraInicioRango = "23:00:00";
-                                var nuevaHoraFinalRango = "00:00:00";
-                                var nuevaActividadRango = 0;
-                                var nuevoRangoRango = 0;
-                                for (let element = 0; element < arrayHoras.length; element++) {
-                                    var respuestaChecheck;
-                                    for (let value = 0; value < copiaArray.length; value++) {
-                                        if (arrayHoras[element].split(",")[0] != copiaArray[value].split(",")[0]) {
-                                            if (arrayHoras[element].split(",")[0] < copiaArray[value].split(",")[0]) {
-                                                respuestaChecheck = checkHora(arrayHoras[element].split(",")[0], arrayHoras[element].split(",")[1], copiaArray[value].split(",")[0]);
-                                            }
-                                        }
-                                    }
-                                    if (!respuestaChecheck) {
-                                        if (nuevaHoraInicioRango > arrayHoras[element].split(",")[0]) nuevaHoraInicioRango = arrayHoras[element].split(",")[0];
-                                        if (nuevaHoraFinalRango < arrayHoras[element].split(",")[1]) nuevaHoraFinalRango = arrayHoras[element].split(",")[1];
-                                        nuevaActividadRango = nuevaActividadRango + parseFloat(arrayHoras[element].split(",")[2]);
-                                        nuevoRangoRango = nuevoRangoRango + parseFloat(arrayHoras[element].split(",")[3]);
-                                    } else {
-                                        if (nuevoRangoRango != 0) {
-                                            var mediaPonderadoActividad = parseFloat((nuevaActividadRango + parseFloat(arrayHoras[element].split(",")[2])) / 2);
-                                            var mediaPonderadoRango = parseFloat((nuevoRangoRango + parseFloat(arrayHoras[element].split(",")[3])) / 2);
-                                            nuevaActividadRango = nuevaActividadRango + mediaPonderadoActividad;
-                                            nuevoRangoRango = nuevoRangoRango + mediaPonderadoRango;
-                                            if (nuevaHoraInicioRango > arrayHoras[element].split(",")[0]) nuevaHoraInicioRango = arrayHoras[element].split(",")[0];
-                                            if (nuevaHoraFinalRango < arrayHoras[element].split(",")[1]) nuevaHoraFinalRango = arrayHoras[element].split(",")[1];
-                                        }
-                                    }
-                                }
-                                hora_inicial = nuevaHoraInicioRango;
-                                hora_final = nuevaHoraFinalRango;
-                                promedios = promedios + nuevaActividadRango;
-                                sumaRangos = sumaRangos + nuevoRangoRango;
-                                sumaActividad = sumaActividad + nuevaActividadRango;
-
                             }
                             if (data[index].minuto[j]["captura"].length == 1) { //* Solo encontramos una captura en el grupo de minutos
                                 if (data[index].minuto[j]["ubicacion"].length == 0) {
@@ -399,7 +367,6 @@ function onMostrarPantallas() {
                                             var horaCompararNow = hora_inicioU;
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
-                                                console.log(nuevaActividadRango, data[index].minuto[j]["captura"][0].actividad);
                                                 sumaRang = parseFloat((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
                                                 sumaActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
@@ -414,7 +381,7 @@ function onMostrarPantallas() {
                                             var resp = checkHora(horaInicioNow, horaFinNow, horaCompararNow);
                                             if (resp) {
                                                 sumaRang = parseFloat((parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango)) / 2);
-                                                sumActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
+                                                sumaActiv = parseFloat((parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad)) / 2);
                                             } else {
                                                 sumaRang = parseFloat(nuevoRangoRango) + parseFloat(data[index].minuto[j]["captura"][0].rango);
                                                 sumaActiv = parseFloat(nuevaActividadRango) + parseFloat(data[index].minuto[j]["captura"][0].actividad);
@@ -423,7 +390,6 @@ function onMostrarPantallas() {
                                         if (hora_finalU > data[index].minuto[j]["captura"][0].hora_fin) hora_final = hora_finalU;
                                         else hora_final = data[index].minuto[j]["captura"][0].hora_fin;
                                         promedio = ((sumaActiv / sumaRang) * 100).toFixed(2);
-                                        console.log(sumaActiv, sumaRang, promedio);
                                         sumaRangosTotal += sumaRang;
                                         sumaActividadTotal += sumaActiv;
                                         var totalR = enteroTime(sumaRang);
@@ -436,6 +402,7 @@ function onMostrarPantallas() {
                                     sumaRangosTotal += sumaRangos;
                                     sumaActividadTotal += sumaActividad;
                                     var totalR = enteroTime(sumaRangos);
+                                    console.log();
                                     totalCM = totalR;
                                     promedio = ((promedios / sumaRangos) * 100).toFixed(2);
                                     if (promedios == 0) {
