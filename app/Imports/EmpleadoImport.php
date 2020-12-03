@@ -295,7 +295,7 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     } else{
                         $row['tipo_contratoArray']=$row['tipo_contrato'];
                     }
-                 } else{ $row['tipo_contratoArray']=null; }
+                 } else{  return redirect()->back()->with('alert', 'Debe especificar tipo de contrato'.' El proceso se interrumpio en la fila: '.$filas.' de excel'); }
 
                 //local
                 $local = local::where("local_descripcion", "like", "%".$row['local']."%")->where('organi_id', '=', session('sesionidorg'))->first();
@@ -362,12 +362,20 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
 
                  }
 
+                 //fechaIContrato
+
+                 if($row['inicio_contrato']!=null ||$row['inicio_contrato']!=''){
+                    $fechaInicioC=date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
+                 } else{
+                    return redirect()->back()->with('alert', 'Debe especificar inicio de contrato'.' El proceso se interrumpio en la fila: '.$filas.' de excel');
+
+                 }
                /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
                  //////////MANDA DATOS A VISTA
                  $din=[$row['tipo_docArray'],$row['numero_documento'],$row['nombres'],$row['apellido_paterno'],$row['apellido_materno'],$row['correo'],$row['celular'],
                  $row['genero'],$fechaNacimieB, $row['name_depNArray'],$row['provNArray'],
                  $row['distNArray'], $row['direccion'],$row['name_depArray'], $row['provArray'],$row['distArray'],$row['tipo_contratoArray'],$row['localArray'],$row['nivelArray'],
-                  $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'], $row['condicionArray'],$row['monto_pago']];
+                  $row['cargoArray'],$row['areaArray'],$row['centro_costoArray'], $row['condicionArray'],$row['monto_pago'], $fechaInicioC];
                   array_push($this->dnias,$din);
 
 

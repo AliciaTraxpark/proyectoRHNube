@@ -204,6 +204,7 @@
                                         <th>Provincia</th>
                                         <th>Distrito</th>
                                         <th>Contrato</th>
+                                        <th>Inicio contrato</th>
                                         <th>Local</th>
                                         <th>Nivel</th>
                                         <th>Cargo</th>
@@ -235,6 +236,7 @@
                                         <td>{{$item[14]}}</td>
                                         <td>{{$item[15]}}</td>
                                         <td>{{$item[16]}}</td>
+                                        <td>{{$item[24]}}</td>
                                         <td>{{$item[17]}}</td>
                                         <td>{{$item[18]}}</td>
                                         <td>{{$item[19]}}</td>
