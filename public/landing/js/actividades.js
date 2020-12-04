@@ -393,46 +393,46 @@ $("#empleAsignar").select2({
     tags: "true"
 });
 
-//: Funcion para mostrar empleados por áreas
-$("#areaAsignar").on("change", function () {
-    var empleados = EmpleadosDeActividad;
-    var areas = $("#areaAsignar").val();
-    $("#empleAsignar").empty();
-    var container = $("#empleAsignar");
-    $.ajax({
-        async: false,
-        url: "/empleadoConAreas",
-        method: "POST",
-        data: {
-            empleados: empleados,
-            areas: areas
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = "";
-            data.forEach(element => {
-                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
-            });
-            container.append(option);
-            $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
-            if ($('#checkboxEmpleados').is(':checked')) {
-                $("#empleAsignar > option").prop("selected", "selected");
-                $("#empleAsignar").trigger("change");
-            }
-        },
-        error: function () { },
-    });
-});
+// //: Funcion para mostrar empleados por áreas
+// $("#areaAsignar").on("change", function () {
+//     var empleados = EmpleadosDeActividad;
+//     var areas = $("#areaAsignar").val();
+//     $("#empleAsignar").empty();
+//     var container = $("#empleAsignar");
+//     $.ajax({
+//         async: false,
+//         url: "/empleadoConAreas",
+//         method: "POST",
+//         data: {
+//             empleados: empleados,
+//             areas: areas
+//         },
+//         headers: {
+//             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//         },
+//         statusCode: {
+//             401: function () {
+//                 location.reload();
+//             },
+//             /*419: function () {
+//                 location.reload();
+//             }*/
+//         },
+//         success: function (data) {
+//             var option = "";
+//             data.forEach(element => {
+//                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+//             });
+//             container.append(option);
+//             $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
+//             if ($('#checkboxEmpleados').is(':checked')) {
+//                 $("#empleAsignar > option").prop("selected", "selected");
+//                 $("#empleAsignar").trigger("change");
+//             }
+//         },
+//         error: function () { },
+//     });
+// });
 
 function asignarActividadEmpleado() {
     var empleados = $("#empleAsignar").val();
@@ -1498,6 +1498,8 @@ $("#actividadesAsignar").on("change", function () {
         error: function () { },
     });
 });
+var EmpleadosAsig;
+var AreaAsig;
 //: OBTENER DATOS DE ACTIVIDAD SELECCIONADA
 function datosAsignacionPorEmpleado_Asignacion(id) {
     $("#empleAsignar").empty();
@@ -1542,6 +1544,7 @@ function datosAsignacionPorEmpleado_Asignacion(id) {
             if (data[0].noSelect.length === 0) {
                 $('#checkboxEmpleados').prop("checked", true);
             }
+            EmpleadosAsig = $("#empleAsignar").val();
         },
         error: function () { },
     });
@@ -1590,6 +1593,7 @@ function datosAsignacionPorArea_Asignacion(id) {
             if (data[0].noSelect.length === 0) {
                 $('#checkboxAreas').prop("checked", true);
             }
+            AreaAsig = $('#areaAsignar').val();
         },
         error: function () { },
     });
@@ -1616,4 +1620,22 @@ function limpiarAsignacion() {
     $('#a_customAE').prop("disabled", true);
     $('#a_customAA').prop("disabled", true);
 }
+// TODO LOS EMPLEADOS EN ASIGNAR
+$('#checkboxEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#empleAsignar > option").prop("selected", "selected");
+        $('#empleAsignar').trigger("change");
+    } else {
+        $('#empleAsignar').val(EmpleadosAsig).trigger('change');
+    }
+});
+// TODO LAS AREAS EN ASIGNAR
+$('#checkboxAreas').click(function () {
+    if ($(this).is(':checked')) {
+        $("#areaAsignar > option").prop("selected", "selected");
+        $('#areaAsignar').trigger("change");
+    } else {
+        $('#areaAsignar').val(AreaAsig).trigger('change');
+    }
+});
 //* ************************ FINALIZACION ****************************** *//
