@@ -39,229 +39,6 @@ function tablaActividades() {
         }
     });
 }
-//: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
-$('#e_customCR').on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $('.rowEmpleadosEditar').show();
-        estadoAsignaciones();
-    } else {
-        if ($('#e_customCRT').is(":checked")) {
-            $('.rowEmpleadosEditar').show();
-            estadoAsignaciones();
-        } else {
-            $('.rowEmpleadosEditar').hide();
-            limpiarAsignacionPorEmpleado();
-            limpiarAsignacionPorArea();
-        }
-    }
-});
-//: ***********************************************
-//: FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
-$('#e_customCRT').on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        $('.rowEmpleadosEditar').show();
-        estadoAsignaciones();
-    } else {
-        if ($('#e_customCR').is(":checked")) {
-            $('.rowEmpleadosEditar').show();
-            estadoAsignaciones();
-        } else {
-            $('.rowEmpleadosEditar').hide();
-            limpiarAsignacionPorEmpleado();
-            limpiarAsignacionPorArea();
-        }
-    }
-});
-//: ***********************************************
-//: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
-$('#e_customAP').on("change.bootstrapSwitch", function (event) {
-    if (event.target.checked == true) {
-        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
-            $('.rowEmpleadosEditar').show();
-            estadoAsignaciones();
-        } else {
-            $('.rowEmpleadosEditar').hide();
-            limpiarAsignacionPorEmpleado();
-            limpiarAsignacionPorArea();
-        }
-    } else {
-        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
-            $('.rowEmpleadosEditar').show();
-            estadoAsignaciones();
-        } else {
-            $('.rowEmpleadosEditar').hide();
-            limpiarAsignacionPorEmpleado();
-            limpiarAsignacionPorArea();
-        }
-    }
-});
-//: ***********************************************
-var EmpleadosDeActividadEditar;
-var ActividadDeActividadEditar;
-function editarActividad(id) {
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/editarA",
-        data: {
-            idA: id
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            $('#idActiv').val(data.Activi_id);
-            $('#e_nombreTarea').val(data.Activi_Nombre);
-            $('#e_codigoTarea').val(data.codigoActividad);
-            if (data.codigoActividad === null) {
-                $('#e_codigoTarea').attr("disabled", false);
-            } else {
-                $('#e_codigoTarea').attr("disabled", true);
-            }
-            if (data.controlRemoto === 1) {
-                $('#e_customCR').prop("checked", true);
-            } else {
-                $('#e_customCR').prop("checked", false);
-            }
-            if (data.controlRuta === 1) {
-                $('#e_customCRT').prop("checked", true);
-            } else {
-                $('#e_customCRT').prop("checked", false);
-            }
-            if (data.asistenciaPuerta === 1) {
-                $('#e_customAP').prop("checked", true);
-            } else {
-                $('#e_customAP').prop("checked", false);
-            }
-            if (data.controlRemoto === 1 || data.controlRuta === 1) {
-                $('.rowEmpleadosEditar').show();
-            } else {
-                $('.rowEmpleadosEditar').hide();
-            }
-            if (data.porEmpleados === 1) {
-                $('#e_customAE').prop("checked", true);
-                $('#porEmpleados').show();
-                $('.todosCol').show();
-                datosAsignacionPorEmpleado();
-                EmpleadosDeActividadEditar = $('#empleados').val();
-            } else {
-                $('#e_customAE').prop("checked", false);
-                $('#porEmpleados').hide();
-                $('.todosCol').hide();
-            }
-            if (data.porAreas === 1) {
-                $('#e_customAA').prop("checked", true);
-                $('.colAreas').show();
-                datosAsignacionPorArea();
-                ActividadDeActividadEditar = $('#areaAsignarEditar').val();
-            } else {
-                $('#e_customAA').prop("checked", false);
-                $('.colAreas').hide();
-            }
-        },
-        error: function () { },
-    });
-    $('#editactividadTarea').modal();
-}
-function editarActividadTarea() {
-    var codigo = $("#e_codigoTarea").val();
-    var idA = $('#idActiv').val();
-    var empleados = $('#empleados').val();
-    var areas = $('#areaAsignarEditar').val();
-    var globalEmpleado;
-    var asignacionEmpleado;
-    var asignacionArea;
-    var globalArea;
-    //* CONTROL REMOTO
-    if ($('#e_customCR').is(":checked") == true) {
-        var controlRemoto = 1;
-    } else {
-        var controlRemoto = 0;
-    }
-    //* ASISTENCIA EN PUERTA
-    if ($('#e_customAP').is(":checked") == true) {
-        var asistenciaPuerta = 1;
-    } else {
-        var asistenciaPuerta = 0;
-    }
-    //* CONTROL EN RUTA
-    if ($('#e_customCRT').is(":checked") == true) {
-        var controlRuta = 1;
-    } else {
-        var controlRuta = 0;
-    }
-    //* ASIGNACION DE EMPLEADOS GLOBAL
-    if ($('#checkboxEmpleadosEditarTodos').is(":checked") == true) {
-        globalEmpleado = 1;
-    } else {
-        globalEmpleado = 0;
-    }
-    //* ASIGNACION DE EMPLEADOS
-    if ($('#e_customAE').is(":checked")) {
-        asignacionEmpleado = 1;
-    } else {
-        asignacionEmpleado = 0;
-    }
-    //* ASIGNACION  DE AREAS
-    if ($('#e_customAA').is(":checked")) {
-        asignacionArea = 1;
-    } else {
-        asignacionArea = 0;
-    }
-    //* ASIGNACION DE AREAS GLOBAL
-    if ($('#checkboxAreasEditarTodos').is(":checked")) {
-        globalArea = 1;
-    } else {
-        globalArea = 0;
-    }
-    $.ajax({
-        type: "GET",
-        url: "/registrarEditar",
-        data: {
-            idA: idA,
-            cr: controlRemoto,
-            ap: asistenciaPuerta,
-            crt: controlRuta,
-            codigo: codigo,
-            empleados: empleados,
-            globalEmpleado: globalEmpleado,
-            asignacionEmpleado: asignacionEmpleado,
-            areas: areas,
-            asignacionArea: asignacionArea,
-            globalArea: globalArea
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            limpiarModo();
-            actividadesOrganizacion();
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nActividad modificada.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-            $('#editactividadTarea').modal("toggle");
-        },
-        error: function () { },
-    });
-}
 function eliminarActividad(id) {
     alertify
         .confirm("¿Desea eliminar actividad?", function (
@@ -830,10 +607,6 @@ function empleadoLista(id) {
         error: function () { },
     });
 }
-$("#empleados").select2({
-    placeholder: 'Seleccionar Empleados',
-    tags: "true"
-});
 // *****************************************
 //* SELECT DE AREAS EN FORMULARIO EDITAR
 //: FUNCION PARA OBTENER AREAS EN FORMULARIO EDITAR
@@ -1165,6 +938,235 @@ $('#checkboxEmpleados').click(function () {
     }
 });
 //* ************************** FORMULARIO EDITAR ********************** *//
+//: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
+$('#e_customCR').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleadosEditar').show();
+        estadoAsignaciones();
+    } else {
+        if ($('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    }
+});
+//: ***********************************************
+//: FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
+$('#e_customCRT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleadosEditar').show();
+        estadoAsignaciones();
+    } else {
+        if ($('#e_customCR').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    }
+});
+//: ***********************************************
+//: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
+$('#e_customAP').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    } else {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    }
+});
+//: ***********************************************
+var EmpleadosDeActividadEditar;
+var ActividadDeActividadEditar;
+function editarActividad(id) {
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/editarA",
+        data: {
+            idA: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#idActiv').val(data.Activi_id);
+            $('#e_nombreTarea').val(data.Activi_Nombre);
+            $('#e_codigoTarea').val(data.codigoActividad);
+            if (data.codigoActividad === null) {
+                $('#e_codigoTarea').attr("disabled", false);
+            } else {
+                $('#e_codigoTarea').attr("disabled", true);
+            }
+            if (data.controlRemoto === 1) {
+                $('#e_customCR').prop("checked", true);
+            } else {
+                $('#e_customCR').prop("checked", false);
+            }
+            if (data.controlRuta === 1) {
+                $('#e_customCRT').prop("checked", true);
+            } else {
+                $('#e_customCRT').prop("checked", false);
+            }
+            if (data.asistenciaPuerta === 1) {
+                $('#e_customAP').prop("checked", true);
+            } else {
+                $('#e_customAP').prop("checked", false);
+            }
+            if (data.controlRemoto === 1 || data.controlRuta === 1) {
+                $('.rowEmpleadosEditar').show();
+            } else {
+                $('.rowEmpleadosEditar').hide();
+            }
+            if (data.porEmpleados === 1) {
+                $('#e_customAE').prop("checked", true);
+                $('#porEmpleados').show();
+                $('.todosCol').show();
+                datosAsignacionPorEmpleado();
+                EmpleadosDeActividadEditar = $('#empleados').val();
+            } else {
+                $('#e_customAE').prop("checked", false);
+                $('#porEmpleados').hide();
+                $('.todosCol').hide();
+            }
+            if (data.porAreas === 1) {
+                $('#e_customAA').prop("checked", true);
+                $('.colAreas').show();
+                datosAsignacionPorArea();
+                ActividadDeActividadEditar = $('#areaAsignarEditar').val();
+            } else {
+                $('#e_customAA').prop("checked", false);
+                $('.colAreas').hide();
+            }
+        },
+        error: function () { },
+    });
+    $('#editactividadTarea').modal();
+}
+function editarActividadTarea() {
+    var codigo = $("#e_codigoTarea").val();
+    var idA = $('#idActiv').val();
+    var empleados = $('#empleados').val();
+    var areas = $('#areaAsignarEditar').val();
+    var globalEmpleado;
+    var asignacionEmpleado;
+    var asignacionArea;
+    var globalArea;
+    //* CONTROL REMOTO
+    if ($('#e_customCR').is(":checked") == true) {
+        var controlRemoto = 1;
+    } else {
+        var controlRemoto = 0;
+    }
+    //* ASISTENCIA EN PUERTA
+    if ($('#e_customAP').is(":checked") == true) {
+        var asistenciaPuerta = 1;
+    } else {
+        var asistenciaPuerta = 0;
+    }
+    //* CONTROL EN RUTA
+    if ($('#e_customCRT').is(":checked") == true) {
+        var controlRuta = 1;
+    } else {
+        var controlRuta = 0;
+    }
+    //* ASIGNACION DE EMPLEADOS GLOBAL
+    if ($('#checkboxEmpleadosEditarTodos').is(":checked") == true) {
+        globalEmpleado = 1;
+    } else {
+        globalEmpleado = 0;
+    }
+    //* ASIGNACION DE EMPLEADOS
+    if ($('#e_customAE').is(":checked")) {
+        asignacionEmpleado = 1;
+    } else {
+        asignacionEmpleado = 0;
+    }
+    //* ASIGNACION  DE AREAS
+    if ($('#e_customAA').is(":checked")) {
+        asignacionArea = 1;
+    } else {
+        asignacionArea = 0;
+    }
+    //* ASIGNACION DE AREAS GLOBAL
+    if ($('#checkboxAreasEditarTodos').is(":checked")) {
+        globalArea = 1;
+    } else {
+        globalArea = 0;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/registrarEditar",
+        data: {
+            idA: idA,
+            cr: controlRemoto,
+            ap: asistenciaPuerta,
+            crt: controlRuta,
+            codigo: codigo,
+            empleados: empleados,
+            globalEmpleado: globalEmpleado,
+            asignacionEmpleado: asignacionEmpleado,
+            areas: areas,
+            asignacionArea: asignacionArea,
+            globalArea: globalArea
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            limpiarModo();
+            actividadesOrganizacion();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nActividad modificada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+            $('#editactividadTarea').modal("toggle");
+        },
+        error: function () { },
+    });
+}
+// TODO INICIALIZAR PLUGIN DE EMPLEADOS
+$("#empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
+});
+// TODO ********************************
 //? TODOS LOS EMPLEADOS EN EDITAR
 $('#checkboxEmpleadosEditar').click(function () {
     if ($(this).is(':checked')) {
@@ -1264,7 +1266,6 @@ function estadoAsignaciones() {
 }
 //: OBTENER DATOS DE ASIGNACION POR EMPLEADO
 function datosAsignacionPorEmpleado() {
-    console.log($('#idActiv').val());
     var idA = $('#idActiv').val();
     $("#empleados").empty();
     var container = $("#empleados");
@@ -1390,4 +1391,5 @@ $('#areaAsignarEditar').on("change", function (e) {
         $('#checkboxAreasEditar').prop("checked", false);
     }
 });
+//* ************************** FORMULARIO REGISTRAR ********************** *//
 //* ******************************************************************** *//

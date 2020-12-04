@@ -763,6 +763,7 @@ class ActividadesController extends Controller
             ->select('ar.area_id', 'ar.area_descripcion')
             ->where('ar.organi_id', '=', session('sesionidorg'))
             ->where('aa.estado', '=', 1)
+            ->where('a.Activi_id', '=', $request->get('id'))
             ->groupBy('ar.area_id')
             ->get();
         for ($index = 0; $index < sizeof($areas); $index++) {

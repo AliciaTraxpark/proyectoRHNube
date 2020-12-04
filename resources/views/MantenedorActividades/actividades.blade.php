@@ -199,7 +199,7 @@
 {{-- MODAL DE REGISTRAR ACTIVIDAD --}}
 <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="regactividadTarea"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-xs d-flex justify-content-center">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -230,40 +230,103 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="customCR">
-                                        <label class="custom-control-label" for="customCR"
-                                            style="font-weight: bold">Control Remoto</label>
+                                        <label class="custom-control-label" for="customCR" style="font-weight: bold">
+                                            <i data-feather="activity"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            Control Remoto
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customCRT">
+                                        <label class="custom-control-label" for="customCRT" style="font-weight: bold">
+                                            <i data-feather="map-pin"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            Control Remoto
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="customAP">
-                                        <label class="custom-control-label" for="customAP"
-                                            style="font-weight: bold">Asistencia en Puerta</label>
+                                        <label class="custom-control-label" for="customAP" style="font-weight: bold">
+                                            <i data-feather="check-circle"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            Asistencia en Puerta
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Asignar empleado</label>
+                            <div class="row border-top rowEmpleados">
+                                <div class="col-md-12 text-left">
+                                    <label for="">Asignar por:</label>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customAE">
+                                        <label class="custom-control-label" for="customAE" style="font-weight: bold">
+                                            Seleccionar por empleados
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left" id="porEmpleadosReg">
+                                    <div class="form-group mb-0 mt-2">
+                                        <input type="checkbox" id="checkboxEmpleadosTodos">
+                                        <label for="" class="mb-0">Asignar a nuevos</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right todosColReg">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="checkboxEmpleados">
+                                        <label for="" class="mb-0">Seleccionar a todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara empleados con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 todosColReg">
                                     <select id="reg_empleados" data-plugin="customselect" class="form-control"
                                         multiple="multiple">
                                         <option value="" disabled selected>Seleccionar Empleados</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-3" style="display: none">
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-switch mb-1">
-                                        <input type="checkbox" class="custom-control-input" id="reg_customGlobal">
-                                        <label class="custom-control-label" for="reg_customGlobal"
-                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
-                                            title="Actividad será asignada para todos los nuevos empleados">
-                                            Actividad global
+                            <div class="row pt-2 rowEmpleados">
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customAA">
+                                        <label class="custom-control-label" for="customAA" style="font-weight: bold">
+                                            Seleccionar por áreas
                                         </label>
                                     </div>
+                                </div>
+                                <div class="col-md-12 text-left colAreasReg">
+                                    <div class="form-group mb-0 mt-2">
+                                        <input type="checkbox" id="checkboxAreasTodos">
+                                        <label for="" class="mb-0">Asignar a nuevos</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right colAreasReg">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="checkboxAreas">
+                                        <label for="" class="mb-0">Seleccionar todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara áreas con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left colAreasReg">
+                                    <select id="areaAsignarReg" data-plugin="customselect"
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                    </select>
                                 </div>
                             </div>
                     </div>
@@ -357,7 +420,7 @@
                                 </div>
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="e_customAE" checked>
+                                        <input type="checkbox" class="custom-control-input" id="e_customAE">
                                         <label class="custom-control-label" for="e_customAE" style="font-weight: bold">
                                             Seleccionar por empleados
                                         </label>
