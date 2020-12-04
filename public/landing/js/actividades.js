@@ -43,18 +43,15 @@ function tablaActividades() {
 $('#e_customCR').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $('.rowEmpleadosEditar').show();
-        var id = $('#idActiv').val();
-        empleadoLista(id);
-        listaAreasEditar();
+        estadoAsignaciones();
     } else {
         if ($('#e_customCRT').is(":checked")) {
             $('.rowEmpleadosEditar').show();
-            var id = $('#idActiv').val();
-            empleadoLista(id);
-            listaAreasEditar();
+            estadoAsignaciones();
         } else {
             $('.rowEmpleadosEditar').hide();
-            $('#empleados').empty();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
         }
     }
 });
@@ -63,18 +60,15 @@ $('#e_customCR').on("change.bootstrapSwitch", function (event) {
 $('#e_customCRT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $('.rowEmpleadosEditar').show();
-        var id = $('#idActiv').val();
-        empleadoLista(id);
-        listaAreasEditar();
+        estadoAsignaciones();
     } else {
         if ($('#e_customCR').is(":checked")) {
             $('.rowEmpleadosEditar').show();
-            var id = $('#idActiv').val();
-            empleadoLista(id);
-            listaAreasEditar();
+            estadoAsignaciones();
         } else {
             $('.rowEmpleadosEditar').hide();
-            $('#empleados').empty();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
         }
     }
 });
@@ -84,23 +78,20 @@ $('#e_customAP').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
             $('.rowEmpleadosEditar').show();
-            var id = $('#idActiv').val();
-            empleadoLista(id);
+            estadoAsignaciones();
         } else {
             $('.rowEmpleadosEditar').hide();
-            $('#empleados').empty();
             limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
         }
     } else {
         if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
             $('.rowEmpleadosEditar').show();
-            var id = $('#idActiv').val();
-            empleadoLista(id);
-            listaAreasEditar();
+            estadoAsignaciones();
         } else {
             $('.rowEmpleadosEditar').hide();
-            $('#empleados').empty();
             limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
         }
     }
 });
@@ -1248,6 +1239,18 @@ $('#e_customAE').on("change.bootstrapSwitch", function (event) {
         limpiarAsignacionPorEmpleado();
     }
 });
+//: FUNCTION ESTADOS SWITCH
+function estadoAsignaciones() {
+    if (!$('#e_customAE').is(":checked")) {
+        $('#porEmpleados').hide();
+        $('.todosCol').hide();
+        limpiarAsignacionPorEmpleado();
+    }
+    if (!$('#e_customAA').is(":checked")) {
+        $('.colAreas').hide();
+        limpiarAsignacionPorArea();
+    }
+}
 //: OBTENER DATOS DE ASIGNACION POR EMPLEADO
 function datosAsignacionPorEmpleado() {
     console.log($('#idActiv').val());
