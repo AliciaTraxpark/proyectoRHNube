@@ -55,10 +55,6 @@ function limpiarModo() {
     $('#e_customCR').prop("checked", false);
     $('#e_customCRT').prop("checked", false);
     $('#e_customAP').prop("checked", false);
-    //* FORMULARIO ASIGNAR
-    $('#areaAsignar').attr("disabled", true);
-    $('#checkboxEmpleados').attr("disabled", true);
-    $('#empleAsignar').attr("disabled", true);
 }
 function eliminarActividad(id) {
     alertify
@@ -1636,6 +1632,22 @@ $('#checkboxAreas').click(function () {
         $('#areaAsignar').trigger("change");
     } else {
         $('#areaAsignar').val(AreaAsig).trigger('change');
+    }
+});
+//: SELECT DE EMPLEADOS
+$("#empleAsignar").on("change", function (e) {
+    if ($("#empleAsignar").select2('data').length === $("#empleAsignar >option").length) {
+        $('#checkboxEmpleados').prop("checked", true);
+    } else {
+        $('#checkboxEmpleados').prop("checked", false);
+    }
+});
+//: SELECT DE AREAS
+$('#areaAsignar').on("change", function (e) {
+    if ($("#areaAsignar").select2('data').length === $("#areaAsignar >option").length) {
+        $('#checkboxAreas').prop("checked", true);
+    } else {
+        $('#checkboxAreas').prop("checked", false);
     }
 });
 //* ************************ FINALIZACION ****************************** *//
