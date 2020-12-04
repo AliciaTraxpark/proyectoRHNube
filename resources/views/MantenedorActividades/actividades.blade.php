@@ -401,8 +401,18 @@
                                         <label for="" class="mb-0">Asignar a nuevos</label>
                                     </div>
                                 </div>
-                                <div class="col-md-12 text-left pt-2 colAreas">
-                                    <label class="mb-0">Asignar por área</label>
+                                <div class="col-md-12 text-right colAreas">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="checkboxAreasEditar">
+                                        <label for="" class="mb-0">Seleccionar todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara áreas con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left colAreas">
                                     <select id="areaAsignarEditar" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple">
                                     </select>

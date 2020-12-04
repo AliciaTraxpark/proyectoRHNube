@@ -97,6 +97,7 @@ $('#e_customAP').on("change.bootstrapSwitch", function (event) {
 });
 //: ***********************************************
 var EmpleadosDeActividadEditar;
+var ActividadDeActividadEditar;
 function editarActividad(id) {
     $.ajax({
         async: false,
@@ -134,7 +135,6 @@ function editarActividad(id) {
             }
             if (data.controlRemoto === 1 || data.controlRuta === 1) {
                 $('.rowEmpleadosEditar').show();
-                EmpleadosDeActividadEditar = $('#empleados').val();
             } else {
                 $('.rowEmpleadosEditar').hide();
             }
@@ -143,6 +143,7 @@ function editarActividad(id) {
                 $('#porEmpleados').show();
                 $('.todosCol').show();
                 datosAsignacionPorEmpleado();
+                EmpleadosDeActividadEditar = $('#empleados').val();
             } else {
                 $('#e_customAE').prop("checked", false);
                 $('#porEmpleados').hide();
@@ -152,6 +153,7 @@ function editarActividad(id) {
                 $('#e_customAA').prop("checked", true);
                 $('.colAreas').show();
                 datosAsignacionPorArea();
+                ActividadDeActividadEditar = $('#areaAsignarEditar').val();
             } else {
                 $('#e_customAA').prop("checked", false);
                 $('.colAreas').hide();
@@ -1172,6 +1174,15 @@ $('#checkboxEmpleadosEditar').click(function () {
         $('#empleados').val(EmpleadosDeActividadEditar).trigger('change');
     }
 });
+//? TODAS LAS AREAS EN EDITAR
+$('#checkboxAreasEditar').click(function () {
+    if ($(this).is(':checked')) {
+        $("#areaAsignarEditar > option").prop("selected", "selected");
+        $('#areaAsignarEditar').trigger("change");
+    } else {
+        $('#areaAsignarEditar').val(ActividadDeActividadEditar).trigger('change');
+    }
+});
 //: Funcion para mostrar empleados por áreas
 $("#areaAsignarEditar").on("change", function () {
     var empleados = EmpleadosDeActividadEditar;
@@ -1343,9 +1354,9 @@ function datosAsignacionPorArea() {
             } else {
                 $('#checkboxAreasEditarTodos').prop("checked", false);
             }
-            // if (data[0].noSelect.length === 0) {
-            //     $('#checkboxEmpleadosEditar').prop("checked", true);
-            // }
+            if (data[0].noSelect.length === 0) {
+                $('#checkboxAreasEditar').prop("checked", true);
+            }
         },
         error: function () { },
     });
@@ -1369,6 +1380,14 @@ $("#empleados").on("change", function (e) {
         $('#checkboxEmpleadosEditar').prop("checked", true);
     } else {
         $('#checkboxEmpleadosEditar').prop("checked", false);
+    }
+});
+//: SELECT DE AREAS EN EDITAR
+$('#areaAsignarEditar').on("change", function (e) {
+    if ($("#areaAsignarEditar").select2('data').length === $("#areaAsignarEditar >option").length) {
+        $('#checkboxAreasEditar').prop("checked", true);
+    } else {
+        $('#checkboxAreasEditar').prop("checked", false);
     }
 });
 //* ******************************************************************** *//
