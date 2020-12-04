@@ -218,7 +218,7 @@ Route::post('/registrarAE', 'ActividadesController@registrarActividadEmpleado');
 Route::post('/editarA', 'ActividadesController@editarActividad');
 Route::get('/registrarEditar', 'ActividadesController@editarCambios');
 Route::get('/recuperarA', 'ActividadesController@recuperarActividad');
-Route::get('/empleadoActiv', 'ActividadesController@empleadoSelect');
+Route::get('/datosActividad', 'ActividadesController@datosActividad');
 Route::get('/empleadoActivReg', 'ActividadesController@listaEmpleadoReg');
 Route::get('/listaAreasE', 'ActividadesController@listaAreasEdit');
 Route::get('/listActivi', 'ActividadesController@listaActividades');

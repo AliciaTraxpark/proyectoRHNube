@@ -487,51 +487,12 @@ class ActividadesController extends Controller
     }
 
     // SELECT DE MOSTRAR EMPLEADOS EN REGISTRAR
-    function empleadoSelect(Request $request)
+    function datosActividad(Request $request)
     {
-        $respuesta = [];
-        $empleadoSA = [];
         $idActividad = $request->get('idA');
         //* ESTADO DE GLOBAL
-        $global = actividad::findOrFail($idActividad);
-        //* *******************
-        // EMPLEADOS ASIGNADOS A DICHA ACTIVIDAD
-        $empleadosA = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-            ->select('ae.id', 'ae.idEmpleado', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.emple_estado', '=', 1)
-            ->where('ae.estado', '=', 1)
-            ->where('ae.idActividad', '=', $idActividad)
-            ->groupBy('ae.idEmpleado')
-            ->get();
-        // *************************************
-        // TODOS LOS EMPLEADOS
-        $empleados = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.emple_estado', '=', 1)
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->get();
-        // ******************
-        // SEPARAR EMPLEADOS
-        for ($index = 0; $index < sizeof($empleados); $index++) {
-            $estado = false;
-            foreach ($empleadosA as $ae) {
-                if ($empleados[$index]->emple_id == $ae->idEmpleado) {
-                    $estado = true;
-                }
-            }
-            if ($estado == false) {
-                array_push($empleadoSA, $empleados[$index]);
-            }
-        }
-        // ****************
-        // DATOS PARA RESULTADO
-        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA, "global" => $global->globalEmpleado));
-        // dd($respuesta);
-
-        return response()->json($respuesta, 200);
+        $actividad = actividad::findOrFail($idActividad);
+        return response()->json($actividad, 200);
     }
 
     // SELECT DE EMPLEADOS EN REGISTRAR
@@ -621,6 +582,10 @@ class ActividadesController extends Controller
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->where('a.eliminacion', '=', 1)
+            ->where(function ($query) {
+                $query->where('a.controlRemoto', '=', 1)
+                    ->orWhere('a.controlRuta', '=', 1);
+            })
             ->get();
 
         return response()->json($actividades, 200);

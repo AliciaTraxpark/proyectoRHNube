@@ -386,108 +386,11 @@ $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
 // **********************************
-
-//: Asignar actividades en area de forma masiva
-//? Inicializar plugin
-$("#actividadesAsignar").select2({
-    placeholder: 'Seleccionar actividad',
-    tags: "true"
-});
 $("#areaAsignar").select2({
     tags: "true"
 });
 $("#empleAsignar").select2({
     tags: "true"
-});
-// ? **********************************
-
-//? Funcion para listar actividades
-function listaActividades() {
-    $("#actividadesAsignar").empty();
-    var container = $("#actividadesAsignar");
-    $.ajax({
-        async: false,
-        url: "/listActivi",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = `<option value="" disabled selected>Seleccionar</option>`;
-            data.forEach(element => {
-                option += `<option value="${element.idActividad}"> Actividad : ${element.nombre} </option>`;
-            });
-            container.append(option);
-        },
-        error: function () { },
-    });
-}
-// ? ******************************
-function asignarActividadMasiso() {
-    $('#asignarPorArea').modal();
-    $("#empleAsignar").empty();
-    $("#areaAsignar").empty();
-    listaActividades();
-}
-
-// ? *****************************
-var EmpleadosDeActividad;
-//: funcion de change
-$("#actividadesAsignar").on("change", function () {
-    //: ACTIVAR FORMULARIO
-    $('#areaAsignar').attr("disabled", false);
-    $('#checkboxEmpleados').attr("disabled", false);
-    $('#empleAsignar').attr("disabled", false);
-    $('#customGlobal').attr("disabled", false);
-    //: ******************************************
-    var idA = $(this).val();
-    $("#empleAsignar").empty();
-    var container = $("#empleAsignar");
-    $.ajax({
-        async: false,
-        url: "/empleadoActiv",
-        method: "GET",
-        data: {
-            idA: idA
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = "";
-            data[0].select.forEach(element => {
-                option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
-            });
-            data[0].noSelect.forEach(element => {
-                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
-            });
-            container.append(option);
-            EmpleadosDeActividad = $('#empleAsignar').val();
-            if (data[0].global === 1) {
-                $('#customGlobal').prop("checked", true);
-            } else {
-                $('#customGlobal').prop("checked", false);
-            }
-            listaAreas();
-        },
-        error: function () { },
-    });
 });
 
 //: Funcion para mostrar empleados por áreas
@@ -982,7 +885,7 @@ function datosAsignacionPorEmpleado() {
         error: function () { },
     });
 }
-//: OBTENER DATOS DE ASIGNACION POR EMPLEADO
+//: OBTENER DATOS DE ASIGNACION POR AREA
 function datosAsignacionPorArea() {
     var idA = $('#idActiv').val();
     $('#areaAsignarEditar').empty();
@@ -1507,3 +1410,210 @@ $('#areaAsignarReg').on("change", function (e) {
     }
 });
 //* ******************************************************************** *//
+//* ************************ FORMULARIO ASIGNAR ************************ *//
+//? INICIALIZAR PLUGIN
+$("#actividadesAsignar").select2({
+    placeholder: 'Seleccionar actividad',
+    tags: "true"
+});
+//? Funcion para listar actividades
+function listaActividades() {
+    $("#actividadesAsignar").empty();
+    var container = $("#actividadesAsignar");
+    $.ajax({
+        async: false,
+        url: "/listActivi",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.idActividad}"> Actividad : ${element.nombre} </option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+// ? ******************************
+function asignarActividadMasiso() {
+    $('#asignarPorArea').modal();
+    $("#empleAsignar").empty();
+    $("#areaAsignar").empty();
+    listaActividades();
+}
+var EmpleadosDeActividad;
+//: funcion de change
+$("#actividadesAsignar").on("change", function () {
+    //: ACTIVAR FORMULARIO
+    $('#a_customAA').attr("disabled", false);
+    $('#a_customAE').attr("disabled", false);
+    //: ******************************************
+    var idA = $(this).val();
+    $.ajax({
+        async: false,
+        url: "/datosActividad",
+        method: "GET",
+        data: {
+            idA: idA
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            if (data.porEmpleados == 1) {
+                datosAsignacionPorEmpleado_Asignacion(data.Activi_id);
+                $('#a_customAE').prop("checked", true);
+                $('.aEmpleado').show();
+            } else {
+                limpiarAE();
+            }
+            if (data.porAreas == 1) {
+                datosAsignacionPorArea_Asignacion(data.Activi_id);
+                $('#a_customAA').prop("checked", true);
+                $('.aArea').show();
+            } else {
+                limpiarAA();
+            }
+        },
+        error: function () { },
+    });
+});
+//: OBTENER DATOS DE ACTIVIDAD SELECCIONADA
+function datosAsignacionPorEmpleado_Asignacion(id) {
+    $("#empleAsignar").empty();
+    var container = $("#empleAsignar");
+    $.ajax({
+        async: false,
+        url: "/datosPorAsignacionE",
+        method: "GET",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = ``;
+            if (data[0].select.length != 0) {
+                data[0].select.forEach(element => {
+                    option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+                });
+            }
+            if (data[0].noSelect.length != 0) {
+                data[0].noSelect.forEach(element => {
+                    option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+                });
+            }
+            container.append(option);
+            if (data[0].global === 1) {
+                $('#checkboxEmpleadosTodos').prop("checked", true);
+            } else {
+                $('#checkboxEmpleadosTodos').prop("checked", false);
+            }
+            if (data[0].noSelect.length === 0) {
+                $('#checkboxEmpleados').prop("checked", true);
+            }
+        },
+        error: function () { },
+    });
+}
+//: OBTENER DATOS DE ASIGNACION POR AREA
+function datosAsignacionPorArea_Asignacion(id) {
+    $('#areaAsignar').empty();
+    var container = $('#areaAsignar');
+    $.ajax({
+        async: false,
+        url: "/datosPorAsignacionA",
+        method: "GET",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = ``;
+            if (data[0].select.length != 0) {
+                data[0].select.forEach(element => {
+                    option += `<option value="${element.area_id}" selected="selected">Área : ${element.area_descripcion}</option>`;
+                });
+            }
+            if (data[0].noSelect.length != 0) {
+                data[0].noSelect.forEach(element => {
+                    option += `<option value="${element.area_id}">Área : ${element.area_descripcion}</option>`;
+                });
+            }
+            container.append(option);
+            if (data[0].global === 1) {
+                $('#checkboxAreasTodos').prop("checked", true);
+            } else {
+                $('#checkboxAreasTodos').prop("checked", false);
+            }
+            if (data[0].noSelect.length === 0) {
+                $('#checkboxAreas').prop("checked", true);
+            }
+        },
+        error: function () { },
+    });
+}
+//: LIMPIAR EN ASIGNACION POR EMPLEADO
+function limpiarAE() {
+    $('#a_customAE').prop("checked", false);
+    $('#checkboxEmpleadosTodos').prop("checked", false);
+    $('#checkboxEmpleados').prop("checked", false);
+    $('#empleAsignar').empty();
+    $('.aEmpleado').hide();
+}
+//: LIMPIAR EN ASIGNACION POR AREAS
+function limpiarAA() {
+    $('#a_customAA').prop("checked", false);
+    $('#checkboxAreasTodos').prop("checked", false);
+    $('#checkboxAreas').prop("checked", false);
+    $('#areaAsignar').empty();
+    $('.aArea').hide();
+}
+function limpiarAsignacion() {
+    limpiarAE();
+    limpiarAA();
+    $('#a_customAE').prop("disabled", true);
+    $('#a_customAA').prop("disabled", true);
+}
+//* ************************ FINALIZACION ****************************** *//

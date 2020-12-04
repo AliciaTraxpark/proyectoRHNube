@@ -518,7 +518,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form action="javascript:asignarActividadEmpleado()">
-                            <div class="row">
+                            <div class="row border-bottom pb-2">
                                 <div class="col-md-12">
                                     <label class="mb-0">Seleccionar Actividad</label>
                                     <select id="actividadesAsignar" data-plugin="customselect" class="form-control"
@@ -527,45 +527,95 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-3">
-                                <div class="col-md-12">
-                                    <label class="mb-0">Asignar por área</label>
-                                    <select id="areaAsignar" data-plugin="customselect"
-                                        class="form-control form-control-sm select2Multiple" multiple="multiple"
-                                        disabled>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="row pt-2">
-                                <div class="col-md-12 text-left">
-                                    <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="checkboxEmpleados" name="FechaI" disabled>
-                                        <label for="" class="mb-0">Asignar a todos los empleados</label>
-                                        <div class="float-right mb-0">
-                                            <span style="font-size: 11px;">
-                                                *Se visualizara empleados con esta actividad asignada
-                                            </span>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="a_customAE"
+                                                    disabled>
+                                                <label class="custom-control-label" for="a_customAE"
+                                                    style="font-weight: bold">
+                                                    Seleccionar por empleados
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2 aEmpleado" style="display: none">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group mb-0 mt-2">
+                                                <input type="checkbox" id="checkboxEmpleadosTodos">
+                                                <label for="" class="mb-0">Asignar a nuevos</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2 aEmpleado" style="display: none">
+                                        <div class="col-md-12 text-right">
+                                            <div class="form-group mb-0 mt-3">
+                                                <input type="checkbox" id="checkboxEmpleados">
+                                                <label for="" class="mb-0">Asignar a todos los empleados</label>
+                                                <div class="float-left mb-0">
+                                                    <span style="font-size: 11px;">
+                                                        *Se visualizara empleados con esta actividad asignada
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row aEmpleado" style="display: none">
+                                        <div class="col-md-12">
+                                            <select id="empleAsignar" data-plugin="customselect"
+                                                class="form-control form-control-sm select2Multiple"
+                                                multiple="multiple">
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select id="empleAsignar" data-plugin="customselect"
-                                        class="form-control form-control-sm select2Multiple" multiple="multiple"
-                                        required disabled>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row pt-3" style="display: none">
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-switch mb-1">
-                                        <input type="checkbox" class="custom-control-input" id="customGlobal" disabled>
-                                        <label class="custom-control-label" for="customGlobal" style="font-weight: bold"
-                                            data-toggle="tooltip" data-placement="right"
-                                            title="Actividad será asignada para todos los nuevos empleados">
-                                            Actividad global
-                                        </label>
+                                    <div class="row pt-3">
+                                        <div class="col-md-12 text-left">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="a_customAA"
+                                                    disabled>
+                                                <label class="custom-control-label" for="a_customAA"
+                                                    style="font-weight: bold">
+                                                    Seleccionar por áreas
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row aArea" style="display: none">
+                                                <div class="col-md-12 text-left">
+                                                    <div class="form-group mb-0 mt-2">
+                                                        <input type="checkbox" id="checkboxAreasTodos">
+                                                        <label for="" class="mb-0">Asignar a nuevos</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-2 aArea" style="display: none">
+                                                <div class="col-md-12 text-right">
+                                                    <div class="form-group mb-0 mt-3">
+                                                        <input type="checkbox" id="checkboxAreas">
+                                                        <label for="" class="mb-0">Asignar a todos las áreas</label>
+                                                        <div class="float-left mb-0">
+                                                            <span style="font-size: 11px;">
+                                                                *Se visualizara áreas con esta actividad asignada
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row aArea" style="display: none;">
+                                                <div class="col-md-12">
+                                                    <select id="areaAsignar" data-plugin="customselect"
+                                                        class="form-control form-control-sm select2Multiple"
+                                                        multiple="multiple">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -577,7 +627,7 @@
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="javascript:limpiarModo()">Cancelar</button>
+                                onclick="javascript:limpiarAsignacion()">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm ">Guardar</button>
                             </form>
