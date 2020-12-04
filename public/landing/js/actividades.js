@@ -1242,7 +1242,7 @@ function listaAreas() {
             }*/
         },
         success: function (data) {
-            var option = `<option value="" disabled>Seleccionar</option>`;
+            var option = ``;
             data.forEach(element => {
                 option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
             });
@@ -1545,4 +1545,38 @@ function recuperarActividad(id) {
     });
 
 }
+// TODO LOS EMPLEADOS EN REGISTRAR
+$('#checkboxEmpleadosReg').click(function () {
+    if ($(this).is(':checked')) {
+        $("#reg_empleados > option").prop("selected", "selected");
+        $('#reg_empleados').trigger("change");
+    } else {
+        $('#reg_empleados').val('').trigger('change');
+    }
+});
+// TODO LAS AREAS EN REGISTRAR
+$('#checkboxAreasReg').click(function () {
+    if ($(this).is(':checked')) {
+        $("#areaAsignarReg > option").prop("selected", "selected");
+        $('#areaAsignarReg').trigger("change");
+    } else {
+        $('#areaAsignarReg').val('').trigger('change');
+    }
+});
+//: SELECT DE EMPLEADOS EN REGISTRAR
+$("#reg_empleados").on("change", function (e) {
+    if ($("#reg_empleados").select2('data').length === $("#reg_empleados >option").length) {
+        $('#checkboxEmpleadosReg').prop("checked", true);
+    } else {
+        $('#checkboxEmpleadosReg').prop("checked", false);
+    }
+});
+//: SELECT DE AREAS EN REGISTRAR
+$('#areaAsignarReg').on("change", function (e) {
+    if ($("#areaAsignarReg").select2('data').length === $("#areaAsignarReg >option").length) {
+        $('#checkboxAreasReg').prop("checked", true);
+    } else {
+        $('#checkboxAreasReg').prop("checked", false);
+    }
+});
 //* ******************************************************************** *//
