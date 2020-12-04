@@ -123,23 +123,56 @@ class ActividadesController extends Controller
         $actividad = new actividad();
         $actividad->Activi_Nombre = $request->get('nombre');
         $actividad->controlRemoto = $request->get('cr');
+        $actividad->controlRuta = $request->get('crt');
         $actividad->asistenciaPuerta = $request->get('ap');
         $actividad->organi_id = session('sesionidorg');
         $actividad->codigoActividad = $request->get('codigo');
-        $actividad->global = $request->get('global');
+        $actividad->globalEmpleado = $request->get('globalEmpleado');
+        $actividad->globalArea = $request->get('globalArea');
+        $actividad->porEmpleados = $request->get('asignacionEmpleado');
+        $actividad->porAreas = $request->get('asignacionArea');
         $actividad->save();
 
         $idActividad = $actividad->Activi_id;
         $listaE = $request->get('empleados');
-        // ASIGNAR EMPLEADOS A NUEVA ACTIVIDAD
-        if (is_null($listaE) === false) {
-            foreach ($listaE as $le) {
-                $actividad_empleado = new actividad_empleado();
-                $actividad_empleado->idActividad = $idActividad;
-                $actividad_empleado->idEmpleado = $le;
-                $actividad_empleado->estado = 1;
-                $actividad_empleado->eliminacion = 1;
-                $actividad_empleado->save();
+        $listaA = $request->get('areas');
+        if ($actividad->porEmpleados == 1) {
+            // ASIGNAR EMPLEADOS A NUEVA ACTIVIDAD
+            if (is_null($listaE) === false) {
+                foreach ($listaE as $le) {
+                    $actividad_empleado = new actividad_empleado();
+                    $actividad_empleado->idActividad = $idActividad;
+                    $actividad_empleado->idEmpleado = $le;
+                    $actividad_empleado->estado = 1;
+                    $actividad_empleado->eliminacion = 1;
+                    $actividad_empleado->save();
+                }
+            }
+        } else {
+            if ($actividad->porAreas == 1) {
+                if (is_null($listaA) === false) {
+                    foreach ($listaA as $la) {
+                        $empleadosArea = DB::table('empleado as e')
+                            ->select('e.emple_id')
+                            ->where('e.emple_area', '=', $la)
+                            ->where('e.emple_estado', '=', 1)
+                            ->get();
+                        foreach ($empleadosArea as $ea) {
+                            $actividad_empleado = new actividad_empleado();
+                            $actividad_empleado->idActividad = $idActividad;
+                            $actividad_empleado->idEmpleado = $ea->emple_id;
+                            $actividad_empleado->estado = 1;
+                            $actividad_empleado->eliminacion = 1;
+                            $actividad_empleado->save();
+                        }
+                        //* REGISTRAR ACTIVIDAD AREAS
+                        $actividad_area = new actividad_area();
+                        $actividad_area->idActividad = $idActividad;
+                        $actividad_area->idArea = $la;
+                        $actividad_area->estado = 1;
+                        $actividad_area->save();
+                    }
+                }
             }
         }
 
@@ -263,6 +296,7 @@ class ActividadesController extends Controller
                         $empleadoArea = DB::table('empleado as e')
                             ->select('e.emple_id')
                             ->where('e.emple_area', '=', $a)
+                            ->where('e.emple_estado', '=', 1)
                             ->get();
                         //* BUSCAR EMPLEADOS EN ACTIVIDAD EMPLEADO
                         foreach ($actividad_empleado as $activ) {
@@ -573,6 +607,7 @@ class ActividadesController extends Controller
             ->select('a.area_id', 'a.area_descripcion')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('a.area_id')
             ->get();
         return response()->json($areas, 200);

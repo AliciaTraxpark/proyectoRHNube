@@ -39,6 +39,27 @@ function tablaActividades() {
         }
     });
 }
+function limpiarModo() {
+    //* FORMULARIO REGISTRAR
+    $('#nombreTarea').val("");
+    $('#codigoTarea').val("");
+    $('#customCR').prop("checked", false);
+    $('#customCRT').prop("checked", false);
+    $('#customAP').prop("checked", false);
+    $('.rowEmpleados').hide();
+    $('#customAE').prop("checked", false);
+    $('#customAA').prop("checked", false);
+    //* FORMULARIO EDITAR
+    $('#e_nombreTarea').val("");
+    $('#e_codigoTarea').val("");
+    $('#e_customCR').prop("checked", false);
+    $('#e_customCRT').prop("checked", false);
+    $('#e_customAP').prop("checked", false);
+    //* FORMULARIO ASIGNAR
+    $('#areaAsignar').attr("disabled", true);
+    $('#checkboxEmpleados').attr("disabled", true);
+    $('#empleAsignar').attr("disabled", true);
+}
 function eliminarActividad(id) {
     alertify
         .confirm("¿Desea eliminar actividad?", function (
@@ -233,205 +254,6 @@ function actividadesOrganizacion() {
 
 }
 actividadesOrganizacion();
-function recuperarActividad(id) {
-    $.ajax({
-        type: "GET",
-        url: "/recuperarA",
-        data: {
-            id: id
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            limpiarModo();
-            actividadesOrganizacion();
-            $('#regactividadTarea').modal('toggle');
-            editarActividad(data.Activi_id);
-        },
-        error: function () { },
-    });
-
-}
-function registrarActividadTarea() {
-    var nombre = $("#nombreTarea").val();
-    var codigo = $("#codigoTarea").val();
-    var empleados = $("#reg_empleados").val();
-    var global;
-    if ($('#customCR').is(":checked") == true) {
-        var controlRemoto = 1;
-    } else {
-        var controlRemoto = 0;
-    }
-    if ($('#customAP').is(":checked") == true) {
-        var asistenciaPuerta = 1;
-    } else {
-        var asistenciaPuerta = 0;
-    }
-    if ($('#reg_customGlobal').is(":checked") == true) {
-        global = 1;
-    } else {
-        global = 0;
-    }
-    $.ajax({
-        type: "POST",
-        url: "/registrarActvO",
-        data: {
-            nombre: nombre,
-            cr: controlRemoto,
-            ap: asistenciaPuerta,
-            codigo: codigo,
-            empleados: empleados,
-            global: global
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            if (data.estado === 1) {
-                if (data.actividad.estado == 0) {
-                    alertify
-                        .confirm("Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla si o no?", function (
-                            e
-                        ) {
-                            if (e) {
-                                recuperarActividad(data.actividad.Activi_id);
-                            }
-                        })
-                        .setting({
-                            title: "Modificar Actividad",
-                            labels: {
-                                ok: "Si",
-                                cancel: "No",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {
-                            },
-                        });
-                } else {
-                    $("#nombreTarea").addClass("borderColor");
-                    $.notifyClose();
-                    $.notify(
-                        {
-                            message:
-                                "\nYa existe una actividad con este nombre.",
-                            icon: "admin/images/warning.svg",
-                        },
-                        {
-                            element: $('#regactividadTarea'),
-                            position: "fixed",
-                            mouse_over: "pause",
-                            placement: {
-                                from: "top",
-                                align: "center",
-                            },
-                            icon_type: "image",
-                            newest_on_top: true,
-                            delay: 2000,
-                            template:
-                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                "</div>",
-                            spacing: 35,
-                        }
-                    );
-                }
-            } else {
-                if (data.estado === 0) {
-                    if (data.actividad.estado == 0) {
-                        alertify
-                            .confirm("Ya existe una actividad inactiva con este código. ¿Desea recuperarla si o no?", function (
-                                e
-                            ) {
-                                if (e) {
-                                    recuperarActividad(data.actividad.Activi_id);
-                                }
-                            })
-                            .setting({
-                                title: "Modificar Actividad",
-                                labels: {
-                                    ok: "Si",
-                                    cancel: "No",
-                                },
-                                modal: true,
-                                startMaximized: false,
-                                reverseButtons: true,
-                                resizable: false,
-                                closable: false,
-                                transition: "zoom",
-                                oncancel: function (closeEvent) {
-                                },
-                            });
-                    } else {
-                        $("#codigoTarea").addClass("borderColor");
-                        $.notifyClose();
-                        $.notify(
-                            {
-                                message:
-                                    "\nYa existe una actividad con este código.",
-                                icon: "admin/images/warning.svg",
-                            },
-                            {
-                                element: $('#regactividadTarea'),
-                                position: "fixed",
-                                mouse_over: "pause",
-                                placement: {
-                                    from: "top",
-                                    align: "center",
-                                },
-                                icon_type: "image",
-                                newest_on_top: true,
-                                delay: 2000,
-                                template:
-                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                                    "</div>",
-                                spacing: 35,
-                            }
-                        );
-                    }
-                } else {
-                    limpiarModo();
-                    actividadesOrganizacion();
-                    $('#regactividadTarea').modal('toggle');
-                    $.notifyClose();
-                    $.notify(
-                        {
-                            message: "\nActividad registrada.",
-                            icon: "admin/images/checked.svg",
-                        },
-                        {
-                            position: "fixed",
-                            icon_type: "image",
-                            newest_on_top: true,
-                            delay: 5000,
-                            template:
-                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                "</div>",
-                            spacing: 35,
-                        }
-                    );
-                }
-            }
-        },
-        error: function () { },
-    });
-}
 
 function cambiarEstadoParaControles(id, valor, control) {
     $.ajax({
@@ -471,22 +293,6 @@ function cambiarEstadoParaControles(id, valor, control) {
         },
         error: function () { },
     });
-}
-function limpiarModo() {
-    $('#nombreTarea').val("");
-    $('#codigoTarea').val("");
-    $('#customCR').prop("checked", false);
-    $('#customAP').prop("checked", false);
-    $('#e_nombreTarea').val("");
-    $('#e_codigoTarea').val("");
-    $('#e_customCR').prop("checked", false);
-    $('#e_customAP').prop("checked", false);
-    $('#areaAsignar').attr("disabled", true);
-    $('#checkboxEmpleados').attr("disabled", true);
-    $('#empleAsignar').attr("disabled", true);
-    $('#customGlobal').prop("checked", false);
-    $('#customGlobal').attr("disabled", true);
-    $('#reg_customGlobal').prop("checked", false);
 }
 
 function cambiarEstadoActividad(id) {
@@ -642,40 +448,6 @@ $("#areaAsignarEditar").select2({
     tags: "true"
 });
 //* ****************************************
-//* SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
-function empleadoListaReg() {
-    $("#reg_empleados").empty();
-    var container = $("#reg_empleados");
-    $.ajax({
-        async: false,
-        url: "/empleadoActivReg",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = `<option value="" disabled>Seleccionar</option>`;
-            data.forEach(element => {
-                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
-            });
-            container.append(option);
-        },
-        error: function () { },
-    });
-}
-$("#reg_empleados").select2({
-    placeholder: 'Seleccionar Empleados',
-    tags: "true"
-});
-
 // * BUSCAR PERSONALIZADO
 function filterGlobal() {
     $("#actividades").DataTable().search(
@@ -790,36 +562,6 @@ $("#actividadesAsignar").on("change", function () {
         error: function () { },
     });
 });
-
-//: Función para obtener las áreas
-function listaAreas() {
-    $("#areaAsignar").empty();
-    var container = $("#areaAsignar");
-    $.ajax({
-        async: false,
-        url: "/listaAreasE",
-        method: "GET",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            var option = `<option value="" disabled>Seleccionar</option>`;
-            data.forEach(element => {
-                option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
-            });
-            container.append(option);
-        },
-        error: function () { },
-    });
-}
 
 //: Funcion para mostrar empleados por áreas
 $("#areaAsignar").on("change", function () {
@@ -1392,4 +1134,415 @@ $('#areaAsignarEditar').on("change", function (e) {
     }
 });
 //* ************************** FORMULARIO REGISTRAR ********************** *//
+$("#areaAsignarReg").select2({
+    tags: "true"
+});
+$("#reg_empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
+});
+//: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
+$('#customCR').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleados').show();
+        estadoAsignacionesReg();
+    } else {
+        if ($('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    }
+});
+//: *****************************************
+//: FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
+$('#customCRT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleados').show();
+        estadoAsignacionesReg();
+    } else {
+        if ($('#customCR').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    }
+});
+//: ***********************************************
+//: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
+$('#customAP').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    } else {
+        if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    }
+});
+//: FUNCTION ESTADOS SWITCH
+function estadoAsignacionesReg() {
+    if (!$('#customAE').is(":checked")) {
+        $('#porEmpleadosReg').hide();
+        $('.todosColReg').hide();
+        limpiarAsignacionPorEmpleadoReg();
+    }
+    if (!$('#customAA').is(":checked")) {
+        $('.colAreasReg').hide();
+        limpiarAsignacionPorAreaReg();
+    }
+}
+//: LIMPIAR EN ASIGNACION POR EMPLEADO EN REGISTRAR
+function limpiarAsignacionPorEmpleadoReg() {
+    $('#checkboxEmpleadosTodosReg').prop("checked", false);
+    $('#checkboxEmpleadosReg').prop("checked", false);
+    $('#reg_empleados').empty();
+    $('#customAE').prop("checked", false);
+}
+//: LIMPIAR EN ASIGNACION POR AREAS EN REGISTRAR
+function limpiarAsignacionPorAreaReg() {
+    $('#areaAsignarReg').empty();
+    $('#checkboxAreasTodosReg').prop("checked", false);
+    $('#customAA').prop("checked", false);
+}
+//: Función para obtener las áreas
+function listaAreas() {
+    $("#areaAsignarReg").empty();
+    var container = $("#areaAsignarReg");
+    $.ajax({
+        async: false,
+        url: "/listaAreasE",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+//: **********************************************************
+//* SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
+function empleadoListaReg() {
+    $("#reg_empleados").empty();
+    var container = $("#reg_empleados");
+    $.ajax({
+        async: false,
+        url: "/empleadoActivReg",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = ``;
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+$('#customAA').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#customAE').prop("checked", false);
+        $('#porEmpleadosReg').hide();
+        $('.todosColReg').hide();
+        $('.colAreasReg').show();
+        limpiarAsignacionPorEmpleadoReg();
+        listaAreas();
+    } else {
+        $('.colAreasReg').hide();
+        limpiarAsignacionPorAreaReg();
+    }
+});
+$('#customAE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#customAA').prop("checked", false);
+        $('.colAreasReg').hide();
+        limpiarAsignacionPorAreaReg();
+        $('#porEmpleadosReg').show();
+        $('.todosColReg').show();
+        empleadoListaReg();
+    } else {
+        $('#porEmpleadosReg').hide();
+        $('.todosColReg').hide();
+        limpiarAsignacionPorAreaReg();
+    }
+});
+//: REGISTRAR NUEVA ACTIVIDAD
+function registrarActividadTarea() {
+    var nombre = $("#nombreTarea").val();
+    var codigo = $("#codigoTarea").val();
+    var empleados = $("#reg_empleados").val();
+    var areas = $("#areaAsignarReg").val();
+    var globalEmpleado;
+    var asignacionEmpleado;
+    var asignacionArea;
+    var globalArea;
+    //* CONTROL REMOTO
+    if ($('#customCR').is(":checked") == true) {
+        var controlRemoto = 1;
+    } else {
+        var controlRemoto = 0;
+    }
+    //* ASISTENCIA EN PUERTA
+    if ($('#customAP').is(":checked") == true) {
+        var asistenciaPuerta = 1;
+    } else {
+        var asistenciaPuerta = 0;
+    }
+    //* CONTROL EN RUTA
+    if ($('#customCRT').is(":checked") == true) {
+        var controlRuta = 1;
+    } else {
+        var controlRuta = 0;
+    }
+    //* ASIGNACION DE EMPLEADOS GLOBAL
+    if ($('#checkboxEmpleadosTodosReg').is(":checked") == true) {
+        globalEmpleado = 1;
+    } else {
+        globalEmpleado = 0;
+    }
+    //* ASIGNACION DE EMPLEADOS
+    if ($('#customAE').is(":checked")) {
+        asignacionEmpleado = 1;
+    } else {
+        asignacionEmpleado = 0;
+    }
+    //* ASIGNACION  DE AREAS
+    if ($('#customAA').is(":checked")) {
+        asignacionArea = 1;
+    } else {
+        asignacionArea = 0;
+    }
+    //* ASIGNACION DE AREAS GLOBAL
+    if ($('#checkboxAreasTodosReg').is(":checked")) {
+        globalArea = 1;
+    } else {
+        globalArea = 0;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/registrarActvO",
+        data: {
+            nombre: nombre,
+            cr: controlRemoto,
+            ap: asistenciaPuerta,
+            crt: controlRuta,
+            codigo: codigo,
+            empleados: empleados,
+            globalEmpleado: globalEmpleado,
+            asignacionEmpleado: asignacionEmpleado,
+            areas: areas,
+            asignacionArea: asignacionArea,
+            globalArea: globalArea
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.estado === 1) {
+                if (data.actividad.estado == 0) {
+                    alertify
+                        .confirm("Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla si o no?", function (
+                            e
+                        ) {
+                            if (e) {
+                                recuperarActividad(data.actividad.Activi_id);
+                            }
+                        })
+                        .setting({
+                            title: "Modificar Actividad",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {
+                            },
+                        });
+                } else {
+                    $("#nombreTarea").addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nYa existe una actividad con este nombre.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#regactividadTarea'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            } else {
+                if (data.estado === 0) {
+                    if (data.actividad.estado == 0) {
+                        alertify
+                            .confirm("Ya existe una actividad inactiva con este código. ¿Desea recuperarla si o no?", function (
+                                e
+                            ) {
+                                if (e) {
+                                    recuperarActividad(data.actividad.Activi_id);
+                                }
+                            })
+                            .setting({
+                                title: "Modificar Actividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {
+                                },
+                            });
+                    } else {
+                        $("#codigoTarea").addClass("borderColor");
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nYa existe una actividad con este código.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                element: $('#regactividadTarea'),
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    }
+                } else {
+                    limpiarModo();
+                    actividadesOrganizacion();
+                    $('#regactividadTarea').modal('toggle');
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nActividad registrada.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
+        },
+        error: function () { },
+    });
+}
+//: RECUPERAR ACTIVIDAD
+function recuperarActividad(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarA",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            limpiarModo();
+            actividadesOrganizacion();
+            $('#regactividadTarea').modal('toggle');
+            editarActividad(data.Activi_id);
+        },
+        error: function () { },
+    });
+
+}
 //* ******************************************************************** *//

@@ -164,7 +164,7 @@
     </div>
     <div class="col-md-6 text-right colResponsive">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
+            onclick="$('#regactividadTarea').modal();javascript:estadoAsignacionesReg()">+ Nueva
             Actividad
         </button>
     </div>
@@ -246,7 +246,7 @@
                                         <label class="custom-control-label" for="customCRT" style="font-weight: bold">
                                             <i data-feather="map-pin"
                                                 style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
-                                            Control Remoto
+                                            Control en Ruta
                                         </label>
                                     </div>
                                 </div>
@@ -261,7 +261,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row border-top rowEmpleados">
+                            <div class="row border-top rowEmpleados" style="display: none">
                                 <div class="col-md-12 text-left">
                                     <label for="">Asignar por:</label>
                                 </div>
@@ -275,13 +275,13 @@
                                 </div>
                                 <div class="col-md-12 text-left" id="porEmpleadosReg">
                                     <div class="form-group mb-0 mt-2">
-                                        <input type="checkbox" id="checkboxEmpleadosTodos">
+                                        <input type="checkbox" id="checkboxEmpleadosTodosReg">
                                         <label for="" class="mb-0">Asignar a nuevos</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right todosColReg">
                                     <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="checkboxEmpleados">
+                                        <input type="checkbox" id="checkboxEmpleadosReg">
                                         <label for="" class="mb-0">Seleccionar a todos</label>
                                         <div class="float-left mb-0">
                                             <span style="font-size: 11px;">
@@ -297,7 +297,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-2 rowEmpleados">
+                            <div class="row pt-2 rowEmpleados" style="display: none">
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customAA">
@@ -308,13 +308,13 @@
                                 </div>
                                 <div class="col-md-12 text-left colAreasReg">
                                     <div class="form-group mb-0 mt-2">
-                                        <input type="checkbox" id="checkboxAreasTodos">
+                                        <input type="checkbox" id="checkboxAreasTodosReg">
                                         <label for="" class="mb-0">Asignar a nuevos</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right colAreasReg">
                                     <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="checkboxAreas">
+                                        <input type="checkbox" id="checkboxAreasReg">
                                         <label for="" class="mb-0">Seleccionar todos</label>
                                         <div class="float-left mb-0">
                                             <span style="font-size: 11px;">
