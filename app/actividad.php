@@ -13,11 +13,16 @@ class actividad extends Model
         'Activi_Nombre',
         'empleado_emple_id',
         'controlRemoto',
+        'controlRuta',
         'asistenciaPuerta',
         'estado',
         'eliminacion',
         'organi_id',
-        'codigoActividad'
+        'codigoActividad',
+        'porEmpleados',
+        'porAreas',
+        'globalEmpleado',
+        'globalArea'
     ];
     public $timestamps = false;
 }

@@ -39,6 +39,73 @@ function tablaActividades() {
         }
     });
 }
+//: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
+$('#e_customCR').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleadosEditar').show();
+        var id = $('#idActiv').val();
+        empleadoLista(id);
+        listaAreasEditar();
+    } else {
+        if ($('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            var id = $('#idActiv').val();
+            empleadoLista(id);
+            listaAreasEditar();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            $('#empleados').empty();
+        }
+    }
+});
+//: ***********************************************
+//: FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
+$('#e_customCRT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleadosEditar').show();
+        var id = $('#idActiv').val();
+        empleadoLista(id);
+        listaAreasEditar();
+    } else {
+        if ($('#e_customCR').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            var id = $('#idActiv').val();
+            empleadoLista(id);
+            listaAreasEditar();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            $('#empleados').empty();
+        }
+    }
+});
+//: ***********************************************
+//: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
+$('#e_customAP').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            var id = $('#idActiv').val();
+            empleadoLista(id);
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            $('#empleados').empty();
+            limpiarAsignacionPorEmpleado();
+        }
+    } else {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            var id = $('#idActiv').val();
+            empleadoLista(id);
+            listaAreasEditar();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            $('#empleados').empty();
+            limpiarAsignacionPorEmpleado();
+        }
+    }
+});
+//: ***********************************************
+var EmpleadosDeActividadEditar;
 function editarActividad(id) {
     $.ajax({
         async: false,
@@ -64,36 +131,95 @@ function editarActividad(id) {
             } else {
                 $('#e_customCR').prop("checked", false);
             }
+            if (data.controlRuta === 1) {
+                $('#e_customCRT').prop("checked", true);
+            } else {
+                $('#e_customCRT').prop("checked", false);
+            }
             if (data.asistenciaPuerta === 1) {
                 $('#e_customAP').prop("checked", true);
             } else {
                 $('#e_customAP').prop("checked", false);
             }
+            if (data.controlRemoto === 1 || data.controlRuta === 1) {
+                $('.rowEmpleadosEditar').show();
+                EmpleadosDeActividadEditar = $('#empleados').val();
+            } else {
+                $('.rowEmpleadosEditar').hide();
+            }
+            if (data.porEmpleados === 1) {
+                $('#e_customAE').prop("checked", true);
+                $('#porEmpleados').show();
+                $('.todosCol').show();
+                datosAsignacionPorEmpleado();
+            } else {
+                $('#e_customAE').prop("checked", false);
+                $('#porEmpleados').hide();
+                $('.todosCol').hide();
+            }
+            if (data.porAreas === 1) {
+                $('#e_customAA').prop("checked", true);
+                $('.colAreas').show();
+                datosAsignacionPorArea();
+            } else {
+                $('#e_customAA').prop("checked", false);
+                $('.colAreas').hide();
+            }
         },
         error: function () { },
     });
     $('#editactividadTarea').modal();
-    empleadoLista(id);
 }
 function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
     var idA = $('#idActiv').val();
     var empleados = $('#empleados').val();
-    var global;
+    var areas = $('#areaAsignarEditar').val();
+    var globalEmpleado;
+    var asignacionEmpleado;
+    var asignacionArea;
+    var globalArea;
+    //* CONTROL REMOTO
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
         var controlRemoto = 0;
     }
+    //* ASISTENCIA EN PUERTA
     if ($('#e_customAP').is(":checked") == true) {
         var asistenciaPuerta = 1;
     } else {
         var asistenciaPuerta = 0;
     }
-    if ($('#edit_customGlobal').is(":checked") == true) {
-        global = 1;
+    //* CONTROL EN RUTA
+    if ($('#e_customCRT').is(":checked") == true) {
+        var controlRuta = 1;
     } else {
-        global = 0;
+        var controlRuta = 0;
+    }
+    //* ASIGNACION DE EMPLEADOS GLOBAL
+    if ($('#checkboxEmpleadosEditarTodos').is(":checked") == true) {
+        globalEmpleado = 1;
+    } else {
+        globalEmpleado = 0;
+    }
+    //* ASIGNACION DE EMPLEADOS
+    if ($('#e_customAE').is(":checked")) {
+        asignacionEmpleado = 1;
+    } else {
+        asignacionEmpleado = 0;
+    }
+    //* ASIGNACION  DE AREAS
+    if ($('#e_customAA').is(":checked")) {
+        asignacionArea = 1;
+    } else {
+        asignacionArea = 0;
+    }
+    //* ASIGNACION DE AREAS GLOBAL
+    if ($('#checkboxAreasEditarTodos').is(":checked")) {
+        globalArea = 1;
+    } else {
+        globalArea = 0;
     }
     $.ajax({
         type: "GET",
@@ -102,9 +228,14 @@ function editarActividadTarea() {
             idA: idA,
             cr: controlRemoto,
             ap: asistenciaPuerta,
+            crt: controlRuta,
             codigo: codigo,
             empleados: empleados,
-            global: global
+            globalEmpleado: globalEmpleado,
+            asignacionEmpleado: asignacionEmpleado,
+            areas: areas,
+            asignacionArea: asignacionArea,
+            globalArea: globalArea
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -320,14 +451,14 @@ function actividadesOrganizacion() {
 
         }
     });
-    var valorswitch=$('#modifActI').val();
-    var valorBaja=$('#bajaActI').val();
-    if(valorswitch==0){
+    var valorswitch = $('#modifActI').val();
+    var valorBaja = $('#bajaActI').val();
+    if (valorswitch == 0) {
         $('input[type=checkbox]').prop('disabled', true);
-                $('[name="aedit"]').hide();
+        $('[name="aedit"]').hide();
     }
-    if(valorBaja==0){
-                $('[name="deletePermiso"]').hide();
+    if (valorBaja == 0) {
+        $('[name="deletePermiso"]').hide();
     }
 
 }
@@ -665,7 +796,7 @@ $("#codigoTarea").keyup(function () {
     $(this).removeClass("borderColor");
 });
 
-// SELECT DE EMPLEADOS EN FORMULARIO EDITAR
+//* SELECT DE EMPLEADOS EN FORMULARIO EDITAR
 function empleadoLista(id) {
     var idA = id;
     $("#empleados").empty();
@@ -689,7 +820,7 @@ function empleadoLista(id) {
             }*/
         },
         success: function (data) {
-            var option = `<option value="" disabled>Seleccionar</option>`;
+            var option = ``;
             data[0].select.forEach(element => {
                 option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
             });
@@ -711,7 +842,41 @@ $("#empleados").select2({
     tags: "true"
 });
 // *****************************************
-// SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
+//* SELECT DE AREAS EN FORMULARIO EDITAR
+//: FUNCION PARA OBTENER AREAS EN FORMULARIO EDITAR
+function listaAreasEditar() {
+    $("#areaAsignarEditar").empty();
+    var container = $("#areaAsignarEditar");
+    $.ajax({
+        url: "/listaAreasE",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.area_id}"> Área : ${element.area_descripcion} </option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+//: ****************************************************************
+$("#areaAsignarEditar").select2({
+    tags: "true"
+});
+//* ****************************************
+//* SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
 function empleadoListaReg() {
     $("#reg_empleados").empty();
     var container = $("#reg_empleados");
@@ -1006,3 +1171,201 @@ $('#checkboxEmpleados').click(function () {
         $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
     }
 });
+//* ************************** FORMULARIO EDITAR ********************** *//
+//? TODOS LOS EMPLEADOS EN EDITAR
+$('#checkboxEmpleadosEditar').click(function () {
+    if ($(this).is(':checked')) {
+        $("#empleados > option").prop("selected", "selected");
+        $('#empleados').trigger("change");
+    } else {
+        $('#empleados').val(EmpleadosDeActividadEditar).trigger('change');
+    }
+});
+//: Funcion para mostrar empleados por áreas
+$("#areaAsignarEditar").on("change", function () {
+    var empleados = EmpleadosDeActividadEditar;
+    var areas = $("#areaAsignarEditar").val();
+    $("#empleados").empty();
+    var container = $("#empleados");
+    $.ajax({
+        async: false,
+        url: "/empleadoConAreas",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            areas: areas
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = "";
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+            });
+            container.append(option);
+            $("#empleados").val(EmpleadosDeActividadEditar).trigger('change');
+            if ($('#checkboxEmpleadosEditar').is(':checked')) {
+                $("#empleados > option").prop("selected", "selected");
+                $("#empleados").trigger("change");
+            }
+        },
+        error: function () { },
+    });
+});
+$('#e_customAA').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#e_customAE').prop("checked", false);
+        $('#porEmpleados').hide();
+        $('.todosCol').hide();
+        $('.colAreas').show();
+        limpiarAsignacionPorEmpleado();
+        datosAsignacionPorArea();
+    } else {
+        $('.colAreas').hide();
+        limpiarAsignacionPorArea();
+    }
+});
+$('#e_customAE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#e_customAA').prop("checked", false);
+        $('.colAreas').hide();
+        $('#porEmpleados').show();
+        $('.todosCol').show();
+        datosAsignacionPorEmpleado();
+        limpiarAsignacionPorArea();
+    } else {
+        $('#porEmpleados').hide();
+        $('.todosCol').hide();
+        limpiarAsignacionPorEmpleado();
+    }
+});
+//: OBTENER DATOS DE ASIGNACION POR EMPLEADO
+function datosAsignacionPorEmpleado() {
+    console.log($('#idActiv').val());
+    var idA = $('#idActiv').val();
+    $("#empleados").empty();
+    var container = $("#empleados");
+    $.ajax({
+        async: false,
+        url: "/datosPorAsignacionE",
+        method: "GET",
+        data: {
+            id: idA
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = ``;
+            if (data[0].select.length != 0) {
+                data[0].select.forEach(element => {
+                    option += `<option value="${element.idEmpleado}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+                });
+            }
+            if (data[0].noSelect.length != 0) {
+                data[0].noSelect.forEach(element => {
+                    option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno}</option>`;
+                });
+            }
+            container.append(option);
+            if (data[0].global === 1) {
+                $('#checkboxEmpleadosEditarTodos').prop("checked", true);
+            } else {
+                $('#checkboxEmpleadosEditarTodos').prop("checked", false);
+            }
+            if (data[0].noSelect.length === 0) {
+                $('#checkboxEmpleadosEditar').prop("checked", true);
+            }
+        },
+        error: function () { },
+    });
+}
+//: OBTENER DATOS DE ASIGNACION POR EMPLEADO
+function datosAsignacionPorArea() {
+    var idA = $('#idActiv').val();
+    $('#areaAsignarEditar').empty();
+    var container = $('#areaAsignarEditar');
+    $.ajax({
+        async: false,
+        url: "/datosPorAsignacionA",
+        method: "GET",
+        data: {
+            id: idA
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            var option = ``;
+            if (data[0].select.length != 0) {
+                data[0].select.forEach(element => {
+                    option += `<option value="${element.area_id}" selected="selected">Área : ${element.area_descripcion}</option>`;
+                });
+            }
+            if (data[0].noSelect.length != 0) {
+                data[0].noSelect.forEach(element => {
+                    option += `<option value="${element.area_id}">Área : ${element.area_descripcion}</option>`;
+                });
+            }
+            container.append(option);
+            if (data[0].global === 1) {
+                $('#checkboxAreasEditarTodos').prop("checked", true);
+            } else {
+                $('#checkboxAreasEditarTodos').prop("checked", false);
+            }
+            // if (data[0].noSelect.length === 0) {
+            //     $('#checkboxEmpleadosEditar').prop("checked", true);
+            // }
+        },
+        error: function () { },
+    });
+}
+//: LIMPIAR EN ASIGNACION POR EMPLEADO
+function limpiarAsignacionPorEmpleado() {
+    $('#checkboxEmpleadosEditarTodos').prop("checked", false);
+    $('#checkboxEmpleadosEditar').prop("checked", false);
+    $('#empleados').empty();
+    $('#e_customAE').prop("checked", false);
+}
+//: LIMPIAR EN ASIGNACION POR AREAS
+function limpiarAsignacionPorArea() {
+    $('#areaAsignarEditar').empty();
+    $('#checkboxAreasEditarTodos').prop("checked", false);
+    $('#e_customAA').prop("checked", false);
+}
+//: SELECT DE EMPLEADOS EN EDITAR
+$("#empleados").on("change", function (e) {
+    if ($("#empleados").select2('data').length === $("#empleados >option").length) {
+        $('#checkboxEmpleadosEditar').prop("checked", true);
+    } else {
+        $('#checkboxEmpleadosEditar').prop("checked", false);
+    }
+});
+//* ******************************************************************** *//
