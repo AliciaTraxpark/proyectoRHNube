@@ -389,122 +389,6 @@ $("#empleAsignar").select2({
     tags: "true"
 });
 
-// //: Funcion para mostrar empleados por áreas
-// $("#areaAsignar").on("change", function () {
-//     var empleados = EmpleadosDeActividad;
-//     var areas = $("#areaAsignar").val();
-//     $("#empleAsignar").empty();
-//     var container = $("#empleAsignar");
-//     $.ajax({
-//         async: false,
-//         url: "/empleadoConAreas",
-//         method: "POST",
-//         data: {
-//             empleados: empleados,
-//             areas: areas
-//         },
-//         headers: {
-//             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-//         },
-//         statusCode: {
-//             401: function () {
-//                 location.reload();
-//             },
-//             /*419: function () {
-//                 location.reload();
-//             }*/
-//         },
-//         success: function (data) {
-//             var option = "";
-//             data.forEach(element => {
-//                 option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
-//             });
-//             container.append(option);
-//             $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
-//             if ($('#checkboxEmpleados').is(':checked')) {
-//                 $("#empleAsignar > option").prop("selected", "selected");
-//                 $("#empleAsignar").trigger("change");
-//             }
-//         },
-//         error: function () { },
-//     });
-// });
-
-function asignarActividadEmpleado() {
-    var empleados = $("#empleAsignar").val();
-    var actividad = $("#actividadesAsignar").val();
-    var global;
-    if ($('#customGlobal').is(":checked") == true) {
-        global = 1;
-    } else {
-        global = 0;
-    }
-    $.ajax({
-        async: false,
-        url: "/asignacionActividadE",
-        method: "POST",
-        data: {
-            empleados: empleados,
-            idActividad: actividad,
-            global: global
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            $('#asignarPorArea').modal('toggle');
-            $("#empleAsignar").empty();
-            $("#areaAsignar").empty();
-            //: DESACTIVAMOS FORMULARIO
-            $('#areaAsignar').attr("disabled", true);
-            $('#checkboxEmpleados').attr("disabled", true);
-            $('#empleAsignar').attr("disabled", true);
-            $('#checkboxEmpleados').prop('checked', true);
-            $('#customGlobal').attr("disabled", true);
-            //: ************************************************
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nAsignación exitosa.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () { },
-    });
-}
-
-//? Todos los empleados
-$('#checkboxEmpleados').click(function () {
-    if ($(this).is(':checked')) {
-        $("#empleAsignar > option").prop("selected", "selected");
-        $("#empleAsignar").trigger("change");
-    } else {
-        $("#empleAsignar").val(EmpleadosDeActividad).trigger('change');
-    }
-});
 //* ************************** FORMULARIO EDITAR ********************** *//
 //: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
 $('#e_customCR').on("change.bootstrapSwitch", function (event) {
@@ -1650,4 +1534,105 @@ $('#areaAsignar').on("change", function (e) {
         $('#checkboxAreas').prop("checked", false);
     }
 });
+$('#a_customAA').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        limpiarAE();
+        var idA = $("#actividadesAsignar").val();
+        datosAsignacionPorArea_Asignacion(idA);
+        $('.aArea').show();
+    } else {
+        limpiarAA();
+    }
+});
+$('#a_customAE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        limpiarAA();
+        var idA = $("#actividadesAsignar").val();
+        datosAsignacionPorEmpleado_Asignacion(idA);
+        $('.aEmpleado').show();
+    } else {
+        limpiarAA();
+    }
+});
+function asignarActividadEmpleado() {
+    var empleados = $("#empleAsignar").val();
+    var actividad = $("#actividadesAsignar").val();
+    var areas = $('#areaAsignar').val();
+    var globalEmpleado;
+    var globalArea;
+    var porEmpleados;
+    var porAreas;
+    if ($('#checkboxEmpleadosTodos').is(":checked") == true) {
+        globalEmpleado = 1;
+    } else {
+        globalEmpleado = 0;
+    }
+    if ($('#checkboxAreasTodos').is(":checked") == true) {
+        globalArea = 1;
+    } else {
+        globalArea = 0;
+    }
+    if ($('#a_customAE').is(":checked") == true) {
+        porEmpleados = 1;
+    } else {
+        porEmpleados = 0;
+    }
+    if ($('#a_customAA').is(":checked") == true) {
+        porAreas = 1;
+    } else {
+        porAreas = 0;
+    }
+    $.ajax({
+        async: false,
+        url: "/asignacionActividadE",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            idActividad: actividad,
+            areas: areas,
+            globalEmpleado: globalEmpleado,
+            globalArea: globalArea,
+            asignacionArea: porAreas,
+            asignacionEmpleado: porEmpleados
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#asignarPorArea').modal('toggle');
+            limpiarAsignacion();
+            //: ************************************************
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nAsignación exitosa.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
+    });
+}
 //* ************************ FINALIZACION ****************************** *//
