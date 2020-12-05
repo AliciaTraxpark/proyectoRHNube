@@ -6,7 +6,7 @@ use App\controladores;
 use App\dispo_nombres;
 use Illuminate\Http\Request;
 use App\dispositivos;
-use App\marcacion_movil;
+use App\marcacion_puerta;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Support\Facades\DB;
@@ -200,29 +200,29 @@ class apimovilController extends Controller
         $idHoraEmp=$request->idHoraEmp; */
         foreach($request->all() as $req){
             if($req['tipoMarcacion']==1){
-                $marcacion_movil=new marcacion_movil();
-           /*  $marcacion_movil->marcaMov_tipo=$req['tipoMarcacion']; */
-            $marcacion_movil->marcaMov_fecha= $req['fechaMarcacion'];
-            $marcacion_movil->marcaMov_emple_id=$req['idEmpleado'];
-            $marcacion_movil->controladores_idControladores=$req['idControlador'];
-            $marcacion_movil->dispositivos_idDispositivos=$req['idDisposi'];
-            $marcacion_movil->organi_id=$req['organi_id'];
+                $marcacion_puerta=new marcacion_puerta();
+           /*  $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
+            $marcacion_puerta->marcaMov_fecha= $req['fechaMarcacion'];
+            $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
+            $marcacion_puerta->controladores_idControladores=$req['idControlador'];
+            $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
+            $marcacion_puerta->organi_id=$req['organi_id'];
 
             if(empty($req['idHoraEmp'])) {}
             else{
-                $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
+                $marcacion_puerta->horarioEmp_id=$req['idHoraEmp'];
             }
             if(empty($req['latitud'])) {}
             else{
-                $marcacion_movil->marca_latitud=$req['latitud'];
+                $marcacion_puerta->marca_latitud=$req['latitud'];
             }
             if(empty($req['longitud'])) {}
             else{
-                $marcacion_movil->marca_longitud=$req['longitud'];
+                $marcacion_puerta->marca_longitud=$req['longitud'];
             }
-            $marcacion_movil->save();
+            $marcacion_puerta->save();
             } else{
-                $marcacion_movil1 =DB::table('marcacion_movil as mv')
+                $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                 ->where('mv.marcaMov_salida', '=',null )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
@@ -230,30 +230,30 @@ class apimovilController extends Controller
                 ->orderby('marcaMov_id','DESC')->take(1)
                 ->get();
 
-            if($marcacion_movil1->isEmpty()){
-                $marcacion_movil=new marcacion_movil();
-           /*  $marcacion_movil->marcaMov_tipo=$req['tipoMarcacion']; */
-            $marcacion_movil->marcaMov_salida= $req['fechaMarcacion'];
-            $marcacion_movil->marcaMov_emple_id=$req['idEmpleado'];
-            $marcacion_movil->controladores_idControladores=$req['idControlador'];
-            $marcacion_movil->dispositivos_idDispositivos=$req['idDisposi'];
-            $marcacion_movil->organi_id=$req['organi_id'];
+            if($marcacion_puerta1->isEmpty()){
+                $marcacion_puerta=new marcacion_puerta();
+           /*  $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
+            $marcacion_puerta->marcaMov_salida= $req['fechaMarcacion'];
+            $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
+            $marcacion_puerta->controladores_idControladores=$req['idControlador'];
+            $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
+            $marcacion_puerta->organi_id=$req['organi_id'];
 
             if(empty($req['idHoraEmp'])) {}
             else{
-                $marcacion_movil->horarioEmp_id=$req['idHoraEmp'];
+                $marcacion_puerta->horarioEmp_id=$req['idHoraEmp'];
             }
             if(empty($req['latitud'])) {}
             else{
-                $marcacion_movil->marca_latitud=$req['latitud'];
+                $marcacion_puerta->marca_latitud=$req['latitud'];
             }
             if(empty($req['longitud'])) {}
             else{
-                $marcacion_movil->marca_longitud=$req['longitud'];
+                $marcacion_puerta->marca_longitud=$req['longitud'];
             }
-            $marcacion_movil->save();
+            $marcacion_puerta->save();
             } else{
-                $marcacion_movil =DB::table('marcacion_movil as mv')
+                $marcacion_puerta =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                 ->where('mv.marcaMov_salida', '=',null )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
@@ -270,7 +270,7 @@ class apimovilController extends Controller
         }
 
 
-        if($marcacion_movil){
+        if($marcacion_puerta){
             return response()->json(array('status'=>200,'title' => 'Marcacion registrada correctamente',
             'detail' => 'Marcacion registrada correctamente en la base de datos'),200);
         }

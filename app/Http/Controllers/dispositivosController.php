@@ -264,7 +264,7 @@ class dispositivosController extends Controller
                 ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->get();
-                
+
                }
                 }
             }
@@ -317,7 +317,7 @@ class dispositivosController extends Controller
     if ($invitadod){
         if ($invitadod->verTodosEmps == 1) {
             if($idemp==0 || $idemp==' '){
-                $marcaciones=DB::table('marcacion_movil as marcm')
+                $marcaciones=DB::table('marcacion_puerta as marcm')
                 ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
                 'cargo_descripcion' ,'marcm.organi_id')
                 ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -338,7 +338,7 @@ class dispositivosController extends Controller
                    })
                ->get() ;
               } else{
-                $marcaciones=DB::table('marcacion_movil as marcm')
+                $marcaciones=DB::table('marcacion_puerta as marcm')
                 ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
                 'cargo_descripcion' ,'marcm.organi_id')
                 ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -367,7 +367,7 @@ class dispositivosController extends Controller
         ->get()->first();
        if($invitado_empleadoIn!=null){
         if($idemp==0 || $idemp==' '){
-            $marcaciones=DB::table('marcacion_movil as marcm')
+            $marcaciones=DB::table('marcacion_puerta as marcm')
             ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
             'cargo_descripcion' ,'marcm.organi_id')
             ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -392,7 +392,7 @@ class dispositivosController extends Controller
                })
            ->get() ;
           } else{
-            $marcaciones=DB::table('marcacion_movil as marcm')
+            $marcaciones=DB::table('marcacion_puerta as marcm')
             ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
             'cargo_descripcion' ,'marcm.organi_id')
             ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -420,7 +420,7 @@ class dispositivosController extends Controller
        }
        else{
         if($idemp==0 || $idemp==' '){
-            $marcaciones=DB::table('marcacion_movil as marcm')
+            $marcaciones=DB::table('marcacion_puerta as marcm')
             ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
             'cargo_descripcion' ,'marcm.organi_id')
             ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -446,7 +446,7 @@ class dispositivosController extends Controller
                })
            ->get() ;
           } else{
-            $marcaciones=DB::table('marcacion_movil as marcm')
+            $marcaciones=DB::table('marcacion_puerta as marcm')
             ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
             'cargo_descripcion' ,'marcm.organi_id')
             ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -481,7 +481,7 @@ class dispositivosController extends Controller
 
 else{
     if($idemp==0 || $idemp==' '){
-        $marcaciones=DB::table('marcacion_movil as marcm')
+        $marcaciones=DB::table('marcacion_puerta as marcm')
         ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
         'cargo_descripcion' ,'marcm.organi_id')
         ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
@@ -502,7 +502,7 @@ else{
            })
        ->get() ;
       } else{
-        $marcaciones=DB::table('marcacion_movil as marcm')
+        $marcaciones=DB::table('marcacion_puerta as marcm')
         ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
         'cargo_descripcion' ,'marcm.organi_id')
         ->leftJoin('empleado as e','marcm.marcaMov_emple_id','=','e.emple_id')
