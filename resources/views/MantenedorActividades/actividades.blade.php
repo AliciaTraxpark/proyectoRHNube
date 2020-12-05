@@ -184,6 +184,7 @@
                             <th>Actividad</th>
                             <th>Código</th>
                             <th class="text-center">Control remoto</th>
+                            <th class="text-center">Control en ruta</th>
                             <th class="text-center">Asistencia en puerta</th>
                             <th class="text-center">En uso</th>
                             <th class="text-center"></th>

@@ -166,6 +166,21 @@ function actividadesOrganizacion() {
                             style=\"font-weight: bold\"></label>\
                         </div></td>";
                     }
+                    if (data[index].controlRuta == 1) {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvCRT"+ data[index].Activi_id + "\" checked disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    } else {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvCRT"+ data[index].Activi_id + "\" disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
                     if (data[index].asistenciaPuerta == 1) {
                         tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
@@ -200,6 +215,21 @@ function actividadesOrganizacion() {
                         <input type=\"checkbox\" class=\"custom-control-input\"\
                             id=\"switchActvCR"+ data[index].Activi_id + "\">\
                         <label class=\"custom-control-label\" for=\"switchActvCR"+ data[index].Activi_id + "\"\
+                            style=\"font-weight: bold\"></label>\
+                        </div></td>";
+                    }
+                    if (data[index].controlRuta == 1) {
+                        tr += "<td class=\"text-center\" ><div class=\"custom-control custom-switch mb-2\">\
+                        <input type=\"checkbox\" class=\"custom-control-input\"\
+                            id=\"switchActvCRT"+ data[index].Activi_id + "\" checked>\
+                        <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
+                            style=\"font-weight: bold\"></label>\
+                        </div></td>";
+                    } else {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                        <input type=\"checkbox\" class=\"custom-control-input\"\
+                            id=\"switchActvCRT"+ data[index].Activi_id + "\">\
+                        <label class=\"custom-control-label\" for=\"switchActvCRT"+ data[index].Activi_id + "\"\
                             style=\"font-weight: bold\"></label>\
                         </div></td>";
                     }
@@ -295,6 +325,39 @@ function cambiarEstadoActividad(id) {
 
     $("#switchActvCR" + id).on("change.bootstrapSwitch", function (event) {
         var control = "CR";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado de la  actividad?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Actividad",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    actividadesOrganizacion();
+                },
+            });
+    });
+
+    $("#switchActvCRT" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "CRT";
         if (event.target.checked == true) {
             var valor = 1;
         } else {

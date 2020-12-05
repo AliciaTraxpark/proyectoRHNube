@@ -97,6 +97,7 @@ class ActividadesController extends Controller
                 'a.Activi_Nombre',
                 'a.controlRemoto',
                 'a.asistenciaPuerta',
+                'a.controlRuta',
                 'a.eliminacion',
                 DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA"),
                 DB::raw("CASE WHEN(cp.idCaptura) IS NULL THEN 'No' ELSE 'Si' END AS respuesta")
@@ -386,6 +387,9 @@ class ActividadesController extends Controller
         if ($actividad) {
             if ($control == "CR") {
                 $actividad->controlRemoto = $request->get('valor');
+            }
+            if ($control == "CRT") {
+                $actividad->controlRuta = $request->get('valor');
             }
             if ($control == "AP") {
                 $actividad->asistenciaPuerta = $request->get('valor');
