@@ -3390,6 +3390,8 @@ function datosEmpresaEmpleado(method) {
 }
 
 function enviarEmpresarialEmpleado(accion, objEmpleado) {
+    ////////////////////////////////////
+
     var formData = new FormData();
     formData.append("objEmpleado", JSON.stringify(objEmpleado));
     $.ajax({
@@ -3398,6 +3400,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
         data: formData,
         contentType: false,
         processData: false,
+        async:false,
         dataType: "json",
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -3438,6 +3441,37 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
         },
         error: function (data, errorThrown) { },
     });
+    var formData1 = new FormData();
+   /*  console.log($("#exampleFormControlFile1").prop("files")[0]); */
+   /*  formData1.append("file", $("#exampleFormControlFile1").prop("files")[0]); */
+    var num= document.getElementById('exampleFormControlFile1').files.length;
+
+for (var i = 0; i < num; i++) {
+    formData1.append("exampleFormControlFile1[]", document.getElementById('exampleFormControlFile1').files[i]);
+}
+    $.ajax({
+        type: "POST",
+        url: "/empleado/storeDocumento" + accion,
+        data: formData1,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+        },
+        error: function (data, errorThrown) { },
+    });
+    ////////////////////////////////////
 }
 
 //GUARDAR FOTO EN GUARDAR EMPLEADO
@@ -6182,4 +6216,14 @@ var fechaValue = $("#fechaSelec").flatpickr({
   f = moment().format("YYYY-MM-DD");
   fechaValue.setDate(f);
   $( "#fechaInput" ).change();
+  })
+  $("#contrato").change(function () {
+    $("#validContrato").hide();
+   let varCont=$("#contrato").val();
+    if (varCont!='') {
+    $('#form-registrar').modal('hide');
+        $('#fechasmodal').modal('show');
+    }
+
+
   })
