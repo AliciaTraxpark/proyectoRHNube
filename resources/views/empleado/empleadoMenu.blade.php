@@ -1030,7 +1030,7 @@ use App\proyecto_empleado;
                 <div class="row">
                     {{-- BOTONES --}}
                     <div class=" col-md-12 text-right btnResponsive">
-                      {{--   @if (isset($bajaEmp))
+                       @if (isset($bajaEmp))
                          @if ($bajaEmp==1)
                          <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
@@ -1046,7 +1046,7 @@ use App\proyecto_empleado;
                             class="btn btn-sm btn-primary delete_all">
                             Dar de baja
                         </button>
-                        @endif --}}
+                        @endif 
 
                         @if (isset($agregarEmp))
                          @if ($agregarEmp==1)

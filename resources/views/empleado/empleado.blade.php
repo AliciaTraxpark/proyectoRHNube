@@ -915,10 +915,10 @@ use Carbon\Carbon;
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
 
-                                  {{--   <button onclick="eliminarEmpleado()" id=""
+                                   <button onclick="eliminarEmpleado()" id=""
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                                         class="btn btn-sm btn-primary delete_all" data-url="">Dar de baja
-                                    </button> --}}
+                                    </button> 
                                     {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                                     <button class="btn btn-sm btn-primary" id="formNuevoE"
