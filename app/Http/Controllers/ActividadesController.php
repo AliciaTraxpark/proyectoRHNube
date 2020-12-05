@@ -448,8 +448,11 @@ class ActividadesController extends Controller
         $actividad = DB::table('actividad as a')
             ->select('a.Activi_id', 'a.Activi_Nombre', 'a.codigoActividad')
             ->where('a.organi_id', '=', session('sesionidorg'))
-            ->where('a.controlRemoto', '=', 1)
             ->where('a.estado', '=', 1)
+            ->where(function ($query) {
+                $query->where('a.controlRemoto', '=', 1)
+                    ->orWhere('a.controlRuta', '=', 1);
+            })
             ->get();
         $respuesta = [];
         for ($index = 0; $index < sizeof($actividad); $index++) {

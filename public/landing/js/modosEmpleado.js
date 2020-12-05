@@ -1,4 +1,4 @@
-// MOSTRAR DATOS EN TABLA DEL FORMULARIO GUARDAR
+//* MOSTRAR DATOS EN TABLA DEL FORMULARIO GUARDAR
 function actividad_empleado() {
     var id = $("#idEmpleado").val();
     $.ajax({
@@ -44,7 +44,7 @@ function actividad_empleado() {
         error: function () { },
     });
 }
-// MOSTRAR DATOS EN TABLA DEL FORMULARIO EDITAR
+//* MOSTRAR DATOS EN TABLA DEL FORMULARIO EDITAR
 function actividadEmp() {
     var id = $("#v_id").val();
     $.ajax({
@@ -110,7 +110,7 @@ function actividadEmp() {
         error: function () { },
     });
 }
-// MOSTRAR DATOS EN TABLA DEL FORMULARIO VER
+//* MOSTRAR DATOS EN TABLA DEL FORMULARIO VER
 function actividadEmpVer() {
     var id = $("#v_idV").val();
     $.ajax({
@@ -147,7 +147,7 @@ function actividadEmpVer() {
         error: function () { },
     });
 }
-//INICIALIZAR PLUGIN DE MILTI SELECT EN GUARDAR
+//* INICIALIZAR PLUGIN DE MILTI SELECT EN GUARDAR
 $('#regEmpleadoActiv').select2({
     tags: "true",
     placeholder: "Seleccionar",
@@ -211,14 +211,14 @@ $('#formActvidadesReg').submit(function (e) {
     }
     this.submit();
 });
-// INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
+//* INICIALIZAR PLUGIN DE MULTI SELECT EN EDITAR
 $('#empleadoActiv').select2({
     tags: "true",
     placeholder: "Seleccionar",
     closeOnSelect: false,
     allowClear: true
 });
-// SELECT EN MODAL EDITAR
+//* SELECT EN MODAL EDITAR
 $('#empleadoActiv').on("select2:opening", function () {
     var idE = $("#v_id").val();
     var value = $('#empleadoActiv').val();
