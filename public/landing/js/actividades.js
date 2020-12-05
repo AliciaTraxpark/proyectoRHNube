@@ -510,6 +510,67 @@ $('#e_customAP').on("change.bootstrapSwitch", function (event) {
     }
 });
 //: ***********************************************
+$('#FormEditarActividadTarea').attr('novalidate', true);
+$('#FormEditarActividadTarea').submit(function (e) {
+    e.preventDefault();
+    if ($('#e_customAA').is(":checked")) {
+        if ($('#areaAsignarEditar').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Actividad',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#editactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if ($('#e_customAE').is(":checked")) {
+        if ($('#empleados').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#editactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    this.submit();
+});
 var EmpleadosDeActividadEditar;
 var ActividadDeActividadEditar;
 function editarActividad(id) {
@@ -575,6 +636,7 @@ function editarActividad(id) {
         },
         error: function () { },
     });
+    $.notifyClose();
     $('#editactividadTarea').modal();
 }
 function editarActividadTarea() {
@@ -907,6 +969,67 @@ $('#areaAsignarEditar').on("change", function (e) {
     }
 });
 //* ************************** FORMULARIO REGISTRAR ********************** *//
+$('#FormRegistrarActividadTarea').attr('novalidate', true);
+$('#FormRegistrarActividadTarea').submit(function (e) {
+    e.preventDefault();
+    if ($('#customAA').is(":checked")) {
+        if ($('#areaAsignarReg').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Actividad',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#regactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if ($('#customAE').is(":checked")) {
+        if ($('#reg_empleados').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#regactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    this.submit();
+});
 $("#areaAsignarReg").select2({
     tags: "true"
 });
@@ -981,6 +1104,7 @@ function estadoAsignacionesReg() {
         $('.colAreasReg').hide();
         limpiarAsignacionPorAreaReg();
     }
+    $.notifyClose();
 }
 //: LIMPIAR EN ASIGNACION POR EMPLEADO EN REGISTRAR
 function limpiarAsignacionPorEmpleadoReg() {
@@ -1616,6 +1740,68 @@ $('#a_customAE').on("change.bootstrapSwitch", function (event) {
     } else {
         limpiarAA();
     }
+});
+//* VALIDACION DE FORMULARIO
+$('#FormAsignarActividadEmpleado').attr('novalidate', true);
+$('#FormAsignarActividadEmpleado').submit(function (e) {
+    e.preventDefault();
+    if ($('#a_customAA').is(":checked")) {
+        if ($('#areaAsignar').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Actividad',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#asignarPorArea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if ($('#a_customAE').is(":checked")) {
+        if ($("#empleAsignar").val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#asignarPorArea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    this.submit();
 });
 function asignarActividadEmpleado() {
     var empleados = $("#empleAsignar").val();

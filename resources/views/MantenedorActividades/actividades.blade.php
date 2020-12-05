@@ -213,7 +213,7 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarActividadTarea()">
+                        <form action="javascript:registrarActividadTarea()" id="FormRegistrarActividadTarea">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -366,7 +366,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input type="hidden" id="idActiv">
-                        <form action="javascript:editarActividadTarea()">
+                        <form action="javascript:editarActividadTarea()" id="FormEditarActividadTarea">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -518,7 +518,7 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:asignarActividadEmpleado()">
+                        <form action="javascript:asignarActividadEmpleado()" id="FormAsignarActividadEmpleado">
                             <div class="row border-bottom pb-2">
                                 <div class="col-md-12">
                                     <label class="mb-0">Seleccionar Actividad</label>
