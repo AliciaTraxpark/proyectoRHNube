@@ -217,16 +217,16 @@ class apiSeguimientoRutaContoller extends Controller
     // ? LISTA DE ACTIVIDADES PARA CONTROL RUTA
     public function listaActividad(Request $request)
     {
-        // ? ACTIVIDADES DEL EMPLEADO -> POR AHORA ACTIVIDADES DE CONTROL REMOTO
+        // ? ACTIVIDADES DEL EMPLEADO
         $respuesta = [];
         $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $request->get('idEmpleado'))->get();
         foreach ($actividad_empleado as $act) {
             $actividad = DB::table('actividad as a')
-                ->select('a.Activi_id', 'a.Activi_Nombre')
+                ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRuta')
                 ->where('a.Activi_id', '=', $act->idActividad)
                 ->get()
                 ->first();
-            $actividad->estado = $act->estado;
+            $actividad->estado = $actividad->controlRuta;
             array_push($respuesta, $actividad);
         }
 

@@ -559,7 +559,7 @@ use Carbon\Carbon;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Registrar Actividad
+                        Registrar actividad
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-ver').modal('show');javascript:limpiarModo()">
@@ -569,7 +569,7 @@ use Carbon\Carbon;
                 <div class="modal-body" style="font-size:12px!important">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="javascript:registrarActividad()">
+                            <form action="javascript:registrarActividad()" id="FormregistrarActividad">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -589,18 +589,24 @@ use Carbon\Carbon;
                                 <div class="row">
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCRGE" checked
-                                                disabled>
+                                            <input type="checkbox" class="custom-control-input" id="customCRGE">
                                             <label class="custom-control-label" for="customCRGE"
-                                                style="font-weight: bold">Control Remoto</label>
+                                                style="font-weight: bold">
+                                                <i data-feather="activity"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                Control Remoto
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customAPGE">
-                                            <label class="custom-control-label" for="customAPGE"
-                                                style="font-weight: bold">Asistencia en
-                                                Puerta</label>
+                                            <input type="checkbox" class="custom-control-input" id="customCRTGE">
+                                            <label class="custom-control-label" for="customCRTGE"
+                                                style="font-weight: bold">
+                                                Control en Ruta
+                                                <i data-feather="map-pin"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -631,7 +637,7 @@ use Carbon\Carbon;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Registrar Actividad
+                        Registrar actividad
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiarModo()">
@@ -641,7 +647,7 @@ use Carbon\Carbon;
                 <div class="modal-body" style="font-size:12px!important">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="javascript:registrarActividadFR()">
+                            <form action="javascript:registrarActividadFR()" id="FormregistrarActividadFR">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -661,18 +667,24 @@ use Carbon\Carbon;
                                 <div class="row">
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCRFR" checked
-                                                disabled>
+                                            <input type="checkbox" class="custom-control-input" id="customCRFR">
                                             <label class="custom-control-label" for="customCRFR"
-                                                style="font-weight: bold">Control Remoto</label>
+                                                style="font-weight: bold">
+                                                <i data-feather="activity"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                Control Remoto
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customAPFR">
-                                            <label class="custom-control-label" for="customAPFR"
-                                                style="font-weight: bold">Asistencia en
-                                                Puerta</label>
+                                            <input type="checkbox" class="custom-control-input" id="customCRTFR">
+                                            <label class="custom-control-label" for="customCRTFR"
+                                                style="font-weight: bold">
+                                                <i data-feather="map-pin"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                Control en Ruta
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -1079,33 +1091,45 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 {{-- MODAL DE ELIMINAR --}}
-    <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Dar de baja </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
+                <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
+                    aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Dar de baja </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
 
-                    <div class="col-xl-12">
-                        <div class="form-group row">
-                            <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de baja o cese de empleado(s) :</label>
-                            <div class="input-group col-md-5 text-center" style="padding-left: 0px;padding-right: 0px;top: 10px;"
-                                id="fechaSelec">
-                                <input type="text" id="fechaInput"  class="col-md-12 form-control" data-input>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text form-control flatpickr">
-                                        <a class="input-button" data-toggle>
-                                            <i class="uil uil-calender"></i>
-                                        </a>
+                                    <div class="col-xl-12">
+                                        <div class="form-group row">
+                                            <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de
+                                                baja o cese de empleado(s) :</label>
+                                            <div class="input-group col-md-5 text-center"
+                                                style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
+                                                <input type="text" id="fechaInput" class="col-md-12 form-control"
+                                                    data-input>
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text form-control flatpickr">
+                                                        <a class="input-button" data-toggle>
+                                                            <i class="uil uil-calender"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-md 12" id="divbajaF">
+                                        <div class="form-group" style="margin-top: 10px;">
+                                            <label for="bajaFile">Adjuntar documento</label>
+                                            <input type="file" multiple="true" class="form-control-file" id="bajaFile">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -1121,17 +1145,17 @@ use Carbon\Carbon;
             </div>
             <div class="modal-footer">
 
-                            <button type="button" id="cerrarE" class="btn btn-light btn-sm "
-                                data-dismiss="modal">Cancelar</button>
+                                <button type="button" id="cerrarE" class="btn btn-light btn-sm "
+                                    data-dismiss="modal">Cancelar</button>
 
-                            <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
-                                style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+                                <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
+                                    style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
 
 
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
@@ -1450,7 +1474,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de Contrato</h5>
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles
+                                    de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
@@ -2561,19 +2586,24 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato  <a
-                                                            onclick="$('#form-registrar').modal('hide');" href="#contratomodal"
-                                                            data-toggle="modal" data-target="#contratomodal"><i
+                                                    <label for="sw-default">Contrato <a
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#contratomodal" data-toggle="modal"
+                                                            data-target="#contratomodal"><i
                                                                 class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContrato" onclick="$('#form-registrar').modal('hide');"
-                                                            href="#fechasmodal" data-toggle="modal" data-target="#fechasmodal"
-                                                            data-toggle="tooltip" data-placement="right"
-                                                            title="Detalle de Contrato."
+                                                        <a id="detalleContrato"
+                                                            onclick="$('#form-registrar').modal('hide');"
+                                                            href="#fechasmodal" data-toggle="modal"
+                                                            data-target="#fechasmodal" data-toggle="tooltip"
+                                                            data-placement="right" title="Detalle de Contrato."
                                                             data-original-title="Detalle de Contrato."
                                                             style="cursor: pointer;"><img
                                                                 src="{{ asset('landing/images/adaptive.svg') }}"
-                                                                height="18"></a></label> <span id="validContrato" style="color: red;display:none">Eliga
-                                                                    contrato</span> <span id="detalleContratoS" style="color: red;display:none">Indique detalles de contrato</span>
+                                                                height="18"></a></label> <span id="validContrato"
+                                                        style="color: red;display:none">Eliga
+                                                        contrato</span> <span id="detalleContratoS"
+                                                        style="color: red;display:none">Indique detalles de
+                                                        contrato</span>
                                                     <select class="form-control" name="contrato" id="contrato"
                                                         onchange="$('#detalleContrato').show();" tabindex="5" required>
                                                         <option value="">Seleccionar</option>
@@ -3230,6 +3260,9 @@ use Carbon\Carbon;
                                                                 <div class="row justify-content-center">
                                                                     <div class="col-xl-12">
                                                                         <label style="font-size: 14px">
+                                                                            <i data-feather="layers"
+                                                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                                                            &nbsp;
                                                                             Actividades
                                                                         </label>
                                                                         <a class="mr-3" data-toggle="tooltip"
@@ -4358,6 +4391,9 @@ use Carbon\Carbon;
                                                             <div class="row justify-content-center">
                                                                 <div class="col-xl-12">
                                                                     <label style="font-size: 14px">
+                                                                        <i data-feather="layers"
+                                                                            style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                                                        &nbsp;
                                                                         Actividades
                                                                     </label>
                                                                     <a class="mr-3" data-toggle="tooltip"
@@ -4489,22 +4525,22 @@ use Carbon\Carbon;
                                     <label for="">Historial de empleado de altas y bajas</label>
                                 </div>
 
-                               <div class="col-xl-12 col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table id="editar_tablaHistorial" class="table"
-                                        style="font-size: 13px!important;">
-                                        <thead style="background: #fafafa;">
-                                            <tr>
-                                                <th>Fecha de alta</th>
-                                                <th>Documento</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="editar_tbodyHistorial"
-                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                        </tbody>
-                                    </table>
+                                <div class="col-xl-12 col-sm-12">
+                                    <div class="table-responsive-xl">
+                                        <table id="editar_tablaHistorial" class="table"
+                                            style="font-size: 13px!important;">
+                                            <thead style="background: #fafafa;">
+                                                <tr>
+                                                    <th>Fecha de alta</th>
+                                                    <th>Documento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="editar_tbodyHistorial"
+                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -4936,22 +4972,21 @@ use Carbon\Carbon;
                                     <label for="">Historial de empleado de altas y bajas</label>
                                 </div>
 
-                               <div class="col-xl-12 col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table id="ver_tablaHistorial" class="table"
-                                        style="font-size: 13px!important;">
-                                        <thead style="background: #fafafa;">
-                                            <tr>
-                                                <th>Fecha de alta</th>
-                                                <th>Documento</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="ver_tbodyHistorial"
-                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                        </tbody>
-                                    </table>
+                                <div class="col-xl-12 col-sm-12">
+                                    <div class="table-responsive-xl">
+                                        <table id="ver_tablaHistorial" class="table" style="font-size: 13px!important;">
+                                            <thead style="background: #fafafa;">
+                                                <tr>
+                                                    <th>Fecha de alta</th>
+                                                    <th>Documento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ver_tbodyHistorial"
+                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>

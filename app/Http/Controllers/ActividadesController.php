@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\actividad;
+use App\actividad_area;
 use App\actividad_empleado;
 use App\captura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\PseudoTypes\True_;
+
 class ActividadesController extends Controller
 {
     public function __construct()
@@ -58,34 +61,30 @@ class ActividadesController extends Controller
     public function actividades()
     {
         $invitadod = DB::table('invitado')
-                ->where('user_Invitado', '=', Auth::user()->id)
-                ->where('rol_id', '=', 3)
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->get()->first();
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
 
-            if ($invitadod) {
-                if ($invitadod->rol_id != 1) {
-                    if( $invitadod->gestionActiv==1){
-                        $permiso_invitado = DB::table('permiso_invitado')
+        if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                if ($invitadod->gestionActiv == 1) {
+                    $permiso_invitado = DB::table('permiso_invitado')
                         ->where('idinvitado', '=', $invitadod->idinvitado)
                         ->get()->first();
                     return view('MantenedorActividades.actividades', [
-                        'agregarActi'=>$permiso_invitado->agregarActi,'modifActi'=>$permiso_invitado->modifActi,'bajaActi'=>$permiso_invitado->bajaActi
+                        'agregarActi' => $permiso_invitado->agregarActi, 'modifActi' => $permiso_invitado->modifActi, 'bajaActi' => $permiso_invitado->bajaActi
                     ]);
-                    } else{
-                          return redirect('/dashboard');
-                    }
-                   /*   */
-
-
                 } else {
-                    return view('MantenedorActividades.actividades');
+                    return redirect('/dashboard');
                 }
-            }
-            else{
+                /*   */
+            } else {
                 return view('MantenedorActividades.actividades');
             }
-
+        } else {
+            return view('MantenedorActividades.actividades');
+        }
     }
 
     public function actividadesOrganizaciones()
@@ -98,6 +97,7 @@ class ActividadesController extends Controller
                 'a.Activi_Nombre',
                 'a.controlRemoto',
                 'a.asistenciaPuerta',
+                'a.controlRuta',
                 'a.eliminacion',
                 DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA"),
                 DB::raw("CASE WHEN(cp.idCaptura) IS NULL THEN 'No' ELSE 'Si' END AS respuesta")
@@ -124,23 +124,56 @@ class ActividadesController extends Controller
         $actividad = new actividad();
         $actividad->Activi_Nombre = $request->get('nombre');
         $actividad->controlRemoto = $request->get('cr');
+        $actividad->controlRuta = $request->get('crt');
         $actividad->asistenciaPuerta = $request->get('ap');
         $actividad->organi_id = session('sesionidorg');
         $actividad->codigoActividad = $request->get('codigo');
-        $actividad->global = $request->get('global');
+        $actividad->globalEmpleado = $request->get('globalEmpleado');
+        $actividad->globalArea = $request->get('globalArea');
+        $actividad->porEmpleados = $request->get('asignacionEmpleado');
+        $actividad->porAreas = $request->get('asignacionArea');
         $actividad->save();
 
         $idActividad = $actividad->Activi_id;
         $listaE = $request->get('empleados');
-        // ASIGNAR EMPLEADOS A NUEVA ACTIVIDAD
-        if (is_null($listaE) === false) {
-            foreach ($listaE as $le) {
-                $actividad_empleado = new actividad_empleado();
-                $actividad_empleado->idActividad = $idActividad;
-                $actividad_empleado->idEmpleado = $le;
-                $actividad_empleado->estado = 1;
-                $actividad_empleado->eliminacion = 1;
-                $actividad_empleado->save();
+        $listaA = $request->get('areas');
+        if ($actividad->porEmpleados == 1) {
+            // ASIGNAR EMPLEADOS A NUEVA ACTIVIDAD
+            if (is_null($listaE) === false) {
+                foreach ($listaE as $le) {
+                    $actividad_empleado = new actividad_empleado();
+                    $actividad_empleado->idActividad = $idActividad;
+                    $actividad_empleado->idEmpleado = $le;
+                    $actividad_empleado->estado = 1;
+                    $actividad_empleado->eliminacion = 1;
+                    $actividad_empleado->save();
+                }
+            }
+        } else {
+            if ($actividad->porAreas == 1) {
+                if (is_null($listaA) === false) {
+                    foreach ($listaA as $la) {
+                        $empleadosArea = DB::table('empleado as e')
+                            ->select('e.emple_id')
+                            ->where('e.emple_area', '=', $la)
+                            ->where('e.emple_estado', '=', 1)
+                            ->get();
+                        foreach ($empleadosArea as $ea) {
+                            $actividad_empleado = new actividad_empleado();
+                            $actividad_empleado->idActividad = $idActividad;
+                            $actividad_empleado->idEmpleado = $ea->emple_id;
+                            $actividad_empleado->estado = 1;
+                            $actividad_empleado->eliminacion = 1;
+                            $actividad_empleado->save();
+                        }
+                        //* REGISTRAR ACTIVIDAD AREAS
+                        $actividad_area = new actividad_area();
+                        $actividad_area->idActividad = $idActividad;
+                        $actividad_area->idArea = $la;
+                        $actividad_area->estado = 1;
+                        $actividad_area->save();
+                    }
+                }
             }
         }
 
@@ -158,8 +191,12 @@ class ActividadesController extends Controller
                 'a.Activi_id',
                 'a.Activi_Nombre',
                 'a.controlRemoto',
+                'a.controlRuta',
                 'a.asistenciaPuerta',
-                'a.codigoActividad'
+                'a.codigoActividad',
+                'a.porEmpleados',
+                'a.porAreas',
+                'a.globalEmpleado'
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.Activi_id', '=', $idA)
@@ -176,68 +213,161 @@ class ActividadesController extends Controller
         $idA = $request->get('idA');
         $actividad = actividad::findOrFail($idA);
         $empleados = $request->get('empleados');
-        // dd($empleados);
+        $areas = $request->get('areas');
         if ($actividad) {
-            // ACTUALIZAR ATRIBUTOS DE ACTIVIDAD
+            //* ACTUALIZAR ATRIBUTOS DE ACTIVIDAD
             $actividad->codigoActividad = $request->get('codigo');
             $actividad->controlRemoto = $request->get('cr');
             $actividad->asistenciaPuerta = $request->get('ap');
-            $actividad->global = $request->get('global');
+            $actividad->controlRuta = $request->get('crt');
+            $actividad->globalEmpleado = $request->get('globalEmpleado');
+            $actividad->porEmpleados = $request->get('asignacionEmpleado');
+            $actividad->porAreas = $request->get('asignacionArea');
+            $actividad->globalArea = $request->get('globalArea');
             $actividad->save();
 
-            // ACTUALIZACION ACTIVIDADES DE EMPLEADOS
+            //* ACTUALIZACION ACTIVIDADES DE EMPLEADOS
             $actividad_empleado = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->get();
-            // ARRAY DE EMPLEADOS SI ESTA VACIO
-            if (is_null($empleados) === true) {
-                foreach ($actividad_empleado as $ae) {
-                    $ae->estado = 0;
-                    $ae->save();
-                }
-            } else {
-                if (sizeof($actividad_empleado) == 0) {
-                    foreach ($empleados as $emple) {
-                        // ASIGNAR EMPLEADOS ACTIVIDAD
-                        $nuevaActividadE = new actividad_empleado();
-                        $nuevaActividadE->idActividad = $actividad->Activi_id;
-                        $nuevaActividadE->idEmpleado = $emple;
-                        $nuevaActividadE->estado = 1;
-                        $nuevaActividadE->eliminacion = 1;
-                        $nuevaActividadE->save();
+            //* SI LA ASIGNACION ES POR EMPLEADO
+            if ($actividad->porEmpleados == 1) {
+                // ARRAY DE EMPLEADOS SI ESTA VACIO
+                if (is_null($empleados) === true) {
+                    foreach ($actividad_empleado as $ae) {
+                        $ae->estado = 0;
+                        $ae->save();
                     }
                 } else {
-                    // BUSCAR EMPLEADOS EN LA TABLA ACTIVIDAD
-                    foreach ($empleados as $emple) {
-                        $estado = false;
-                        for ($index = 0; $index < sizeof($actividad_empleado); $index++) {
-                            if ($actividad_empleado[$index]->idEmpleado == $emple) {
-                                $estado = true;
-                            }
-                        }
-                        if ($estado == false) {
+                    if (sizeof($actividad_empleado) == 0) {
+                        foreach ($empleados as $emple) {
+                            //* ASIGNAR EMPLEADOS ACTIVIDAD
                             $nuevaActividadE = new actividad_empleado();
                             $nuevaActividadE->idActividad = $actividad->Activi_id;
                             $nuevaActividadE->idEmpleado = $emple;
                             $nuevaActividadE->estado = 1;
                             $nuevaActividadE->eliminacion = 1;
                             $nuevaActividadE->save();
-                        } else {
-                            $ae = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->where('idEmpleado', '=', $emple)->get()->first();
-                            $ae->estado = 1;
-                            $ae->save();
                         }
-                    }
-                    // COMPARAR LAS ACTIVIDADES CON LA LISTA DE EMPLEADOS
-                    foreach ($actividad_empleado as $actvE) {
-                        $estadoB = false;
+                    } else {
+                        //* BUSCAR EMPLEADOS EN LA TABLA ACTIVIDAD
                         foreach ($empleados as $emple) {
-                            if ($actvE->idEmpleado == $emple) {
-                                $estadoB = true;
+                            $estado = false;
+                            for ($index = 0; $index < sizeof($actividad_empleado); $index++) {
+                                if ($actividad_empleado[$index]->idEmpleado == $emple) {
+                                    $estado = true;
+                                }
+                            }
+                            if ($estado == false) {
+                                $nuevaActividadE = new actividad_empleado();
+                                $nuevaActividadE->idActividad = $actividad->Activi_id;
+                                $nuevaActividadE->idEmpleado = $emple;
+                                $nuevaActividadE->estado = 1;
+                                $nuevaActividadE->eliminacion = 1;
+                                $nuevaActividadE->save();
+                            } else {
+                                $ae = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->where('idEmpleado', '=', $emple)->get()->first();
+                                $ae->estado = 1;
+                                $ae->save();
                             }
                         }
-                        if ($estadoB == false) {
-                            $actvE->estado = 0;
-                            $actvE->save();
+                        //* COMPARAR LAS ACTIVIDADES CON LA LISTA DE EMPLEADOS
+                        foreach ($actividad_empleado as $actvE) {
+                            $estadoB = false;
+                            foreach ($empleados as $emple) {
+                                if ($actvE->idEmpleado == $emple) {
+                                    $estadoB = true;
+                                }
+                            }
+                            if ($estadoB == false) {
+                                $actvE->estado = 0;
+                                $actvE->save();
+                            }
                         }
+                    }
+                }
+                //* DESACTIVAMOS POR AREAS
+                $actividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->get();
+                foreach ($actividad_area as $aa) {
+                    $aa->estado = 0;
+                    $aa->save();
+                }
+            } else {
+                if ($actividad->porAreas == 1) {
+                    //* FOREACH PARA BUSCAR EMPLEADO POR AREAS
+                    foreach ($areas as $a) {
+                        $empleadoArea = DB::table('empleado as e')
+                            ->select('e.emple_id')
+                            ->where('e.emple_area', '=', $a)
+                            ->where('e.emple_estado', '=', 1)
+                            ->get();
+                        //* BUSCAR EMPLEADOS EN ACTIVIDAD EMPLEADO
+                        foreach ($actividad_empleado as $activ) {
+                            $busqueda = true;
+                            foreach ($empleadoArea as $ea) {
+                                if ($activ->idEmpleado == $ea->emple_id) {
+                                    $busqueda = false;
+                                }
+                            }
+                            if ($busqueda) {
+                                $ae = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->where('idEmpleado', '=', $activ->idEmpleado)->get()->first();
+                                $ae->estado = 0;
+                                $ae->save();
+                            }
+                        }
+                        //* BUSCAR EMPLEADOS DE AREA EN ACTIVIDAD EMPLEADO
+                        foreach ($empleadoArea as $ea) {
+                            $busqueda = true;
+                            foreach ($actividad_empleado as $activ) {
+                                if ($activ->idEmpleado == $ea->emple_id) {
+                                    $busqueda = false;
+                                }
+                            }
+                            if ($busqueda) {
+                                $nuevoActividad_empleado = new actividad_empleado();
+                                $nuevoActividad_empleado->idActividad = $actividad->Activi_id;
+                                $nuevoActividad_empleado->idEmpleado = $ea->emple_id;
+                                $nuevoActividad_empleado->estado = 1;
+                                $nuevoActividad_empleado->eliminacion = 1;
+                                $nuevoActividad_empleado->save();
+                            } else {
+                                $ae = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)->where('idEmpleado', '=', $ea->emple_id)->get()->first();
+                                $ae->estado = 1;
+                                $ae->save();
+                            }
+                        }
+                        //* BUSCAR ACTIVIDAD AREAS
+                        $buscarActividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->where('idArea', '=', $a)->get();
+                        if (sizeof($buscarActividad_area) == 0) {
+                            //* REGISTRAR ACTIVIDAD AREAS
+                            $actividad_area = new actividad_area();
+                            $actividad_area->idActividad = $actividad->Activi_id;
+                            $actividad_area->idArea = $a;
+                            $actividad_area->estado = 1;
+                            $actividad_area->save();
+                        }
+                    }
+                    $actividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->get();
+                    foreach ($actividad_area as $area) {
+                        $busqueda = true;
+                        foreach ($areas as $a) {
+                            if ($area->idArea == $a) {
+                                $busqueda = false;
+                            }
+                        }
+                        if ($busqueda) {
+                            $area->estado = 0;
+                            $area->save();
+                        }
+                    }
+                } else {
+                    foreach ($actividad_empleado as $ae) {
+                        $ae->estado = 0;
+                        $ae->save();
+                    }
+                    //* DESACTIVAMOS POR AREAS
+                    $actividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->get();
+                    foreach ($actividad_area as $aa) {
+                        $aa->estado = 0;
+                        $aa->save();
                     }
                 }
             }
@@ -257,6 +387,9 @@ class ActividadesController extends Controller
         if ($actividad) {
             if ($control == "CR") {
                 $actividad->controlRemoto = $request->get('valor');
+            }
+            if ($control == "CRT") {
+                $actividad->controlRuta = $request->get('valor');
             }
             if ($control == "AP") {
                 $actividad->asistenciaPuerta = $request->get('valor');
@@ -315,8 +448,11 @@ class ActividadesController extends Controller
         $actividad = DB::table('actividad as a')
             ->select('a.Activi_id', 'a.Activi_Nombre', 'a.codigoActividad')
             ->where('a.organi_id', '=', session('sesionidorg'))
-            ->where('a.controlRemoto', '=', 1)
             ->where('a.estado', '=', 1)
+            ->where(function ($query) {
+                $query->where('a.controlRemoto', '=', 1)
+                    ->orWhere('a.controlRuta', '=', 1);
+            })
             ->get();
         $respuesta = [];
         for ($index = 0; $index < sizeof($actividad); $index++) {
@@ -358,51 +494,12 @@ class ActividadesController extends Controller
     }
 
     // SELECT DE MOSTRAR EMPLEADOS EN REGISTRAR
-    function empleadoSelect(Request $request)
+    function datosActividad(Request $request)
     {
-        $respuesta = [];
-        $empleadoSA = [];
         $idActividad = $request->get('idA');
         //* ESTADO DE GLOBAL
-        $global = actividad::findOrFail($idActividad);
-        //* *******************
-        // EMPLEADOS ASIGNADOS A DICHA ACTIVIDAD
-        $empleadosA = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-            ->select('ae.id', 'ae.idEmpleado', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.emple_estado', '=', 1)
-            ->where('ae.estado', '=', 1)
-            ->where('ae.idActividad', '=', $idActividad)
-            ->groupBy('ae.idEmpleado')
-            ->get();
-        // *************************************
-        // TODOS LOS EMPLEADOS
-        $empleados = DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.emple_estado', '=', 1)
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->get();
-        // ******************
-        // SEPARAR EMPLEADOS
-        for ($index = 0; $index < sizeof($empleados); $index++) {
-            $estado = false;
-            foreach ($empleadosA as $ae) {
-                if ($empleados[$index]->emple_id == $ae->idEmpleado) {
-                    $estado = true;
-                }
-            }
-            if ($estado == false) {
-                array_push($empleadoSA, $empleados[$index]);
-            }
-        }
-        // ****************
-        // DATOS PARA RESULTADO
-        array_push($respuesta, array("select" => $empleadosA, "noSelect" => $empleadoSA, "global" => $global->global));
-        // dd($respuesta);
-
-        return response()->json($respuesta, 200);
+        $actividad = actividad::findOrFail($idActividad);
+        return response()->json($actividad, 200);
     }
 
     // SELECT DE EMPLEADOS EN REGISTRAR
@@ -414,60 +511,56 @@ class ActividadesController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
 
-            if ($invitadod){
-                if ($invitadod->verTodosEmps == 1) {
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                    ->where('e.emple_estado', '=', 1)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->get();
+            } else {
+
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+
                     $empleados = DB::table('empleado as e')
-                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                ->where('e.emple_estado', '=', 1)
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->get();
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->get();
                 } else {
 
-                    $invitado_empleadoIn=DB::table('invitado_empleado as invem')
-                ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                ->where('invem.area_id', '=', null)
-                ->where('invem.emple_id', '!=', null)
-                ->get()->first();
-               if($invitado_empleadoIn!=null){
-
-                $empleados = DB::table('empleado as e')
-                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                ->where('e.emple_estado', '=', 1)
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->get();
-
-               }
-               else{
-               
-                $empleados = DB::table('empleado as e')
-                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-                ->where('e.emple_estado', '=', 1)
-                ->where('invi.estado', '=', 1)
-                ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->get();
-
-               }
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->get();
                 }
             }
-            else{
-                $empleados = DB::table('empleado as e')
+        } else {
+            $empleados = DB::table('empleado as e')
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
                 ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                 ->where('e.emple_estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->get();
-            }
+        }
         // TODOS LOS EMPLEADOS
 
 
@@ -482,6 +575,7 @@ class ActividadesController extends Controller
             ->select('a.area_id', 'a.area_descripcion')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
             ->groupBy('a.area_id')
             ->get();
         return response()->json($areas, 200);
@@ -495,6 +589,10 @@ class ActividadesController extends Controller
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->where('a.eliminacion', '=', 1)
+            ->where(function ($query) {
+                $query->where('a.controlRemoto', '=', 1)
+                    ->orWhere('a.controlRuta', '=', 1);
+            })
             ->get();
 
         return response()->json($actividades, 200);
@@ -519,6 +617,19 @@ class ActividadesController extends Controller
                 ->get();
 
             return response()->json($empleados, 200);
+        } else {
+            //: Cuando solo hay datos de areas
+            if (!is_null($idAreas)) {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->leftJoin('area as a', 'a.area_id', '=', 'e.emple_area')
+                    ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->WhereIn('e.emple_area', $idAreas)
+                    ->get();
+
+                return response()->json($empleados, 200);
+            }
         }
         //: Cuando solo hay datos en empleados
         if (!is_null($idEmpleados)) {
@@ -529,15 +640,11 @@ class ActividadesController extends Controller
                 ->get();
 
             return response()->json($empleados, 200);
-        }
-        //: Cuando solo hay datos de areas
-        if (!is_null($idAreas)) {
+        } else {
             $empleados = DB::table('empleado as e')
                 ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->leftJoin('area as a', 'a.area_id', '=', 'e.emple_area')
                 ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                 ->where('e.organi_id', '=', session('sesionidorg'))
-                ->WhereIn('e.emple_area', $idAreas)
                 ->get();
 
             return response()->json($empleados, 200);
@@ -549,56 +656,245 @@ class ActividadesController extends Controller
     {
         $empleados = $request->get('empleados');
         $actividad = $request->get('idActividad');
-        $global = $request->get('global');
-
+        $areas = $request->get('areas');
+        $globalEmpleado = $request->get('globalEmpleado');
+        $globalArea = $request->get('globalArea');
+        $porEmpleados = $request->get('asignacionEmpleado');
+        $porAreas = $request->get('asignacionArea');
         //: ESTADO GLOBAL DE LA ACTIVIDAD
         $actividadB = actividad::findOrFail($actividad);
         if ($actividadB) {
-            $actividadB->global = $global;
+            $actividadB->globalEmpleado = $globalEmpleado;
+            $actividadB->globalArea = $globalArea;
+            $actividadB->porEmpleados = $porEmpleados;
+            $actividadB->porAreas = $porAreas;
             $actividadB->save();
         }
 
-        //: BUSCAMOS LOS EMPLEADOS DE LA ACTIVIDAD
-        $actividadEmpleado = DB::table('actividad as a')
-            ->join('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
-            ->select('ae.idEmpleado', 'ae.id', 'ae.estado')
-            ->where('a.Activi_id', '=', $actividad)
-            ->get();
+        //* ACTUALIZACION ACTIVIDADES DE EMPLEADOS
+        $actividad_empleado = actividad_empleado::where('idActividad', '=', $actividadB->Activi_id)->get();
+        //* SI LA ASIGNACION ES POR EMPLEADO
+        if ($actividadB->porEmpleados == 1) {
+            // ARRAY DE EMPLEADOS SI ESTA VACIO
+            if (is_null($empleados) === true) {
+                foreach ($actividad_empleado as $ae) {
+                    $ae->estado = 0;
+                    $ae->save();
+                }
+            } else {
+                if (sizeof($actividad_empleado) == 0) {
+                    foreach ($empleados as $emple) {
+                        //* ASIGNAR EMPLEADOS ACTIVIDAD
+                        $nuevaActividadE = new actividad_empleado();
+                        $nuevaActividadE->idActividad = $actividadB->Activi_id;
+                        $nuevaActividadE->idEmpleado = $emple;
+                        $nuevaActividadE->estado = 1;
+                        $nuevaActividadE->eliminacion = 1;
+                        $nuevaActividadE->save();
+                    }
+                } else {
+                    //* BUSCAR EMPLEADOS EN LA TABLA ACTIVIDAD
+                    foreach ($empleados as $emple) {
+                        $estado = false;
+                        for ($index = 0; $index < sizeof($actividad_empleado); $index++) {
+                            if ($actividad_empleado[$index]->idEmpleado == $emple) {
+                                $estado = true;
+                            }
+                        }
+                        if ($estado == false) {
+                            $nuevaActividadE = new actividad_empleado();
+                            $nuevaActividadE->idActividad = $actividadB->Activi_id;
+                            $nuevaActividadE->idEmpleado = $emple;
+                            $nuevaActividadE->estado = 1;
+                            $nuevaActividadE->eliminacion = 1;
+                            $nuevaActividadE->save();
+                        } else {
+                            $ae = actividad_empleado::where('idActividad', '=', $actividadB->Activi_id)->where('idEmpleado', '=', $emple)->get()->first();
+                            $ae->estado = 1;
+                            $ae->save();
+                        }
+                    }
+                    //* COMPARAR LAS ACTIVIDADES CON LA LISTA DE EMPLEADOS
+                    foreach ($actividad_empleado as $actvE) {
+                        $estadoB = false;
+                        foreach ($empleados as $emple) {
+                            if ($actvE->idEmpleado == $emple) {
+                                $estadoB = true;
+                            }
+                        }
+                        if ($estadoB == false) {
+                            $actvE->estado = 0;
+                            $actvE->save();
+                        }
+                    }
+                }
+            }
+            //* DESACTIVAMOS POR AREAS
+            $actividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->get();
+            foreach ($actividad_area as $aa) {
+                $aa->estado = 0;
+                $aa->save();
+            }
+        } else {
+            if ($actividadB->porAreas == 1) {
+                //* FOREACH PARA BUSCAR EMPLEADO POR AREAS
+                foreach ($areas as $a) {
+                    $empleadoArea = DB::table('empleado as e')
+                        ->select('e.emple_id')
+                        ->where('e.emple_area', '=', $a)
+                        ->where('e.emple_estado', '=', 1)
+                        ->get();
+                    //* BUSCAR EMPLEADOS EN ACTIVIDAD EMPLEADO
+                    foreach ($actividad_empleado as $activ) {
+                        $busqueda = true;
+                        foreach ($empleadoArea as $ea) {
+                            if ($activ->idEmpleado == $ea->emple_id) {
+                                $busqueda = false;
+                            }
+                        }
+                        if ($busqueda) {
+                            $ae = actividad_empleado::where('idActividad', '=', $actividadB->Activi_id)->where('idEmpleado', '=', $activ->idEmpleado)->get()->first();
+                            $ae->estado = 0;
+                            $ae->save();
+                        }
+                    }
+                    //* BUSCAR EMPLEADOS DE AREA EN ACTIVIDAD EMPLEADO
+                    foreach ($empleadoArea as $ea) {
+                        $busqueda = true;
+                        foreach ($actividad_empleado as $activ) {
+                            if ($activ->idEmpleado == $ea->emple_id) {
+                                $busqueda = false;
+                            }
+                        }
+                        if ($busqueda) {
+                            $nuevoActividad_empleado = new actividad_empleado();
+                            $nuevoActividad_empleado->idActividad = $actividadB->Activi_id;
+                            $nuevoActividad_empleado->idEmpleado = $ea->emple_id;
+                            $nuevoActividad_empleado->estado = 1;
+                            $nuevoActividad_empleado->eliminacion = 1;
+                            $nuevoActividad_empleado->save();
+                        } else {
+                            $ae = actividad_empleado::where('idActividad', '=', $actividadB->Activi_id)->where('idEmpleado', '=', $ea->emple_id)->get()->first();
+                            $ae->estado = 1;
+                            $ae->save();
+                        }
+                    }
+                    //* BUSCAR ACTIVIDAD AREAS
+                    $buscarActividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->where('idArea', '=', $a)->get();
+                    if (sizeof($buscarActividad_area) == 0) {
+                        //* REGISTRAR ACTIVIDAD AREAS
+                        $actividad_area = new actividad_area();
+                        $actividad_area->idActividad = $actividadB->Activi_id;
+                        $actividad_area->idArea = $a;
+                        $actividad_area->estado = 1;
+                        $actividad_area->save();
+                    }
+                }
+                $actividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->get();
+                foreach ($actividad_area as $area) {
+                    $busqueda = true;
+                    foreach ($areas as $a) {
+                        if ($area->idArea == $a) {
+                            $busqueda = false;
+                        }
+                    }
+                    if ($busqueda) {
+                        $area->estado = 0;
+                        $area->save();
+                    }
+                }
+            } else {
+                foreach ($actividad_empleado as $ae) {
+                    $ae->estado = 0;
+                    $ae->save();
+                }
+                //* DESACTIVAMOS POR AREAS
+                $actividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->get();
+                foreach ($actividad_area as $aa) {
+                    $aa->estado = 0;
+                    $aa->save();
+                }
+            }
+        }
+        return response()->json($empleados, 200);
+    }
 
-        //? Comparamos los nuevos empleados con los empelados con actividad
+    //: OBTENER DATOS POR ASIGNACION DE EMPLEADOS Y ACTIVIDAD
+    public function asignacionEmpleadoActividad(Request $request)
+    {
+        $actividad = actividad::findOrFail($request->get('id'));
+        $empleadoSA = [];
+        $respuesta = [];
+        $empleadosActividad  = [];
+        // TODOS LOS EMPLEADOS
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+        //* EMPLEADOS CON DICHA ACTIVIDAD
+        $empleadosActividad = DB::table('actividad as a')
+            ->join('actividad_empleado as ae', 'ae.idActividad', '=', 'a.Activi_id')
+            ->join('empleado as e', 'e.emple_id', '=', 'ae.idEmpleado')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('ae.idEmpleado', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('a.Activi_id', '=', $request->get('id'))
+            ->where('ae.estado', '=', 1)
+            ->get();
         for ($index = 0; $index < sizeof($empleados); $index++) {
             $estado = true;
-            for ($element = 0; $element < sizeof($actividadEmpleado); $element++) {
-                if ($empleados[$index] == $actividadEmpleado[$element]->idEmpleado) {
+            foreach ($empleadosActividad as $ae) {
+                if ($empleados[$index]->emple_id == $ae->idEmpleado) {
                     $estado = false;
                 }
             }
-
             if ($estado) {
-                $actividad_empleado = new actividad_empleado();
-                $actividad_empleado->idActividad = $actividad;
-                $actividad_empleado->idEmpleado = $empleados[$index];
-                $actividad_empleado->estado = 1;
-                $actividad_empleado->eliminacion = 1;
-                $actividad_empleado->save();
+                array_push($empleadoSA, $empleados[$index]);
             }
         }
-
-        //? Comparamos los empleados de la actividad y los nuevos empleados
-        for ($index = 0; $index < sizeof($actividadEmpleado); $index++) {
+        // ****************
+        // DATOS PARA RESULTADO
+        array_push($respuesta, array("select" => $empleadosActividad, "noSelect" => $empleadoSA, "global" => $actividad->globalEmpleado));
+        return response()->json($respuesta, 200);
+    }
+    //: OBTENER DATOS POR ASIGNACION DE AREAS Y ACTIVIDAD
+    public function asignacionAreaActividad(Request $request)
+    {
+        $actividad = actividad::findOrFail($request->get('id'));
+        $areaSA = [];
+        $respuesta = [];
+        $areasActividad = [];
+        // TODOS LAS AREAS
+        $areas = DB::table('empleado as e')
+            ->join('area as a', 'a.area_id', '=', 'e.emple_area')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->groupBy('a.area_id')
+            ->get();
+        //* AREAS CON DICHA ACTIVIDAD
+        $areasActividad = DB::table('actividad as a')
+            ->join('actividad_area as aa', 'aa.idActividad', '=', 'a.Activi_id')
+            ->join('area as ar', 'ar.area_id', '=', 'aa.idArea')
+            ->select('ar.area_id', 'ar.area_descripcion')
+            ->where('ar.organi_id', '=', session('sesionidorg'))
+            ->where('aa.estado', '=', 1)
+            ->where('a.Activi_id', '=', $request->get('id'))
+            ->groupBy('ar.area_id')
+            ->get();
+        for ($index = 0; $index < sizeof($areas); $index++) {
             $estado = true;
-            for ($element = 0; $element < sizeof($empleados); $element++) {
-                if ($actividadEmpleado[$index]->idEmpleado == $empleados[$element]) {
-                    $estado = false; //? si lo encuentra no cambiamos estado
+            foreach ($areasActividad as $aa) {
+                if ($areas[$index]->area_id == $aa->area_id) {
+                    $estado = false;
                 }
             }
-            if ($estado) { //? si el estado no cambio a FALSE entonces inactivamos esta actividad para el empleado
-                $actividad_empleado = actividad_empleado::where('id', '=', $actividadEmpleado[$index]->id)->get()->first();
-                $actividad_empleado->estado = 0;
-                $actividad_empleado->save();
+            if ($estado) {
+                array_push($areaSA, $areas[$index]);
             }
         }
-
-        return response()->json($empleados, 200);
+        array_push($respuesta, array("select" => $areasActividad, "noSelect" => $areaSA, "global" => $actividad->globalArea));
+        return response()->json($respuesta, 200);
     }
 }

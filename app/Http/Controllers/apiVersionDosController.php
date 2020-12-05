@@ -114,12 +114,12 @@ class apiVersionDosController extends Controller
         $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $empleado)->get();
         foreach ($actividad_empleado as $act) {
             $actividad = DB::table('actividad as a')
-                ->select('a.Activi_id', 'a.Activi_Nombre')
+                ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto')
                 ->where('a.Activi_id', '=', $act->idActividad)
                 ->get()
                 ->first();
             $actividad->empleado_emple_id = $act->idEmpleado;
-            $actividad->estado = $act->estado;
+            $actividad->estado = $actividad->controlRemoto;
             array_push($respuesta, $actividad);
         }
         return response()->json($respuesta, 200);
@@ -142,13 +142,6 @@ class apiVersionDosController extends Controller
                 $actividad->save();
             }
         }
-        // if ($cambio == 'e') {
-        //     $actividad = actividad_empleado::where('id', $request->get('idActividad'))->first();
-        //     if ($actividad) {
-        //         $actividad->estado = 0;
-        //         $actividad->save();
-        //     }
-        // }
         return response()->json($actividad, 200);
     }
 
