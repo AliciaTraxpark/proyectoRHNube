@@ -542,6 +542,56 @@ use App\proyecto_empleado;
                                 width: 100% !important;
                             }
                         }
+                        .inputfile {
+    width: 0.1px!important;
+    height: 0.1px!important;
+    opacity: !important
+    overflow: hidden!important;
+    position: absolute!important;
+    z-index: -1!important;
+}
+
+.inputfile + label {
+    max-width: 80%!important;
+    font-size: 1.25rem!important;
+    font-weight: 700!important;
+    text-overflow: ellipsis!important;
+    white-space: nowrap!important;
+    cursor: pointer!important;
+    display: inline;
+    overflow: hidden!important;
+    padding: 0.30rem 0.8rem!important;
+}
+
+.inputfile + label svg {
+    width: 1em!important;
+    height: 1em!important;
+    vertical-align: middle!important;
+    fill: currentColor!important;
+
+    margin-right: 0.25em!important;
+}
+
+.iborrainputfile {
+	font-size:13.8px!important;
+	font-weight:normal!important;
+
+}
+
+/* style 1 */
+
+.inputfile-1 + label {
+    color: #fff!important;
+    background-color: #163552!important;
+}
+
+.inputfile-1:focus + label,
+.inputfile-1.has-focus + label,
+.inputfile-1 + label:hover {
+    background-color: #1a4063!important;
+}
+
+
                     </style>
 
                        <table id="tablaEmpleado" class="table nowrap" style="width:100%!important" >
@@ -3407,11 +3457,16 @@ aria-hidden="true" data-backdrop="static">
                     </div>
                 </div>
                 <div class="col-md 12">
-                    <div class="form-group" style="margin-top: 10px;">
-                        <label for="AltaFile">Adjuntar documento</label>
+                    <label for="">Adjuntar documento(s)</label>
+                    <div class="form-group">
+
                         <input type="file" accept=
                         "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                         application/pdf, image/*"  multiple="true"  class="form-control-file" id="AltaFile">
+                         application/pdf, image/*" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple id="AltaFile">
+                         <label for="AltaFile">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                            <span class="iborrainputfile">Seleccionar archivo</span>
+                         </label>
                       </div>
                 </div>
             </form>
@@ -4480,6 +4535,32 @@ function calendario4() {
             error: function () {}
         });
 }
+'use strict';
+
+;( function ( document, window, index )
+{
+    var inputs = document.querySelectorAll( '.inputfile' );
+    Array.prototype.forEach.call( inputs, function( input )
+    {
+        var label	 = input.nextElementSibling,
+            labelVal = label.innerHTML;
+
+        input.addEventListener( 'change', function( e )
+        {
+            var fileName = '';
+            if( this.files && this.files.length > 1 )
+                fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+            else
+                fileName = e.target.value.split( '\\' ).pop();
+
+            if( fileName )
+                label.querySelector( 'span' ).innerHTML = fileName;
+            else
+                label.innerHTML = labelVal;
+        });
+    });
+}( document, window, 0 ));
+
     </script>
 
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
