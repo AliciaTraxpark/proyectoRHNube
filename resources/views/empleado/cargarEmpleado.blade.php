@@ -173,7 +173,9 @@
 
                                             @if (session('empleados'))
 
-                                            <button type="button" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
+                                            <button type="button" style="font-size: 12.25px;
+                                            padding-top: 5.5px;
+                                            padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
                                             @endif
 
                                         </div>

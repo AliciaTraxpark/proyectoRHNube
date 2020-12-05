@@ -366,7 +366,8 @@ class excelEmpleadoController extends Controller
             ]);
             historial_empleado::create([
                 'emple_id'    => $empleadoId->emple_id,
-                'histo_Falta'    =>$emp[24],
+                'tipo_Hist'    =>1,
+                'fecha_historial'    =>$emp[24],
             ]);
                 }
 

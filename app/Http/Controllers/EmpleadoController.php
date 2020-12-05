@@ -1244,22 +1244,9 @@ class EmpleadoController extends Controller
             $historial_empleado->fecha_historial = $fechaBaja;
             $historial_empleado->save();
 
-            ///IMAGEN
-         /*    if ($request->hasFile('exampleFormControlFile1')) {
-                foreach($request->file('exampleFormControlFile1') as $filesC){
-                $file = $filesC;
-                $path = public_path() . '/documEmpleado';
-                $fileName = uniqid() . $file->getClientOriginalName();
-                $file->move($path, $fileName);
 
-                $doc_empleado=new doc_empleado();
-                $doc_empleado->idhistorial_empleado=$idHH;
-                $doc_empleado->rutaDocumento=$fileName;
-                $doc_empleado->save();
-                }
-
-            } */
         }
+        return $historial_empleado->idhistorial_empleado;
 
     }
     public function indexMenu()
@@ -2615,6 +2602,7 @@ class EmpleadoController extends Controller
 
 
         }
+        return $historial_empleadoN->idhistorial_empleado;
     }
     public function historialEmpleado(Request $request){
         $idempleado=$request->idempleado;
@@ -2632,5 +2620,51 @@ class EmpleadoController extends Controller
 
 
 
+    }
+
+    public function storeDocumentoBaja(Request $request, $data)
+    {
+
+
+        //VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('bajaFile')) {
+            foreach($request->file('bajaFile') as $filesC){
+            $file = $filesC;
+            $path = public_path() . '/documEmpleado';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            $doc_empleado=new doc_empleado();
+            $doc_empleado->idhistorial_empleado=$data;
+            $doc_empleado->rutaDocumento=$fileName;
+            $doc_empleado->save();
+            }
+
+        }
+
+        return json_encode(array('status' => true));
+    }
+
+    public function storeDocumentoAlta(Request $request, $data)
+    {
+
+
+        //VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('AltaFile')) {
+            foreach($request->file('AltaFile') as $filesC){
+            $file = $filesC;
+            $path = public_path() . '/documEmpleado';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            $doc_empleado=new doc_empleado();
+            $doc_empleado->idhistorial_empleado=$data;
+            $doc_empleado->rutaDocumento=$fileName;
+            $doc_empleado->save();
+            }
+
+        }
+
+        return json_encode(array('status' => true));
     }
 }

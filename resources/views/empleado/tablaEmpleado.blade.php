@@ -440,19 +440,57 @@
                     var trVer = '<tr>';
 
 
-                        if(data[i].histo_Falta!=null){
-                            trVer+=  '<td><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].histo_Falta).format('DD/MM/YYYY')+'</td>';
+                        if(data[i].fecha_historial!=null){
+                            if(data[i].tipo_Hist==1){
+                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].fecha_historial).format('DD/MM/YYYY')+'</td>';
+                            } else
+                            {
+                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].fecha_historial).format('DD/MM/YYYY') +'</td>';
+                            }
                         } else{
                             trVer+=  '<td>--</td>';
                         }
-                        if(data[i].histo_Fbaja!=null){
-                            trVer+=  '<td><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].histo_Fbaja).format('DD/MM/YYYY') +'</td>';
+
+                        if(data[i].rutaDocumento!=null){
+
+                        var valores=data[i].rutaDocumento;
+                        idsV=valores.split(',');
+                        var variableResult=[];
+                        trVer+=  '<td><div class="row">';
+                        $.each( idsV, function( index, value ){
+                            trVer+=
+                            '<div class="col-xl-6 col-md-6" style="padding-left: 0px;">'+
+                                '<div class="p-2 border rounded" style="padding-top: 1px!important; padding-bottom: 1px!important;">'+
+                                    '<div class="media">'+
+                                        '<div class="avatar-sm font-weight-bold mr-3">'+
+                                            '<span class="avatar-title rounded bg-soft-primary text-primary">'+
+                                            '<i class="uil-file-plus-alt font-size-18"></i>'+
+                                        ' </span>'+
+                                        '</div>'+
+                                        '<div class="media-body">'+
+                                            '<a href="documEmpleado/'+value+'" target="_blank" class="d-inline-block mt-2">'+value+'</a>'+
+                                        '</div>'+
+                                        '<div class="float-right mt-1">'+
+                                            '<a href="documEmpleado/'+value+'" target="_blank" class="p-2"><i class="uil-download-alt font-size-18"></i></a>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                            /* variableResult.push(variableResult1); */
+
+                        })
+
+                        /*   trVer+=variableResult; */
+
+                        trVer+=  '</div></td>';
                         } else{
-                            trVer+=  '<td>--</td>';
+                        trVer+=  '<td>--</td>';
                         }
 
 
                             trVer+= '</tr>';
+
 
                 containerVer.append(trVer);
 
@@ -653,13 +691,50 @@ function verDEmpleado(idempleadoVer){
                     var trVer = '<tr>';
 
 
-                        if(data[i].histo_Falta!=null){
-                            trVer+=  '<td><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].histo_Falta).format('DD/MM/YYYY')+'</td>';
+                        if(data[i].fecha_historial!=null){
+                            if(data[i].tipo_Hist==1){
+                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].fecha_historial).format('DD/MM/YYYY')+'</td>';
+                            } else
+                            {
+                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].fecha_historial).format('DD/MM/YYYY') +'</td>';
+                            }
                         } else{
                             trVer+=  '<td>--</td>';
                         }
-                        if(data[i].histo_Fbaja!=null){
-                            trVer+=  '<td><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].histo_Fbaja).format('DD/MM/YYYY') +'</td>';
+
+                         if(data[i].rutaDocumento!=null){
+
+                            var valores=data[i].rutaDocumento;
+                            idsV=valores.split(',');
+                            var variableResult=[];
+                            trVer+=  '<td><div class="row">';
+                            $.each( idsV, function( index, value ){
+                                trVer+=
+                                '<div class="col-xl-6 col-md-6" style="padding-left: 0px;">'+
+                                    '<div class="p-2 border rounded" style="padding-top: 1px!important; padding-bottom: 1px!important;">'+
+                                         '<div class="media">'+
+                                            '<div class="avatar-sm font-weight-bold mr-3">'+
+                                                '<span class="avatar-title rounded bg-soft-primary text-primary">'+
+                                                 '<i class="uil-file-plus-alt font-size-18"></i>'+
+                                               ' </span>'+
+                                            '</div>'+
+                                            '<div class="media-body">'+
+                                                '<a href="documEmpleado/'+value+'" target="_blank" class="d-inline-block mt-2">'+value+'</a>'+
+                                             '</div>'+
+                                             '<div class="float-right mt-1">'+
+                                                '<a href="documEmpleado/'+value+'" target="_blank" class="p-2"><i class="uil-download-alt font-size-18"></i></a>'+
+                                            '</div>'+
+                                         '</div>'+
+                                     '</div>'+
+                                '</div>';
+
+                                /* variableResult.push(variableResult1); */
+
+                            })
+
+                            /*   trVer+=variableResult; */
+
+                            trVer+=  '</div></td>';
                         } else{
                             trVer+=  '<td>--</td>';
                         }
@@ -839,6 +914,11 @@ function verDEmpleado(idempleadoVer){
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
 <script>
     function eliminarEmpleado() {
+        $(function () {
+  f = moment().format("YYYY-MM-DD");
+  fechaValue.setDate(f);
+  $( "#fechaInput" ).change();
+  })
         var allVals = [];
 
 
@@ -851,6 +931,7 @@ function verDEmpleado(idempleadoVer){
     bootbox.alert("Por favor seleccione una fila");
             return false;
         } else {
+            
             $('#modalEliminar').modal();
 
 
@@ -865,14 +946,22 @@ function verDEmpleado(idempleadoVer){
         $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
         });
+        if(allVals!=null){
+
+        }
+        else{
+            console.log('esta vacio');
+        }
         var join_selected_values = allVals.join(",");
         var table = $('#tablaEmpleado').DataTable();
+
         $.ajax({
             url: "/eliminarEmpleados",
             type: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            async:'false',
             statusCode: {
                 /*401: function () {
                     location.reload();
@@ -883,7 +972,35 @@ function verDEmpleado(idempleadoVer){
             },
             data: {ids:join_selected_values,fechaBaja} ,
             success: function (data) {
+                var formData1 = new FormData();
+                var num= document.getElementById('bajaFile').files.length;
 
+for (var i = 0; i < num; i++) {
+formData1.append("bajaFile[]", document.getElementById('bajaFile').files[i]);
+}
+data1='/'+data;
+                 $.ajax({
+                    type: "POST",
+                    url: "/empleado/storeDocumentoBaja" + data1,
+                    data: formData1,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    statusCode: {
+                        401: function () {
+                            location.reload();
+                        },
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    success: function (data) {
+                    },
+                    error: function (data, errorThrown) { },
+                });
                 $('#modalEliminar').modal('hide');
                 RefreshTablaEmpleado();
                 $.notify({
@@ -907,6 +1024,8 @@ function verDEmpleado(idempleadoVer){
                 alert(data.responseText);
             }
         });
+
+
 
     }
 

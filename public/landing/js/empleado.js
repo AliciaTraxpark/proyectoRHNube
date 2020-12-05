@@ -3442,8 +3442,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
         error: function (data, errorThrown) { },
     });
     var formData1 = new FormData();
-   /*  console.log($("#exampleFormControlFile1").prop("files")[0]); */
-   /*  formData1.append("file", $("#exampleFormControlFile1").prop("files")[0]); */
+
     var num= document.getElementById('exampleFormControlFile1').files.length;
 
 for (var i = 0; i < num; i++) {
