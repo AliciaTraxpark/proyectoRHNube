@@ -330,7 +330,7 @@
                                         </div>
                                         <br><br>
                                         <div class="col-md-8 " id="divReporteAsis"  >
-                                            <label for="">Reporte de asistencia:</label>
+                                            <label for="">Reporte:</label>
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="ReporteAsistCheck">
                                                 <label class="form-check-label" for="ReporteAsistCheck"
@@ -627,7 +627,7 @@
                                         </div>
                                         <br><br>
                                         <div class="col-md-8 " id="divReporteAsis_edit"  >
-                                            <label for="">Reporte de asistencia:</label>
+                                            <label for="">Reporte:</label>
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="ReporteAsistCheck_edit">
                                                 <label class="form-check-label" for="ReporteAsistCheck_edit"
