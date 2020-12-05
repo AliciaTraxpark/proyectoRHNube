@@ -412,8 +412,7 @@
                                                         <input type="checkbox" style="font-size: 11.4px"
                                                             class="form-check-input" id="selectAreaCheck">
                                                         <label class="form-check-label" for="selectAreaCheck"
-                                                            style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                            todas.</label>
+                                                            style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Todos, incluidos nuevos.</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -706,8 +705,7 @@
                                                     <input type="checkbox" style="font-size: 11.4px"
                                                         class="form-check-input" id="selectAreaCheck_edit">
                                                     <label class="form-check-label" for="selectAreaCheck_edit"
-                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Seleccionar
-                                                        todas.</label>
+                                                        style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Todos, incluidos nuevos.</label>
                                                 </div>
                                             </div>
                                         </div>
