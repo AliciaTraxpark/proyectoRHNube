@@ -61,8 +61,8 @@ function actividadEmp() {
             if (data != 0) {
                 var container = $("#tablaBodyTarea");
                 var td = "";
-                var valorIn=$('#gestActI').val();
-                console.log('valorIn=='+valorIn);
+                var valorIn = $('#gestActI').val();
+                console.log('valorIn==' + valorIn);
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return editarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
@@ -74,13 +74,13 @@ function actividadEmp() {
                                 <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
                             </div></td><td></td></tr>`;
                         } else {
-                            if(valorIn==1){
+                            if (valorIn == 1) {
                                 td += `<td><div class="custom-control custom-switch">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
                                 <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
                             </div></td><td></td></tr>`;
                             }
-                            else{
+                            else {
                                 td += `<td><div class="custom-control custom-switch">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
                                 <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
@@ -89,14 +89,13 @@ function actividadEmp() {
 
                         }
                     } else {
-                        if(valorIn==1){
-                        td += `<td><div class="custom-control custom-switch">
+                        if (valorIn == 1) {
+                            td += `<td><div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
                       </div></td><td></td></tr>`;
                         }
-                        else
-                        {
+                        else {
                             td += `<td><div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
                             <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
@@ -993,38 +992,78 @@ function estadoDispositivoCR(idEmpleado, id, pc, datos) {
 function limpiarCorreoE() {
     $("#textCorreo").val("");
 }
-
-// REGISTRAR ACTIVIADES EN FORMULARIO EDITAR
+//: EVENTOS DE SWITCH EN FORMULARIO EDITAR
+$('#customCRGE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == false) {
+        $('#customCRTGE').prop("checked", true);
+    }
+});
+$('#customCRTGE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == false) {
+        $('#customCRGE').prop("checked", true);
+    }
+});
+$('#FormregistrarActividad').attr('novalidate', true);
+$('#FormregistrarActividad').submit(function (e) {
+    e.preventDefault();
+    if ($('#customCRGE').is(":checked") == false && $('#customCRTGE').is(":checked") == false) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar un control',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#RegActividadTareaGE"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
+//* REGISTRAR ACTIVIADES EN FORMULARIO EDITAR
 function registrarActividad() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
     var empleados = null;
-    var global;
     if ($('#customCRGE').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
         var controlRemoto = 0;
     }
-    if ($('#customAPGE').is(":checked") == true) {
-        var asistenciaPuerta = 1;
+    if ($('#customCRTGE').is(":checked") == true) {
+        var controlRuta = 1;
     } else {
-        var asistenciaPuerta = 0;
+        var controlRuta = 0;
     }
-    if ($('#edit_customGlobalE').is(":checked") == true) {
-        global = 1;
-    } else {
-        global = 0;
-    }
+
     $.ajax({
         type: "POST",
         url: "/registrarActvO",
         data: {
             nombre: nombre,
             cr: controlRemoto,
-            ap: asistenciaPuerta,
+            crt: controlRuta,
             codigo: codigo,
             empleados: empleados,
-            global: global
+            ap: 0,
+            globalEmpleado: 0,
+            globalArea: 0,
+            asignacionEmpleado: 1,
+            asignacionArea: 0
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1181,7 +1220,7 @@ function registrarActividad() {
         error: function () { },
     });
 }
-// RECUPERAR ACTIVIDAD
+//* RECUPERAR ACTIVIDAD EN FORMULARIO EDITAR
 function recuperarActividad(id) {
     $.ajax({
         type: "GET",
@@ -1225,26 +1264,62 @@ function recuperarActividad(id) {
 
 }
 // ***********************************************************************************************************
-// REGISTRAR ACTIVIDADES EN FORMULARIO REGISTRAR
+//* REGISTRAR ACTIVIDADES EN FORMULARIO REGISTRAR
+//: EVENTOS DE SWITCH EN FORMULARIO REGISTRAR
+$('#customCRFR').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == false) {
+        $('#customCRTFR').prop("checked", true);
+    }
+});
+$('#customCRTFR').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == false) {
+        $('#customCRFR').prop("checked", true);
+    }
+});
+$('#FormregistrarActividadFR').attr('novalidate', true);
+$('#FormregistrarActividadFR').submit(function (e) {
+    e.preventDefault();
+    if ($('#customCRFR').is(":checked") == false && $('#customCRTFR').is(":checked") == false) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar un control',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#ActividadTareaGE"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
 function registrarActividadFR() {
     var nombre = $("#reg_nombreTarea").val();
     var codigo = $("#reg_codigoTarea").val();
     var empleados = null;
-    var global;
     if ($('#customCRFR').is(":checked") == true) {
         var controlRemoto = 1;
     } else {
         var controlRemoto = 0;
     }
-    if ($('#customAPFR').is(":checked") == true) {
-        var asistenciaPuerta = 1;
+    if ($('#customCRTFR').is(":checked") == true) {
+        var controlRuta = 1;
     } else {
-        var asistenciaPuerta = 0;
-    }
-    if ($('#reg_customGlobalE').is(":checked") == true) {
-        global = 1;
-    } else {
-        global = 0;
+        var controlRuta = 0;
     }
     $.ajax({
         type: "POST",
@@ -1252,10 +1327,14 @@ function registrarActividadFR() {
         data: {
             nombre: nombre,
             cr: controlRemoto,
-            ap: asistenciaPuerta,
+            crt: controlRuta,
             codigo: codigo,
             empleados: empleados,
-            global: global
+            ap: 0,
+            globalEmpleado: 0,
+            globalArea: 0,
+            asignacionEmpleado: 1,
+            asignacionArea: 0
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1460,10 +1539,12 @@ function recuperarActividadFR(id) {
 function limpiarModo() {
     $('#nombreTarea').val("");
     $('#codigoTarea').val("");
-    $('#customAPGE').prop("checked", false);
     $('#reg_nombreTarea').val("");
     $('#reg_codigoTarea').val("");
-    $('#customAPFR').prop("checked", false);
+    $('#customCRTGE').prop("checked", false);
+    $('#customCRGE').prop("checked", false);
+    $('#customCRFR').prop("checked", false);
+    $('#customCRTFR').prop("checked", false);
 }
 //REMOVER CLASES
 $("#nombreTarea").keyup(function () {

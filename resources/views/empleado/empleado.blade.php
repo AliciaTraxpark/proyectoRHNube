@@ -559,7 +559,7 @@ use Carbon\Carbon;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Registrar Actividad
+                        Registrar actividad
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-ver').modal('show');javascript:limpiarModo()">
@@ -569,7 +569,7 @@ use Carbon\Carbon;
                 <div class="modal-body" style="font-size:12px!important">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="javascript:registrarActividad()">
+                            <form action="javascript:registrarActividad()" id="FormregistrarActividad">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -589,18 +589,24 @@ use Carbon\Carbon;
                                 <div class="row">
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCRGE" checked
-                                                disabled>
+                                            <input type="checkbox" class="custom-control-input" id="customCRGE">
                                             <label class="custom-control-label" for="customCRGE"
-                                                style="font-weight: bold">Control Remoto</label>
+                                                style="font-weight: bold">
+                                                <i data-feather="activity"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                Control Remoto
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customAPGE">
-                                            <label class="custom-control-label" for="customAPGE"
-                                                style="font-weight: bold">Asistencia en
-                                                Puerta</label>
+                                            <input type="checkbox" class="custom-control-input" id="customCRTGE">
+                                            <label class="custom-control-label" for="customCRTGE"
+                                                style="font-weight: bold">
+                                                Control en Ruta
+                                                <i data-feather="map-pin"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -631,7 +637,7 @@ use Carbon\Carbon;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Registrar Actividad
+                        Registrar actividad
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiarModo()">
@@ -641,7 +647,7 @@ use Carbon\Carbon;
                 <div class="modal-body" style="font-size:12px!important">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="javascript:registrarActividadFR()">
+                            <form action="javascript:registrarActividadFR()" id="FormregistrarActividadFR">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -661,18 +667,24 @@ use Carbon\Carbon;
                                 <div class="row">
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCRFR" checked
-                                                disabled>
+                                            <input type="checkbox" class="custom-control-input" id="customCRFR">
                                             <label class="custom-control-label" for="customCRFR"
-                                                style="font-weight: bold">Control Remoto</label>
+                                                style="font-weight: bold">
+                                                <i data-feather="activity"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                Control Remoto
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customAPFR">
-                                            <label class="custom-control-label" for="customAPFR"
-                                                style="font-weight: bold">Asistencia en
-                                                Puerta</label>
+                                            <input type="checkbox" class="custom-control-input" id="customCRTFR">
+                                            <label class="custom-control-label" for="customCRTFR"
+                                                style="font-weight: bold">
+                                                <i data-feather="map-pin"
+                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                Control en Ruta
+                                            </label>
                                         </div>
                                     </div>
                                 </div>

@@ -337,7 +337,7 @@ use App\proyecto_empleado;
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarActividad()">
+                        <form action="javascript:registrarActividad()" id="FormregistrarActividad">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -357,29 +357,21 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customCRGE" checked
-                                            disabled>
-                                        <label class="custom-control-label" for="customCRGE"
-                                            style="font-weight: bold">Control Remoto</label>
+                                        <input type="checkbox" class="custom-control-input" id="customCRGE">
+                                        <label class="custom-control-label" for="customCRGE" style="font-weight: bold">
+                                            <i data-feather="activity"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            Control Remoto
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customAPGE">
-                                        <label class="custom-control-label" for="customAPGE"
-                                            style="font-weight: bold">Asistencia en
-                                            Puerta</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row pt-3" style="display: none">
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-switch mb-1">
-                                        <input type="checkbox" class="custom-control-input" id="edit_customGlobalE">
-                                        <label class="custom-control-label" for="edit_customGlobalE"
-                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
-                                            title="Actividad será asignada para todos los nuevos empleados">
-                                            Actividad global
+                                        <input type="checkbox" class="custom-control-input" id="customCRTGE">
+                                        <label class="custom-control-label" for="customCRTGE" style="font-weight: bold">
+                                            Control en Ruta
+                                            <i data-feather="map-pin"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
                                         </label>
                                     </div>
                                 </div>
@@ -421,7 +413,7 @@ use App\proyecto_empleado;
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarActividadFR()">
+                        <form action="javascript:registrarActividadFR()" id="FormregistrarActividadFR">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -441,29 +433,21 @@ use App\proyecto_empleado;
                             <div class="row">
                                 <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customCRFR" checked
-                                            disabled>
-                                        <label class="custom-control-label" for="customCRFR"
-                                            style="font-weight: bold">Control Remoto</label>
+                                        <input type="checkbox" class="custom-control-input" id="customCRFR">
+                                        <label class="custom-control-label" for="customCRFR" style="font-weight: bold">
+                                            <i data-feather="activity"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            Control Remoto
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-left">
                                     <div class="custom-control custom-switch mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customAPFR">
-                                        <label class="custom-control-label" for="customAPFR"
-                                            style="font-weight: bold">Asistencia en
-                                            Puerta</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row pt-3" style="display: none">
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-switch mb-1">
-                                        <input type="checkbox" class="custom-control-input" id="reg_customGlobalE">
-                                        <label class="custom-control-label" for="reg_customGlobalE"
-                                            style="font-weight: bold" data-toggle="tooltip" data-placement="right"
-                                            title="Actividad será asignada para todos los nuevos empleados">
-                                            Actividad global
+                                        <input type="checkbox" class="custom-control-input" id="customCRTFR">
+                                        <label class="custom-control-label" for="customCRTFR" style="font-weight: bold">
+                                            <i data-feather="map-pin"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                            Control en Ruta
                                         </label>
                                     </div>
                                 </div>

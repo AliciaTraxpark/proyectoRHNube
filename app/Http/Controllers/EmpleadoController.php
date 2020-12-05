@@ -700,7 +700,7 @@ class EmpleadoController extends Controller
                 $actividad_empleado =  new actividad_empleado();
                 $actividad_empleado->idActividad = $actividadG->Activi_id;
                 $actividad_empleado->idEmpleado = $idempleado;
-                $actividad_empleado->eliminacion = 0;
+                $actividad_empleado->eliminacion = 1;
                 $actividad_empleado->save();
             }
         }
@@ -845,12 +845,15 @@ class EmpleadoController extends Controller
                     }
                 }
                 if ($busqueda) {
-                    //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
-                    $actividad_empleado =  new actividad_empleado();
-                    $actividad_empleado->idActividad = $actividadG->Activi_id;
-                    $actividad_empleado->idEmpleado = $empleado->emple_id;
-                    $actividad_empleado->eliminacion = 0;
-                    $actividad_empleado->save();
+                    $busquedaActividadE = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->where('idActividad', '=', $actividadG->Activi_id)->get()->first();
+                    if (!$busquedaActividadE) {
+                        //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
+                        $actividad_empleado =  new actividad_empleado();
+                        $actividad_empleado->idActividad = $actividadG->Activi_id;
+                        $actividad_empleado->idEmpleado = $empleado->emple_id;
+                        $actividad_empleado->eliminacion = 1;
+                        $actividad_empleado->save();
+                    }
                 }
             }
         }
