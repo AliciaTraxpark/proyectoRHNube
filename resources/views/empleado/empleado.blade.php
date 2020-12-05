@@ -927,10 +927,10 @@ use Carbon\Carbon;
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
 
-                                    {{--   <button onclick="eliminarEmpleado()" id=""
+                                   <button onclick="eliminarEmpleado()" id=""
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                                         class="btn btn-sm btn-primary delete_all" data-url="">Dar de baja
-                                    </button> --}}
+                                    </button>
                                     {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                                     <button class="btn btn-sm btn-primary" id="formNuevoE"
@@ -1131,7 +1131,19 @@ use Carbon\Carbon;
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
+                        </div>
+                    </div>
+                    <div class="col-md 12" id="divbajaF">
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="bajaFile">Adjuntar documento</label>
+                            <input type="file" accept=
+                            "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                             application/pdf, image/*"  multiple="true"  class="form-control-file" id="bajaFile">
+                          </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
 
                                 <button type="button" id="cerrarE" class="btn btn-light btn-sm "
                                     data-dismiss="modal">Cancelar</button>
@@ -1602,9 +1614,10 @@ use Carbon\Carbon;
                                         <div class="col-md 12">
                                             <div class="form-group" style="margin-top: 10px;">
                                                 <label for="exampleFormControlFile1">Adjuntar documento</label>
-                                                <input type="file" class="form-control-file"
-                                                    id="exampleFormControlFile1" multiple="true">
-                                            </div>
+                                                <input type="file" accept=
+                                                "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                 application/pdf, image/*" class="form-control-file" id="exampleFormControlFile1" multiple="true">
+                                              </div>
                                         </div>
                                     </div>
                             </div>

@@ -1014,7 +1014,7 @@ use App\proyecto_empleado;
                 <div class="row">
                     {{-- BOTONES --}}
                     <div class=" col-md-12 text-right btnResponsive">
-                        {{--   @if (isset($bajaEmp))
+                       @if (isset($bajaEmp))
                          @if ($bajaEmp==1)
                          <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
@@ -1030,7 +1030,7 @@ use App\proyecto_empleado;
                             class="btn btn-sm btn-primary delete_all">
                             Dar de baja
                         </button>
-                        @endif --}}
+                        @endif
 
                         @if (isset($agregarEmp))
                         @if ($agregarEmp==1)
@@ -1230,8 +1230,10 @@ use App\proyecto_empleado;
                         <div class="col-md 12" id="divbajaF">
                             <div class="form-group" style="margin-top: 10px;">
                                 <label for="bajaFile">Adjuntar documento</label>
-                                <input type="file" multiple="true" class="form-control-file" id="bajaFile">
-                            </div>
+                                <input type="file"  accept=
+                                "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                 application/pdf, image/*"  multiple="true"  class="form-control-file" id="bajaFile">
+                              </div>
                         </div>
                     </form>
                 </div>
@@ -1705,9 +1707,10 @@ use App\proyecto_empleado;
                             <div class="col-md 12">
                                 <div class="form-group" style="margin-top: 10px;">
                                     <label for="exampleFormControlFile1">Adjuntar documento</label>
-                                    <input type="file" class="form-control-file" id="exampleFormControlFile1"
-                                        multiple="true">
-                                </div>
+                                    <input type="file" accept=
+                                    "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                     application/pdf, image/*" class="form-control-file" id="exampleFormControlFile1" multiple="true">
+                                  </div>
                             </div>
                         </div>
 

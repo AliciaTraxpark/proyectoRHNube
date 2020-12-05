@@ -3409,7 +3409,9 @@ aria-hidden="true" data-backdrop="static">
                 <div class="col-md 12">
                     <div class="form-group" style="margin-top: 10px;">
                         <label for="AltaFile">Adjuntar documento</label>
-                        <input type="file"   multiple="true"  class="form-control-file" id="AltaFile">
+                        <input type="file" accept=
+                        "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                         application/pdf, image/*"  multiple="true"  class="form-control-file" id="AltaFile">
                       </div>
                 </div>
             </form>
