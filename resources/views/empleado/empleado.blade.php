@@ -915,10 +915,10 @@ use Carbon\Carbon;
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
 
-                                    <button onclick="eliminarEmpleado()" id=""
+                                  {{--   <button onclick="eliminarEmpleado()" id=""
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                                         class="btn btn-sm btn-primary delete_all" data-url="">Dar de baja
-                                    </button>
+                                    </button> --}}
                                     {{--  <button class="btn btn-sm btn-primary" id="formNuevoEd"
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"> Editar</button> --}}
                                     <button class="btn btn-sm btn-primary" id="formNuevoE"
@@ -1108,6 +1108,12 @@ use Carbon\Carbon;
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md 12" id="divbajaF">
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="bajaFile">Adjuntar documento</label>
+                            <input type="file"   multiple="true"  class="form-control-file" id="bajaFile">
+                          </div>
                     </div>
                 </form>
             </div>
@@ -1442,8 +1448,7 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
-                                    fechas de Contrato</h5>
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
                                     <span aria-hidden="true">&times;</span>
@@ -1576,6 +1581,14 @@ use Carbon\Carbon;
 
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md 12">
+                                            <div class="form-group" style="margin-top: 10px;">
+                                                <label for="exampleFormControlFile1">Adjuntar documento</label>
+                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" multiple="true">
+                                              </div>
                                         </div>
                                     </div>
                             </div>
@@ -2544,26 +2557,25 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default">Contrato <a
-                                                            onclick="$('#form-registrar').modal('hide');"
-                                                            href="#contratomodal" data-toggle="modal"
-                                                            data-target="#contratomodal"><i
+                                                    <label for="sw-default">Contrato  <a
+                                                            onclick="$('#form-registrar').modal('hide');" href="#contratomodal"
+                                                            data-toggle="modal" data-target="#contratomodal"><i
                                                                 class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a id="detalleContrato"
-                                                            onclick="$('#form-registrar').modal('hide');"
-                                                            href="#fechasmodal" data-toggle="modal"
-                                                            data-target="#fechasmodal" data-toggle="tooltip"
-                                                            data-placement="right" title="Detalle de Contrato."
+                                                        <a id="detalleContrato" onclick="$('#form-registrar').modal('hide');"
+                                                            href="#fechasmodal" data-toggle="modal" data-target="#fechasmodal"
+                                                            data-toggle="tooltip" data-placement="right"
+                                                            title="Detalle de Contrato."
                                                             data-original-title="Detalle de Contrato."
                                                             style="cursor: pointer;"><img
-                                                                src="{{asset('landing/images/adaptive.svg')}}"
-                                                                height="18"></a></label>
+                                                                src="{{ asset('landing/images/adaptive.svg') }}"
+                                                                height="18"></a></label> <span id="validContrato" style="color: red;display:none">Eliga
+                                                                    contrato</span> <span id="detalleContratoS" style="color: red;display:none">Indique detalles de contrato</span>
                                                     <select class="form-control" name="contrato" id="contrato"
                                                         onchange="$('#detalleContrato').show();" tabindex="5" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($tipo_cont as $tipo_conts)
-                                                        <option value="{{$tipo_conts->contrato_id}}">
-                                                            {{$tipo_conts->contrato_descripcion}}</option>
+                                                        <option value="{{ $tipo_conts->contrato_id }}">
+                                                            {{ $tipo_conts->contrato_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -4480,7 +4492,7 @@ use Carbon\Carbon;
                                         <thead style="background: #fafafa;">
                                             <tr>
                                                 <th>Fecha de alta</th>
-                                                <th>Fecha de baja</th>
+                                                <th>Documento</th>
                                             </tr>
                                         </thead>
                                         <tbody id="editar_tbodyHistorial"
@@ -4927,7 +4939,7 @@ use Carbon\Carbon;
                                         <thead style="background: #fafafa;">
                                             <tr>
                                                 <th>Fecha de alta</th>
-                                                <th>Fecha de baja</th>
+                                                <th>Documento</th>
                                             </tr>
                                         </thead>
                                         <tbody id="ver_tbodyHistorial"

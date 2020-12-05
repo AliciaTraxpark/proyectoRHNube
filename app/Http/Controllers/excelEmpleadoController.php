@@ -25,6 +25,8 @@ use App\actividad_empleado;
 use App\calendario;
 use App\eventos_usuario;
 use App\eventos_empleado;
+use App\historial_empleado;
+
 class excelEmpleadoController extends Controller
 {
     //
@@ -358,10 +360,14 @@ class excelEmpleadoController extends Controller
                 'id_tipoContrato'=>$row['idtipo_contrato'],
                 'id_condicionPago'=>$row['idcondicion_pago'],
                 'monto'=>$emp[23],
+                'fechaInicio'=>$emp[24],
                 'idEmpleado'    => $empleadoId->emple_id,
                 'estado'    => 1,
-
-
+            ]);
+            historial_empleado::create([
+                'emple_id'    => $empleadoId->emple_id,
+                'tipo_Hist'    =>1,
+                'fecha_historial'    =>$emp[24],
             ]);
                 }
 

@@ -13,6 +13,7 @@ use App\cargo;
 use App\centro_costo;
 use App\condicion_pago;
 use App\contrato;
+use App\doc_empleado;
 use Illuminate\Http\Request;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_provinces;
@@ -639,7 +640,7 @@ class EmpleadoController extends Controller
         $empleado->emple_foto = '';
         $empleado->save();
         $idempleado = $empleado->emple_id;
-        
+
         ///////////////// SI USUARIO ES INVITADO
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
                 ->where('uso.organi_id', '=', session('sesionidorg'))
@@ -783,6 +784,14 @@ class EmpleadoController extends Controller
                     $contrato->id_condicionPago = $objEmpleado['condicion'];
                 }
                 $contrato->save();
+
+                ///////////////////
+                $historial_empleado = new historial_empleado();
+                $historial_empleado->emple_id =  $idE;
+                $historial_empleado->tipo_Hist =  1;
+                $historial_empleado->fecha_historial =  $objEmpleado['fechaI'];
+                $historial_empleado->save();
+                /////////////////////////77
                 $idContrato = $contrato->id;
             } else {
                 $contrato = contrato::where('id', '=', $objEmpleado['idContrato'])->get()->first();
@@ -824,6 +833,31 @@ class EmpleadoController extends Controller
             $empleado->emple_foto = $fileName;
         }
         $empleado->save();
+        return json_encode(array('status' => true));
+    }
+
+    public function storeDocumento(Request $request, $idE)
+    {
+        $HisEmpleado =DB::table('historial_empleado')->where('emple_id',$idE)
+        ->where('tipo_Hist',1)->get()->first();
+       $idHH=$HisEmpleado->idhistorial_empleado;
+
+        //VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('exampleFormControlFile1')) {
+            foreach($request->file('exampleFormControlFile1') as $filesC){
+            $file = $filesC;
+            $path = public_path() . '/documEmpleado';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            $doc_empleado=new doc_empleado();
+            $doc_empleado->idhistorial_empleado=$idHH;
+            $doc_empleado->rutaDocumento=$fileName;
+            $doc_empleado->save();
+            }
+
+        }
+
         return json_encode(array('status' => true));
     }
 
@@ -950,7 +984,7 @@ class EmpleadoController extends Controller
             ->leftJoin('nivel as n', 'e.emple_nivel', '=', 'n.nivel_id')
             ->leftJoin('local as l', 'e.emple_local', '=', 'l.local_id')
             ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-         /*    ->leftJoin('historial_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado') */
+
 
             ->select(
                 'e.emple_id',
@@ -1206,9 +1240,13 @@ class EmpleadoController extends Controller
         foreach ($arrayEmp[0] as $emp) {
             $historial_empleado = new historial_empleado();
             $historial_empleado->emple_id =  $emp;
-            $historial_empleado->histo_Fbaja = $fechaBaja;
+            $historial_empleado->tipo_Hist =  0;
+            $historial_empleado->fecha_historial = $fechaBaja;
             $historial_empleado->save();
+
+
         }
+        return $historial_empleado->idhistorial_empleado;
 
     }
     public function indexMenu()
@@ -2542,7 +2580,7 @@ class EmpleadoController extends Controller
 
     public function darAltaEmpleado(Request $request){
         $ids = $request->ids;
-        $fechaBaja = $request->fechaBaja;
+        $fechaAlta = $request->fechaAlta;
         $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
         //$empleado = empleado::find(explode(",",$ids))->first();
 
@@ -2555,25 +2593,78 @@ class EmpleadoController extends Controller
         $arrayEmp = array();
         $arrayEmp[]=explode(",", $ids);
         foreach ($arrayEmp[0] as $emp) {
-        $historial_empleado = DB::table('historial_empleado') ->where('emple_id',$emp)->where('histo_Falta',null)
-        ->where('histo_Fbaja','!=',null)->get()->first();
-       if($historial_empleado!=null){
-        $historial_empleadoGu=historial_empleado::findOrFail($historial_empleado->idhistorial_empleado);
-        $historial_empleadoGu->histo_Falta = $fechaBaja;
-        $historial_empleadoGu->save();
-       } else{
+
         $historial_empleadoN = new historial_empleado();
         $historial_empleadoN->emple_id =  $emp;
-        $historial_empleadoN->histo_Falta = $fechaBaja;
+        $historial_empleadoN->tipo_Hist =  1;
+        $historial_empleadoN->fecha_historial =  $fechaAlta;
         $historial_empleadoN->save();
-       }
+
 
         }
+        return $historial_empleadoN->idhistorial_empleado;
     }
     public function historialEmpleado(Request $request){
         $idempleado=$request->idempleado;
-        $historial_empleado = DB::table('historial_empleado') ->where('emple_id',$idempleado)->get();
+
+        $historial_empleado = DB::table('historial_empleado') ->where('historial_empleado.emple_id',$idempleado)
+        ->leftJoin('doc_empleado','historial_empleado.idhistorial_empleado','=','doc_empleado.idhistorial_empleado')
+        ->select('tipo_Hist','fecha_historial')
+        ->selectRaw('GROUP_CONCAT(doc_empleado.rutaDocumento) as rutaDocumento')
+
+        ->groupBy('historial_empleado.idhistorial_empleado')
+        ->where('historial_empleado.emple_id',$idempleado)
+        ->get();
+
         return $historial_empleado;
 
+
+
+    }
+
+    public function storeDocumentoBaja(Request $request, $data)
+    {
+
+
+        //VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('bajaFile')) {
+            foreach($request->file('bajaFile') as $filesC){
+            $file = $filesC;
+            $path = public_path() . '/documEmpleado';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            $doc_empleado=new doc_empleado();
+            $doc_empleado->idhistorial_empleado=$data;
+            $doc_empleado->rutaDocumento=$fileName;
+            $doc_empleado->save();
+            }
+
+        }
+
+        return json_encode(array('status' => true));
+    }
+
+    public function storeDocumentoAlta(Request $request, $data)
+    {
+
+
+        //VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('AltaFile')) {
+            foreach($request->file('AltaFile') as $filesC){
+            $file = $filesC;
+            $path = public_path() . '/documEmpleado';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            $doc_empleado=new doc_empleado();
+            $doc_empleado->idhistorial_empleado=$data;
+            $doc_empleado->rutaDocumento=$fileName;
+            $doc_empleado->save();
+            }
+
+        }
+
+        return json_encode(array('status' => true));
     }
 }

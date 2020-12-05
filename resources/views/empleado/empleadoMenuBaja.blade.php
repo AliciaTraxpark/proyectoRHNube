@@ -746,6 +746,7 @@ use App\proyecto_empleado;
                             <li><a href="#sw-default-step-5">Horario</a></li>
                             <li><a href="#sw-default-step-6">Actividades</a></li>
                             <li><a href="#sw-default-step-7">Dispositivo</a></li>
+
                         </ul>
                         <input type="hidden" id="estadoPR" value="false">
                         <input type="hidden" id="estadoPE" value="false">
@@ -1764,6 +1765,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div> --}}
                     </div>
+
                 </div>
             </div>
         </div>
@@ -1790,6 +1792,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Actividades</a></li>
                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                        <li><a href="#sw-default-step-8">Historial</a></li>
                     </ul>
                     <input type="hidden" id="estadoP" value="false">
                     <input type="hidden" id="estadoE" value="false">
@@ -2840,6 +2843,7 @@ use App\proyecto_empleado;
                         <li><a href="#sw-default-step-5">Horario</a></li>
                         <li><a href="#sw-default-step-6">Actividades</a></li>
                         <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                        <li><a href="#sw-default-step-8">Historial</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
@@ -3225,6 +3229,28 @@ use App\proyecto_empleado;
                                 </div>
                             </div> --}}
                         </div>
+                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
+                            <div class="col-md-12">
+                                <label for="">Historial de empleado de altas y bajas</label>
+                            </div>
+
+                           <div class="col-xl-12 col-sm-12">
+                            <div class="table-responsive-xl">
+                                <table id="ver_tablaHistorial" class="table"
+                                    style="font-size: 13px!important;">
+                                    <thead style="background: #fafafa;">
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Documento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ver_tbodyHistorial"
+                                        style="background:#ffffff;color: #585858;font-size: 12px">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3379,6 +3405,12 @@ aria-hidden="true" data-backdrop="static">
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md 12">
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="AltaFile">Adjuntar documento</label>
+                        <input type="file"   multiple="true"  class="form-control-file" id="AltaFile">
+                      </div>
                 </div>
             </form>
         </div>
@@ -3748,7 +3780,7 @@ function altaEmpleado() {
     }
     function confirmarAlta(){
         var allVals = [];
-        var fechaBaja=$('#fechaInput').val();
+        var fechaAlta=$('#fechaInput').val();
         $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
         });
@@ -3768,9 +3800,37 @@ function altaEmpleado() {
                     location.reload();
                 }
             },
-            data: {ids:join_selected_values,fechaBaja} ,
+            data: {ids:join_selected_values,fechaAlta} ,
             success: function (data) {
+                var formData1 = new FormData();
+                var num= document.getElementById('AltaFile').files.length;
 
+                for (var i = 0; i < num; i++) {
+                formData1.append("AltaFile[]", document.getElementById('AltaFile').files[i]);
+                }
+                data1='/'+data;
+                $.ajax({
+                    type: "POST",
+                    url: "/empleado/storeDocumentoAlta" + data1,
+                    data: formData1,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    statusCode: {
+                        401: function () {
+                            location.reload();
+                        },
+                        419: function () {
+                            location.reload();
+                        },
+                    },
+                    success: function (data) {
+                    },
+                    error: function (data, errorThrown) { },
+                });
 
                 RefreshTablaEmpleado();
                 $('#modalAlta').modal('hide');
@@ -4281,7 +4341,85 @@ function calendario4() {
                 $('#v_apPaternoV').val(data[0].perso_apPaterno);
                 $('#v_direccionV').val(data[0].perso_direccion);
                 $('#v_idV').val(data[0].emple_id);
+                $.ajax({
+                type:"POST",
+                url: "/empleado/historial",
+                data: {
+                    idempleado:value
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                success: function (data) {
+                    var containerVer = $('#ver_tbodyHistorial');
+            for (var i = 0; i < data.length; i++) {
 
+                    var trVer = '<tr>';
+
+
+                        if(data[i].fecha_historial!=null){
+                            if(data[i].tipo_Hist==1){
+                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].fecha_historial).format('DD/MM/YYYY')+'</td>';
+                            } else
+                            {
+                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].fecha_historial).format('DD/MM/YYYY') +'</td>';
+                            }
+                        } else{
+                            trVer+=  '<td>--</td>';
+                        }
+
+                        if(data[i].rutaDocumento!=null){
+
+                        var valores=data[i].rutaDocumento;
+                        idsV=valores.split(',');
+                        var variableResult=[];
+                        trVer+=  '<td><div class="row">';
+                        $.each( idsV, function( index, value ){
+                            trVer+=
+                            '<div class="col-xl-6 col-md-6" style="padding-left: 0px;">'+
+                                '<div class="p-2 border rounded" style="padding-top: 1px!important; padding-bottom: 1px!important;">'+
+                                    '<div class="media">'+
+                                        '<div class="avatar-sm font-weight-bold mr-3">'+
+                                            '<span class="avatar-title rounded bg-soft-primary text-primary">'+
+                                            '<i class="uil-file-plus-alt font-size-18"></i>'+
+                                        ' </span>'+
+                                        '</div>'+
+                                        '<div class="media-body">'+
+                                            '<a href="documEmpleado/'+value+'" target="_blank" class="d-inline-block mt-2">'+value+'</a>'+
+                                        '</div>'+
+                                        '<div class="float-right mt-1">'+
+                                            '<a href="documEmpleado/'+value+'" target="_blank" class="p-2"><i class="uil-download-alt font-size-18"></i></a>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                            /* variableResult.push(variableResult1); */
+
+                        })
+
+                        /*   trVer+=variableResult; */
+
+                        trVer+=  '</div></td>';
+                        } else{
+                        trVer+=  '<td>--</td>';
+                        }
+
+
+                            trVer+= '</tr>';
+
+
+                containerVer.append(trVer);
+
+            }
+                },
+                error: function () {}
+            });
                 //////////////////////////////////////////////////////////////
                 var VFechaDaVer=moment(data[0].perso_fechaNacimiento).format('YYYY-MM-DD');
                 var VFechaDiaVer = new Date(moment(VFechaDaVer));

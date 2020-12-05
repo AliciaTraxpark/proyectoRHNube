@@ -269,6 +269,29 @@ $(document).ready(function () {
             }
         }
         if (stepnumber == 1) {
+            console.log($("#contrato").val());
+            varCon=$("#contrato").val();
+            varCondicion=$("#condicion").val();
+            if (varCon=='') {
+                isStepValid = false;
+                $("#validContrato").show();
+                $("#detalleContratoS").hide();
+            } else {
+                $("#validContrato").hide();
+            }
+
+            if (varCondicion=='') {
+                isStepValid = false;
+                if (varCon=='') {
+                    $("#detalleContratoS").hide();
+                } else{
+                    $("#detalleContratoS").show();
+                }
+
+            } else {
+                $("#detalleContratoS").hide();
+            }
+
             if (isStepValid == true) {
                 if ($("#estadoPE").val() == "true") {
                     idE = $("#idEmpleado").val();
