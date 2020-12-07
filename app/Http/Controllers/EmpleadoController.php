@@ -834,25 +834,20 @@ class EmpleadoController extends Controller
         if ($objEmpleado['area'] != '') {
             $actividadGlobalArea = actividad::where('organi_id', '=', session('sesionidorg'))->where('globalArea', '=', 1)->where('estado', '=', 1)->get();
             if (sizeof($actividadGlobalArea) != 0) {
-                $busqueda = false;
                 foreach ($actividadGlobalArea as $actividadG) {
+                    $busqueda = false;
                     //* BUSCAR AREAS
-                    $actividad_area = actividad_area::where('idActividad', '=', $actividadG->Activi_id)->where('estado', '=', 1)->get();
+                    $actividad_area = actividad_area::where('idActividad', '=', $actividadG->Activi_id)->where('idArea', '=', $objEmpleado['area'])->where('estado', '=', 1)->get();
                     foreach ($actividad_area as $a) {
-                        if ($a->idArea = $objEmpleado['area']) {
-                            $busqueda = true;
+                        $busquedaActividadE = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->where('idActividad', '=', $a->idActividad)->get()->first();
+                        if (!$busquedaActividadE) {
+                            //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
+                            $actividad_empleado =  new actividad_empleado();
+                            $actividad_empleado->idActividad = $a->idActividad;
+                            $actividad_empleado->idEmpleado = $empleado->emple_id;
+                            $actividad_empleado->eliminacion = 1;
+                            $actividad_empleado->save();
                         }
-                    }
-                }
-                if ($busqueda) {
-                    $busquedaActividadE = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->where('idActividad', '=', $actividadG->Activi_id)->get()->first();
-                    if (!$busquedaActividadE) {
-                        //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
-                        $actividad_empleado =  new actividad_empleado();
-                        $actividad_empleado->idActividad = $actividadG->Activi_id;
-                        $actividad_empleado->idEmpleado = $empleado->emple_id;
-                        $actividad_empleado->eliminacion = 1;
-                        $actividad_empleado->save();
                     }
                 }
             }
@@ -1160,6 +1155,45 @@ class EmpleadoController extends Controller
         $objEmpleado = json_decode($request->get('objEmpleadoA'), true);
         if ($request == null) return false;
         $empleado = Empleado::findOrFail($idE);
+        if ($objEmpleado['area_v'] != $empleado->emple_area) {
+            //* BUSCAR ACTIVIDADES DEL EMPLEADO
+            $buscarActividadesAreas = actividad_area::where('idArea', '=', $empleado->emple_area)->where('estado', '=', 1)->get();
+            if (sizeof($buscarActividadesAreas) != 0) {
+                foreach ($buscarActividadesAreas as $actividadB) {
+                    //* BUSCAR AREAS
+                    $actividad = actividad::where('Activi_id', '=', $actividadB->idActividad)->where('estado', '=', 1)->get()->first();
+                    $actividad_empleado = actividad_empleado::where('idActividad', '=', $actividad->Activi_id)
+                        ->where('idEmpleado', '=', $empleado->emple_id)->where('eliminacion', '=', 1)->get()->first();
+                    $actividad_empleado->estado = 0;
+                    $actividad_empleado->save();
+                }
+            }
+            //* BUSCAR ACTIVIDADES DE AREAS
+            if ($objEmpleado['area_v'] != '') {
+                $actividadGlobalArea = actividad::where('organi_id', '=', session('sesionidorg'))->where('globalArea', '=', 1)->where('estado', '=', 1)->get();
+                if (sizeof($actividadGlobalArea) != 0) {
+                    foreach ($actividadGlobalArea as $actividadG) {
+                        //* BUSCAR AREAS
+                        $actividad_area = actividad_area::where('idActividad', '=', $actividadG->Activi_id)->where('idArea', '=', $objEmpleado['area_v'])->where('estado', '=', 1)->get();
+                        foreach ($actividad_area as $a) {
+                            $busquedaActividadE = actividad_empleado::where('idEmpleado', '=', $empleado->emple_id)->where('idActividad', '=', $a->idActividad)->get()->first();
+                            if (!$busquedaActividadE) {
+                                //*VINCULAR ACTIVIDAD DE GLOBAL POR EMPLEADO
+                                $actividad_empleado =  new actividad_empleado();
+                                $actividad_empleado->idActividad = $a->idActividad;
+                                $actividad_empleado->idEmpleado = $empleado->emple_id;
+                                $actividad_empleado->estado = 1;
+                                $actividad_empleado->eliminacion = 1;
+                                $actividad_empleado->save();
+                            } else {
+                                $busquedaActividadE->estado = 1;
+                                $busquedaActividadE->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         $idContrato = '';
         if ($objEmpleado['contrato_v'] != '') {
             if ($objEmpleado['idContrato_v'] == '') {

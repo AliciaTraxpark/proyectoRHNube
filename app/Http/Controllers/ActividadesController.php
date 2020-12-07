@@ -335,14 +335,19 @@ class ActividadesController extends Controller
                             }
                         }
                         //* BUSCAR ACTIVIDAD AREAS
-                        $buscarActividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->where('idArea', '=', $a)->get();
-                        if (sizeof($buscarActividad_area) == 0) {
+                        $buscarActividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->where('idArea', '=', $a)->get()->first();
+                        if (!$buscarActividad_area) {
                             //* REGISTRAR ACTIVIDAD AREAS
                             $actividad_area = new actividad_area();
                             $actividad_area->idActividad = $actividad->Activi_id;
                             $actividad_area->idArea = $a;
                             $actividad_area->estado = 1;
                             $actividad_area->save();
+                        } else {
+                            if ($buscarActividad_area->estado == 0) {
+                                $buscarActividad_area->estado = 1;
+                                $buscarActividad_area->save();
+                            }
                         }
                     }
                     $actividad_area = actividad_area::where('idActividad', '=', $actividad->Activi_id)->get();
@@ -467,10 +472,6 @@ class ActividadesController extends Controller
                 array_push($respuesta, array("value" => $actividad[$index]->Activi_id, "text" => $actividad[$index]->Activi_Nombre . " | " . $valor));
             }
         }
-        // dd(DB::getQueryLog());
-        // foreach ($actividad as $a) {
-        //     array_push($respuesta, array("value" => $a->Activi_id, "text" => $a->Activi_Nombre));
-        // }
 
         return response()->json($respuesta, 200);
     }
@@ -780,14 +781,19 @@ class ActividadesController extends Controller
                         }
                     }
                     //* BUSCAR ACTIVIDAD AREAS
-                    $buscarActividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->where('idArea', '=', $a)->get();
-                    if (sizeof($buscarActividad_area) == 0) {
+                    $buscarActividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->where('idArea', '=', $a)->get()->first();
+                    if (!$buscarActividad_area) {
                         //* REGISTRAR ACTIVIDAD AREAS
                         $actividad_area = new actividad_area();
                         $actividad_area->idActividad = $actividadB->Activi_id;
                         $actividad_area->idArea = $a;
                         $actividad_area->estado = 1;
                         $actividad_area->save();
+                    } else {
+                        if ($buscarActividad_area->estado == 0) {
+                            $buscarActividad_area->estado = 1;
+                            $buscarActividad_area->save();
+                        }
                     }
                 }
                 $actividad_area = actividad_area::where('idActividad', '=', $actividadB->Activi_id)->get();
