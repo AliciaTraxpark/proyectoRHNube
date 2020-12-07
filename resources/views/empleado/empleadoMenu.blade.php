@@ -4855,56 +4855,41 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch6">
-                                                        <label class="custom-control-label" for="customSwitch6"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoProyecto_ver">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                         <div id="sw-default-step-7" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
-                                        <div class="card-header">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCV1">
                                                         <label class="custom-control-label" for="customSwitchCV1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="activity"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control Remoto
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-body border p-3" id="bodyModoControlRV">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="ver_tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="ver_tablaDispositivo" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                 <tr>
-                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Dispositivo</th>
                                                                     <th>Nombre</th>
-                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Activación</th>
                                                                     <th>Codigo</th>
                                                                     <th>Enviado</th>
                                                                     <th>Estado</th>
@@ -4923,27 +4908,58 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
-                                        <div class="card-header">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCV2">
                                                         <label class="custom-control-label" for="customSwitchCV2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="map-pin"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control en Ruta
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlAV">
+                                        <div class="card-body border p-3" id="bodyModoControlAV">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="ver_tablaDispositivoA" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
+                                                                <tr>
+                                                                    <th>Dispositivo</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Actividad (%)</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="ver_tbodyDispositivoA"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="col-md-12">

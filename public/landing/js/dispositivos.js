@@ -1284,14 +1284,10 @@ $('#customSwitchCV2').on('change.bootstrapSwitch', function (event) {
         $('#bodyModoControlAV').hide();
     }
 });
-$('#tbodyDispositivo').empty();
-$('#v_tbodyDispositivo').empty();
-$('#v_tbodyDispositivoA').empty();
 // ? CARGAR DISPOSITIVOS WINDOWS EN MODAL VER
 function dispositivoWindowsVer() {
     var idEmpleado = $('#v_idV').val();
-
-    $('#v_tbodyDispositivo').empty();
+    $('#ver_tbodyDispositivo').empty();
     $.ajax({
         async: false,
         type: "get",
@@ -1338,10 +1334,6 @@ function dispositivoWindowsVer() {
                     if (data[i].dispositivoD == 'WINDOWS') {
                         var tdV = `<a><img src="landing/images/email (4).svg" height="20">
                                             </a>`;
-                    } else {
-                        var tdV = `<input style="display: none;" id="android${data[i].idEmpleado}" value="${data[i].idVinculacion}">
-                                        <a><img src="landing/images/email (4).svg" height="20">
-                                        </a>`;
                     }
                     $('#correoVer' + data[i].idVinculacion).append(tdV);
                 }
@@ -1355,6 +1347,80 @@ function dispositivoWindowsVer() {
         },
         error: function () { }
     });
+}
+//? CARGAR DATOS DE DISPOSITIVOS ANDROID EN VER
+function dispositivosAndroidVer() {
+    var idEmpleado = $('#v_idV').val();
+    $('#ver_tbodyDispositivoA').empty();
+    $('#bodyModoControlAV').hide();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/listaVA",
+        data: {
+            idE: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var containerAVer = $('#ver_tbodyDispositivoA');
+            $('#customSwitchCV2').prop('checked', false);
+            $('#bodyModoControlAV').show();
+            for (let index = 0; index < data.length; index++) {
+                if (data[index].dispositivoD == 'ANDROID') {
+                    var trA = `<tr id="trVerA${data[index].idVinculacion}">
+                                <td>${data[index].dispositivoD}</td>
+                                <td>Android</td>
+                                <td class="hidetext">${data[index].codigo}</td>
+                                <td>
+                                    ${data[index].numero}
+                                </td>
+                                <td>${data[index].actividad}</td>
+                                <td>${data[index].envio}</td>
+                                <td id="estadoAV${data[index].idV}"></td>
+                                <td id="smsVer${data[index].idV}">
+                                    <a>
+                                        <img src="landing/images/note.svg" height="20">
+                                    </a>
+                                </td>
+                                <td id="inactivarVerA${data[index].idV}"><a class="badge badge-soft-danger mr-2">Inactivar</a></td>
+                                </tr>`;
+                }
+                containerAVer.append(trA);
+                // * MODELO DE DISPOSITIVO ANDROID
+                if (data[index].modelo !== null) {
+                    $("#trVerA" + data[index].idV).find("td:eq(1)").text(data[index].modelo);
+                } else {
+                    $("#trVerA" + data[index].idV).find("td:eq(1)").text("CEL " + index);
+                }
+                //* ESTADO DE VINCULACION
+                if (data[index].disponible == 'c') {
+                    $('#trVerA' + data[index].idV).find("td:eq(6)").text("Creado");
+                }
+                if (data[index].disponible == 'e') {
+                    $('#trVerA' + data[index].idV).find("td:eq(6)").text("Enviado");
+                }
+                if (data[index].disponible == 'a') {
+                    $('#trVerA' + data[index].idV).find("td:eq(6)").text("Activado");
+                }
+                if (data[index].disponible == 'i') {
+                    $('#trVerA' + data[index].idV).find("td:eq(6)").text("Inactivo");
+                    $('#inactivarVerA' + data[index].idV).empty();
+                    $('#smsVer' + data[index].idV).empty();
+                    var tdSms = `<a  
+                                    <img src="landing/images/email (4).svg" height="20">
+                                </a>`;
+                    $('#smsVer' + data[index].idV).append(tdSms);
+                }
+                //* *************************************************************
+                $('#customSwitchCV2').prop('checked', true);
+                $('#bodyModoControlAV').show();
+            }
+        },
+        error: function () { }
+    });
+
 }
 // TODO ****** FINALIZACION DE FORMULARIO VER *****//
 function controlPuerta(idPuerta) {

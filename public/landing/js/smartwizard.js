@@ -750,6 +750,7 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
         dispositivoWindowsVer();
+        dispositivosAndroidVer();
         $("#smartwizardVer :input").attr("disabled", false);
     }
     if (stepNumber == 7) {
