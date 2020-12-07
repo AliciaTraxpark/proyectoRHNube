@@ -1092,70 +1092,74 @@ use Carbon\Carbon;
                 </div><!-- /.modal -->
                 {{-- MODAL DE ELIMINAR --}}
                 <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
-                    aria-hidden="true" data-backdrop="static">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                    Dar de baja </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="form-horizontal">
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Dar de baja </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
 
-                                    <div class="col-xl-12">
-                                        <div class="form-group row">
-                                            <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de
-                                                baja o cese de empleado(s) :</label>
-                                            <div class="input-group col-md-5 text-center"
-                                                style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
-                                                <input type="text" id="fechaInput" class="col-md-12 form-control"
-                                                    data-input>
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text form-control flatpickr">
-                                                        <a class="input-button" data-toggle>
-                                                            <i class="uil uil-calender"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <div class="col-xl-12">
+                            <div class="form-group row">
+                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de baja o cese
+                                    de empleado(s) :</label>
+                                <div class="input-group col-md-5 text-center"
+                                    style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
+                                    <input type="text" id="fechaInput" class="col-md-12 form-control" data-input>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control flatpickr">
+                                            <a class="input-button" data-toggle>
+                                                <i class="uil uil-calender"></i>
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="col-md 12" id="divbajaF">
-                                        <div class="form-group" style="margin-top: 10px;">
-                                            <label for="bajaFile">Adjuntar documento</label>
-                                            <input type="file" multiple="true" class="form-control-file" id="bajaFile">
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md 12" id="divbajaF">
-                        <div class="form-group" style="margin-top: 10px;">
-                            <label for="bajaFile">Adjuntar documento</label>
-                            <input type="file" accept=
+                       {{--  <div class="col-md 12" id="divbajaF">
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label for="bajaFile" class="btn btn-tertiary js-labelFile">
+                                    <i class="icon fa fa-check"></i>
+                                <span class="js-fileName">Choose a file</span>
+                                </label>
+                                <input type="file"  accept=
+                                "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                 application/pdf, image/*"  multiple="true"  class="input-file" id="bajaFile">
+                              </div>
+                        </div> --}}
+                        <div class="col-md 12" id="divbajaF">
+                            <label for="">Adjuntar documento(s)</label>
+                        <div class="form-group">
+                            <input type="file" name="bajaFile" id="bajaFile" accept=
                             "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                             application/pdf, image/*"  multiple="true"  class="form-control-file" id="bajaFile">
-                          </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-
-                                <button type="button" id="cerrarE" class="btn btn-light btn-sm "
-                                    data-dismiss="modal">Cancelar</button>
-
-                                <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
-                                    style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
-
-
+                             application/pdf, image/*" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
+                            <label for="bajaFile">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                            <span class="iborrainputfile">Seleccionar archivo</span>
+                            </label>
                             </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="cerrarE" class="btn btn-light btn-sm "
+                        data-dismiss="modal">Cancelar</button>
+
+                    <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
+                        style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
                 <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
