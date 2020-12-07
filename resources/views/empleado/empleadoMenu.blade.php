@@ -4405,13 +4405,14 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlR">
+                                        <div class="card-body border" id="bodyModoControlR">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="v_tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="v_tablaDispositivo" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                 <tr>
                                                                     <th>Dispositivo</th>
                                                                     <th>Nombre</th>
@@ -4424,7 +4425,7 @@ use App\proyecto_empleado;
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="v_tbodyDispositivo"
-                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -4455,13 +4456,14 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlRuta">
+                                        <div class="card-body border" id="bodyModoControlRuta">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="v_tablaDispositivoA" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="v_tablaDispositivoA" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                 <tr>
                                                                     <th>Dispositivo</th>
                                                                     <th>Nombre</th>
@@ -4475,7 +4477,7 @@ use App\proyecto_empleado;
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="v_tbodyDispositivoA"
-                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
                                                             </tbody>
                                                         </table>
                                                     </div>

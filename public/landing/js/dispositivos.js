@@ -506,7 +506,7 @@ function modoAndroid(id) {
     $("#tdNumero" + id).on("click", function () {
         $(this).addClass("editable");
         $(this).html(
-            '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="9" />'
+            '<input type="text" style="border-radius: 5px;border: 2px solid #0a043c;" maxlength="9" />'
         );
         $(this).children().first().focus();
         $(this).children().first().keyup(function (event) {
@@ -554,7 +554,7 @@ function modoAndroid(id) {
     $('#tdActividad' + id).on("click", function () {
         $(this).addClass("editable");
         $(this).html(
-            '<input type="number" step="any" style="border-radius: 5px;border: 2px solid #8d93ab;"/>'
+            '<input type="number" step="any" style="border-radius: 5px;border: 2px solid #0a043c;"/>'
         );
         $(this).children().first().focus();
         $(this).children().first().keyup(function (event) {
@@ -887,7 +887,7 @@ function inactivarDispositoAEditar(id) {
             },
         });
 }
-//: CAMBIAR ESTADO DE LICENCIA EN WINDOWS
+//: CAMBIAR ESTADO DE ANDROID
 function cambiarEstadoAndroidEditar(id) {
     var idEmpleado = $('#v_id').val();
     //NOTIFICACION
