@@ -927,7 +927,7 @@ use Carbon\Carbon;
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
 
-                                   <button onclick="eliminarEmpleado()" id=""
+                                    <button onclick="eliminarEmpleado()" id=""
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                                         class="btn btn-sm btn-primary delete_all" data-url="">Dar de baja
                                     </button>
@@ -1092,37 +1092,39 @@ use Carbon\Carbon;
                 </div><!-- /.modal -->
                 {{-- MODAL DE ELIMINAR --}}
                 <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminar"
-        aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Dar de baja </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
+                    aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Dar de baja </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
 
-                        <div class="col-xl-12">
-                            <div class="form-group row">
-                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de baja o cese
-                                    de empleado(s) :</label>
-                                <div class="input-group col-md-5 text-center"
-                                    style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
-                                    <input type="text" id="fechaInput" class="col-md-12 form-control" data-input>
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text form-control flatpickr">
-                                            <a class="input-button" data-toggle>
-                                                <i class="uil uil-calender"></i>
-                                            </a>
+                                    <div class="col-xl-12">
+                                        <div class="form-group row">
+                                            <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de
+                                                baja o cese
+                                                de empleado(s) :</label>
+                                            <div class="input-group col-md-5 text-center"
+                                                style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
+                                                <input type="text" id="fechaInput" class="col-md-12 form-control"
+                                                    data-input>
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text form-control flatpickr">
+                                                        <a class="input-button" data-toggle>
+                                                            <i class="uil uil-calender"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                       {{--  <div class="col-md 12" id="divbajaF">
+                                    {{--  <div class="col-md 12" id="divbajaF">
                             <div class="form-group" style="margin-top: 10px;">
                                 <label for="bajaFile" class="btn btn-tertiary js-labelFile">
                                     <i class="icon fa fa-check"></i>
@@ -1133,33 +1135,39 @@ use Carbon\Carbon;
                                  application/pdf, image/*"  multiple="true"  class="input-file" id="bajaFile">
                               </div>
                         </div> --}}
-                        <div class="col-md 12" id="divbajaF">
-                            <label for="">Adjuntar documento(s)</label>
-                        <div class="form-group">
-                            <input type="file" name="bajaFile" id="bajaFile" accept=
-                            "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                             application/pdf, image/*" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
-                            <label for="bajaFile">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            <span class="iborrainputfile">Seleccionar archivo</span>
-                            </label>
+                                    <div class="col-md 12" id="divbajaF">
+                                        <label for="">Adjuntar documento(s)</label>
+                                        <div class="form-group">
+                                            <input type="file" name="bajaFile" id="bajaFile"
+                                                accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,application/pdf, image/*"
+                                                class="inputfile inputfile-1"
+                                                data-multiple-caption="{count} archivos seleccionados" multiple />
+                                            <label for="bajaFile">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
+                                                    width="20" height="17" viewBox="0 0 20 17">
+                                                    <path
+                                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                </svg>
+                                                <span class="iborrainputfile">Seleccionar archivo</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
+                            <div class="modal-footer">
 
-                    <button type="button" id="cerrarE" class="btn btn-light btn-sm "
-                        data-dismiss="modal">Cancelar</button>
+                                <button type="button" id="cerrarE" class="btn btn-light btn-sm "
+                                    data-dismiss="modal">Cancelar</button>
 
-                    <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
-                        style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+                                <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
+                                    style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
 
 
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal"
                     aria-hidden="true" data-backdrop="static">
                     <div class="modal-dialog">
@@ -1618,10 +1626,10 @@ use Carbon\Carbon;
                                         <div class="col-md 12">
                                             <div class="form-group" style="margin-top: 10px;">
                                                 <label for="exampleFormControlFile1">Adjuntar documento</label>
-                                                <input type="file" accept=
-                                                "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                                 application/pdf, image/*" class="form-control-file" id="exampleFormControlFile1" multiple="true">
-                                              </div>
+                                                <input type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                 application/pdf, image/*" class="form-control-file"
+                                                    id="exampleFormControlFile1" multiple="true">
+                                            </div>
                                         </div>
                                     </div>
                             </div>
@@ -4435,8 +4443,16 @@ use Carbon\Carbon;
                                 </div><!-- /.modal -->
                             </div>
                             <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                                <div class="row">
-                                    <div class="col-xl-12 pb-2">
+                                <div class="row pb-3">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <button class="btn btn-sm dropdown-toggle" style="background-color:#0a043c;"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            + Agregar
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                            <a class="dropdown-item" id="v_agregarAndroid">ANDROID</a>
+                                        </div>
                                         <div class="float-md-right">
                                             <a onclick="javascript:mostrarContenidoD()" data-toggle="tooltip"
                                                 data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
@@ -4444,45 +4460,40 @@ use Carbon\Carbon;
                                             </a>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-xl-12">
-                                        <div class="card">
-                                            <div class="card-header">
+                                        <div class="card border">
+                                            <div class="card-header"
+                                                style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                                 <div class="row pb-1 pl-2">
                                                     <div class="col">
                                                         <div class="custom-control custom-switch mb-2">
                                                             <input type="checkbox" class="custom-control-input"
                                                                 id="customSwitchC1">
                                                             <label class="custom-control-label" for="customSwitchC1"
-                                                                style="font-weight: bold">Modo Control
-                                                                Remoto</label>
+                                                                style="font-weight: bold">
+                                                                <i data-feather="activity"
+                                                                    style="height: 15px !important;width: 15px !important;color:white !important">
+                                                                </i>&nbsp;&nbsp;
+                                                                Modo Control Remoto
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body border p-2" id="bodyModoControlR">
+                                            <div class="card-body border p-3" id="bodyModoControlR">
                                                 <div class="row">
-                                                    <div class="col-xl-12 col-sm-12">
-                                                        <button class="btn btn-sm dropdown-toggle"
-                                                            style="background-color:#163552;" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">+
-                                                            Agregar
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-xl-12 col-sm-12">
-                                                        <div class="table-responsive-xl">
-                                                            <table id="v_tablaDispositivo" class="table"
-                                                                style="font-size: 13px!important;">
-                                                                <thead style="background: #fafafa;font-size: 14px">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table id="v_tablaDispositivo" class="table table-hover"
+                                                                style="font-size: 13px!important;width: 100% !important">
+                                                                <thead
+                                                                    style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                     <tr>
-                                                                        <th>Tipo Dispositivo</th>
+                                                                        <th>Dispositivo</th>
                                                                         <th>Nombre</th>
-                                                                        <th>Activación de Dispositivo</th>
+                                                                        <th>Activación</th>
                                                                         <th>Codigo</th>
                                                                         <th>Enviado</th>
                                                                         <th>Estado</th>
@@ -4491,7 +4502,7 @@ use Carbon\Carbon;
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="v_tbodyDispositivo"
-                                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -4501,28 +4512,58 @@ use Carbon\Carbon;
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div class="row pb-1 pl-2">
-                                                            <div class="col">
-                                                                <div class="custom-control custom-switch mb-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                        id="customSwitchC2">
-                                                                    <label class="custom-control-label"
-                                                                        for="customSwitchC2"
-                                                                        style="font-weight: bold">Modo Control de
-                                                                        Asistencia en Puerta</label>
-                                                                </div>
-                                                            </div>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card border">
+                                            <div class="card-header"
+                                                style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                                <div class="row pb-1 pl-2">
+                                                    <div class="col">
+                                                        <div class="custom-control custom-switch mb-2">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customSwitchC2">
+                                                            <label class="custom-control-label" for="customSwitchC2"
+                                                                style="font-weight: bold">
+                                                                <i data-feather="map-pin"
+                                                                    style="height: 15px !important;width: 15px !important;color:white !important">
+                                                                </i>&nbsp;&nbsp;
+                                                                Modo Control en Ruta
+                                                            </label>
                                                         </div>
-                                                    </div>
-                                                    <div class="card-body border p-2" id="bodyModoControlA">
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                            <div class="card-body border p-3" id="bodyModoControlRuta">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table id="v_tablaDispositivoA" class="table table-hover"
+                                                                style="font-size: 13px!important;width: 100% !important">
+                                                                <thead
+                                                                    style="background: #fafafa;font-size: 14px;width: 100% !important">
+                                                                    <tr>
+                                                                        <th>Dispositivo</th>
+                                                                        <th>Nombre</th>
+                                                                        <th>Codigo</th>
+                                                                        <th>Número</th>
+                                                                        <th>Actividad (%)</th>
+                                                                        <th>Enviado</th>
+                                                                        <th>Estado</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="v_tbodyDispositivoA"
+                                                                    style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                                 <div class="col-md-12">

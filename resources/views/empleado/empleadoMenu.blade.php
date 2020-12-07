@@ -4405,7 +4405,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border" id="bodyModoControlR">
+                                        <div class="card-body border p-3" id="bodyModoControlR">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
@@ -4456,7 +4456,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border" id="bodyModoControlRuta">
+                                        <div class="card-body border p-3" id="bodyModoControlRuta">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
