@@ -223,9 +223,6 @@ function vinculacionWindowsEditar() {
 $('#v_agregarWindows').on("click", vinculacionWindowsEditar);
 //: FUNCIONES DE INACTIVAR LICENCIA EN WINDOWS
 function inactivarLicenciaWEditar(id) {
-    // $('#estadoLicenciaW').val(id);
-    // $('#form-ver').hide();
-    // $('#v_estadoLicenciaW').modal();
     alertify
         .confirm(
             "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC",
@@ -255,7 +252,6 @@ function inactivarLicenciaWEditar(id) {
 //: CAMBIAR ESTADO DE LICENCIA EN WINDOWS
 function cambiarEstadoLicenciaWindowsEditar(id) {
     var idEmpleado = $('#v_id').val();
-    // var idVinculacion = $('#estadoLicenciaW').val();
     //NOTIFICACION
     $.ajax({
         async: false,
@@ -323,8 +319,6 @@ function cambiarEstadoLicenciaWindowsEditar(id) {
 $('#v_CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindowsEditar);
 //: FUNCIONES DE ENVIAR CORREO
 function modalWindowsEditar(id) {
-    // $('#windows').val(id);
-    // $('#v_windowsEmpleado').modal();
     alertify
         .confirm(
             "¿Desea enviar correo al empleado?",
@@ -354,7 +348,6 @@ function modalWindowsEditar(id) {
 //: ENVIAR CORREO
 function enviarCorreoWindowsEditar(id) {
     var idEmpleado = $('#v_id').val();
-    // var idVinculacion = $('#windows').val();
     $.ajax({
         async: false,
         type: "get",
@@ -367,18 +360,6 @@ function enviarCorreoWindowsEditar(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            // $('#v_windowsEmpleado').modal('toggle');
-            // $('#form-ver').show();
-            // var container = $('#enviadoW' + idVinculacion);
-            // container.empty();
-            // var td = `<td>${data.envio}</td>`;
-            // if (data.disponible == 'e') {
-            //     var cont = $('#estado' + idVinculacion);
-            //     cont.empty();
-            //     var tdE = `<td>Enviado</td>`
-            //     cont.append(tdE);
-            // }
-            // container.append(td);
             dispositivosWindows();
             $.notifyClose();
             $.notify({
@@ -437,21 +418,7 @@ function vinculacionAndroidEditar() {
                     spacing: 35
                 });
             } else {
-                var container = $('#v_tbodyDispositivoA');
-                var tr = `<tr onclick="javascript:modoAndroid(${data.idVinculacion})">
-                <td>${data.dispositivo_descripcion}</td>
-                <td> CEL ${data.contar}</td>
-                <td id="tdNumero${data.idVinculacion}">${data.numero}</td>
-                <td class="hidetext">${data.codigo}</td>
-                <td id="enviadoA${data.idVinculacion}">${data.envio}</td>
-                <td id="sms${data.idVinculacion}">
-                    <a  onclick="javascript:smsAndroid(${data.idVinculacion});" data-toggle="tooltip" data-placement="right" title="Enviar
-                    correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                        src="landing/images/note.svg" height="20">
-                </a>
-                </td>
-                </tr>`;
-                container.append(tr);
+                dispositivosAndroid();
                 $('#customSwitchC2').prop('checked', true);
                 $('#bodyModoControlRuta').show();
             }
@@ -972,9 +939,6 @@ function vinculacionWindows() {
 $('#agregarWindows').on("click", vinculacionWindows);
 //* FUNCIONES DE INACTIVAR LICENCIA
 function inactivarLicenciaW(id) {
-    // $('#estadoLicenciaW').val(id);
-    // $('#form-registrar').hide();
-    // $('#estadoLicenciaW').modal();
     alertify
         .confirm(
             "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC",
@@ -1004,7 +968,6 @@ function inactivarLicenciaW(id) {
 //* CAMBIAR ESTADO DE LICENCIA
 function cambiarEstadoLicenciaWindows(id) {
     var idEmpleado = $('#idEmpleado').val();
-    // var idVinculacion = $('#estadoLicenciaW').val();
     $.ajax({
         async: false,
         type: "get",
@@ -1025,20 +988,6 @@ function cambiarEstadoLicenciaWindows(id) {
             }
         },
         success: function (data) {
-            // $('#correo' + idVinculacion).empty();
-            // $('#inactivar' + idVinculacion).empty();
-            // $('#estado' + idVinculacion).empty();
-            // var td = `<a  onclick="javascript:modalWindows(${idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-            // correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-            //     src="landing/images/email (4).svg" height="20">
-            // </a>`;
-            // var tdE = `Inactivo`;
-            // var tdI = ``;
-            // $('#correo' + idVinculacion).append(td);
-            // $('#inactivar' + idVinculacion).append(tdI);
-            // $('#estado' + idVinculacion).append(tdE);
-            // $('#estadoLicenciaW').modal('toggle');
-            // $('#form-registrar').show();
             dispositivosWindowsRegistrar();
             $.notifyClose();
             $.notify({
@@ -1087,8 +1036,6 @@ function cambiarEstadoLicenciaWindows(id) {
 $('#CambiarEstadoLW').on("click", cambiarEstadoLicenciaWindows);
 //* FUNCIONES DE ENVIAR CORREO WINDOWS
 function modalWindows(id) {
-    // $('#windows').val(id);
-    // $('#windowsEmpleado').modal();
     alertify
         .confirm(
             "¿Desea enviar correo al empleado?",
@@ -1118,7 +1065,6 @@ function modalWindows(id) {
 //* ENVIAR CORREO WINDOWS
 function enviarCorreoWindows(id) {
     var idEmpleado = $('#idEmpleado').val();
-    // var idVinculacion = $('#windows').val();
     $.ajax({
         async: false,
         type: "get",
@@ -1131,18 +1077,6 @@ function enviarCorreoWindows(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            // $('#windowsEmpleado').modal('toggle');
-            // $('#form-registrar').show();
-            // var container = $('#enviadoW' + idVinculacion);
-            // container.empty();
-            // var td = `<td>${data.envio}</td>`;
-            // if (data.disponible == 'e') {
-            //     var cont = $('#estado' + idVinculacion);
-            //     cont.empty();
-            //     var tdE = `<td>Enviado</td>`
-            //     cont.append(tdE);
-            // }
-            // container.append(td);
             dispositivosWindowsRegistrar();
             $.notifyClose();
             $.notify({
