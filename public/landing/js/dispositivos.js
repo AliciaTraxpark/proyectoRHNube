@@ -893,7 +893,7 @@ function dispositivosWindowsRegistrar() {
                     $('#inactivarR' + data[i].idVinculacion).empty();
                     $('#correoR' + data[i].idVinculacion).empty();
                     if (data[i].dispositivoD == 'WINDOWS') {
-                        var td = `<a  onclick="javascript:modalWindowsEditar(${data[i].idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" 
+                        var td = `<a  onclick="javascript:modalWindows(${data[i].idVinculacion});" data-toggle="tooltip" data-placement="right" 
                                     title="Enviar correo empleado" data-original-title="Habilitar activación" style="cursor: pointer">
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
@@ -972,21 +972,46 @@ function vinculacionWindows() {
 $('#agregarWindows').on("click", vinculacionWindows);
 //* FUNCIONES DE INACTIVAR LICENCIA
 function inactivarLicenciaW(id) {
-    $('#estadoLicenciaW').val(id);
-    $('#form-registrar').hide();
-    $('#estadoLicenciaW').modal();
+    // $('#estadoLicenciaW').val(id);
+    // $('#form-registrar').hide();
+    // $('#estadoLicenciaW').modal();
+    alertify
+        .confirm(
+            "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC",
+            function (e) {
+                if (e) {
+                    cambiarEstadoLicenciaWindows(id);
+                }
+            }
+        )
+        .setting({
+            title: "Cambiar estado de activación de dispositivo",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                dispositivosWindowsRegistrar();
+            },
+        });
 }
 //* CAMBIAR ESTADO DE LICENCIA
-function cambiarEstadoLicenciaWindows() {
+function cambiarEstadoLicenciaWindows(id) {
     var idEmpleado = $('#idEmpleado').val();
-    var idVinculacion = $('#estadoLicenciaW').val();
+    // var idVinculacion = $('#estadoLicenciaW').val();
     $.ajax({
         async: false,
         type: "get",
         url: "/cambiarEstadoLicencia",
         data: {
             idE: idEmpleado,
-            idV: idVinculacion
+            idV: id
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1000,20 +1025,21 @@ function cambiarEstadoLicenciaWindows() {
             }
         },
         success: function (data) {
-            $('#correo' + idVinculacion).empty();
-            $('#inactivar' + idVinculacion).empty();
-            $('#estado' + idVinculacion).empty();
-            var td = `<a  onclick="javascript:modalWindows(${idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
-            correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
-                src="landing/images/email (4).svg" height="20">
-            </a>`;
-            var tdE = `Inactivo`;
-            var tdI = ``;
-            $('#correo' + idVinculacion).append(td);
-            $('#inactivar' + idVinculacion).append(tdI);
-            $('#estado' + idVinculacion).append(tdE);
-            $('#estadoLicenciaW').modal('toggle');
-            $('#form-registrar').show();
+            // $('#correo' + idVinculacion).empty();
+            // $('#inactivar' + idVinculacion).empty();
+            // $('#estado' + idVinculacion).empty();
+            // var td = `<a  onclick="javascript:modalWindows(${idVinculacion});$('#form-registrar').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+            // correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
+            //     src="landing/images/email (4).svg" height="20">
+            // </a>`;
+            // var tdE = `Inactivo`;
+            // var tdI = ``;
+            // $('#correo' + idVinculacion).append(td);
+            // $('#inactivar' + idVinculacion).append(tdI);
+            // $('#estado' + idVinculacion).append(tdE);
+            // $('#estadoLicenciaW').modal('toggle');
+            // $('#form-registrar').show();
+            dispositivosWindowsRegistrar();
             $.notifyClose();
             $.notify({
                 message: "\nProceso con éxito.",
@@ -1034,11 +1060,12 @@ function cambiarEstadoLicenciaWindows() {
             });
         },
         error: function () {
-            $('#estadoLicenciaW').modal('toggle');
-            $('#form-registrar').show();
+            // $('#estadoLicenciaW').modal('toggle');
+            // $('#form-registrar').show();
+            dispositivosWindowsRegistrar();
             $.notifyClose();
             $.notify({
-                message: "\nAún no ha registrado correo a empleado.",
+                message: "\nProceso falló.",
                 icon: 'admin/images/warning.svg'
             }, {
                 element: $('#form-registrar'),
@@ -1046,11 +1073,11 @@ function cambiarEstadoLicenciaWindows() {
                 icon_type: 'image',
                 newest_on_top: true,
                 delay: 5000,
-                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
                     '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
                     '</div>',
                 spacing: 35
             });
