@@ -19,7 +19,8 @@ class vinculacion_ruta extends Model
         'idModo',
         'celular',
         'imei_androidID',
-        'actividad'
+        'actividad',
+        'disponible'
     ];
     public $timestamps = false;
 }

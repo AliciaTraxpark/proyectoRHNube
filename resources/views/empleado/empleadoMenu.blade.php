@@ -52,56 +52,53 @@ use App\proyecto_empleado;
 
 
 
-.inputfile {
-    width: 0.1px!important;
-    height: 0.1px!important;
-    opacity: !important
-    overflow: hidden!important;
-    position: absolute!important;
-    z-index: -1!important;
-}
+    .inputfile {
+        width: 0.1px !important;
+        height: 0.1px !important;
+        opacity:  !important overflow: hidden !important;
+        position: absolute !important;
+        z-index: -1 !important;
+    }
 
-.inputfile + label {
-    max-width: 80%!important;
-    font-size: 1.25rem!important;
-    font-weight: 700!important;
-    text-overflow: ellipsis!important;
-    white-space: nowrap!important;
-    cursor: pointer!important;
-    display: inline;
-    overflow: hidden!important;
-    padding: 0.30rem 0.8rem!important;
-}
+    .inputfile+label {
+        max-width: 80% !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        display: inline;
+        overflow: hidden !important;
+        padding: 0.30rem 0.8rem !important;
+    }
 
-.inputfile + label svg {
-    width: 1em!important;
-    height: 1em!important;
-    vertical-align: middle!important;
-    fill: currentColor!important;
+    .inputfile+label svg {
+        width: 1em !important;
+        height: 1em !important;
+        vertical-align: middle !important;
+        fill: currentColor !important;
 
-    margin-right: 0.25em!important;
-}
+        margin-right: 0.25em !important;
+    }
 
-.iborrainputfile {
-	font-size:13.8px!important;
-	font-weight:normal!important;
+    .iborrainputfile {
+        font-size: 13.8px !important;
+        font-weight: normal !important;
 
-}
+    }
 
-/* style 1 */
+    /* style 1 */
 
-.inputfile-1 + label {
-    color: #fff!important;
-    background-color: #163552!important;
-}
+    .inputfile-1+label {
+        color: #fff !important;
+        background-color: #163552 !important;
+    }
 
-.inputfile-1:focus + label,
-.inputfile-1.has-focus + label,
-.inputfile-1 + label:hover {
-    background-color: #1a4063!important;
-}
-
-
+    .inputfile-1:focus+label,
+    .inputfile-1.has-focus+label,
+    .inputfile-1+label:hover {
+        background-color: #1a4063 !important;
+    }
 </style>
 
 
@@ -903,6 +900,53 @@ use App\proyecto_empleado;
         border-color: red;
     }
 
+    /* CURSOR DE TABLA DISPOSITIVO */
+    .cursorDispositivo {
+        cursor: url("../landing/images/pencil.svg"), auto !important;
+    }
+
+    /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
+
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 28px;
+        min-width: 75px;
+    }
+
+    .ajs-cancel {
+        font-size: 12px !important;
+    }
+
+    .ajs-ok {
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 767.98px) {
@@ -1067,16 +1111,16 @@ use App\proyecto_empleado;
                 <div class="row">
                     {{-- BOTONES --}}
                     <div class=" col-md-12 text-right btnResponsive">
-                       @if (isset($bajaEmp))
-                         @if ($bajaEmp==1)
-                         <button onclick="eliminarEmpleado()"
+                        @if (isset($bajaEmp))
+                        @if ($bajaEmp==1)
+                        <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all">
                             Dar de baja
                         </button>
-                         @else
+                        @else
 
-                         @endif
+                        @endif
                         @else
                         <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
@@ -1280,7 +1324,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-                       {{--  <div class="col-md 12" id="divbajaF">
+                        {{--  <div class="col-md 12" id="divbajaF">
                             <div class="form-group" style="margin-top: 10px;">
                                 <label for="bajaFile" class="btn btn-tertiary js-labelFile">
                                     <i class="icon fa fa-check"></i>
@@ -1293,14 +1337,19 @@ use App\proyecto_empleado;
                         </div> --}}
                         <div class="col-md 12" id="divbajaF">
                             <label for="">Adjuntar documento(s)</label>
-                        <div class="form-group">
-                            <input type="file" name="bajaFile" id="bajaFile" accept=
-                            "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                             application/pdf, image/*" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
-                            <label for="bajaFile">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            <span class="iborrainputfile">Seleccionar archivo</span>
-                            </label>
+                            <div class="form-group">
+                                <input type="file" name="bajaFile" id="bajaFile" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                             application/pdf, image/*" class="inputfile inputfile-1"
+                                    data-multiple-caption="{count} archivos seleccionados" multiple />
+                                <label for="bajaFile">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                        height="17" viewBox="0 0 20 17">
+                                        <path
+                                            d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                        </path>
+                                    </svg>
+                                    <span class="iborrainputfile">Seleccionar archivo</span>
+                                </label>
                             </div>
                         </div>
                     </form>
@@ -1776,14 +1825,20 @@ use App\proyecto_empleado;
                                 <label for="">Adjuntar documento(s)</label>
                                 <div class="form-group" style="margin-top: 10px;">
 
-                                    <input type="file" accept=
-                                    "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                     application/pdf, image/*" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple  id="exampleFormControlFile1">
-                                     <label for="exampleFormControlFile1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                                          <span class="iborrainputfile">Seleccionar archivo</span>
-                                     </label>
-                                  </div>
+                                    <input type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                     application/pdf, image/*" class="inputfile inputfile-1"
+                                        data-multiple-caption="{count} archivos seleccionados" multiple
+                                        id="exampleFormControlFile1">
+                                    <label for="exampleFormControlFile1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                            height="17" viewBox="0 0 20 17">
+                                            <path
+                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                        </svg>
+                                        <span class="iborrainputfile">Seleccionar archivo</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -4403,7 +4458,7 @@ use App\proyecto_empleado;
                                                     @if (isset($GestActEmp))
                                                     @if ($GestActEmp==1)
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #163552;"
+                                                        style="background-color: #0a043c;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                     @else
@@ -4411,7 +4466,7 @@ use App\proyecto_empleado;
                                                     @endif
                                                     @else
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #163552;"
+                                                        style="background-color: #0a043c;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                     @endif
@@ -4500,8 +4555,16 @@ use App\proyecto_empleado;
                             {{-- FINALIZACIÓN DE MODAL --}}
                         </div>
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12 pb-2">
+                            <div class="row pb-3">
+                                <div class="col-xl-12 col-sm-12">
+                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#0a043c;"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        + Agregar
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                        <a class="dropdown-item" id="v_agregarAndroid">ANDROID</a>
+                                    </div>
                                     <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenidoD()" data-toggle="tooltip"
                                             data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
@@ -4509,17 +4572,24 @@ use App\proyecto_empleado;
                                         </a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchC1">
                                                         <label class="custom-control-label" for="customSwitchC1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="activity"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control Remoto
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -4527,27 +4597,14 @@ use App\proyecto_empleado;
                                         <div class="card-body border p-2" id="bodyModoControlR">
                                             <div class="row">
                                                 <div class="col-xl-12 col-sm-12">
-                                                    <button class="btn btn-sm dropdown-toggle"
-                                                        style="background-color:#163552;" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">+
-                                                        Agregar
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-xl">
                                                         <table id="v_tablaDispositivo" class="table"
                                                             style="font-size: 13px!important;">
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
-                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Dispositivo</th>
                                                                     <th>Nombre</th>
-                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Activación</th>
                                                                     <th>Codigo</th>
                                                                     <th>Enviado</th>
                                                                     <th>Estado</th>
@@ -4566,27 +4623,57 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchC2">
                                                         <label class="custom-control-label" for="customSwitchC2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="map-pin"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control en Ruta
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlA">
+                                        <div class="card-body border p-2" id="bodyModoControlRuta">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+                                                    <div class="table-responsive-xl">
+                                                        <table id="v_tablaDispositivoA" class="table"
+                                                            style="font-size: 13px!important;">
+                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                                <tr>
+                                                                    <th>Dispositivo</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Actividad (%)</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="v_tbodyDispositivoA"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="col-md-12">

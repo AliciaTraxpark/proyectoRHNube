@@ -270,7 +270,17 @@ class vinculacionDispositivoController extends Controller
         $vinculacionRuta = DB::table('vinculacion_ruta as vr')
             ->join('modo as m', 'm.id', '=', 'vr.idModo')
             ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
-            ->select('vr.id as idV', 'vr.modelo as modelo', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'td.dispositivo_descripcion as dispositivoD', 'vr.celular as numero', 'vr.actividad as actividad')
+            ->select(
+                'vr.id as idV',
+                'vr.modelo as modelo',
+                'vr.envio as envio',
+                'vr.hash as codigo',
+                'vr.idEmpleado',
+                'td.dispositivo_descripcion as dispositivoD',
+                'vr.celular as numero',
+                'vr.actividad as actividad',
+                'vr.disponible'
+            )
             ->where('vr.idEmpleado', '=', $idempleado)
             ->groupBy('vr.id')
             ->get();
