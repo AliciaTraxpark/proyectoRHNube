@@ -80,7 +80,7 @@ class correosEmpleadoController extends Controller
     {
         $idV = $request->get('id');
         $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
-        if (is_null($vinculacion_ruta->celular) === false) {
+        if (!empty($vinculacion_ruta->celular)) {
             $mensaje = "RH nube - Codigo de validacion de Inicio:" . $vinculacion_ruta->hash;
             $cel = explode("+", $vinculacion_ruta->celular);
             $curl = curl_init();

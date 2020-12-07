@@ -696,6 +696,7 @@ function enviarSms(id) {
         },
         success: function (data) {
             if (data == 0) {
+                $("#tdNumero" + id).trigger("click");
                 $.notifyClose();
                 $.notify({
                     message: "\nRegistrar número de celular del empleado.",
