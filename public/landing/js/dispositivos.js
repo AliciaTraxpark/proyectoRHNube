@@ -509,41 +509,39 @@ function modoAndroid(id) {
             '<input type="text" style="border-radius: 5px;border: 2px solid #8d93ab;" maxlength="9" />'
         );
         $(this).children().first().focus();
-        $(this)
-            .children()
-            .first()
-            .keypress(function (e) {
-                if (e.which == 13) {
-                    var newContent = $(this).val();
-                    $(this).parent().text(newContent);
-                    $(this).parent().removeClass("editable");
-                    alertify
-                        .confirm(
-                            "¿Desea modificar número de celular?",
-                            function (e) {
-                                if (e) {
-                                    editarNumero(id, newContent);
-                                }
+        $(this).children().first().keyup(function (event) {
+            if ($(this).val().length === 9) {
+                var newContent = $(this).val();
+                $(this).parent().text(newContent);
+                $(this).parent().removeClass("editable");
+                alertify
+                    .confirm(
+                        "¿Desea modificar número de celular?",
+                        function (e) {
+                            if (e) {
+                                editarNumero(id, newContent);
                             }
-                        )
-                        .setting({
-                            title: "Modificar",
-                            labels: {
-                                ok: "Aceptar",
-                                cancel: "Cancelar",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {
-                                dispositivosAndroid();
-                            },
-                        });
-                }
-            });
+                        }
+                    )
+                    .setting({
+                        title: "Modificar",
+                        labels: {
+                            ok: "Aceptar",
+                            cancel: "Cancelar",
+                        },
+                        modal: true,
+                        startMaximized: false,
+                        reverseButtons: true,
+                        resizable: false,
+                        closable: false,
+                        transition: "zoom",
+                        oncancel: function (closeEvent) {
+                            dispositivosAndroid();
+                        },
+                    });
+            }
+            console.log($(this).val(), $(this).val().length);
+        });
 
         $(this)
             .children()
@@ -564,7 +562,76 @@ function modoAndroid(id) {
                 var regex = RegExp("^\\d{1,3}(\\.\\d{1,2})?$");
                 if (!regex.test($(this).val())) {
                     $(this).off('keypress');
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nActividad máxima 100.",
+                        icon: 'admin/images/warning.svg'
+                    }, {
+                        element: $('#form-ver'),
+                        position: 'fixed',
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
                 } else {
+                    if ($(this).val() > 100) {
+                        $.notifyClose();
+                        $.notify({
+                            message: "\nActividad máxima 100.",
+                            icon: 'admin/images/warning.svg'
+                        }, {
+                            element: $('#form-ver'),
+                            position: 'fixed',
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    } else {
+                        $.notifyClose();
+                        $.notify({
+                            message: "\nPresionar <strong>ENTER</strong> para guardar cambios.",
+                            icon: 'landing/images/warningInfo.svg'
+                        }, {
+                            element: $('#form-ver'),
+                            position: 'fixed',
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #d9edf7;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#31708f;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
                     $(this).on('keypress', function (e) {
                         if (e.which == 13) {
                             if ($(this).val() <= 100) {
