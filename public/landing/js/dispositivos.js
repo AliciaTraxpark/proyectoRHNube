@@ -784,6 +784,7 @@ function enviarSms(id) {
                 });
             } else {
                 if (data == 1) {
+                    dispositivosAndroid();
                     $.notifyClose();
                     $.notify({
                         message: "\nTenemos problemas con el servidor mensajeria.Comunicarse con nosotros",
@@ -857,6 +858,101 @@ function smsAndroid(id) {
                 dispositivosAndroid();
             },
         });
+}
+//: FUNCIONES DE INACTIVAR ANDROID
+function inactivarDispositoAEditar(id) {
+    alertify
+        .confirm(
+            "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Al cambiar el estado del dispositivo se inhabilitará información del empleado en su celular",
+            function (e) {
+                if (e) {
+                    cambiarEstadoAndroidEditar(id);
+                }
+            }
+        )
+        .setting({
+            title: "Cambiar estado de activación de dispositivo",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                dispositivosAndroid();
+            },
+        });
+}
+//: CAMBIAR ESTADO DE LICENCIA EN WINDOWS
+function cambiarEstadoAndroidEditar(id) {
+    var idEmpleado = $('#v_id').val();
+    //NOTIFICACION
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/cambiarEstadoVinculacionRuta",
+        data: {
+            idE: idEmpleado,
+            idV: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            dispositivosAndroid();
+            $.notifyClose();
+            $.notify({
+                message: "\nProceso con éxito.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-ver'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function () {
+            dispositivosAndroid();
+            $.notifyClose();
+            $.notify({
+                message: "\nProceso falló.",
+                icon: 'admin/images/warning.svg'
+            }, {
+                element: $('#form-ver'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        }
+    });
 }
 // TODO ****** FINALIZACION DE FORMULARIO EDITAR *****//
 // TODO EN FORMULARIO REGISTRAR

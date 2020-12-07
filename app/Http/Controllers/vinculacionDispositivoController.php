@@ -53,6 +53,7 @@ class vinculacionDispositivoController extends Controller
             $vinculacion->envio = 0;
             $vinculacion->idModo = $idModo;
             $vinculacion->celular = $celular->numero;
+            $vinculacion->disponible = 'c';
             $vinculacion->actividad = 50;
             $vinculacion->save();
 

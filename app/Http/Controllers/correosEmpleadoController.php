@@ -27,6 +27,10 @@ use Tymon\JWTAuth\Claims\DatetimeTrait;
 
 class correosEmpleadoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function envioWindows(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
@@ -108,8 +112,11 @@ class correosEmpleadoController extends Controller
             $response = curl_exec($curl);
             $err = curl_error($curl);
             if ($err) {
+                $vinculacion_ruta->disponible = 'e';
+                $vinculacion_ruta->save();
                 return 1;
             } else {
+                $vinculacion_ruta->disponible = 'e';
                 $vinculacion_ruta->envio = $vinculacion_ruta->envio + 1;
                 $vinculacion_ruta->fecha_envio = Carbon::now();
                 $vinculacion_ruta->save();
