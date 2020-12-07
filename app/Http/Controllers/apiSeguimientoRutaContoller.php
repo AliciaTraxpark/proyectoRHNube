@@ -489,7 +489,7 @@ class apiSeguimientoRutaContoller extends Controller
                 }
             }
             // * OBTENER HORA DEL SERVIDOR
-            $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');;
+            $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
             $respuesta["tiempo"] = gmdate('H:i:s', $rango);
             $respuesta["horaActual"] = $horaActual;
             return response()->json($respuesta, 200);
