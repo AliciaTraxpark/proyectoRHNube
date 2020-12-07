@@ -640,11 +640,6 @@ $(document).ready(function () {
             actividad_empleado();
         }
         if (stepNumber == 6) {
-            $("button.sw-btn-prev").show();
-            $("button.sw-btn-next").show();
-            $("#FinalizarEmpleado").hide();
-        }
-        if (stepNumber == 7) {
             $("button.sw-btn-prev").hide();
             $("button.sw-btn-next").hide();
             $("#FinalizarEmpleado").show();
