@@ -1364,12 +1364,13 @@ function dispositivosAndroidVer() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            console.log(data);
             var containerAVer = $('#ver_tbodyDispositivoA');
             $('#customSwitchCV2').prop('checked', false);
-            $('#bodyModoControlAV').show();
+            $('#bodyModoControlAV').hide();
             for (let index = 0; index < data.length; index++) {
                 if (data[index].dispositivoD == 'ANDROID') {
-                    var trA = `<tr id="trVerA${data[index].idVinculacion}">
+                    var trA = `<tr id="trVerA${data[index].idV}">
                                 <td>${data[index].dispositivoD}</td>
                                 <td>Android</td>
                                 <td class="hidetext">${data[index].codigo}</td>
@@ -1389,6 +1390,7 @@ function dispositivosAndroidVer() {
                 }
                 containerAVer.append(trA);
                 // * MODELO DE DISPOSITIVO ANDROID
+                console.log($("#trVerA" + data[index].idV));
                 if (data[index].modelo !== null) {
                     $("#trVerA" + data[index].idV).find("td:eq(1)").text(data[index].modelo);
                 } else {
