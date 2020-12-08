@@ -33,6 +33,8 @@ function dispositivosWindows() {
         },
         success: function (data) {
             var container = $('#v_tbodyDispositivo');
+            $('#customSwitchC1').prop('checked', true);
+            $('#bodyModoControlR').show();
             for (var i = 0; i < data.length; i++) {
                 if (data[i].dispositivoD == 'WINDOWS') {
                     var tr = `<tr id="tr${data[i].idVinculacion}">
@@ -989,6 +991,8 @@ function dispositivosWindowsRegistrar() {
         },
         success: function (data) {
             var container = $('#tbodyDispositivo');
+            $('#customSwitchCR1').prop('checked', true);
+            $('#bodyModoControlRR').show();
             for (var i = 0; i < data.length; i++) {
                 if (data[i].dispositivoD == 'WINDOWS') {
                     var tr = `<tr id="trR${data[i].idVinculacion}">
@@ -1300,6 +1304,8 @@ function dispositivoWindowsVer() {
         },
         success: function (data) {
             var containerVer = $('#ver_tbodyDispositivo');
+            $('#bodyModoControlRV').show();
+            $('#customSwitchCV1').prop('checked', true);
             for (var i = 0; i < data.length; i++) {
                 if (data[i].dispositivoD == 'WINDOWS') {
                     var trVer = `<tr id="trVer${data[i].idVinculacion}">
