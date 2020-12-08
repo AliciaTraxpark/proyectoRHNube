@@ -825,7 +825,6 @@ function enviarSms(id) {
                             '</div>',
                         spacing: 35
                     });
-                    dispositivosAndroid()
                 }
             }
         },
@@ -845,7 +844,7 @@ function smsAndroid(id) {
             }
         )
         .setting({
-            title: "Modificar Actividad",
+            title: "Enviar SMS",
             labels: {
                 ok: "Aceptar",
                 cancel: "Cancelar",
@@ -1042,6 +1041,88 @@ function dispositivosWindowsRegistrar() {
                 } else {
                     $("#trR" + data[i].idVinculacion).find("td:eq(1)").text("PC " + i);
                 }
+            }
+        },
+        error: function () { }
+    });
+}
+//* CARGAR DATOS DE DISPOSITIVOS ANDROID
+function dispositivosAndroidRegistrar() {
+    var idEmpleado = $('#idEmpleado').val();
+    $('#tbodyDispositivoAR').empty();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/listaVA",
+        data: {
+            idE: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var containerA = $('#tbodyDispositivoAR');
+            $('#customSwitchCR2').prop('checked', false);
+            $('#bodyModoControlAR').hide();
+            for (let index = 0; index < data.length; index++) {
+                if (data[index].dispositivoD == 'ANDROID') {
+                    var trA = `<tr id="trAR${data[index].idV}" onclick="javascript:modoAndroidReg(${data[index].idV})">
+                                    <td>${data[index].dispositivoD}</td>
+                                    <td>Android</td>
+                                    <td class="hidetext">${data[index].codigo}</td>
+                                    <td class="cursorDispositivo" id="tdNumeroReg${data[index].idV}" 
+                                        data-toggle="tooltip" data-placement="right" title="doble click para editar número">
+                                        ${data[index].numero}
+                                    </td>
+                                    <td class="cursorDispositivo" data-toggle="tooltip" data-placement="right" title="doble click para editar actividad"
+                                        id="tdActividadReg${data[index].idV}">
+                                            ${data[index].actividad}
+                                    </td>
+                                    <td id="enviadoAReg${data[index].idV}">${data[index].envio}</td>
+                                    <td id="estadoAReg${data[index].idV}"></td>
+                                    <td id="smsReg${data[index].idV}">
+                                        <a  onclick="javascript:smsAndroidReg(${data[index].idV});" data-toggle="tooltip" data-placement="right" 
+                                            title="Enviar sms empleado" data-original-title="Enviar sms empleado" style="cursor: pointer">
+                                            <img src="landing/images/note.svg" height="20">
+                                        </a>
+                                    </td>
+                                    <td id="inactivarAReg${data[index].idV}">
+                                        <a onclick="javascript:inactivarDispositoAReg(${data[index].idV})" class="badge badge-soft-danger mr-2">
+                                            Inactivar
+                                        </a>
+                                    </td>
+                                </tr>`;
+                }
+                containerA.append(trA);
+                // * MODELO DE DISPOSITIVO ANDROID
+                if (data[index].modelo !== null) {
+                    $("#trAR" + data[index].idV).find("td:eq(1)").text(data[index].modelo);
+                } else {
+                    $("#trAR" + data[index].idV).find("td:eq(1)").text("CEL " + index);
+                }
+                //* ESTADO DE VINCULACION
+                if (data[index].disponible == 'c') {
+                    $('#trAR' + data[index].idV).find("td:eq(6)").text("Creado");
+                }
+                if (data[index].disponible == 'e') {
+                    $('#trAR' + data[index].idV).find("td:eq(6)").text("Enviado");
+                }
+                if (data[index].disponible == 'a') {
+                    $('#trAR' + data[index].idV).find("td:eq(6)").text("Activado");
+                }
+                if (data[index].disponible == 'i') {
+                    $('#trAR' + data[index].idV).find("td:eq(6)").text("Inactivo");
+                    $('#inactivarAReg' + data[index].idV).empty();
+                    $('#smsReg' + data[index].idV).empty();
+                    var tdSms = `<a  onclick="javascript:smsAndroidReg(${data[index].idV});" data-toggle="tooltip" data-placement="right" 
+                                    title="Enviar sms empleado" data-original-title="Enviar sms empleado" style="cursor: pointer">
+                                    <img src="landing/images/email (4).svg" height="20">
+                                </a>`;
+                    $('#smsReg' + data[index].idV).append(tdSms);
+                }
+                //* *************************************************************
+                $('#customSwitchCR2').prop('checked', true);
+                $('#bodyModoControlAR').show();
             }
         },
         error: function () { }
@@ -1269,6 +1350,572 @@ function enviarCorreoWindows(id) {
     });
 }
 $('#enviarCorreoWindowsEmpleado').on("click", enviarCorreoWindows);
+//* VINCULACION ANDROID
+function vinculacionAndroid() {
+    var idEmpleado = $('#idEmpleado').val();
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "vinculacionAndroid",
+        data: {
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                $.notifyClose();
+                $.notify({
+                    message: "\nLlego al limite de dispositivos Android",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                dispositivosAndroidRegistrar();
+            }
+        },
+        error: function () { }
+    });
+}
+$('#agregarAndroid').on("click", vinculacionAndroid);
+//* FUNCION PARA EDITAR NUMERO DE CELULAR EN ANDROID
+function editarNumeroReg(id, numero) {
+    $.ajax({
+        async: false,
+        type: "post",
+        url: "/celularVinculacion",
+        data: {
+            id: id,
+            numero: numero
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $.notifyClose();
+            $.notify({
+                message: "\nActualización exitosa.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            dispositivosAndroidRegistrar();
+        },
+        error: function () { }
+    });
+}
+//* FUNCION DE EDITAR ACTIVIDAD EN ANDROID
+function editarActividadVReg(id, actividad) {
+    $.ajax({
+        async: false,
+        type: "post",
+        url: "/actividadVinculacion",
+        data: {
+            id: id,
+            actividad: actividad
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $.notifyClose();
+            $.notify({
+                message: "\nActualización exitosa.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            dispositivosAndroidRegistrar();
+        },
+        error: function () { }
+    });
+}
+//* INPUT PARA EDITAR NUMERO
+function modoAndroidReg(id) {
+    $("#tdNumeroReg" + id).on("click", function () {
+        $(this).addClass("editable");
+        $(this).html(
+            '<input type="text" style="border-radius: 5px;border: 2px solid #0a043c;" maxlength="9" />'
+        );
+        $(this).children().first().focus();
+        $(this).children().first().keyup(function (event) {
+            if ($(this).val().length === 9) {
+                var newContent = $(this).val();
+                $(this).parent().text(newContent);
+                $(this).parent().removeClass("editable");
+                alertify
+                    .confirm(
+                        "¿Desea modificar número de celular?",
+                        function (e) {
+                            if (e) {
+                                editarNumeroReg(id, newContent);
+                            }
+                        }
+                    )
+                    .setting({
+                        title: "Modificar",
+                        labels: {
+                            ok: "Aceptar",
+                            cancel: "Cancelar",
+                        },
+                        modal: true,
+                        startMaximized: false,
+                        reverseButtons: true,
+                        resizable: false,
+                        closable: false,
+                        transition: "zoom",
+                        oncancel: function (closeEvent) {
+                            dispositivosAndroidRegistrar();
+                        },
+                    });
+            }
+        });
+
+        $(this)
+            .children()
+            .first()
+            .blur(function () {
+                dispositivosAndroidRegistrar();
+            });
+    });
+
+    $('#tdActividadReg' + id).on("click", function () {
+        $(this).addClass("editable");
+        $(this).html(
+            '<input type="number" step="any" style="border-radius: 5px;border: 2px solid #0a043c;"/>'
+        );
+        $(this).children().first().focus();
+        $(this).children().first().keyup(function (event) {
+            if (event.keyCode != 13) {
+                var regex = RegExp("^\\d{1,3}(\\.\\d{1,2})?$");
+                if (!regex.test($(this).val())) {
+                    $(this).off('keypress');
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nActividad máxima 100.",
+                        icon: 'admin/images/warning.svg'
+                    }, {
+                        element: $('#form-registrar'),
+                        position: 'fixed',
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    if ($(this).val() > 100) {
+                        $.notifyClose();
+                        $.notify({
+                            message: "\nActividad máxima 100.",
+                            icon: 'admin/images/warning.svg'
+                        }, {
+                            element: $('#form-registrar'),
+                            position: 'fixed',
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    } else {
+                        $.notifyClose();
+                        $.notify({
+                            message: "\nPresionar <strong>ENTER</strong> para guardar cambios.",
+                            icon: 'landing/images/warningInfo.svg'
+                        }, {
+                            element: $('#form-registrar'),
+                            position: 'fixed',
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #d9edf7;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#31708f;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                    $(this).on('keypress', function (e) {
+                        if (e.which == 13) {
+                            if ($(this).val() <= 100) {
+                                var newContent = $(this).val();
+                                $(this).parent().text(newContent);
+                                $(this).parent().removeClass("editable");
+                                alertify.confirm("¿Desea modificar el promedio de actividad del dispositivo?",
+                                    function (e) {
+                                        if (e) {
+                                            editarActividadVReg(id, newContent);
+                                        }
+                                    }
+                                ).setting({
+                                    title: "Modificar",
+                                    labels: {
+                                        ok: "Aceptar",
+                                        cancel: "Cancelar"
+                                    },
+                                    modal: true,
+                                    startMaximized: false,
+                                    reverseButtons: true,
+                                    resizable: false,
+                                    closable: false,
+                                    oncancel: function (closeEvent) {
+                                        dispositivosAndroidRegistrar();
+                                    }
+                                });
+                            } else {
+                                $.notifyClose();
+                                $.notify({
+                                    message: "\nActividad máxima 100.",
+                                    icon: 'admin/images/warning.svg'
+                                }, {
+                                    element: $('#form-registrar'),
+                                    position: 'fixed',
+                                    placement: {
+                                        from: "top",
+                                        align: "center",
+                                    },
+                                    icon_type: 'image',
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                        '</div>',
+                                    spacing: 35
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+
+        });
+        $(this).children().first().keypress(function (e) {
+            if ($(this).val() != '') {
+                if (e.which == 13) {
+                    if ($(this).val() <= 100) {
+                        var newContent = $(this).val();
+                        $(this).parent().text(newContent);
+                        $(this).parent().removeClass("editable");
+                        alertify.confirm("¿Desea modificar el promedio de actividad del dispositivo?",
+                            function (e) {
+                                if (e) {
+                                    editarActividadVReg(id, newContent);
+                                }
+                            }
+                        ).setting({
+                            title: "Modificar",
+                            labels: {
+                                ok: "Aceptar",
+                                cancel: "Cancelar"
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            oncancel: function (closeEvent) {
+                                dispositivosAndroidRegistrar();
+                            }
+                        });
+                    } else {
+                        $.notifyClose();
+                        $.notify({
+                            message: "\nActividad máxima 100.",
+                            icon: 'admin/images/warning.svg'
+                        }, {
+                            element: $('#form-registrar'),
+                            position: 'fixed',
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: 'image',
+                            newest_on_top: true,
+                            delay: 5000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    }
+                }
+            }
+        });
+
+        $(this).children().first().blur(function () {
+            dispositivosAndroidRegistrar();
+        });
+    });
+}
+//* ENVIAR SMS
+function enviarSmsReg(id) {
+    $.ajax({
+        type: "get",
+        url: "/smsAndroid",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 0) {
+                $("#tdNumeroReg" + id).trigger("click");
+                $.notifyClose();
+                $.notify({
+                    message: "\nRegistrar número de celular del empleado.",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    element: $('#form-registrar'),
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                if (data == 1) {
+                    dispositivosAndroidRegistrar();
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nTenemos problemas con el servidor mensajeria.Comunicarse con nosotros",
+                        icon: 'admin/images/warning.svg'
+                    }, {
+                        element: $('#form-registrar'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                } else {
+                    dispositivosAndroidRegistrar();
+                    $.notifyClose();
+                    $.notify({
+                        message: "\nSMS enviado.",
+                        icon: 'admin/images/checked.svg'
+                    }, {
+                        element: $('#form-registrar'),
+                        position: 'fixed',
+                        icon_type: 'image',
+                        newest_on_top: true,
+                        delay: 5000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
+            }
+        },
+        error: function () { }
+    });
+}
+
+//* MODAL DE DECISION DE ENVIAR SMS
+function smsAndroidReg(id) {
+    alertify
+        .confirm(
+            "¿Desea enviar sms a empleado?",
+            function (e) {
+                if (e) {
+                    enviarSmsReg(id);
+                }
+            }
+        )
+        .setting({
+            title: "Enviar SMS",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                dispositivosAndroidRegistrar();
+            },
+        });
+}
+//* FUNCIONES DE INACTIVAR ANDROID
+function inactivarDispositoAReg(id) {
+    alertify
+        .confirm(
+            "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Al cambiar el estado del dispositivo se inhabilitará información del empleado en su celular",
+            function (e) {
+                if (e) {
+                    cambiarEstadoAndroidReg(id);
+                }
+            }
+        )
+        .setting({
+            title: "Cambiar estado de activación de dispositivo",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                dispositivosAndroidRegistrar();
+            },
+        });
+}
+//* CAMBIAR ESTADO DE ANDROID
+function cambiarEstadoAndroidReg(id) {
+    var idEmpleado = $('#idEmpleado').val();
+    //NOTIFICACION
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/cambiarEstadoVinculacionRuta",
+        data: {
+            idE: idEmpleado,
+            idV: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            dispositivosAndroidRegistrar();
+            $.notifyClose();
+            $.notify({
+                message: "\nProceso con éxito.",
+                icon: 'admin/images/checked.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        },
+        error: function () {
+            dispositivosAndroidRegistrar();
+            $.notifyClose();
+            $.notify({
+                message: "\nProceso falló.",
+                icon: 'admin/images/warning.svg'
+            }, {
+                element: $('#form-registrar'),
+                position: 'fixed',
+                icon_type: 'image',
+                newest_on_top: true,
+                delay: 5000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+        }
+    });
+}
 // TODO ****** FINALIZACION DE FORMULARIO REGISTRAR *****//
 // TODO EN FOMULARIO EN VER
 $('#customSwitchCV1').prop('checked', true);
@@ -1396,7 +2043,7 @@ function dispositivosAndroidVer() {
                 }
                 containerAVer.append(trA);
                 // * MODELO DE DISPOSITIVO ANDROID
-                console.log($("#trVerA" + data[index].idV));
+                console.log(data);
                 if (data[index].modelo !== null) {
                     $("#trVerA" + data[index].idV).find("td:eq(1)").text(data[index].modelo);
                 } else {
@@ -1416,7 +2063,7 @@ function dispositivosAndroidVer() {
                     $('#trVerA' + data[index].idV).find("td:eq(6)").text("Inactivo");
                     $('#inactivarVerA' + data[index].idV).empty();
                     $('#smsVer' + data[index].idV).empty();
-                    var tdSms = `<a  
+                    var tdSms = `<a>  
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
                     $('#smsVer' + data[index].idV).append(tdSms);
