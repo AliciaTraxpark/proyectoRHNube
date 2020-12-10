@@ -6,7 +6,6 @@ function leertabla() {
     $("#tabladiv").hide();
     $("#espera").show();
     $.get("tablaempleado/ver", {}, function (data, status) {
-        console.log(data);
         $("#tabladiv").html(data);
         $("#espera").hide();
         $("#tabladiv").show();
