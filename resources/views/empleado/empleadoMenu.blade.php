@@ -3168,7 +3168,7 @@ use App\proyecto_empleado;
                                                         </a>
                                                     </div>
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #163552;"
+                                                        style="background-color: #383e56;"
                                                         onclick="$('#regactividadTarea').modal();">+
                                                         Asignar actividad
                                                     </button>
@@ -3256,7 +3256,7 @@ use App\proyecto_empleado;
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-3">
                                 <div class="col-xl-12 col-sm-12">
-                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#163552;"
+                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
                                         Agregar
                                     </button>
@@ -3274,9 +3274,10 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card border">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header"
-                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
@@ -3293,7 +3294,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlRR">
+                                        <div class="card-body p-3" id="bodyModoControlRR">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
@@ -3324,9 +3325,10 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card border">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header"
-                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
@@ -3343,7 +3345,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlAR">
+                                        <div class="card-body p-3" id="bodyModoControlAR">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
@@ -4302,15 +4304,14 @@ use App\proyecto_empleado;
                                                     @if (isset($GestActEmp))
                                                     @if ($GestActEmp==1)
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #0a043c;"
+                                                        style="background-color: #383e56;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                     @else
-
                                                     @endif
                                                     @else
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #0a043c;"
+                                                        style="background-color: #383e56;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                     @endif
@@ -4401,7 +4402,7 @@ use App\proyecto_empleado;
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-3">
                                 <div class="col-xl-12 col-sm-12">
-                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#0a043c;"
+                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         + Agregar
                                     </button>
@@ -4419,9 +4420,10 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card border">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header"
-                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
@@ -4438,7 +4440,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlR">
+                                        <div class="card-body p-3" id="bodyModoControlR">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
@@ -4470,9 +4472,10 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card border">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header"
-                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
@@ -4489,7 +4492,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlRuta">
+                                        <div class="card-body p-3" id="bodyModoControlRuta">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
@@ -4892,9 +4895,10 @@ use App\proyecto_empleado;
                         <div id="sw-default-step-7" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header"
-                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
@@ -4911,7 +4915,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlRV">
+                                        <div class="card-body p-3" id="bodyModoControlRV">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
@@ -4943,9 +4947,10 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header"
-                                            style="padding: 0.2rem 1rem;background: #0a043c!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
@@ -4962,7 +4967,7 @@ use App\proyecto_empleado;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlAV">
+                                        <div class="card-body p-3" id="bodyModoControlAV">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
