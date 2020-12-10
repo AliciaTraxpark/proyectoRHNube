@@ -354,6 +354,7 @@ Route::post('editarCondicion', 'editarAtributosController@editarCondicion');
 //*************************************************************************/
 //ESTADO LICENCIA
 Route::get('cambiarEstadoLicencia', 'detallesActivacionController@cambiarEstadoLicencia');
+Route::get('cambiarEstadoVinculacionRuta', 'detallesActivacionController@cambiarEstadoAndroid');
 
 //laborales
 Route::post('/dias/storeCalendario', 'diasLaborablesController@storeCalendario');

@@ -27,6 +27,10 @@ use Tymon\JWTAuth\Claims\DatetimeTrait;
 
 class correosEmpleadoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     public function envioWindows(Request $request)
     {
         $idEmpleado = $request->get('idEmpleado');
@@ -80,7 +84,7 @@ class correosEmpleadoController extends Controller
     {
         $idV = $request->get('id');
         $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
-        if (is_null($vinculacion_ruta->celular) === false) {
+        if (!empty($vinculacion_ruta->celular)) {
             $mensaje = "RH nube - Codigo de validacion de Inicio:" . $vinculacion_ruta->hash;
             $cel = explode("+", $vinculacion_ruta->celular);
             $curl = curl_init();
@@ -108,8 +112,11 @@ class correosEmpleadoController extends Controller
             $response = curl_exec($curl);
             $err = curl_error($curl);
             if ($err) {
+                $vinculacion_ruta->disponible = 'e';
+                $vinculacion_ruta->save();
                 return 1;
             } else {
+                $vinculacion_ruta->disponible = 'e';
                 $vinculacion_ruta->envio = $vinculacion_ruta->envio + 1;
                 $vinculacion_ruta->fecha_envio = Carbon::now();
                 $vinculacion_ruta->save();

@@ -36,7 +36,6 @@
         width: 150px !important;
     }
 
-    .table-responsive,
     .dataTables_scrollBody {
         overflow: visible !important;
     }

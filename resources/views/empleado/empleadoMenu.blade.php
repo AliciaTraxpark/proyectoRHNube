@@ -52,56 +52,53 @@ use App\proyecto_empleado;
 
 
 
-.inputfile {
-    width: 0.1px!important;
-    height: 0.1px!important;
-    opacity: !important
-    overflow: hidden!important;
-    position: absolute!important;
-    z-index: -1!important;
-}
+    .inputfile {
+        width: 0.1px !important;
+        height: 0.1px !important;
+        opacity:  !important overflow: hidden !important;
+        position: absolute !important;
+        z-index: -1 !important;
+    }
 
-.inputfile + label {
-    max-width: 80%!important;
-    font-size: 1.25rem!important;
-    font-weight: 700!important;
-    text-overflow: ellipsis!important;
-    white-space: nowrap!important;
-    cursor: pointer!important;
-    display: inline;
-    overflow: hidden!important;
-    padding: 0.30rem 0.8rem!important;
-}
+    .inputfile+label {
+        max-width: 80% !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        display: inline;
+        overflow: hidden !important;
+        padding: 0.30rem 0.8rem !important;
+    }
 
-.inputfile + label svg {
-    width: 1em!important;
-    height: 1em!important;
-    vertical-align: middle!important;
-    fill: currentColor!important;
+    .inputfile+label svg {
+        width: 1em !important;
+        height: 1em !important;
+        vertical-align: middle !important;
+        fill: currentColor !important;
 
-    margin-right: 0.25em!important;
-}
+        margin-right: 0.25em !important;
+    }
 
-.iborrainputfile {
-	font-size:13.8px!important;
-	font-weight:normal!important;
+    .iborrainputfile {
+        font-size: 13.8px !important;
+        font-weight: normal !important;
 
-}
+    }
 
-/* style 1 */
+    /* style 1 */
 
-.inputfile-1 + label {
-    color: #fff!important;
-    background-color: #163552!important;
-}
+    .inputfile-1+label {
+        color: #fff !important;
+        background-color: #163552 !important;
+    }
 
-.inputfile-1:focus + label,
-.inputfile-1.has-focus + label,
-.inputfile-1 + label:hover {
-    background-color: #1a4063!important;
-}
-
-
+    .inputfile-1:focus+label,
+    .inputfile-1.has-focus+label,
+    .inputfile-1+label:hover {
+        background-color: #1a4063 !important;
+    }
 </style>
 
 
@@ -134,195 +131,6 @@ use App\proyecto_empleado;
 @endsection
 
 @section('breadcrumb')
-{{-- MODAL DE CORREO DE WINDOWS --}}
-<div id="windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowsEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Enviar correo a empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-registrar').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="windows">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                        ¿Desea enviar correo al empleado?
-                    </h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-10 text-right" style="padding-right:0px;">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-registrar').show();">
-                                Cancelar
-                            </button>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <button type="button" id="enviarCorreoWindowsEmpleado" name="enviarCorreoWindowsEmpleado"
-                                style="background-color: #163552;" class="btn btn-sm">
-                                Enviar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{{-- FIN MODAL --}}
-{{-- MODAL DE CORREO DE WINDOWS EN EDITAR --}}
-<div id="v_windowsEmpleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_windowsEmpleado"
-    aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Enviar correo a empleado
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-ver').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="windows">
-                <form class="form-horizontal">
-                    <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                        ¿Desea enviar correo al empleado?
-                    </h5>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-10 text-right" style="padding-right:0px;">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-ver').show();">
-                                Cancelar
-                            </button>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <button type="button" id="v_enviarCorreoWindowsEmpleado"
-                                name="v_enviarCorreoWindowsEmpleado" style="background-color: #163552;"
-                                class="btn btn-sm">
-                                Enviar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{{-- FINALIZACION DEL MODAL --}}
-{{-- CAMBIAR ESTADO DE LICENCIA --}}
-<div id="estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="estadoLicenciaW"
-    aria-hidden="true" data-backdrop="static">
-    <br><br><br><br>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Cambiar estado de activación de dispositivo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-registrar').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="estadoLicenciaW">
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                        </div>
-                        <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
-                            </h5>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-2 text-right" style="padding-right:50px;">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-registrar').show();">Cancelar</button>
-                        </div>
-                        <div class="col-md-10 text-right">
-                            <button type="button" id="CambiarEstadoLW" name="CambiarEstadoLW"
-                                style="background-color: #163552;" class="btn btn-sm">
-                                Aceptar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{{-- FINALIZACION MODAL --}}
-{{-- CAMBIAR ESTADO DE LICENCIA EN EDITAR --}}
-<div id="v_estadoLicenciaW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="v_estadoLicenciaW"
-    aria-hidden="true" data-backdrop="static">
-    <br><br><br><br>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Cambiar estado de activación de dispositivo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="$('#form-ver').show();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input style="display: none;" id="estadoLicenciaW">
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1 mt-2">
-                        </div>
-                        <div class="col-md-8 text-center">
-                            <h5 class="modal-title" id="myModalLabel" style="font-size:15px">
-                                Al cambiar el estado de la licencia se inhabilitará información del empleado en su PC.
-                            </h5>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-10 text-right" style="padding-right:
-                        50px;">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="$('#form-ver').show();">Cancelar</button>
-                        </div>
-                        <div class="col-md-2 text-right">
-                            <button type="button" id="v_CambiarEstadoLW" name="v_CambiarEstadoLW"
-                                style="background-color: #163552;" class="btn
-                             btn-sm">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{{-- FINALIZACION MODAL --}}
 {{-- MODAL DE REGISTRAR CORREO --}}
 <div id="modalCorreoElectronico" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCorreoElectronico"
     aria-hidden="true" data-backdrop="static">
@@ -903,6 +711,53 @@ use App\proyecto_empleado;
         border-color: red;
     }
 
+    /* CURSOR DE TABLA DISPOSITIVO */
+    .cursorDispositivo {
+        cursor: url("../landing/images/pencil.svg"), auto !important;
+    }
+
+    /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
+
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 28px;
+        min-width: 75px;
+    }
+
+    .ajs-cancel {
+        font-size: 12px !important;
+    }
+
+    .ajs-ok {
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 767.98px) {
@@ -1067,16 +922,16 @@ use App\proyecto_empleado;
                 <div class="row">
                     {{-- BOTONES --}}
                     <div class=" col-md-12 text-right btnResponsive">
-                       @if (isset($bajaEmp))
-                         @if ($bajaEmp==1)
-                         <button onclick="eliminarEmpleado()"
+                        @if (isset($bajaEmp))
+                        @if ($bajaEmp==1)
+                        <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all">
                             Dar de baja
                         </button>
-                         @else
+                        @else
 
-                         @endif
+                        @endif
                         @else
                         <button onclick="eliminarEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
@@ -1280,7 +1135,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-                       {{--  <div class="col-md 12" id="divbajaF">
+                        {{--  <div class="col-md 12" id="divbajaF">
                             <div class="form-group" style="margin-top: 10px;">
                                 <label for="bajaFile" class="btn btn-tertiary js-labelFile">
                                     <i class="icon fa fa-check"></i>
@@ -3318,7 +3173,7 @@ use App\proyecto_empleado;
                                                         </a>
                                                     </div>
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #163552;"
+                                                        style="background-color: #383e56;"
                                                         onclick="$('#regactividadTarea').modal();">+
                                                         Asignar actividad
                                                     </button>
@@ -3404,8 +3259,16 @@ use App\proyecto_empleado;
                             </div><!-- /.modal -->
                         </div>
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12 pb-2">
+                            <div class="row pb-3">
+                                <div class="col-xl-12 col-sm-12">
+                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
+                                        Agregar
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
+                                        <a class="dropdown-item" id="agregarAndroid">ANDROID</a>
+                                    </div>
                                     <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenidoD()" data-toggle="tooltip"
                                             data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
@@ -3413,45 +3276,40 @@ use App\proyecto_empleado;
                                         </a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCR1">
                                                         <label class="custom-control-label" for="customSwitchCR1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="activity"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control Remoto
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlRR">
+                                        <div class="card-body p-3" id="bodyModoControlRR">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <button class="btn btn-sm dropdown-toggle"
-                                                        style="background-color:#163552;" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">+
-                                                        Agregar
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="tablaDispositivo" class="table"
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="tablaDispositivo" class="table table-hover"
                                                             style="font-size: 13px!important;">
                                                             <thead style="background: #fafafa;">
                                                                 <tr>
-                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Dispositivo</th>
                                                                     <th>Nombre</th>
-                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Activación</th>
                                                                     <th>Codigo</th>
                                                                     <th>Enviado</th>
                                                                     <th>Estado</th>
@@ -3470,27 +3328,59 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCR2">
                                                         <label class="custom-control-label" for="customSwitchCR2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="map-pin"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control en Ruta
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlAR">
+                                        <div class="card-body p-3" id="bodyModoControlAR">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="tablaDispositivoA" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
+                                                                <tr>
+                                                                    <th>Dispositivo</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Actividad (%)</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tbodyDispositivoAR"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4419,15 +4309,14 @@ use App\proyecto_empleado;
                                                     @if (isset($GestActEmp))
                                                     @if ($GestActEmp==1)
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #163552;"
+                                                        style="background-color: #383e56;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                     @else
-
                                                     @endif
                                                     @else
                                                     <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #163552;"
+                                                        style="background-color: #383e56;"
                                                         onclick="$('#actividadTarea').modal()">+Asignar actividad
                                                     </button>
                                                     @endif
@@ -4516,8 +4405,16 @@ use App\proyecto_empleado;
                             {{-- FINALIZACIÓN DE MODAL --}}
                         </div>
                         <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-xl-12 pb-2">
+                            <div class="row pb-3">
+                                <div class="col-xl-12 col-sm-12">
+                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        + Agregar
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
+                                        <a class="dropdown-item" id="v_agregarAndroid">ANDROID</a>
+                                    </div>
                                     <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenidoD()" data-toggle="tooltip"
                                             data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
@@ -4525,45 +4422,41 @@ use App\proyecto_empleado;
                                         </a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchC1">
                                                         <label class="custom-control-label" for="customSwitchC1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="activity"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control Remoto
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlR">
+                                        <div class="card-body p-3" id="bodyModoControlR">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <button class="btn btn-sm dropdown-toggle"
-                                                        style="background-color:#163552;" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">+
-                                                        Agregar
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" id="v_agregarWindows">WINDOWS</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="v_tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;font-size: 14px">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="v_tablaDispositivo" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                 <tr>
-                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Dispositivo</th>
                                                                     <th>Nombre</th>
-                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Activación</th>
                                                                     <th>Codigo</th>
                                                                     <th>Enviado</th>
                                                                     <th>Estado</th>
@@ -4572,7 +4465,7 @@ use App\proyecto_empleado;
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="v_tbodyDispositivo"
-                                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -4582,27 +4475,59 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchC2">
                                                         <label class="custom-control-label" for="customSwitchC2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="map-pin"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control en Ruta
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlA">
+                                        <div class="card-body p-3" id="bodyModoControlRuta">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="v_tablaDispositivoA" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
+                                                                <tr>
+                                                                    <th>Dispositivo</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Actividad (%)</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="v_tbodyDispositivoA"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="col-md-12">
@@ -4971,56 +4896,42 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch6">
-                                                        <label class="custom-control-label" for="customSwitch6"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoProyecto_ver">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                         <div id="sw-default-step-7" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCV1">
                                                         <label class="custom-control-label" for="customSwitchCV1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="activity"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control Remoto
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlRV">
+                                        <div class="card-body p-3" id="bodyModoControlRV">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="ver_tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="ver_tablaDispositivo" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                 <tr>
-                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Dispositivo</th>
                                                                     <th>Nombre</th>
-                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Activación</th>
                                                                     <th>Codigo</th>
                                                                     <th>Enviado</th>
                                                                     <th>Estado</th>
@@ -5039,27 +4950,59 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCV2">
                                                         <label class="custom-control-label" for="customSwitchCV2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="map-pin"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control en Ruta
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlAV">
+                                        <div class="card-body p-3" id="bodyModoControlAV">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="ver_tablaDispositivoA" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
+                                                                <tr>
+                                                                    <th>Dispositivo</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Actividad (%)</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="ver_tbodyDispositivoA"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="col-md-12">

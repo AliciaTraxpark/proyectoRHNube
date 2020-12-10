@@ -528,7 +528,7 @@ class apiVersionDosController extends Controller
         }
     }
 
-    // MEJORACIONES EN LOGIN
+    //* MEJORACIONES EN LOGIN
     public function verificacionLogin(Request $request)
     {
         $nroD = $request->get('nroDocumento');
@@ -606,6 +606,9 @@ class apiVersionDosController extends Controller
                             $token = JWTAuth::encode($payload);
                             $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
 
+                            //* TIEMPO EN EL SERVIDOR 
+                            $fecha = Carbon::now('America/Lima');
+                            $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                             return response()->json(array(
                                 "corte" => $organizacion->corteCaptura,
                                 "idEmpleado" => $empleado->emple_id,
@@ -614,6 +617,7 @@ class apiVersionDosController extends Controller
                                 'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                 'version' => $software_vinculacion->version,
                                 'versionGlobal' => $versionGlobal->descripcion,
+                                'horaActual' => $horaActual,
                                 'token' => $token->get()
                             ), 200);
                         } else {
@@ -649,6 +653,9 @@ class apiVersionDosController extends Controller
                                 $payload = $factory->make();
                                 $token = JWTAuth::encode($payload);
                                 $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+                                //* TIEMPO EN EL SERVIDOR 
+                                $fecha = Carbon::now('America/Lima');
+                                $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                                 return response()->json(array(
                                     "corte" => $organizacion->corteCaptura,
                                     "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
@@ -656,6 +663,7 @@ class apiVersionDosController extends Controller
                                     'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                     'version' => $software_vinculacion->version,
                                     'versionGlobal' => $versionGlobal->descripcion,
+                                    'horaActual' => $horaActual,
                                     'token' => $token->get()
                                 ), 200);
                             } else {

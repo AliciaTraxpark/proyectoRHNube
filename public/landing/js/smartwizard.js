@@ -270,9 +270,9 @@ $(document).ready(function () {
         }
         if (stepnumber == 1) {
             console.log($("#contrato").val());
-            varCon=$("#contrato").val();
-            varCondicion=$("#condicion").val();
-            if (varCon=='') {
+            varCon = $("#contrato").val();
+            varCondicion = $("#condicion").val();
+            if (varCon == '') {
                 isStepValid = false;
                 $("#validContrato").show();
                 $("#detalleContratoS").hide();
@@ -280,11 +280,11 @@ $(document).ready(function () {
                 $("#validContrato").hide();
             }
 
-            if (varCondicion=='') {
+            if (varCondicion == '') {
                 isStepValid = false;
-                if (varCon=='') {
+                if (varCon == '') {
                     $("#detalleContratoS").hide();
-                } else{
+                } else {
                     $("#detalleContratoS").show();
                 }
 
@@ -669,10 +669,15 @@ $(document).ready(function () {
             actividadEmp();
         }
         if (stepNumber == 6) {
-            $("button.sw-btn-prev").hide();
-            $("button.sw-btn-next").hide();
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
             dispositivosWindows();
             dispositivosAndroid();
+            $("#FinalizarEmpleadoEditar").hide();
+        }
+        if (stepNumber == 7) {
+            $("button.sw-btn-prev").hide();
+            $("button.sw-btn-next").hide();
             $("#FinalizarEmpleadoEditar").show();
         }
     });
@@ -741,10 +746,16 @@ $("#smartwizardVer").on("showStep", function (
         actividadEmpVer();
     }
     if (stepNumber == 6) {
+        $("button.sw-btn-prev").show();
+        $("button.sw-btn-next").show();
+        $("#FinalizarEmpleadoVer").hide();
+        dispositivoWindowsVer();
+        dispositivosAndroidVer();
+        $("#smartwizardVer :input").attr("disabled", false);
+    }
+    if (stepNumber == 7) {
         $("button.sw-btn-prev").hide();
         $("button.sw-btn-next").hide();
         $("#FinalizarEmpleadoVer").show();
-        dispositivoWindowsVer();
-        $("#smartwizardVer :input").attr("disabled", false);
     }
 });
