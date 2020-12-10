@@ -139,15 +139,6 @@
 
 <table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
-        {{-- <tr style="background: #ffffff">
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-        </tr> --}}
         <tr style="width:100%!important">
             <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
             <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
@@ -177,14 +168,8 @@
                     pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="18">
                 </a>
-                <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"></td>
-            {{--<td class="text-center">&nbsp;
-                 @if (empty($tabla_empleados->emple_foto) === true)
-                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
-            @else
-            <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
-            @endif
-            </td>--}}
+                <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}">
+            </td>
             <td class="text-center">
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
             </td>

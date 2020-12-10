@@ -244,12 +244,18 @@ class EmpleadoController extends Controller
             ->get()->first();
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
+                DB::enableQueryLog();
                 $tabla_empleado1 = DB::table('empleado as e')
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                     ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
+                    ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                    ->leftJoin('modo as md', function ($join) {
+                        $join->on('md.id', '=', 'v.idModo');
+                        $join->orOn('md.id', '=', 'vr.idModo');
+                    })
                     ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
 
                     ->select(
@@ -268,6 +274,7 @@ class EmpleadoController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->get();
+                dd(DB::getQueryLog());
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                     ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
@@ -339,8 +346,11 @@ class EmpleadoController extends Controller
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                 ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
-
+                ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('modo as md', function ($join) {
+                    $join->on('md.id', '=', 'v.idModo');
+                    $join->orOn('md.id', '=', 'vr.idModo');
+                })
                 ->select(
                     'e.emple_nDoc',
                     'p.perso_nombre',
@@ -360,7 +370,10 @@ class EmpleadoController extends Controller
         }
 
         $vinculacionD = [];
+        $vinculacionRD = [];
+        //* FOREACH PARA OBTENER DISPOSITIVOS
         foreach ($tabla_empleado1 as $tab) {
+            //* VINCULACION DE CONTROL REMOTO
             $vinculacion = DB::table('vinculacion as v')
                 ->join('modo as m', 'm.id', '=', 'v.idModo')
                 ->join('tipo_dispositivo as td', 'td.id', 'm.idTipoDispositivo')
@@ -389,7 +402,28 @@ class EmpleadoController extends Controller
                 }
             }
             $tab->estadoCR = $estadoCR;
+            //* *****************FINALIZACION DE CONTROL REMOTO**************** 
+            //* VINCULACION DE CONTROL RUTA
+            $vinculacion_ruta = DB::table('vinculacion_ruta as vr')
+                ->join('modo as m', 'm.id', '=', 'vr.idModo')
+                ->join('tipo_dispositivo as td', 'td.id', '=', 'm.idTipoDispositivo')
+                ->select('vr.id as idV', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'vr.disponible', 'td.dispositivo_descripcion', 'vr.modelo')
+                ->where('vr.idEmpleado', '=', $tab->emple_id)
+                ->where('m.idTipoModo', '=', 2)
+                ->get();
+            $estadoCRT = false;
+            foreach ($vinculacion_ruta as $vr) {
+                array_push($vinculacionRD, array("idVinculacion" => $vr->idV, "modelo" => $vr->modelo, "disponible" => $vr->disponible, "dispositivoD" => $vr->dispositivo_descripcion, "codigo" => $vr->codigo, "envio" => $vr->envio));
+                if ($vr->disponible == 'c' || $vr->disponible == 'e' || $vr->disponible == 'a') {
+                    $estadoCRT = true;
+                }
+            }
+            $tab->vinculacionRuta = $vinculacionRD;
+            $tab->estadoCRT = $estadoCRT;
+            unset($vinculacionRD);
+            $vinculacionRD = array();
         }
+        //* ********************************
         $result = agruparEmpleados($tabla_empleado1);
         $area = DB::table('area as a')
             ->select('a.area_id', 'a.area_descripcion')
