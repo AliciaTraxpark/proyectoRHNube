@@ -54,7 +54,7 @@ Route::post("logueoV", "apiController@verificacion")->middleware('apilogger');
 //LICENCIA
 Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger');
 
-//SEGUNDA VERSION
+//* SEGUNDA VERSION
 Route::post("logueoV2", "apiVersionDosController@verificacion")->middleware('apilogger');
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
@@ -66,8 +66,7 @@ Route::post("horario3", "apiVersionDosController@horarioV2")->middleware('token'
 Route::get("logout", "apiVersionDosController@logoutToken")->middleware('token')->middleware('apilogger');
 Route::get("updatex64", "apiVersionDosController@downloadActualizacionx64")->middleware('token')->middleware('apilogger');
 Route::get("updateRHx64", "apiVersionDosController@updteDonwloand64")->middleware('apilogger');
-
-// MEJORAS DE LOGIN
+//? MEJORAS DE LOGIN
 Route::post("logueoV3", "apiVersionDosController@verificacionLogin")->middleware('apilogger');
 
 // TICKET DE SOPORTE Y SUGERENCIA
