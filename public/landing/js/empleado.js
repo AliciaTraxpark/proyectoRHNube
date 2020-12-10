@@ -3827,6 +3827,7 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
         data: formDataA,
         contentType: false,
         processData: false,
+        async:false,
         dataType: "json",
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -3860,6 +3861,37 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
 
         },
     });
+
+    var formData1 = new FormData();
+
+     var num= document.getElementById('exampleFormControlFile1_ed').files.length;
+
+ for (var i = 0; i < num; i++) {
+     formData1.append("exampleFormControlFile1_ed[]", document.getElementById('exampleFormControlFile1_ed').files[i]);
+ }
+     $.ajax({
+         type: "POST",
+         url: "/empleado/storeDocumentoEdi" + accion,
+         data: formData1,
+         contentType: false,
+         processData: false,
+         dataType: "json",
+         headers: {
+             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+         },
+         statusCode: {
+             /*401: function () {
+                 location.reload();
+             },*/
+             419: function () {
+                 location.reload();
+             },
+         },
+         success: function (data) {
+         },
+         error: function (data, errorThrown) { },
+     });
+     ////////////////////////////////////
 }
 // FOTO
 function actualizarEmpleadoFoto(accion) {
@@ -6251,3 +6283,16 @@ var fechaValue = $("#fechaSelec").flatpickr({
           });
       });
   }( document, window, 0 ));
+  $("#v_contrato").change(function () {
+    console.log('aqui se cierra x1');
+    console.log('esperando')
+   /*  $("#validContrato").hide(); */
+   let varCont=$("#v_contrato").val();
+    if (varCont!='') {
+        console.log('aqui se cierra x2');
+    $('#form-ver').modal('hide');
+        $('#fechasmodalE').modal('show');
+    }
+
+
+  })

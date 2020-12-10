@@ -46,6 +46,55 @@ use Carbon\Carbon;
         .form-control:disabled {
             background-color: #f1f0f0;
         }
+
+.inputfile {
+    width: 0.1px!important;
+    height: 0.1px!important;
+    opacity: !important
+    overflow: hidden!important;
+    position: absolute!important;
+    z-index: -1!important;
+}
+
+.inputfile + label {
+    max-width: 80%!important;
+    font-size: 1.25rem!important;
+    font-weight: 700!important;
+    text-overflow: ellipsis!important;
+    white-space: nowrap!important;
+    cursor: pointer!important;
+    display: inline;
+    overflow: hidden!important;
+    padding: 0.30rem 0.8rem!important;
+}
+
+.inputfile + label svg {
+    width: 1em!important;
+    height: 1em!important;
+    vertical-align: middle!important;
+    fill: currentColor!important;
+
+    margin-right: 0.25em!important;
+}
+
+.iborrainputfile {
+	font-size:13.8px!important;
+	font-weight:normal!important;
+
+}
+
+/* style 1 */
+
+.inputfile-1 + label {
+    color: #fff!important;
+    background-color: #163552!important;
+}
+
+.inputfile-1:focus + label,
+.inputfile-1.has-focus + label,
+.inputfile-1 + label:hover {
+    background-color: #1a4063!important;
+}
     </style>
 
 
@@ -1137,8 +1186,8 @@ use Carbon\Carbon;
                             <label for="">Adjuntar documento(s)</label>
                         <div class="form-group">
                             <input type="file" name="bajaFile" id="bajaFile" accept=
-                            "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                             application/pdf, image/*" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
+                            "application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                             application/pdf" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
                             <label for="bajaFile">
                             <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
                             <span class="iborrainputfile">Seleccionar archivo</span>
@@ -1619,8 +1668,8 @@ use Carbon\Carbon;
                                             <div class="form-group" style="margin-top: 10px;">
                                                 <label for="exampleFormControlFile1">Adjuntar documento</label>
                                                 <input type="file" accept=
-                                                "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                                 application/pdf, image/*" class="form-control-file" id="exampleFormControlFile1" multiple="true">
+                                                "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                                 application/pdf" class="form-control-file" id="exampleFormControlFile1" multiple="true">
                                               </div>
                                         </div>
                                     </div>
@@ -2085,6 +2134,21 @@ use Carbon\Carbon;
 
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md 12">
+                                            <label for="">Adjuntar documento(s)</label>
+                                            <div class="form-group" style="margin-top: 10px;">
+
+                                                <input type="file" accept=
+                                                "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                                 application/pdf" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple  id="exampleFormControlFile1_ed">
+                                                 <label for="exampleFormControlFile1_ed">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                                                      <span class="iborrainputfile">Seleccionar archivo</span>
+                                                 </label>
+                                              </div>
                                         </div>
                                     </div>
                             </div>

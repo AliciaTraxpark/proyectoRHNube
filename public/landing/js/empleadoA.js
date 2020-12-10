@@ -40,7 +40,7 @@ function enviarAreaA(accion, objArea) {
                     value: data.area_id,
                     text: data.area_descripcion,
                     selected: true
-                })); 
+                }));
                 $('#v_area').val(data.area_id).trigger("change");//lo selecciona
                 $('#textAreaE').val('');
                 $('#editarAreaA').hide();
@@ -727,7 +727,8 @@ function enviarContratoA(accion, objContrato) {
                 $('#editarContratoA').hide();
                 limpiarEditar();
                 $('#contratomodalE').modal('toggle');
-                $('#form-ver').modal('show');
+                $('#fechasmodalE').modal('show');
+               /*  $('#form-ver').modal('show'); */
                 $.notify({
                     message: "\nContrato Registrado\n",
                     icon: 'admin/images/checked.svg'
@@ -787,7 +788,7 @@ function enviarContratoA(accion, objContrato) {
                         $('#v_contrato').append(select);
                     },
                     error: function () {}
-                }); 
+                });
                 $('#v_contrato').val(data.contrato_id).trigger("change");//lo selecciona
                 $('#textContratoE').val('');
                 $('#editarContratoA').hide();
@@ -956,7 +957,7 @@ $("#checkboxFechaIE").on("click", function () {
         $('#m_dia_fechaFE').val("0");
         $('#m_mes_fechaFE').val("0");
         $('#m_ano_fechaFE').val("0");
-      
+
 
         $('#ocultarFechaE').hide();
     } else {
