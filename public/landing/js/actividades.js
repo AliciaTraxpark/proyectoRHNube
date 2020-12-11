@@ -1671,6 +1671,7 @@ function limpiarAE() {
     $('#checkboxEmpleadosTodos').prop("checked", false);
     $('#checkboxEmpleados').prop("checked", false);
     $('#empleAsignar').empty();
+    $('.aNuevos').show();
     $('.aEmpleado').hide();
 }
 //: LIMPIAR EN ASIGNACION POR AREAS
@@ -1884,4 +1885,15 @@ function asignarActividadEmpleado() {
         error: function () { },
     });
 }
+$('#checkboxEmpleadosTodos').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#checkboxEmpleados').prop("checked", true);
+        $("#empleAsignar > option").prop("selected", "selected");
+        $('#empleAsignar').trigger("change");
+        $('.aNuevos').hide();
+    } else {
+        $('#empleAsignar').val(EmpleadosAsig).trigger('change');
+        $('.aNuevos').show();
+    }
+});
 //* ************************ FINALIZACION ****************************** *//

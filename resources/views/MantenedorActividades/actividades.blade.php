@@ -546,15 +546,15 @@
                                         <div class="col-md-12 text-left">
                                             <div class="form-group mb-0 mt-2">
                                                 <input type="checkbox" id="checkboxEmpleadosTodos">
-                                                <label for="" class="mb-0">Asignar a nuevos</label>
+                                                <label for="" class="mb-0">Todos, incluyendo nuevos</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row pt-2 aEmpleado" style="display: none">
+                                    <div class="row pt-2 aEmpleado aNuevos" style="display: none">
                                         <div class="col-md-12 text-right">
                                             <div class="form-group mb-0 mt-3">
                                                 <input type="checkbox" id="checkboxEmpleados">
-                                                <label for="" class="mb-0">Asignar a todos los empleados</label>
+                                                <label for="" class="mb-0">Todos los empleados</label>
                                                 <div class="float-left mb-0">
                                                     <span style="font-size: 11px;">
                                                         *Se visualizara empleados con esta actividad asignada
@@ -563,7 +563,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row aEmpleado" style="display: none">
+                                    <div class="row aEmpleado aNuevos" style="display: none">
                                         <div class="col-md-12">
                                             <select id="empleAsignar" data-plugin="customselect"
                                                 class="form-control form-control-sm select2Multiple"
