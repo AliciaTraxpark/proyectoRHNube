@@ -28,9 +28,11 @@ use Carbon\Carbon;
             -moz-user-select: none;
             user-select: none;
         }
+
         .pace-inactive {
             display: none;
         }
+
         .pace .pace-progress {
             background: #545474;
             position: fixed;
@@ -40,6 +42,7 @@ use Carbon\Carbon;
             width: 100%;
             height: 6px;
         }
+
         .form-control:disabled {
             background-color: #f1f0f0;
         }
@@ -500,7 +503,7 @@ use Carbon\Carbon;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    {{-- MODAL --}}
+    {{-- MODAL CORREO ELECTRONICO--}}
     <div id="modalCorreoElectronico" class="modal fade" tabindex="-1" role="dialog"
         aria-labelledby="modalCorreoElectronico" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -549,6 +552,58 @@ use Carbon\Carbon;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    {{-- MODAL DE REGISTRAR CELULAR --}}
+    <div id="modalCelular" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCelular"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Registrar celular empleado
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:RefreshTablaEmpleado();javascript:limpiarCorreoE()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="idEmpleCelular">
+                        <form class="form-horizontal col-lg-12" action="javascript:guardarCelularE()"
+                            id="FormguardarCelularE">
+                            {{ csrf_field() }}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" style="font-weight: 500;">
+                                            Celular
+                                        </label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"
+                                                    style="background-color: #ffffff;font-size: 9px">
+                                                    +51
+                                                </span>
+                                            </div>
+                                            <input type="number" class="form-control" id="textCelular" name="celular"
+                                                required autofocus>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
+                        onclick="javascript:RefreshTablaEmpleado()">Cerrar</button>
+                    <button type="submit" style="background-color:#163552; border-color: #163552;"
+                        class="btn btn-sm btn-primary">Registrar</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {{-- FINALIZACION MODAL --}}
     {{-- MODAL DE AGREGAR ACTIVIDADES EN FORMULARIO EDITAR--}}
     <div id="RegActividadTareaGE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="RegActividadTareaGE"
         aria-hidden="true" data-backdrop="static">
@@ -709,10 +764,12 @@ use Carbon\Carbon;
         .form-control {
             font-size: 12px;
         }
+
         .container {
             margin-left: 40px;
             margin-right: 28px;
         }
+
         tr:first-child>td>.fc-day-grid-event {
             margin-top: 0px;
             padding-top: 0px;
@@ -721,9 +778,11 @@ use Carbon\Carbon;
             margin-left: 2px;
             margin-right: 2px;
         }
+
         #calendarInv_ed>div.fc-view-container>div>table>tbody {
             background: #f4f4f4;
         }
+
         .fc-event,
         .fc-event-dot {
             /*  background-color: #d1c3c3; */
@@ -731,172 +790,203 @@ use Carbon\Carbon;
             margin: 2px 2px;
             cursor: url("../landing/images/cruz1.svg"), auto !important;
         }
+
         .fc-event-container>a {
             border: 1px solid #fff;
         }
+
         a:not([href]):not([tabindex]) {
             color: #000;
             cursor: pointer;
             font-size: 12px;
         }
+
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-light.bootbox-cancel {
             background: #e2e1e1;
             color: #000000;
             border-color: #e2e1e1;
             zoom: 85%;
         }
+
         body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-footer>button,
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-footer>button.btn.btn-success.bootbox-accept {
             background-color: #163552;
             border-color: #163552;
             zoom: 85%;
         }
+
         #calendarInv>div.fc-view-container>div>table>tbody {
             background: #f4f4f4;
         }
+
         .fc-event,
         .fc-event-dot {
             font-size: 12.2px !important;
             margin: 2px 2px;
         }
+
         .fc-time {
             display: none;
         }
+
         .v-divider {
             border-right: 5px solid #4C5D73;
         }
+
         .table th,
         .table td {
             padding: 0.55rem;
             border-top: 1px solid #c9c9c9;
         }
+
         .sw-theme-default>ul.step-anchor>li.active>a {
             color: #1c68b1 !important;
         }
+
         .sw-theme-default>ul.step-anchor>li.done>a,
         .sw-theme-default>ul.step-anchor>li>a {
             color: #0b1b29 !important;
         }
+
         .day {
             max-width: 30%;
         }
+
         .month {
             max-width: 35%;
         }
+
         .year {
             max-width: 40%;
         }
+
         .btn-group {
             width: 100%;
             justify-content: space-between;
         }
+
         .sw-btn-group-extra {
             justify-content: flex-end !important;
         }
+
         .btn-secondary {
             max-width: 9em;
         }
+
         .form-control:disabled {
             background-color: #fcfcfc;
         }
+
         body {
             background-color: #f8f8f8;
         }
+
         .hidetext {
             -webkit-text-security: disc;
             /* Default */
         }
+
         .scroll {
             max-height: 100px;
             overflow-y: auto;
         }
+
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: #52565b;
         }
+
         .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
             color: #fdfdfd;
         }
+
         .col-lg-10 .select2-container .select2-selection {
             height: 20px;
             font-size: 12.2px;
             overflow-y: scroll;
         }
+
         .custom-select:disabled {
             color: #3f3a3a;
             background-color: #fcfcfc;
         }
+
         .select2-container--default .select2-results__option[aria-selected=true] {
             background: #ced0d3;
         }
+
         body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-header {
             background-color: #163552;
         }
+
         body>div.bootbox.modal.fade.bootbox-alert.show>div>div>div.modal-header>h5 {
             color: #fff;
             font-size: 15px !important;
         }
+
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-header {
             background-color: #163552;
         }
+
         body>div.bootbox.modal.fade.bootbox-confirm.show>div>div>div.modal-header>h5 {
             color: #fff;
             font-size: 15px !important;
         }
+
         .borderColor {
             border-color: red;
         }
+
         .cursorDispositivo {
             cursor: url("../landing/images/pencil.svg"), auto !important;
         }
 
         .inputfile {
-    width: 0.1px!important;
-    height: 0.1px!important;
-    opacity: !important
-    overflow: hidden!important;
-    position: absolute!important;
-    z-index: -1!important;
-}
+            width: 0.1px !important;
+            height: 0.1px !important;
+            opacity:  !important overflow: hidden !important;
+            position: absolute !important;
+            z-index: -1 !important;
+        }
 
-.inputfile + label {
-    max-width: 80%!important;
-    font-size: 1.25rem!important;
-    font-weight: 700!important;
-    text-overflow: ellipsis!important;
-    white-space: nowrap!important;
-    cursor: pointer!important;
-    display: inline;
-    overflow: hidden!important;
-    padding: 0.30rem 0.8rem!important;
-}
+        .inputfile+label {
+            max-width: 80% !important;
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            cursor: pointer !important;
+            display: inline;
+            overflow: hidden !important;
+            padding: 0.30rem 0.8rem !important;
+        }
 
-.inputfile + label svg {
-    width: 1em!important;
-    height: 1em!important;
-    vertical-align: middle!important;
-    fill: currentColor!important;
+        .inputfile+label svg {
+            width: 1em !important;
+            height: 1em !important;
+            vertical-align: middle !important;
+            fill: currentColor !important;
 
-    margin-right: 0.25em!important;
-}
+            margin-right: 0.25em !important;
+        }
 
-.iborrainputfile {
-	font-size:13.8px!important;
-	font-weight:normal!important;
+        .iborrainputfile {
+            font-size: 13.8px !important;
+            font-weight: normal !important;
 
-}
+        }
 
-/* style 1 */
+        /* style 1 */
 
-.inputfile-1 + label {
-    color: #fff!important;
-    background-color: #163552!important;
-}
+        .inputfile-1+label {
+            color: #fff !important;
+            background-color: #163552 !important;
+        }
 
-.inputfile-1:focus + label,
-.inputfile-1.has-focus + label,
-.inputfile-1 + label:hover {
-    background-color: #1a4063!important;
-}
+        .inputfile-1:focus+label,
+        .inputfile-1.has-focus+label,
+        .inputfile-1+label:hover {
+            background-color: #1a4063 !important;
+        }
     </style>
 
     <header id="header-section">
@@ -5256,39 +5346,39 @@ use Carbon\Carbon;
     </script>
 
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js')}}"></script>
-    <sc
-ript src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
-    <script src="{{asset('admin/packages/core/main.js')}}"></script>
-    <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
-    <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
-    <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
-    <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
-    <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
-    <script src="{{asset('landing/js/tabla.js')}}"></script>
-    <script src="{{asset('landing/js/smartwizard.js')}}"></script>
-    <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-    <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
-    <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="{{asset('landing/js/empleado.js')}}"></script>
-    <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
-    <script src="{{asset('landing/js/empleadoA.js')}}"></script>
-    <script src="{{asset('landing/js/dispositivos.js')}}"></script>
-    <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
-    @if (Auth::user())
-    <script>
-        $(function () {
+    <sc ript src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}">
+        </script>
+        <script src="{{asset('admin/assets/libs/bootstrap-fileinput/purify.min.js')}}"></script>
+        <script src="{{asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js')}}"></script>
+        <script src="{{asset('admin/assets/libs/bootstrap-fileinput/theme.js')}}"></script>
+        <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
+        <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
+        <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
+        <script src="{{asset('admin/packages/core/main.js')}}"></script>
+        <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
+        <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
+        <script src="{{asset('admin/packages/timegrid/main.js')}}"></script>
+        <script src="{{asset('admin/packages/interaction/main.js')}}"></script>
+        <script src="{{asset('admin/assets/js/pages/form-wizard.init.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
+        <script src="{{asset('landing/js/tabla.js')}}"></script>
+        <script src="{{asset('landing/js/smartwizard.js')}}"></script>
+        <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
+        <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+        <script src="{{asset('landing/js/seleccionarDepProv.js')}}"></script>
+        <script src="{{asset('landing/js/cargaMasivaF.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+        <script src="{{asset('landing/js/empleado.js')}}"></script>
+        <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
+        <script src="{{asset('landing/js/empleadoA.js')}}"></script>
+        <script src="{{asset('landing/js/dispositivos.js')}}"></script>
+        <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
+        @if (Auth::user())
+        <script>
+            $(function () {
             setInterval(function checkSession() {
                 $.get('/check-session', function (data) {
                     // if session was expired
@@ -5299,9 +5389,9 @@ ript src="{{asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js')}}"></
                 });
             }, 7202000);
         });
-    </script>
-    @endif
-    <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
+        </script>
+        @endif
+        <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 </body>
 
 </html>
