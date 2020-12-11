@@ -879,8 +879,10 @@ function datosAsignacionPorEmpleado() {
             }
             container.append(option);
             if (data[0].global === 1) {
+                $('.todosCol').hide();
                 $('#checkboxEmpleadosEditarTodos').prop("checked", true);
             } else {
+                $('.todosCol').show();
                 $('#checkboxEmpleadosEditarTodos').prop("checked", false);
             }
             if (data[0].noSelect.length === 0) {
@@ -945,6 +947,7 @@ function limpiarAsignacionPorEmpleado() {
     $('#checkboxEmpleadosEditar').prop("checked", false);
     $('#empleados').empty();
     $('#e_customAE').prop("checked", false);
+    $('.aNuevosE').show();
     $('.aNuevosR').show();
 }
 //: LIMPIAR EN ASIGNACION POR AREAS
@@ -967,6 +970,16 @@ $('#areaAsignarEditar').on("change", function (e) {
         $('#checkboxAreasEditar').prop("checked", true);
     } else {
         $('#checkboxAreasEditar').prop("checked", false);
+    }
+});
+$('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $("#empleados > option").prop("selected", "selected");
+        $('#empleados').trigger("change");
+        $('.aNuevosE').hide();
+    } else {
+        $('#empleados').val(EmpleadosDeActividadEditar).trigger('change');
+        $('.aNuevosE').show();
     }
 });
 //* ************************** FORMULARIO REGISTRAR ********************** *//
@@ -1561,16 +1574,16 @@ $("#actividadesAsignar").on("change", function () {
         success: function (data) {
             console.log(data);
             if (data.porEmpleados == 1) {
+                $('.aEmpleado').show();
                 datosAsignacionPorEmpleado_Asignacion(data.Activi_id);
                 $('#a_customAE').prop("checked", true);
-                $('.aEmpleado').show();
             } else {
                 limpiarAE();
             }
             if (data.porAreas == 1) {
+                $('.aArea').show();
                 datosAsignacionPorArea_Asignacion(data.Activi_id);
                 $('#a_customAA').prop("checked", true);
-                $('.aArea').show();
             } else {
                 limpiarAA();
             }
@@ -1617,8 +1630,10 @@ function datosAsignacionPorEmpleado_Asignacion(id) {
             }
             container.append(option);
             if (data[0].global === 1) {
+                $('.aNuevos').hide();
                 $('#checkboxEmpleadosTodos').prop("checked", true);
             } else {
+                $('.aNuevos').show();
                 $('#checkboxEmpleadosTodos').prop("checked", false);
             }
             if (data[0].noSelect.length === 0) {
