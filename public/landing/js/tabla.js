@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    //$('#form-ver').hide();
     leertabla();
 });
 
@@ -71,8 +70,8 @@ function RefreshTablaEmpleadoArea() {
                                     <img src="/landing/images/see.svg" height="18">\
                                 </a>\
                                 <input type="hidden" id="codE" value=' +
-                                data[i].emple_id +
-                                "> </td>";
+                    data[i].emple_id +
+                    "> </td>";
 
                 tbody += "</td>";
                 tbody +=
@@ -388,12 +387,12 @@ function RefreshTablaEmpleado() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            if(data.length>0){
-                $('#btnContinuar').prop("disabled",false);
+            if (data.length > 0) {
+                $('#btnContinuar').prop("disabled", false);
                 $('#btnContinuar').attr('title', 'Continuar');
             }
-            else{
-                $('#btnContinuar').prop("disabled",true);
+            else {
+                $('#btnContinuar').prop("disabled", true);
                 $('#btnContinuar').attr('title', 'Registre al menos un empleado para poder continuar');
 
             }
@@ -439,8 +438,8 @@ function RefreshTablaEmpleado() {
                                     <img src="/landing/images/see.svg" height="18">\
                                 </a>\
                                 <input type="hidden" id="codE" value=' +
-                                data[i].emple_id +
-                                "> </td>";
+                    data[i].emple_id +
+                    "> </td>";
 
                 tbody +=
                     '<td class="text-center"> <div class="text-wrap width-400">' +

@@ -25,7 +25,6 @@
 
     .hidetext {
         -webkit-text-security: disc;
-        /* Default */
     }
 
     .text-wrap {
@@ -62,6 +61,7 @@
         padding: 4px 8px 4px 8px;
     }
 
+    /* RESPONSIVE */
     @media (max-width: 767.98px) {
 
         .dataTable,
@@ -95,7 +95,10 @@
             width: 100% !important;
         }
     }
+
+    /* FINALIZACION DE RESPONSIVE */
 </style>
+{{-- MODAL DE CONTROL REMOTO --}}
 <div id="modalControlR" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlR"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
@@ -133,21 +136,11 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!---->
+</div>
+{{-- FINALIZACION DE MODAL --}}
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
-
 <table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
-        {{-- <tr style="background: #ffffff">
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-            <th style="border-top: 1px solid #fdfdfd;"></th>
-        </tr> --}}
         <tr style="width:100%!important">
             <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
             <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
@@ -156,6 +149,7 @@
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Control Remoto</th>
+            <th>Control Ruta</th>
             <th class="text-center">Asistencia en puerta</th>
             <th>Cargo</th>
             <th>Área</th>
@@ -164,38 +158,44 @@
     <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
         @foreach ($tabla_empleado as $tabla_empleados)
         <tr id="{{$tabla_empleados->emple_id}}" value="{{$tabla_empleados->emple_id}}">
-            <td class="text-center"><input type="checkbox" name="selec" id="tdC" style="margin-left:5.5px!important"
+            {{-- CHECKBOX --}}
+            <td class="text-center">
+                <input type="checkbox" name="selec" id="tdC" style="margin-left:5.5px!important"
                     class="form-check-input sub_chk" data-id="{{$tabla_empleados->emple_id}}" $(this)$(this)$(this)>
             </td>
-            <td class="text-center"><a name="editarEName" onclick="editarEmpleado({{$tabla_empleados->emple_id}})"
-                    style="cursor: pointer"><img src="{{asset('admin/images/edit.svg')}}" height="15"></a>&nbsp;<a
-                    data-toggle="tooltip" name="dBajaName" data-original-title="Dar de baja" data-placement="right"
-                    onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer"><img
-                        src="{{asset('landing/images/abajo.svg')}}" height="17"></a>&nbsp;
+            {{-- EDITAR Y DAR DE BAJA --}}
+            <td class="text-center">
+                <a name="editarEName" onclick="editarEmpleado({{$tabla_empleados->emple_id}})" style="cursor: pointer">
+                    <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                </a>
+                &nbsp;
+                <a data-toggle="tooltip" name="dBajaName" data-original-title="Dar de baja" data-placement="right"
+                    onclick="marcareliminar({{$tabla_empleados->emple_id}})" style="cursor: pointer">
+                    <img src="{{asset('landing/images/abajo.svg')}}" height="17">
+                </a>
+                &nbsp;
                 <a class="verEmpleado" onclick="verDEmpleado({{$tabla_empleados->emple_id}})" data-toggle="tooltip"
-                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:
-                    pointer">
+                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles"
+                    style="cursor:pointer">
                     <img src="{{asset('landing/images/see.svg')}}" height="18">
                 </a>
-                <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}"></td>
-            {{--<td class="text-center">&nbsp;
-                 @if (empty($tabla_empleados->emple_foto) === true)
-                <img src="{{ URL::asset('admin/assets/images/users/empleado.png')}}" alt="" />
-            @else
-            <img src="/fotosEmpleado/{{$tabla_empleados->emple_foto}}" class="avatar-xs rounded-circle" />
-            @endif
-            </td>--}}
+                <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}">
+            </td>
+            {{-- NUMERO DE DOCUMENTO --}}
             <td class="text-center">
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
             </td>
+            {{-- NOMBRE --}}
             <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->perso_nombre}}</div>
             </td>
+            {{-- APELLIDOS --}}
             <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->perso_apPaterno}}
                     {{$tabla_empleados->perso_apMaterno}}
                 </div>
             </td>
+            {{-- CONTROL REMOTO --}}
             @if(!in_array("1",$tabla_empleados->dispositivos))
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
@@ -203,7 +203,8 @@
                         id="customSwitchCR{{$tabla_empleados->emple_id}}"
                         onclick="javascript:controlRemoto({{$tabla_empleados->emple_id}},'{{$tabla_empleados->perso_nombre}}')">
                     <label class="custom-control-label" for="customSwitchCR{{$tabla_empleados->emple_id}}"
-                        style="font-weight: bold"></label>
+                        style="font-weight: bold">
+                    </label>
                 </div>
             </td>
             @else
@@ -268,6 +269,94 @@
                 </div>
             </td>
             @endif
+            {{-- CONTROL RUTA --}}
+            @if(!in_array("2",$tabla_empleados->dispositivos))
+            <td class="text-center">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input"
+                        id="customSwitchCRT{{$tabla_empleados->emple_id}}"
+                        onclick="javascript:controlRuta({{$tabla_empleados->emple_id}},'{{$tabla_empleados->perso_nombre}}')">
+                    <label class="custom-control-label" for="customSwitchCRT{{$tabla_empleados->emple_id}}"
+                        style="font-weight: bold">
+                    </label>
+                </div>
+            </td>
+            @else
+            <td class="text-center">
+                <div class="dropdown" id="a{{$tabla_empleados->emple_id}}">
+                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="cursor: pointer">
+                        <div class="custom-control custom-switch mb-2">
+                            {{-- ESTADO DE CONTROL EN RUTA --}}
+                            @if($tabla_empleados->estadoCRT === true)
+                            <input type="checkbox" class="custom-control-input"
+                                id="customSwitchCRA{{$tabla_empleados->emple_id}}" checked>
+                            @else
+                            <input type="checkbox" class="custom-control-input"
+                                id="customSwitchCRA{{$tabla_empleados->emple_id}}">
+                            @endif
+                            <label class="custom-control-label" for="customSwitchCRA{{$tabla_empleados->emple_id}}"
+                                style="font-weight: bold">
+                            </label>
+                        </div>
+                    </a>
+                    {{-- MENU DE ANDROID --}}
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach ($tabla_empleados->vinculacionRuta as $tablaVR)
+                        @if ($tablaVR["dispositivoD"] == "ANDROID")
+                        <div class="dropdown-item">
+                            @if ($tablaVR['disponible'] == 'c' || $tablaVR['disponible'] == 'e' ||
+                            $tablaVR['disponible'] ==
+                            'a')
+                            <div class="custom-control custom-switch mb-2">
+                                @if (empty($tablaVR['modelo']) == true)
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}" checked
+                                    onclick="javascript:estadoDispositivoCRT({{$tabla_empleados->emple_id}},{{$tablaVR['idVinculacion']}},'CEL {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
+                                <label class="custom-control-label"
+                                    for="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}" style="font-weight: bold">
+                                    CEL {{$loop->index}}
+                                </label>
+                                @else
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}" checked
+                                    onclick="javascript:estadoDispositivoCRT({{$tabla_empleados->emple_id}},{{$tablaVR['idVinculacion']}},'CEL {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
+                                <label class="custom-control-label"
+                                    for="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}" style="font-weight: bold">
+                                    {{$tablaVR['modelo']}}
+                                </label>
+                                @endif
+                            </div>
+                            @else
+                            <div class="custom-control custom-switch mb-2">
+                                @if (empty($tablaVR['modelo']) == true)
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}"
+                                    onclick="javascript:estadoDispositivoCRT({{$tabla_empleados->emple_id}},{{$tablaVR['idVinculacion']}},'CEL {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
+                                <label class="custom-control-label"
+                                    for="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}" style="font-weight: bold">
+                                    CEL {{$loop->index}}
+                                </label>
+                                @else
+                                <input type="checkbox" class="custom-control-input"
+                                    id="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}"
+                                    onclick="javascript:estadoDispositivoCRT({{$tabla_empleados->emple_id}},{{$tablaVR['idVinculacion']}},'CEL {{$loop->index}}','{{$tabla_empleados->perso_nombre}}')">
+                                <label class="custom-control-label"
+                                    for="customSwitchCRTDisp{{$tablaVR['idVinculacion']}}" style="font-weight: bold">
+                                    {{$tablaVR['modelo']}}
+                                </label>
+                                @endif
+                            </div>
+                            @endif
+                        </div>
+                        @endif
+                        @endforeach
+                    </ul>
+                    {{-- FINALIZACION --}}
+                </div>
+            </td>
+            @endif
+            {{-- CONTROL ASISTENCIA EN PUERTA --}}
             @if($tabla_empleados->asistencia_puerta==1)
             <td class="text-center">
                 <div class="custom-control custom-switch mb-2">
@@ -289,6 +378,7 @@
                 </div>
             </td>
             @endif
+
             <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->cargo_descripcion}}</div>
             </td>
@@ -301,32 +391,29 @@
 </table>
 <script>
     $('[data-toggle="tooltip"]').tooltip();
-                                                                $('#enviarCorreosMasivos').hide();
-                                                                $('#enviarAndroidMasivos').hide();
-                                                                $('#enviarMasivo').hide();
-                                                                $('#filter_col2').hide();
-                                                                $('#filter_col3').hide();
-                                                                $('#filter_col4').hide();
-                                                                $('#filter_col5').hide();
-                                                                $('#filter_col6').hide();
-                                                                var seleccionarTodos = $('#selectT');
-                                                                var table = $('#tablaEmpleado');
-                                                                var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
-                                                                var CheckBoxMarcados = 0;
-
+    $('#enviarCorreosMasivos').hide();
+    $('#enviarAndroidMasivos').hide();
+    $('#enviarMasivo').hide();
+    $('#filter_col2').hide();
+    $('#filter_col3').hide();
+    $('#filter_col4').hide();
+    $('#filter_col5').hide();
+    $('#filter_col6').hide();
+    var seleccionarTodos = $('#selectT');
+    var table = $('#tablaEmpleado');
+    var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
+    var CheckBoxMarcados = 0;
+    
     seleccionarTodos.on('click', function () {
-        if (seleccionarTodos.is(":checked")) {
-            CheckBoxs.prop('checked', true);
-        } else {
-            CheckBoxs.prop('checked', false);
-        };
-
+    if (seleccionarTodos.is(":checked")) {
+    CheckBoxs.prop('checked', true);
+    } else {
+    CheckBoxs.prop('checked', false);
+    }
     });
-
-
     CheckBoxs.on('change', function (e) {
-        CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
-        seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
+    CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
+    seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
     });
 </script>
 <script>
