@@ -699,7 +699,7 @@ class ControlController extends Controller
                 ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '<=', $fechaF[1])
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id', DB::raw('DATE(cp.hora_ini)'))
+                ->groupBy('e.emple_id', DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'))
                 ->get();
             // dd(DB::getQueryLog());
             $date1 = new DateTime($fechaF[0]);
