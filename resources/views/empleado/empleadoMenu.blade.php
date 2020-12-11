@@ -3257,7 +3257,8 @@ use App\proyecto_empleado;
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-sm"
                                                         style="height: 250px;overflow: auto;">
-                                                        <table class="table" style="font-size: 13px!important;">
+                                                        <table class="table table-hover"
+                                                            style="font-size: 13px!important;">
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
@@ -4402,7 +4403,8 @@ use App\proyecto_empleado;
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-sm"
                                                         style="height: 250px;overflow: auto;">
-                                                        <table class="table" style="font-size: 13px!important;">
+                                                        <table class="table table-hover"
+                                                            style="font-size: 13px!important;">
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
@@ -4954,7 +4956,8 @@ use App\proyecto_empleado;
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-sm"
                                                         style="height: 250px;overflow: auto;">
-                                                        <table class="table" style="font-size: 13px!important;">
+                                                        <table class="table table-hover"
+                                                            style="font-size: 13px!important;">
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
