@@ -688,6 +688,55 @@ class apiVersionDosController extends Controller
                                         'token' => $token->get()
                                     ), 200);
                                 } else {
+                                    if (strpos($vinculacion->serieDisco, 'RHbox')) {
+                                        if ($vinculacion->idSoftware == null) {
+                                            //* AGREGAR TABLA DE SOFTWARE VINCULACIÓN
+                                            $software_vinculacion = new software_vinculacion();
+                                            $software_vinculacion->version = $request->get('version');
+                                            $software_vinculacion->fechaActualizacion = Carbon::now();
+                                            $software_vinculacion->save();
+
+                                            $idSoftware = $software_vinculacion->id;
+
+                                            //* UNIR SOFTWARE A VINCULACIÓN
+                                            $vinculacion->idSoftware = $idSoftware;
+                                        } else {
+                                            $software_vinculacion = software_vinculacion::findOrFail($vinculacion->idSoftware);
+                                            if ($software_vinculacion) {
+                                                if ($software_vinculacion->version != $request->get('version')) {
+                                                    $software_vinculacion->version = $request->get('version');
+                                                    $software_vinculacion->fechaActualizacion = Carbon::now();
+                                                    $software_vinculacion->save();
+                                                }
+                                            } else {
+                                                return response()->json("software_erroneo", 400);
+                                            }
+                                        }
+                                        $vinculacion->pc_mac = $request->get('pc_mac');
+                                        $vinculacion->serieDisco = $request->get('serieD');
+                                        $vinculacion->save();
+                                        $factory = JWTFactory::customClaims([
+                                            'sub' => env('API_id'),
+                                        ]);
+                                        $payload = $factory->make();
+                                        $token = JWTAuth::encode($payload);
+                                        $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+
+                                        //* TIEMPO EN EL SERVIDOR 
+                                        $fecha = Carbon::now('America/Lima');
+                                        $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
+                                        return response()->json(array(
+                                            "corte" => $organizacion->corteCaptura,
+                                            "idEmpleado" => $empleado->emple_id,
+                                            "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                            'idUser' => $idOrganizacion,
+                                            'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                            'version' => $software_vinculacion->version,
+                                            'versionGlobal' => $versionGlobal->descripcion,
+                                            'horaActual' => $horaActual,
+                                            'token' => $token->get()
+                                        ), 200);
+                                    }
                                     return response()->json("disco_erroneo", 400);
                                 }
                             }
