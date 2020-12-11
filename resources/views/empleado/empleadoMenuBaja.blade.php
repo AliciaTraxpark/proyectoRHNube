@@ -46,9 +46,10 @@ use App\proyecto_empleado;
         color: #fff;
         font-size: 15px !important;
     }
-    .form-control:disabled{
-    background-color: #f1f0f0;
-}
+
+    .form-control:disabled {
+        background-color: #f1f0f0;
+    }
 </style>
 
 
@@ -392,7 +393,7 @@ use App\proyecto_empleado;
                         <button onclick="altaEmpleado()"
                             style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
                             class="btn btn-sm btn-primary delete_all">
-                           Dar de alta
+                            Dar de alta
                         </button>
 
                     </div>
@@ -460,8 +461,9 @@ use App\proyecto_empleado;
                             padding: 0.4rem;
                             border-top: 1px solid #edf0f1;
                         }
-                        .table th{
-                            font-size: 12.8px!important
+
+                        .table th {
+                            font-size: 12.8px !important
                         }
 
                         .tooltip-arrow,
@@ -542,59 +544,57 @@ use App\proyecto_empleado;
                                 width: 100% !important;
                             }
                         }
+
                         .inputfile {
-    width: 0.1px!important;
-    height: 0.1px!important;
-    opacity: !important
-    overflow: hidden!important;
-    position: absolute!important;
-    z-index: -1!important;
-}
+                            width: 0.1px !important;
+                            height: 0.1px !important;
+                            opacity:  !important overflow: hidden !important;
+                            position: absolute !important;
+                            z-index: -1 !important;
+                        }
 
-.inputfile + label {
-    max-width: 80%!important;
-    font-size: 1.25rem!important;
-    font-weight: 700!important;
-    text-overflow: ellipsis!important;
-    white-space: nowrap!important;
-    cursor: pointer!important;
-    display: inline;
-    overflow: hidden!important;
-    padding: 0.30rem 0.8rem!important;
-}
+                        .inputfile+label {
+                            max-width: 80% !important;
+                            font-size: 1.25rem !important;
+                            font-weight: 700 !important;
+                            text-overflow: ellipsis !important;
+                            white-space: nowrap !important;
+                            cursor: pointer !important;
+                            display: inline;
+                            overflow: hidden !important;
+                            padding: 0.30rem 0.8rem !important;
+                        }
 
-.inputfile + label svg {
-    width: 1em!important;
-    height: 1em!important;
-    vertical-align: middle!important;
-    fill: currentColor!important;
+                        .inputfile+label svg {
+                            width: 1em !important;
+                            height: 1em !important;
+                            vertical-align: middle !important;
+                            fill: currentColor !important;
 
-    margin-right: 0.25em!important;
-}
+                            margin-right: 0.25em !important;
+                        }
 
-.iborrainputfile {
-	font-size:13.8px!important;
-	font-weight:normal!important;
+                        .iborrainputfile {
+                            font-size: 13.8px !important;
+                            font-weight: normal !important;
 
-}
+                        }
 
-/* style 1 */
+                        /* style 1 */
 
-.inputfile-1 + label {
-    color: #fff!important;
-    background-color: #163552!important;
-}
+                        .inputfile-1+label {
+                            color: #fff !important;
+                            background-color: #163552 !important;
+                        }
 
-.inputfile-1:focus + label,
-.inputfile-1.has-focus + label,
-.inputfile-1 + label:hover {
-    background-color: #1a4063!important;
-}
-
-
+                        .inputfile-1:focus+label,
+                        .inputfile-1.has-focus+label,
+                        .inputfile-1+label:hover {
+                            background-color: #1a4063 !important;
+                        }
                     </style>
 
-                       <table id="tablaEmpleado" class="table nowrap" style="width:100%!important" >
+                    <table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
                         <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
                             {{-- <tr style="background: #ffffff">
                                 <th style="border-top: 1px solid #fdfdfd;"></th>
@@ -606,8 +606,10 @@ use App\proyecto_empleado;
                                 <th style="border-top: 1px solid #fdfdfd;"></th>
                             </tr> --}}
                             <tr style="width:100%!important">
-                                <th class="text-center"><input type="checkbox" style="margin-left: 15px" id="selectT"></th>
-                                <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+                                <th class="text-center"><input type="checkbox" style="margin-left: 15px" id="selectT">
+                                </th>
+                                <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                </th>
 
                                 <th class="text-center">Documento</th>
                                 <th>Nombres</th>
@@ -637,7 +639,8 @@ use App\proyecto_empleado;
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de Contrato</h5>
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de Contrato
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#verEmpleadoDetalles').modal('show');">
                         <span aria-hidden="true">&times;</span>
@@ -1427,19 +1430,24 @@ use App\proyecto_empleado;
                                                         <label class="custom-control-label"
                                                             for="fueraHSwitch_re">Trabajar fuera de horario</label>
                                                     </div>
-                                                   {{--  <div class="custom-control custom-switch mb-2">
+                                                    {{--  <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="horCompSwitch_re">
                                                         <label class="custom-control-label"
                                                             for="horCompSwitch_re">Horario compensable.</label>
                                                     </div> --}}
                                                     <div class="row">
-                                                        <div class="custom-control custom-switch mb-2" style="left: 12px;">
-                                                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch_re">
-                                                            <label class="custom-control-label" for="horAdicSwitch_re">Permite marcar horas adicionales.</label>
+                                                        <div class="custom-control custom-switch mb-2"
+                                                            style="left: 12px;">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="horAdicSwitch_re">
+                                                            <label class="custom-control-label"
+                                                                for="horAdicSwitch_re">Permite marcar horas
+                                                                adicionales.</label>
 
                                                         </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <select id="nHorasAdic_re" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
+                                                        <select id="nHorasAdic_re" style="display: none;bottom: 3px;"
+                                                            class="form-control form-control-sm col-md-3">
                                                             <option value="0.5">0.5 hora </option>
                                                             <option value="1">1 hora </option>
                                                             <option value="2">2 horas </option>
@@ -1475,8 +1483,8 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-                        <div id="horarioAgregar" class="modal fade"  role="dialog"
-                            aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div id="horarioAgregar" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true" data-backdrop="static">
                             <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 600px;">
 
                                 <div class="modal-content">
@@ -1592,7 +1600,13 @@ use App\proyecto_empleado;
                                                                 <input type="checkbox" class="custom-control-input"
                                                                     id="SwitchPausa">
                                                                 <label class="custom-control-label" for="SwitchPausa"
-                                                                style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp; <span id="fueraRango" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
+                                                                    style="font-weight: bold;padding-top: 1px">Pausas en
+                                                                    el horario</label> &nbsp; <span id="fueraRango"
+                                                                    style="color: #80211e;display: none">Hora no esta
+                                                                    dentro de rango de horario</span> <span
+                                                                    id="errorenPausas"
+                                                                    style="color: #80211e;display: none">- Fin de pausa
+                                                                    debe ser mayor a inicio pausa</span>
 
                                                             </div>
                                                         </div>
@@ -2460,19 +2474,24 @@ use App\proyecto_empleado;
                                                         <label class="custom-control-label" for="fueraHSwitch">Trabajar
                                                             fuera de horario</label>
                                                     </div>
-                                                  {{--   <div class="custom-control custom-switch mb-2">
+                                                    {{--   <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="horCompSwitch">
                                                         <label class="custom-control-label" for="horCompSwitch">Horario
                                                             compensable.</label>
                                                     </div> --}}
                                                     <div class="row">
-                                                        <div class="custom-control custom-switch mb-2" style="left: 12px;">
-                                                            <input type="checkbox" class="custom-control-input" id="horAdicSwitch">
-                                                            <label class="custom-control-label" for="horAdicSwitch">Permite marcar horas adicionales.</label>
+                                                        <div class="custom-control custom-switch mb-2"
+                                                            style="left: 12px;">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="horAdicSwitch">
+                                                            <label class="custom-control-label"
+                                                                for="horAdicSwitch">Permite marcar horas
+                                                                adicionales.</label>
 
                                                         </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <select id="nHorasAdic" style="display: none;bottom: 3px;"  class="form-control form-control-sm col-md-3">
+                                                        <select id="nHorasAdic" style="display: none;bottom: 3px;"
+                                                            class="form-control form-control-sm col-md-3">
                                                             <option value="0.5">0.5 hora </option>
                                                             <option value="1">1 hora </option>
                                                             <option value="2">2 horas </option>
@@ -2563,7 +2582,7 @@ use App\proyecto_empleado;
 
                                                                     <input type="text"
                                                                         class="form-control form-control-sm"
-                                                                        id="horaOblig_ed"  required>
+                                                                        id="horaOblig_ed" required>
                                                                     <div class="input-group-prepend ">
                                                                         <div class="input-group-text form-control-sm"
                                                                             style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -2633,7 +2652,13 @@ use App\proyecto_empleado;
                                                                     id="SwitchPausa_ed">
                                                                 <label class="custom-control-label" for="SwitchPausa_ed"
                                                                     style="font-weight: bold;padding-top: 1px">Pausas
-                                                                    en el horario</label> &nbsp; <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
+                                                                    en el horario</label> &nbsp; <span
+                                                                    id="fueraRango_ed"
+                                                                    style="color: #80211e;display: none">Hora no esta
+                                                                    dentro de rango de horario</span> <span
+                                                                    id="errorenPausas_ed"
+                                                                    style="color: #80211e;display: none">- Fin de pausa
+                                                                    debe ser mayor a inicio pausa</span>
 
                                                             </div>
                                                         </div>
@@ -2876,8 +2901,7 @@ use App\proyecto_empleado;
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
-                    >
+                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
 
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -3213,31 +3237,38 @@ use App\proyecto_empleado;
                         <div id="sw-default-step-7" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCV1">
                                                         <label class="custom-control-label" for="customSwitchCV1"
-                                                            style="font-weight: bold">Modo Control
-                                                            Remoto</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="activity"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control Remoto
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-3" id="bodyModoControlRV">
+                                        <div class="card-body p-3" id="bodyModoControlRV">
                                             <div class="row">
-                                                <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl">
-                                                        <table id="ver_tablaDispositivo" class="table"
-                                                            style="font-size: 13px!important;">
-                                                            <thead style="background: #fafafa;">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="ver_tablaDispositivo" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
                                                                 <tr>
-                                                                    <th>Tipo Dispositivo</th>
+                                                                    <th>Dispositivo</th>
                                                                     <th>Nombre</th>
-                                                                    <th>Activación de Dispositivo</th>
+                                                                    <th>Activación</th>
                                                                     <th>Codigo</th>
                                                                     <th>Enviado</th>
                                                                     <th>Estado</th>
@@ -3256,49 +3287,80 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div class="card border"
+                                        style="border-radius: 5px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                        <div class="card-header"
+                                            style="padding: 0.2rem 1rem;background: #383e56!important;color:white !important;border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                             <div class="row pb-1 pl-2">
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitchCV2">
                                                         <label class="custom-control-label" for="customSwitchCV2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
+                                                            style="font-weight: bold">
+                                                            <i data-feather="map-pin"
+                                                                style="height: 15px !important;width: 15px !important;color:white !important">
+                                                            </i>&nbsp;&nbsp;
+                                                            Modo Control en Ruta
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body border p-2" id="bodyModoControlAV">
+                                        <div class="card-body p-3" id="bodyModoControlAV">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="ver_tablaDispositivoA" class="table table-hover"
+                                                            style="font-size: 13px!important;width: 100% !important">
+                                                            <thead
+                                                                style="background: #fafafa;font-size: 14px;width: 100% !important">
+                                                                <tr>
+                                                                    <th>Dispositivo</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Codigo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Actividad (%)</th>
+                                                                    <th>Enviado</th>
+                                                                    <th>Estado</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="ver_tbodyDispositivoA"
+                                                                style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="col-md-12">
                                 <label for="">Historial de empleado de altas y bajas</label>
                             </div>
 
-                           <div class="col-xl-12 col-sm-12">
-                            <div class="table-responsive-xl">
-                                <table id="ver_tablaHistorial" class="table"
-                                    style="font-size: 13px!important;">
-                                    <thead style="background: #fafafa;">
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Documento</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="ver_tbodyHistorial"
-                                        style="background:#ffffff;color: #585858;font-size: 12px">
-                                    </tbody>
-                                </table>
+                            <div class="col-xl-12 col-sm-12">
+                                <div class="table-responsive-xl">
+                                    <table id="ver_tablaHistorial" class="table" style="font-size: 13px!important;">
+                                        <thead style="background: #fafafa;">
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Documento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ver_tbodyHistorial"
+                                            style="background:#ffffff;color: #585858;font-size: 12px">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -3425,63 +3487,68 @@ use App\proyecto_empleado;
 
 </div>
 {{-- MODAL DE ALTA --}}
-<div id="modalAlta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAlta"
-aria-hidden="true" data-backdrop="static">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header" style="background-color:#163552;">
-            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                Dar de alta </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form class="form-horizontal">
+<div id="modalAlta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAlta" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Dar de alta </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
 
-                <div class="col-xl-12">
-                    <div class="form-group row">
-                        <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de alta de empleado(s) :</label>
-                        <div class="input-group col-md-5 text-center" style="padding-left: 0px;padding-right: 0px;top: 10px;"
-                            id="fechaSelec">
-                            <input type="text" id="fechaInput"  class="col-md-12 form-control" data-input>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text form-control flatpickr">
-                                    <a class="input-button" data-toggle>
-                                        <i class="uil uil-calender"></i>
-                                    </a>
+                    <div class="col-xl-12">
+                        <div class="form-group row">
+                            <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de alta de
+                                empleado(s) :</label>
+                            <div class="input-group col-md-5 text-center"
+                                style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
+                                <input type="text" id="fechaInput" class="col-md-12 form-control" data-input>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control flatpickr">
+                                        <a class="input-button" data-toggle>
+                                            <i class="uil uil-calender"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md 12">
-                    <label for="">Adjuntar documento(s)</label>
-                    <div class="form-group">
+                    <div class="col-md 12">
+                        <label for="">Adjuntar documento(s)</label>
+                        <div class="form-group">
 
-                        <input type="file" accept=
-                        "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                         application/pdf" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple id="AltaFile">
-                         <label for="AltaFile">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            <span class="iborrainputfile">Seleccionar archivo</span>
-                         </label>
-                      </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
+                            <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                         application/pdf" class="inputfile inputfile-1"
+                                data-multiple-caption="{count} archivos seleccionados" multiple id="AltaFile">
+                            <label for="AltaFile">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17"
+                                    viewBox="0 0 20 17">
+                                    <path
+                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                    </path>
+                                </svg>
+                                <span class="iborrainputfile">Seleccionar archivo</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
 
-                        <button type="button" id="cerrarE" class="btn btn-light btn-sm "
-                            data-dismiss="modal">Cancelar</button>
+                <button type="button" id="cerrarE" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
 
-                        <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarAlta()"
-                            style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+                <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarAlta()"
+                    style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
 
 
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 @endsection
 @section('script')
@@ -3520,7 +3587,7 @@ aria-hidden="true" data-backdrop="static">
             }
         }
 </script>
-<script >
+<script>
     $(function () {
 
         RefreshTablaEmpleado();
@@ -4128,7 +4195,7 @@ function RefreshTablaEmpleadoBajaArea() {
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
- <script src="{{ asset('landing/js/smartwizard.js') }}"></script>
+<script src="{{ asset('landing/js/smartwizard.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
@@ -4139,8 +4206,8 @@ function RefreshTablaEmpleadoBajaArea() {
 <script src="{{
     URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
     }}"></script>
-     <script>
-         var fechaValue = $("#fechaSelec").flatpickr({
+<script>
+    var fechaValue = $("#fechaSelec").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
     altInput: true,
@@ -4560,7 +4627,7 @@ function calendario4() {
     });
 }( document, window, 0 ));
 
-    </script>
+</script>
 
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
