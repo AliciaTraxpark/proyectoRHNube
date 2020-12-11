@@ -3449,7 +3449,7 @@ use App\proyecto_empleado;
 </div>
 <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog" aria-labelledby="form-ver"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
@@ -4618,7 +4618,7 @@ use App\proyecto_empleado;
 <!--VER EMPLEADO-->
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
