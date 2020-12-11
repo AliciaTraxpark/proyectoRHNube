@@ -591,7 +591,7 @@
                                                 <div class="col-md-12 text-left">
                                                     <div class="form-group mb-0 mt-2">
                                                         <input type="checkbox" id="checkboxAreasTodos">
-                                                        <label for="" class="mb-0">Asignar a nuevos</label>
+                                                        <label for="" class="mb-0">Nuevos por área</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -599,7 +599,7 @@
                                                 <div class="col-md-12 text-right">
                                                     <div class="form-group mb-0 mt-3">
                                                         <input type="checkbox" id="checkboxAreas">
-                                                        <label for="" class="mb-0">Asignar a todos las áreas</label>
+                                                        <label for="" class="mb-0">Todas las áreas</label>
                                                         <div class="float-left mb-0">
                                                             <span style="font-size: 11px;">
                                                                 *Se visualizara áreas con esta actividad asignada
