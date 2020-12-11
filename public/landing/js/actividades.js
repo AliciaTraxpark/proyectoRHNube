@@ -945,6 +945,7 @@ function limpiarAsignacionPorEmpleado() {
     $('#checkboxEmpleadosEditar').prop("checked", false);
     $('#empleados').empty();
     $('#e_customAE').prop("checked", false);
+    $('.aNuevosR').show();
 }
 //: LIMPIAR EN ASIGNACION POR AREAS
 function limpiarAsignacionPorArea() {
@@ -1474,6 +1475,18 @@ $('#areaAsignarReg').on("change", function (e) {
         $('#checkboxAreasReg').prop("checked", true);
     } else {
         $('#checkboxAreasReg').prop("checked", false);
+    }
+});
+$('#checkboxEmpleadosTodosReg').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#checkboxAreasReg').prop("checked", true);
+        $("#reg_empleados > option").prop("selected", "selected");
+        $('#reg_empleados').trigger("change");
+        $('.aNuevosR').hide();
+    } else {
+        $('#checkboxAreasReg').prop("checked", false);
+        $('#reg_empleados').val('').trigger('change');
+        $('.aNuevosR').show();
     }
 });
 //* ******************************************************************** *//
