@@ -430,10 +430,10 @@
                                 <div class="col-md-12 text-left" id="porEmpleados">
                                     <div class="form-group mb-0 mt-2">
                                         <input type="checkbox" id="checkboxEmpleadosEditarTodos">
-                                        <label for="" class="mb-0">Asignar a nuevos</label>
+                                        <label for="" class="mb-0">Todos, incluyendo nuevos</label>
                                     </div>
                                 </div>
-                                <div class="col-md-12 text-right todosCol">
+                                <div class="col-md-12 text-right todosCol aNuevosE">
                                     <div class="form-group mb-0 mt-3">
                                         <input type="checkbox" id="checkboxEmpleadosEditar">
                                         <label for="" class="mb-0">Seleccionar a todos</label>
@@ -444,7 +444,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 todosCol">
+                                <div class="col-md-12 todosCol aNuevosE">
                                     <select id="empleados" data-plugin="customselect" class="form-control"
                                         multiple="multiple">
                                     </select>
@@ -462,7 +462,7 @@
                                 <div class="col-md-12 text-left colAreas">
                                     <div class="form-group mb-0 mt-2">
                                         <input type="checkbox" id="checkboxAreasEditarTodos">
-                                        <label for="" class="mb-0">Asignar a nuevos</label>
+                                        <label for="" class="mb-0">Nuevos por área</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right colAreas">
