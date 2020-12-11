@@ -227,6 +227,147 @@ function RefreshTablaEmpleadoArea() {
                         </div>\
                          </td>";
                 }
+                if (data[i].dispositivos.includes(2) == false) {
+                    tbody +=
+                        '<td class="text-center">\
+                            <div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRT' +
+                        data[i].emple_id +
+                        '"\
+                                    onclick="javascript:controlRuta(' +
+                        data[i].emple_id + ",'" +
+                        data[i].perso_nombre +
+                        '\')">\
+                                <label class="custom-control-label" for="customSwitchCRT' +
+                        data[i].emple_id +
+                        '"\
+                                    style="font-weight: bold"></label>\
+                            </div>\
+                        </td>';
+                } else {
+                    tbody +=
+                        '<td class="text-center">\
+                                        <div class="dropdown" id="a' +
+                        data[i].emple_id +
+                        '">\
+                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
+                                <div class="custom-control custom-switch mb-2">';
+                    if (data[i].estadoCRT == true) {
+                        tbody +=
+                            '<input type="checkbox" class="custom-control-input" id="customSwitchCRA' +
+                            data[i].emple_id +
+                            '" checked>';
+                    } else {
+                        tbody +=
+                            '<input type="checkbox" class="custom-control-input" id="customSwitchCRA' +
+                            data[i].emple_id +
+                            '">';
+                    }
+                    tbody +=
+                        '<label class="custom-control-label" for="customSwitchCRA' +
+                        data[i].emple_id +
+                        '" style="font-weight: bold"></label>\
+                                </div>\
+                            </a>\
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                    for (var j = 0; j < data[i].vinculacionRuta.length; j++) {
+                        if (data[i].vinculacion[j].dispositivoD == "ANDROID") {
+                            tbody += '<div class="dropdown-item">';
+                            if (
+                                data[i].vinculacionRuta[j].disponible == "c" ||
+                                data[i].vinculacionRuta[j].disponible == "e" ||
+                                data[i].vinculacionRuta[j].disponible == "a"
+                            ) {
+                                tbody +=
+                                    '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRTDisp' +
+                                    data[i].vinculacionRuta[j].idVinculacion +
+                                    '" checked\
+                                    onclick="javasscript:estadoDispositivoCRT(' +
+                                    data[i].emple_id +
+                                    "," +
+                                    data[i].vinculacionRuta[j].idVinculacion +
+                                    "," +
+                                    j +
+                                    ",'" +
+                                    data[i].perso_nombre +
+                                    '\')">';
+
+                                if (data[i].vinculacionRuta[j].modelo === null) {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">CEL ' +
+                                        j +
+                                        "</label>";
+                                } else {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">' +
+                                        data[i].vinculacionRuta[j].modelo +
+                                        "</label>";
+                                }
+                                tbody += "</div>";
+                            } else {
+                                if (data[i].vinculacionRuta[j].modelo === null) {
+                                    tbody +=
+                                        '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    onclick="javasscript:estadoDispositivoCRT(' +
+                                        data[i].emple_id +
+                                        "," +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        "," + "'CEL " +
+                                        j + "'" +
+                                        ",'" +
+                                        data[i].perso_nombre +
+                                        '\')">';
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">CEL ' +
+                                        j +
+                                        "</label>";
+                                } else {
+                                    tbody +=
+                                        '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    onclick="javasscript:estadoDispositivoCRT(' +
+                                        data[i].emple_id +
+                                        "," +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        "," + "'" +
+                                        data[i].vinculacionRuta[j].modelo + "'" +
+                                        ",'" +
+                                        data[i].perso_nombre +
+                                        '\')">';
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">' +
+                                        data[i].vinculacionRuta[j].modelo +
+                                        "</label>";
+                                }
+                                tbody += "</div>";
+                            }
+
+                            tbody += "</div>";
+                        }
+                    }
+                    tbody +=
+                        "</ul>\
+                        </div>\
+                         </td>";
+                }
                 if (data[i].asistencia_puerta == 1) {
                     tbody +=
                         '<td class="text-center">\
@@ -398,6 +539,7 @@ function RefreshTablaEmpleado() {
             }
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
+                console.log(data);
                 tbody +=
                     "<tr id=" +
                     data[i].emple_id +
@@ -582,6 +724,148 @@ function RefreshTablaEmpleado() {
                                         '"\
                                     style="font-weight: bold">' +
                                         data[i].vinculacion[j].pc +
+                                        "</label>";
+                                }
+                                tbody += "</div>";
+                            }
+
+                            tbody += "</div>";
+                        }
+                    }
+                    tbody +=
+                        "</ul>\
+                        </div>\
+                         </td>";
+                }
+                if (data[i].dispositivos.includes(2) == false) {
+                    tbody +=
+                        '<td class="text-center">\
+                            <div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRT' +
+                        data[i].emple_id +
+                        '"\
+                                    onclick="javascript:controlRuta(' +
+                        data[i].emple_id + ",'" +
+                        data[i].perso_nombre +
+                        '\')">\
+                                <label class="custom-control-label" for="customSwitchCRT' +
+                        data[i].emple_id +
+                        '"\
+                                    style="font-weight: bold"></label>\
+                            </div>\
+                        </td>';
+                } else {
+                    tbody +=
+                        '<td class="text-center">\
+                                        <div class="dropdown" id="a' +
+                        data[i].emple_id +
+                        '">\
+                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">\
+                                <div class="custom-control custom-switch mb-2">';
+                    console.log(data[i].estadoCRT);
+                    if (data[i].estadoCRT == true) {
+                        tbody +=
+                            '<input type="checkbox" class="custom-control-input" id="customSwitchCRA' +
+                            data[i].emple_id +
+                            '" checked>';
+                    } else {
+                        tbody +=
+                            '<input type="checkbox" class="custom-control-input" id="customSwitchCRA' +
+                            data[i].emple_id +
+                            '">';
+                    }
+                    tbody +=
+                        '<label class="custom-control-label" for="customSwitchCRA' +
+                        data[i].emple_id +
+                        '" style="font-weight: bold"></label>\
+                                </div>\
+                            </a>\
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                    for (var j = 0; j < data[i].vinculacionRuta.length; j++) {
+                        if (data[i].vinculacionRuta[j].dispositivoD == "ANDROID") {
+                            tbody += '<div class="dropdown-item">';
+                            if (
+                                data[i].vinculacionRuta[j].disponible == "c" ||
+                                data[i].vinculacionRuta[j].disponible == "e" ||
+                                data[i].vinculacionRuta[j].disponible == "a"
+                            ) {
+                                tbody +=
+                                    '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRTDisp' +
+                                    data[i].vinculacionRuta[j].idVinculacion +
+                                    '" checked\
+                                    onclick="javasscript:estadoDispositivoCRT(' +
+                                    data[i].emple_id +
+                                    "," +
+                                    data[i].vinculacionRuta[j].idVinculacion +
+                                    "," +
+                                    j +
+                                    ",'" +
+                                    data[i].perso_nombre +
+                                    '\')">';
+
+                                if (data[i].vinculacionRuta[j].modelo === null) {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">CEL ' +
+                                        j +
+                                        "</label>";
+                                } else {
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">' +
+                                        data[i].vinculacionRuta[j].modelo +
+                                        "</label>";
+                                }
+                                tbody += "</div>";
+                            } else {
+                                if (data[i].vinculacionRuta[j].modelo === null) {
+                                    tbody +=
+                                        '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    onclick="javasscript:estadoDispositivoCRT(' +
+                                        data[i].emple_id +
+                                        "," +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        "," + "'CEL " +
+                                        j + "'" +
+                                        ",'" +
+                                        data[i].perso_nombre +
+                                        '\')">';
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">CEL ' +
+                                        j +
+                                        "</label>";
+                                } else {
+                                    tbody +=
+                                        '<div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    onclick="javasscript:estadoDispositivoCRT(' +
+                                        data[i].emple_id +
+                                        "," +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        "," + "'" +
+                                        data[i].vinculacionRuta[j].modelo + "'" +
+                                        ",'" +
+                                        data[i].perso_nombre +
+                                        '\')">';
+                                    tbody += '<label class="custom-control-label" for="customSwitchCRTDisp' +
+                                        data[i].vinculacionRuta[j].idVinculacion +
+                                        '"\
+                                    style="font-weight: bold">' +
+                                        data[i].vinculacionRuta[j].modelo +
                                         "</label>";
                                 }
                                 tbody += "</div>";

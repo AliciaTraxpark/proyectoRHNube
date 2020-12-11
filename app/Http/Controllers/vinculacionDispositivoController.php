@@ -231,6 +231,7 @@ class vinculacionDispositivoController extends Controller
             $vinculacion->idEmpleado = $idEmpleado;
             $vinculacion->envio = 0;
             $vinculacion->idModo = $idModo;
+            $vinculacion->celular = $empleado->emple_celular;
             $vinculacion->disponible = 'c';
             $vinculacion->actividad = 50;
             $vinculacion->save();
@@ -274,7 +275,6 @@ class vinculacionDispositivoController extends Controller
             if ($err) {
                 $vinc->disponible = 'e';
                 $vinc->save();
-                return 1;
             } else {
                 $vinc->disponible = 'e';
                 $vinc->envio = $vinc->envio + 1;

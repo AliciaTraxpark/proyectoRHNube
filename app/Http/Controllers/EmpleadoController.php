@@ -290,7 +290,11 @@ class EmpleadoController extends Controller
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                        ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                        ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                        ->leftJoin('modo as md', function ($join) {
+                            $join->on('md.id', '=', 'v.idModo');
+                            $join->orOn('md.id', '=', 'vr.idModo');
+                        })
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->select(
@@ -318,7 +322,11 @@ class EmpleadoController extends Controller
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                        ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                        ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                        ->leftJoin('modo as md', function ($join) {
+                            $join->on('md.id', '=', 'v.idModo');
+                            $join->orOn('md.id', '=', 'vr.idModo');
+                        })
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->select(
@@ -463,7 +471,11 @@ class EmpleadoController extends Controller
                     ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                     ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                     ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                    ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                    ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                    ->leftJoin('modo as md', function ($join) {
+                        $join->on('md.id', '=', 'v.idModo');
+                        $join->orOn('md.id', '=', 'vr.idModo');
+                    })
 
                     ->select(
                         'e.emple_nDoc',
@@ -496,7 +508,11 @@ class EmpleadoController extends Controller
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                        ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                        ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                        ->leftJoin('modo as md', function ($join) {
+                            $join->on('md.id', '=', 'v.idModo');
+                            $join->orOn('md.id', '=', 'vr.idModo');
+                        })
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->select(
@@ -524,7 +540,11 @@ class EmpleadoController extends Controller
                         ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                         ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                         ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                        ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                        ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                        ->leftJoin('modo as md', function ($join) {
+                            $join->on('md.id', '=', 'v.idModo');
+                            $join->orOn('md.id', '=', 'vr.idModo');
+                        })
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->select(
@@ -552,7 +572,11 @@ class EmpleadoController extends Controller
                 ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                 ->leftJoin('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
                 ->leftJoin('vinculacion as v', 'v.idEmpleado', '=', 'e.emple_id')
-                ->leftJoin('modo as md', 'md.id', '=', 'v.idModo')
+                ->leftJoin('vinculacion_ruta as vr', 'vr.idEmpleado', '=', 'e.emple_id')
+                ->leftJoin('modo as md', function ($join) {
+                    $join->on('md.id', '=', 'v.idModo');
+                    $join->orOn('md.id', '=', 'vr.idModo');
+                })
 
                 ->select(
                     'e.emple_nDoc',
@@ -572,6 +596,7 @@ class EmpleadoController extends Controller
                 ->get();
         }
         $vinculacionD = [];
+        $vinculacionRD = [];
         foreach ($tabla_empleado1 as $tab) {
             $vinculacion = DB::table('vinculacion as v')
                 ->join('modo as m', 'm.id', '=', 'v.idModo')
@@ -601,6 +626,25 @@ class EmpleadoController extends Controller
                 }
             }
             $tab->estadoCR = $estadoCR;
+            //* VINCULACION DE CONTROL RUTA
+            $vinculacion_ruta = DB::table('vinculacion_ruta as vr')
+                ->join('modo as m', 'm.id', '=', 'vr.idModo')
+                ->join('tipo_dispositivo as td', 'td.id', '=', 'm.idTipoDispositivo')
+                ->select('vr.id as idV', 'vr.envio as envio', 'vr.hash as codigo', 'vr.idEmpleado', 'vr.disponible', 'td.dispositivo_descripcion', 'vr.modelo')
+                ->where('vr.idEmpleado', '=', $tab->emple_id)
+                ->where('m.idTipoModo', '=', 2)
+                ->get();
+            $estadoCRT = false;
+            foreach ($vinculacion_ruta as $vr) {
+                array_push($vinculacionRD, array("idVinculacion" => $vr->idV, "modelo" => $vr->modelo, "disponible" => $vr->disponible, "dispositivoD" => $vr->dispositivo_descripcion, "codigo" => $vr->codigo, "envio" => $vr->envio));
+                if ($vr->disponible == 'c' || $vr->disponible == 'e' || $vr->disponible == 'a') {
+                    $estadoCRT = true;
+                }
+            }
+            $tab->vinculacionRuta = $vinculacionRD;
+            $tab->estadoCRT = $estadoCRT;
+            unset($vinculacionRD);
+            $vinculacionRD = array();
         }
         $result = agruparEmpleadosRefresh($tabla_empleado1);
 
@@ -2248,7 +2292,7 @@ class EmpleadoController extends Controller
     {
         $empleado = empleado::find($request->get('idEmpleado'));
         if ($empleado) {
-            $empleado->emple_celular = $request->get('celular');
+            $empleado->emple_celular = "+51" . $request->get('celular');
             $empleado->save();
         }
 

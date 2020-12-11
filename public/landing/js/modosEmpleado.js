@@ -1454,12 +1454,43 @@ function controlRuta(id, dato) {
         }
     });
 }
+$('#FormguardarCelularE').attr('novalidate', true);
+$('#FormguardarCelularE').submit(function (e) {
+    e.preventDefault();
+    if ($('#textCelular').val().length != 9) {
+        $.notifyClose();
+        $.notify({
+            message: '\nNúmero de celular incorrecto.',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#modalCelular"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
+    this.submit();
+});
 function agregarControlRT(id) {
     var idEmpleado = id;
     $.ajax({
         async: false,
         type: "get",
-        url: "vinculacionAndroidTabla",
+        url: "/vinculacionControlRuta",
         data: {
             idEmpleado: idEmpleado,
         },
@@ -1478,7 +1509,7 @@ function agregarControlRT(id) {
                 showNotificaciones();
                 $.notify(
                     {
-                        message: "\nRegistro de dispositivo y correo enviado con exito\n",
+                        message: "\nRegistro de dispositivo y sms enviado con exito\n",
                         icon: "admin/images/checked.svg",
                     },
                     {

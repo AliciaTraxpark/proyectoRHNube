@@ -169,7 +169,7 @@
                         </div>
                         <div class="col-md-2 text-right">
                             <button type="button" style="background-color: #163552;" class="btn btn-sm"
-                                onclick="javascript:agregarControlR($('#empleadoControlR').val());">Enviar</button>
+                                onclick="javascript:agregarControlRT($('#empleadoControlRT').val());">Enviar</button>
                         </div>
                     </div>
                 </div>
