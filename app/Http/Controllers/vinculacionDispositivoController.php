@@ -210,6 +210,83 @@ class vinculacionDispositivoController extends Controller
         }
     }
 
+    public function vinculacionAndroidTabla(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+
+        $empleado = DB::table('empleado as e')
+            ->select('e.emple_celular')
+            ->where('e.emple_id', '=', $idEmpleado)
+            ->get()->first();
+        if ($empleado->emple_celular != "") {
+            //MODO
+            $modo = new modo();
+            $modo->idTipoModo = 2;
+            $modo->idTipoDispositivo = 2;
+            $modo->idEmpleado = $idEmpleado;
+            $modo->save();
+            $idModo = $modo->id;
+            //* VINCULACION RUTA
+            $vinculacion = new vinculacion_ruta();
+            $vinculacion->idEmpleado = $idEmpleado;
+            $vinculacion->envio = 0;
+            $vinculacion->idModo = $idModo;
+            $vinculacion->disponible = 'c';
+            $vinculacion->actividad = 50;
+            $vinculacion->save();
+
+            $idVinculacion = $vinculacion->id;
+
+            $vinc = vinculacion_ruta::where('id', '=', $idVinculacion)->get()->first();
+            $codigoEmpresa = session('sesionidorg');
+            $codigo =  $idVinculacion . "d" . $codigoEmpresa . "d";
+            $encode = intval($codigo, 36);
+            $vinc->hash = $encode;
+            $vinc->save();
+
+            //* ENVIAR SMS
+            $mensaje = "RH nube - Codigo de validacion de Inicio:" . $vinc->hash;
+            $cel = explode("+", $vinc->celular);
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_FOLLOWLOCATION => TRUE,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => '{
+                "apiKey":2308,
+                "country":"PE",
+                "dial":38383,
+                "message":"' . $mensaje . '",
+                "msisdns":[' . $cel[1] . '],
+                "tag":"tag-prueba"
+            }',
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: application/json",
+                    "Authorization:67p7e5ONkalvrKLDQh3RaONgSFs=",
+                    "Cache-Control: no-cache"
+                ),
+            ));
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                $vinc->disponible = 'e';
+                $vinc->save();
+                return 1;
+            } else {
+                $vinc->disponible = 'e';
+                $vinc->envio = $vinc->envio + 1;
+                $vinc->fecha_envio = Carbon::now();
+                $vinc->save();
+            }
+
+            return response()->json($vinculacion, 200);
+        } else {
+            return 1;
+        }
+    }
     public function editarNumeroV(Request $request)
     {
         $idV = $request->get('id');

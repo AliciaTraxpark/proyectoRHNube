@@ -936,18 +936,16 @@ class EmpleadoController extends Controller
         $FechaInicial = $HisEmpleado->fechaInicio;
 
         $HisHistorial_em = DB::table('historial_empleado')->where('emple_id', $idE)
-        ->where('tipo_Hist', 1)->where('fecha_historial',$FechaInicial)
+            ->where('tipo_Hist', 1)->where('fecha_historial', $FechaInicial)
             ->get()->last();
-         if($HisHistorial_em==null || $HisHistorial_em==' ' ){
+        if ($HisHistorial_em == null || $HisHistorial_em == ' ') {
             $historial_empleado = new historial_empleado();
             $historial_empleado->emple_id =  $idE;
             $historial_empleado->tipo_Hist =  1;
             $historial_empleado->fecha_historial = $FechaInicial;
             $historial_empleado->save();
-         }
-         else{
-
-         }
+        } else {
+        }
 
 
         //VALIDAR SI ES VACIO O O ACTUALIZAR
@@ -959,19 +957,17 @@ class EmpleadoController extends Controller
                 $file->move($path, $fileName);
 
 
-                if($HisHistorial_em==null || $HisHistorial_em==' ' ){
+                if ($HisHistorial_em == null || $HisHistorial_em == ' ') {
                     $doc_empleado = new doc_empleado();
                     $doc_empleado->idhistorial_empleado = $historial_empleado->idhistorial_empleado;
                     $doc_empleado->rutaDocumento = $fileName;
                     $doc_empleado->save();
-                 }
-                 else{
+                } else {
                     $doc_empleado = new doc_empleado();
                     $doc_empleado->idhistorial_empleado = $HisHistorial_em->idhistorial_empleado;
                     $doc_empleado->rutaDocumento = $fileName;
                     $doc_empleado->save();
-                 }
-
+                }
             }
         }
 
@@ -2242,6 +2238,17 @@ class EmpleadoController extends Controller
         $empleado = empleado::find($request->get('idEmpleado'));
         if ($empleado) {
             $empleado->emple_Correo = $request->get('correo');
+            $empleado->save();
+        }
+
+        return response()->json($empleado, 200);
+    }
+
+    public function agregarCelularE(Request $request)
+    {
+        $empleado = empleado::find($request->get('idEmpleado'));
+        if ($empleado) {
+            $empleado->emple_celular = $request->get('celular');
             $empleado->save();
         }
 

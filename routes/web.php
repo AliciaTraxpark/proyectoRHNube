@@ -150,6 +150,7 @@ Route::post('/empleado/vaciarhorariosBD', 'EmpleadoController@vaciarhorariosBD')
 Route::post('/empleado/cambiarEstado', 'EmpleadoController@cambiarEstadoEmp');
 Route::get('tablaempleado/refresh', 'EmpleadoController@refresTabla');
 Route::get('/empleado/agregarCorreo', 'EmpleadoController@agregarCorreoE');
+Route::get('/empleado/agregarCelular', 'EmpleadoController@agregarCelularE');
 Route::post('/empleado/asisPuerta', 'EmpleadoController@asisPuerta');
 Route::post('tablaempleado/refreshArea', 'EmpleadoController@refresTablaAre');
 Route::get('/empleadosdeBaja', 'EmpleadoController@empleadosBaja')->middleware('auth');
@@ -313,6 +314,7 @@ Route::get('envioMasivoW', 'correosEmpleadoController@envioMasivoWindows');
 Route::get('ambasPlataformas', 'correosEmpleadoController@ambasPlataformas');
 //ANDROID
 Route::get('smsAndroid', 'correosEmpleadoController@smsAndroid');
+Route::get('vinculacionControlRuta', 'vinculacionDispositivoController@vinculacionAndroidTabla');
 //DOWNLOAD
 Route::get('download/{code}', 'downloadController@download');
 Route::get('downloadx32/{code}', 'downloadController@downloadx32');
