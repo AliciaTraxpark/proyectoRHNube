@@ -914,6 +914,7 @@ $('#cerrarHorario').click(function () {
     $('#verhorarioEmpleado').modal('toggle');
 });
 function abrirHorario() {
+    $('#btnGuardaHorario').prop('disabled', false);
     $('#errorenPausas').hide();
       $('#fueraRango').hide();
     $('#divOtrodia').hide();
@@ -996,7 +997,7 @@ function registrarHorario() {
     }
 
 
-
+    $('#btnGuardaHorario').prop('disabled', true);
     $.ajax({
         type: "post",
         url: "/guardarHorario",

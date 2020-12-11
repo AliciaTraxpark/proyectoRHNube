@@ -194,7 +194,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="dashboardCheck">
                                         <label class="custom-control-label" for="dashboardCheck"
-                                            style="margin-top: 2px;">Ver Dashboard
+                                            style="margin-top: 2px;"><i data-feather="home"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Ver Dashboard
                                             general</label>
                                     </div>
                                 </div>
@@ -203,7 +203,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="AlcaAdminCheck">
                                         <label class="custom-control-label" for="AlcaAdminCheck"
-                                            style="margin-top: 2px;">Gestión de empleados</label><br>
+                                            style="margin-top: 2px;"><i data-feather="list"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de empleados</label><br>
                                     </div>
                                 </div>
                                 <div class="col-md-12" id="opcionesGE" style="padding-top: 10px;font-style: oblique;     padding-bottom: 15px; display: none;" >
@@ -240,7 +240,7 @@
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="ActivCheckG">
                                                 <label class="form-check-label" for="ActivCheckG"
-                                                    style="margin-top: 2px;">Gestionar actividades</label>
+                                                    style="margin-top: 2px;"> Gestionar actividades</label>
                                             </div>
                                         </div>
                                     </div>
@@ -250,7 +250,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="gestActiCheck">
                                         <label class="custom-control-label" for="gestActiCheck"
-                                            style="margin-top: 2px;">Gestión de actividades</label><br>
+                                            style="margin-top: 2px;"><i data-feather="layers" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de actividades</label><br>
                                     </div>
                                 </div>
                                 <div class="col-md-12" id="opcionesActiv" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
@@ -290,7 +290,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck">
                                         <label class="custom-control-label" for="ControlReCheck"
-                                            style="margin-top: 2px;">Modo: Control remoto</label><br>
+                                            style="margin-top: 2px;"><i data-feather="activity" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control remoto</label><br>
                                     </div>
                                 </div>
 
@@ -298,7 +298,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="asistPuertaCheck">
                                         <label class="custom-control-label" for="asistPuertaCheck"
-                                            style="margin-top: 2px;">Modo: Asistencia en puerta &nbsp; &nbsp; <span id="spanBooCk"
+                                            style="margin-top: 2px;"> <i data-feather="check-circle" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Asistencia en puerta &nbsp; &nbsp; <span id="spanBooCk"
                                             style="display: none;color:#911818">Seleccione al menos una opcion.</span></label>  <br>
                                     </div>
                                 </div>
@@ -490,7 +490,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="dashboardCheck_edit">
                                         <label class="custom-control-label" for="dashboardCheck_edit"
-                                            style="margin-top: 2px;font-style: oblique;">Ver Dashboard
+                                            style="margin-top: 2px;font-style: oblique;"><i data-feather="home"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Ver Dashboard
                                             general</label><br>
                                     </div>
                                 </div>
@@ -498,7 +498,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="AlcaAdminCheck_edit">
                                         <label class="custom-control-label" for="AlcaAdminCheck_edit"
-                                            style="margin-top: 2px;font-style: oblique;">Gestión de empleados</label><br>
+                                            style="margin-top: 2px;font-style: oblique;"><i data-feather="list"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de empleados</label><br>
                                     </div>
                                 </div>
 
@@ -546,7 +546,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="gestActiCheck_edit">
                                         <label class="custom-control-label" for="gestActiCheck_edit"
-                                            style="margin-top: 2px;">Gestión de actividades</label><br>
+                                            style="margin-top: 2px;"><i data-feather="layers" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de actividades</label><br>
                                     </div>
                                 </div>
                                 <div class="col-md-12" id="opcionesActiv_edit" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
@@ -586,7 +586,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck_edit">
                                         <label class="custom-control-label" for="ControlReCheck_edit"
-                                            style="margin-top: 2px;">Modo: Control remoto</label><br>
+                                            style="margin-top: 2px;"><i data-feather="activity" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control remoto</label><br>
                                     </div>
                                 </div>
 
@@ -594,7 +594,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="asistPuertaCheck_edit">
                                         <label class="custom-control-label" for="asistPuertaCheck_edit"
-                                            style="margin-top: 2px;">Modo: Asistencia en puerta &nbsp; &nbsp; <span id="spanBooCk_edit"
+                                            style="margin-top: 2px;"><i data-feather="check-circle" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Asistencia en puerta &nbsp; &nbsp; <span id="spanBooCk_edit"
                                             style="display: none;color:#911818">Seleccione al menos una opcion.</span></label><br>
                                     </div>
                                 </div>

@@ -1058,7 +1058,7 @@ a:not([href]):not([tabindex]){
                        <div class="row">
                            <div class="col-md-12 text-right" >
                             <button type="button"  class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                            <button type="submit"  name="" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
+                            <button type="submit"  name="" id="btnGuardaHorario" style="background-color: #163552;" class="btn btn-sm ">Guardar</button>
                         </form>
                            </div>
                        </div>

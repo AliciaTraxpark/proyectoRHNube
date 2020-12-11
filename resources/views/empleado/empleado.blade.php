@@ -1526,7 +1526,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div>
                 <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodal"
-                    aria-hidden="true" data-backdrop="static">
+                    aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -1997,7 +1997,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div>
                 <div id="fechasmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalE"
-                    aria-hidden=" true" data-backdrop="static">
+                    aria-hidden=" true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
@@ -2166,7 +2166,7 @@ use Carbon\Carbon;
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div id="fechasmodalVer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalVer"
-                    aria-hidden=" true" data-backdrop="static">
+                    aria-hidden=" true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
