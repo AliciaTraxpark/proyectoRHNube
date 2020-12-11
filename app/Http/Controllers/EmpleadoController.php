@@ -929,6 +929,55 @@ class EmpleadoController extends Controller
         return json_encode(array('status' => true));
     }
 
+    public function storeDocumentoEdi(Request $request, $idE)
+    {
+        $HisEmpleado = DB::table('contrato')->where('idEmpleado', $idE)
+            ->where('estado', 1)->get()->last();
+        $FechaInicial = $HisEmpleado->fechaInicio;
+
+        $HisHistorial_em = DB::table('historial_empleado')->where('emple_id', $idE)
+        ->where('tipo_Hist', 1)->where('fecha_historial',$FechaInicial)
+            ->get()->last();
+         if($HisHistorial_em==null || $HisHistorial_em==' ' ){
+            $historial_empleado = new historial_empleado();
+            $historial_empleado->emple_id =  $idE;
+            $historial_empleado->tipo_Hist =  1;
+            $historial_empleado->fecha_historial = $FechaInicial;
+            $historial_empleado->save();
+         }
+         else{
+
+         }
+
+
+        //VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('exampleFormControlFile1_ed')) {
+            foreach ($request->file('exampleFormControlFile1_ed') as $filesC) {
+                $file = $filesC;
+                $path = public_path() . '/documEmpleado';
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+
+
+                if($HisHistorial_em==null || $HisHistorial_em==' ' ){
+                    $doc_empleado = new doc_empleado();
+                    $doc_empleado->idhistorial_empleado = $historial_empleado->idhistorial_empleado;
+                    $doc_empleado->rutaDocumento = $fileName;
+                    $doc_empleado->save();
+                 }
+                 else{
+                    $doc_empleado = new doc_empleado();
+                    $doc_empleado->idhistorial_empleado = $HisHistorial_em->idhistorial_empleado;
+                    $doc_empleado->rutaDocumento = $fileName;
+                    $doc_empleado->save();
+                 }
+
+            }
+        }
+
+        return json_encode(array('status' => true));
+    }
+
     public function storeCalendario(Request $request, $idE)
     {
         $empleado = Empleado::findOrFail($idE);
