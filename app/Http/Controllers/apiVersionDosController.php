@@ -116,10 +116,11 @@ class apiVersionDosController extends Controller
             $actividad = DB::table('actividad as a')
                 ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRemoto')
                 ->where('a.Activi_id', '=', $act->idActividad)
+                ->where('a.controlRemoto', '=', 1)
                 ->get()
                 ->first();
             $actividad->empleado_emple_id = $act->idEmpleado;
-            $actividad->estado = $actividad->controlRemoto;
+            $actividad->estado = $act->estado;
             array_push($respuesta, $actividad);
         }
         return response()->json($respuesta, 200);
