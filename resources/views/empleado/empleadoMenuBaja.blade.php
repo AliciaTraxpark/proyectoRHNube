@@ -3325,7 +3325,7 @@ function calendario4() {
         function verDEmpleado(idempleadoVer){
     $('#verEmpleadoDetalles').modal();
     $( "#detallehorario_ed" ).empty();
-        $('#smartwizard1').smartWizard("reset");
+
         $('#smartwizardVer').smartWizard("reset");
         $('#MostrarCa_e').hide();
         $('#calendarInv_ed').hide();
@@ -3570,7 +3570,8 @@ function calendario4() {
 }( document, window, 0 ));
 
 </script>
-
+<script src="{{ asset('landing/js/dispositivos.js') }}"></script>
+<script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 @endsection
