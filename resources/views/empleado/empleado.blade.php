@@ -2001,8 +2001,7 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
-                                    fechas de Contrato</h5>
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                                     <span aria-hidden="true">&times;</span>
@@ -2170,8 +2169,7 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Indicar
-                                    fechas de Contrato</h5>
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#verEmpleadoDetalles').modal('show');">
                                     <span aria-hidden="true">&times;</span>
