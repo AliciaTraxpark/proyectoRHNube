@@ -62,7 +62,13 @@
     <div class="container" style="margin-left: 20px; margin-right: 40px;">
         <div class="col-md-2">
             <div class="navbar-brand-wrapper d-flex w-100">
-                <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69" >
+                <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
+                    <span class="logo-lg text-center">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" alt="" height="60" />
+
+                    </span>
+                   
+                </a>>
               </div>
         </div>
         <div class="col-md-4 text-left">
