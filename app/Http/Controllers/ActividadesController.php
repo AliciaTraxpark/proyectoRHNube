@@ -23,7 +23,11 @@ class ActividadesController extends Controller
         $id = $request->get('id');
         $actividad_empleado = actividad_empleado::where('idEmpleado', '=', $id)->get();
         foreach ($actividad_empleado as $a) {
-            $actividad = actividad::where('Activi_id', '=', $a->idActividad)->where('estado', '=', 1)->get()->first();
+            $actividad = actividad::where('Activi_id', '=', $a->idActividad)->where('estado', '=', 1)
+                ->where(function ($query) {
+                    $query->where('controlRemoto', '=', 1)
+                        ->orWhere('controlRuta', '=', 1);
+                })->get()->first();
             if ($actividad) {
                 $actividad->eliminacionActividadEmpleado = $a->eliminacion;
                 $actividad->estadoActividadEmpleado = $a->estado;
