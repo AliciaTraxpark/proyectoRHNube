@@ -1026,8 +1026,8 @@ use App\proyecto_empleado;
                                 <option value="2">Documento</option>
                                 <option value="3">Nombre</option>
                                 <option value="4" selected>Apellidos</option>
-                                <option value="7">Cargo</option>
-                                <option value="8">Área</option>
+                                <option value="8">Cargo</option>
+                                <option value="9">Área</option>
                             </select>
                         </td>
                     </div>

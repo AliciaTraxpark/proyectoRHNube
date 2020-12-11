@@ -1051,8 +1051,8 @@ use Carbon\Carbon;
                                             <option value="2">Documento</option>
                                             <option value="3">Nombre</option>
                                             <option value="4" selected>Apellidos</option>
-                                            <option value="7">Cargo</option>
-                                            <option value="8">Área</option>
+                                            <option value="8">Cargo</option>
+                                            <option value="9">Área</option>
                                         </select>
                                     </td>
                                 </div>
@@ -3380,7 +3380,8 @@ use Carbon\Carbon;
                                                         <div class="col-xl-12 col-sm-12">
                                                             <div class="table-responsive-sm"
                                                                 style="height: 250px;overflow: auto;">
-                                                                <table class="table table-hover" style="font-size: 13px!important;">
+                                                                <table class="table table-hover"
+                                                                    style="font-size: 13px!important;">
                                                                     <thead style="background: #fafafa;font-size: 14px">
                                                                         <tr>
                                                                             <th>Actividad</th>
@@ -4545,7 +4546,8 @@ use Carbon\Carbon;
                                                     <div class="col-xl-12 col-sm-12">
                                                         <div class="table-responsive-sm"
                                                             style="height: 250px;overflow: auto;">
-                                                            <table class="table table-hover" style="font-size: 13px!important;">
+                                                            <table class="table table-hover"
+                                                                style="font-size: 13px!important;">
                                                                 <thead style="background: #fafafa;font-size: 14px">
                                                                     <tr>
                                                                         <th>Actividad</th>
@@ -5082,7 +5084,8 @@ use Carbon\Carbon;
                                                     <div class="col-xl-12 col-sm-12">
                                                         <div class="table-responsive-sm"
                                                             style="height: 250px;overflow: auto;">
-                                                            <table class="table table-hover" style="font-size: 13px!important;">
+                                                            <table class="table table-hover"
+                                                                style="font-size: 13px!important;">
                                                                 <thead style="background: #fafafa;font-size: 14px">
                                                                     <tr>
                                                                         <th>Actividad</th>
