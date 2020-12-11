@@ -1332,6 +1332,7 @@ function inactivarEstadoCR(idEmpleado, idVinculacion) {
         },
     });
 }
+//* ACTIVAR
 function activarEstadoCR(idEmpleado, idVinculacion) {
     $.ajax({
         async: false,
@@ -1605,6 +1606,183 @@ function guardarCelularE() {
                     spacing: 35,
                 }
             );
+        },
+        error: function () { },
+    });
+}
+function estadoDispositivoCRT(idEmpleado, id, cel, datos) {
+    $("#customSwitchCRTDisp" + id).on("change.bootstrapSwitch", function (
+        event
+    ) {
+        if (event.target.checked == true) {
+            alertify
+                .confirm(
+                    "<img src=\"admin/images/tick.svg\" height=\"20\" class=\"mr-1\">¿Activar el celular <strong>" +
+                    cel +
+                    "</strong> de&nbsp;" +
+                    datos +
+                    "&nbsp;y enviar un sms con sus credenciales?",
+                    function (e) {
+                        if (e) {
+                            activarEstadoCRT(id);
+                        }
+                    }
+                )
+                .setting({
+                    title: "Activar dispositivo - Modo Control Ruta",
+                    labels: {
+                        ok: "Aceptar",
+                        cancel: "Cancelar",
+                    },
+                    modal: true,
+                    startMaximized: false,
+                    reverseButtons: true,
+                    resizable: false,
+                    transition: "zoom",
+                    closable: false,
+                    oncancel: function (closeEvent) {
+                        RefreshTablaEmpleado();
+                    },
+                });
+        } else {
+            alertify
+                .confirm(
+                    "<img src=\"/landing/images/alert1.svg\" height=\"20\" class=\"mr-1 mt-0\">El empleado no pódra usar este dispositivo.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+                    Tiempo estimado: 60 minutos.",
+                    function (e) {
+                        if (e) {
+                            inactivarEstadoCRT(idEmpleado, id);
+                        }
+                    }
+                )
+                .setting({
+                    title: "Desactivar dispositivo - Modo Control Ruta",
+                    labels: {
+                        ok: "Aceptar",
+                        cancel: "Cancelar",
+                    },
+                    modal: true,
+                    startMaximized: false,
+                    reverseButtons: true,
+                    resizable: false,
+                    transition: "zoom",
+                    closable: false,
+                    oncancel: function (closeEvent) {
+                        RefreshTablaEmpleado();
+                    },
+                });
+        }
+    });
+}
+//* INACTIVAR
+function inactivarEstadoCRT(idEmpleado, idVinculacion) {
+    //NOTIFICACION
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/cambiarEstadoVinculacionRuta",
+        data: {
+            idE: idEmpleado,
+            idV: idVinculacion,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+            RefreshTablaEmpleado();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nProceso con éxito.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () {
+            RefreshTablaEmpleado();
+            $.notifyClose();
+            agregarCorreoE(idEmpleado);
+        },
+    });
+}
+//* ACTIVAR
+function activarEstadoCRT(idVinculacion) {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/smsAndroid",
+        data: {
+            id: idVinculacion,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data == 1) {
+                RefreshTablaEmpleado();
+                $.notifyClose();
+                $.notify({
+                    message: "\nTenemos problemas con el servidor mensajeria.Comunicarse con nosotros",
+                    icon: 'admin/images/warning.svg'
+                }, {
+                    position: 'fixed',
+                    icon_type: 'image',
+                    newest_on_top: true,
+                    delay: 5000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            } else {
+                RefreshTablaEmpleado();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nProceso con éxito.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2  text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
         },
         error: function () { },
     });
