@@ -22,7 +22,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Detalle diario</h4>
+        <h4 class="mb-1 mt-0" style="font-weight: bold">Detalle diario</h4>
     </div>
 </div>
 @endsection
