@@ -879,8 +879,10 @@ function datosAsignacionPorEmpleado() {
             }
             container.append(option);
             if (data[0].global === 1) {
+                $('.todosCol').hide();
                 $('#checkboxEmpleadosEditarTodos').prop("checked", true);
             } else {
+                $('.todosCol').show();
                 $('#checkboxEmpleadosEditarTodos').prop("checked", false);
             }
             if (data[0].noSelect.length === 0) {
@@ -945,6 +947,8 @@ function limpiarAsignacionPorEmpleado() {
     $('#checkboxEmpleadosEditar').prop("checked", false);
     $('#empleados').empty();
     $('#e_customAE').prop("checked", false);
+    $('.aNuevosE').show();
+    $('.aNuevosR').show();
 }
 //: LIMPIAR EN ASIGNACION POR AREAS
 function limpiarAsignacionPorArea() {
@@ -966,6 +970,16 @@ $('#areaAsignarEditar').on("change", function (e) {
         $('#checkboxAreasEditar').prop("checked", true);
     } else {
         $('#checkboxAreasEditar').prop("checked", false);
+    }
+});
+$('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $("#empleados > option").prop("selected", "selected");
+        $('#empleados').trigger("change");
+        $('.aNuevosE').hide();
+    } else {
+        $('#empleados').val(EmpleadosDeActividadEditar).trigger('change');
+        $('.aNuevosE').show();
     }
 });
 //* ************************** FORMULARIO REGISTRAR ********************** *//
@@ -1476,6 +1490,18 @@ $('#areaAsignarReg').on("change", function (e) {
         $('#checkboxAreasReg').prop("checked", false);
     }
 });
+$('#checkboxEmpleadosTodosReg').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#checkboxAreasReg').prop("checked", true);
+        $("#reg_empleados > option").prop("selected", "selected");
+        $('#reg_empleados').trigger("change");
+        $('.aNuevosR').hide();
+    } else {
+        $('#checkboxAreasReg').prop("checked", false);
+        $('#reg_empleados').val('').trigger('change');
+        $('.aNuevosR').show();
+    }
+});
 //* ******************************************************************** *//
 //* ************************ FORMULARIO ASIGNAR ************************ *//
 //? INICIALIZAR PLUGIN
@@ -1548,16 +1574,16 @@ $("#actividadesAsignar").on("change", function () {
         success: function (data) {
             console.log(data);
             if (data.porEmpleados == 1) {
+                $('.aEmpleado').show();
                 datosAsignacionPorEmpleado_Asignacion(data.Activi_id);
                 $('#a_customAE').prop("checked", true);
-                $('.aEmpleado').show();
             } else {
                 limpiarAE();
             }
             if (data.porAreas == 1) {
+                $('.aArea').show();
                 datosAsignacionPorArea_Asignacion(data.Activi_id);
                 $('#a_customAA').prop("checked", true);
-                $('.aArea').show();
             } else {
                 limpiarAA();
             }
@@ -1604,8 +1630,10 @@ function datosAsignacionPorEmpleado_Asignacion(id) {
             }
             container.append(option);
             if (data[0].global === 1) {
+                $('.aNuevos').hide();
                 $('#checkboxEmpleadosTodos').prop("checked", true);
             } else {
+                $('.aNuevos').show();
                 $('#checkboxEmpleadosTodos').prop("checked", false);
             }
             if (data[0].noSelect.length === 0) {
@@ -1671,6 +1699,7 @@ function limpiarAE() {
     $('#checkboxEmpleadosTodos').prop("checked", false);
     $('#checkboxEmpleados').prop("checked", false);
     $('#empleAsignar').empty();
+    $('.aNuevos').show();
     $('.aEmpleado').hide();
 }
 //: LIMPIAR EN ASIGNACION POR AREAS
@@ -1884,4 +1913,15 @@ function asignarActividadEmpleado() {
         error: function () { },
     });
 }
+$('#checkboxEmpleadosTodos').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked) {
+        $('#checkboxEmpleados').prop("checked", true);
+        $("#empleAsignar > option").prop("selected", "selected");
+        $('#empleAsignar').trigger("change");
+        $('.aNuevos').hide();
+    } else {
+        $('#empleAsignar').val(EmpleadosAsig).trigger('change');
+        $('.aNuevos').show();
+    }
+});
 //* ************************ FINALIZACION ****************************** *//
