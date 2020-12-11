@@ -338,32 +338,6 @@ function onSelectFechasMensual() {
                         },
                         sheetName: 'Exported data',
                         autoFilter: false
-                    }, {
-                        extend: "pdfHtml5",
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        title: 'REPORTE MENSUAL',
-                        customize: function (doc) {
-                            doc['styles'] = {
-                                userTable: {
-                                    margin: [0, 15, 0, 15]
-                                },
-                                title: {
-                                    color: '#163552',
-                                    fontSize: '20',
-                                    alignment: 'center'
-                                },
-                                tableHeader: {
-                                    bold: !0,
-                                    fontSize: 11,
-                                    color: '#FFFFFF',
-                                    fillColor: '#163552',
-                                    alignment: 'center'
-                                }
-                            };
-                        }
                     }],
                     paging: true
                 });
@@ -411,32 +385,6 @@ function onSelectFechasMensual() {
                         },
                         sheetName: 'Exported data',
                         autoFilter: false
-                    }, {
-                        extend: "pdfHtml5",
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        title: 'REPORTE MENSUAL',
-                        customize: function (doc) {
-                            doc['styles'] = {
-                                userTable: {
-                                    margin: [0, 15, 0, 15]
-                                },
-                                title: {
-                                    color: '#163552',
-                                    fontSize: '20',
-                                    alignment: 'center'
-                                },
-                                tableHeader: {
-                                    bold: !0,
-                                    fontSize: 11,
-                                    color: '#FFFFFF',
-                                    fillColor: '#163552',
-                                    alignment: 'center'
-                                }
-                            };
-                        }
                     }],
                     paging: true
                 });
