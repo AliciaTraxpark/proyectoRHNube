@@ -1554,7 +1554,8 @@ use App\proyecto_empleado;
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de contrato
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Detalles de contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');">
@@ -1568,9 +1569,13 @@ use App\proyecto_empleado;
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sw-default">Condición Pago <a onclick="$('#fechasmodal').modal('hide');"
-                                            href="#condicionmodal" data-toggle="modal" data-target="#condicionmodal"><i
-                                                class="uil uil-plus"></i></a></label>
+                                    <label for="sw-default">
+                                        Condición Pago
+                                        <a onclick="$('#fechasmodal').modal('hide');" href="#condicionmodal"
+                                            data-toggle="modal" data-target="#condicionmodal">
+                                            <i class="uil uil-plus"></i>
+                                        </a>
+                                    </label>
                                     <select class="form-control" name="condicion" id="condicion" required>
                                         <option value="">Seleccionar</option>
                                         @foreach ($condicionP as $condicion)
@@ -1590,9 +1595,9 @@ use App\proyecto_empleado;
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                <span id="m_validFechaC" style="color: red;display: none;">*Fecha
-                                    incorrecta.</span>
-
+                                <span id="m_validFechaC" style="color: red;display: none;">
+                                    *Fecha incorrecta.
+                                </span>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fecha" id="m_dia_fecha" required="">
@@ -1620,25 +1625,21 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="m_ano_fecha" id="m_ano_fecha"
-                                            required="">
+                                        <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
+                                            name="m_ano_fecha" id="m_ano_fecha" required>
                                             <option value="0">Año</option>
-                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
-                                                {{$i}}
+                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
                                                 </option>
                                                 @endfor
                                         </select>
                                     </div>
-
                                 </div>
                                 <div class="row">
                                     <div class="col-md 12">
-                                        {{--   <label for="">Adjuntar documento(s)</label> --}}
-                                        <div class="form-group" style="margin-top: 14px;     margin-bottom: 0px;">
-
-                                            <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                                                application/pdf" class="inputfile inputfile-1"
+                                        <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
+                                            <input type="file"
+                                                accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                class="inputfile inputfile-1"
                                                 data-multiple-caption="{count} archivos seleccionados" multiple
                                                 id="exampleFormControlFile1">
                                             <label for="exampleFormControlFile1">
@@ -1656,14 +1657,15 @@ use App\proyecto_empleado;
 
                                 <br>
                                 <div class="form-group">
-                                    <label id="labelfechaF" style="font-weight: 600">Fecha Final</label> <br>
+                                    <label id="labelfechaF" style="font-weight: 600">Fecha Final</label>
+                                    <br>
                                     <label for="">Fecha Indefinida</label>
                                     <input type="checkbox" id="checkboxFechaI" name="FechaI">
                                 </div>
                                 <div id="ocultarFecha">
-
-                                    <span id="mf_validFechaC" style="color: red;display: none;">*Fecha
-                                        incorrecta.</span>
+                                    <span id="mf_validFechaC" style="color: red;display: none;">
+                                        *Fecha incorrecta.
+                                    </span>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select class="form-control" name="mf_dia_fecha" id="mf_dia_fecha"
@@ -1693,9 +1695,8 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="mf_ano_fecha" id="mf_ano_fecha"
-                                                required="">
+                                            <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
+                                                name="mf_ano_fecha" id="mf_ano_fecha" required>
                                                 <option value="0">Año</option>
                                                 @for ($i = 2014; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
                                                     </option>
@@ -1707,11 +1708,12 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="$('#form-registrar').modal('show');" class="btn btn-sm btn-light"
-                        data-dismiss="modal">Cerrar</button>
+                        data-dismiss="modal">
+                        Cerrar
+                    </button>
                     <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
                 </div>
                 </form>
@@ -2125,7 +2127,6 @@ use App\proyecto_empleado;
                                     <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE">
                                 </div>
                                 <div id="ocultarFechaE">
-
                                     <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
                                         incorrecta.</span>
                                     <div class="row">
