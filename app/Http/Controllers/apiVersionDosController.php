@@ -481,7 +481,7 @@ class apiVersionDosController extends Controller
             ->first();
         if ($horario_empleado) {
             $horario = DB::table('horario_empleado as he')
-                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
+                ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic', 'he.nHoraAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->get();
             foreach ($horario as $resp) {
@@ -501,6 +501,7 @@ class apiVersionDosController extends Controller
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
+                $horario->numeroHoraAdicional = $resp->nHoraAdic;
                 $horario->pausas = $pausas;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
