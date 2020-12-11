@@ -162,8 +162,58 @@ use App\proyecto_empleado;
                                                 <img src="{{asset('landing/images/at.svg')}}" height="13">
                                             </span>
                                         </div>
-                                        <input type="email" type="text" class="form-control" id="textCorreo"
-                                            name="email" required autofocus>
+                                        <input type="email" class="form-control" id="textCorreo" name="email" required
+                                            autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
+                    onclick="javascript:RefreshTablaEmpleado()">Cerrar</button>
+                <button type="submit" style="background-color:#163552; border-color: #163552;"
+                    class="btn btn-sm btn-primary">Registrar</button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION MODAL --}}
+{{-- MODAL DE REGISTRAR CELULAR --}}
+<div id="modalCelular" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalCelular" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar celular empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:RefreshTablaEmpleado();javascript:limpiarCorreoE()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="idEmpleCelular">
+                    <form class="form-horizontal col-lg-12" action="javascript:guardarCelularE()">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" style="font-weight: 500;">
+                                        Celular
+                                    </label>
+                                    <div class="input-group input-group-merge">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color: #ffffff;">
+                                                +51
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="textCelular" name="celular"
+                                            maxlength="9" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -1148,14 +1198,19 @@ use App\proyecto_empleado;
                         </div> --}}
                         <div class="col-md 12" id="divbajaF">
                             <label for="">Adjuntar documento(s)</label>
-                        <div class="form-group">
-                            <input type="file" name="bajaFile" id="bajaFile" accept=
-                            "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                             application/pdf" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
-                            <label for="bajaFile">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            <span class="iborrainputfile">Seleccionar archivo</span>
-                            </label>
+                            <div class="form-group">
+                                <input type="file" name="bajaFile" id="bajaFile" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                             application/pdf" class="inputfile inputfile-1"
+                                    data-multiple-caption="{count} archivos seleccionados" multiple />
+                                <label for="bajaFile">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                        height="17" viewBox="0 0 20 17">
+                                        <path
+                                            d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                        </path>
+                                    </svg>
+                                    <span class="iborrainputfile">Seleccionar archivo</span>
+                                </label>
                             </div>
                         </div>
                     </form>
@@ -1645,7 +1700,6 @@ use App\proyecto_empleado;
                             </div>
                         </div>
 
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="$('#form-registrar').modal('show');" class="btn btn-sm btn-light"
@@ -2100,7 +2154,6 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"

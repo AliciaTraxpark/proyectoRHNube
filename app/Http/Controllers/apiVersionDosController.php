@@ -484,7 +484,6 @@ class apiVersionDosController extends Controller
                 ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->get();
-
             foreach ($horario as $resp) {
                 $horario_dias = DB::table('horario_dias  as hd')
                     ->select(DB::raw('DATE(hd.start) as start'), 'hd.id')
@@ -506,7 +505,26 @@ class apiVersionDosController extends Controller
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 if ($horario_dias->start == $fechaHoy) {
+                    if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
+                        $despues = new Carbon('tomorrow');
+                        $fechaMan = $despues->isoFormat('YYYY-MM-DD');
+                        $horario->horaI = $fechaHoy . " " . $horario->horaI;
+                        $horario->horaF = $fechaMan . " " . $horario->horaF;
+                    } else {
+                        $horario->horaI = $fechaHoy . " " . $horario->horaI;
+                        $horario->horaF = $fechaHoy . " " . $horario->horaF;
+                    }
                     array_push($respuesta, $horario);
+                } else {
+                    if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
+                        $fechaAyer = new Carbon('yesterday');
+                        $fechaA = $fechaAyer->isoFormat('YYYY-MM-DD');
+                        if ($horario_dias->start == $fechaA) {
+                            $horario->horaI = $fechaA . " " . $horario->horaI;
+                            $horario->horaF = $fechaHoy . " " . $horario->horaF;
+                            array_push($respuesta, $horario);
+                        }
+                    }
                 }
             }
             return response()->json($respuesta, 200);

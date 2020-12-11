@@ -138,6 +138,46 @@
     </div><!-- /.modal-dialog -->
 </div>
 {{-- FINALIZACION DE MODAL --}}
+{{-- MODAL DE CONTROL RUTA --}}
+<div id="modalControlRT" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalControlRT"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Activar dispositivo -
+                    Modo Control Ruta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:RefreshTablaEmpleado()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="empleadoControlRT">
+                <form class="form-horizontal text-center">
+                    <h5 class="modal-title" id="myModalLabel" style="font-size:
+                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1">Activar
+                        el celular de <span id="nombreECRT"></span> y enviar un sms con sus credenciales</h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10 text-right" style="padding-left: 50px">
+                            <button type="button" class="btn btn-light btn-sm cancelar" data-dismiss="modal"
+                                onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <button type="button" style="background-color: #163552;" class="btn btn-sm"
+                                onclick="javascript:agregarControlR($('#empleadoControlR').val());">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+{{-- FINALIZACION DE MODAL --}}
 <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
 <table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
     <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
