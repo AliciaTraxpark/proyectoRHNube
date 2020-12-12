@@ -526,7 +526,7 @@ class apiVersionDosController extends Controller
                         ->select(
                             DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
                         )
-                        ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                        ->where(DB::raw('DATE(h.start)'), '=', $fechaHoy)
                         ->where('e.emple_id', '=', $request->get('idEmpleado'))
                         ->get()
                         ->first();
@@ -545,7 +545,7 @@ class apiVersionDosController extends Controller
                                 ->select(
                                     DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
                                 )
-                                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaA)
+                                ->where(DB::raw('DATE(h.start)'), '=', $fechaA)
                                 ->where('e.emple_id', '=', $request->get('idEmpleado'))
                                 ->get()
                                 ->first();
