@@ -504,7 +504,7 @@ class apiVersionDosController extends Controller
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
-                $horario->numeroHoraAdicional = $resp->nHoraAdic;
+                $horario->numeroHoraAdicional = $resp->nHoraAdic == null ? 0 : $resp->nHoraAdic;
                 $horario->pausas = $pausas;
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
