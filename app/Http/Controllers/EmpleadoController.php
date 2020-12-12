@@ -410,7 +410,7 @@ class EmpleadoController extends Controller
                 }
             }
             $tab->estadoCR = $estadoCR;
-            //* *****************FINALIZACION DE CONTROL REMOTO**************** 
+            //* *****************FINALIZACION DE CONTROL REMOTO****************
             //* VINCULACION DE CONTROL RUTA
             $vinculacion_ruta = DB::table('vinculacion_ruta as vr')
                 ->join('modo as m', 'm.id', '=', 'vr.idModo')
@@ -973,8 +973,9 @@ class EmpleadoController extends Controller
         return json_encode(array('status' => true));
     }
 
-    public function storeDocumentoEdi(Request $request, $idE)
+    public function storeDocumentoEdi(Request $request, $idE, $idcontratoEdit,$idcontratoNuevo)
     {
+       
         $HisEmpleado = DB::table('contrato')->where('idEmpleado', $idE)
             ->where('estado', 1)->get()->last();
         $FechaInicial = $HisEmpleado->fechaInicio;
@@ -982,7 +983,7 @@ class EmpleadoController extends Controller
         $HisHistorial_em = DB::table('historial_empleado')->where('emple_id', $idE)
             ->where('tipo_Hist', 1)->where('fecha_historial', $FechaInicial)
             ->get()->last();
-        if ($HisHistorial_em == null || $HisHistorial_em == ' ') {
+        if ( $idcontratoEdit!= $idcontratoNuevo ) {
             $historial_empleado = new historial_empleado();
             $historial_empleado->emple_id =  $idE;
             $historial_empleado->tipo_Hist =  1;
@@ -1001,7 +1002,7 @@ class EmpleadoController extends Controller
                 $file->move($path, $fileName);
 
 
-                if ($HisHistorial_em == null || $HisHistorial_em == ' ') {
+                if ($idcontratoEdit!= $idcontratoNuevo) {
                     $doc_empleado = new doc_empleado();
                     $doc_empleado->idhistorial_empleado = $historial_empleado->idhistorial_empleado;
                     $doc_empleado->rutaDocumento = $fileName;

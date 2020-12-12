@@ -1978,7 +1978,7 @@ use App\proyecto_empleado;
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
                         Condición de Pago</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#fechasmodalE').modal('show');javascript:limpiarEditar()">
+                        onclick="$('#fechasmodalE').modal('show'); javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2020,7 +2020,7 @@ use App\proyecto_empleado;
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
+                        onclick=" var idcontratoEditN=$('#v_contratoTipoH').val(); $('#v_contrato').val(idcontratoEditN); $('#form-ver').modal('show');javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2171,7 +2171,7 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                    <button type="button" onclick="var idcontratoEditNu=$('#v_contratoTipoH').val(); $('#v_contrato').val(idcontratoEditNu); $('#form-ver').modal('show');javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
                 </div>
@@ -3791,6 +3791,7 @@ use App\proyecto_empleado;
                                                 style="cursor: pointer;"><img
                                                     src="{{ asset('landing/images/adaptive.svg') }}"
                                                     height="18"></a></label>
+                                                    <input type="hidden" id="v_contratoTipoH">
                                         <select class="form-control" name="v_contrato" id="v_contrato"
                                             onchange="$('#detalleContratoE').show();" tabindex="5" required>
                                             <option value="">Seleccionar</option>
