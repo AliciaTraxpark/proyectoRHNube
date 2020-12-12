@@ -65,7 +65,7 @@ function enviarAreaA(accion, objArea) {
                     spacing: 35
                 });
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -105,7 +105,7 @@ function enviarAreaA(accion, objArea) {
                         $('#area').append(select);
                         $('#v_area').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_area').val(data.area_id).trigger("change");//lo selecciona
                 $('#textAreaE').val('');
@@ -201,7 +201,7 @@ function enviarCargoA(accion, objCargo) {
                     spacing: 35
                 });
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -242,7 +242,7 @@ function enviarCargoA(accion, objCargo) {
                         $('#cargo').append(select);
                         $('#v_cargo').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_cargo').val(data.cargo_id).trigger("change"); //lo selecciona
                 $('#textCargoE').val('');
@@ -338,7 +338,7 @@ function enviarCentroA(accion, objCentroC) {
                     spacing: 35
                 });
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -378,7 +378,7 @@ function enviarCentroA(accion, objCentroC) {
                         $('#centroc').append(select);
                         $('#v_centroc').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_centroc').val(data.centroC_id).trigger("change"); //lo selecciona
                 $('#textCentroE').val('');
@@ -474,7 +474,7 @@ function enviarLocalA(accion, objLocal) {
                 });
 
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -514,7 +514,7 @@ function enviarLocalA(accion, objLocal) {
                         $('#local').append(select);
                         $('#v_local').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_local').val(data.local_id).trigger("change"); //lo selecciona
                 $('#textLocalE').val('');
@@ -610,7 +610,7 @@ function enviarNivelA(accion, objNivel) {
                 });
 
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -650,7 +650,7 @@ function enviarNivelA(accion, objNivel) {
                         $('#nivel').append(select);
                         $('#v_nivel').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_nivel').val(data.nivel_id).trigger("change"); //lo selecciona
                 $('#textNivelE').val('');
@@ -728,7 +728,7 @@ function enviarContratoA(accion, objContrato) {
                 limpiarEditar();
                 $('#contratomodalE').modal('toggle');
                 $('#fechasmodalE').modal('show');
-               /*  $('#form-ver').modal('show'); */
+                /*  $('#form-ver').modal('show'); */
                 $.notify({
                     message: "\nContrato Registrado\n",
                     icon: 'admin/images/checked.svg'
@@ -747,7 +747,7 @@ function enviarContratoA(accion, objContrato) {
                     spacing: 35
                 });
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -787,7 +787,7 @@ function enviarContratoA(accion, objContrato) {
                         $('#contrato').append(select);
                         $('#v_contrato').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_contrato').val(data.contrato_id).trigger("change");//lo selecciona
                 $('#textContratoE').val('');
@@ -882,7 +882,7 @@ function enviarCondicionA(accion, objCondicion) {
                     spacing: 35
                 });
             },
-            error: function () {}
+            error: function () { }
         });
     } else {
         $.ajax({
@@ -922,7 +922,7 @@ function enviarCondicionA(accion, objCondicion) {
                         $('#condicion').append(select);
                         $('#v_condicion').append(select);
                     },
-                    error: function () {}
+                    error: function () { }
                 });
                 $('#v_condicion').val(data.id).trigger("change"); //lo selecciona
                 $('#textCondicionE').val('');
@@ -972,43 +972,46 @@ function agregarFechasA() {
     var m_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
     var m_DiaIE = parseInt($('#m_dia_fechaIE').val());
     var m1_VFechaIE = new Date(m_AnioIE, m_MesIE, m_DiaIE);
-        if ((m1_VFechaIE.getFullYear() == m_AnioIE) && (m1_VFechaIE.getMonth() == m_MesIE) && (m1_VFechaIE.getDate() == m_DiaIE)) {
-            $('#m_validFechaCIE').hide();
-        } else {
-
-
-            $('#m_validFechaCIE').show();
-            return false; e.preventDefault();
-
-        }
-    if(m_AnioIE!=0 && m_MesIE!=-1 && m_DiaIE!=0){
-
-         fechaI = new Date(m_AnioIE,m_MesIE, m_DiaIE);
-    } else{
-         fechaI = '0000-00-00';
+    if ((m1_VFechaIE.getFullYear() == m_AnioIE) && (m1_VFechaIE.getMonth() == m_MesIE) && (m1_VFechaIE.getDate() == m_DiaIE)) {
+        $('#m_validFechaCIE').hide();
+    } else {
+        $('#m_validFechaCIE').show();
+        return false;
     }
-    /////////////////////////////////
-    if ($("#checkboxFechaIE").is(':checked')) {}
-    else{
-    var mf_AnioFE = parseInt($('#m_ano_fechaFE').val());
-    var mf_MesFE = parseInt($('#m_mes_fechaFE').val() - 1);
-    var mf_DiaFE = parseInt($('#m_dia_fechaFE').val());
-    var m1f_VFechaFE = new Date(mf_AnioFE, mf_MesFE, mf_DiaFE);
+    if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
+
+        fechaI = new Date(m_AnioIE, m_MesIE, m_DiaIE);
+    } else {
+        fechaI = '0000-00-00';
+    }
+    if (!$("#checkboxFechaIE").is(':checked')) {
+        var mf_AnioFE = parseInt($('#m_ano_fechaFE').val());
+        var mf_MesFE = parseInt($('#m_mes_fechaFE').val() - 1);
+        var mf_DiaFE = parseInt($('#m_dia_fechaFE').val());
+        var m1f_VFechaFE = new Date(mf_AnioFE, mf_MesFE, mf_DiaFE);
         if ((m1f_VFechaFE.getFullYear() == mf_AnioFE) && (m1f_VFechaFE.getMonth() == mf_MesFE) && (m1f_VFechaFE.getDate() == mf_DiaFE)) {
             $('#m_validFechaCFE').hide();
         } else {
             $('#m_validFechaCFE').show();
-            return false; e.preventDefault();
+            return false;
 
         }
-    if(mf_AnioFE!=0 && mf_MesFE!=-1 && mf_DiaFE!=0){
+        var momentInicio = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+        var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (!momentInicio.isBefore(momentFinal)) {
+            $('#m_validFechaCFE').show();
+            return false;
+        } else {
+            $('#m_validFechaCFE').hide();
+        }
+        console.log(momentInicio.isBefore(momentFinal));
+        if (mf_AnioFE != 0 && mf_MesFE != -1 && mf_DiaFE != 0) {
 
-         fechaF= new Date(mf_AnioFE,mf_MesFE, mf_DiaFE);
-    } else{
-         fechaF = '0000-00-00';
-    }}
-//////////////////////////////////////////////////
-
+            fechaF = new Date(mf_AnioFE, mf_MesFE, mf_DiaFE);
+        } else {
+            fechaF = '0000-00-00';
+        }
+    }
     $('#form-ver').modal('show');
     $('#fechasmodalE').modal('toggle');
 }
@@ -1056,7 +1059,7 @@ $('#buscarAreaA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarAreaA').show();
 });
@@ -1099,7 +1102,7 @@ $('#buscarCargoA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarCargoA').show();
 });
@@ -1142,7 +1145,7 @@ $('#buscarCentroA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarCentroA').show();
 });
@@ -1185,7 +1188,7 @@ $('#buscarLocalA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarLocalA').show();
 });
@@ -1228,7 +1231,7 @@ $('#buscarNivelA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarNivelA').show();
 });
@@ -1271,7 +1274,7 @@ $('#buscarContratoA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarContratoA').show();
 });
@@ -1314,7 +1317,7 @@ $('#buscarCondicionA').on("click", function () {
                 })
             });
         },
-        error: function () {}
+        error: function () { }
     });
     $('#editarContratoC').show();
 });

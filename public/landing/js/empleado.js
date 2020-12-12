@@ -3162,9 +3162,8 @@ function enviarCondicion(accion, objCondicion) {
         });
     }
 }
-//FECHAS
+//* FECHAS
 function agregarFechas() {
-    //////////////////////////////////////////
     var m_Anio = parseInt($("#m_ano_fecha").val());
     var m_Mes = parseInt($("#m_mes_fecha").val() - 1);
     var m_Dia = parseInt($("#m_dia_fecha").val());
@@ -3178,17 +3177,13 @@ function agregarFechas() {
     } else {
         $("#m_validFechaC").show();
         return false;
-        e.preventDefault();
     }
     if (m_Anio != 0 && m_Mes != -1 && m_Dia != 0) {
         fechaI = new Date(m_Anio, m_Mes, m_Dia);
     } else {
         fechaI = "0000-00-00";
     }
-    ///////////////////////////////////////////
-    //////////////////////////////////////////
-    if ($("#checkboxFechaI").is(":checked")) {
-    } else {
+    if (!$("#checkboxFechaI").is(":checked")) {
         var mf_Anio = parseInt($("#mf_ano_fecha").val());
         var mf_Mes = parseInt($("#mf_mes_fecha").val() - 1);
         var mf_Dia = parseInt($("#mf_dia_fecha").val());
@@ -3202,18 +3197,23 @@ function agregarFechas() {
         } else {
             $("#mf_validFechaC").show();
             return false;
-            e.preventDefault();
         }
+        //* VALIDACION DE FECHAS
+        var momentInicio = moment([m_Anio, m_Mes, m_Dia]);
+        var momentFinal = moment([mf_Anio, mf_Mes, mf_Dia]);
+        if (!momentInicio.isBefore(momentFinal)) {
+            $("#mf_validFechaC").show();
+            return false;
+        } else {
+            $("#mf_validFechaC").hide();
+        }
+        //* ********************
         if (mf_Anio != 0 && mf_Mes != -1 && mf_Dia != 0) {
             fechaF = new Date(mf_Anio, mf_Mes, mf_Dia);
         } else {
             fechaF = "0000-00-00";
         }
     }
-    ///////////////////////////////////////////
-
-    //$('#c_fechaI').text(fechaI);
-    //$('#c_fechaF').text(fechaF);
     $("#fechasmodal").modal("toggle");
     $("#form-registrar").modal("show");
 }
@@ -3421,7 +3421,7 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
         data: formData,
         contentType: false,
         processData: false,
-        async:false,
+        async: false,
         dataType: "json",
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -3464,11 +3464,11 @@ function enviarEmpresarialEmpleado(accion, objEmpleado) {
     });
     var formData1 = new FormData();
 
-    var num= document.getElementById('exampleFormControlFile1').files.length;
+    var num = document.getElementById('exampleFormControlFile1').files.length;
 
-for (var i = 0; i < num; i++) {
-    formData1.append("exampleFormControlFile1[]", document.getElementById('exampleFormControlFile1').files[i]);
-}
+    for (var i = 0; i < num; i++) {
+        formData1.append("exampleFormControlFile1[]", document.getElementById('exampleFormControlFile1').files[i]);
+    }
     $.ajax({
         type: "POST",
         url: "/empleado/storeDocumento" + accion,
@@ -3809,8 +3809,6 @@ function datosEmpresarialA(method) {
     } else {
         var v_VFechaIE = "0000-00-00";
     }
-    /////////////////////////////////////////////
-    //////////////////////////////////////
     var v_AnioFE = parseInt($("#m_ano_fechaFE").val());
     var v_MesFE = parseInt($("#m_mes_fechaFE").val() - 1);
     var v_DiaFE = parseInt($("#m_dia_fechaFE").val());
@@ -3848,7 +3846,7 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
         data: formDataA,
         contentType: false,
         processData: false,
-        async:false,
+        async: false,
         dataType: "json",
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -3885,34 +3883,34 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
 
     var formData1 = new FormData();
 
-     var num= document.getElementById('exampleFormControlFile1_ed').files.length;
+    var num = document.getElementById('exampleFormControlFile1_ed').files.length;
 
- for (var i = 0; i < num; i++) {
-     formData1.append("exampleFormControlFile1_ed[]", document.getElementById('exampleFormControlFile1_ed').files[i]);
- }
-     $.ajax({
-         type: "POST",
-         url: "/empleado/storeDocumentoEdi" + accion,
-         data: formData1,
-         contentType: false,
-         processData: false,
-         dataType: "json",
-         headers: {
-             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-         },
-         statusCode: {
-             /*401: function () {
-                 location.reload();
-             },*/
-             419: function () {
-                 location.reload();
-             },
-         },
-         success: function (data) {
-         },
-         error: function (data, errorThrown) { },
-     });
-     ////////////////////////////////////
+    for (var i = 0; i < num; i++) {
+        formData1.append("exampleFormControlFile1_ed[]", document.getElementById('exampleFormControlFile1_ed').files[i]);
+    }
+    $.ajax({
+        type: "POST",
+        url: "/empleado/storeDocumentoEdi" + accion,
+        data: formData1,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+        },
+        error: function (data, errorThrown) { },
+    });
+    ////////////////////////////////////
 }
 // FOTO
 function actualizarEmpleadoFoto(accion) {
@@ -5584,11 +5582,11 @@ function addField() {
                 event.stopPropagation();
             } else {
                 $('#fueraRango_ed').hide();
-                if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                if (horaI > horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                     $('#errorenPausas_ed').show();
                     $('#FinPausa_ed' + newID).val('');
                 }
-                else{
+                else {
                     $('#errorenPausas_ed').hide();
                 }
             }
@@ -5724,11 +5722,11 @@ function addFieldRe() {
                 event.stopPropagation();
             } else {
                 $('#fueraRango').hide();
-                if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                if (horaI > horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#errorenPausas').show();
                     $('#FinPausa' + newID).val('');
                 }
-                else{
+                else {
                     $('#errorenPausas').hide();
                 }
             }
@@ -6038,45 +6036,45 @@ $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if($('#horaI').val() > $('#horaF').val()){
-            if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
+            if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
                 $('#FinPausa').val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-                if (horaI > horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                if (horaI > horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#errorenPausas').show();
                     $('#FinPausa').val('');
                 }
-                else{
+                else {
                     $('#errorenPausas').hide();
                 }
-             }
+            }
 
-             if (horaI > horaF) {
-               /*  $('#FinPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation(); */
+            if (horaI > horaF) {
+                /*  $('#FinPausa').val('');
+                 $('#errorenPausas').show();
+                 event.stopPropagation(); */
             } else {
                 $('#errorenPausas').hide();
             }
         }
-        else{
-           if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
-            $('#FinPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
-         if (horaF < horaI) {
-            $('#FinPausa').val('');
-            $('#errorenPausas').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
-        }
+        else {
+            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+                $('#FinPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
+            if (horaF < horaI) {
+                $('#FinPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
         }
 
 
@@ -6088,35 +6086,34 @@ $(function () {
     $(document).on('change', '#InicioPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        $('#FinPausa').prop( "disabled",false);
-        if($('#horaI').val() > $('#horaF').val()){
+        $('#FinPausa').prop("disabled", false);
+        if ($('#horaI').val() > $('#horaF').val()) {
 
-            if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
-            console.log('moostrando fuera rango 11/11');
+            if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
+                console.log('moostrando fuera rango 11/11');
                 $('#InicioPausa').val('');
                 $('#fueraRango').show();
 
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-             }
+            }
 
-        } else
-        {
-            if(horaI<$('#horaI').val() || horaI>$('#horaF').val() ){
+        } else {
+            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
 
-            $('#InicioPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
+                $('#InicioPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
         }
 
-         console.log(horaF);
-         if(horaF==null || horaF==''){
-            var horafinal1=$('#horaF').val();
-            splih1=horafinal1.split(":");
+        console.log(horaF);
+        if (horaF == null || horaF == '') {
+            var horafinal1 = $('#horaF').val();
+            splih1 = horafinal1.split(":");
             console.log(splih1[0]);
             console.log('nada me da');
             $('#FinPausa').val('').flatpickr({
@@ -6124,25 +6121,24 @@ $(function () {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
             console.log('secumple');
-            if($('#horaI').val() < $('#horaF').val()){
-            if (horaF < horaI) {
-                $('#InicioPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
+            if ($('#horaI').val() < $('#horaF').val()) {
+                if (horaF < horaI) {
+                    $('#InicioPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
             } else {
                 $('#errorenPausas').hide();
             }
-        } else
-        {
-            $('#errorenPausas').hide();
         }
-         }
 
 
     });
@@ -6159,11 +6155,11 @@ $(function () {
             event.stopPropagation();
         } else {
             $('#fueraRango_ed').hide();
-            if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+            if (horaI > horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                 $('#errorenPausas_ed').show();
                 $('#FinPausa_ed').val('');
             }
-            else{
+            else {
                 $('#errorenPausas_ed').hide();
             }
         }
@@ -6263,57 +6259,54 @@ var fechaValue = $("#fechaSelec").flatpickr({
     maxDate: "today",
     wrap: true,
     allowInput: true,
-  });
-  $(function () {
-  f = moment().format("YYYY-MM-DD");
-  fechaValue.setDate(f);
-  $( "#fechaInput" ).change();
-  })
-  $("#contrato").change(function () {
+});
+$(function () {
+    f = moment().format("YYYY-MM-DD");
+    fechaValue.setDate(f);
+    $("#fechaInput").change();
+})
+$("#contrato").change(function () {
     $("#validContrato").hide();
-   let varCont=$("#contrato").val();
-    if (varCont!='') {
-    $('#form-registrar').modal('hide');
+    let varCont = $("#contrato").val();
+    if (varCont != '') {
+        $('#form-registrar').modal('hide');
         $('#fechasmodal').modal('show');
     }
 
 
-  })
-  'use strict';
+})
+'use strict';
 
-  ;( function ( document, window, index )
-  {
-      var inputs = document.querySelectorAll( '.inputfile' );
-      Array.prototype.forEach.call( inputs, function( input )
-      {
-          var label	 = input.nextElementSibling,
-              labelVal = label.innerHTML;
+; (function (document, window, index) {
+    var inputs = document.querySelectorAll('.inputfile');
+    Array.prototype.forEach.call(inputs, function (input) {
+        var label = input.nextElementSibling,
+            labelVal = label.innerHTML;
 
-          input.addEventListener( 'change', function( e )
-          {
-              var fileName = '';
-              if( this.files && this.files.length > 1 )
-                  fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
-              else
-                  fileName = e.target.value.split( '\\' ).pop();
+        input.addEventListener('change', function (e) {
+            var fileName = '';
+            if (this.files && this.files.length > 1)
+                fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+            else
+                fileName = e.target.value.split('\\').pop();
 
-              if( fileName )
-                  label.querySelector( 'span' ).innerHTML = fileName;
-              else
-                  label.innerHTML = labelVal;
-          });
-      });
-  }( document, window, 0 ));
-  $("#v_contrato").change(function () {
+            if (fileName)
+                label.querySelector('span').innerHTML = fileName;
+            else
+                label.innerHTML = labelVal;
+        });
+    });
+}(document, window, 0));
+$("#v_contrato").change(function () {
     console.log('aqui se cierra x1');
     console.log('esperando')
-   /*  $("#validContrato").hide(); */
-   let varCont=$("#v_contrato").val();
-    if (varCont!='') {
+    /*  $("#validContrato").hide(); */
+    let varCont = $("#v_contrato").val();
+    if (varCont != '') {
         console.log('aqui se cierra x2');
-    $('#form-ver').modal('hide');
+        $('#form-ver').modal('hide');
         $('#fechasmodalE').modal('show');
     }
 
 
-  })
+})

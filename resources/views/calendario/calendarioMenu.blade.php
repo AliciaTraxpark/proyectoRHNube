@@ -116,7 +116,7 @@ background-color: #ffffff;
 <div class="row page-title" style="padding-right: 20px;">
     <div class="col-md-7">
 
-        <h4 class="mb-1 mt-0">Calendarios</h4>
+        <h4 class="mb-1 mt-0" style="font-weight: bold">Calendarios</h4>
         <input type="hidden" name="idorgani" id="idorgani" value="{{session('sesionidorg')}}">
         <input type="hidden" name="" id="AñoOrgani" value="{{$fechaEnviJS}}">
 
