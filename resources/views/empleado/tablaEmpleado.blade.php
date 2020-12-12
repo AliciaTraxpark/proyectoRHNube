@@ -35,6 +35,10 @@
         width: 120px !important;
     }
 
+    .width-100 {
+        width: 80px !important;
+    }
+
     .dataTables_scrollBody {
         overflow: visible !important;
     }
@@ -185,7 +189,7 @@
             <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
             <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
 
-            <th>Documento</th>
+            <th class="text-center">Documento</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Control Remoto</th>
@@ -223,7 +227,7 @@
             </td>
             {{-- NUMERO DE DOCUMENTO --}}
             <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
+                <div class="text-wrap width-100">{{$tabla_empleados->emple_nDoc}}</div>
             </td>
             {{-- NOMBRE --}}
             <td>
