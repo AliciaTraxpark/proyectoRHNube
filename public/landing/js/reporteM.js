@@ -179,7 +179,7 @@ var tableActividad = {};
 function onSelectFechasMensual() {
     var fecha = $('#fechaMensual').val();
     var area = $('#area').val();
-    var cargo = $('#cargo').val();
+    var empleadoL = $('#empleadoL').val();
     if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
         $('#ReporteMensual').DataTable().destroy();
     }
@@ -200,7 +200,7 @@ function onSelectFechasMensual() {
         data: {
             fecha: fecha,
             area: area,
-            cargo: cargo
+            empleadoL: empleadoL
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -498,16 +498,6 @@ function onSelectFechasMensual() {
         error: function (data) { }
     })
 }
-// $(function () {
-//     $('#fechaMensual').on('change.dp', function (e) {
-//         dato = $('#fechaMensual').val();
-//         value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
-//         firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
-//         lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
-//         $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-//         onSelectFechasMensual();
-//     });
-// });
 function changeFecha() {
     dato = $('#fechaMensual').val();
     value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
@@ -530,14 +520,14 @@ $(function () {
     $('#area').select2({
         placeholder: 'Seleccionar áreas'
     });
-    $('#cargo').select2({
+    $('#empleadoL').select2({
         placeholder: 'Seleccionar cargos',
         language: "es"
     });
     $('#area').on("change", function (e) {
         fechaDefecto();
     });
-    $('#cargo').on("change", function (e) {
+    $('#empleadoL').on("change", function (e) {
         fechaDefecto();
     });
 });
