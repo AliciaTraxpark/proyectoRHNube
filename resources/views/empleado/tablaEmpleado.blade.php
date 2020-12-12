@@ -32,7 +32,7 @@
     }
 
     .width-400 {
-        width: 150px !important;
+        width: 120px !important;
     }
 
     .dataTables_scrollBody {
@@ -185,7 +185,7 @@
             <th class="text-center">&nbsp;<input type="checkbox" style="margin-left: 15px" id="selectT"></th>
             <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
 
-            <th class="text-center">Documento</th>
+            <th>Documento</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Control Remoto</th>
@@ -222,7 +222,7 @@
                 <input type="hidden" id="codE" value="{{$tabla_empleados->emple_id}}">
             </td>
             {{-- NUMERO DE DOCUMENTO --}}
-            <td class="text-center">
+            <td>
                 <div class="text-wrap width-400">{{$tabla_empleados->emple_nDoc}}</div>
             </td>
             {{-- NOMBRE --}}
@@ -991,8 +991,9 @@ function verDEmpleado(idempleadoVer){
             },
             columnDefs: [
                 { responsivePriority: 1, targets: 0 },
-                { responsivePriority: 2, targets: 4 }
+                { responsivePriority: 2, targets: 4 },
             ],
+            "autoWidth": false,
             initComplete: function(){
                 this.api().columns().every(function(){
                     var that = this;
