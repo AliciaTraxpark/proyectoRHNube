@@ -69,10 +69,13 @@ Route::get("updateRHx64", "apiVersionDosController@updteDonwloand64")->middlewar
 //? MEJORAS DE LOGIN
 Route::post("logueoV3", "apiVersionDosController@verificacionLogin")->middleware('apilogger');
 
-// TICKET DE SOPORTE Y SUGERENCIA
+//? TICKET DE SOPORTE Y SUGERENCIA
 Route::post("ticketSoporte", "apiVersionDosController@ticketSoporte")->middleware('token')->middleware('apilogger');
 
-//API MOVILES
+//? TIEMPO DEL SERVIDOR 
+Route::get("tiempoRHbox", "apiVersionDosController@tiempoControlRuta")->middleware('token')->middleware('apilogger');
+
+//* API MOVILES
 Route::post("verificacionMovil", "apimovilController@apiActivacion")->middleware('apilogger');
 Route::post("EmpleadoMovil", "apimovilController@EmpleadoMovil")->middleware('token')->middleware('apilogger');
 Route::post("ActividadesMovil", "apimovilController@ActivMovil")->middleware('token')->middleware('apilogger');
@@ -81,7 +84,7 @@ Route::post("marcacionMovil", "apimovilController@marcacionMovil")->middleware('
 Route::post("empleadoHorario", "apimovilController@empleadoHorario")->middleware('token')->middleware('apilogger');
 Route::post("ticketSoporteMovil", "apimovilController@ticketSoporte")->middleware('token')->middleware('apilogger');
 
-// ? APIS DE MODO CONTROL RUTA
+// * APIS DE MODO CONTROL RUTA
 Route::post("loginRuta", 'apiSeguimientoRutaContoller@login')->middleware('apilogger');
 Route::post("ubicacion", 'apiSeguimientoRutaContoller@registrarRuta')->middleware('token')->middleware('apilogger');
 Route::post("listaActividadCRT", "apiSeguimientoRutaContoller@listaActividad")->middleware('token')->middleware('apilogger');

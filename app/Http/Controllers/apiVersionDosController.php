@@ -795,4 +795,13 @@ class apiVersionDosController extends Controller
     {
         return response()->download(app_path() . "/file/x64/RHnubeX64.zip");
     }
+
+    //? TIEMPO DEL SERVIDOR
+    public function tiempoControlRuta()
+    {
+        $fecha = Carbon::now('America/Lima');
+        $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
+
+        return response()->json($horaActual, 200);
+    }
 }
