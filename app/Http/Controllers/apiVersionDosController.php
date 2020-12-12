@@ -802,6 +802,7 @@ class apiVersionDosController extends Controller
         $fecha = Carbon::now('America/Lima');
         $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
 
-        return response()->json($horaActual, 200);
+        $respuesta = array("hora" => $horaActual);
+        return response()->json($respuesta, 200);
     }
 }
