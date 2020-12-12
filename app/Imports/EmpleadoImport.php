@@ -108,6 +108,9 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                         return redirect()->back()->with('alert', 'correo ya registrado en otro empleado: '.$row['correo'].' El proceso se interrumpio en la fila: '.$filas.' de excel');
                     };
                    }
+                   else{
+                    return redirect()->back()->with('alert', 'Debe especificar correo de empleado'.' El proceso se interrumpio en la fila: '.$filas.' de excel');
+                   }
 
                    //celular
                    if($row['celular']!=null || $row['celular']!=''){
@@ -368,6 +371,13 @@ class EmpleadoImport implements ToCollection,WithHeadingRow, WithValidation, Wit
                     $fechaInicioC=date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
                  } else{
                     return redirect()->back()->with('alert', 'Debe especificar inicio de contrato'.' El proceso se interrumpio en la fila: '.$filas.' de excel');
+
+                 }
+                 //VALIDACION GENERO
+                 if($row['genero']!=null ||$row['genero']!=''){
+
+                 } else{
+                    return redirect()->back()->with('alert', 'Debe especificar genero de empleado'.' El proceso se interrumpio en la fila: '.$filas.' de excel');
 
                  }
                /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
