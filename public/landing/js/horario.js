@@ -2091,21 +2091,78 @@ function editarHorarioLista(idsedit) {
             if (data[1] == null || data[1] == '') {
 
             }
-            else {
+            else {/*  */
+                 var arrayidPau=[];
+                 $.each(data[1], function (key, item) {
+                    arrayidPau.push(item.idpausas_horario);
+
+                 }
+                 );
+               var maxCadenaId= Math.max(...arrayidPau);
                 $('#pausas_edit').show();
                 $.each(data[1], function (key, item) {
                     $('#SwitchPausa_ed').prop('checked', true);
                     $('#SwitchPausa_ed').prop('disabled', false);
-                    $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
+
+
+
+                    if(item.idpausas_horario==maxCadenaId){
+                        $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
+                        '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
+                        '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg'+ item.idpausas_horario +'" required  >' +
+                        '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg'+ item.idpausas_horario +'" required >' +
+                        '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  > &nbsp; <button class="btn btn-sm" id="agregarMP" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+
+                        '</div>'+
+                        '<div id="divEdRN_100" class="row col-md-12" style=" margin-bottom: 8px;  display:none">' +
+                        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_edRN[]" id="descPausa_edRN" >' +
+                        '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edRN[]"  id="InicioPausa_edRN" >' +
+                        '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_edRN[]"  id="FinPausa_edRN" >' +
+                        '&nbsp; <button class="btn btn-sm bt_plus_edAgr" id="edA_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+                        '</div>');
+                    } else{
+                        $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
                         '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
                         '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg'+ item.idpausas_horario +'" required  >' +
                         '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg'+ item.idpausas_horario +'" required >' +
                         '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  >' +
 
                         '</div>');
-                      /*  */
+                    }
 
-                      $(function () {
+
+                      /*  */
+                      $(document).on('change', '#FinPausa_edRN', function (event) {
+                        let horaF = $('#FinPausa_edRN').val();
+                        let horaI = $('#InicioPausa_edRN').val();
+                        if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+                            $('#FinPausa_edRN').val('');
+                            $('#fueraRango_ed').show();
+                            event.stopPropagation();
+                         } else{
+                            $('#fueraRango_ed').hide();
+                            if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                                $('#errorenPausas_ed').show();
+                                $('#FinPausa_edRN').val('');
+                            }
+                            else{
+                                $('#errorenPausas_ed').hide();
+                            }
+                         }
+                        if (horaF < horaI) {
+                            $('#FinPausa_edRN').val('');
+                            $('#errorenPausas_ed').show();
+                            event.stopPropagation();
+                        } else {
+                            $('#errorenPausas_ed').hide();
+                        }
+
+
+                    });
+
+                    $(function () {
                         $(document).on('change', '#InicioPausa_edReg'+ item.idpausas_horario +'', function (event) {
                             let horaF = $('#FinPausa_edReg'+ item.idpausas_horario +'').val();
                             let horaI = $('#InicioPausa_edReg'+ item.idpausas_horario +'').val();
@@ -2167,6 +2224,61 @@ function editarHorarioLista(idsedit) {
                         });
                     });
                 });
+                $(function () {
+                    $(document).on('change', '#InicioPausa_edRN', function (event) {
+                        let horaF = $('#FinPausa_edRN').val();
+                        let horaI = $('#InicioPausa_edRN').val();
+                        $('#FinPausa_edRN').prop( "disabled",false);
+                        console('esta funcionando editar')
+                         if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+                            $('#InicioPausa_edRN').val('');
+                            $('#fueraRango_ed').show();
+                            event.stopPropagation();
+                         } else{
+                            $('#fueraRango_ed').hide();
+                         }
+                         console.log(horaF);
+                         if(horaF==null || horaF==''){
+
+                         }
+                         else{
+                            console.log('secumple');
+                            if (horaF < horaI) {
+                                $('#InicioPausa_edRN').val('');
+                                $('#errorenPausas_edRN').show();
+                                event.stopPropagation();
+                            } else {
+                                $('#errorenPausas_ed').hide();
+                            }
+                         }
+
+
+                    });
+                });
+                      $('#InicioPausa_edRN').flatpickr({
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i",
+                        time_24hr: true
+                    });
+                    $('#FinPausa_edRN').flatpickr({
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i",
+                        time_24hr: true
+                    });
+                      ///ACCION BOTON
+                      $("#agregarMP").click(function() {
+                        $('#agregarMP').hide();
+                        $('#divEdRN_100').show();
+                    });
+                      $(".bt_plus_edAgr").each(function (el) {
+                        $(this).bind("click", addField_edNR);
+                    });
+
+
+
                 $('input[name="InicioPausa_edReg[]"]').flatpickr({
                     enableTime: true,
                     noCalendar: true,
@@ -2216,6 +2328,10 @@ function editarHorario() {
         var descPausa_edReg = [];
         var pausaInicio_edReg = [];
         var finPausa_edReg = [];
+
+        var descPausa_edRN = [];
+        var pausaInicio_edRN = [];
+        var finPausa_edRN = [];
         //NUEVOS EN EDICION
         $('input[name="descPausa_ed[]"]').each(function () {
             descPausa_ed.push($(this).val());
@@ -2239,6 +2355,16 @@ function editarHorario() {
         $('input[name="FinPausa_edReg[]"]').each(function () {
             finPausa_edReg.push($(this).val());
         });
+        //NUEVO AGREGADAS EN EDICION
+        $('input[name="descPausa_edRN[]"]').each(function () {
+            descPausa_edRN.push($(this).val());
+        });
+        $('input[name="InicioPausa_edRN[]"]').each(function () {
+            pausaInicio_edRN.push($(this).val());
+        });
+        $('input[name="FinPausa_edRN[]"]').each(function () {
+            finPausa_edRN.push($(this).val());
+        });
 
     }
     console.log(ID_edReg);
@@ -2251,7 +2377,7 @@ function editarHorario() {
         url: "/horario/actualizarhorario",
         data: { idhorario, descried, toleed, horaIed, horaFed,tardanza_ed,
              toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed,ID_edReg,descPausa_edReg,
-             pausaInicio_edReg,finPausa_edReg },
+             pausaInicio_edReg,finPausa_edReg,descPausa_edRN,pausaInicio_edRN,finPausa_edRN },
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -3079,6 +3205,130 @@ function delRow_ed() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
 }
+/////////////////////////
+function addField_edNR() {
+    console.log('agrego nuevo en pausa');
+
+    // ID del elemento div quitandole la palabra "div_" de delante. Pasi asi poder aumentar el número.
+    // Esta parte no es necesaria pero yo la utilizaba ya que cada campo de mi formulario tenia un autosuggest,
+    // así que dejo como seria por si a alguien le hace falta.
+    var clickID = parseInt($(this).parent('div').attr('id').replace('divEdRN_', ''));
+    // Genero el nuevo numero id
+    var newID = (clickID + 1);
+    // Creo un clon del elemento div que contiene los campos de texto
+    $newClone = $('#divEdRN_' + clickID).clone(true);
+    //Le asigno el nuevo numero id
+    $newClone.attr("id", 'divEdRN_' + newID);
+
+    //Asigno nuevo id al primer campo input dentro del div y le borro cualquier valor
+    // que tenga asi no copia lo ultimo que hayas escrito.(igual que antes no es necesario tener un id)
+    $newClone.children("input").eq(0).attr("id", 'descPausa_edRN' + newID).val('');
+    //Borro el valor del segundo campo input(este caso es el campo de cantidad)
+    $newClone.children("input").eq(1).attr("id", 'InicioPausa_edRN' + newID).val('').prop('required', true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    $newClone.children("input").eq(2).attr("id", 'FinPausa_edRN' + newID).val('').prop('required', true).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });;
+    $(function () {
+        $(document).on('change', '#FinPausa_edRN'+ newID, function (event) {
+            let horaF = $('#FinPausa_edRN'+ newID).val();
+            let horaI = $('#InicioPausa_edRN'+ newID).val();
+
+            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+                $('#FinPausa_edRN' + newID).val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango_ed').hide();
+                if (horaI > horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                    $('#errorenPausas_ed').show();
+                    $('#FinPausa_edRN' + newID).val('');
+                }
+                else{
+                    $('#errorenPausas_ed').hide();
+                }
+             }
+
+                if (horaF < horaI) {
+                    $('#FinPausa_edRN'+ newID).val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+
+
+
+        });
+    });
+    $(function () {
+        $(document).on('change', '#InicioPausa_edRN'+ newID, function (event) {
+            let horaF = $('#FinPausa_edRN'+ newID).val();
+            let horaI = $('#InicioPausa_edRN'+ newID).val();
+            $('#FinPausa_edRN'+ newID).prop( "disabled",false);
+            if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+                $('#InicioPausa_edRN'+ newID).val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango_ed').hide();
+             }
+
+            if(horaF==null || horaF==''){
+
+            } else{
+            if (horaF < horaI) {
+                $('#InicioPausa_edRN'+ newID).val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
+        }
+
+        });
+    });
+
+    /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
+    //Asigno nuevo id al boton
+    $newClone.children("button").attr("id",'edA_'+newID)
+    //Inserto el div clonado y modificado despues del div original
+    $newClone.insertAfter($('#divEdRN_' + clickID));
+    //Cambio el signo "+" por el signo "-" y le quito el evento addfield
+    //$("#"+clickID-1).remove();
+    $("#edA_" + clickID).css("backgroundColor", "#f6cfcf");
+    $("#edA_" + clickID).css("border-Color", "#f6cfcf");
+    $("#edA_" + clickID).css("color", "#d11010");
+    $("#edA_" + clickID).css("height", "22px");
+    $("#edA_" + clickID).css("font-weight", "600");
+    $("#edA_" + clickID).css("margin-top", "5px");
+    $("#edA_" + clickID).css("font-size", "12px");
+    $("#edA_" + clickID).css("width", "19px");
+    $("#edA_" + clickID).css("margin-left", "20-px");
+    $('input[name="descPausa_edRN[]"]').prop('required', true);
+    $('input[name="InicioPausa_edRN[]"]').prop('required', true);
+    $('input[name="FinPausa_edRN[]"]').prop('required', true);
+    $("#edA_" + clickID).html('-').unbind("click", addField_edNR);
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+    //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
+    $("#edA_" + clickID).bind("click", delRow_edRN);
+}
+function delRow_edRN() {
+    // Funcion que destruye el elemento actual una vez echo el click
+    $(this).parent('div').remove();
+}
+////////////////////////
 $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
