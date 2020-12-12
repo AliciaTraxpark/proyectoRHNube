@@ -442,11 +442,11 @@ function onMostrarPantallas() {
                                                 imagenUbicacion = `<img src="landing/images/Estatico.gif" height="120" width="150" class="img-responsive">`;
                                                 ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                             } else {
-                                                imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="200" class="img-responsive">`;
+                                                imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
                                                 ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                             }
                                         } else {
-                                            imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="200" class="img-responsive">`;
+                                            imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
                                             ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                         }
                                     } else {
@@ -465,11 +465,11 @@ function onMostrarPantallas() {
                                                 imagenUbicacion = `<img src="landing/images/Estatico.gif" height="120" width="150" class="img-responsive">`;
                                                 ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                             } else {
-                                                imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="200" class="img-responsive">`;
+                                                imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
                                                 ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                             }
                                         } else {
-                                            imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="200" class="img-responsive">`;
+                                            imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
                                             ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
                                         }
                                         sumaRangosTotal += sumaRangos;
