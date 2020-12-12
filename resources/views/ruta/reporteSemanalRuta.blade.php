@@ -22,7 +22,9 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0" style="font-weight: bold">Reporte semanal - Búsqueda por fecha</h4>
+        <h4 class="mb-1 mt-0" style="font-weight: bold">
+            Reporte semanal - Búsqueda por fecha
+        </h4>
     </div>
 </div>
 @endsection
@@ -134,7 +136,7 @@
                 <div class="card">
                     <div class="card-header" style="background-color: #ffffff">
                         <div class="row" id="busquedaP" style="display: none">
-                            <div class="col-xl-6">
+                            <div class="col-xl-4">
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label">Área:</label>
                                     <div class="col-lg-10 pl-0">
@@ -149,15 +151,17 @@
 
                                 </div>
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-8">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Cargo:</label>
+                                    <label class="col-lg-2 col-form-label">Empleado:</label>
                                     <div class="col-lg-10 pl-0">
-                                        <select id="cargo" data-plugin="customselect" class="form-control"
+                                        <select id="empleadoL" data-plugin="customselect" class="form-control"
                                             multiple="multiple">
-                                            @foreach ($cargos as $cargo)
-                                            <option value="{{$cargo->cargo_id}}">
-                                                {{$cargo->cargo_descripcion}}</option>
+                                            @foreach ($empleado as $emple)
+                                            <option value="{{$emple->emple_id}}">
+                                                {{$emple->perso_nombre}} {{$emple->perso_apPaterno}}
+                                                {{$emple->perso_apMaterno}}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>

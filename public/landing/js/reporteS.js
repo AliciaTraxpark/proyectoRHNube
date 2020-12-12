@@ -182,7 +182,7 @@ var tableActividad = {};
 function onSelectFechas() {
     var fecha = $('#fecha').val();
     var area = $('#area').val();
-    var cargo = $('#cargo').val();
+    var empleadoL = $('#empleadoL').val();
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
@@ -203,7 +203,7 @@ function onSelectFechas() {
         data: {
             fecha: fecha,
             area: area,
-            cargo: cargo
+            empleadoL: empleadoL
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -218,7 +218,6 @@ function onSelectFechas() {
         },
         success: function (data) {
             if (data.length > 0) {
-                console.log(data);
                 $('#VacioImg').hide();
                 var nombre = [];
                 var horas = [];
@@ -243,11 +242,10 @@ function onSelectFechas() {
                     var sumaRTotal = data[i].sumaRango.reduce(function (a, b) {
                         return sumarTotales(a, b);
                     });
-                    console.log(sumaATotal, sumaRTotal);
                     for (let j = 0; j < data[i].horas.length; j++) {
-                        // TABLA DEFAULT
+                        //* TABLA DEFAULT
                         html_tr += '<td>' + data[i].horas[j] + '</td>';
-                        // TABLA CON ACTIVIDAD DIARIA
+                        //* TABLA CON ACTIVIDAD DIARIA
                         html_trA += '<td>' + data[i].horas[j] + '</td>';
                         var sumaA = data[i].sumaActividad[j];
                         var sumaR = data[i].sumaRango[j];
@@ -265,10 +263,10 @@ function onSelectFechas() {
                     } else {
                         var sumaP = 0;
                     }
-                    // TABLA DEFAULT
+                    //* TABLA DEFAULT
                     html_tr += '<td>' + total + '</td>';
                     html_tr += '<td>' + sumaP + '%' + '</td>';
-                    // TABLA CON ACTIVIDADES
+                    //* TABLA CON ACTIVIDADES
                     html_trA += '<td>' + total + '</td>';
                     html_trA += '<td>' + sumaP + '%' + '</td>';
                     // ********************
@@ -280,22 +278,22 @@ function onSelectFechas() {
                     var momentValue = moment(data[0].fechaF[m]);
                     momentValue.toDate();
                     momentValue.format("ddd DD/MM");
-                    // TABLA DEFAULT
+                    //* TABLA DEFAULT
                     html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
-                    // TABLA CON ACTIVIDAD DIARIA
+                    //* TABLA CON ACTIVIDAD DIARIA
                     html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
                     html_trAD += '<th class="text-center"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/></th>';
                 }
-                // TABLA DEFAULT
+                //* TABLA DEFAULT
                 html_trD += '<th>TOTAL</th>';
                 html_trD += '<th>ACTIV.</th></tr>';
-                // TABLA CON ACTIVIDAD DIARIA
+                //* TABLA CON ACTIVIDAD DIARIA
                 html_trAD += '<th>TOTAL</th>';
                 html_trAD += '<th>ACTIV.</th></tr>';
-                // TABLA DEFAULT
+                //* TABLA DEFAULT
                 $("#dias").html(html_trD);
                 $("#empleado").html(html_tr);
-                //TABLA CON ACTIVIDAD DIARIA
+                //* TABLA CON ACTIVIDAD DIARIA
                 $('#diasActvidad').html(html_trAD);
                 $('#empleadoActividad').html(html_trA);
 
@@ -595,14 +593,14 @@ $(function () {
     $('#area').select2({
         placeholder: 'Seleccionar áreas'
     });
-    $('#cargo').select2({
-        placeholder: 'Seleccionar cargos',
+    $('#empleadoL').select2({
+        placeholder: 'Seleccionar empleados',
         language: "es"
     });
     $('#area').on("change", function (e) {
         fechaDefecto();
     });
-    $('#cargo').on("change", function (e) {
+    $('#empleadoL').on("change", function (e) {
         fechaDefecto();
     });
 });

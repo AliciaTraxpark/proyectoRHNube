@@ -2,35 +2,31 @@
 
 @section('css')
 <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{
-    URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')
-    }}" rel="stylesheet" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.css')}}" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{
-        URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')
-        }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{
-    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
-    }}" rel="stylesheet" />
-     <meta name="csrf-token" content="{{ csrf_token() }}">
+<link href="{{URL::asset('admin/assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
+    type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/apexcharts/apexcharts.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/chart/Chart.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/css/notify.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/css/prettify.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0" style="font-weight: bold">Reporte semanal - Búsqueda por fecha</h4>
+        <h4 class="mb-1 mt-0" style="font-weight: bold">
+            Reporte semanal - Búsqueda por fecha
+        </h4>
     </div>
 </div>
 @endsection
-
 @section('content')
 <style>
     .select2-container--default .select2-results__option[aria-selected=true] {
@@ -44,6 +40,8 @@
     .select2-container--default .select2-selection--multiple {
         overflow-y: scroll;
     }
+
+    /* RESPONSIVE */
 
     @media (max-width: 767.98px) {
         .colBtnR {
@@ -78,6 +76,8 @@
             margin-left: 19% !important;
         }
     }
+
+    /* FINALIZACION */
 </style>
 <div class="row justify-content-center p-5">
     <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
@@ -94,14 +94,17 @@
             <div class="pl-2">
                 <button type="button" class="btn btn-sm" style="background-color: #163552;"
                     onclick="javascript:buscarReporte()">
-                    <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
+                    <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1">
+                </button>
             </div>
         </div>
     </div>
 
     <div class="col-xl-2 colBtnR" style="margin-right: 5%;">
         <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
-            onclick="javascript:mostrarGrafica()"><i class="fa fa-eye mr-1"></i>VER GRAFICO
+            onclick="javascript:mostrarGrafica()">
+            <i class="fa fa-eye mr-1"></i>
+            VER GRAFICO
         </button>
     </div>
 </div>
@@ -109,30 +112,35 @@
     <div class="col-lg-12">
         <div class="row" id="VacioImg" style="display: none">
             <div class="col-xl-12">
-                <img style="margin-left:35%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
-                    for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una
-                    búsqueda para ver Actividad</label>
+                <img style="margin-left:35%" src="{{URL::asset('admin/images/search-file.svg')}}" class="mr-2 imgR"
+                    height="220" />
+                <br>
+                <label for="" style="margin-left:35%;color:#7d7d7d" class="imgR">
+                    Realize una búsqueda para ver Actividad
+                </label>
             </div>
         </div>
+        {{-- DIBUJAR GRAFICO --}}
         <div class="row" id="graficaReporte" style="display: none">
             <div class="col-lg-12">
-                <!-- Portlet card -->
                 <div class="card">
                     <div class="card-body">
                         <div id="myChart"></div>
-                    </div> <!-- end card-body -->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
+                    </div>
+                </div>
+            </div>
         </div>
+        {{-- FINALIZACION --}}
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header" style="background-color: #ffffff">
                         <div class="row" id="busquedaP" style="display: none">
-                            <div class="col-xl-6">
+                            <div class="col-xl-4">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Área:</label>
+                                    <label class="col-lg-2 col-form-label">
+                                        Área:
+                                    </label>
                                     <div class="col-lg-10 pl-0">
                                         <select id="area" data-plugin="customselect" class="form-control"
                                             multiple="multiple">
@@ -145,15 +153,17 @@
 
                                 </div>
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-8">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Cargo:</label>
+                                    <label class="col-lg-2 col-form-label">Empleado:</label>
                                     <div class="col-lg-10 pl-0">
-                                        <select id="cargo" data-plugin="customselect" class="form-control"
+                                        <select id="empleadoL" data-plugin="customselect" class="form-control"
                                             multiple="multiple">
-                                            @foreach ($cargos as $cargo)
-                                            <option value="{{$cargo->cargo_id}}">
-                                                {{$cargo->cargo_descripcion}}</option>
+                                            @foreach ($empleado as $emple)
+                                            <option value="{{$emple->emple_id}}">
+                                                {{$emple->perso_nombre}} {{$emple->perso_apPaterno}}
+                                                {{$emple->perso_apMaterno}}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
