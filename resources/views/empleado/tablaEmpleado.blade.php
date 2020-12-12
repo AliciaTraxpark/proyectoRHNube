@@ -443,7 +443,7 @@
     var table = $('#tablaEmpleado');
     var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
     var CheckBoxMarcados = 0;
-    
+
     seleccionarTodos.on('click', function () {
     if (seleccionarTodos.is(":checked")) {
     CheckBoxs.prop('checked', true);
@@ -679,6 +679,7 @@
                 if(data[0].contrato.length >= 1){
                     $('#detalleContratoE').show();
                     $('#v_contrato').val(data[0].contrato[0].idTipoC);
+                    $('#v_contratoTipoH').val(data[0].contrato[0].idTipoC);
                     $('#v_idContrato').val(data[0].contrato[0].idC);
                     $('#v_monto').val(data[0].contrato[0].monto);
                     $('#v_condicion').val(data[0].contrato[0].idCond);
@@ -1057,7 +1058,7 @@ function verDEmpleado(idempleadoVer){
     bootbox.alert("Por favor seleccione una fila");
             return false;
         } else {
-            
+
             $('#modalEliminar').modal();
 
 

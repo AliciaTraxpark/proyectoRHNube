@@ -96,7 +96,7 @@ Route::post('/empleado/storeEmpleado/{idE}', 'EmpleadoController@storeEmpleado')
 Route::post('/empleado/storeEmpresarial/{idE}', 'EmpleadoController@storeEmpresarial');
 Route::post('/empleado/storeFoto/{idE}', 'EmpleadoController@storeFoto');
 Route::post('/empleado/storeDocumento/{idE}', 'EmpleadoController@storeDocumento');
-Route::post('/empleado/storeDocumentoEdi/{idE}', 'EmpleadoController@storeDocumentoEdi');
+Route::post('/empleado/storeDocumentoEdi/{idE}/{idcontratoEdit}/{idcontratoNuevo}', 'EmpleadoController@storeDocumentoEdi');
 Route::post('/empleado/storeDocumentoBaja/{data}', 'EmpleadoController@storeDocumentoBaja');
 Route::post('/empleado/storeDocumentoAlta/{data}', 'EmpleadoController@storeDocumentoAlta');
 Route::post('/empleado/storeCalendario/{idE}', 'EmpleadoController@storeCalendario');

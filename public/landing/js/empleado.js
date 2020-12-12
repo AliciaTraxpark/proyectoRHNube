@@ -3838,6 +3838,8 @@ function datosEmpresarialA(method) {
     return nuevoEmpleadoEA;
 }
 function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
+    var idcontratoEdit=$('#v_contratoTipoH').val();
+    var idcontratoNuevo=$('#v_contrato').val();
     var formDataA = new FormData();
     formDataA.append("objEmpleadoA", JSON.stringify(objEmpleadoA));
     $.ajax({
@@ -3890,7 +3892,7 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
     }
     $.ajax({
         type: "POST",
-        url: "/empleado/storeDocumentoEdi" + accion,
+        url: "/empleado/storeDocumentoEdi" + accion+"/" + idcontratoEdit + "/" +idcontratoNuevo,
         data: formData1,
         contentType: false,
         processData: false,
