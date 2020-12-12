@@ -890,6 +890,9 @@ class horarioController extends Controller
         $horaFed = $request->horaFed;
         $toleranciaFed = $request->toleranciaFed;
         $horaObed = $request->horaObed;
+        ////////////////////////
+
+        ///////////////////////
 
         $horario = horario::where('horario_id', '=', $idhorario)
             ->update([
@@ -947,6 +950,25 @@ class horarioController extends Controller
                     }
                 }
             }
+            $descPausaRN = $request->get('descPausa_edRN');
+            $IniPausaRN = $request->get('pausaInicio_edRN');
+            $FinPausaRN = $request->get('finPausa_edRN');
+            if ($descPausaRN) {
+
+                if ($descPausaRN != null || $descPausaRN != '') {
+                    for ($i = 0; $i < sizeof($descPausaRN); $i++) {
+                        if ($descPausaRN[$i] != null) {
+                            $pausas_horarioRN = new pausas_horario();
+                            $pausas_horarioRN->pausH_descripcion = $descPausaRN[$i];
+                            $pausas_horarioRN->pausH_Inicio = $IniPausaRN[$i];
+                            $pausas_horarioRN->pausH_Fin = $FinPausaRN[$i];
+                            $pausas_horarioRN->horario_id = $idhorario;
+                            $pausas_horarioRN->save();
+                        }
+                    }
+                }
+            }
+
         }
 
 
