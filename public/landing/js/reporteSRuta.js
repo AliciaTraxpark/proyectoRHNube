@@ -182,7 +182,7 @@ var tableActividad = {};
 function onSelectFechas() {
     var fecha = $('#fecha').val();
     var area = $('#area').val();
-    var cargo = $('#cargo').val();
+    var empleadoL = $('#empleadoL').val();
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
@@ -203,7 +203,7 @@ function onSelectFechas() {
         data: {
             fecha: fecha,
             area: area,
-            cargo: cargo
+            empleadoL: empleadoL
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -593,14 +593,14 @@ $(function () {
     $('#area').select2({
         placeholder: 'Seleccionar áreas'
     });
-    $('#cargo').select2({
-        placeholder: 'Seleccionar cargos',
+    $('#empleadoL').select2({
+        placeholder: 'Seleccionar empleados',
         language: "es"
     });
     $('#area').on("change", function (e) {
         fechaDefecto();
     });
-    $('#cargo').on("change", function (e) {
+    $('#empleadoL').on("change", function (e) {
         fechaDefecto();
     });
 });

@@ -27,13 +27,73 @@ class controlRutaController extends Controller
             ->select('a.area_id', 'a.area_descripcion')
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->get();
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', session('sesionidorg'))
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+        if ($usuario_organizacion->rol_id == 3) {
+            $invitado = DB::table('invitado as in')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->where('rol_id', '=', 3)
+                ->where('in.user_Invitado', '=', Auth::user()->id)
+                ->get()->first();
 
-        $cargos = DB::table('cargo as c')
-            ->select('c.cargo_id', 'c.cargo_descripcion')
-            ->where('c.organi_id', '=', session('sesionidorg'))
-            ->get();
+            if ($invitado->verTodosEmps == 1) {
+                $empleado = DB::table('empleado as e')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->groupBy('e.emple_id')
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
 
-        return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'cargos' => $cargos]);
+                if ($invitado_empleadoIn != null) {
+                    $empleado = DB::table('empleado as e')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                        ->groupBy('e.emple_id')
+                        ->get();
+                } else {
+                    $empleado = DB::table('empleado as e')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                        ->groupBy('e.emple_id')
+                        ->get();
+                }
+            }
+        } else {
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.emple_estado', '=', 1)
+                ->groupBy('e.emple_id')
+                ->get();
+        }
+
+        return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
     }
 
     public function showConRuta(Request $request)
@@ -534,8 +594,8 @@ class controlRutaController extends Controller
         $fecha = $request->get('fecha');
         $fechaF = explode("a", $fecha);
         $area = $request->get('area');
-        $cargo = $request->get('cargo');
-        if (is_null($area) === true && is_null($cargo) === true) {
+        $empleadoL = $request->get('empleadoL');
+        if (is_null($area) === true && is_null($empleadoL) === true) {
             if ($usuario_organizacion->rol_id == 3) {
                 $invitado = DB::table('invitado as in')
                     ->where('organi_id', '=', session('sesionidorg'))
@@ -597,7 +657,7 @@ class controlRutaController extends Controller
                     ->get();
             }
         } else {
-            if (is_null($area) === false && is_null($cargo) === true) {
+            if (is_null($area) === false && is_null($empleadoL) === true) {
                 if ($usuario_organizacion->rol_id == 3) {
                     $invitado = DB::table('invitado as in')
                         ->where('organi_id', '=', session('sesionidorg'))
@@ -664,7 +724,7 @@ class controlRutaController extends Controller
                         ->get();
                 }
             }
-            if (is_null($area) === true && is_null($cargo) === false) {
+            if (is_null($area) === true && is_null($empleadoL) === false) {
                 if ($usuario_organizacion->rol_id == 3) {
                     $invitado = DB::table('invitado as in')
                         ->where('organi_id', '=', session('sesionidorg'))
@@ -679,7 +739,7 @@ class controlRutaController extends Controller
                             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
-                            ->whereIn('e.emple_cargo', $cargo)
+                            ->whereIn('e.emple_id', $empleadoL)
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
@@ -699,7 +759,7 @@ class controlRutaController extends Controller
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                ->whereIn('e.emple_cargo', $cargo)
+                                ->whereIn('e.emple_id', $empleadoL)
                                 ->groupBy('e.emple_id')
                                 ->get();
                         } else {
@@ -713,7 +773,7 @@ class controlRutaController extends Controller
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                                ->whereIn('e.emple_cargo', $cargo)
+                                ->whereIn('e.emple_id', $empleadoL)
                                 ->groupBy('e.emple_id')
                                 ->get();
                         }
@@ -725,12 +785,12 @@ class controlRutaController extends Controller
                         ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
-                        ->whereIn('e.emple_cargo', $cargo)
+                        ->whereIn('e.emple_id', $empleadoL)
                         ->groupBy('e.emple_id')
                         ->get();
                 }
             }
-            if (is_null($area) === false && is_null($cargo) === false) {
+            if (is_null($area) === false && is_null($empleadoL) === false) {
                 if ($usuario_organizacion->rol_id == 3) {
                     $invitado = DB::table('invitado as in')
                         ->where('organi_id', '=', session('sesionidorg'))
@@ -746,7 +806,7 @@ class controlRutaController extends Controller
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
                             ->whereIn('e.emple_area', $area)
-                            ->whereIn('e.emple_cargo', $cargo)
+                            ->whereIn('e.emple_id', $empleadoL)
                             ->groupBy('e.emple_id')
                             ->get();
                     } else {
@@ -765,7 +825,7 @@ class controlRutaController extends Controller
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_area', $area)
-                                ->whereIn('e.emple_cargo', $cargo)
+                                ->whereIn('e.emple_id', $empleadoL)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->groupBy('e.emple_id')
@@ -780,7 +840,7 @@ class controlRutaController extends Controller
                                 ->where('e.organi_id', '=', session('sesionidorg'))
                                 ->where('e.emple_estado', '=', 1)
                                 ->whereIn('e.emple_area', $area)
-                                ->whereIn('e.emple_cargo', $cargo)
+                                ->whereIn('e.emple_id', $empleadoL)
                                 ->where('invi.estado', '=', 1)
                                 ->where('invi.idinvitado', '=', $invitado->idinvitado)
                                 ->groupBy('e.emple_id')
@@ -795,7 +855,7 @@ class controlRutaController extends Controller
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
                         ->whereIn('e.emple_area', $area)
-                        ->whereIn('e.emple_cargo', $cargo)
+                        ->whereIn('e.emple_id', $empleadoL)
                         ->groupBy('e.emple_id')
                         ->get();
                 }

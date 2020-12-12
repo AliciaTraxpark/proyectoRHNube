@@ -183,7 +183,6 @@ function onSelectFechas() {
     var fecha = $('#fecha').val();
     var area = $('#area').val();
     var empleadoL = $('#empleadoL').val();
-    console.log($('#empleadoL').val());
     if ($.fn.DataTable.isDataTable("#Reporte")) {
         $('#Reporte').DataTable().destroy();
     }
