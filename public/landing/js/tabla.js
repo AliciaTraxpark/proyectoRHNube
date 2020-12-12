@@ -539,7 +539,6 @@ function RefreshTablaEmpleado() {
             }
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
-                console.log(data);
                 tbody +=
                     "<tr id=" +
                     data[i].emple_id +
@@ -584,7 +583,7 @@ function RefreshTablaEmpleado() {
                     "> </td>";
 
                 tbody +=
-                    '<td class="text-center"> <div class="text-wrap width-400">' +
+                    '<td> <div class="text-wrap width-400">' +
                     data[i].emple_nDoc +
                     '</div></td>\
                             <td> <div class="text-wrap width-400">' +
