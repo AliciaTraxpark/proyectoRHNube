@@ -2149,7 +2149,7 @@ class EmpleadoController extends Controller
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
         /* dd($datafechaValida); */
         if($datafechaValida!=null || $datafechaValida!=[]){
-            return 'Cambios guardados,Se ha encontrado cruces al asignador los horarios, intentalo nuevamente';
+            return 'Se ha encontrado cruces al asignar los horarios, inténtalo nuevamente';
         } else{
             return 'Cambios guardados';
         }
