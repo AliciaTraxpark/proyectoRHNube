@@ -719,7 +719,7 @@ function agregarHorarioSe() {
             $("#horarioAsignar_ed").modal("hide");
             $.notify(
                 {
-                    message: "\nCambios guardados\n",
+                    message: data,
                     icon: "admin/images/checked.svg",
                 },
                 {
