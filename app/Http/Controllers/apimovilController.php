@@ -14,6 +14,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SoporteApiMovil;
 use App\Mail\SugerenciaApiMovil;
+use App\reporte_marcacionesp;
+use Illuminate\Database\Eloquent\Collection;
+
 class apimovilController extends Controller
 {
     //ACTIVACION DISPOSITIVO
@@ -191,24 +194,103 @@ class apimovilController extends Controller
     }
 
     public function marcacionMovil(Request $request){
-       /*  $organi_id=$request->organi_id;
-        $tipoMarcacion=$request->tipoMarcacion;
-        $fechaMarcacion=$request->fechaMarcacion;
-        $idControlador=$request->idControlador;
-        $idDisposi=$request->idDisposi;
-        $idEmpleado=$request->idEmpleado;
-        $idHoraEmp=$request->idHoraEmp; */
-        foreach($request->all() as $req){
+
+      /*   ORDENAR ARRAY POR FECHA  */
+         $arrayDatos=new Collection ();
+         foreach($request->all() as $req){
+             $datos=['idControlador'=>$req['idControlador'],'idDisposi'=>$req['idDisposi'], 'idEmpleado'=>$req['idEmpleado'],
+             'organi_id'=>$req['organi_id'],'tipoMarcacion'=>$req['tipoMarcacion'], 'fechaMarcacion'=>$req['fechaMarcacion'] ];
+              $arrayDatos->push($datos);
+         }
+       $arrayOrdenado = $arrayDatos->sortBy('fechaMarcacion');
+        $arrayOrdenado->values()->all();
+        /* return  $arrayOrdenado; */
+       /*  $arrayOrdenado=$arrayOrdenado->groupBy('idEmpleado'); */
+
+          /*   RECORRES ARRAY RECIBIDO  */
+           foreach($arrayOrdenado as $arrayOrdenados){
+            $marcacion_puerta=new marcacion_puerta();
+            $marcacion_puerta->marcaMov_emple_id=$arrayOrdenados['idEmpleado'];
+            $marcacion_puerta->tipoMarcacion=$arrayOrdenados['tipoMarcacion'];
+            $marcacion_puerta->marcaMov_fecha= $arrayOrdenados['fechaMarcacion'];
+            $marcacion_puerta->controladores_idControladores=$arrayOrdenados['idControlador'];
+            $marcacion_puerta->dispositivos_idDispositivos=$arrayOrdenados['idDisposi'];
+            $marcacion_puerta->organi_id=$arrayOrdenados['organi_id'];
+            if(empty($arrayOrdenados['idHoraEmp'])) {}
+            else{
+                $marcacion_puerta->horarioEmp_id=$arrayOrdenados['idHoraEmp'];
+            }
+            if(empty($arrayOrdenados['latitud'])) {}
+            else{
+                $marcacion_puerta->marca_latitud=$arrayOrdenados['latitud'];
+            }
+            if(empty($arrayOrdenados['longitud'])) {}
+            else{
+                $marcacion_puerta->marca_longitud=$arrayOrdenados['longitud'];
+            }
+            $marcacion_puerta->save();
+
+          }
+
+          $arrayOrdenadoEmple=$arrayOrdenado->groupBy('idEmpleado');
+           /*  return $arrayOrdenado; */
+
+         $arrayEntraSalid=new Collection ();
+          foreach($arrayOrdenadoEmple as $arrayOrdenadoEmples){
+         /*   return $arrayOrdenadoEmples;  */
+           foreach($arrayOrdenadoEmples as $key =>$arrayEm){
+              $nn=count($arrayEm)-1 ;
+              dd( count($arrayOrdenadoEmples));
+            if($key!=$nn   && $arrayOrdenadoEmples[$key]['tipoMarcacion']=='1'
+            && $arrayOrdenadoEmples[$key+1]['tipoMarcacion']=='0'  ){
+
+                 $datosA=['marcacion_entrada'=>$arrayOrdenadoEmples[$key]['fechaMarcacion'] ,
+                 'marcacion_salida'=> $arrayOrdenadoEmples[$key+1]['fechaMarcacion'] ];
+            $arrayEntraSalid->push($datosA);
+
+
+             }
+             else{
+              if($key!=0){
+                if(
+                $arrayOrdenadoEmples[$key-1]['tipoMarcacion']!='1' ){
+                $datosA=['marcacion_entrada'=>'',
+                                'marcacion_salida'=> $arrayOrdenadoEmples[$key]['fechaMarcacion']  ];
+                        $arrayEntraSalid->push($datosA);
+                }
+
+               } else{
+                if(
+                    $arrayOrdenadoEmples[$key]['tipoMarcacion']==0 || $arrayOrdenadoEmples[$key]['tipoMarcacion']==1 ){
+                        if($arrayOrdenadoEmples[$key]['tipoMarcacion']==1){
+                          $datosA=['marcacion_entrada'=>$arrayOrdenadoEmples[$key]['fechaMarcacion'],
+                                'marcacion_salida'=> '' ];
+                        } else{
+                            $datosA=['marcacion_entrada'=>'',
+                                'marcacion_salida'=> $arrayOrdenadoEmples[$key]['fechaMarcacion'] ];
+                        }
+
+                        $arrayEntraSalid->push($datosA);
+                    }
+               }
+             }
+           }
+
+ return $arrayEntraSalid;
+          }
+
+
+        /*  foreach($request->all() as $req){
             if($req['tipoMarcacion']==1){
                 $marcacion_puerta=new marcacion_puerta();
-           /*  $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
-            $marcacion_puerta->marcaMov_fecha= $req['fechaMarcacion'];
+           $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion'];
+           $marcacion_puerta->marcaMov_fecha= $req['fechaMarcacion'];
             $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
             $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
 
-            if(empty($req['idHoraEmp'])) {}
+             if(empty($req['idHoraEmp'])) {}
             else{
                 $marcacion_puerta->horarioEmp_id=$req['idHoraEmp'];
             }
@@ -230,9 +312,9 @@ class apimovilController extends Controller
                 ->orderby('marcaMov_id','DESC')->take(1)
                 ->get();
 
-            if($marcacion_puerta1->isEmpty()){
+             if($marcacion_puerta1->isEmpty()){
                 $marcacion_puerta=new marcacion_puerta();
-           /*  $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
+            $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion'];
             $marcacion_puerta->marcaMov_salida= $req['fechaMarcacion'];
             $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
@@ -263,12 +345,8 @@ class apimovilController extends Controller
 
             }
             }
-            /*  */
 
-
-
-        }
-
+           }
 
         if($marcacion_puerta){
             return response()->json(array('status'=>200,'title' => 'Marcacion registrada correctamente',
@@ -278,7 +356,7 @@ class apimovilController extends Controller
             return response()->json(array('status'=>400,'title' => 'No se pudo registrar marcacion',
             'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'),400);
         }
-
+ */
 
 
     }
