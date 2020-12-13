@@ -2109,9 +2109,15 @@ class EmpleadoController extends Controller
                       foreach($horarioDentro as $horarioDentros){
                          $horaIDentro=Carbon::parse($horarioDentros->horaI);
                          $horaFDentro=Carbon::parse($horarioDentros->horaF);
-                         if($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)){
+                         if($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF) ){
                             $startArreD = carbon::create($horarioDentros->start);
                             $arrayHDentro->push($startArreD->format('Y-m-d'));
+                         }
+                         else{
+                             if($horaFDentro->gte($horaFinalF)){
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($startArreD->format('Y-m-d'));
+                             }
                          }
                      }   
                      }
