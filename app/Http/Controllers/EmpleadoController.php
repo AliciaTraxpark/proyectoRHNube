@@ -2080,7 +2080,7 @@ class EmpleadoController extends Controller
                 $startArre = carbon::create($tempre->start);
                 $arrayrep->push($startArre->format('Y-m-d'));
             }
-           
+
         }
         $datos = Arr::flatten($arrayrep);
 
@@ -2114,14 +2114,14 @@ class EmpleadoController extends Controller
                             $arrayHDentro->push($startArreD->format('Y-m-d'));
                          }
                          else{
-                             if($horaFDentro->gte($horaFinalF)){
+                             if($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)){
                                 $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($startArreD->format('Y-m-d'));
                              }
                          }
-                     }   
                      }
-                     
+                     }
+
              }
              $datosDentroN = Arr::flatten($arrayHDentro);
              $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
@@ -2159,7 +2159,7 @@ class EmpleadoController extends Controller
         } else{
             return 'Cambios guardados';
         }
-       
+
     }
 
     public function vaciardfTem(Request $request)
