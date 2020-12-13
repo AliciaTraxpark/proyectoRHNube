@@ -509,7 +509,8 @@ class apiVersionDosController extends Controller
                 $fecha = Carbon::now();
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 $horaActual = $fecha->isoFormat('HH:mm:ss');
-                if ($horario_dias->start == $fechaHoy && Carbon::parse($horario->horaF)->lte($horaActual)) {
+                $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                if ($horario_dias->start == $fechaHoy && Carbon::parse($horaActual)->lte($horaComparar)) {
                     if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
                         $despues = new Carbon('tomorrow');
                         $fechaMan = $despues->isoFormat('YYYY-MM-DD');
@@ -537,7 +538,8 @@ class apiVersionDosController extends Controller
                     if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
                         $fechaAyer = new Carbon('yesterday');
                         $fechaA = $fechaAyer->isoFormat('YYYY-MM-DD');
-                        if ($horario_dias->start == $fechaA && Carbon::parse($horario->horaF)->lte($horaActual)) {
+                        $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                        if ($horario_dias->start == $fechaA && Carbon::parse($horaActual)->lte($horaComparar)) {
                             //* CALCULAR TIEMPO DE HOARIO
                             $horas = DB::table('empleado as e')
                                 ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
