@@ -3234,7 +3234,7 @@ use Carbon\Carbon;
                                                                     padding-left: 0px; padding-right: 0px;">
                                                                                 <input type="number" value="0"
                                                                                     class="form-control form-control-sm"
-                                                                                    min="0" id="toleranciaH" required>
+                                                                                    min="0" max="59" id="toleranciaH" required>
                                                                                 <div class="input-group-prepend  ">
                                                                                     <div class="input-group-text form-control-sm "
                                                                                         style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3253,7 +3253,7 @@ use Carbon\Carbon;
                                                                    padding-left: 0px; padding-right: 0px;">
                                                                                 <input type="number" value="0"
                                                                                     class="form-control form-control-sm"
-                                                                                    min="0" id="toleranciaSalida"
+                                                                                    min="0" max="59" id="toleranciaSalida"
                                                                                     required>
                                                                                 <div class="input-group-prepend  ">
                                                                                     <div class="input-group-text form-control-sm "
@@ -4397,7 +4397,7 @@ use Carbon\Carbon;
                                                                             padding-left: 0px; padding-right: 0px;">
                                                                             <input type="number" value="0"
                                                                                 class="form-control form-control-sm"
-                                                                                min="0" id="toleranciaH_ed" required>
+                                                                                min="0" max="59" id="toleranciaH_ed" required>
                                                                             <div class="input-group-prepend  ">
                                                                                 <div class="input-group-text form-control-sm "
                                                                                     style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -4415,7 +4415,7 @@ use Carbon\Carbon;
                                                                            padding-left: 0px; padding-right: 0px;">
                                                                             <input type="number" value="0"
                                                                                 class="form-control form-control-sm"
-                                                                                min="0" id="toleranciaSalida_ed"
+                                                                                min="0" max="59" id="toleranciaSalida_ed"
                                                                                 required>
                                                                             <div class="input-group-prepend  ">
                                                                                 <div class="input-group-text form-control-sm "

@@ -12,7 +12,7 @@
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -1334,6 +1334,53 @@ a:not([href]):not([tabindex]){
            </div><!-- /.modal-content -->
          </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
+        <div id="modalEmpleadosHo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog  modal-lg d-flex justify-content-center" style="max-width:800px!important;" >
+
+            <div class="modal-content">
+               <div class="modal-header" style="background-color:#163552;">
+                   <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Empleados con horarios cruzados</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+               <div class="modal-body">
+                   <div class="row">
+                       <div class="col-md-12">
+                           <label for="">Empleados que no se pudo registrar horarios</label>
+                       </div>
+                    <div class="col-md-12">
+                        <table id="tablaEmpleadoExcel" class="table nowrap" style="font-size: 12.8px;">
+                            <thead style=" background: #edf0f1;color: #6c757d;">
+                                <tr>
+                                    <th></th>
+                                    <th>DNI</th>
+                                    <th>Nombres</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyExcel"></tbody>
+                        </table>
+                    </div>
+
+                   </div>
+
+               </div>
+               <div class="modal-footer">
+                   <div class="col-md-12">
+                       <div class="row">
+                           <div class="col-md-12 text-right" >
+                            <button type="button"  class="btn btn-light " data-dismiss="modal">Cerrar</button>
+
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </div>
 @endsection
@@ -1345,7 +1392,10 @@ a:not([href]):not([tabindex]){
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{asset('landing/js/horario.js')}}"></script>
-
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
+}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
