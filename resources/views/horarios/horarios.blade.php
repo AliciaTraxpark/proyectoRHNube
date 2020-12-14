@@ -1333,6 +1333,53 @@ background-color: #ffffff !important;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="modalEmpleadosHo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center" style="max-width:800px!important;" >
+
+        <div class="modal-content">
+           <div class="modal-header" style="background-color:#163552;">
+               <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Empleados con horarios cruzados</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               <div class="row">
+                   <div class="col-md-12">
+                       <label for="">Empleados que no se pudo registrar horarios</label>
+                   </div>
+                <div class="col-md-12">
+                    <table id="tablaEmpleadoExcel" class="table nowrap" style="font-size: 12.8px;">
+                        <thead style=" background: #edf0f1;color: #6c757d;">
+                            <tr>
+                                <th></th>
+                                <th>DNI</th>
+                                <th>Nombres</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyExcel"></tbody>
+                    </table>
+                </div>
+
+               </div>
+
+           </div>
+           <div class="modal-footer">
+               <div class="col-md-12">
+                   <div class="row">
+                       <div class="col-md-12 text-right" >
+                        <button type="button"  class="btn btn-light " data-dismiss="modal">Cerrar</button>
+
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 @if (Auth::user())
 <script>
   $(function() {

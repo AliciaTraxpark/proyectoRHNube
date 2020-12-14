@@ -801,6 +801,7 @@ $('#guardarTodoHorario').click(function () {
     $.ajax({
         type: "post",
         url: "/guardarHorarioC",
+        async:false,
         data: {
             idemps,
 
@@ -817,11 +818,85 @@ $('#guardarTodoHorario').click(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            $('#tbodyExcel').empty();
             $('#tablaEmpleado').DataTable().ajax.reload();
             $('#guardarTodoHorario').prop('disabled', false);
 
             $('#asignarHorario').modal('toggle');
             calendar.refetchEvents();
+            if(data.length>0){
+                console.log('hay datos');
+                var tbodyTabla=[];
+                for (var i = 0; i < data.length; i++) {
+                    tbody='<tr>'+
+        '<td>' + (i + 1) +'</td>'+
+        '<td>'+data[i].emple_nDoc+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>'+
+        '<td>'+data[i].nombre+' '+data[i].apPaterno+' '+data[i].apMaterno+'&nbsp;&nbsp;</td></tr>';
+        tbodyTabla.push(tbody);
+                }
+                $('#tbodyExcel').html(tbodyTabla);
+                $('#modalEmpleadosHo').modal('show');
+
+                table =
+    $("#tablaEmpleadoExcel").DataTable({
+
+        "searching": false,
+        "scrollX": true,
+
+        "ordering": false,
+        "autoWidth": true,
+
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ ",
+            sInfoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: ">",
+                sPrevious: "<",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+            buttons: {
+                copy: "Copiar",
+                colvis: "Visibilidad",
+            },
+        },
+
+        dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excel',
+                        className: 'btn btn-sm mt-1',
+                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        },
+                        sheetName: 'Exported data',
+                        autoFilter: false
+                    }],
+                    paging: true
+
+   });
+
+            }
+            else{
+                console.log('no hay datos');
+            }
 
 
         },
@@ -829,6 +904,7 @@ $('#guardarTodoHorario').click(function () {
             alert("Hay un error");
         }
     });
+
 
 })
 

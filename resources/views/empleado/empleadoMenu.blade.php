@@ -3123,7 +3123,7 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                     padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0"
+                                                                            class="form-control form-control-sm" min="0" max="59"
                                                                             id="toleranciaH" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
@@ -3140,7 +3140,7 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0"
+                                                                            class="form-control form-control-sm" min="0" max="59"
                                                                             id="toleranciaSalida" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
@@ -4252,7 +4252,7 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                     padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0"
+                                                                            class="form-control form-control-sm" min="0" max="59"
                                                                             id="toleranciaH_ed" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
@@ -4269,7 +4269,7 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0"
+                                                                            class="form-control form-control-sm" min="0" max="59"
                                                                             id="toleranciaSalida_ed" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
