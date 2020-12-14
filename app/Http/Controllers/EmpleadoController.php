@@ -2118,6 +2118,13 @@ class EmpleadoController extends Controller
                                 $startArreD = carbon::create($horarioDentros->start);
                                 $arrayHDentro->push($startArreD->format('Y-m-d'));
                              }
+                             else{
+                                 if($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)){
+                                    $startArreD = carbon::create($horarioDentros->start);
+                                    $arrayHDentro->push($startArreD->format('Y-m-d'));
+                                 }
+
+                             }
                          }
                      }
                      }
