@@ -851,7 +851,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia al ingreso(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaH" required>
+                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" max="59" id="toleranciaH" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -863,7 +863,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia a la salida(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaSalida" required>
+                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" max="59" id="toleranciaSalida" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -981,7 +981,7 @@ background-color: #ffffff !important;
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Tolerancia(Min):</label>
-                                               <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaHen" required>
+                                               <input type="number" value="0" class="form-control form-control-sm" min="0" max="59" id="toleranciaHen" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
@@ -1118,7 +1118,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia al ingreso(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number"  class="form-control form-control-sm" min="0" id="toleranciaH_ed" required>
+                                                   <input type="number"  class="form-control form-control-sm" min="0" max="59" id="toleranciaH_ed" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -1130,7 +1130,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia a la salida(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number"  class="form-control form-control-sm" min="0" id="toleranciaSalida_ed" required>
+                                                   <input type="number"  class="form-control form-control-sm" min="0" max="59" id="toleranciaSalida_ed" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
