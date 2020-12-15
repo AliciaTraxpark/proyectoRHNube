@@ -275,6 +275,7 @@ Route::post('/horario/copiarferiados', 'horarioController@copiarferiados');
 Route::post('/horario/borrarferiados', 'horarioController@borrarferiados');
 Route::post('/horario/listar', 'horarioController@horarioListar');
 Route::post('eliminarPausasEnEditar', 'horarioController@eliminarPausasEnEditar');
+Route::post('/eliminarPausaHorario', 'horarioController@eliminarPausaHorario');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
