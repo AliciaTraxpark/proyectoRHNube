@@ -6213,18 +6213,6 @@ $(function () {
     fechaValue.setDate(f);
     $("#fechaInput").change();
 })
-$("#contrato").change(function () {
-    $("#validContrato").hide();
-    let varCont = $("#contrato").val();
-    if (varCont != '') {
-        $('#form-registrar').modal('hide');
-        $('#fechasmodal').modal('show');
-    }
-
-
-})
-'use strict';
-
 ; (function (document, window, index) {
     var inputs = document.querySelectorAll('.inputfile');
     Array.prototype.forEach.call(inputs, function (input) {
@@ -6245,16 +6233,3 @@ $("#contrato").change(function () {
         });
     });
 }(document, window, 0));
-$("#v_contrato").change(function () {
-    console.log('aqui se cierra x1');
-    console.log('esperando')
-    /*  $("#validContrato").hide(); */
-    let varCont = $("#v_contrato").val();
-    if (varCont != '') {
-        console.log('aqui se cierra x2');
-        $('#form-ver').modal('hide');
-        $('#fechasmodalE').modal('show');
-    }
-
-
-})

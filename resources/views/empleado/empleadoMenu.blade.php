@@ -2001,7 +2001,7 @@ use App\proyecto_empleado;
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
                         Contrato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
+                        onclick="$('#contratoDetallesmodalEN').modal('show');javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2027,7 +2027,8 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                    <button type="button"
+                        onclick="$('#contratoDetallesmodalEN').modal('show');javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
                 </div>
@@ -2043,7 +2044,7 @@ use App\proyecto_empleado;
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
                         Condición de Pago</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#contratoDetallesmodalE').modal('show');javascript:limpiarEditar()">
+                        onclick="javascript:ModalCerrarCondicion();javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2069,10 +2070,10 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                        onclick="$('#contratoDetallesmodalE').modal('show');javascript:limpiarEditar()"
+                    <button type="button" onclick="javascript:ModalCerrarCondicion();javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;"
+                        onclick="javascript:ModalCerrarCondicion();">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -2241,8 +2242,8 @@ use App\proyecto_empleado;
                                     <label for="sw-default">
                                         Contrato
                                     </label>
-                                    <select class="form-control" name="v_contrato" id="v_contrato"
-                                        onchange="$('#detalleContratoE').show();" tabindex="5" required disabled>
+                                    <select class="form-control" name="v_contrato" id="v_contrato" tabindex="5" required
+                                        disabled>
                                         <option value="">Seleccionar</option>
                                         @foreach ($tipo_cont as $tipo_conts)
                                         <option class="" value="{{ $tipo_conts->contrato_id }}">
@@ -2278,9 +2279,9 @@ use App\proyecto_empleado;
                                         <div class="form-group">
                                             <label for="sw-default">
                                                 Condición Pago
-                                                <a onclick="$('#contratoDetallesmodalE').modal('hide');"
-                                                    href="#condicionmodalE" data-toggle="modal"
-                                                    data-target="#condicionmodalE"><i class="uil uil-plus"></i>
+                                                <a onclick="javascript:ModalAbiertoCondicion();" href="#condicionmodalE"
+                                                    data-toggle="modal" data-target="#condicionmodalE"><i
+                                                        class="uil uil-plus"></i>
                                                 </a>
                                             </label>
                                             <select class="form-control" name="v_condicion" id="v_condicion" required>
@@ -2460,7 +2461,7 @@ use App\proyecto_empleado;
                         Contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
+                        onclick="javascript:limpiarNuevosDatosAlta();$('#form-ver').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2471,13 +2472,13 @@ use App\proyecto_empleado;
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label for="sw-default">Contrato
-                                        <a onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
+                                        <a onclick="$('#contratoDetallesmodalEN').modal('hide');$('#contratomodalE').modal('show');"
                                             data-toggle="modal"><i class="uil uil-plus"
                                                 style="color: darkblue;cursor: pointer;"></i>
                                         </a>
                                     </label>
                                     <select class="form-control" name="v_contratoN" id="v_contratoN" tabindex="5"
-                                        required>
+                                        onclick="javascript:validacionNuevaAlta()" required>
                                         <option value="">Seleccionar</option>
                                         @foreach ($tipo_cont as $tipo_conts)
                                         <option class="" value="{{ $tipo_conts->contrato_id }}">
@@ -2512,8 +2513,9 @@ use App\proyecto_empleado;
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="sw-default">Condición Pago <a
-                                                    onclick="$('#fechasmodalE').modal('hide');" href="#condicionmodalE"
-                                                    data-toggle="modal" data-target="#condicionmodalE"><i
+                                                    onclick="javascript:ModalAbiertoCondicion();"
+                                                    href="#condicionmodalE" data-toggle="modal"
+                                                    data-target="#condicionmodalE"><i
                                                         class="uil uil-plus"></i></a></label>
                                             <select class="form-control" name="v_condicionN" id="v_condicionN" required>
                                                 <option value="">Seleccionar</option>
@@ -2585,8 +2587,8 @@ use App\proyecto_empleado;
                                                     <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
                                                  application/pdf" class="inputfile inputfile-1"
                                                         data-multiple-caption="{count} archivos seleccionados" multiple
-                                                        id="exampleFormControlFile1_edN">
-                                                    <label for="exampleFormControlFile1_edN">
+                                                        id="fileArchivosNuevos">
+                                                    <label for="fileArchivosNuevos">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
                                                             width="20" height="17" viewBox="0 0 20 17">
                                                             <path
@@ -2609,7 +2611,7 @@ use App\proyecto_empleado;
                                                 incorrecta.</span>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="m_dia_fechaFE"
+                                                    <select class="form-control" name="m_dia_fechaFEN"
                                                         id="m_dia_fechaFEN">
                                                         <option value="0">Día</option>
                                                         @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
@@ -2618,7 +2620,7 @@ use App\proyecto_empleado;
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="m_mes_fechaFE"
+                                                    <select class="form-control" name="m_mes_fechaFEN"
                                                         id="m_mes_fechaFEN">
                                                         <option value="0">Mes</option>
                                                         <option class="" value="1">Ene.</option>
@@ -2637,7 +2639,7 @@ use App\proyecto_empleado;
                                                 </div>
                                                 <div class="col-md-4">
                                                     <select class="form-control" style="padding-left: 5px;
-                                                            padding-right: 5px;" name="m_ano_fechaFE"
+                                                            padding-right: 5px;" name="m_ano_fechaFEN"
                                                         id="m_ano_fechaFEN">
                                                         <option value="0">Año</option>
                                                         @for ($i = 2000; $i <2100; $i++) <option class=""
@@ -2656,9 +2658,9 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                    <button type="button" onclick="javascript:limpiarNuevosDatosAlta();$('#form-ver').modal('show');"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;" id="guardarAltaN">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -3465,8 +3467,8 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                     padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0" max="59"
-                                                                            id="toleranciaH" required>
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            max="59" id="toleranciaH" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
                                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3482,8 +3484,8 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0" max="59"
-                                                                            id="toleranciaSalida" required>
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            max="59" id="toleranciaSalida" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
                                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -4185,7 +4187,7 @@ use App\proyecto_empleado;
                             <div class="row pb-2" id="nuevaAltaEdit" style="display: none">
                                 <div class="col-xl-12 text-left">
                                     <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                        onclick="$('#contratoDetallesmodalE').modal();$('#form-ver').hide();">
+                                        onclick="$('#contratoDetallesmodalEN').modal();$('#form-ver').modal('hide');javascript:validacionNuevaAlta()">
                                         + Nueva alta
                                     </button>
                                 </div>
@@ -4601,8 +4603,8 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                     padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0" max="59"
-                                                                            id="toleranciaH_ed" required>
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            max="59" id="toleranciaH_ed" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
                                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -4618,8 +4620,8 @@ use App\proyecto_empleado;
                                                                     <div class="input-group form-control-sm " style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
                                                                         <input type="number" value="0"
-                                                                            class="form-control form-control-sm" min="0" max="59"
-                                                                            id="toleranciaSalida_ed" required>
+                                                                            class="form-control form-control-sm" min="0"
+                                                                            max="59" id="toleranciaSalida_ed" required>
                                                                         <div class="input-group-prepend  ">
                                                                             <div class="input-group-text form-control-sm "
                                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">

@@ -1,4 +1,5 @@
 //* ********************FORMULARIO EDITAR ********************* *//
+//: FECHA DE BAJA EN PESTAÑA DE CONTRATO
 var fechaValue = $("#fechaBajaEdit").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
@@ -14,6 +15,7 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
+//: FECHA DE ALTA EN PESTAÑA EDIT
 var fechaValueAlta = $("#fechaAltaEdit").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
@@ -370,8 +372,86 @@ function archivosDeEdit(id) {
         },
     });
 }
+//: FECHA ALTA DE NUEVA ALTA
+var fechaValueA = $("#fechaAltaEditN").flatpickr({
+    mode: "single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "Y-m-d",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+    disableMobile: "true"
+});
+$(function () {
+    f = moment().format("YYYY-MM-DD");
+    fechaValueA.setDate(f);
+});
+var modalA;
+//TODO -> FUNCION DE CERRAR Y ABRIR DE MODAL
+function ModalAbiertoCondicion() {
+    if ($('#contratoDetallesmodalE').is(':visible')) {
+        $('#contratoDetallesmodalE').modal('hide');
+        modalA = 1;
+    } else {
+        $('#contratoDetallesmodalEN').modal('hide');
+        modalA = 2;
+    }
+
+}
+function ModalCerrarCondicion() {
+    if (modalA === 1) {
+        $('#contratoDetallesmodalE').modal('show');
+    } else {
+        $('#contratoDetallesmodalEN').modal('show');
+    }
+}
 //TODO -> NUEVA ALTA
 function nuevaAltaEditar() {
 
 }
+//TODO -> LIMPIAR
+function limpiarNuevosDatosAlta() {
+    $('#v_contratoN').val("");
+    $('#v_condicionN').val("");
+    $('#v_montoN').val("");
+    $('#m_dia_fechaIEN').val(0);
+    $('#m_mes_fechaIEN').val(0);
+    $('#m_ano_fechaIEN').val(0);
+    $('#fileArchivosNuevos').val(null);
+    $('.iborrainputfile').val(null);
+    $('#checkboxFechaIEN').prop("checked", false);
+    $('#m_dia_fechaFEN').val(0);
+    $('#m_mes_fechaFEN').val(0);
+    $('#m_ano_fechaFEN').val(0);
+    $('#contratoDetallesmodalEN').modal('toggle');
+}
+//TODO -> VALIDACION DE NUEVA ALTA
+function validacionNuevaAlta() {
+    if ($('#v_contratoN').val() != "") {
+        $('#v_condicionN').prop("disabled", false);
+        $('#v_montoN').prop("disabled", false);
+        $('#m_dia_fechaIEN').prop("disabled", false);
+        $('#m_ano_fechaIEN').prop("disabled", false);
+        $('#fileArchivosNuevos').prop("disabled", false);
+        $('#checkboxFechaIEN').prop("disabled", false);
+        $('#m_dia_fechaFEN').prop("disabled", false);
+        $('#m_mes_fechaFEN').prop("disabled", false);
+        $('#m_ano_fechaFEN').prop("disabled", false);
+        $('#guardarAltaN').prop("disabled", false);
+    } else {
+        $('#v_condicionN').prop("disabled", true);
+        $('#v_montoN').prop("disabled", true);
+        $('#m_dia_fechaIEN').prop("disabled", true);
+        $('#m_ano_fechaIEN').prop("disabled", true);
+        $('#fileArchivosNuevos').prop("disabled", true);
+        $('#checkboxFechaIEN').prop("disabled", true);
+        $('#m_dia_fechaFEN').prop("disabled", true);
+        $('#m_mes_fechaFEN').prop("disabled", true);
+        $('#m_ano_fechaFEN').prop("disabled", true);
+        $('#guardarAltaN').prop("disabled", true);
+    }
+}
+
 //* ************************FINALIZACION********************** **//
