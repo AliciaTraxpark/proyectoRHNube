@@ -628,7 +628,7 @@ class apiVersionDosController extends Controller
                             // *****************
                             // VERSION GLOBAL
                             $versionGlobal = DB::table('versionrhbox as vr')
-                                ->select('vr.descripcion')
+                                ->select('vr.descripcion','vr.obligatorio')
                                 ->get()
                                 ->first();
                             // **************
@@ -677,6 +677,7 @@ class apiVersionDosController extends Controller
                                     'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                     'version' => $software_vinculacion->version,
                                     'versionGlobal' => $versionGlobal->descripcion,
+                                    'versionObligatorio' => $versionGlobal->obligatorio,
                                     'horaActual' => $horaActual,
                                     'token' => $token->get()
                                 ), 200);
@@ -723,6 +724,7 @@ class apiVersionDosController extends Controller
                                         'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                         'version' => $software_vinculacion->version,
                                         'versionGlobal' => $versionGlobal->descripcion,
+                                        'versionObligatorio' => $versionGlobal->obligatorio,
                                         'horaActual' => $horaActual,
                                         'token' => $token->get()
                                     ), 200);
@@ -772,6 +774,7 @@ class apiVersionDosController extends Controller
                                             'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                             'version' => $software_vinculacion->version,
                                             'versionGlobal' => $versionGlobal->descripcion,
+                                            'versionObligatorio' => $versionGlobal->obligatorio,
                                             'horaActual' => $horaActual,
                                             'token' => $token->get()
                                         ), 200);
