@@ -786,6 +786,7 @@ $('#guardarHorarioEventos').click(function () {
 });
 ////////////
 $('#guardarTodoHorario').click(function () {
+    $('#tablaEmpleadoExcel').DataTable().destroy();
     $('#guardarTodoHorario').prop('disabled', true);
     idemps = $('#nombreEmpleado').val();
     if (idemps == '') {
