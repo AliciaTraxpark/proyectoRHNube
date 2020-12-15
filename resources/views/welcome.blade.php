@@ -224,7 +224,7 @@
                         Próximo lanzamiento en Perú
                     </h5>
                     <p class="w-75 mx-auto text-muted" style="color: black!important">
-                        10 de Octubre 2020.
+                        17 de Diciembre 2020.
                     </p>
                     <div class="mt-4">
                         <button class="btn btn-opacity-primary mr-1" data-dismiss="modal">
@@ -284,8 +284,8 @@
                             </p>
                             <div class="row justify-content-center">
                                 <div class="col-md-8 text-right btnResp">
-                                    <a href="{{route('registroPersona')}} ">
-                                        <button {{-- onclick=" $('#modal-error').modal('show')" --}}
+                                    <a {{-- href="{{route('registroPersona')}} " --}}>
+                                        <button onclick=" $('#modal-error').modal('show')" 
                                             class="btn btn-opacity-comienza mr-1">Crear mi cuenta
                                         </button>
                                     </a>
