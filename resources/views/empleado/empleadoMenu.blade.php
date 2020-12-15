@@ -2606,7 +2606,7 @@ use App\proyecto_empleado;
                                             <label for="">Fecha Indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIEN" name="checkboxFechaIEN">
                                         </div>
-                                        <div id="ocultarFechaE">
+                                        <div id="ocultarFechaEN">
                                             <span id="m_validFechaCFEN" style="color: red;display: none;">*Fecha
                                                 incorrecta.</span>
                                             <div class="row">

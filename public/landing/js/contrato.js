@@ -411,6 +411,17 @@ function ModalCerrarCondicion() {
 function nuevaAltaEditar() {
 
 }
+//* NUEVA ALTA EN EMPLEADO ACTUALIZAR
+$("#checkboxFechaIEN").on("click", function () {
+    if ($("#checkboxFechaIEN").is(':checked')) {
+        $('#m_dia_fechaFEN').val(0);
+        $('#m_mes_fechaFEN').val(0);
+        $('#m_ano_fechaFEN').val(0);
+        $('#ocultarFechaEN').hide();
+    } else {
+        $('#ocultarFechaEN').show();
+    }
+});
 //TODO -> LIMPIAR
 function limpiarNuevosDatosAlta() {
     $('#v_contratoN').val("");
@@ -433,6 +444,7 @@ function validacionNuevaAlta() {
         $('#v_condicionN').prop("disabled", false);
         $('#v_montoN').prop("disabled", false);
         $('#m_dia_fechaIEN').prop("disabled", false);
+        $('#m_mes_fechaIEN').prop("disabled", false);
         $('#m_ano_fechaIEN').prop("disabled", false);
         $('#fileArchivosNuevos').prop("disabled", false);
         $('#checkboxFechaIEN').prop("disabled", false);
@@ -444,6 +456,7 @@ function validacionNuevaAlta() {
         $('#v_condicionN').prop("disabled", true);
         $('#v_montoN').prop("disabled", true);
         $('#m_dia_fechaIEN').prop("disabled", true);
+        $('#m_mes_fechaIEN').prop("disabled", true);
         $('#m_ano_fechaIEN').prop("disabled", true);
         $('#fileArchivosNuevos').prop("disabled", true);
         $('#checkboxFechaIEN').prop("disabled", true);
