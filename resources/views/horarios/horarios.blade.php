@@ -1338,7 +1338,7 @@ background-color: #ffffff !important;
 
         <div class="modal-content">
            <div class="modal-header" style="background-color:#163552;">
-               <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Empleados con horarios cruzados</h5>
+               <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Alerta de inconsistencia</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                </button>
