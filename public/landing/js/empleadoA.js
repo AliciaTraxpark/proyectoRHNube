@@ -1,4 +1,3 @@
-
 //AREA
 function agregarAreaA() {
     objArea = datosAreaA("POST");
@@ -951,71 +950,6 @@ function enviarCondicionA(accion, objCondicion) {
         });
     }
 }
-//EMPLEADO ACTUALIZAR
-$("#checkboxFechaIE").on("click", function () {
-    if ($("#checkboxFechaIE").is(':checked')) {
-        $('#m_dia_fechaFE').val("0");
-        $('#m_mes_fechaFE').val("0");
-        $('#m_ano_fechaFE').val("0");
-
-
-        $('#ocultarFechaE').hide();
-    } else {
-        $('#ocultarFechaE').show();
-
-    }
-});
-//FECHAS
-function agregarFechasA() {
-    //////////////////////////////////
-    var m_AnioIE = parseInt($('#m_ano_fechaIE').val());
-    var m_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
-    var m_DiaIE = parseInt($('#m_dia_fechaIE').val());
-    var m1_VFechaIE = new Date(m_AnioIE, m_MesIE, m_DiaIE);
-    if ((m1_VFechaIE.getFullYear() == m_AnioIE) && (m1_VFechaIE.getMonth() == m_MesIE) && (m1_VFechaIE.getDate() == m_DiaIE)) {
-        $('#m_validFechaCIE').hide();
-    } else {
-        $('#m_validFechaCIE').show();
-        return false;
-    }
-    if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
-
-        fechaI = new Date(m_AnioIE, m_MesIE, m_DiaIE);
-    } else {
-        fechaI = '0000-00-00';
-    }
-    if (!$("#checkboxFechaIE").is(':checked')) {
-        var mf_AnioFE = parseInt($('#m_ano_fechaFE').val());
-        var mf_MesFE = parseInt($('#m_mes_fechaFE').val() - 1);
-        var mf_DiaFE = parseInt($('#m_dia_fechaFE').val());
-        var m1f_VFechaFE = new Date(mf_AnioFE, mf_MesFE, mf_DiaFE);
-        if ((m1f_VFechaFE.getFullYear() == mf_AnioFE) && (m1f_VFechaFE.getMonth() == mf_MesFE) && (m1f_VFechaFE.getDate() == mf_DiaFE)) {
-            $('#m_validFechaCFE').hide();
-        } else {
-            $('#m_validFechaCFE').show();
-            return false;
-
-        }
-        var momentInicio = moment([m_AnioIE, m_MesIE, m_DiaIE]);
-        var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
-        if (!momentInicio.isBefore(momentFinal)) {
-            $('#m_validFechaCFE').show();
-            return false;
-        } else {
-            $('#m_validFechaCFE').hide();
-        }
-        console.log(momentInicio.isBefore(momentFinal));
-        if (mf_AnioFE != 0 && mf_MesFE != -1 && mf_DiaFE != 0) {
-
-            fechaF = new Date(mf_AnioFE, mf_MesFE, mf_DiaFE);
-        } else {
-            fechaF = '0000-00-00';
-        }
-    }
-    $('#form-ver').modal('show');
-    $('#fechasmodalE').modal('toggle');
-}
-
 $('#btnCerrar').on("click", function () {
     $('#form-ver').modal('show');
 });

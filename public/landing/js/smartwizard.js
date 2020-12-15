@@ -654,7 +654,6 @@ $(document).ready(function () {
         if (
             stepNumber == 0 ||
             stepNumber == 1 ||
-            stepNumber == 2 ||
             stepNumber == 3 ||
             stepNumber == 4
         ) {
@@ -662,26 +661,26 @@ $(document).ready(function () {
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleadoEditar").hide();
         }
-        if (stepNumber == 5) {
+
+        if (stepNumber == 2) {
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
+            $("#FinalizarEmpleadoEditar").hide();
+            historialEmp();
+        }
+
+        if (stepNumber == 6) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleadoEditar").hide();
             actividadEmp();
         }
-        if (stepNumber == 6) {
-            $("button.sw-btn-prev").show();
-            $("button.sw-btn-next").show();
-            dispositivosWindows();
-            dispositivosAndroid();
-            $("#FinalizarEmpleadoEditar").hide();
-        }
         if (stepNumber == 7) {
-            historialEmp();
             $("button.sw-btn-prev").hide();
             $("button.sw-btn-next").hide();
             $("#FinalizarEmpleadoEditar").show();
-
-
+            dispositivosWindows();
+            dispositivosAndroid();
         }
     });
 });
@@ -762,86 +761,3 @@ $("#smartwizardVer").on("showStep", function (
         $("#FinalizarEmpleadoVer").show();
     }
 });
-function historialEmp()
-{     var value = $('#v_id').val();
-$("#editar_tbodyHistorial" ).empty();
-    $.ajax({
-        type:"POST",
-        url: "/empleado/historial",
-        data: {
-            idempleado:value
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            var containerVer = $('#editar_tbodyHistorial');
-    for (var i = 0; i < data.length; i++) {
-
-            var trVer = '<tr>';
-
-
-                if(data[i].fecha_historial!=null){
-                    if(data[i].tipo_Hist==1){
-                        trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].fecha_historial).format('DD/MM/YYYY')+'</td>';
-                    } else
-                    {
-                        trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].fecha_historial).format('DD/MM/YYYY') +'</td>';
-                    }
-                } else{
-                    trVer+=  '<td>--</td>';
-                }
-
-                if(data[i].rutaDocumento!=null){
-
-                var valores=data[i].rutaDocumento;
-                idsV=valores.split(',');
-                var variableResult=[];
-                trVer+=  '<td><div class="row">';
-                $.each( idsV, function( index, value ){
-                    trVer+=
-                    '<div class="col-xl-6 col-md-6" style="padding-left: 0px;">'+
-                        '<div class="p-2 border rounded" style="padding-top: 1px!important; padding-bottom: 1px!important;">'+
-                            '<div class="media">'+
-                                '<div class="avatar-sm font-weight-bold mr-3">'+
-                                    '<span class="avatar-title rounded bg-soft-primary text-primary">'+
-                                    '<i class="uil-file-plus-alt font-size-18"></i>'+
-                                ' </span>'+
-                                '</div>'+
-                                '<div class="media-body">'+
-                                    '<a href="documEmpleado/'+value+'" target="_blank" class="d-inline-block mt-2">'+value+'</a>'+
-                                '</div>'+
-                                '<div class="float-right mt-1">'+
-                                    '<a href="documEmpleado/'+value+'" target="_blank" class="p-2"><i class="uil-download-alt font-size-18"></i></a>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>';
-
-                    /* variableResult.push(variableResult1); */
-
-                })
-
-                /*   trVer+=variableResult; */
-
-                trVer+=  '</div></td>';
-                } else{
-                trVer+=  '<td>--</td>';
-                }
-
-
-                    trVer+= '</tr>';
-
-
-        containerVer.append(trVer);
-
-    }
-        },
-        error: function () {}
-    });
-}

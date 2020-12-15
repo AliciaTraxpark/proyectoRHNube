@@ -29,8 +29,6 @@ function showNotificaciones() {
                     style="font-size:12px;color:#7d7d7d">Aún no tienes notificaciones nuevas</label> </div>`;
                 container.append(img);
             } else {
-                // grupo += `<div class="badge float-center mt-3" style="margin-left:30%;">
-                // <img src="/landing/images/bell_notification.gif" height="100"></div>`;
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].read_at == null) {
                         contador++;

@@ -717,7 +717,7 @@ function agregarHorarioSe() {
             $("#selectHorario_ed").val("Seleccionar horario");
             $("#selectHorario_ed").trigger("change");
             $("#horarioAsignar_ed").modal("hide");
-            if(data=='Cambios guardados'){
+            if (data == 'Cambios guardados') {
                 $.notify(
                     {
                         message: data,
@@ -739,10 +739,10 @@ function agregarHorarioSe() {
                         spacing: 35,
                     }
                 );
-            } else{
+            } else {
                 bootbox.alert(data);
             }
-           
+
         },
         // error: function (data) {
         // },
@@ -3804,37 +3804,11 @@ function actualizarEmpleado(accion, objEmpleadoA) {
 }
 // DATOS EMPRESARIALES
 function datosEmpresarialA(method) {
-    //////////////////////////////////////
-    var v_AnioIE = parseInt($("#m_ano_fechaIE").val());
-    var v_MesIE = parseInt($("#m_mes_fechaIE").val() - 1);
-    var v_DiaIE = parseInt($("#m_dia_fechaIE").val());
-
-    if (v_AnioIE != 0 && v_MesIE != -1 && v_DiaIE != 0) {
-        var v_VFechaIE = new Date(v_AnioIE, v_MesIE, v_DiaIE);
-    } else {
-        var v_VFechaIE = "0000-00-00";
-    }
-    var v_AnioFE = parseInt($("#m_ano_fechaFE").val());
-    var v_MesFE = parseInt($("#m_mes_fechaFE").val() - 1);
-    var v_DiaFE = parseInt($("#m_dia_fechaFE").val());
-
-    if (v_AnioFE != 0 && v_MesFE != -1 && v_DiaFE != 0) {
-        var v_VFechaFE = new Date(v_AnioFE, v_MesFE, v_DiaFE);
-    } else {
-        var v_VFechaFE = "0000-00-00";
-    }
-    /////////////////////////////////////////////
 
     nuevoEmpleadoEA = {
         codigoEmpleado_v: $("#v_codigoEmpleado").val(),
         cargo_v: $("#v_cargo").val(),
         centroc_v: $("#v_centroc").val(),
-        contrato_v: $("#v_contrato").val(),
-        idContrato_v: $("#v_idContrato").val(),
-        monto_v: $("#v_monto").val(),
-        condicion_v: $("#v_condicion").val(),
-        fechaI_v: v_VFechaIE,
-        fechaF_v: v_VFechaFE,
         nivel_v: $("#v_nivel").val(),
         local_v: $("#v_local").val(),
         area_v: $("#v_area").val(),
@@ -3843,8 +3817,6 @@ function datosEmpresarialA(method) {
     return nuevoEmpleadoEA;
 }
 function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
-    var idcontratoEdit=$('#v_contratoTipoH').val();
-    var idcontratoNuevo=$('#v_contrato').val();
     var formDataA = new FormData();
     formDataA.append("objEmpleadoA", JSON.stringify(objEmpleadoA));
     $.ajax({
@@ -3887,37 +3859,6 @@ function actualizarEmpleadoEmpresarial(accion, objEmpleadoA) {
 
         },
     });
-
-    var formData1 = new FormData();
-
-    var num = document.getElementById('exampleFormControlFile1_ed').files.length;
-
-    for (var i = 0; i < num; i++) {
-        formData1.append("exampleFormControlFile1_ed[]", document.getElementById('exampleFormControlFile1_ed').files[i]);
-    }
-    $.ajax({
-        type: "POST",
-        url: "/empleado/storeDocumentoEdi" + accion+"/" + idcontratoEdit + "/" +idcontratoNuevo,
-        data: formData1,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            },
-        },
-        success: function (data) {
-        },
-        error: function (data, errorThrown) { },
-    });
-    ////////////////////////////////////
 }
 // FOTO
 function actualizarEmpleadoFoto(accion) {

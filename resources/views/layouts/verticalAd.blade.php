@@ -91,20 +91,6 @@ use App\persona;
 
                 <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu
                     float-right mb-0">
-
-                   {{--  <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="Organizacion">
-                        <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="false" aria-expanded="false">
-                            <span style="color: aliceblue;font-size:
-                            12px" ;></span>&nbsp; <strong id="strongOrganizacion" style="color:
-                            rgb(255, 255, 255)">{{$organizacion->organi_razonSocial}}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</strong> &nbsp;&nbsp;&nbsp;
-                            <span class="badge badge-pill"
-                                style="background-color: #617be3;color: #ffffff;font-size: 12px;font-weight: normal"><img
-                                    src="{{asset('landing/images/modo.svg')}}" height="20" class="mr-1">Beta
-                                &nbsp;&nbsp;&nbsp;</span>
-                        </a>
-                    </li> --}}
                     <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
                         <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="false" aria-expanded="false">

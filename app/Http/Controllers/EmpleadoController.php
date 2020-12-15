@@ -973,7 +973,7 @@ class EmpleadoController extends Controller
         return json_encode(array('status' => true));
     }
 
-    public function storeDocumentoEdi(Request $request, $idE, $idcontratoEdit,$idcontratoNuevo)
+    public function storeDocumentoEdi(Request $request, $idE, $idcontratoEdit, $idcontratoNuevo)
     {
 
         $HisEmpleado = DB::table('contrato')->where('idEmpleado', $idE)
@@ -983,7 +983,7 @@ class EmpleadoController extends Controller
         $HisHistorial_em = DB::table('historial_empleado')->where('emple_id', $idE)
             ->where('tipo_Hist', 1)->where('fecha_historial', $FechaInicial)
             ->get()->last();
-        if ( $idcontratoEdit!= $idcontratoNuevo ) {
+        if ($idcontratoEdit != $idcontratoNuevo) {
             $historial_empleado = new historial_empleado();
             $historial_empleado->emple_id =  $idE;
             $historial_empleado->tipo_Hist =  1;
@@ -1002,7 +1002,7 @@ class EmpleadoController extends Controller
                 $file->move($path, $fileName);
 
 
-                if ($idcontratoEdit!= $idcontratoNuevo) {
+                if ($idcontratoEdit != $idcontratoNuevo) {
                     $doc_empleado = new doc_empleado();
                     $doc_empleado->idhistorial_empleado = $historial_empleado->idhistorial_empleado;
                     $doc_empleado->rutaDocumento = $fileName;
@@ -1318,38 +1318,6 @@ class EmpleadoController extends Controller
                 }
             }
         }
-        $idContrato = '';
-        if ($objEmpleado['contrato_v'] != '') {
-            if ($objEmpleado['idContrato_v'] == '') {
-                $contrato = new contrato();
-                $contrato->id_tipoContrato = $objEmpleado['contrato_v'];
-                $contrato->fechaInicio = $objEmpleado['fechaI_v'];
-                $contrato->fechaFinal = $objEmpleado['fechaF_v'];
-                $contrato->idEmpleado = $idE;
-                $contrato->estado = 1;
-                if ($objEmpleado['condicion_v'] != '') {
-                    $contrato->monto = $objEmpleado['monto_v'];
-                    $contrato->id_condicionPago = $objEmpleado['condicion_v'];
-                }
-                $contrato->save();
-                $idContrato = $contrato->id;
-            } else {
-                $contrato = contrato::where('id', '=', $objEmpleado['idContrato_v'])->get()->first();
-                if ($contrato) {
-                    $contrato->id_tipoContrato = $objEmpleado['contrato_v'];
-                    $contrato->fechaInicio = $objEmpleado['fechaI_v'];
-                    $contrato->fechaFinal = $objEmpleado['fechaF_v'];
-                    $contrato->monto = $objEmpleado['monto_v'];
-                    $contrato->idEmpleado = $idE;
-                    $contrato->estado = 1;
-                    if ($objEmpleado['condicion_v'] != '') {
-                        $contrato->id_condicionPago = $objEmpleado['condicion_v'];
-                    }
-                    $contrato->save();
-                }
-                $idContrato = $objEmpleado['idContrato_v'];
-            }
-        }
         $empleado->emple_codigo = $objEmpleado['codigoEmpleado_v'];
         if ($objEmpleado['cargo_v'] != '') {
             $empleado->emple_cargo = $objEmpleado['cargo_v'];
@@ -1367,7 +1335,7 @@ class EmpleadoController extends Controller
             $empleado->emple_local = $objEmpleado['local_v'];
         }
         $empleado->save();
-        return response()->json($idContrato, 200);
+        return response()->json($objEmpleado, 200);
     }
 
     public function updateFoto(Request $request, $idE)
@@ -1423,8 +1391,6 @@ class EmpleadoController extends Controller
         $ids = $request->ids;
         $fechaBaja = $request->fechaBaja;
         $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
-        //$empleado = empleado::find(explode(",",$ids))->first();
-
         $array = array();
         foreach ($empleado as $t) {
             $t->emple_estado = 0;
@@ -1435,10 +1401,8 @@ class EmpleadoController extends Controller
         $arrayEmp[] = explode(",", $ids);
 
         foreach ($arrayEmp[0] as $emp) {
-            $historial_empleado = new historial_empleado();
-            $historial_empleado->emple_id =  $emp;
-            $historial_empleado->tipo_Hist =  0;
-            $historial_empleado->fecha_historial = $fechaBaja;
+            $historial_empleado = historial_empleado::where('emple_id', '=', $emp)->whereNull('fecha_baja')->get()->first();
+            $historial_empleado->fecha_baja = $fechaBaja;
             $historial_empleado->save();
         }
         return $historial_empleado->idhistorial_empleado;
@@ -2080,7 +2044,6 @@ class EmpleadoController extends Controller
                 $startArre = carbon::create($tempre->start);
                 $arrayrep->push($startArre->format('Y-m-d'));
             }
-           
         }
         $datos = Arr::flatten($arrayrep);
 
@@ -2089,44 +2052,42 @@ class EmpleadoController extends Controller
 
         /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
 
-        $horarioEmpleado=horario::where('horario_id',$idhorar)->first();
-        $horaInicialF=Carbon::parse($horarioEmpleado->horaI);
-        $horaFinalF=Carbon::parse($horarioEmpleado->horaF);
+        $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
+        $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
+        $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
         $arrayHDentro = collect();
 
-            /*  dd($horarioDentro); */
+        /*  dd($horarioDentro); */
 
-                 foreach($datafecha as $datafechas){
-                     $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
-                     ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
-                     ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
-                     ->where('start', '=', $datafechas)
-                     /* ->where('h.horaI', '=', $idhorar)
+        foreach ($datafecha as $datafechas) {
+            $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+                ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
+                ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
+                ->where('start', '=', $datafechas)
+                /* ->where('h.horaI', '=', $idhorar)
                      ->where('h.horaF', '=', $idhorar) */
-                     ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
-                     ->get();
-                     if($horarioDentro){
-                      foreach($horarioDentro as $horarioDentros){
-                         $horaIDentro=Carbon::parse($horarioDentros->horaI);
-                         $horaFDentro=Carbon::parse($horarioDentros->horaF);
-                         if($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF) ){
+                ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
+                ->get();
+            if ($horarioDentro) {
+                foreach ($horarioDentro as $horarioDentros) {
+                    $horaIDentro = Carbon::parse($horarioDentros->horaI);
+                    $horaFDentro = Carbon::parse($horarioDentros->horaF);
+                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+                    } else {
+                        if ($horaFDentro->gte($horaFinalF)) {
                             $startArreD = carbon::create($horarioDentros->start);
                             $arrayHDentro->push($startArreD->format('Y-m-d'));
-                         }
-                         else{
-                             if($horaFDentro->gte($horaFinalF)){
-                                $startArreD = carbon::create($horarioDentros->start);
-                                $arrayHDentro->push($startArreD->format('Y-m-d'));
-                             }
-                         }
-                     }   
-                     }
-                     
-             }
-             $datosDentroN = Arr::flatten($arrayHDentro);
-             $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
-            /*  dd($datafecha3); */
-         /////////////////////////////////////
+                        }
+                    }
+                }
+            }
+        }
+        $datosDentroN = Arr::flatten($arrayHDentro);
+        $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
+        /*  dd($datafecha3); */
+        /////////////////////////////////////
         foreach ($datafecha3 as $datafechas) {
             $horario_dias = new horario_dias();
             $horario_dias->title = $horas;
@@ -2154,12 +2115,11 @@ class EmpleadoController extends Controller
         }
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
         /* dd($datafechaValida); */
-        if($datafechaValida!=null || $datafechaValida!=[]){
+        if ($datafechaValida != null || $datafechaValida != []) {
             return 'Se ha encontrado cruces al asignar los horarios, inténtalo nuevamente';
-        } else{
+        } else {
             return 'Cambios guardados';
         }
-       
     }
 
     public function vaciardfTem(Request $request)
@@ -2831,8 +2791,6 @@ class EmpleadoController extends Controller
         $ids = $request->ids;
         $fechaAlta = $request->fechaAlta;
         $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
-        //$empleado = empleado::find(explode(",",$ids))->first();
-
         $array = array();
         foreach ($empleado as $t) {
             $t->emple_estado = 1;
@@ -2845,26 +2803,10 @@ class EmpleadoController extends Controller
 
             $historial_empleadoN = new historial_empleado();
             $historial_empleadoN->emple_id =  $emp;
-            $historial_empleadoN->tipo_Hist =  1;
-            $historial_empleadoN->fecha_historial =  $fechaAlta;
+            $historial_empleadoN->fecha_alta = $fechaAlta;
             $historial_empleadoN->save();
         }
         return $historial_empleadoN->idhistorial_empleado;
-    }
-    public function historialEmpleado(Request $request)
-    {
-        $idempleado = $request->idempleado;
-
-        $historial_empleado = DB::table('historial_empleado')->where('historial_empleado.emple_id', $idempleado)
-            ->leftJoin('doc_empleado', 'historial_empleado.idhistorial_empleado', '=', 'doc_empleado.idhistorial_empleado')
-            ->select('tipo_Hist', 'fecha_historial')
-            ->selectRaw('GROUP_CONCAT(doc_empleado.rutaDocumento) as rutaDocumento')
-
-            ->groupBy('historial_empleado.idhistorial_empleado')
-            ->where('historial_empleado.emple_id', $idempleado)
-            ->get();
-
-        return $historial_empleado;
     }
 
     public function storeDocumentoBaja(Request $request, $data)

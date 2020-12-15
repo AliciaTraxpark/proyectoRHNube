@@ -1162,18 +1162,19 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Dar de baja </h5>
+                        Dar de baja
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-
                         <div class="col-xl-12">
                             <div class="form-group row">
-                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de baja o cese
-                                    de empleado(s) :</label>
+                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
+                                    Fecha de baja o cese de empleado(s) :
+                                </label>
                                 <div class="input-group col-md-5 text-center"
                                     style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
                                     <input type="text" id="fechaInput" class="col-md-12 form-control" data-input>
@@ -1187,23 +1188,13 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
-                        {{--  <div class="col-md 12" id="divbajaF">
-                            <div class="form-group" style="margin-top: 10px;">
-                                <label for="bajaFile" class="btn btn-tertiary js-labelFile">
-                                    <i class="icon fa fa-check"></i>
-                                <span class="js-fileName">Choose a file</span>
-                                </label>
-                                <input type="file"  accept=
-                                "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                 application/pdf, image/*"  multiple="true"  class="input-file" id="bajaFile">
-                              </div>
-                        </div> --}}
                         <div class="col-md 12" id="divbajaF">
                             <label for="">Adjuntar documento(s)</label>
                             <div class="form-group">
-                                <input type="file" name="bajaFile" id="bajaFile" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                             application/pdf" class="inputfile inputfile-1"
-                                    data-multiple-caption="{count} archivos seleccionados" multiple />
+                                <input type="file" name="bajaFile" id="bajaFile"
+                                    accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                    class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados"
+                                    multiple />
                                 <label for="bajaFile">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
                                         height="17" viewBox="0 0 20 17">
@@ -1218,12 +1209,86 @@ use App\proyecto_empleado;
                     </form>
                 </div>
                 <div class="modal-footer">
-
-                    <button type="button" id="cerrarE" class="btn btn-light btn-sm "
-                        data-dismiss="modal">Cancelar</button>
-
+                    <button type="button" id="cerrarE" class="btn btn-light btn-sm" data-dismiss="modal">
+                        Cancelar
+                    </button>
                     <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarEliminacion()"
-                        style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
+                        style="background-color: #163552;" class="btn btn-sm">
+                        Confirmar
+                    </button>
+
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- MODAL DE BAJA --}}
+    <div id="modalBajaHistorial" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBajaHistorial"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Dar de baja
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:cerrarModalHistorial()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <input type="hidden" id="idHistorialEdit">
+                        <div class="col-xl-12">
+                            <div class="form-group row">
+                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
+                                    Fecha de baja o cese de empleado(s) :
+                                </label>
+                                <div class="input-group col-md-5 text-center"
+                                    style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaBajaEdit">
+                                    <input type="text" id="fechaBajaInput" class="col-md-12 form-control" data-input>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control flatpickr">
+                                            <a class="input-button" data-toggle>
+                                                <i class="uil uil-calender"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md 12" id="divbajaEdit">
+                            <label for="">
+                                Adjuntar documento(s)
+                            </label>
+                            <div class="form-group">
+                                <input type="file" name="bajaFileEdit" id="bajaFileEdit"
+                                    accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                    class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados"
+                                    multiple />
+                                <label for="bajaFileEdit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                        height="17" viewBox="0 0 20 17">
+                                        <path
+                                            d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                        </path>
+                                    </svg>
+                                    <span class="iborrainputfile">Seleccionar archivo</span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        onclick="javascript:cerrarModalHistorial()">
+                        Cancelar
+                    </button>
+                    <button type="button" name="confirmarE" onclick="confirmarBajaHistorial()"
+                        style="background-color: #163552;" class="btn btn-sm">
+                        Confirmar
+                    </button>
 
 
                 </div>
@@ -1722,7 +1787,7 @@ use App\proyecto_empleado;
     </div><!-- /.modal -->
     <!-- /.modal -->
     {{-- FINALIZACION DE MODAL --}}
-    <!-----Modales Editar-->
+    {{-- MODALES DE EDITAR --}}
     <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE" aria-hidden="true"
         data-backdrop="static">
         <div class="modal-dialog">
@@ -1763,7 +1828,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="cargomodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -1804,7 +1869,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="centrocmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -1846,7 +1911,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="localmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -1887,7 +1952,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="nivelmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodalE"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
@@ -1978,7 +2043,7 @@ use App\proyecto_empleado;
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
                         Condición de Pago</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#fechasmodalE').modal('show'); javascript:limpiarEditar()">
+                        onclick="$('#contratoDetallesmodalE').modal('show');javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2004,7 +2069,8 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="$('#fechasmodalE').modal('show');javascript:limpiarEditar()"
+                    <button type="button"
+                        onclick="$('#contratoDetallesmodalE').modal('show');javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
                 </div>
@@ -2012,173 +2078,6 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div id="fechasmodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalE"
-        aria-hidden=" true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#163552;">
-                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles de contrato
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick=" var idcontratoEditN=$('#v_contratoTipoH').val(); $('#v_contrato').val(idcontratoEditN); $('#form-ver').modal('show');javascript:limpiarEditar()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="formContrato_v">
-                    <form action="javascript:agregarFechasA()">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="v_idContrato" id="v_idContrato">
-                        <input type="hidden" id="estadoCond" value="false">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="sw-default">Condición Pago <a
-                                            onclick="$('#fechasmodalE').modal('hide');" href="#condicionmodalE"
-                                            data-toggle="modal" data-target="#condicionmodalE"><i
-                                                class="uil uil-plus"></i></a></label>
-                                    <select class="form-control" name="v_condicion" id="v_condicion" required>
-                                        <option value="">Seleccionar</option>
-                                        @foreach ($condicionP as $condicion)
-                                        <option class="" value="{{$condicion->id}}">
-                                            {{$condicion->condicion}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="sw-default">Monto</label>
-                                    <input type="number" step=".01" class="form-control" name="v_monto" id="v_monto">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
-                                    incorrecta.</span>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
-                                            required="">
-                                            <option value="0">Día</option>
-                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                {{$i}}
-                                                </option>
-                                                @endfor
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select class="form-control" name="m_mes_fechaIE" id="m_mes_fechaIE"
-                                            required="">
-                                            <option value="0">Mes</option>
-                                            <option class="" value="1">Ene.</option>
-                                            <option class="" value="2">Feb.</option>
-                                            <option class="" value="3">Mar.</option>
-                                            <option class="" value="4">Abr.</option>
-                                            <option class="" value="5">May.</option>
-                                            <option class="" value="6">Jun.</option>
-                                            <option class="" value="7">Jul.</option>
-                                            <option class="" value="8">Ago.</option>
-                                            <option class="" value="9">Set.</option>
-                                            <option class="" value="10">Oct.</option>
-                                            <option class="" value="11">Nov.</option>
-                                            <option class="" value="12">Dic.</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
-                                            required="">
-                                            <option value="0">Año</option>
-                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
-                                                {{$i}}
-                                                </option>
-                                                @endfor
-                                        </select>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md 12">
-                                        {{-- <label for="">Adjuntar documento(s)</label> --}}
-                                        <div class="form-group" style="margin-top: 14px;     margin-bottom: 0px;">
-
-                                            <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                                             application/pdf" class="inputfile inputfile-1"
-                                                data-multiple-caption="{count} archivos seleccionados" multiple
-                                                id="exampleFormControlFile1_ed">
-                                            <label for="exampleFormControlFile1_ed">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
-                                                    width="20" height="17" viewBox="0 0 20 17">
-                                                    <path
-                                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
-                                                    </path>
-                                                </svg>
-                                                <span class="iborrainputfile">Adjuntar archivo</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                    <label for="">Fecha Indefinida</label>
-                                    <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE">
-                                </div>
-                                <div id="ocultarFechaE">
-                                    <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
-                                        incorrecta.</span>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <select class="form-control" name="m_dia_fechaFE" id="m_dia_fechaFE">
-                                                <option value="0">Día</option>
-                                                @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                    {{$i}}</option>
-                                                    @endfor
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <select class="form-control" name="m_mes_fechaFE" id="m_mes_fechaFE">
-                                                <option value="0">Mes</option>
-                                                <option class="" value="1">Ene.</option>
-                                                <option class="" value="2">Feb.</option>
-                                                <option class="" value="3">Mar.</option>
-                                                <option class="" value="4">Abr.</option>
-                                                <option class="" value="5">May.</option>
-                                                <option class="" value="6">Jun.</option>
-                                                <option class="" value="7">Jul.</option>
-                                                <option class="" value="8">Ago.</option>
-                                                <option class="" value="9">Set.</option>
-                                                <option class="" value="10">Oct.</option>
-                                                <option class="" value="11">Nov.</option>
-                                                <option class="" value="12">Dic.</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaFE" id="m_ano_fechaFE">
-                                                <option value="0">Año</option>
-                                                @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
-                                                    </option>
-                                                    @endfor
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="var idcontratoEditNu=$('#v_contratoTipoH').val(); $('#v_contrato').val(idcontratoEditNu); $('#form-ver').modal('show');javascript:limpiarEditar()"
-                        class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
-                </div>
-                </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
     <div id="fechasmodalVer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalVer"
         aria-hidden=" true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -2269,9 +2168,6 @@ use App\proyecto_empleado;
                                     <input type="checkbox" id="checkboxFechaIEV" name="checkboxFechaIEV">
                                 </div>
                                 <div id="ocultarFechaEV">
-
-                                    <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
-                                        incorrecta.</span>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select class="form-control" name="m_dia_fechaFEV" id="m_dia_fechaFEV">
@@ -2320,9 +2216,455 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- /.modal -->
-    <!---->
+    </div>
+    {{-- DETALLES DE CONTRATO --}}
+    <div id="contratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="contratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Contrato
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idContratoD">
+                    <form action="javascript:editarDetalleCE()">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label for="sw-default">
+                                        Contrato
+                                    </label>
+                                    <select class="form-control" name="v_contrato" id="v_contrato"
+                                        onchange="$('#detalleContratoE').show();" tabindex="5" required disabled>
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($tipo_cont as $tipo_conts)
+                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <label>
+                                    Alta de empleado:
+                                </label>
+                                <div class="form-group row">
+                                    <div class="input-group col-md-10 text-rigth"
+                                        style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaAltaEdit">
+                                        <input type="text" id="fechaAltaInput" class="col-md-12 form-control"
+                                            data-input>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control flatpickr text-center">
+                                                <a class="input-button" data-toggle>
+                                                    <i class="uil uil-calender"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-2 border-top">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sw-default">
+                                                Condición Pago
+                                                <a onclick="$('#contratoDetallesmodalE').modal('hide');"
+                                                    href="#condicionmodalE" data-toggle="modal"
+                                                    data-target="#condicionmodalE"><i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
+                                            <select class="form-control" name="v_condicion" id="v_condicion" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($condicionP as $condicion)
+                                                <option class="" value="{{$condicion->id}}">
+                                                    {{$condicion->condicion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sw-default">Monto</label>
+                                            <input type="number" step=".01" class="form-control" name="v_monto"
+                                                id="v_monto">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
+                                                    required="">
+                                                    <option value="0">Día</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_mes_fechaIE" id="m_mes_fechaIE"
+                                                    required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                        padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
+                                                    required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
+                                                    <input type="file"
+                                                        accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                        class="inputfile inputfile-1"
+                                                        data-multiple-caption="{count} archivos seleccionados" multiple
+                                                        id="fileDetalleE">
+                                                    <label for="fileDetalleE">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
+                                                            width="20" height="17" viewBox="0 0 20 17">
+                                                            <path
+                                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="iborrainputfile">Adjuntar archivo</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pt-2">
+                                                <div class="dropdown" id="documentosDetalles">
+                                                    <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                                        style="cursor: pointer">
+                                                        <div class="avatar-sm font-weight-bold">
+                                                            <span
+                                                                class="avatar-title rounded bg-soft-primary text-primary">
+                                                                <i class="uil-file-plus-alt font-size-18"></i>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                        id="documentosxDetalle">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
+                                            <label for="">Fecha Indefinida</label>
+                                            <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE">
+                                        </div>
+                                        <div id="ocultarFechaE">
+                                            <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_dia_fechaFE"
+                                                        id="m_dia_fechaFE">
+                                                        <option value="0">Día</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_mes_fechaFE"
+                                                        id="m_mes_fechaFE">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                            padding-right: 5px;" name="m_ano_fechaFE"
+                                                        id="m_ano_fechaFE">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                            value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                        class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {{-- FINALIZACION --}}
+    {{-- NUEVO DETALLE CONTRATO --}}
+    <div id="contratoDetallesmodalEN" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Contrato
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:agregarContratoA()">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label for="sw-default">Contrato
+                                        <a onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
+                                            data-toggle="modal"><i class="uil uil-plus"
+                                                style="color: darkblue;cursor: pointer;"></i>
+                                        </a>
+                                    </label>
+                                    <select class="form-control" name="v_contratoN" id="v_contratoN" tabindex="5"
+                                        required>
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($tipo_cont as $tipo_conts)
+                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <label>
+                                    Alta de empleado:
+                                </label>
+                                <div class="form-group row">
+                                    <div class="input-group col-md-10 text-rigth"
+                                        style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaAltaEditN">
+                                        <input type="text" id="fechaAltaInputN" class="col-md-12 form-control"
+                                            data-input>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control flatpickr text-center">
+                                                <a class="input-button" data-toggle>
+                                                    <i class="uil uil-calender"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-2 border-top">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sw-default">Condición Pago <a
+                                                    onclick="$('#fechasmodalE').modal('hide');" href="#condicionmodalE"
+                                                    data-toggle="modal" data-target="#condicionmodalE"><i
+                                                        class="uil uil-plus"></i></a></label>
+                                            <select class="form-control" name="v_condicionN" id="v_condicionN" required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($condicionP as $condicion)
+                                                <option class="" value="{{$condicion->id}}">
+                                                    {{$condicion->condicion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sw-default">Monto</label>
+                                            <input type="number" step=".01" class="form-control" name="v_montoN"
+                                                id="v_montoN">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_dia_fechaIEN" id="m_dia_fechaIEN"
+                                                    required="">
+                                                    <option value="0">Día</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_mes_fechaIEN" id="m_mes_fechaIEN"
+                                                    required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                        padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
+                                                    required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md 12">
+                                                <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
+                                                    <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                                 application/pdf" class="inputfile inputfile-1"
+                                                        data-multiple-caption="{count} archivos seleccionados" multiple
+                                                        id="exampleFormControlFile1_edN">
+                                                    <label for="exampleFormControlFile1_edN">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
+                                                            width="20" height="17" viewBox="0 0 20 17">
+                                                            <path
+                                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="iborrainputfile">Adjuntar archivo</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
+                                            <label for="">Fecha Indefinida</label>
+                                            <input type="checkbox" id="checkboxFechaIEN" name="checkboxFechaIEN">
+                                        </div>
+                                        <div id="ocultarFechaE">
+                                            <span id="m_validFechaCFEN" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_dia_fechaFE"
+                                                        id="m_dia_fechaFEN">
+                                                        <option value="0">Día</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_mes_fechaFE"
+                                                        id="m_mes_fechaFEN">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                            padding-right: 5px;" name="m_ano_fechaFE"
+                                                        id="m_ano_fechaFEN">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                            value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
+                        class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {{-- FINALIZACION --}}
     <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
         aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -3464,6 +3806,7 @@ use App\proyecto_empleado;
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
 </div>
 <div class="modal fade" id="form-ver" style="font-size: 13px" tabindex="-1" role="dialog" aria-labelledby="form-ver"
     aria-hidden="true" data-backdrop="static">
@@ -3480,12 +3823,12 @@ use App\proyecto_empleado;
                     <ul style="background: #fdfdfd!important;">
                         <li><a href="#persona-step-1">Personales</a></li>
                         <li><a href="#swE-default-step-2">Empresarial</a></li>
-                        <li><a href="#swF-default-step-3">Foto</a></li>
-                        <li><a href="#sw-default-step-4">Calendario</a></li>
-                        <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Actividades</a></li>
-                        <li><a href="#sw-default-step-7">Dispositivo</a></li>
-                        <li><a href="#sw-default-step-8">Historial</a></li>
+                        <li><a href="#sw-default-step-3">Contrato</a></li>
+                        <li><a href="#swF-default-step-4">Foto</a></li>
+                        <li><a href="#sw-default-step-5">Calendario</a></li>
+                        <li><a href="#sw-default-step-6">Horario</a></li>
+                        <li><a href="#sw-default-step-7">Actividades</a></li>
+                        <li><a href="#sw-default-step-8">Dispositivo</a></li>
                     </ul>
                     <input type="hidden" id="estadoP" value="false">
                     <input type="hidden" id="estadoE" value="false">
@@ -3746,15 +4089,7 @@ use App\proyecto_empleado;
                         </div>
                         <div id="swE-default-step-2" style="font-size: 12px!important">
                             <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="v_codigoEmpleado" maxlength="200"
-                                            id="v_codigoEmpleado" tabindex="1" required>
-                                    </div>
-                                </div>
-                                <div class="col-4"><br></div>
-                                <div class="col-4">
+                                <div class="col-12">
                                     <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                             data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
@@ -3780,26 +4115,11 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Contrato
-                                            <a onclick="$('#form-ver').modal('hide');$('#contratomodalE').modal('show');"
-                                                data-toggle="modal"><i class="uil uil-plus"
-                                                    style="color: darkblue;cursor: pointer;"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a id="detalleContratoE" onclick="$('#form-ver').modal('hide');"
-                                                href="#fechasmodalE" data-toggle="modal" data-target="#fechasmodalE"
-                                                data-toggle="tooltip" data-placement="right"
-                                                title="Detalle de Contrato." data-original-title="Detalle de Contrato."
-                                                style="cursor: pointer;"><img
-                                                    src="{{ asset('landing/images/adaptive.svg') }}"
-                                                    height="18"></a></label>
-                                                    <input type="hidden" id="v_contratoTipoH">
-                                        <select class="form-control" name="v_contrato" id="v_contrato"
-                                            onchange="$('#detalleContratoE').show();" tabindex="5" required>
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($tipo_cont as $tipo_conts)
-                                            <option class="" value="{{ $tipo_conts->contrato_id }}">
-                                                {{ $tipo_conts->contrato_descripcion }}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="form-group">
+                                            <label for="sw-default">Codigo Empleado</label>
+                                            <input type="text" class="form-control" name="v_codigoEmpleado"
+                                                maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
+                                        </div>
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-4">
@@ -3861,7 +4181,37 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
                         </div>
-                        <div id="swF-default-step-3" style="font-size: 12px!important">
+                        <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
+                            <div class="row pb-2" id="nuevaAltaEdit" style="display: none">
+                                <div class="col-xl-12 text-left">
+                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
+                                        onclick="$('#contratoDetallesmodalE').modal();$('#form-ver').hide();">
+                                        + Nueva alta
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12">
+                                    <div class="table-responsive-xl">
+                                        <table id="editar_tablaHistorial" class="table"
+                                            style="font-size: 13px!important;">
+                                            <thead style="background: #fafafa;">
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Contrato</th>
+                                                    <th>Documento</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="editar_tbodyHistorial"
+                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="swF-default-step-4" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-12 pb-2">
                                     <div class="float-md-right">
@@ -3881,7 +4231,7 @@ use App\proyecto_empleado;
                             </div> <!-- end row -->
                             <br>
                         </div>
-                        <div id="sw-default-step-4" style="font-size: 12px!important">
+                        <div id="sw-default-step-5" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="float-md-right">
@@ -4064,9 +4414,8 @@ use App\proyecto_empleado;
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                             </div> <!-- end row -->
-
                         </div>
-                        <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="float-md-right">
@@ -4369,8 +4718,7 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </div>
-
-                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
@@ -4484,7 +4832,7 @@ use App\proyecto_empleado;
                             </div><!-- /.modal -->
                             {{-- FINALIZACIÓN DE MODAL --}}
                         </div>
-                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-3">
                                 <div class="col-xl-12 col-sm-12">
                                     <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
@@ -4606,27 +4954,6 @@ use App\proyecto_empleado;
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
-                            <div class="col-md-12">
-                                <label for="">Historial de empleado de altas y bajas</label>
-                            </div>
-
-                            <div class="col-xl-12 col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table id="editar_tablaHistorial" class="table" style="font-size: 13px!important;">
-                                        <thead style="background: #fafafa;">
-                                            <tr>
-                                                <th>Fecha </th>
-                                                <th>Documento</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="editar_tbodyHistorial"
-                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -5354,6 +5681,7 @@ document.getElementsByName("editarEName").remove();
 <script src="{{ asset('landing/js/empleadoA.js') }}"></script>
 <script src="{{ asset('landing/js/dispositivos.js') }}"></script>
 <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
+<script src="{{asset('landing/js/contrato.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 @endsection

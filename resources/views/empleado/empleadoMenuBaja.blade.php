@@ -77,13 +77,9 @@ use App\proyecto_empleado;
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
-{{--  --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
-
 @section('breadcrumb')
-
-
 <style>
     #calendarInv>div.fc-view-container>div>table>tbody {
         background: #f4f4f4;
@@ -363,6 +359,157 @@ use App\proyecto_empleado;
 
     /* FINALIZACION DE RESPONSIVE */
 </style>
+<style>
+    div.dataTables_wrapper div.dataTables_filter {
+        display: none;
+    }
+
+    .table {
+        width: 100% !important;
+    }
+
+    .dataTables_scrollHeadInner {
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.4rem;
+        border-top: 1px solid #edf0f1;
+    }
+
+    .table th {
+        font-size: 12.8px !important
+    }
+
+    .tooltip-arrow,
+    .red-tooltip+.tooltip>.tooltip-inner {
+        background-color: rgb(0, 0, 0);
+    }
+
+    .hidetext {
+        -webkit-text-security: disc;
+        /* Default */
+    }
+
+    .text-wrap {
+        white-space: normal;
+    }
+
+    .width-400 {
+        width: 150px !important;
+    }
+
+    .table-responsive,
+    .dataTables_scrollBody {
+        overflow: visible !important;
+    }
+
+    .alertify .ajs-body .ajs-content {
+        padding: 16px 16px 16px 16px !important;
+    }
+
+    .ajs-body {
+        font: 12.8px !important;
+        padding: 0px !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+        border-top: 1px solid #f6f6f7;
+        border-radius: 0 0 4.8px 4.8px;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-width: 88px;
+        min-height: 35px;
+        padding: 4px 8px 4px 8px;
+    }
+
+    @media (max-width: 767.98px) {
+
+        .dataTable,
+        .dataTables_scrollHeadInner,
+        .dataTables_scrollBody {
+            margin: 0 auto !important;
+            width: 100% !important;
+        }
+
+        table.dataTable>tbody>tr.child ul.dtr-details {
+            display: flex !important;
+            flex-flow: column !important;
+        }
+
+        .width-400 {
+            width: 100% !important;
+        }
+
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+            padding-left: 8% !important;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 406px) {
+
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+            padding-left: 8% !important;
+            width: 100% !important;
+        }
+    }
+
+    .inputfile {
+        width: 0.1px !important;
+        height: 0.1px !important;
+        opacity:  !important overflow: hidden !important;
+        position: absolute !important;
+        z-index: -1 !important;
+    }
+
+    .inputfile+label {
+        max-width: 80% !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        display: inline;
+        overflow: hidden !important;
+        padding: 0.30rem 0.8rem !important;
+    }
+
+    .inputfile+label svg {
+        width: 1em !important;
+        height: 1em !important;
+        vertical-align: middle !important;
+        fill: currentColor !important;
+
+        margin-right: 0.25em !important;
+    }
+
+    .iborrainputfile {
+        font-size: 13.8px !important;
+        font-weight: normal !important;
+
+    }
+
+    /* style 1 */
+
+    .inputfile-1+label {
+        color: #fff !important;
+        background-color: #163552 !important;
+    }
+
+    .inputfile-1:focus+label,
+    .inputfile-1.has-focus+label,
+    .inputfile-1+label:hover {
+        background-color: #1a4063 !important;
+    }
+</style>
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -375,7 +522,9 @@ use App\proyecto_empleado;
 {{-- BOTONES DE CARGAS MASIVAS --}}
 <div class="row page-title titleResponsive" style="padding-right: 20px;">
     <div class="col-md-7">
-        <h4 class="header-title mt-0 "></i>Empleados de baja</h4>
+        <h4 class="header-title mt-0 ">
+            Empleados de baja
+        </h4>
     </div>
 
 </div>
@@ -395,7 +544,6 @@ use App\proyecto_empleado;
                             class="btn btn-sm btn-primary delete_all">
                             Dar de alta
                         </button>
-
                     </div>
                     {{-- FINALIZACION --}}
                     {{-- BUSQUEDA PARA TABLA --}}
@@ -442,198 +590,29 @@ use App\proyecto_empleado;
                 {{-- FINALIZACION DE GIF --}}
                 {{-- TABLA --}}
                 <div id="tabladiv" class="divTableResponsive">
-                    <style>
-                        div.dataTables_wrapper div.dataTables_filter {
-                            display: none;
-                        }
-
-                        .table {
-                            width: 100% !important;
-                        }
-
-                        .dataTables_scrollHeadInner {
-                            margin: 0 auto !important;
-                            width: 100% !important;
-                        }
-
-                        .table th,
-                        .table td {
-                            padding: 0.4rem;
-                            border-top: 1px solid #edf0f1;
-                        }
-
-                        .table th {
-                            font-size: 12.8px !important
-                        }
-
-                        .tooltip-arrow,
-                        .red-tooltip+.tooltip>.tooltip-inner {
-                            background-color: rgb(0, 0, 0);
-                        }
-
-                        .hidetext {
-                            -webkit-text-security: disc;
-                            /* Default */
-                        }
-
-                        .text-wrap {
-                            white-space: normal;
-                        }
-
-                        .width-400 {
-                            width: 150px !important;
-                        }
-
-                        .table-responsive,
-                        .dataTables_scrollBody {
-                            overflow: visible !important;
-                        }
-
-                        .alertify .ajs-body .ajs-content {
-                            padding: 16px 16px 16px 16px !important;
-                        }
-
-                        .ajs-body {
-                            font: 12.8px !important;
-                            padding: 0px !important;
-                            font-family: 'Roboto', sans-serif !important;
-                        }
-
-                        .alertify .ajs-footer {
-                            background: #ffffff;
-                            border-top: 1px solid #f6f6f7;
-                            border-radius: 0 0 4.8px 4.8px;
-                        }
-
-                        .alertify .ajs-footer .ajs-buttons .ajs-button {
-                            min-width: 88px;
-                            min-height: 35px;
-                            padding: 4px 8px 4px 8px;
-                        }
-
-                        @media (max-width: 767.98px) {
-
-                            .dataTable,
-                            .dataTables_scrollHeadInner,
-                            .dataTables_scrollBody {
-                                margin: 0 auto !important;
-                                width: 100% !important;
-                            }
-
-                            table.dataTable>tbody>tr.child ul.dtr-details {
-                                display: flex !important;
-                                flex-flow: column !important;
-                            }
-
-                            .width-400 {
-                                width: 100% !important;
-                            }
-
-                            table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
-                            table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
-                                padding-left: 8% !important;
-                                width: 100% !important;
-                            }
-                        }
-
-                        @media (max-width: 406px) {
-
-                            table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child,
-                            table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
-                                padding-left: 8% !important;
-                                width: 100% !important;
-                            }
-                        }
-
-                        .inputfile {
-                            width: 0.1px !important;
-                            height: 0.1px !important;
-                            opacity:  !important overflow: hidden !important;
-                            position: absolute !important;
-                            z-index: -1 !important;
-                        }
-
-                        .inputfile+label {
-                            max-width: 80% !important;
-                            font-size: 1.25rem !important;
-                            font-weight: 700 !important;
-                            text-overflow: ellipsis !important;
-                            white-space: nowrap !important;
-                            cursor: pointer !important;
-                            display: inline;
-                            overflow: hidden !important;
-                            padding: 0.30rem 0.8rem !important;
-                        }
-
-                        .inputfile+label svg {
-                            width: 1em !important;
-                            height: 1em !important;
-                            vertical-align: middle !important;
-                            fill: currentColor !important;
-
-                            margin-right: 0.25em !important;
-                        }
-
-                        .iborrainputfile {
-                            font-size: 13.8px !important;
-                            font-weight: normal !important;
-
-                        }
-
-                        /* style 1 */
-
-                        .inputfile-1+label {
-                            color: #fff !important;
-                            background-color: #163552 !important;
-                        }
-
-                        .inputfile-1:focus+label,
-                        .inputfile-1.has-focus+label,
-                        .inputfile-1+label:hover {
-                            background-color: #1a4063 !important;
-                        }
-                    </style>
-
                     <table id="tablaEmpleado" class="table nowrap" style="width:100%!important">
                         <thead style="background: #edf0f1;color: #6c757d;" style="width:100%!important">
-                            {{-- <tr style="background: #ffffff">
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                                <th style="border-top: 1px solid #fdfdfd;"></th>
-                            </tr> --}}
                             <tr style="width:100%!important">
-                                <th class="text-center"><input type="checkbox" style="margin-left: 15px" id="selectT">
+                                <th class="text-center">
+                                    <input type="checkbox" style="margin-left: 15px" id="selectT">
                                 </th>
-                                <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <th class="text-center">
+                                    <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                 </th>
-
                                 <th class="text-center">Documento</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
-
                                 <th>Cargo</th>
                                 <th>Área</th>
                             </tr>
                         </thead>
-                        <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr">
-
-                        </tbody>
+                        <tbody style="background:#ffffff;color: #585858;font-size: 12.5px" id="tbodyr"></tbody>
                     </table>
-
                 </div>
                 {{-- FINALIZACION DE TABLA --}}
-            </div> <!-- end card body-->
-        </div> <!-- end card -->
+            </div>
+        </div>
     </div>
-
-
-
-
-
     <div id="fechasmodalVer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodalVer"
         aria-hidden=" true" data-backdrop="static">
         <div class="modal-dialog">
@@ -774,1064 +753,6 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- /.modal -->
-    <!---->
-    <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
-        aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background: #163552;">
-                    <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
-                    <button type="button" class="close" id="cerrarModalEmpleado" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="padding: 0px">
-                    <div class="setup-panel" id="smartwizard" style="background: #ffffff; color:#3d3d3d;">
-                        <ul style="background: #fdfdfd!important;">
-                            <li><a href="#sw-default-step-1">Personales</a></li>
-                            <li><a href="#sw-default-step-2">Empresarial</a></li>
-                            <li><a href="#sw-default-step-3">Foto</a></li>
-                            <li><a href="#sw-default-step-4">Calendario</a></li>
-                            <li><a href="#sw-default-step-5">Horario</a></li>
-                            <li><a href="#sw-default-step-6">Actividades</a></li>
-                            <li><a href="#sw-default-step-7">Dispositivo</a></li>
-
-                        </ul>
-                        <input type="hidden" id="estadoPR" value="false">
-                        <input type="hidden" id="estadoPE" value="false">
-                        <input type="hidden" id="estadoPF" value="false">
-                        <input type="hidden" id="estadoPC" value="false">
-                        <input type="hidden" id="estadoPH" value="false">
-                        <div class="p-3">
-                            <div id="sw-default-step-1" class="setup-content" style="font-size: 12px!important">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <input type="hidden" name="idEmpleado" id="idEmpleado">
-                                        <div class="form-group">
-                                            <label for="sw-default">Tipo Documento</label>
-                                            <span id="validDocumento" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <select class="form-control" placeholder="Tipo Documento " name="documento"
-                                                id="documento" tabindex="1" required>
-                                                <option value="">Seleccionar</option>
-                                                @foreach ($tipo_doc as $tipo_docs)
-                                                <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
-                                                    {{ $tipo_docs->tipoDoc_descripcion }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Apellido Paterno</label>
-                                            <span id="validApPaterno" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <input type="text" class="form-control" name="apPaterno" id="apPaterno"
-                                                tabindex="4" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Correo Electrónico</label>
-                                            <span id="validCorreo" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <span id="emailR" style="color: red;">*Correo registrado</span>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                tabindex="7">
-                                        </div>
-                                    </div> <!-- end col -->
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default">Num. Documento</label>
-                                            <span id="validNumDocumento" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <span id="numR" style="color: red;">*Num. registrado</span>
-                                            <input type="text" class="form-control" name="numDocumento"
-                                                id="numDocumento" onkeypress="return isNumeric(event)"
-                                                oninput="maxLengthCheck(this)" tabindex="2" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Apellido Materno</label>
-                                            <span id="validApMaterno" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <input type="text" class="form-control" name="apMaterno" id="apMaterno"
-                                                tabindex="5" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Celular</label>
-                                            <span id="validCel" style="color: red;">*Número
-                                                incorrecto.</span>
-                                            <div class="row">
-                                                <div class="col-4 pselect">
-                                                    <select class="form-control" id="codigoCelular">
-                                                        <option value="+51" selected>+51</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-8">
-                                                    <input type="number" class="form-control" name="celular"
-                                                        id="celular" tabindex="8" maxlength="9"
-                                                        onkeypress="return isNumeric(event)"
-                                                        oninput="maxLengthCheck(this)" pattern="/^9{1}|[0-9]{8,8}+">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        {{-- <div class="float-md-right">
-                                            <a onclick="javascript:mostrarContenido()" data-toggle="tooltip"
-                                                data-placement="left" title="ver vídeo"
-                                                data-original-title="ver vídeo">
-                                                <img src="{{asset('landing/images/play.svg')}}" height="40">
-                                        </a>
-                                    </div> --}}
-                                    <div class="form-group">
-                                        <label for="sw-default">Fecha Nacimiento</label>
-                                        <span id="validFechaC" style="color: red;display: none;">*Fecha
-                                            incorrecta.</span>
-                                        <div class="row fechasResponsive">
-                                            <div class="col-md-4 prigth">
-                                                <select class="form-control" name="dia_fecha" id="dia_fecha"
-                                                    required="">
-                                                    <option value="0">Día</option>
-                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                        {{$i}}</option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 prigth pleft">
-                                                <select class="form-control" name="mes_fecha" id="mes_fecha"
-                                                    required="">
-                                                    <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 pAnio pleft">
-                                                <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
-                                                    <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
-                                                        {{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                        {{--  <input type="text" data-custom-class="form-control" id="fechaN" tabindex="3"
-                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"> --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nombres</label>
-                                        <span id="validNombres" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="nombres" id="nombres" tabindex="6"
-                                            required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Teléfono</label>
-                                        <div class="row">
-                                            <div class="col-4 pselect">
-                                                <select class="form-control" id="codigoTelefono">
-                                                    <option value="01" selected>01</option>
-                                                    <option value="41">41</option>
-                                                    <option value="43">43</option>
-                                                    <option value="83">83</option>
-                                                    <option value="54">54</option>
-                                                    <option value="66">66</option>
-                                                    <option value="76">76</option>
-                                                    <option value="84">84</option>
-                                                    <option value="67">67</option>
-                                                    <option value="62">62</option>
-                                                    <option value="56">56</option>
-                                                    <option value="64">64</option>
-                                                    <option value="44">44</option>
-                                                    <option value="74">74</option>
-                                                    <option value="65">65</option>
-                                                    <option value="82">82</option>
-                                                    <option value="53">53</option>
-                                                    <option value="63">63</option>
-                                                    <option value="73">73</option>
-                                                    <option value="51">51</option>
-                                                    <option value="42">42</option>
-                                                    <option value="52">52</option>
-                                                    <option value="72">72</option>
-                                                    <option value="61">61</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="number" class="form-control" name="telefono" id="telefono"
-                                                    tabindex="9" maxlength="9" onkeypress="return isNumeric(event)"
-                                                    oninput="maxLengthCheck(this)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección</label>
-                                        <input type="text" class="form-control" name="direccion" id="direccion"
-                                            tabindex="10" required>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección Domiciliara</label>
-                                        <select class="form-control" placeholder="Departamento" name="departamento"
-                                            id="dep" tabindex="11" required>
-                                            <option value="">Departamento</option>
-                                            @foreach ($departamento as $departamentos)
-                                            <option class="" value="{{ $departamentos->id }}">
-                                                {{ $departamentos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Lugar Nacimiento</label>
-                                        <select class="form-control" placeholder="Departamento" name="departamento"
-                                            id="departamento" tabindex="14" required>
-                                            <option value="">Departamento</option>
-                                            @foreach ($departamento as $departamentos)
-                                            <option class="" value="{{ $departamentos->id }}">
-                                                {{ $departamentos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for="">Género</label>
-                                        <span id="validGenero" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="tipo" id="tipo" value="Femenino" required>
-                                            Femenino
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Provincia " name="provincia"
-                                            id="prov" tabindex="12" required>
-                                            <option value="">Provincia</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Provincia " name="provincia"
-                                            id="provincia" tabindex="15" required>
-                                            <option value="">Provincia</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="tipo" id="tipo" value="Masculino" required>
-                                            Masculino
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="distrito" id="dist"
-                                            tabindex="13" required>
-                                            <option value="">Distrito</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="distrito"
-                                            id="distrito" tabindex="16" required>
-                                            <option value="">Distrito</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio" data-toggle="tooltip"
-                                            data-placement="right" title=""
-                                            data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
-                                            <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
-                                            Personalizado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div> <!-- end row -->
-                        </div>
-                        <div id="sw-default-step-2" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="codigoEmpleado"
-                                            id="codigoEmpleado" tabindex="1" onfocus="javascript:valorCodigoEmpleado()"
-                                            data-toggle="tooltip" data-placement="right" maxlength="200"
-                                            title="Número de documento por defecto o Ingrese un código interno"
-                                            data-original-title="Número de documento por defecto o Ingrese un código interno">
-                                    </div>
-                                </div>
-                                <div class="col-4"><br></div>
-                                <div class="col-4">
-                                    <div class="float-md-right">
-                                        <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
-                                            data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                            <img src="{{asset('landing/images/play.svg')}}" height="40">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Cargo <a onclick="$('#form-registrar').modal('hide');"
-                                                href="#cargomodal" data-toggle="modal" data-target="#cargomodal"><i
-                                                    class="uil uil-plus"></i></a></label>
-                                        <select class="form-control" name="cargo" id="cargo" tabindex="2">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($cargo as $cargos)
-                                            <option class="" value="{{ $cargos->cargo_id }}">
-                                                {{ $cargos->cargo_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Contrato <a
-                                                onclick="$('#form-registrar').modal('hide');" href="#contratomodal"
-                                                data-toggle="modal" data-target="#contratomodal"><i
-                                                    class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a id="detalleContrato" onclick="$('#form-registrar').modal('hide');"
-                                                href="#fechasmodal" data-toggle="modal" data-target="#fechasmodal"
-                                                data-toggle="tooltip" data-placement="right"
-                                                title="Detalle de Contrato." data-original-title="Detalle de Contrato."
-                                                style="cursor: pointer;"><img
-                                                    src="{{ asset('landing/images/adaptive.svg') }}"
-                                                    height="18"></a></label>
-                                        <select class="form-control" name="contrato" id="contrato"
-                                            onchange="$('#detalleContrato').show();" tabindex="5" required>
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($tipo_cont as $tipo_conts)
-                                            <option value="{{ $tipo_conts->contrato_id }}">
-                                                {{ $tipo_conts->contrato_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Área <a onclick="$('#form-registrar').modal('hide');"
-                                                href="#areamodal" data-toggle="modal" data-target="#areamodal"><i
-                                                    class="uil uil-plus"></i></a></label>
-                                        <select class="form-control" name="area" id="area" tabindex="3">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($area as $areas)
-                                            <option class="" value="{{ $areas->area_id }}">
-                                                {{ $areas->area_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default" class="labelNivel">Nivel del Colaborador<a
-                                                onclick="$('#form-registrar').modal('hide');" href="#nivelmodal"
-                                                data-toggle="modal" data-target="#nivelmodal"><i
-                                                    class="uil uil-plus"></i></a></label>
-                                        <select class="form-control" name="nivel" id="nivel" tabindex="6">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($nivel as $niveles)
-                                            <option class="" value="{{ $niveles->nivel_id }}">
-                                                {{ $niveles->nivel_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Centro Costo <a
-                                                onclick="$('#form-registrar').modal('hide');" href="#centrocmodal"
-                                                data-toggle="modal" data-target="#centrocmodal"><i
-                                                    class="uil uil-plus"></i></a></label>
-                                        <select class="form-control" name="centroc" id="centroc" tabindex="4">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($centro_costo as $centro_costos)
-                                            <option class="" value="{{ $centro_costos->centroC_id }}">
-                                                {{ $centro_costos->centroC_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Local <a onclick="$('#form-registrar').modal('hide');"
-                                                href="#localmodal" data-toggle="modal" data-target="#localmodal"><i
-                                                    class="uil uil-plus"></i></a></label>
-                                        <select class="form-control" name="local" id="local" tabindex="7">
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($local as $locales)
-                                            <option class="" value="{{ $locales->local_id }}">
-                                                {{ $locales->local_descripcion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-
-                        </div>
-                        <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
-                            <div class="col-12 pb-2">
-                                <div class="float-md-right">
-                                    <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
-                                        data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="file" name="file" id="file" accept="image/*">
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-
-                        </div>
-                        <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    @if (count($calendario) === 0)
-                                    <div class="col-md-12 text-center">
-                                        <h5>No existe calendarios registrados</h5>
-                                    </div>
-                                    <div style="display: none">
-                                        <div class="col-md-12" id="calendarInv" style="display: none!important">
-                                        </div>
-                                    </div>
-                                </div>
-                                @else
-                                <div class="form-group row">
-                                    <div class="col-md-1"></div>
-                                    <label style="font-weight: 600;font-size: 14px;" class="col-lg-3 col-form-label"
-                                        for="simpleinput">Calendario
-                                        de empleado:</label>
-                                    <div class="col-lg-5">
-                                        <span id="vallidCalend" style="color: red;display:none">Eliga
-                                            calendario</span>
-                                        <select name="" id="selectCalendario"
-                                            class="form-control col-lg-6 form-control-sm" style="margin-top: 4px;">
-                                            <option hidden selected>Asignar calendario</option>
-                                            @foreach ($calendario as $calendarios)
-                                            <option class="" value="{{ $calendarios->calen_id }}">
-                                                {{ $calendarios->calendario_nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2" id="opborrar" style="display: none">
-
-                                        <div class="btn-group mt-2 mr-1">
-                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="color: #fff;
-                                                    background-color: #4a5669;
-                                                    border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false"><img
-                                                    src="{{ asset('admin/images/borrador.svg') }}" height="15">
-                                                Borrar <i class="icon"><span
-                                                        data-feather="chevron-down"></span></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" onclick="vaciardFeria()">Dias
-                                                    feriados</a>
-                                                <a class="dropdown-item" onclick="vaciarddescanso()">Dias
-                                                    descanso</a>
-                                                {{-- <a class="dropdown-item"
-                                                            onclick="vaciardlabTem()">D.
-                                                            laborables</a> --}}
-                                                <a class="dropdown-item" onclick="vaciardNlabTem()">D. no
-                                                    laborables</a>
-                                                <a class="dropdown-item" onclick="vaciardIncidTem()">Incidencia</a>
-
-                                            </div>
-                                        </div><!-- /btn-group -->
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10" id="calendarInv"></div>
-                            @endif
-                            <input type="hidden" id="pruebaEnd">
-                            <input type="hidden" id="pruebaStar">
-                            <div class="col-md-10" id="calendar" style="display: none"></div>
-                            <div class="col-md-1"></div>
-                            <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                                <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width:670px;  margin-top: 150px; left:0px;">
-
-                                    <div class="modal-content">
-
-                                        <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <button type="button" style=" max-width: 18em!important;"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="laborableTem()"><img
-                                                                src="{{ asset('admin/images/dormir.svg') }}"
-                                                                height="20"> Descanso</button>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <button type="button" style=" max-width: 18em!important;"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="nolaborableTem()"><img
-                                                                src="{{ asset('admin/images/evento.svg') }}"
-                                                                height="20"> Día no laborable</button>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <button type="button" style=" max-width: 18em!important;"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
-                                                                src="{{ asset('admin/images/calendario.svg') }}"
-                                                                height="20"> Día feriado</button>
-                                                    </div>
-                                                    <div class="col-md-3 text-right">
-                                                        {{-- <button type="button"
-                                                                    style=" max-width: 18em!important;"
-                                                                    class="btn btn-secondary btn-sm "
-                                                                    onclick="registrarDdescanso()"><img
-                                                                        src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                        height="20"> Incidencia</button>
-                                                        --}}
-                                                        <button style=" max-width: 18em!important;"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="agregarinciden()"><img
-                                                                src="{{ asset('admin/images/calendarioInc.svg') }}"
-                                                                height="20"> Incidencia</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer"
-                                            style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <button type="button" class="btn btn-soft-primary btn-sm "
-                                                            onclick="$('#calendarioAsignar').modal('hide')">Cancelar</button>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-                            <div id="myModalFeriado" class="modal fade" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header" style="background-color: #163552;">
-                                            <h5 class="modal-title" id="myModalLabel"
-                                                style="color:#ffffff;font-size:15px">Agregar nuevo feriado</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="form-group col-md-12">
-                                                    <div class="col-md-6">
-                                                        <label for="">Nombre de día feriado:</label>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <form action="javascript:diaferiadoTem()">
-                                                            <input class="form-control" type="text" id="nombreFeriado"
-                                                                required>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-7 text-right">
-                                                        <button type="button" class="btn btn-light"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                    </div>
-                                                    <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                                                        <button type="submit" class="btn btn-secondary">Aceptar</button>
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-                        </div>
-                    </div>
-                    <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="float-md-right">
-                                    <a onclick="javascript:mostrarContenidoH()" data-toggle="tooltip"
-                                        data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-12 text-center" id="detallehorario"></div>
-                            <div class="col-md-1"><br></div>
-                            <div class="col-md-10" id="mensajeOc"><label for="">Aún no ha
-                                    seleccionado un calendario en el paso anterior.</label></div>
-                            <div class="col-md-10" id="calendar2" style="display: none"></div>
-                            <div class="col-md-1"><br></div>
-                        </div>
-                        <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog"
-                            aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-                            <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                style="width:400px;  margin-top: 150px; left: 30px;">
-                                <div class="modal-content">
-                                    <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <span id="errorSel_re"
-                                                        style="color: #8b3a1e;display:none">Seleccione un
-                                                        horario</span>
-                                                    <select data-plugin="customselect"
-                                                        class="form-control custom-select custom-select-sm"
-                                                        name="selectHorario" id="selectHorario">
-                                                        <option hidden selected disabled>Seleccionar horario
-                                                        </option>
-                                                        @foreach ($horario as $horarios)
-                                                        <option class="" value="{{$horarios->horario_id}}">
-                                                            {{$horarios->horario_descripcion}} <span
-                                                                style="font-size: 11px;font-style: oblique">({{$horarios->horaI}}-{{$horarios->horaF}})</span>
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 text-left" style="padding-left: 0px;">
-                                                    <button class="btn btn-primary btn-sm"
-                                                        style="background-color: #183b5d;border-color:#62778c;margin-top: 5px"
-                                                        onclick="abrirHorario()">+</button>
-                                                </div>
-                                                <div class="col-md-12"><br>
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="fueraHSwitch_re">
-                                                        <label class="custom-control-label"
-                                                            for="fueraHSwitch_re">Trabajar fuera de horario</label>
-                                                    </div>
-                                                    {{--  <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="horCompSwitch_re">
-                                                        <label class="custom-control-label"
-                                                            for="horCompSwitch_re">Horario compensable.</label>
-                                                    </div> --}}
-                                                    <div class="row">
-                                                        <div class="custom-control custom-switch mb-2"
-                                                            style="left: 12px;">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="horAdicSwitch_re">
-                                                            <label class="custom-control-label"
-                                                                for="horAdicSwitch_re">Permite marcar horas
-                                                                adicionales.</label>
-
-                                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <select id="nHorasAdic_re" style="display: none;bottom: 3px;"
-                                                            class="form-control form-control-sm col-md-3">
-                                                            <option value="0.5">0.5 hora </option>
-                                                            <option value="1">1 hora </option>
-                                                            <option value="2">2 horas </option>
-                                                            <option value="3">3 horas </option>
-                                                            <option value="4">4 horas </option>
-                                                            <option value="5">5 horas </option>
-                                                            <option value="6">6 horas </option>
-                                                            <option value="7">7 horas </option>
-                                                            <option value="8">8 horas </option>
-                                                            <option value="9">9 horas </option>
-                                                            <option value="10">10 horas </option>
-                                                            <option value="11">11 horas </option>
-                                                            <option value="12">12 horas </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer"
-                                        style="padding-top: 5px; padding-bottom: 5px;background: #f1f0f0;">
-                                        <div class="col-md-12 text-right" style="padding-right: 0px;">
-                                            <button type="button" class="btn btn-light  btn-sm " style="background: #f3f3f3;
-                                                border-color: #f3f3f3;"
-                                                onclick="$('#horarioAsignar').modal('hide')">Cancelar</button>
-                                            <button type="button" class="btn btn-primary btn-sm"
-                                                style="background-color: #183b5d;border-color:#62778c;"
-                                                onclick="agregarHorarioSe_regis()">Registrar</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-                        <div id="horarioAgregar" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
-                            aria-hidden="true" data-backdrop="static">
-                            <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 600px;">
-
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color:#163552;">
-                                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                            Asignar horario</h5>
-                                        <button type="button" class="close" onclick="$('#horarioAgregar').modal('hide')"
-                                            aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" style="font-size:12px!important">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <form id="frmHor" action="javascript:registrarHorario()">
-                                                    <div class="row">
-
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <label for="">Descripción del horario:</label>
-                                                                <input type="text" class="form-control form-control-sm"
-                                                                    id="descripcionCa" maxlength="60" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="">Hora de
-                                                                    inicio(24h):</label>
-                                                                <input type="text" id="horaI"
-                                                                    class="form-control form-control-sm" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="">Hora de fin(24h):</label>
-                                                                <input type="text" id="horaF"
-                                                                    class="form-control form-control-sm" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="">Horas obligadas:</label>
-                                                                <div class="input-group form-control-sm" style="bottom: 4px;
-                                                                   padding-left: 0px; padding-right: 0px;">
-
-                                                                    <input type="text"
-                                                                        class="form-control form-control-sm"
-                                                                        id="horaOblig" required>
-                                                                    <div class="input-group-prepend ">
-                                                                        <div class="input-group-text form-control-sm"
-                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                            Horas</div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="">Tolerancia al ingreso(Min):</label>
-                                                                <div class="input-group form-control-sm " style="bottom: 4px;
-                                                                    padding-left: 0px; padding-right: 0px;">
-                                                                    <input type="number" value="0"
-                                                                        class="form-control form-control-sm" min="0"
-                                                                        id="toleranciaH" required>
-                                                                    <div class="input-group-prepend  ">
-                                                                        <div class="input-group-text form-control-sm "
-                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                            Minutos</div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="">Tolerancia a la salida(Min):</label>
-                                                                <div class="input-group form-control-sm " style="bottom: 4px;
-                                                                   padding-left: 0px; padding-right: 0px;">
-                                                                    <input type="number" value="0"
-                                                                        class="form-control form-control-sm" min="0"
-                                                                        id="toleranciaSalida" required>
-                                                                    <div class="input-group-prepend  ">
-                                                                        <div class="input-group-text form-control-sm "
-                                                                            style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                            Minutos</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4" id="divOtrodia" style="display: none">
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="otroDCh" checked disabled>
-                                                                <label class="form-check-label" for="otroDCh"
-                                                                    style="margin-top: 2px;font-weight: 700">La hora
-                                                                    fin de este horario pertenece al siguiente
-                                                                    día.</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="custom-control custom-switch mb-2">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="SwitchTardanza">
-                                                                <label class="custom-control-label" for="SwitchTardanza"
-                                                                    style="font-weight: bold;padding-top: 1px">Controlar
-                                                                    tardanza</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="custom-control custom-switch mb-2">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="SwitchPausa">
-                                                                <label class="custom-control-label" for="SwitchPausa"
-                                                                    style="font-weight: bold;padding-top: 1px">Pausas en
-                                                                    el horario</label> &nbsp; <span id="fueraRango"
-                                                                    style="color: #80211e;display: none">Hora no esta
-                                                                    dentro de rango de horario</span> <span
-                                                                    id="errorenPausas"
-                                                                    style="color: #80211e;display: none">- Fin de pausa
-                                                                    debe ser mayor a inicio pausa</span>
-
-                                                            </div>
-                                                        </div>
-                                                        <div id="divPausa" class="col-md-12" style="display: none">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-5">
-                                                                        <label for=""
-                                                                            style="font-weight:600">Descripción</label>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <label for="" style="font-weight:600">Inicio
-                                                                            pausa(24h)</label>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <label for="" style="font-weight:600">Fin
-                                                                            pausa(24h)</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div id="inputPausa">
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-12 text-right">
-                                                    <button type="button" class="btn btn-light btn-sm "
-                                                        onclick="$('#horarioAgregar').modal('hide')">Cancelar</button>
-                                                    <button type="submit" name="" style="background-color: #163552;"
-                                                        class="btn btn-sm ">Guardar</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-                    </div>
-                    <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-body border p-2">
-                                        <div class="row">
-                                            <div class="col-xl-12 text-left">
-                                                <div class="float-md-right">
-                                                    <a onclick="javascript:mostrarContenidoA()" data-toggle="tooltip"
-                                                        data-placement="left" title="ver vídeo"
-                                                        data-original-title="ver vídeo">
-                                                        <img src="{{asset('landing/images/play.svg')}}" height="40">
-                                                    </a>
-                                                </div>
-                                                <button type="button" class="btn btn-sm mt-1"
-                                                    style="background-color: #163552;"
-                                                    onclick="$('#regactividadTarea').modal();">+
-                                                    Asignar actividad
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="row pt-3">
-                                            <div class="col-xl-12 col-sm-12">
-                                                <div class="table-responsive-xl scroll">
-                                                    <table class="table" style="font-size: 13px!important;">
-                                                        <thead style="background: #fafafa;font-size: 14px">
-                                                            <tr>
-                                                                <th>Actividad</th>
-                                                                <th>Estado</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="regtablaBodyTarea"
-                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
-                            aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static">
-                            <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 550px;">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color:#163552;">
-                                        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                            Asignar Actividad
-                                        </h5>
-                                    </div>
-                                    <div class="modal-body" style="font-size:12px!important">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <form action="javascript:registrarNuevaActividadTarea()"
-                                                    id="formActvidadesReg">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-xl-12">
-                                                            <label style="font-size: 14px">
-                                                                Actividades
-                                                            </label>
-                                                            <a class="mr-3" data-toggle="tooltip" data-placement="right"
-                                                                title="registrar nueva actividad"
-                                                                data-original-title="registrar nueva actividad"
-                                                                onclick="$('#form-registrar').modal('hide');$('#ActividadTareaGE').modal();">
-                                                                <i class="uil uil-plus"
-                                                                    style="color: darkblue;cursor: pointer;font-weight: bold;font-size: 13px"></i>
-                                                            </a>
-                                                            <select multiple="multiple" data-plugin="customselect"
-                                                                class="form-control" multiple="multiple"
-                                                                id="regEmpleadoActiv"></select>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-12 text-right">
-                                                    <button type="button" class="btn btn-light btn-sm "
-                                                        onclick="$('#regactividadTarea').modal('toggle');javascript:limpiarSelect()">Cancelar</button>
-                                                    <button type="submit" name="" style="background-color: #163552;"
-                                                        class="btn btn-sm ">Guardar</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-                    </div>
-                    <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="row pb-1 pl-2">
-                                            <div class="col">
-                                                <div class="custom-control custom-switch mb-2">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="customSwitchCR1">
-                                                    <label class="custom-control-label" for="customSwitchCR1"
-                                                        style="font-weight: bold">Modo Control
-                                                        Remoto</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body border p-2" id="bodyModoControlRR">
-                                        <div class="row">
-                                            <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm dropdown-toggle"
-                                                    style="background-color:#163552;" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">+
-                                                    Agregar
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item" id="agregarWindows">WINDOWS</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-xl-12 col-sm-12">
-                                                <div class="table-responsive-xl">
-                                                    <table id="tablaDispositivo" class="table"
-                                                        style="font-size: 13px!important;">
-                                                        <thead style="background: #fafafa;">
-                                                            <tr>
-                                                                <th>Tipo Dispositivo</th>
-                                                                <th>Nombre</th>
-                                                                <th>Activación de Dispositivo</th>
-                                                                <th>Codigo</th>
-                                                                <th>Enviado</th>
-                                                                <th>Estado</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="tbodyDispositivo"
-                                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchCR2">
-                                                        <label class="custom-control-label" for="customSwitchCR2"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoControlAR">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                    </div>
-
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 </div>
@@ -1839,7 +760,7 @@ use App\proyecto_empleado;
 <!--VER EMPLEADO-->
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;" >
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
@@ -2310,123 +1231,6 @@ use App\proyecto_empleado;
         </div>
     </div>
 </div><!-- /.modal -->
-
-<div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Agregar
-                    nueva incidencia</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <form id="frmIncidenciaCa" action="javascript:modalIncidencia()">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm" id="descripcionInciCa"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6"><label for=""><br></label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa">
-                                        <label class="form-check-label" for="descuentoCheckCa">Aplicar
-                                            descuento</label>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                            <button type="submit" name="" style="background-color: #163552;"
-                                class="btn btn-sm">Guardar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="modalIncidencia_ed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva
-                    incidencia
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="descripcionInciCa_ed" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6"><label for=""><br></label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
-                                        <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
-                                            descuento</label>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-                            <button type="submit" name="" style="background-color: #163552;"
-                                class="btn btn-sm">Guardar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
 </div>
 {{-- MODAL DE ALTA --}}
 <div id="modalAlta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAlta" aria-hidden="true"
@@ -2435,14 +1239,14 @@ use App\proyecto_empleado;
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                    Dar de alta </h5>
+                    Dar de alta
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-
                     <div class="col-xl-12">
                         <div class="form-group row">
                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de alta de
@@ -2502,9 +1306,6 @@ use App\proyecto_empleado;
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
-
-
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 <script>
@@ -2547,16 +1348,6 @@ use App\proyecto_empleado;
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-
-            if(data.length>0){
-                $('#btnContinuar').prop("disabled",false);
-                $('#btnContinuar').attr('title', 'Continuar');
-            }
-            else{
-                $('#btnContinuar').prop("disabled",true);
-                $('#btnContinuar').attr('title', 'Registre al menos un empleado para poder continuar');
-
-            }
             var tbody = "";
             for (var i = 0; i < data.length; i++) {
                 tbody +=
@@ -2719,11 +1510,6 @@ use App\proyecto_empleado;
                 };
 
             });
-           /*  $(window).on('resize', function() {
-            $('#example').css('width', '100%');
-            table.draw(true);
-        }); */
-
             CheckBoxs.on('change', function (e) {
                 CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
                 seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
@@ -2770,76 +1556,6 @@ function altaEmpleado() {
             return false;
         } else {
             $('#modalAlta').modal('show');
-
-         /*    bootbox.confirm({
-        title: "Dar de alta",
-        message:
-            "¿Esta seguro que desea dar de alta a este empleado?",
-        buttons: {
-            confirm: {
-                label: "Aceptar",
-                className: "btn-success",
-            },
-            cancel: {
-                label: "Cancelar",
-                className: "btn-light",
-            },
-        },
-        callback: function (result) {
-            if (result == true) {
-                var allVals = [];
-
-
-        $(".sub_chk:checked").each(function () {
-            allVals.push($(this).attr('data-id'));
-        });
-        var join_selected_values = allVals.join(",");
-        var table = $('#tablaEmpleado').DataTable();
-        $.ajax({
-            url: "/empleado/darAlta",
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                419: function () {
-                    location.reload();
-                }
-            },
-            data: 'ids=' + join_selected_values,
-            success: function (data) {
-
-
-                RefreshTablaEmpleado();
-                $.notify({
-                    message: '\nEl empleado(s) se dio de alta',
-                    icon: 'admin/images/checked.svg',
-                }, {
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #ffffff;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#289c26;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            },
-            error: function (data) {
-                alert(data.responseText);
-            }
-        });
-
-            }
-        },
-    }); */
-
         }
 
     }
@@ -3114,16 +1830,7 @@ function RefreshTablaEmpleadoBajaArea() {
         },
     });
 }
-
 </script>
-{{-- <script src="{{asset('landing/js/tabla.js')}}"></script> --}}
-{{-- <script src="{{ asset('admin/assets/libs/bootstrap-fileinput/piexif.min.js') }} "></script>
-<script src="{{ asset('admin/assets/libs/bootstrap-fileinput/sortable.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap-fileinput/purify.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap-fileinput/theme.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap-fileinput/es.js') }}"></script> --}}
-
 
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>

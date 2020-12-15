@@ -157,7 +157,6 @@ Route::get('/empleadosdeBaja', 'EmpleadoController@empleadosBaja')->middleware('
 Route::get('tablaempleado/refreshBaja', 'EmpleadoController@refresTablaEmpBaja');
 Route::post('tablaempleado/refreshAreaBaja', 'EmpleadoController@refresTablaAreBaja');
 Route::post('empleado/darAlta', 'EmpleadoController@darAltaEmpleado');
-Route::post('/empleado/historial', 'EmpleadoController@historialEmpleado');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
@@ -179,6 +178,12 @@ Route::post('/registrar/contrato', 'contratoController@store');
 // CONDICION DE PAGO
 Route::post('/registrar/condicion', 'condicionPagoController@store');
 
+// HISTORIAL DEL EMPLEADO
+Route::post('/empleado/historial', 'contratoController@historialEmpleado');
+Route::post('/bajaHistorial', 'contratoController@bajaHistorialEmpleado');
+Route::get('/detalleC', 'contratoController@detallesContrato');
+Route::post('/editDetalleC', 'contratoController@editarContrato');
+Route::post('/archivosEditC/{id}', 'contratoController@agregarArchivosEdit');
 //TAREAS
 Route::get('/tareas', 'ControlController@index');
 Route::get('/tareas/show', 'ControlController@show');
