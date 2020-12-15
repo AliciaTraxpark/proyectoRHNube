@@ -103,7 +103,7 @@ class dispositivosController extends Controller
             $dispositivosAc->dispo_codigo=$codigo;
             $dispositivosAc->save();
 
-           $mensaje = "RH nube - Codigo de validacion " . $codigo;
+           $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
            $curl = curl_init();
            curl_setopt_array($curl, array(
                CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -139,7 +139,7 @@ class dispositivosController extends Controller
         $dispositivosAc->dispo_estado=1;
         $dispositivosAc->dispo_codigo=$codigo;
         $dispositivosAc->save();
-       $mensaje = "RH nube - Codigo de validacion " . $codigo;
+        $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
        $curl = curl_init();
        curl_setopt_array($curl, array(
            CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -172,7 +172,7 @@ class dispositivosController extends Controller
 
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo=$dispositivosAc->dispo_codigo;
-       $mensaje = "RH nube - Codigo de validacion " . $codigo;
+        $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
        $curl = curl_init();
        curl_setopt_array($curl, array(
            CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
