@@ -666,7 +666,7 @@ class apiVersionDosController extends Controller
                                 $token = JWTAuth::encode($payload);
                                 $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
 
-                                //* TIEMPO EN EL SERVIDOR 
+                                //* TIEMPO EN EL SERVIDOR
                                 $fecha = Carbon::now('America/Lima');
                                 $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                                 return response()->json(array(
@@ -713,7 +713,7 @@ class apiVersionDosController extends Controller
                                     $payload = $factory->make();
                                     $token = JWTAuth::encode($payload);
                                     $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
-                                    //* TIEMPO EN EL SERVIDOR 
+                                    //* TIEMPO EN EL SERVIDOR
                                     $fecha = Carbon::now('America/Lima');
                                     $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                                     return response()->json(array(
@@ -761,7 +761,7 @@ class apiVersionDosController extends Controller
                                         $token = JWTAuth::encode($payload);
                                         $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
 
-                                        //* TIEMPO EN EL SERVIDOR 
+                                        //* TIEMPO EN EL SERVIDOR
                                         $fecha = Carbon::now('America/Lima');
                                         $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                                         return response()->json(array(

@@ -2019,6 +2019,7 @@ class EmpleadoController extends Controller
 
         $incidencia_dias->save();
     }
+
     public function guardarhorarioempleado(Request $request)
     {
         $datafecha = $request->fechasArray;
@@ -2046,19 +2047,14 @@ class EmpleadoController extends Controller
             }
         }
         $datos = Arr::flatten($arrayrep);
-
         //DIFERENCIA ARRAYS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
-
         /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
-
         $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
         $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
         $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
         $arrayHDentro = collect();
-
         /*  dd($horarioDentro); */
-
         foreach ($datafecha as $datafechas) {
             $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
                 ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
@@ -2076,9 +2072,14 @@ class EmpleadoController extends Controller
                         $startArreD = carbon::create($horarioDentros->start);
                         $arrayHDentro->push($startArreD->format('Y-m-d'));
                     } else {
-                        if ($horaFDentro->gte($horaFinalF)) {
+                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
                             $startArreD = carbon::create($horarioDentros->start);
                             $arrayHDentro->push($startArreD->format('Y-m-d'));
+                        } else {
+                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($startArreD->format('Y-m-d'));
+                            }
                         }
                     }
                 }
@@ -2098,7 +2099,6 @@ class EmpleadoController extends Controller
             $horario_dias->organi_id = session('sesionidorg');
             $horario_dias->save();
             $arrayeve->push($horario_dias);
-
             $horario_empleados = new horario_empleado();
             $horario_empleados->horario_horario_id = $idhorar;
             $horario_empleados->empleado_emple_id = $idempleado;
@@ -2107,7 +2107,6 @@ class EmpleadoController extends Controller
             $horario_empleados->horarioComp = $horaC;
             $horario_empleados->horaAdic = $horaA;
             $horario_empleados->nHoraAdic = $nHoraAdic;
-
             if ($fueraHora == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }

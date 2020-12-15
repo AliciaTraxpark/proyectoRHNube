@@ -21,6 +21,7 @@ use App\User;
 use App\eventos_empleado;
 use Illuminate\Support\Facades\Auth;
 use App\pausas_horario;
+use Carbon\Carbon;
 
 class horarioController extends Controller
 {
@@ -520,7 +521,51 @@ class horarioController extends Controller
                 $horario_dias->organi_id = session('sesionidorg');
                 $horario_dias->save();
 
-                foreach ($idemps as $idempleados) {
+                /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
+
+                $horarioEmpleado=horario::where('horario_id',$temporal_eventosH->id_horario)->first();
+                $horaInicialF=Carbon::parse($horarioEmpleado->horaI);
+                $horaFinalF=Carbon::parse($horarioEmpleado->horaF);
+                $arrayHDentro = collect();
+                ////////////////////////////////////
+                foreach($idemps as $idempsva){
+                    $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+                    ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
+                    ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
+                    ->where('start', '=', $temporal_eventosH->start)
+                    /* ->where('h.horaI', '=', $idhorar)
+                    ->where('h.horaF', '=', $idhorar) */
+                    ->where('horario_empleado.empleado_emple_id', '=', $idempsva)
+                    ->get();
+                    if($horarioDentro){
+                     foreach($horarioDentro as $horarioDentros){
+                        $horaIDentro=Carbon::parse($horarioDentros->horaI);
+                        $horaFDentro=Carbon::parse($horarioDentros->horaF);
+                        if($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF) ){
+                           $startArreD = carbon::create($horarioDentros->start);
+                           $arrayHDentro->push($idempsva);
+                        }
+                        else{
+                            if($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)){
+                               $startArreD = carbon::create($horarioDentros->start);
+                               $arrayHDentro->push($idempsva);
+                            }
+                            else{
+                                if($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)){
+                                   $startArreD = carbon::create($horarioDentros->start);
+                                   $arrayHDentro->push($idempsva);
+                                }
+
+                            }
+                        }
+                    }
+                    }
+
+            }
+            $datosDentroN = Arr::flatten($arrayHDentro);
+             $idemps3 = array_values(array_diff($idemps, $datosDentroN));
+                /////////////////////////////////////
+                foreach ($idemps3 as $idempleados) {
                     $horario_empleado = new horario_empleado();
                     $horario_empleado->horario_horario_id =  $temporal_eventosH->id_horario;
                     $horario_empleado->empleado_emple_id = $idempleados;
@@ -536,6 +581,7 @@ class horarioController extends Controller
                 }
             }
         }
+
         $temporal_evento = temporal_eventos::where('users_id', '=', Auth::user()->id)
             ->where('id_horario', '=', null)->where('temp_horaF', '=', null)->where('textColor', '!=', '#0b1b29')
             ->where('textColor', '!=', '#fff7f7')->get();
@@ -628,6 +674,21 @@ class horarioController extends Controller
                 }
             }
         }
+
+      /*   dd($datosDentroN); */
+      $empleadosMostrar = collect();
+        foreach($datosDentroN as $datosDentroNs ){
+            $empleadosTabla=DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id','e.emple_nDoc', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_id', '=',$datosDentroNs)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+            $empleadosMostrar->push($empleadosTabla);
+        }
+
+        $datosEmpleadosSH = Arr::flatten($empleadosMostrar);
+        return $datosEmpleadosSH;
     }
 
     public function vaciarhor()

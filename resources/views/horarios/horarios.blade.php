@@ -851,7 +851,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia al ingreso(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaH" required>
+                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" max="59" id="toleranciaH" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -863,7 +863,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia a la salida(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaSalida" required>
+                                                   <input type="number" value="0" class="form-control form-control-sm" min="0" max="59" id="toleranciaSalida" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -981,7 +981,7 @@ background-color: #ffffff !important;
                                          <div class="col-md-6">
                                             <div class="form-group">
                                                <label for="">Tolerancia(Min):</label>
-                                               <input type="number" value="0" class="form-control form-control-sm" min="0" id="toleranciaHen" required>
+                                               <input type="number" value="0" class="form-control form-control-sm" min="0" max="59" id="toleranciaHen" required>
                                             </div>
                                          </div>
                                          <div class="col-md-6">
@@ -1118,7 +1118,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia al ingreso(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number"  class="form-control form-control-sm" min="0" id="toleranciaH_ed" required>
+                                                   <input type="number"  class="form-control form-control-sm" min="0" max="59" id="toleranciaH_ed" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -1130,7 +1130,7 @@ background-color: #ffffff !important;
                                                <label for="">Tolerancia a la salida(Min):</label>
                                                <div class="input-group form-control-sm " style="bottom: 4px;
                                                padding-left: 0px; padding-right: 0px;">
-                                                   <input type="number"  class="form-control form-control-sm" min="0" id="toleranciaSalida_ed" required>
+                                                   <input type="number"  class="form-control form-control-sm" min="0" max="59" id="toleranciaSalida_ed" required>
                                                    <div class="input-group-prepend  ">
                                                     <div class="input-group-text form-control-sm " style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px" >Minutos</div>
                                                     </div>
@@ -1331,6 +1331,53 @@ background-color: #ffffff !important;
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="modalEmpleadosHo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog  modal-lg d-flex justify-content-center" style="max-width:800px!important;" >
+
+        <div class="modal-content">
+           <div class="modal-header" style="background-color:#163552;">
+               <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Alerta de inconsistencia</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               <div class="row">
+                   <div class="col-md-12">
+                       <label for="">Empleados que no se pudo registrar horarios</label>
+                   </div>
+                <div class="col-md-12">
+                    <table id="tablaEmpleadoExcel" class="table nowrap" style="font-size: 12.8px;">
+                        <thead style=" background: #edf0f1;color: #6c757d;">
+                            <tr>
+                                <th></th>
+                                <th>DNI</th>
+                                <th>Nombres</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyExcel"></tbody>
+                    </table>
+                </div>
+
+               </div>
+
+           </div>
+           <div class="modal-footer">
+               <div class="col-md-12">
+                   <div class="row">
+                       <div class="col-md-12 text-right" >
+                        <button type="button"  class="btn btn-light " data-dismiss="modal">Cerrar</button>
+
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
 @if (Auth::user())
