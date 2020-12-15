@@ -510,7 +510,8 @@ class apiVersionDosController extends Controller
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 $horaActual = $fecha->isoFormat('HH:mm:ss');
                 $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
-                if ($horario_dias->start == $fechaHoy && Carbon::parse($horaActual)->lte($horaComparar)) {
+                if ($horario_dias->start == $fechaHoy) {
+                    $fechaC = "";
                     if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
                         $despues = new Carbon('tomorrow');
                         $fechaMan = $despues->isoFormat('YYYY-MM-DD');
@@ -520,44 +521,48 @@ class apiVersionDosController extends Controller
                         $horario->horaI = $fechaHoy . " " . $horario->horaI;
                         $horario->horaF = $fechaHoy . " " . $horario->horaF;
                     }
-                    //* CALCULAR TIEMPO POR HORARIO
-                    $horas = DB::table('empleado as e')
-                        ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                        ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
-                        ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
-                        ->select(
-                            DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
-                        )
-                        ->where(DB::raw('DATE(h.start)'), '=', $fechaHoy)
-                        ->where('e.emple_id', '=', $request->get('idEmpleado'))
-                        ->get()
-                        ->first();
-                    $horario->tiempo = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
-                    array_push($respuesta, $horario);
+                    $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                    if (Carbon::parse($horaActual)->lte($horaComparar)) {
+                        //* CALCULAR TIEMPO POR HORARIO
+                        $horas = DB::table('empleado as e')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                            ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                            ->select(
+                                DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
+                            )
+                            ->where(DB::raw('DATE(h.start)'), '=', $fechaHoy)
+                            ->where('e.emple_id', '=', $request->get('idEmpleado'))
+                            ->get()
+                            ->first();
+                        $horario->tiempo = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
+                        array_push($respuesta, $horario);
+                    }
                 } else {
                     if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
                         $fechaAyer = new Carbon('yesterday');
                         $fechaA = $fechaAyer->isoFormat('YYYY-MM-DD');
-                        $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
-                        if ($horario_dias->start == $fechaA && Carbon::parse($horaActual)->lte($horaComparar)) {
-                            //* CALCULAR TIEMPO DE HOARIO
-                            $horas = DB::table('empleado as e')
-                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                                ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
-                                ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
-                                ->select(
-                                    DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
-                                )
-                                ->where(DB::raw('DATE(h.start)'), '=', $fechaA)
-                                ->where('e.emple_id', '=', $request->get('idEmpleado'))
-                                ->get()
-                                ->first();
-                            $horario->tiempo = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
-                            //* ***********************************************
+                        if ($horario_dias->start == $fechaA) {
                             $horario->horaI = $fechaA . " " . $horario->horaI;
                             $horario->horaF = $fechaHoy . " " . $horario->horaF;
+                            $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
                             //* ***********************************************
-                            array_push($respuesta, $horario);
+                            if (Carbon::parse($horaActual)->lte($horaComparar)) {
+                                //* CALCULAR TIEMPO DE HOARIO
+                                $horas = DB::table('empleado as e')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                                    ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                                    ->select(
+                                        DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
+                                    )
+                                    ->where(DB::raw('DATE(h.start)'), '=', $fechaA)
+                                    ->where('e.emple_id', '=', $request->get('idEmpleado'))
+                                    ->get()
+                                    ->first();
+                                $horario->tiempo = $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio;
+                                array_push($respuesta, $horario);
+                            }
                         }
                     }
                 }
