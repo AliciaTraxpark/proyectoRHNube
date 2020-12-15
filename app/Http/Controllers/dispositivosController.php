@@ -235,6 +235,7 @@ class dispositivosController extends Controller
                     $empleados = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
                 } else {
                     $invitado_empleadoIn=DB::table('invitado_empleado as invem')
@@ -272,6 +273,7 @@ class dispositivosController extends Controller
                  $empleados = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
             ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+            ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
             }
 
