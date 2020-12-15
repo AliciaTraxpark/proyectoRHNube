@@ -64,7 +64,7 @@ Route::post('/calendario/seleccionados', 'calendarioController@empSeleccionados'
 Route::post('/calendario/yearCale', 'calendarioController@yearCale');
 //PERSONA
 //persona
-Route::get('registro/persona', 'registroPController@index')->name('registroPersona');
+/* Route::get('registro/persona', 'registroPController@index')->name('registroPersona'); */
 Route::get('registroInvitado/{idinEncr}', 'delegarInvController@vistaRegistroInv');
 Route::post('/persona/store', 'registroPController@registrarDatos')->name('persona');
 Route::POST('persona/create', 'RegistroPController@create')->name('registerPersona');
