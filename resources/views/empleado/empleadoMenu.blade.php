@@ -2367,16 +2367,15 @@ use App\proyecto_empleado;
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 pt-2">
+                                            <div class="col-md-6 pt-3">
                                                 <div class="dropdown" id="documentosDetalles">
                                                     <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                                         style="cursor: pointer">
-                                                        <div class="avatar-sm font-weight-bold">
-                                                            <span
-                                                                class="avatar-title rounded bg-soft-primary text-primary">
-                                                                <i class="uil-file-plus-alt font-size-18"></i>
-                                                            </span>
-                                                        </div>
+                                                        <span class="badge badge-soft-primary text-primary">
+                                                            <i class="uil-file-plus-alt font-size-18"></i>
+                                                            &nbsp;
+                                                            Documentos
+                                                        </span>
                                                     </a>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
                                                         id="documentosxDetalle">

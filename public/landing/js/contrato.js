@@ -75,19 +75,20 @@ function mostrarDetallesContrato(id) {
                 var dataD = data.rutaDocumento.split(',');
                 var itemsD = "";
                 $.each(dataD, function (index, value) {
-
+                    var mostrarC = value.substr(13, value.length);
                     itemsD += `<div class="dropdown-item">
-                                        <div class="col-xl-12" style="padding-left: 0px;">
-                                            <div class="media-body">
-                                                <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2"><span style="vertical-align:middle;">${value}</span></a>
-                                            </div>
-                                            <div class="float-right mt-1">
-                                                <a href="documEmpleado/'${value}" target="_blank" class="p-2">
-                                                    <i class="uil-download-alt font-size-18"></i>
-                                                </a>
-                                            </div>
+                                    <div class="col-xl-12" style="padding-left: 0px;">
+                                        <div class="float-left mt-1">
+                                            <a href="documEmpleado/${value}" target="_blank" class="p-2">
+                                                <i class="uil-download-alt font-size-18"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
+                                                <span class="d-inline-block text-truncate" style="max-width: 100px;font-size:12px">${mostrarC}</span>
+                                            </a>
                                         </div>
-                                    </div>`;
+                                    </div>
+                                </div>`;
                 });
                 $('#documentosxDetalle').append(itemsD);
             }
@@ -139,22 +140,24 @@ function historialEmp() {
                         <div class="dropdown" id="documentos${i}">
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
-                                <div class="avatar-sm font-weight-bold mr-3">
-                                    <span class="avatar-title rounded bg-soft-primary text-primary">
-                                        <i class="uil-file-plus-alt font-size-18"></i>
-                                    </span>
-                                </div>
+                                <span class="badge badge-soft-primary text-primary">
+                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                </span>
+                                &nbsp;
+                                Documentos
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">`;
                         $.each(idsV, function (index, value) {
+                            var mostrarC = value.substr(13, value.length);
                             trVer += `<div class="dropdown-item">
                                         <div class="col-xl-12" style="padding-left: 0px;">
-                                            <div class="media-body">
-                                                <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2"><span style="vertical-align:middle;">${value}</span></a>
-                                            </div>
-                                            <div class="float-right mt-1">
-                                                <a href="documEmpleado/'${value}" target="_blank" class="p-2">
+                                            <div class="float-left mt-1">
+                                                <a href="documEmpleado/${value}" target="_blank" class="p-2">
                                                     <i class="uil-download-alt font-size-18"></i>
+                                                </a>
+                                                &nbsp;
+                                                <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">${mostrarC}</span>
                                                 </a>
                                             </div>
                                         </div>
