@@ -2466,7 +2466,7 @@ use App\proyecto_empleado;
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:agregarContratoA()">
+                    <form action="javascript:nuevaAltaEditar()">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-6">
@@ -2584,8 +2584,9 @@ use App\proyecto_empleado;
                                         <div class="row">
                                             <div class="col-md 12">
                                                 <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
-                                                    <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                                                 application/pdf" class="inputfile inputfile-1"
+                                                    <input type="file"
+                                                        accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                        class="inputfile inputfile-1"
                                                         data-multiple-caption="{count} archivos seleccionados" multiple
                                                         id="fileArchivosNuevos">
                                                     <label for="fileArchivosNuevos">
@@ -2660,7 +2661,8 @@ use App\proyecto_empleado;
                 <div class="modal-footer">
                     <button type="button" onclick="javascript:limpiarNuevosDatosAlta();$('#form-ver').modal('show');"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;" id="guardarAltaN">Guardar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;"
+                        id="guardarAltaN">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->

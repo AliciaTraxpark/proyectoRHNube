@@ -132,4 +132,28 @@ class contratoController extends Controller
 
         return response()->json(array('status' => true), 200);
     }
+
+    //* REGISTRAR UNA NUEVA ALTA
+    public function nuevaAlta(Request $request)
+    {
+        $contrato = new contrato();
+        $contrato->id_tipoContrato = $request->get('contrato');
+        $contrato->id_condicionPago = $request->get('condicionPago');
+        $contrato->fechaInicio = $request->get('fechaInicial');
+        $contrato->fechaFinal = $request->get('fechaFinal');
+        $contrato->monto = $request->get('monto');
+        $contrato->idEmpleado = $request->get('idEmpleado');
+        $contrato->estado = 1;
+        $contrato->save();
+
+        $idContrato = $contrato->id;
+
+        $historial_empleado = new historial_empleado();
+        $historial_empleado->emple_id = $request->get('idEmpleado');
+        $historial_empleado->fecha_alta = $request->get('fechaAlta');
+        $historial_empleado->idContrato = $idContrato;
+        $historial_empleado->save();
+
+        return response()->json($idContrato, 200);
+    }
 }

@@ -159,7 +159,6 @@ function historialEmp() {
                                             </div>
                                         </div>
                                     </div>`;
-
                         });
                         trVer += `</ul></div></td> `;
                     } else {
@@ -181,7 +180,7 @@ function historialEmp() {
                     trVer += '</td>';
                     trVer += '</tr>';
                     containerVer.append(trVer);
-
+                    mostrarBoton();
                 }
             }
         },
@@ -189,10 +188,12 @@ function historialEmp() {
     });
 }
 //* MOSTRAR BOTON
-if (altaEmpleado) {
-    $('#nuevaAltaEdit').show();
-} else {
-    $('#nuevaAltaEdit').hide();
+function mostrarBoton() {
+    if (altaEmpleado) {
+        $('#nuevaAltaEdit').show();
+    } else {
+        $('#nuevaAltaEdit').hide();
+    }
 }
 function bajaEmpleadoContrato(id) {
     $('#modalBajaHistorial').modal();
@@ -407,9 +408,135 @@ function ModalCerrarCondicion() {
         $('#contratoDetallesmodalEN').modal('show');
     }
 }
+// TODO -> ARCHIVO NUEVO
+function archivosDeNuevo(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($("#fileArchivosNuevos"), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            historialEmp();
+        },
+        error: function () {
+        },
+    });
+}
 //TODO -> NUEVA ALTA
 function nuevaAltaEditar() {
+    var contrato = $('#v_contratoN').val();
+    var fechaAlta = $('#fechaAltaInputN').val();
+    var condicionPago = $('#v_condicionN').val();
+    var monto = $('#v_montoN').val();
+    var fechaInicial;
+    var fechaFinal = "0000-00-00";
+    var idEmpleado = $('#v_id').val();
 
+    //* FUNCIONES DE FECHAS
+    var m_AnioIE = parseInt($('#m_ano_fechaIEN').val());
+    var m_MesIE = parseInt($('#m_mes_fechaIEN').val() - 1);
+    var m_DiaIE = parseInt($('#m_dia_fechaIEN').val());
+    var m1_VFechaIE = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+    if (m1_VFechaIE.isValid()) {
+        $('#m_validFechaCIEN').hide();
+    } else {
+        $('#m_validFechaCIEN').show();
+        return false;
+    }
+    if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
+        fechaInicial = moment([m_AnioIE, m_MesIE, m_DiaIE]).format('YYYY-MM-DD');
+    } else {
+        fechaInicial = '0000-00-00';
+    }
+    if (!$("#checkboxFechaIEN").is(':checked')) {
+        var mf_AnioFE = parseInt($('#m_ano_fechaFEN').val());
+        var mf_MesFE = parseInt($('#m_mes_fechaFEN').val() - 1);
+        var mf_DiaFE = parseInt($('#m_dia_fechaFEN').val());
+        var m1f_VFechaFE = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (m1f_VFechaFE.isValid()) {
+            $('#m_validFechaCFEN').hide();
+        } else {
+            $('#m_validFechaCFEN').show();
+            return false;
+
+        }
+        var momentInicio = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+        var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (!momentInicio.isBefore(momentFinal)) {
+            $('#m_validFechaCFEN').show();
+            return;
+        } else {
+            $('#m_validFechaCFEN').hide();
+        }
+        if (mf_AnioFE != 0 && mf_MesFE != -1 && mf_DiaFE != 0) {
+            fechaFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]).format('YYYY-MM-DD');
+        } else {
+            fechaFinal = '0000-00-00';
+        }
+    }
+    //* *******************************FINALIZACION ******************************************
+    //* AJAX DE NUEVA ALTA
+    $.ajax({
+        type: "POST",
+        url: "/nuevaAlta",
+        data: {
+            contrato: contrato,
+            fechaAlta: fechaAlta,
+            condicionPago: condicionPago,
+            monto: monto,
+            fechaInicial: fechaInicial,
+            fechaFinal: fechaFinal,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            //* REGISTRAR ARCHIVOS EN NUEVA ALTA
+            archivosDeNuevo(data);
+            $('#contratoDetallesmodalEN').modal('toggle');
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nRegisto exitoso.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    element: $('#form-ver'),
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { }
+    });
 }
 //* NUEVA ALTA EN EMPLEADO ACTUALIZAR
 $("#checkboxFechaIEN").on("click", function () {
