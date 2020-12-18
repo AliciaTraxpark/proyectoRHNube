@@ -90,6 +90,7 @@ function mostrarDetallesContrato(id) {
                 fechaValueBaja.setDate(data.fechaBaja);
                 $('#ocultarInputBaja').show();
             } else {
+                fechaValueBaja.setDate(null);
                 $("#ocultarInputBaja").hide();
             }
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
@@ -343,7 +344,7 @@ async function editarDetalleCE() {
     var fechaBaja = ($('#fechaBajaInputE').val() == '') ? null : $('#fechaBajaInputE').val();
     console.log(fechaBaja);
 
-    //* FUNCIONES DE VALIDACION DE FECHAS
+    //* VALIDACION DE FECHAS DE INICIO Y FINAL
     var m_AnioIE = parseInt($('#m_ano_fechaIE').val());
     var m_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
     var m_DiaIE = parseInt($('#m_dia_fechaIE').val());
@@ -383,6 +384,18 @@ async function editarDetalleCE() {
             fechaFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]).format('YYYY-MM-DD');
         } else {
             fechaFinal = '0000-00-00';
+        }
+    }
+    //* VALIDACION DE FECHAS DE BAJA Y ALTA
+    if ($('#fechaBajaInputE').val() != '') {
+        var momentAlta = moment($('#fechaAltaInput').val());
+        var momentBaja = moment($('#fechaBajaInputE').val());
+
+        if (!momentAlta.isBefore(momentBaja)) {
+            $('#validFechaBaja').show();
+            return;
+        } else {
+            $('#validFechaBaja').hide();
         }
     }
     //* FUNCIONES DE VALIDAR ARCHIVO

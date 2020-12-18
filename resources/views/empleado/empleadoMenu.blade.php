@@ -2221,7 +2221,7 @@ use App\proyecto_empleado;
     {{-- DETALLES DE CONTRATO --}}
     <div id="contratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
         aria-labelledby="contratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg d-flex justify-content-center">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -2286,6 +2286,8 @@ use App\proyecto_empleado;
                             </div>
                             <div class="col-xl-6" id="ocultarInputBaja">
                                 <label>Baja de empleado:</label>
+                                <span id="validFechaBaja" style="color: red;display: none;">*Fecha
+                                    incorrecta.</span>
                                 <div class="form-group row">
                                     <div class="input-group col-md-10 text-rigth"
                                         style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaBajaE">
@@ -2473,7 +2475,7 @@ use App\proyecto_empleado;
     {{-- NUEVO DETALLE CONTRATO --}}
     <div id="contratoDetallesmodalEN" class="modal fade" tabindex="-1" role="dialog"
         aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg d-flex justify-content-center">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
