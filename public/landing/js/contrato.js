@@ -1,5 +1,25 @@
+var modalA;
+//* FUNCION ABRIR DE MODAL
+function ModalAbiertoCondicion() {
+    if ($('#contratoDetallesmodalE').is(':visible')) {
+        $('#contratoDetallesmodalE').modal('hide');
+        modalA = 1;
+    } else {
+        $('#contratoDetallesmodalEN').modal('hide');
+        modalA = 2;
+    }
+
+}
+//* FUNCION DE CERRAR DE MODAL
+function ModalCerrarCondicion() {
+    if (modalA === 1) {
+        $('#contratoDetallesmodalE').modal('show');
+    } else {
+        $('#contratoDetallesmodalEN').modal('show');
+    }
+}
 //* ********************FORMULARIO EDITAR ********************* *//
-//: FECHA DE BAJA EN PESTAÑA DE CONTRATO
+//: FECHA DE BAJA EN TABLA CONTRATO
 var fechaValue = $("#fechaBajaEdit").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
@@ -15,7 +35,7 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
-//: FECHA DE ALTA EN PESTAÑA EDIT
+//: FECHA DE ALTA EN DETALLES DE CONTRATO
 var fechaValueAlta = $("#fechaAltaEdit").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
@@ -27,11 +47,20 @@ var fechaValueAlta = $("#fechaAltaEdit").flatpickr({
     allowInput: true,
     disableMobile: "true"
 });
-$(function () {
-    f = moment().format("YYYY-MM-DD");
-    fechaValueAlta.setDate(f);
+//: FECHA DE BAJA EN DETALLES DE CONTRATO
+var fechaValueBaja = $("#fechaBajaE").flatpickr({
+    mode: "single",
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "Y-m-d",
+    locale: "es",
+    maxDate: "today",
+    wrap: true,
+    allowInput: true,
+    disableMobile: "true"
 });
 var altaEmpleado = true;
+//: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
     $.ajax({
         async: false,
@@ -49,11 +78,20 @@ function mostrarDetallesContrato(id) {
             }
         },
         success: function (data) {
+            $('#fileDetalleE').val(null);
+            $('.iborrainputfile').text('Adjuntar archivo');
             $('#v_contrato').val(data.tipoContrato);
             $('#v_condicion').val(data.condPago);
             $('#v_idContrato').val(data.idC);
             $('#v_monto').val(data.monto);
             $('#idContratoD').val(data.idC);
+            fechaValueAlta.setDate(data.fechaAlta);
+            if (data.fechaBaja != null) {
+                fechaValueBaja.setDate(data.fechaBaja);
+                $('#ocultarInputBaja').show();
+            } else {
+                $("#ocultarInputBaja").hide();
+            }
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
             var VFechaDiaIE = new Date(moment(VFechaDaIE));
             $('#m_dia_fechaIE').val(VFechaDiaIE.getDate());
@@ -99,6 +137,7 @@ function mostrarDetallesContrato(id) {
         error: function () { }
     });
 }
+//: CARGAR DATA EN TABLA CONTRATO
 function historialEmp() {
     var value = $('#v_id').val();
     $("#editar_tbodyHistorial").empty();
@@ -190,7 +229,7 @@ function historialEmp() {
         error: function () { }
     });
 }
-//* MOSTRAR BOTON
+//: FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
 function mostrarBoton() {
     if (altaEmpleado) {
         $('#nuevaAltaEdit').show();
@@ -198,11 +237,12 @@ function mostrarBoton() {
         $('#nuevaAltaEdit').hide();
     }
 }
+//: FUNCION DE MOSTRAR MODAL DE DECICION DE BAJA
 function bajaEmpleadoContrato(id) {
     $('#modalBajaHistorial').modal();
     $('#idHistorialEdit').val(id);
 }
-// TODO -> ARCHIVO DE BAJA
+//: FUNCION DE GUARDAR ARCHIVOS DE BAJA 
 function archivosDeBaja(id) {
     //* AJAX DE ARCHICOS
     var formData = new FormData();
@@ -227,6 +267,7 @@ function archivosDeBaja(id) {
         },
     });
 }
+//: FUNCION GUARDAR DATOS DE BAJA
 function confirmarBajaHistorial() {
     var id = $('#idHistorialEdit').val();
     var fechaBaja = $('#fechaBajaInput').val();
@@ -255,12 +296,12 @@ function confirmarBajaHistorial() {
         error: function () { }
     });
 }
-
+//: FUNCION CERRAR MODAL DE CONDICION MODAL
 function cerrarModalHistorial() {
     $('#form-ver').show();
     $('#modalBajaHistorial').modal('toggle');
 }
-//* EMPLEADO ACTUALIZAR
+//: CHECKBOX EN EDITAR DETALLES DE CONTROL
 $("#checkboxFechaIE").on("click", function () {
     if ($("#checkboxFechaIE").is(':checked')) {
         $('#m_dia_fechaFE').val("0");
@@ -271,16 +312,38 @@ $("#checkboxFechaIE").on("click", function () {
         $('#ocultarFechaE').show();
     }
 });
-//TODO ->EDITAR DETALLES DE CONTRATO
-function editarDetalleCE() {
+//: VALIDACION DE ARCHIVOS EN EDITAR DETALLES DE CONTROL
+async function validArchivosEdit() {
+    var respuesta = true;
+    $.each($('#fileDetalleE'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            console.log(sizeKiloBytes, $('#fileDetalleE').attr('size'));
+            if (sizeKiloBytes > parseInt($('#fileDetalleE').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+//: LIMPIAR VALIDACION DE ARCHIVO
+$('#fileDetalleE').on("click", function () {
+    $('#validArchivoEdit').hide();
+});
+//:EDITAR DETALLES DE CONTRATO
+async function editarDetalleCE() {
+    console.log($('#fechaBajaInputE').val());
     var idContrato = $('#idContratoD').val();
     var fechaAlta = $('#fechaAltaInput').val();
     var condicionPago = $('#v_condicion').val();
     var monto = $('#v_monto').val();
     var fechaInicial;
     var fechaFinal = "0000-00-00";
+    var fechaBaja = ($('#fechaBajaInputE').val() == '') ? null : $('#fechaBajaInputE').val();
+    console.log(fechaBaja);
 
-    //* FUNCIONES DE FECHAS
+    //* FUNCIONES DE VALIDACION DE FECHAS
     var m_AnioIE = parseInt($('#m_ano_fechaIE').val());
     var m_MesIE = parseInt($('#m_mes_fechaIE').val() - 1);
     var m_DiaIE = parseInt($('#m_dia_fechaIE').val());
@@ -322,6 +385,15 @@ function editarDetalleCE() {
             fechaFinal = '0000-00-00';
         }
     }
+    //* FUNCIONES DE VALIDAR ARCHIVO
+    const result = await validArchivosEdit();
+    if (!result) {
+        $('#validArchivoEdit').show();
+        return false;
+    } else {
+        $('#validArchivoEdit').hide();
+    }
+    //* ***********************************************
     //* AJAX DE EDITAR
     $.ajax({
         type: "POST",
@@ -329,6 +401,7 @@ function editarDetalleCE() {
         data: {
             idContrato: idContrato,
             fechaAlta: fechaAlta,
+            fechaBaja: fechaBaja,
             condicionPago: condicionPago,
             monto: monto,
             fechaInicial: fechaInicial,
@@ -374,7 +447,7 @@ function editarDetalleCE() {
     $('#contratoDetallesmodalE').modal('toggle');
     $('#form-ver').modal('show');
 }
-// TODO -> ARCHIVO EDIT
+//: REGISTRAR ARCHIVOS DE  EDIT DETALLE DE CONTROL
 function archivosDeEdit(id) {
     //* AJAX DE ARCHICOS
     var formData = new FormData();
@@ -400,7 +473,8 @@ function archivosDeEdit(id) {
         },
     });
 }
-//: FECHA ALTA DE NUEVA ALTA
+//TODO -> ****************** NUEVA ALTA *************************************
+//* FECHA ALTA DE NUEVA ALTA
 var fechaValueA = $("#fechaAltaEditN").flatpickr({
     mode: "single",
     dateFormat: "Y-m-d",
@@ -416,26 +490,7 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValueA.setDate(f);
 });
-var modalA;
-//TODO -> FUNCION DE CERRAR Y ABRIR DE MODAL
-function ModalAbiertoCondicion() {
-    if ($('#contratoDetallesmodalE').is(':visible')) {
-        $('#contratoDetallesmodalE').modal('hide');
-        modalA = 1;
-    } else {
-        $('#contratoDetallesmodalEN').modal('hide');
-        modalA = 2;
-    }
-
-}
-function ModalCerrarCondicion() {
-    if (modalA === 1) {
-        $('#contratoDetallesmodalE').modal('show');
-    } else {
-        $('#contratoDetallesmodalEN').modal('show');
-    }
-}
-// TODO -> ARCHIVO NUEVO
+//* REGISTRAR ARCHIVO EN NUEVA ALTA
 function archivosDeNuevo(id) {
     //* AJAX DE ARCHICOS
     var formData = new FormData();
@@ -455,12 +510,13 @@ function archivosDeNuevo(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            historialEmp();
         },
         error: function () {
         },
     });
 }
-//TODO -> NUEVA ALTA
+//* REGISTRAR NUEVA ALTA
 function nuevaAltaEditar() {
     var contrato = $('#v_contratoN').val();
     var fechaAlta = $('#fechaAltaInputN').val();
@@ -566,7 +622,7 @@ function nuevaAltaEditar() {
         error: function () { }
     });
 }
-//* NUEVA ALTA EN EMPLEADO ACTUALIZAR
+//* CHECKBOX DE FECHA INDEFINADA EN NUEVA ALTA
 $("#checkboxFechaIEN").on("click", function () {
     if ($("#checkboxFechaIEN").is(':checked')) {
         $('#m_dia_fechaFEN').val(0);
@@ -577,7 +633,7 @@ $("#checkboxFechaIEN").on("click", function () {
         $('#ocultarFechaEN').show();
     }
 });
-//TODO -> LIMPIAR
+//* LIMPIAR FORMULARIO EN NUEVA ALTA
 function limpiarNuevosDatosAlta() {
     $('#v_contratoN').val("");
     $('#v_condicionN').val("");
@@ -593,7 +649,7 @@ function limpiarNuevosDatosAlta() {
     $('#m_ano_fechaFEN').val(0);
     $('#contratoDetallesmodalEN').modal('toggle');
 }
-//TODO -> VALIDACION DE NUEVA ALTA
+//* VALIDACION DE NUEVA ALTA
 function validacionNuevaAlta() {
     if ($('#v_contratoN').val() != "") {
         $('#v_condicionN').prop("disabled", false);
@@ -622,4 +678,4 @@ function validacionNuevaAlta() {
     }
 }
 
-//* ************************FINALIZACION********************** **//
+//TODO -> ************************FINALIZACION********************** **//

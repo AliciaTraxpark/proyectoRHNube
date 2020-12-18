@@ -2225,7 +2225,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Contrato
+                        Detalles de Contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2252,14 +2252,44 @@ use App\proyecto_empleado;
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-xl-6 text-right" style="padding-top: 2.2em">
+                                <div class="dropdown" id="documentosDetalles">
+                                    <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                        style="cursor: pointer">
+                                        <span class="badge badge-soft-primary text-primary">
+                                            <i class="uil-file-plus-alt font-size-18"></i>
+                                            &nbsp;
+                                            Documentos
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        id="documentosxDetalle">
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="col-xl-6">
-                                <label>
-                                    Alta de empleado:
-                                </label>
+                                <label>Alta de empleado:</label>
                                 <div class="form-group row">
                                     <div class="input-group col-md-10 text-rigth"
                                         style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaAltaEdit">
                                         <input type="text" id="fechaAltaInput" class="col-md-12 form-control"
+                                            data-input>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control flatpickr text-center">
+                                                <a class="input-button" data-toggle>
+                                                    <i class="uil uil-calender"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6" id="ocultarInputBaja">
+                                <label>Baja de empleado:</label>
+                                <div class="form-group row">
+                                    <div class="input-group col-md-10 text-rigth"
+                                        style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaBajaE">
+                                        <input type="text" id="fechaBajaInputE" class="col-md-12 form-control"
                                             data-input>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text form-control flatpickr text-center">
@@ -2349,37 +2379,27 @@ use App\proyecto_empleado;
 
                                         </div>
                                         <div class="row">
+                                            <div class="col-md-12" id="validArchivoEdit" style="display: none;">
+                                                <span style="color: red;">
+                                                    *El tamaño supera el limite de 4 MB.
+                                                </span>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
                                                     <input type="file"
                                                         accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                                                         class="inputfile inputfile-1"
                                                         data-multiple-caption="{count} archivos seleccionados" multiple
-                                                        id="fileDetalleE">
+                                                        id="fileDetalleE" size="4194304">
                                                     <label for="fileDetalleE">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
-                                                            width="20" height="17" viewBox="0 0 20 17">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                            viewBox="0 0 20 17">
                                                             <path
                                                                 d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
                                                             </path>
                                                         </svg>
                                                         <span class="iborrainputfile">Adjuntar archivo</span>
                                                     </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pt-3">
-                                                <div class="dropdown" id="documentosDetalles">
-                                                    <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
-                                                        style="cursor: pointer">
-                                                        <span class="badge badge-soft-primary text-primary">
-                                                            <i class="uil-file-plus-alt font-size-18"></i>
-                                                            &nbsp;
-                                                            Documentos
-                                                        </span>
-                                                    </a>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                                                        id="documentosxDetalle">
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
