@@ -54,6 +54,11 @@ class contratoController extends Controller
         $historial_empleado->fecha_baja = $fechaBaja;
         $historial_empleado->save();
 
+        $contrato = contrato::where('id', '=', $historial_empleado->idContrato)->get()->first();
+        $contrato->fechaFinal = $request->get('fechaBaja');
+        $contrato->estado = 0;
+        $contrato->save();
+
         return response()->json($historial_empleado->idContrato, 200);
     }
 
@@ -67,7 +72,7 @@ class contratoController extends Controller
             ->join('condicion_pago as cp', 'cp.id', 'c.id_condicionPago')
             ->join('historial_empleado as he', 'he.idContrato', 'c.id')
             ->leftJoin('doc_empleado as de', 'de.idhistorial_empleado', '=', 'he.idhistorial_empleado')
-            ->select('tc.contrato_id as tipoContrato', 'c.id_condicionPago as condPago', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'c.id as idC', 'he.fecha_alta as fechaAlta', 'he.fecha_baja as fechaBaja')
+            ->select('tc.contrato_id as tipoContrato', 'c.id_condicionPago as condPago', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'c.id as idC', 'he.fecha_alta as fechaAlta', 'he.fecha_baja as fechaBaja', 'c.estado')
             ->selectRaw('GROUP_CONCAT(de.rutaDocumento) as rutaDocumento')
             ->where('c.id', '=', $id)
             ->get()

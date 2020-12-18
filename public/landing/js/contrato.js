@@ -35,30 +35,6 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
-//: FECHA DE ALTA EN DETALLES DE CONTRATO
-var fechaValueAlta = $("#fechaAltaEdit").flatpickr({
-    mode: "single",
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "Y-m-d",
-    locale: "es",
-    maxDate: "today",
-    wrap: true,
-    allowInput: true,
-    disableMobile: "true"
-});
-//: FECHA DE BAJA EN DETALLES DE CONTRATO
-var fechaValueBaja = $("#fechaBajaE").flatpickr({
-    mode: "single",
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "Y-m-d",
-    locale: "es",
-    maxDate: "today",
-    wrap: true,
-    allowInput: true,
-    disableMobile: "true"
-});
 var altaEmpleado = true;
 //: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
@@ -78,6 +54,11 @@ function mostrarDetallesContrato(id) {
             }
         },
         success: function (data) {
+            if (data.estado == 0) {
+                $('.ocultarFechaIE').hide();
+            } else {
+                $('.ocultarFechaIE').show();
+            }
             $('#fileDetalleE').val(null);
             $('.iborrainputfile').text('Adjuntar archivo');
             $('#v_contrato').val(data.tipoContrato);
@@ -85,14 +66,6 @@ function mostrarDetallesContrato(id) {
             $('#v_idContrato').val(data.idC);
             $('#v_monto').val(data.monto);
             $('#idContratoD').val(data.idC);
-            fechaValueAlta.setDate(data.fechaAlta);
-            if (data.fechaBaja != null) {
-                fechaValueBaja.setDate(data.fechaBaja);
-                $('#ocultarInputBaja').show();
-            } else {
-                fechaValueBaja.setDate(null);
-                $("#ocultarInputBaja").hide();
-            }
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
             var VFechaDiaIE = new Date(moment(VFechaDaIE));
             $('#m_dia_fechaIE').val(VFechaDiaIE.getDate());
@@ -160,6 +133,7 @@ function historialEmp() {
         success: function (data) {
             var containerVer = $('#editar_tbodyHistorial');
             if (data.length != 0) {
+                altaEmpleado = true;
                 for (var i = 0; i < data.length; i++) {
                     var trVer = '<tr>';
                     trVer += `<td style="vertical-align:middle;">
@@ -263,6 +237,7 @@ function archivosDeBaja(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            historialEmp();
         },
         error: function () {
         },
@@ -299,8 +274,8 @@ function confirmarBajaHistorial() {
 }
 //: FUNCION CERRAR MODAL DE CONDICION MODAL
 function cerrarModalHistorial() {
-    $('#form-ver').show();
     $('#modalBajaHistorial').modal('toggle');
+    $('#form-ver').modal('show');
 }
 //: CHECKBOX EN EDITAR DETALLES DE CONTROL
 $("#checkboxFechaIE").on("click", function () {
@@ -336,13 +311,10 @@ $('#fileDetalleE').on("click", function () {
 async function editarDetalleCE() {
     console.log($('#fechaBajaInputE').val());
     var idContrato = $('#idContratoD').val();
-    var fechaAlta = $('#fechaAltaInput').val();
     var condicionPago = $('#v_condicion').val();
     var monto = $('#v_monto').val();
     var fechaInicial;
     var fechaFinal = "0000-00-00";
-    var fechaBaja = ($('#fechaBajaInputE').val() == '') ? null : $('#fechaBajaInputE').val();
-    console.log(fechaBaja);
 
     //* VALIDACION DE FECHAS DE INICIO Y FINAL
     var m_AnioIE = parseInt($('#m_ano_fechaIE').val());
@@ -386,18 +358,6 @@ async function editarDetalleCE() {
             fechaFinal = '0000-00-00';
         }
     }
-    //* VALIDACION DE FECHAS DE BAJA Y ALTA
-    if ($('#fechaBajaInputE').val() != '') {
-        var momentAlta = moment($('#fechaAltaInput').val());
-        var momentBaja = moment($('#fechaBajaInputE').val());
-
-        if (!momentAlta.isBefore(momentBaja)) {
-            $('#validFechaBaja').show();
-            return;
-        } else {
-            $('#validFechaBaja').hide();
-        }
-    }
     //* FUNCIONES DE VALIDAR ARCHIVO
     const result = await validArchivosEdit();
     if (!result) {
@@ -407,6 +367,8 @@ async function editarDetalleCE() {
         $('#validArchivoEdit').hide();
     }
     //* ***********************************************
+    var fechaAlta = fechaInicial;
+    var fechaBaja = (fechaFinal == '0000-00-00') ? null : fechaFinal;
     //* AJAX DE EDITAR
     $.ajax({
         type: "POST",

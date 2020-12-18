@@ -1221,7 +1221,7 @@ use App\proyecto_empleado;
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODAL DE BAJA --}}
     <div id="modalBajaHistorial" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBajaHistorial"
@@ -1268,8 +1268,7 @@ use App\proyecto_empleado;
                                     class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados"
                                     multiple />
                                 <label for="bajaFileEdit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
-                                        height="17" viewBox="0 0 20 17">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
                                         <path
                                             d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
                                         </path>
@@ -1294,7 +1293,7 @@ use App\proyecto_empleado;
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE AREA EN REGISTRAR --}}
     <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true"
@@ -1340,7 +1339,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE CARGO EN REGISTRAR --}}
     <div id="cargomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargomodal" aria-hidden="true"
@@ -1386,7 +1385,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE CENTRO COSTO EN REGISTRAR --}}
     <div id="centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="centrocmodal"
@@ -1433,7 +1432,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE LOCAL EN REGISTRAR --}}
     <div id="localmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="localmodal" aria-hidden="true"
@@ -1477,7 +1476,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE NIVEL EN REGISTRAR --}}
     <div id="nivelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nivelmodal" aria-hidden="true"
@@ -1784,7 +1783,7 @@ use App\proyecto_empleado;
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <!-- /.modal -->
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODALES DE EDITAR --}}
@@ -2252,7 +2251,7 @@ use App\proyecto_empleado;
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-6 text-right" style="padding-top: 2.2em">
+                            <div class="col-xl-6" style="padding-top: 2.2em">
                                 <div class="dropdown" id="documentosDetalles">
                                     <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                         style="cursor: pointer">
@@ -2265,42 +2264,6 @@ use App\proyecto_empleado;
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
                                         id="documentosxDetalle">
                                     </ul>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <label>Alta de empleado:</label>
-                                <div class="form-group row">
-                                    <div class="input-group col-md-10 text-rigth"
-                                        style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaAltaEdit">
-                                        <input type="text" id="fechaAltaInput" class="col-md-12 form-control"
-                                            data-input>
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text form-control flatpickr text-center">
-                                                <a class="input-button" data-toggle>
-                                                    <i class="uil uil-calender"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6" id="ocultarInputBaja">
-                                <label>Baja de empleado:</label>
-                                <span id="validFechaBaja" style="color: red;display: none;">*Fecha
-                                    incorrecta.</span>
-                                <div class="form-group row">
-                                    <div class="input-group col-md-10 text-rigth"
-                                        style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaBajaE">
-                                        <input type="text" id="fechaBajaInputE" class="col-md-12 form-control"
-                                            data-input>
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text form-control flatpickr text-center">
-                                                <a class="input-button" data-toggle>
-                                                    <i class="uil uil-calender"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2408,8 +2371,9 @@ use App\proyecto_empleado;
                                         <br>
                                         <div class="form-group">
                                             <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="">Fecha Indefinida</label>
-                                            <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE">
+                                            <label for="" class="ocultarFechaIE">Fecha Indefinida</label>
+                                            <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE"
+                                                class="ocultarFechaIE">
                                         </div>
                                         <div id="ocultarFechaE">
                                             <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
@@ -2611,8 +2575,8 @@ use App\proyecto_empleado;
                                                         data-multiple-caption="{count} archivos seleccionados" multiple
                                                         id="fileArchivosNuevos">
                                                     <label for="fileArchivosNuevos">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
-                                                            width="20" height="17" viewBox="0 0 20 17">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                            viewBox="0 0 20 17">
                                                             <path
                                                                 d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
                                                             </path>
