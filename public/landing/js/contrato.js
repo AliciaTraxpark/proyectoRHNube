@@ -688,9 +688,3 @@ function cerrarModalHistorial() {
     $('#modalBajaHistorial').modal('toggle');
     $('#form-ver').modal('show');
 }
-
-//TODO -> ****************EN BLADE EMPLEADO DE BAJA**************
-function darAltaEmpleado(id) {
-    $('#idEmpleadoBaja').val(id);
-    $('#modalAlta').modal();
-}

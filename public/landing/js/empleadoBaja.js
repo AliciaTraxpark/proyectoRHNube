@@ -1171,3 +1171,42 @@ function verDEmpleado(idempleadoVer) {
         });
     });
 }(document, window, 0));
+
+//TODO -> ****************EN BLADE EMPLEADO DE BAJA**************
+//* ABRIR MODAL DE NUEVA ALTA
+function darAltaEmpleado(id) {
+    $('#idEmpleadoBaja').val(id);
+    $('#modalAlta').modal();
+    validacionAlta();
+}
+//* VALIDACION DE NUEVA ALTA
+function validacionAlta() {
+    if ($('#contratoB').val() != "") {
+        $('#condicionB').prop("disabled", false);
+        $('#montoB').prop("disabled", false);
+        $('#m_dia_fechaIB').prop("disabled", false);
+        $('#m_mes_fechaIB').prop("disabled", false);
+        $('#m_ano_fechaIB').prop("disabled", false);
+        $('#fileArchivosB').prop("disabled", false);
+        $('#checkboxFechaIB').prop("disabled", false);
+        $('#m_dia_fechaFB').prop("disabled", false);
+        $('#m_mes_fechaFB').prop("disabled", false);
+        $('#m_ano_fechaFB').prop("disabled", false);
+        $('#guardarAltaB').prop("disabled", false);
+    } else {
+        $('#condicionB').prop("disabled", true);
+        $('#montoB').prop("disabled", true);
+        $('#m_dia_fechaIB').prop("disabled", true);
+        $('#m_mes_fechaIB').prop("disabled", true);
+        $('#m_ano_fechaIB').prop("disabled", true);
+        $('#fileArchivosB').prop("disabled", true);
+        $('#checkboxFechaIB').prop("disabled", true);
+        $('#m_dia_fechaFB').prop("disabled", true);
+        $('#m_mes_fechaFB').prop("disabled", true);
+        $('#m_ano_fechaFB').prop("disabled", true);
+        $('#guardarAltaB').prop("disabled", true);
+    }
+}
+$('#contratoB').on("change", function () {
+    validacionAlta();
+});

@@ -1332,7 +1332,7 @@
                                             style="color: darkblue;cursor: pointer;"></i>
                                     </a>
                                 </label>
-                                <select class="form-control" name="contratoB" id="ContratoB" tabindex="5"
+                                <select class="form-control" name="contratoB" id="contratoB" tabindex="5"
                                     onclick="javascript:validacionAlta()" required>
                                     <option value="">Seleccionar</option>
                                     @foreach ($tipo_cont as $tipo_conts)
@@ -1497,7 +1497,7 @@
             <div class="modal-footer">
                 <button type="button" onclick="javascript:limpiarDatosAlta();$('#modalAlta').modal('toggle');"
                     class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                <button type="submit" class="btn btn-sm" style="background-color:#163552;" id="guardarAltaB">Guardar</button>
             </div>
             </form>
         </div>
@@ -1534,7 +1534,6 @@
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
-<script src="{{asset('landing/js/contrato.js')}}"></script>
 <script src="{{ asset('landing/js/dispositivos.js')}}"></script>
 <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
