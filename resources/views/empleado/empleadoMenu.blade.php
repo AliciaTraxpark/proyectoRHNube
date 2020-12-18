@@ -2443,7 +2443,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Contrato
+                        Detalle Contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="javascript:limpiarNuevosDatosAlta();$('#form-ver').modal('show');">
@@ -2454,7 +2454,7 @@ use App\proyecto_empleado;
                     <form action="javascript:nuevaAltaEditar()">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="sw-default">Contrato
                                         <a onclick="$('#contratoDetallesmodalEN').modal('hide');$('#contratomodalE').modal('show');"
@@ -2470,25 +2470,6 @@ use App\proyecto_empleado;
                                             {{ $tipo_conts->contrato_descripcion }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <label>
-                                    Alta de empleado:
-                                </label>
-                                <div class="form-group row">
-                                    <div class="input-group col-md-10 text-rigth"
-                                        style="padding-left: 10px;padding-right: 0px;top: 0px;" id="fechaAltaEditN">
-                                        <input type="text" id="fechaAltaInputN" class="col-md-12 form-control"
-                                            data-input>
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text form-control flatpickr text-center">
-                                                <a class="input-button" data-toggle>
-                                                    <i class="uil uil-calender"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

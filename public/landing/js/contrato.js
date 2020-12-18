@@ -494,7 +494,6 @@ function archivosDeNuevo(id) {
 //* REGISTRAR NUEVA ALTA
 function nuevaAltaEditar() {
     var contrato = $('#v_contratoN').val();
-    var fechaAlta = $('#fechaAltaInputN').val();
     var condicionPago = $('#v_condicionN').val();
     var monto = $('#v_montoN').val();
     var fechaInicial;
@@ -543,6 +542,7 @@ function nuevaAltaEditar() {
             fechaFinal = '0000-00-00';
         }
     }
+    var fechaAlta = fechaInicial;
     //* *******************************FINALIZACION ******************************************
     //* AJAX DE NUEVA ALTA
     $.ajax({
