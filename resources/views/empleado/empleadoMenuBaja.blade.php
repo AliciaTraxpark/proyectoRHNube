@@ -1,7 +1,3 @@
-@php
-use App\proyecto_empleado;
-@endphp
-
 @extends('layouts.vertical')
 
 @section('css')
@@ -358,8 +354,7 @@ use App\proyecto_empleado;
     }
 
     /* FINALIZACION DE RESPONSIVE */
-</style>
-<style>
+
     div.dataTables_wrapper div.dataTables_filter {
         display: none;
     }
@@ -500,14 +495,14 @@ use App\proyecto_empleado;
     /* style 1 */
 
     .inputfile-1+label {
-        color: #fff !important;
-        background-color: #163552 !important;
+        color: #59687d !important;
+        background-color: #e3eaef !important;
     }
 
     .inputfile-1:focus+label,
     .inputfile-1.has-focus+label,
     .inputfile-1+label:hover {
-        background-color: #1a4063 !important;
+        background-color: #e3eaef !important;
     }
 </style>
 <div id="preloader">
@@ -526,7 +521,6 @@ use App\proyecto_empleado;
             Empleados de baja
         </h4>
     </div>
-
 </div>
 {{-- FINAIZACION --}}
 @endsection
@@ -537,15 +531,6 @@ use App\proyecto_empleado;
             <div class="card-body"
                 style="padding-top: 0px; background: #ffffff; font-size: 12.8px;color: #222222; padding-left:0px;">
                 <div class="row">
-                    {{-- BOTONES --}}
-                    <div class=" col-md-12 text-right btnResponsive">
-                        <button onclick="altaEmpleado()"
-                            style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d"
-                            class="btn btn-sm btn-primary delete_all">
-                            Dar de alta
-                        </button>
-                    </div>
-                    {{-- FINALIZACION --}}
                     {{-- BUSQUEDA PARA TABLA --}}
                     <div class="col-md-12">
                         <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
@@ -755,9 +740,98 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
 </div>
+{{-- CRUD DE CONTRATO EN BAJA --}}
+<div id="contratomodalB" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contratomodalB"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Agregar contrato
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="$('#modalAlta').modal('show');javascript:limpiarBaja()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:agregarContratoB()">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="">Contrato</label>
+                        </div>
+                        <div id="editarContratoB" class="col-md-6"></div>
+                        <div class="col-md-4">
+                            <a id="buscarContratoB" data-toggle="tooltip" data-placement="right" title="editar contrato"
+                                data-original-title="editar contrato" style="cursor: pointer;">
+                                <img src="{{ asset('landing/images/search.svg') }}" height="18">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pt-2">
+                        <input type="text" class="form-control" name="textContratoB" id="textContratoB" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="$('#modalAlta').modal('show');javascript:limpiarBaja()"
+                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
 </div>
-
-<!--VER EMPLEADO-->
+{{-- FINALIZACION DE MODAL --}}
+{{-- CRUD DE CONDICION DE PAGO EN REGISTRAR --}}
+<div id="condicionmodalB" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="condicionmodalB"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Agregar condición de pago
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="$('#modalAlta').modal('show');javascript:limpiarBaja()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:agregarCondicionB()">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="">Condición</label>
+                        </div>
+                        <div id="editarCondicionB" class="col-md-6"></div>
+                        <div class="col-md-4">
+                            <a id="buscarCondicionB" data-toggle="tooltip" data-placement="right"
+                                title="editar condición de pago" data-original-title="editar condición de pago"
+                                style="cursor: pointer;">
+                                <img src="{{asset('landing/images/search.svg')}}" height="18">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pt-2">
+                        <input type="text" class="form-control" name="textCondicionB" id="textCondicionB" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="$('#modalAlta').modal('show');javascript:limpiarBaja()"
+                    class="btn btn-sm btn-light" data-dismiss="modal">
+                    Cerrar
+                </button>
+                <button type="submit" class="btn btn-sm" style="background-color:#163552;">
+                    Guardar
+                </button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION DE MODAL --}}
+{{-- MODAL DE VER EMPLEADO --}}
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
@@ -1231,71 +1305,204 @@ use App\proyecto_empleado;
         </div>
     </div>
 </div><!-- /.modal -->
-</div>
-{{-- MODAL DE ALTA --}}
+{{-- NUEVA ALTA --}}
 <div id="modalAlta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAlta" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg d-flex justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
                     Dar de alta
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:limpiarDatosAlta();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <input type="hidden" id="idEmpleadoBaja">
             <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="col-xl-12">
-                        <div class="form-group row">
-                            <label class="col-lg-7 col-form-label" style="padding-top: 14px;">Fecha de alta de
-                                empleado(s) :</label>
-                            <div class="input-group col-md-5 text-center"
-                                style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelec">
-                                <input type="text" id="fechaInput" class="col-md-12 form-control" data-input>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text form-control flatpickr">
-                                        <a class="input-button" data-toggle>
-                                            <i class="uil uil-calender"></i>
-                                        </a>
+                <form action="javascript:nuevaAlta()">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="sw-default">Contrato
+                                    <a onclick="$('#modalAlta').modal('hide');$('#contratomodalB').modal('show');"
+                                        data-toggle="modal"><i class="uil uil-plus"
+                                            style="color: darkblue;cursor: pointer;"></i>
+                                    </a>
+                                </label>
+                                <select class="form-control" name="contratoB" id="ContratoB" tabindex="5"
+                                    onclick="javascript:validacionAlta()" required>
+                                    <option value="">Seleccionar</option>
+                                    @foreach ($tipo_cont as $tipo_conts)
+                                    <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                        {{ $tipo_conts->contrato_descripcion }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-2 border-top">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="sw-default">Condición Pago
+                                            <a onclick="$('#modalAlta').modal('hide');" href="#condicionmodalB"
+                                                data-toggle="modal" data-target="#condicionmodalB">
+                                                <i class="uil uil-plus"></i>
+                                            </a>
+                                        </label>
+                                        <select class="form-control" name="condicionB" id="condicionB" required>
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($condicionP as $condicion)
+                                            <option class="" value="{{$condicion->id}}">
+                                                {{$condicion->condicion}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="sw-default">Monto</label>
+                                        <input type="number" step=".01" class="form-control" name="montoB" id="montoB">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                    <span id="validFechaCIB" style="color: red;display: none;">*Fecha
+                                        incorrecta.</span>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="m_dia_fechaIB" id="m_dia_fechaIB"
+                                                required="">
+                                                <option value="0">Día</option>
+                                                @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                    {{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="m_mes_fechaIB" id="m_mes_fechaIB"
+                                                required="">
+                                                <option value="0">Mes</option>
+                                                <option class="" value="1">Ene.</option>
+                                                <option class="" value="2">Feb.</option>
+                                                <option class="" value="3">Mar.</option>
+                                                <option class="" value="4">Abr.</option>
+                                                <option class="" value="5">May.</option>
+                                                <option class="" value="6">Jun.</option>
+                                                <option class="" value="7">Jul.</option>
+                                                <option class="" value="8">Ago.</option>
+                                                <option class="" value="9">Set.</option>
+                                                <option class="" value="10">Oct.</option>
+                                                <option class="" value="11">Nov.</option>
+                                                <option class="" value="12">Dic.</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
+                                                name="m_ano_fechaIB" id="m_ano_fechaIB" required>
+                                                <option value="0">Año</option>
+                                                @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                    {{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pt-1" id="validArchivoB" style="display: none;">
+                                            <span style="color: red;">
+                                                *El tamaño supera el limite de 4 MB.
+                                            </span>
+                                        </div>
+                                        <div class="col-md 12">
+                                            <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
+                                                <input type="file"
+                                                    accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                    class="inputfile inputfile-1"
+                                                    data-multiple-caption="{count} archivos seleccionados" multiple
+                                                    id="fileArchivosB" size="4194304">
+                                                <label for="fileArchivosB">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                        viewBox="0 0 20 17">
+                                                        <path
+                                                            d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                        </path>
+                                                    </svg>
+                                                    <span class="iborrainputfile">Adjuntar archivo</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="" style="font-weight: 600">Fecha Final</label><br>
+                                        <label for="">Fecha Indefinida</label>
+                                        <input type="checkbox" id="checkboxFechaIB" name="checkboxFechaIB">
+                                    </div>
+                                    <div id="ocultarFechaEN">
+                                        <span id="m_validFechaCFB" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_dia_fechaFB" id="m_dia_fechaFB">
+                                                    <option value="0">Día</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}</option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_mes_fechaFB" id="m_mes_fechaFB">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control"
+                                                    style="padding-left: 5px;padding-right: 5px;" name="m_ano_fechaFB"
+                                                    id="m_ano_fechaFEN">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md 12">
-                        <label for="">Adjuntar documento(s)</label>
-                        <div class="form-group">
-
-                            <input type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                         application/pdf" class="inputfile inputfile-1"
-                                data-multiple-caption="{count} archivos seleccionados" multiple id="AltaFile">
-                            <label for="AltaFile">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17"
-                                    viewBox="0 0 20 17">
-                                    <path
-                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
-                                    </path>
-                                </svg>
-                                <span class="iborrainputfile">Seleccionar archivo</span>
-                            </label>
-                        </div>
-                    </div>
-                </form>
             </div>
             <div class="modal-footer">
-
-                <button type="button" id="cerrarE" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
-
-                <button type="button" id="confirmarE" name="confirmarE" onclick="confirmarAlta()"
-                    style="background-color: #163552;" class="btn btn-sm ">Confirmar</button>
-
-
+                <button type="button" onclick="javascript:limpiarDatosAlta();$('#modalAlta').modal('toggle');"
+                    class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script>
@@ -1308,530 +1515,6 @@ use App\proyecto_empleado;
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
-<script>
-    function filterGlobal() {
-        $('#tablaEmpleado').DataTable().search(
-            $('#global_filter').val(),
-
-        ).draw();
-    }
-    function maxLengthCheck(object) {
-            if (object.value.length > object.maxLength)
-                object.value = object.value.slice(0, object.maxLength)
-        }
-        function isNumeric(evt) {
-            var theEvent = evt || window.event;
-            var key = theEvent.keyCode || theEvent.which;
-            key = String.fromCharCode(key);
-            var regex = /[0-9]|\./;
-            if (!regex.test(key)) {
-                theEvent.returnValue = false;
-                if (theEvent.preventDefault) theEvent.preventDefault();
-            }
-        }
-</script>
-<script>
-    $(function () {
-
-        RefreshTablaEmpleado();
-    })
-    function RefreshTablaEmpleado() {
-    if ($.fn.DataTable.isDataTable("#tablaEmpleado")) {
-        $("#tablaEmpleado").DataTable().destroy();
-    }
-    $("#tbodyr").empty();
-    $.ajax({
-        async: false,
-        type: "get",
-        url: "tablaempleado/refreshBaja",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            var tbody = "";
-            for (var i = 0; i < data.length; i++) {
-                tbody +=
-                    "<tr id=" +
-                    data[i].emple_id +
-                    " value=" +
-                    data[i].emple_id +
-                    ">";
-                tbody +=
-                    '<td class="text-center">\
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="selec" id="tdC" style="margin-right:5.7px!important"\
-                            class="form-check-input sub_chk" data-id=' +
-                    data[i].emple_id +
-                    " " +
-                    this +
-                    "" +
-                    this +
-                    "" +
-                    this +
-                    ">\
-                        </td>";
-                tbody +=
-                    '<td class="text-center">\
-                                \
-                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de alta" onclick="javascript:darAlta(' +
-                    data[i].emple_id +
-                    ')" style="cursor: pointer">\
-                                    <img src="/landing/images/arriba.svg" height="17">\
-                                </a>\
-                               \
-                                <a class="verEmpleado" onclick="javascript:verDEmpleado(' +
-                    data[i].emple_id +
-                    ')" data-toggle="tooltip"\
-                                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:pointer">\
-                                    <img src="/landing/images/see.svg" height="18">\
-                                </a>\
-                                <input type="hidden" id="codE" value=' +
-                                data[i].emple_id +
-                                "> </td>";
-
-                tbody +=
-                    '<td class="text-center"> <div class="text-wrap width-400">' +
-                    data[i].emple_nDoc +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
-                    data[i].perso_nombre +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
-                    data[i].perso_apPaterno +
-                    " " +
-                    data[i].perso_apMaterno +
-                    "</div></td>";
-
-                if (data[i].cargo_descripcion == null) {
-                    tbody += '<td><div class="text-wrap width-400"></div></td>';
-                } else {
-                    tbody +=
-                        '<td><div class="text-wrap width-400">' +
-                        data[i].cargo_descripcion +
-                        "</div></td>";
-                }
-                if (data[i].area_descripcion == null) {
-                    tbody +=
-                        '<td><div class="text-wrap width-400"></div></td></tr>';
-                } else {
-                    tbody +=
-                        '<td><div class="text-wrap width-400">' +
-                        data[i].area_descripcion +
-                        "</div></td></tr>";
-                }
-            }
-            $("#tbodyr").html(tbody);
-            $('[data-toggle="tooltip"]').tooltip();
-            $("#tablaEmpleado").DataTable({
-                scrollX: true,
-                responsive: true,
-                retrieve: true,
-                searching: true,
-                lengthChange: false,
-                scrollCollapse: false,
-                pageLength: 30,
-                bAutoWidth: true,
-                language: {
-                    sProcessing: "Procesando...",
-                    sLengthMenu: "Mostrar _MENU_ registros",
-                    sZeroRecords: "No se encontraron resultados",
-                    sEmptyTable: "Ningún dato disponible en esta tabla",
-                    sInfo: "Mostrando registros del _START_ al _END_ ",
-                    sInfoEmpty:
-                        "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    sInfoPostFix: "",
-                    sSearch: "Buscar:",
-                    sUrl: "",
-                    sInfoThousands: ",",
-                    sLoadingRecords: "Cargando...",
-                    oPaginate: {
-                        sFirst: "Primero",
-                        sLast: "Último",
-                        sNext: ">",
-                        sPrevious: "<",
-                    },
-                    oAria: {
-                        sSortAscending:
-                            ": Activar para ordenar la columna de manera ascendente",
-                        sSortDescending:
-                            ": Activar para ordenar la columna de manera descendente",
-                    },
-                    buttons: {
-                        copy: "Copiar",
-                        colvis: "Visibilidad",
-                    },
-                },
-                columnDefs: [
-                    { responsivePriority: 1, targets: 0 },
-                    { responsivePriority: 2, targets: 3 }
-                ],
-                initComplete: function () {
-                    this.api()
-                        .columns()
-                        .every(function () {
-                            var that = this;
-                            var i;
-                            var val1;
-                            $("#select").on("keyup change", function () {
-                                i = $.fn.dataTable.util.escapeRegex(this.value);
-
-                                var val = $("#global_filter").val();
-                                if (that.column(i).search() !== this.value) {
-                                    that.column(this.value).search(val).draw();
-                                }
-                                val1 = $.fn.dataTable.util.escapeRegex(
-                                    this.value
-                                );
-                                $("#global_filter").on(
-                                    "keyup change clear",
-                                    function () {
-                                        var val = $(this).val();
-                                        if (that.column(i).search() !== val1) {
-                                            that.column(val1)
-                                                .search(val)
-                                                .draw();
-                                        }
-                                    }
-                                );
-                            });
-                        });
-                },
-            });
-            var seleccionarTodos = $('#selectT');
-            var table = $('#tablaEmpleado');
-            var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
-            var CheckBoxMarcados = 0;
-
-            seleccionarTodos.on('click', function () {
-                if (seleccionarTodos.is(":checked")) {
-                    CheckBoxs.prop('checked', true);
-                } else {
-                    CheckBoxs.prop('checked', false);
-                };
-
-            });
-            CheckBoxs.on('change', function (e) {
-                CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
-                seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
-            });
-        },
-    });
-}
-
-        $('#tablaEmpleado').on('shown.bs.collapse', function () {
-            $($.fn.dataTable.tables(true)).DataTable()
-                .columns.adjust();
-        });
-        $('#tablaEmpleado tbody #tdC').css('display', 'block');
-
-        $('input.global_filter').on('keyup click', function () {
-            filterGlobal();
-        });
-
-        $('input.column_filter').on('keyup click', function () {
-            filterColumn($(this).parents('div').attr('data-column'));
-        });
-
-        // SELECT DEFECTO PARA BUSQUEDA
-        $('#select').val(4).trigger('change');
-
-function darAlta(data){
-    $('input:checkbox').prop('checked', false);
-
-$('input:checkbox[data-id=' + data + ']').prop('checked', true);
-$('.delete_all').click();
-/*     */
-}
-function altaEmpleado() {
-        var allVals = [];
-
-
-        $(".sub_chk:checked").each(function () {
-            allVals.push($(this).attr('data-id'));
-        });
-
-        if (allVals.length <= 0) {
-
-    bootbox.alert("Por favor seleccione una fila");
-            return false;
-        } else {
-            $('#modalAlta').modal('show');
-        }
-
-    }
-    function confirmarAlta(){
-        var allVals = [];
-        var fechaAlta=$('#fechaInput').val();
-        $(".sub_chk:checked").each(function () {
-            allVals.push($(this).attr('data-id'));
-        });
-        var join_selected_values = allVals.join(",");
-        var table = $('#tablaEmpleado').DataTable();
-        $.ajax({
-            url: "/empleado/darAlta",
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                419: function () {
-                    location.reload();
-                }
-            },
-            data: {ids:join_selected_values,fechaAlta} ,
-            success: function (data) {
-                var formData1 = new FormData();
-                var num= document.getElementById('AltaFile').files.length;
-
-                for (var i = 0; i < num; i++) {
-                formData1.append("AltaFile[]", document.getElementById('AltaFile').files[i]);
-                }
-                data1='/'+data;
-                $.ajax({
-                    type: "POST",
-                    url: "/empleado/storeDocumentoAlta" + data1,
-                    data: formData1,
-                    contentType: false,
-                    processData: false,
-                    dataType: "json",
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    statusCode: {
-                        401: function () {
-                            location.reload();
-                        },
-                        419: function () {
-                            location.reload();
-                        },
-                    },
-                    success: function (data) {
-                    },
-                    error: function (data, errorThrown) { },
-                });
-
-                RefreshTablaEmpleado();
-                $('#modalAlta').modal('hide');
-                $.notify({
-                    message: '\nEl empleado(s) se dio de alta',
-                    icon: 'admin/images/checked.svg',
-                }, {
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #ffffff;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#289c26;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            },
-            error: function (data) {
-                alert(data.responseText);
-            }
-        });
-
-    }
-$('#selectarea').on("change", function (e) {
-    console.log($('#selectarea').val());
-   RefreshTablaEmpleadoBajaArea();
-});
-function RefreshTablaEmpleadoBajaArea() {
-    if ($.fn.DataTable.isDataTable("#tablaEmpleado")) {
-        $("#tablaEmpleado").DataTable().destroy();
-    }
-    $("#tbodyr").empty();
-    var areaselect = $('#selectarea').val();
-    $.ajax({
-        async: false,
-        type: "post",
-        url: "tablaempleado/refreshAreaBaja",
-        data: { idarea: areaselect },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            var tbody = "";
-            for (var i = 0; i < data.length; i++) {
-                tbody +=
-                    "<tr id=" +
-                    data[i].emple_id +
-                    " value=" +
-                    data[i].emple_id +
-                    ">";
-                tbody +=
-                    '<td class="text-center">\
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="selec" id="tdC" style="margin-right:5.7px!important"\
-                            class="form-check-input sub_chk" data-id=' +
-                    data[i].emple_id +
-                    " " +
-                    this +
-                    "" +
-                    this +
-                    "" +
-                    this +
-                    ">\
-                        </td>";
-                tbody +=
-                    '<td class="text-center">\
-                                \
-                                <a data-toggle="tooltip" data-placement="right" data-original-title="Dar de alta" onclick="javascript:darAlta(' +
-                    data[i].emple_id +
-                    ')" style="cursor: pointer">\
-                                    <img src="/landing/images/arriba.svg" height="17">\
-                                </a>\
-                                \
-                                <a class="verEmpleado" onclick="javascript:verDEmpleado(' +
-                    data[i].emple_id +
-                    ')" data-toggle="tooltip"\
-                                    data-placement="right" title="Ver Detalles" data-original-title="Ver Detalles" style="cursor:pointer">\
-                                    <img src="/landing/images/see.svg" height="18">\
-                                </a>\
-                                <input type="hidden" id="codE" value=' +
-                                data[i].emple_id +
-                                "> </td>";
-
-                tbody += "</td>";
-                tbody +=
-                    '<td class="text-center"> <div class="text-wrap width-400">' +
-                    data[i].emple_nDoc +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
-                    data[i].perso_nombre +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
-                    data[i].perso_apPaterno +
-                    " " +
-                    data[i].perso_apMaterno +
-                    "</div></td>";
-
-
-                if (data[i].cargo_descripcion == null) {
-                    tbody += '<td><div class="text-wrap width-400"></div></td>';
-                } else {
-                    tbody +=
-                        '<td><div class="text-wrap width-400">' +
-                        data[i].cargo_descripcion +
-                        "</div></td>";
-                }
-                if (data[i].area_descripcion == null) {
-                    tbody +=
-                        '<td><div class="text-wrap width-400"></div></td></tr>';
-                } else {
-                    tbody +=
-                        '<td><div class="text-wrap width-400">' +
-                        data[i].area_descripcion +
-                        "</div></td></tr>";
-                }
-            }
-            $("#tbodyr").html(tbody);
-            $('[data-toggle="tooltip"]').tooltip();
-            $("#tablaEmpleado").DataTable({
-                scrollX: true,
-                responsive: true,
-                retrieve: true,
-                searching: true,
-                lengthChange: false,
-                scrollCollapse: false,
-                pageLength: 30,
-                bAutoWidth: true,
-                language: {
-                    sProcessing: "Procesando...",
-                    sLengthMenu: "Mostrar _MENU_ registros",
-                    sZeroRecords: "No se encontraron resultados",
-                    sEmptyTable: "Ningún dato disponible en esta tabla",
-                    sInfo: "Mostrando registros del _START_ al _END_ ",
-                    sInfoEmpty:
-                        "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    sInfoPostFix: "",
-                    sSearch: "Buscar:",
-                    sUrl: "",
-                    sInfoThousands: ",",
-                    sLoadingRecords: "Cargando...",
-                    oPaginate: {
-                        sFirst: "Primero",
-                        sLast: "Último",
-                        sNext: ">",
-                        sPrevious: "<",
-                    },
-                    oAria: {
-                        sSortAscending:
-                            ": Activar para ordenar la columna de manera ascendente",
-                        sSortDescending:
-                            ": Activar para ordenar la columna de manera descendente",
-                    },
-                    buttons: {
-                        copy: "Copiar",
-                        colvis: "Visibilidad",
-                    },
-                },
-                columnDefs: [
-                    { responsivePriority: 1, targets: 0 },
-                    { responsivePriority: 2, targets: 3 }
-                ],
-                initComplete: function () {
-                    this.api()
-                        .columns()
-                        .every(function () {
-                            var that = this;
-                            var i;
-                            var val1;
-                            $("#select").on("keyup change", function () {
-                                i = $.fn.dataTable.util.escapeRegex(this.value);
-
-                                var val = $("#global_filter").val();
-                                if (that.column(i).search() !== this.value) {
-                                    that.column(this.value).search(val).draw();
-                                }
-                                val1 = $.fn.dataTable.util.escapeRegex(
-                                    this.value
-                                );
-                                $("#global_filter").on(
-                                    "keyup change clear",
-                                    function () {
-                                        var val = $(this).val();
-                                        if (that.column(i).search() !== val1) {
-                                            that.column(val1)
-                                                .search(val)
-                                                .draw();
-                                        }
-                                    }
-                                );
-                            });
-                        });
-                },
-            });
-            var seleccionarTodos = $('#selectT');
-            var table = $('#tablaEmpleado');
-            var CheckBoxs = table.find('tbody input:checkbox[name=selec]');
-            var CheckBoxMarcados = 0;
-
-            seleccionarTodos.on('click', function () {
-                if (seleccionarTodos.is(":checked")) {
-                    CheckBoxs.prop('checked', true);
-                } else {
-                    CheckBoxs.prop('checked', false);
-                };
-
-            });
-
-
-            CheckBoxs.on('change', function (e) {
-                CheckBoxMarcados = table.find('tbody input:checkbox[name=selec]:checked').length;
-                seleccionarTodos.prop('checked', (CheckBoxMarcados === CheckBoxs.length));
-            });
-        },
-    });
-}
-</script>
-
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{ asset('admin/packages/core/main.js') }}"></script>
@@ -1844,440 +1527,15 @@ function RefreshTablaEmpleadoBajaArea() {
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.js')}}"></script>
-<script src="{{ asset('landing/js/smartwizard.js') }}"></script>
+<script src="{{ asset('landing/js/empleadoBaja.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/notify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')
-    }}"></script>
-<script src="{{
-    URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')
-    }}"></script>
-<script>
-    var fechaValue = $("#fechaSelec").flatpickr({
-    mode: "single",
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "d/m/Y",
-    locale: "es",
-    maxDate: "today",
-    wrap: true,
-    allowInput: true,
-  });
-  $(function () {
-  f = moment().format("YYYY-MM-DD");
-  fechaValue.setDate(f);
-  $( "#fechaInput" ).change();
-  })
-         function calendario3() {
-    var calendarEl = document.getElementById("calendar3");
-    calendarEl.innerHTML = "";
-
-    var fecha = new Date();
-    var ano = fecha.getFullYear();
-    var id;
-
-    var configuracionCalendario = {
-        locale: "es",
-        defaultDate: fecha,
-        height: 400,
-        fixedWeekCount: false,
-        plugins: ["dayGrid", "interaction", "timeGrid"],
-
-        selectable: true,
-        selectMirror: true,
-        /* select: function (arg) {
-            $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-            $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-
-            $('#horarioAsignar').modal('show');
-        }, */
-        eventClick: function (info) { },
-        editable: false,
-        eventLimit: true,
-        header: {
-            left: "prev,next today",
-            center: "title",
-            right: "",
-        },
-        eventRender: function (info) {
-            $('.tooltip').remove();
-            /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
-            if (info.event.extendedProps.horaI === null) {
-                $(info.el).tooltip({ title: info.event.title });
-            } else {
-                if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
-
-                }
-                else {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
-                }
-            }
-        },
-        events: function (info, successCallback, failureCallback) {
-            var idempleado = $("#idempleado").val();
-            var datoscal;
-            $.ajax({
-                type: "POST",
-                url: "/empleado/vercalendario",
-                data: {
-                    idempleado,
-                },
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content"
-                    ),
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    },
-                },
-                success: function (data) {
-                    successCallback(data);
-                },
-                error: function () { },
-            });
-        },
-
-        /*  events: "calendario/show", */
-    };
-    calendar3 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
-    calendar3.setOption("locale", "Es");
-
-    calendar3.render();
-}
-function calendario4() {
-    var calendarEl = document.getElementById("calendar4");
-    calendarEl.innerHTML = "";
-
-    var fecha = new Date();
-    var ano = fecha.getFullYear();
-    var id;
-
-    var configuracionCalendario = {
-        locale: "es",
-        defaultDate: fecha,
-        height: 400,
-        fixedWeekCount: false,
-        plugins: ["dayGrid", "interaction", "timeGrid"],
-
-        selectable: true,
-        selectMirror: true,
-        /* select: function (arg) {
-            $('#pruebaEnd').val(moment(arg.end).format('YYYY-MM-DD HH:mm:ss'));
-            $('#pruebaStar').val(moment(arg.start).format('YYYY-MM-DD HH:mm:ss'));
-
-            $('#horarioAsignar').modal('show');
-        }, */
-        eventClick: function (info) { },
-        editable: false,
-        eventLimit: true,
-        header: {
-            left: "prev,next today",
-            center: "title",
-            right: "",
-        },
-        eventRender: function (info) {
-            $('.tooltip').remove();
-            /*  $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF}); */
-            if (info.event.extendedProps.horaI === null) {
-                $(info.el).tooltip({ title: info.event.title });
-            } else {
-                if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
-
-                }
-                else {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
-                }
-            }
-        },
-        events: function (info, successCallback, failureCallback) {
-            var idempleado = $("#idempleado").val();
-            var datoscal;
-            $.ajax({
-                type: "POST",
-                url: "/empleado/vercalendario",
-                data: {
-                    idempleado,
-                },
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content"
-                    ),
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    },
-                },
-                success: function (data) {
-                    successCallback(data);
-                },
-                error: function () { },
-            });
-        },
-
-        /*  events: "calendario/show", */
-    };
-    calendar4 = new FullCalendar.Calendar(calendarEl, configuracionCalendario);
-    calendar4.setOption("locale", "Es");
-
-    calendar4.render();
-}
-        function verDEmpleado(idempleadoVer){
-    $('#verEmpleadoDetalles').modal();
-    $( "#detallehorario_ed" ).empty();
-
-        $('#smartwizardVer').smartWizard("reset");
-        $('#MostrarCa_e').hide();
-        $('#calendarInv_ed').hide();
-        $('#divescond1').hide();
-        $('#divescond1_ver').hide();
-        $('#divescond2').hide();
-        $('#calendar_ed').hide();
-        $('#h5Ocultar').show();
-        $('#v_fotoV').attr("src", "landing/images/png.svg");
-        //$(this).addClass('selected').siblings().removeClass('selected');
-        var value = idempleadoVer
-        $('#selectCalendario').val("Asignar calendario");
-        $('#selectHorario').val("Seleccionar horario");
-        $('#selectCalendario_ed').val("Asignar calendario");
-
-        $('#idempleado').val(value);
-        $('#formNuevoEl').show();
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "empleado/show",
-            data: {
-                value: value
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                }
-            },
-            success: function (data) {
-
-                calendario3();
-                calendario4();
-                $.ajax({
-                type:"POST",
-                url: "/empleado/calendarioEditar",
-                data: {
-                    idempleado:value
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                success: function (data) {
-                    if(data==1){
-                        $('#MostrarCa_e').show();
-                        $('#calendarInv_ed').show();
-                    }
-                    else{
-                        $('#calendar_ed').show();
-                        $('#mensajeOc_ed').hide();
-                        $('#calendar2_ed').show();
-                        $('#divescond1').show();
-                        $('#divescond1_ver').show();
-                        $('#divescond2').show();
-                       $('#detallehorario_ed2').empty();
-                       /*  $("#detallehorario_ed2").append("<div class='form-group row'><div class='col-md-1'></div><label class='col-lg-4 col-form-label' style='color:#163552;margin-top: 5px;'></label>" +
-                "<div class='col-md-3'></div>"+
-                "<div class='col-md-3' ><div class='btn-group mt-2 mr-1'> <button type='button' onclick='eliminarhorariosBD()' class='btn btn-primary btn-sm dropdown-toggle' style='color: #fff; background-color: #4a5669;"+
-                "border-color: #485263;' > <img src='admin/images/borrador.svg' height='15'>"+
-                " Borrar horarios </button> </div></div></div>"); */
-                    }
-                },
-                error: function () {}
-            });
-                $('#selectCalendario_edit3_ver').val(data[0].idcalendar);
-                $('#idselect3').val(data[0].idcalendar);
-
-                //VER
-                $('#v_tipoDocV').val(data[0].tipoDoc_descripcion);
-                $('#v_apPaternoV').val(data[0].perso_apPaterno);
-                $('#v_direccionV').val(data[0].perso_direccion);
-                $('#v_idV').val(data[0].emple_id);
-                $.ajax({
-                type:"POST",
-                url: "/empleado/historial",
-                data: {
-                    idempleado:value
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                success: function (data) {
-                    var containerVer = $('#ver_tbodyHistorial');
-            for (var i = 0; i < data.length; i++) {
-
-                    var trVer = '<tr>';
-
-
-                        if(data[i].fecha_historial!=null){
-                            if(data[i].tipo_Hist==1){
-                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].fecha_historial).format('DD/MM/YYYY')+'</td>';
-                            } else
-                            {
-                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].fecha_historial).format('DD/MM/YYYY') +'</td>';
-                            }
-                        } else{
-                            trVer+=  '<td>--</td>';
-                        }
-
-                        if(data[i].rutaDocumento!=null){
-
-                        var valores=data[i].rutaDocumento;
-                        idsV=valores.split(',');
-                        var variableResult=[];
-                        trVer+=  '<td><div class="row">';
-                        $.each( idsV, function( index, value ){
-                            trVer+=
-                            '<div class="col-xl-6 col-md-6" style="padding-left: 0px;">'+
-                                '<div class="p-2 border rounded" style="padding-top: 1px!important; padding-bottom: 1px!important;">'+
-                                    '<div class="media">'+
-                                        '<div class="avatar-sm font-weight-bold mr-3">'+
-                                            '<span class="avatar-title rounded bg-soft-primary text-primary">'+
-                                            '<i class="uil-file-plus-alt font-size-18"></i>'+
-                                        ' </span>'+
-                                        '</div>'+
-                                        '<div class="media-body">'+
-                                            '<a href="documEmpleado/'+value+'" target="_blank" class="d-inline-block mt-2">'+value+'</a>'+
-                                        '</div>'+
-                                        '<div class="float-right mt-1">'+
-                                            '<a href="documEmpleado/'+value+'" target="_blank" class="p-2"><i class="uil-download-alt font-size-18"></i></a>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-
-                            /* variableResult.push(variableResult1); */
-
-                        })
-
-                        /*   trVer+=variableResult; */
-
-                        trVer+=  '</div></td>';
-                        } else{
-                        trVer+=  '<td>--</td>';
-                        }
-
-
-                            trVer+= '</tr>';
-
-
-                containerVer.append(trVer);
-
-            }
-                },
-                error: function () {}
-            });
-                //////////////////////////////////////////////////////////////
-                var VFechaDaVer=moment(data[0].perso_fechaNacimiento).format('YYYY-MM-DD');
-                var VFechaDiaVer = new Date(moment(VFechaDaVer));
-                $('#v_dia_fechaV').val(VFechaDiaVer.getDate());
-                $('#v_mes_fechaV').val(moment(VFechaDaVer).month()+1);
-                $('#v_ano_fechaV').val(moment(VFechaDaVer).year());
-                /////////////////////////////////////////////////////////////////
-                $('#v_apMaternoV').val(data[0].perso_apMaterno);
-                $('#v_numDocumentoV').val(data[0].emple_nDoc);
-                $('#v_emailV').val(data[0].emple_Correo);
-                $('#v_celularV').val(data[0].emple_celular);
-                $('#v_nombresV').val(data[0].perso_nombre);
-                $('#v_telefonoV').val(data[0].emple_telefono);
-                $('#v_depV').val(data[0].deparNo);
-                $('#v_departamentoV').val(data[0].depaN);
-                $("[name=v_tipoV]").val([data[0].perso_sexo]);
-                $('#v_provV').val(data[0].provi);
-                $('#v_provinciaV').val(data[0].proviN);
-                $('#v_distV').val(data[0].distNo)
-                $('#v_distritoV').val(data[0].distN)
-                $('#v_cargoV').val(data[0].cargo_descripcion);
-                $('#v_areaV').val(data[0].area_descripcion);
-                $('#v_centrocV').val(data[0].centroC_descripcion);
-                $('#v_nivelV').val(data[0].nivel_descripcion);
-                $('#v_localV').val(data[0].local_descripcion);
-                $('#v_codigoEmpleadoV').val(data[0].emple_codigo);
-                if(data[0].foto != ''){
-                    $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
-                    $('#h5Ocultar').hide();
-                }
-                $('#detalleContratoVer').hide();
-                if(data[0].contrato.length >= 1){
-                    $('#detalleContratoVer').show();
-                    $('#v_contratoV').val(data[0].contrato[0].contrato_descripcion);
-                    $('#v_idContratoV').val(data[0].contrato[0].idC);
-                    $('#v_montoV').val(data[0].contrato[0].monto);
-                    $('#v_condicionV').val(data[0].contrato[0].idCond);
-                    var VFechaDaIE=moment(data[0].contrato[0].fechaInicio).format('YYYY-MM-DD');
-                    var VFechaDiaIE = new Date(moment(VFechaDaIE));
-                    $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());
-                    $('#m_mes_fechaIEV').val(moment(VFechaDaIE).month()+1);
-                    $('#m_ano_fechaIEV').val(moment(VFechaDaIE).year());
-                        if (data[0].contrato[0].fechaFinal == null || data[0].contrato[0].fechaFinal == "0000-00-00") {
-                            $("#checkboxFechaIEV").prop('checked', true);
-                            $('#ocultarFechaEV').hide();
-                        }
-                    var VFechaDaFE=moment(data[0].contrato[0].fechaFinal ).format('YYYY-MM-DD');
-                    var VFechaDiaFE = new Date(moment(VFechaDaFE));
-                    $('#m_dia_fechaFEV').val(VFechaDiaFE.getDate());
-                    $('#m_mes_fechaFEV').val(moment(VFechaDaFE).month()+1);
-                    $('#m_ano_fechaFEV').val(moment(VFechaDaFE).year());
-                }
-                $('#ver_tbodyDispositivo').css('pointer-events', 'none');
-                $("#formContratoVer :input").prop('disabled', true);
-            },
-            error: function () {}
-        });
-}
-'use strict';
-
-;( function ( document, window, index )
-{
-    var inputs = document.querySelectorAll( '.inputfile' );
-    Array.prototype.forEach.call( inputs, function( input )
-    {
-        var label	 = input.nextElementSibling,
-            labelVal = label.innerHTML;
-
-        input.addEventListener( 'change', function( e )
-        {
-            var fileName = '';
-            if( this.files && this.files.length > 1 )
-                fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
-            else
-                fileName = e.target.value.split( '\\' ).pop();
-
-            if( fileName )
-                label.querySelector( 'span' ).innerHTML = fileName;
-            else
-                label.innerHTML = labelVal;
-        });
-    });
-}( document, window, 0 ));
-
-</script>
-<script src="{{ asset('landing/js/dispositivos.js') }}"></script>
+<script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
+<script src="{{asset('landing/js/contrato.js')}}"></script>
+<script src="{{ asset('landing/js/dispositivos.js')}}"></script>
 <script src="{{asset('landing/js/modosEmpleado.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>

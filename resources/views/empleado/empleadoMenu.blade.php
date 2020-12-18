@@ -2444,7 +2444,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Detalle Contrato
+                        Dar de alta
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="javascript:limpiarNuevosDatosAlta();$('#form-ver').modal('show');">
