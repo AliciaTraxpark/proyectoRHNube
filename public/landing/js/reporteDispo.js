@@ -161,12 +161,18 @@ function cargartabla (fecha) {
 
                 }else{
                 for(var z = 0; z < nEntradas.length; z++){
-                    if(nEntradas[b]!=0){
+                    if (nEntradas[b] === undefined) {
+                        cuerpo= '<td>--</td> ';
+                    }
+                    else{
+                      if(nEntradas[b]!=0 ){
                         cuerpo=  '<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+moment(nEntradas[b]).format("HH:mm:ss")+'</td>';
                     }
                     else{
                         cuerpo= '<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td> ';
                     }
+                    }
+
 
                 }
             }
@@ -193,13 +199,17 @@ function cargartabla (fecha) {
                 }
 
             }else{
-
-                if(nSalidas[b]!=0){
+                if (nSalidas[b] === undefined) {
+                    cuerpo+= '<td>--</td> ';
+                } else{
+                    if(nSalidas[b]!=0){
                     cuerpo+=  '<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+moment(nSalidas[b]).format("HH:mm:ss")+'</td>';
                 }
                 else{
                     cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td> ';
                 }
+                }
+
 
            }
            }
