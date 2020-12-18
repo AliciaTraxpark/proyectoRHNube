@@ -1238,8 +1238,8 @@ use App\proyecto_empleado;
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal">
-                        <input type="hidden" id="idHistorialEdit">
+                    <input type="hidden" id="idHistorialEdit">
+                    <form action="javascript:confirmarBajaHistorial()">
                         <div class="col-xl-12">
                             <div class="form-group row">
                                 <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
@@ -1258,6 +1258,11 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 pt-1" id="validArchivoBajaE" style="display: none;">
+                            <span style="color: red;">
+                                *El tamaño supera el limite de 4 MB.
+                            </span>
+                        </div>
                         <div class="col-md 12" id="divbajaEdit">
                             <label for="">
                                 Adjuntar documento(s)
@@ -1266,7 +1271,7 @@ use App\proyecto_empleado;
                                 <input type="file" name="bajaFileEdit" id="bajaFileEdit"
                                     accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                                     class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados"
-                                    multiple />
+                                    multiple size="4194304" />
                                 <label for="bajaFileEdit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
                                         <path
@@ -1277,22 +1282,19 @@ use App\proyecto_empleado;
                                 </label>
                             </div>
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         onclick="javascript:cerrarModalHistorial()">
                         Cancelar
                     </button>
-                    <button type="button" name="confirmarE" onclick="confirmarBajaHistorial()"
-                        style="background-color: #163552;" class="btn btn-sm">
+                    <button type="submit" style="background-color: #163552;" class="btn btn-sm">
                         Confirmar
                     </button>
-
-
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+                </form>
+            </div>
+        </div>
     </div>
     {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE AREA EN REGISTRAR --}}
@@ -1784,7 +1786,6 @@ use App\proyecto_empleado;
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
     {{-- FINALIZACION DE MODAL --}}
     {{-- MODALES DE EDITAR --}}
     <div id="areamodalE" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodalE" aria-hidden="true"

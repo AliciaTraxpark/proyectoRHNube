@@ -212,71 +212,6 @@ function mostrarBoton() {
         $('#nuevaAltaEdit').hide();
     }
 }
-//: FUNCION DE MOSTRAR MODAL DE DECICION DE BAJA
-function bajaEmpleadoContrato(id) {
-    $('#modalBajaHistorial').modal();
-    $('#idHistorialEdit').val(id);
-}
-//: FUNCION DE GUARDAR ARCHIVOS DE BAJA 
-function archivosDeBaja(id) {
-    //* AJAX DE ARCHICOS
-    var formData = new FormData();
-    $.each($('#bajaFileEdit'), function (i, obj) {
-        $.each(obj.files, function (j, file) {
-            formData.append('file[' + j + ']', file);
-        })
-    });
-    $.ajax({
-        contentType: false,
-        processData: false,
-        type: "POST",
-        url: "/archivosEditC/" + id,
-        data: formData,
-        dataType: "json",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            historialEmp();
-        },
-        error: function () {
-        },
-    });
-}
-//: FUNCION GUARDAR DATOS DE BAJA
-function confirmarBajaHistorial() {
-    var id = $('#idHistorialEdit').val();
-    var fechaBaja = $('#fechaBajaInput').val();
-    $("#editar_tbodyHistorial").empty();
-    $.ajax({
-        type: "POST",
-        url: "/bajaHistorial",
-        data: {
-            id: id,
-            fechaBaja: fechaBaja
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            archivosDeBaja(data);
-            $('#modalBajaHistorial').modal('toggle');
-            $('#form-ver').modal('show');
-            historialEmp();
-        },
-        error: function () { }
-    });
-}
-//: FUNCION CERRAR MODAL DE CONDICION MODAL
-function cerrarModalHistorial() {
-    $('#modalBajaHistorial').modal('toggle');
-    $('#form-ver').modal('show');
-}
 //: CHECKBOX EN EDITAR DETALLES DE CONTROL
 $("#checkboxFechaIE").on("click", function () {
     if ($("#checkboxFechaIE").is(':checked')) {
@@ -661,5 +596,95 @@ function validacionNuevaAlta() {
         $('#guardarAltaN').prop("disabled", true);
     }
 }
-
 //TODO -> ************************FINALIZACION********************** **//
+//TODO -> ************************BAJA DESDE TABLA CONTRATO********************** **//
+//? FUNCION DE MOSTRAR MODAL DE DECICION DE BAJA
+function bajaEmpleadoContrato(id) {
+    $('#modalBajaHistorial').modal();
+    $('#idHistorialEdit').val(id);
+}
+//? VALIDACION DE ARCHIVOS EN BAJA
+async function validArchivosBajaEdit() {
+    var respuesta = true;
+    $.each($('#bajaFileEdit'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            if (sizeKiloBytes > parseInt($('#bajaFileEdit').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+$('#bajaFileEdit').on("click", function () {
+    $('#validArchivoBajaE').hide();
+});
+//? FUNCION DE GUARDAR ARCHIVOS DE BAJA 
+function archivosDeBaja(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($('#bajaFileEdit'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            historialEmp();
+        },
+        error: function () {
+        },
+    });
+}
+//? FUNCION GUARDAR DATOS DE BAJA
+async function confirmarBajaHistorial() {
+    console.log("ingreso");
+    const result = await validArchivosBajaEdit();
+    console.log(result);
+    if (!result) {
+        $('#validArchivoBajaE').show();
+        return false;
+    } else {
+        $('#validArchivoBajaE').hide();
+    }
+    var id = $('#idHistorialEdit').val();
+    var fechaBaja = $('#fechaBajaInput').val();
+    $("#editar_tbodyHistorial").empty();
+    $.ajax({
+        type: "POST",
+        url: "/bajaHistorial",
+        data: {
+            id: id,
+            fechaBaja: fechaBaja
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            archivosDeBaja(data);
+            $('#modalBajaHistorial').modal('toggle');
+            $('#form-ver').modal('show');
+            historialEmp();
+        },
+        error: function () { }
+    });
+}
+function cerrarModalHistorial() {
+    $('#modalBajaHistorial').modal('toggle');
+    $('#form-ver').modal('show');
+}
