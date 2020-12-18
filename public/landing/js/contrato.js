@@ -202,19 +202,41 @@ function bajaEmpleadoContrato(id) {
     $('#modalBajaHistorial').modal();
     $('#idHistorialEdit').val(id);
 }
-
+// TODO -> ARCHIVO DE BAJA
+function archivosDeBaja(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($('#bajaFileEdit'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+        },
+        error: function () {
+        },
+    });
+}
 function confirmarBajaHistorial() {
     var id = $('#idHistorialEdit').val();
     var fechaBaja = $('#fechaBajaInput').val();
-    var bajaFile = $('#bajaFileEdit').val();
     $("#editar_tbodyHistorial").empty();
     $.ajax({
         type: "POST",
         url: "/bajaHistorial",
         data: {
             id: id,
-            fechaBaja: fechaBaja,
-            bajaFile: bajaFile
+            fechaBaja: fechaBaja
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -225,9 +247,10 @@ function confirmarBajaHistorial() {
             }
         },
         success: function (data) {
-            historialEmp();
+            archivosDeBaja(data);
             $('#modalBajaHistorial').modal('toggle');
-            $('#form-ver').show();
+            $('#form-ver').modal('show');
+            historialEmp();
         },
         error: function () { }
     });
@@ -321,6 +344,7 @@ function editarDetalleCE() {
         },
         success: function (data) {
             archivosDeEdit(idContrato);
+            historialEmp();
             $.notifyClose();
             $.notify(
                 {
@@ -431,7 +455,6 @@ function archivosDeNuevo(id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            historialEmp();
         },
         error: function () {
         },
@@ -515,6 +538,8 @@ function nuevaAltaEditar() {
             //* REGISTRAR ARCHIVOS EN NUEVA ALTA
             archivosDeNuevo(data);
             $('#contratoDetallesmodalEN').modal('toggle');
+            $('#form-ver').modal('show');
+            historialEmp();
             $.notifyClose();
             $.notify(
                 {

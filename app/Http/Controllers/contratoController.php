@@ -54,22 +54,7 @@ class contratoController extends Controller
         $historial_empleado->fecha_baja = $fechaBaja;
         $historial_empleado->save();
 
-        //* VALIDAR SI ES VACIO O O ACTUALIZAR
-        if ($request->hasFile('bajaFile')) {
-            foreach ($request->file('bajaFile') as $filesC) {
-                $file = $filesC;
-                $path = public_path() . '/documEmpleado';
-                $fileName = uniqid() . $file->getClientOriginalName();
-                $file->move($path, $fileName);
-
-                $doc_empleado = new doc_empleado();
-                $doc_empleado->idhistorial_empleado = $id;
-                $doc_empleado->rutaDocumento = $fileName;
-                $doc_empleado->save();
-            }
-        }
-
-        return response()->json($id, 200);
+        return response()->json($historial_empleado->idContrato, 200);
     }
 
     //* FUNCION DETALLES DE CONTRATO
