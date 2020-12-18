@@ -449,21 +449,22 @@ function archivosDeEdit(id) {
     });
 }
 //TODO -> ****************** NUEVA ALTA *************************************
-//* FECHA ALTA DE NUEVA ALTA
-var fechaValueA = $("#fechaAltaEditN").flatpickr({
-    mode: "single",
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "Y-m-d",
-    locale: "es",
-    maxDate: "today",
-    wrap: true,
-    allowInput: true,
-    disableMobile: "true"
-});
-$(function () {
-    f = moment().format("YYYY-MM-DD");
-    fechaValueA.setDate(f);
+//* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
+async function validArchivosAltaEdit() {
+    var respuesta = true;
+    $.each($('#fileArchivosNuevos'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            if (sizeKiloBytes > parseInt($('#fileArchivosNuevos').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+$('#fileArchivosNuevos').on("click", function () {
+    $('#validArchivoEditN').hide();
 });
 //* REGISTRAR ARCHIVO EN NUEVA ALTA
 function archivosDeNuevo(id) {
@@ -492,7 +493,7 @@ function archivosDeNuevo(id) {
     });
 }
 //* REGISTRAR NUEVA ALTA
-function nuevaAltaEditar() {
+async function nuevaAltaEditar() {
     var contrato = $('#v_contratoN').val();
     var condicionPago = $('#v_condicionN').val();
     var monto = $('#v_montoN').val();
@@ -543,6 +544,14 @@ function nuevaAltaEditar() {
         }
     }
     var fechaAlta = fechaInicial;
+    //* FUNCIONES DE VALIDAR ARCHIVO
+    const result = await validArchivosAltaEdit();
+    if (!result) {
+        $('#validArchivoEditN').show();
+        return false;
+    } else {
+        $('#validArchivoEditN').hide();
+    }
     //* *******************************FINALIZACION ******************************************
     //* AJAX DE NUEVA ALTA
     $.ajax({

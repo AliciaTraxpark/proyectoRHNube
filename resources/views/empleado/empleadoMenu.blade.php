@@ -2344,7 +2344,7 @@ use App\proyecto_empleado;
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12" id="validArchivoEdit" style="display: none;">
+                                            <div class="col-md-12 pt-1" id="validArchivoEdit" style="display: none;">
                                                 <span style="color: red;">
                                                     *El tamaño supera el limite de 4 MB.
                                                 </span>
@@ -2548,13 +2548,18 @@ use App\proyecto_empleado;
 
                                         </div>
                                         <div class="row">
+                                            <div class="col-md-12 pt-1" id="validArchivoEditN" style="display: none;">
+                                                <span style="color: red;">
+                                                    *El tamaño supera el limite de 4 MB.
+                                                </span>
+                                            </div>
                                             <div class="col-md 12">
                                                 <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
                                                     <input type="file"
                                                         accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                                                         class="inputfile inputfile-1"
                                                         data-multiple-caption="{count} archivos seleccionados" multiple
-                                                        id="fileArchivosNuevos">
+                                                        id="fileArchivosNuevos" size="4194304">
                                                     <label for="fileArchivosNuevos">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
                                                             viewBox="0 0 20 17">
