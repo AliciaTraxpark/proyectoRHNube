@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\contrato;
 use App\doc_empleado;
+use App\empleado;
 use App\historial_empleado;
 use Illuminate\Http\Request;
 use App\tipo_contrato;
@@ -58,6 +59,10 @@ class contratoController extends Controller
         $contrato->fechaFinal = $request->get('fechaBaja');
         $contrato->estado = 0;
         $contrato->save();
+
+        $empleado = empleado::where('emple_id', '=', $historial_empleado->emple_id)->get()->first();
+        $empleado->emple_estado = 0;
+        $empleado->save();
 
         return response()->json($historial_empleado->idContrato, 200);
     }
@@ -144,6 +149,10 @@ class contratoController extends Controller
         $historial_empleado->fecha_alta = $request->get('fechaAlta');
         $historial_empleado->idContrato = $idContrato;
         $historial_empleado->save();
+
+        $empleado = empleado::where('emple_id', '=', $request->get('idEmpleado'))->get()->first();
+        $empleado->emple_estado = 1;
+        $empleado->save();
 
         return response()->json($idContrato, 200);
     }
