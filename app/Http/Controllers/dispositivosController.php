@@ -328,8 +328,8 @@ class dispositivosController extends Controller
                 ->where('marcm.organi_id','=',session('sesionidorg'))
 
                 /*      */
-                ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-                ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+                ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+                ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
                 ->groupBy('marcm.marcaMov_emple_id')
                    ->whereDate('marcaMov_fecha',$fecha)
                    ->orwhere(function($query) use ($fecha) {
@@ -349,8 +349,8 @@ class dispositivosController extends Controller
                 ->where('marcm.organi_id','=',session('sesionidorg'))
                 ->where('e.emple_id',$idemp)
                 /*      */
-                ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-                ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+                ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+                ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
                 ->groupBy('marcm.marcaMov_emple_id')
                    ->whereDate('marcaMov_fecha',$fecha)
                    ->orwhere(function($query) use ($fecha,$idemp) {
@@ -382,8 +382,8 @@ class dispositivosController extends Controller
             ->where('marcm.organi_id','=',session('sesionidorg'))
 
             /*      */
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha) {
@@ -407,8 +407,8 @@ class dispositivosController extends Controller
             ->where('marcm.organi_id','=',session('sesionidorg'))
             ->where('e.emple_id',$idemp)
             /*      */
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha,$idemp) {
@@ -436,8 +436,8 @@ class dispositivosController extends Controller
             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
 
             /*      */
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha) {
@@ -462,8 +462,8 @@ class dispositivosController extends Controller
             ->where('invi.estado', '=', 1)
             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
             /*      */
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+            ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha,$idemp) {
@@ -492,8 +492,8 @@ else{
         ->where('marcm.organi_id','=',session('sesionidorg'))
 
         /*      */
-        ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-        ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
         ->groupBy('marcm.marcaMov_emple_id')
            ->whereDate('marcaMov_fecha',$fecha)
            ->orwhere(function($query) use ($fecha) {
@@ -513,8 +513,8 @@ else{
         ->where('marcm.organi_id','=',session('sesionidorg'))
         ->where('e.emple_id',$idemp)
         /*      */
-        ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_id DESC) as entrada ')
-        ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_id DESC)  as final  ')
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
+        ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
         ->groupBy('marcm.marcaMov_emple_id')
            ->whereDate('marcaMov_fecha',$fecha)
            ->orwhere(function($query) use ($fecha,$idemp) {

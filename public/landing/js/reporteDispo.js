@@ -138,7 +138,8 @@ function cargartabla (fecha) {
 
         var nfi=$('#nfila').val();
          let cuerpoA='';
-         for (var b = 0; b < nfi; b++) {
+         for (var b = nfi-1; b >=0; b--) {
+
             //entrada
             if(dataA[i].entrada!=0 || dataA[i].entrada!=null ){
                 vectorEntrada=dataA[i].entrada;
@@ -147,6 +148,7 @@ function cargartabla (fecha) {
 
                 cuerpoTDB='';
                 cuerpoVacioTd='';
+
                 if(nEntradas.length<2){
                     if(b==0){
                        if( nEntradas[0]!=0){
@@ -186,7 +188,7 @@ function cargartabla (fecha) {
            if(dataA[i].final!=0 || dataA[i].final!=null ){
             vectorSalida=dataA[i].final;
             nSalidas=vectorSalida.split(',');
-
+           console.log(nSalidas);
              if(nSalidas.length<2){
                 if(b==0){
                     if( nSalidas[0]!=0){
@@ -251,7 +253,7 @@ function cargartabla (fecha) {
                      $('input[name="tiempoSit'+idemp+'[]"]').each(function () {
                          tiempoto.push(($(this).val()));
                       });
- console.log(tiempoto);
+
                       });
                     }
                     else{
@@ -372,10 +374,10 @@ function cargartabla (fecha) {
     if(segundos<10){
         segundos='0'+segundos;
     }
-       console.log(horas+':'+minutos+':'+segundos);
+
          $('#TiempoTotal'+item.emple_id+'').html('<a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">'+horas+':'+minutos+':'+segundos+'</a>');
     });
-    console.log(valoresArray);
+
    /*  var valorrec=$('#pasandoV').val(); */
    if( $('#customSwitDetalles').is(':checked')) {
     $('[name="tiempoSitHi"]').show();
