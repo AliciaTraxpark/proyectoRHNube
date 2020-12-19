@@ -4115,11 +4115,14 @@ use App\proyecto_empleado;
                         </div>
                         <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-2" id="nuevaAltaEdit" style="display: none">
-                                <div class="col-xl-12 text-left">
+                                <div class="col-xl-2 text-left">
                                     <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
                                         onclick="$('#contratoDetallesmodalEN').modal();$('#form-ver').modal('hide');javascript:validacionNuevaAlta()">
                                         + Nueva alta
                                     </button>
+                                    <div class="float-md-right" id="gifAlta" style="display: none">
+                                        <img src="{{asset('landing/images/flecha.gif')}}" height="30">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

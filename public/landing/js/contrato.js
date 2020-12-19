@@ -133,6 +133,7 @@ function historialEmp() {
         success: function (data) {
             var containerVer = $('#editar_tbodyHistorial');
             if (data.length != 0) {
+                $('#gifAlta').hide();
                 altaEmpleado = true;
                 for (var i = 0; i < data.length; i++) {
                     var trVer = '<tr>';
@@ -206,6 +207,9 @@ function historialEmp() {
                     containerVer.append(trVer);
                     mostrarBoton();
                 }
+            } else {
+                $('#nuevaAltaEdit').show();
+                $('#gifAlta').show();
             }
         },
         error: function () { }

@@ -1037,7 +1037,8 @@ function verDEmpleado(idempleadoVer){
                         function (e) {
                             if (e) {
                                 editarEmpleado(idEmpleado);
-                                $('#smartwizard1'). smartWizard("goToStep",2);
+                                $('#smartwizard1').smartWizard("next");
+                                $('#smartwizard1').smartWizard("next");
                             }
                         }
                     )
