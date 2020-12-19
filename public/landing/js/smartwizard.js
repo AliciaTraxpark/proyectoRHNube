@@ -463,7 +463,7 @@ $(document).ready(function () {
             }
         }
 
-        if (stepnumber == 2) {
+        if (stepnumber == 3) {
             if (isStepValid == true) {
 
                 if ($("#estadoF").val() == "true") {
