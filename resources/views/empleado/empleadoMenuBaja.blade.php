@@ -1478,7 +1478,7 @@
                                             <div class="col-md-4">
                                                 <select class="form-control"
                                                     style="padding-left: 5px;padding-right: 5px;" name="m_ano_fechaFB"
-                                                    id="m_ano_fechaFEN">
+                                                    id="m_ano_fechaFB">
                                                     <option value="0">Año</option>
                                                     @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
                                                         {{$i}}

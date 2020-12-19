@@ -1207,6 +1207,181 @@ function validacionAlta() {
         $('#guardarAltaB').prop("disabled", true);
     }
 }
+//* VALIDACION DE FORMULARIO
 $('#contratoB').on("change", function () {
     validacionAlta();
 });
+//* LIMPIAR FOMURARIO
+function limpiarDatosAlta() {
+    $('#contratoB').val("");
+    $('#condicionB').val("");
+    $('#montoB').val("");
+    $('#m_dia_fechaIB').val(0);
+    $('#m_mes_fechaIB').val(0);
+    $('#m_ano_fechaIB').val(0);
+    $('#fileArchivosB').val(null);
+    $('.iborrainputfile').val(null);
+    $('#checkboxFechaIB').prop("checked", false);
+    $('#m_dia_fechaFB').val(0);
+    $('#m_mes_fechaFB').val(0);
+    $('#m_ano_fechaFB').val(0);
+}
+//* VALIDACION DE ARCHIVOS EN NUEVA ALTA
+async function validArchivosAlta() {
+    var respuesta = true;
+    $.each($('#fileArchivosB'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            if (sizeKiloBytes > parseInt($('#fileArchivosB').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+$('#fileArchivosB').on("click", function () {
+    $('#validArchivoB').hide();
+});
+//* REGISTRAR ARCHIVO EN NUEVA ALTA
+function archivosDeNuevo(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($('#fileArchivosB'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            limpiarDatosAlta();
+        },
+        error: function () {
+        },
+    });
+}
+//* REGISTRAR NUEVA ALTA
+async function nuevaAlta() {
+    var contrato = $('#contratoB').val();
+    var condicionPago = $('#condicionB').val();
+    var monto = $('#montoB').val();
+    var fechaInicial;
+    var fechaFinal = "0000-00-00";
+    var idEmpleado = $('#idEmpleadoBaja').val();
+
+    //* FUNCIONES DE FECHAS
+    var m_AnioIE = parseInt($('#m_ano_fechaIB').val());
+    var m_MesIE = parseInt($('#m_mes_fechaIB').val() - 1);
+    var m_DiaIE = parseInt($('#m_dia_fechaIB').val());
+    var m1_VFechaIE = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+    if (m1_VFechaIE.isValid()) {
+        $('#m_validFechaCIB').hide();
+    } else {
+        $('#m_validFechaCIB').show();
+        return false;
+    }
+    if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
+        fechaInicial = moment([m_AnioIE, m_MesIE, m_DiaIE]).format('YYYY-MM-DD');
+    } else {
+        fechaInicial = '0000-00-00';
+    }
+    if (!$("#checkboxFechaIB").is(':checked')) {
+        var mf_AnioFE = parseInt($('#m_ano_fechaFB').val());
+        var mf_MesFE = parseInt($('#m_mes_fechaFB').val() - 1);
+        var mf_DiaFE = parseInt($('#m_dia_fechaFB').val());
+        var m1f_VFechaFE = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        console.log(m1f_VFechaFE);
+        if (m1f_VFechaFE.isValid()) {
+            $('#m_validFechaCFB').hide();
+        } else {
+            $('#m_validFechaCFB').show();
+            return false;
+
+        }
+        var momentInicio = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+        var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        console.log(momentInicio.isBefore(momentFinal));
+        if (!momentInicio.isBefore(momentFinal)) {
+            $('#m_validFechaCFB').show();
+            return;
+        } else {
+            $('#m_validFechaCFB').hide();
+        }
+        if (mf_AnioFE != 0 && mf_MesFE != -1 && mf_DiaFE != 0) {
+            fechaFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]).format('YYYY-MM-DD');
+        } else {
+            fechaFinal = '0000-00-00';
+        }
+    }
+    var fechaAlta = fechaInicial;
+    //* FUNCIONES DE VALIDAR ARCHIVO
+    const result = await validArchivosAlta();
+    console.log(result);
+    if (!result) {
+        $('#validArchivoB').show();
+        return false;
+    } else {
+        $('#validArchivoB').hide();
+    }
+    //* *******************************FINALIZACION ******************************************
+    //* AJAX DE NUEVA ALTA
+    $.ajax({
+        type: "POST",
+        url: "/nuevaAlta",
+        data: {
+            contrato: contrato,
+            fechaAlta: fechaAlta,
+            condicionPago: condicionPago,
+            monto: monto,
+            fechaInicial: fechaInicial,
+            fechaFinal: fechaFinal,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            //* REGISTRAR ARCHIVOS EN NUEVA ALTA
+            archivosDeNuevo(data);
+            $('#modalAlta').modal('toggle');
+            RefreshTablaEmpleado();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nRegisto exitoso.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    element: $('#form-ver'),
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { }
+    });
+}
