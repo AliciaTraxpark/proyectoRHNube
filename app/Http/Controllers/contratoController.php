@@ -156,4 +156,22 @@ class contratoController extends Controller
 
         return response()->json($idContrato, 200);
     }
+
+    //* ELIMINAR CONTRATO
+    public function eliminarContrato(Request $request)
+    {
+        $id = $request->get('id');
+        $historial_empleado = historial_empleado::where('idhistorial_empleado', '=', $id)->get()->first();
+        $contrato = contrato::where('id', '=', $historial_empleado->idContrato)->get()->first();
+        $documentos = doc_empleado::where('idhistorial_empleado', '=', $historial_empleado->idhistorial_empleado)->get();
+        for ($j = 0; $j < sizeof($documentos); $j++) {
+            $rutaDoc = public_path() . '/documEmpleado/' . $documentos[$j]->rutaDocumento;
+            unlink($rutaDoc);
+            $doc = doc_empleado::where('iddoc_empleado', '=', $documentos[$j]->iddoc_empleado)->delete();
+        }
+        $historial_empleado->delete();
+        $contrato->delete();
+
+        return response()->json(array('status' => true), 200);
+    }
 }

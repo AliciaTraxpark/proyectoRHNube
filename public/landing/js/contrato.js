@@ -186,10 +186,17 @@ function historialEmp() {
                             title="Detalle de Contrato" data-original-title="Detalle de Contrato" style="cursor: pointer;">
                             <img src="landing/images/adaptive.svg" height="18">
                                 </a>`;
+                    if (data[i].fecha_baja !== null && i != 0) {
+                        trVer += `&nbsp;
+                                <a data-toggle="tooltip" title="Eliminar contrato" data-placement="right"
+                                    onclick="javascript:eliminarContrato(${data[i].id});" style="cursor: pointer">
+                                    <img src="admin/images/delete.svg" height="15">
+                                </a>`;
+                    }
                     if (data[i].fecha_baja === null) {
                         altaEmpleado = false;
                         trVer += `&nbsp;
-                                <a data-toggle="tooltip" name="dBajaName" data-original-title="Dar de baja" data-placement="right"
+                                <a data-toggle="tooltip" name="dBajaName" title="Dar de baja" data-placement="right"
                                     onclick="javascript:bajaEmpleadoContrato(${data[i].id});$('#form-ver').modal('hide');" style="cursor: pointer">
                                     <img src="landing/images/abajo.svg" height="17">
                                 </a>`;
@@ -595,6 +602,65 @@ function validacionNuevaAlta() {
         $('#m_ano_fechaFEN').prop("disabled", true);
         $('#guardarAltaN').prop("disabled", true);
     }
+}
+//* ELIMINAR CONTRATO
+function eliminarContrato(id) {
+    //* DESICION DE ELIMINAR CONTRATO
+    alertify
+        .confirm("¿Desea eliminar contrato?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "/eliminarHistorialC",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        historialEmp();
+                        $.notifyClose();
+                        $.notify({
+                            message: '\nContrato eliminado',
+                            icon: 'landing/images/bell.svg',
+                        }, {
+                            element: $('#form-ver'),
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { },
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar contrato",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                historialEmp();
+            },
+        });
 }
 //TODO -> ************************FINALIZACION********************** **//
 //TODO -> ************************BAJA DESDE TABLA CONTRATO********************** **//
