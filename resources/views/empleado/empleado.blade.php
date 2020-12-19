@@ -3488,9 +3488,9 @@ use Carbon\Carbon;
                                                         <div class="col">
                                                             <div class="custom-control custom-switch mb-2">
                                                                 <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitchCR1">
+                                                                    id="SwitchCR1">
                                                                 <label class="custom-control-label"
-                                                                    for="customSwitchCR1" style="font-weight: bold">
+                                                                    for="SwitchCR1" style="font-weight: bold">
                                                                     <i data-feather="activity"
                                                                         style="height: 15px !important;width: 15px !important;color:white !important">
                                                                     </i>&nbsp;&nbsp;
@@ -3539,9 +3539,9 @@ use Carbon\Carbon;
                                                         <div class="col">
                                                             <div class="custom-control custom-switch mb-2">
                                                                 <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitchCR2">
+                                                                    id="SwitchCR2">
                                                                 <label class="custom-control-label"
-                                                                    for="customSwitchCR2" style="font-weight: bold">
+                                                                    for="SwitchCR2" style="font-weight: bold">
                                                                     <i data-feather="map-pin"
                                                                         style="height: 15px !important;width: 15px !important;color:white !important">
                                                                     </i>&nbsp;&nbsp;

@@ -269,29 +269,6 @@ $(document).ready(function () {
             }
         }
         if (stepnumber == 1) {
-            console.log($("#contrato").val());
-            varCon = $("#contrato").val();
-            varCondicion = $("#condicion").val();
-            if (varCon == '') {
-                isStepValid = false;
-                $("#validContrato").show();
-                $("#detalleContratoS").hide();
-            } else {
-                $("#validContrato").hide();
-            }
-
-            if (varCondicion == '') {
-                isStepValid = false;
-                if (varCon == '') {
-                    $("#detalleContratoS").hide();
-                } else {
-                    $("#detalleContratoS").show();
-                }
-
-            } else {
-                $("#detalleContratoS").hide();
-            }
-
             if (isStepValid == true) {
                 if ($("#estadoPE").val() == "true") {
                     idE = $("#idEmpleado").val();
@@ -301,7 +278,7 @@ $(document).ready(function () {
                 }
             }
         }
-        if (stepnumber == 2) {
+        if (stepnumber == 3) {
             if (isStepValid == true) {
                 if ($("#estadoPF").val() == "true") {
                     idE = $("#idEmpleado").val();
@@ -310,9 +287,7 @@ $(document).ready(function () {
                 }
             }
         }
-        if (stepnumber == 3) {
-
-            console.log($("#selectCalendario").val());
+        if (stepnumber == 4) {
             if ($("#selectCalendario").val() == "Asignar calendario") {
                 isStepValid = false;
                 $("#vallidCalend").show();
@@ -328,7 +303,7 @@ $(document).ready(function () {
                 }
             }
         }
-        if (stepnumber == 4) {
+        if (stepnumber == 5) {
             if (isStepValid == true) {
                 if ($("#estadoPH").val() == "true") {
                     idE = $("#idEmpleado").val();
@@ -626,20 +601,21 @@ $(document).ready(function () {
             stepNumber == 1 ||
             stepNumber == 2 ||
             stepNumber == 3 ||
-            stepNumber == 4
+            stepNumber == 4 ||
+            stepNumber == 5
         ) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleado").hide();
         }
 
-        if (stepNumber == 5) {
+        if (stepNumber == 6) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleado").hide();
             actividad_empleado();
         }
-        if (stepNumber == 6) {
+        if (stepNumber == 7) {
             $("button.sw-btn-prev").hide();
             $("button.sw-btn-next").hide();
             $("#FinalizarEmpleado").show();

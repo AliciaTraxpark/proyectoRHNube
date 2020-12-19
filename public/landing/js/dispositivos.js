@@ -957,17 +957,17 @@ function cambiarEstadoAndroidEditar(id) {
 }
 // TODO ****** FINALIZACION DE FORMULARIO EDITAR *****//
 // TODO EN FORMULARIO REGISTRAR
-$('#customSwitchCR1').prop('checked', true);
+$('#SwitchCR1').prop('checked', true);
 $('#bodyModoControlRR').show();
 $('#bodyModoControlAR').hide();
-$('#customSwitchCR1').on('change.bootstrapSwitch', function (event) {
+$('#SwitchCR1').on('change.bootstrapSwitch', function (event) {
     if (event.target.checked == true) {
         $('#bodyModoControlRR').show();
     } else {
         $('#bodyModoControlRR').hide();
     }
 });
-$('#customSwitchCR2').on('change.bootstrapSwitch', function (event) {
+$('#SwitchCR2').on('change.bootstrapSwitch', function (event) {
     if (event.target.checked == true) {
         $('#bodyModoControlAR').show();
     } else {
@@ -990,7 +990,7 @@ function dispositivosWindowsRegistrar() {
         },
         success: function (data) {
             var container = $('#tbodyDispositivo');
-            $('#customSwitchCR1').prop('checked', true);
+            $('#SwitchCR1').prop('checked', true);
             $('#bodyModoControlRR').show();
             for (var i = 0; i < data.length; i++) {
                 if (data[i].dispositivoD == 'WINDOWS') {
@@ -1062,7 +1062,7 @@ function dispositivosAndroidRegistrar() {
         },
         success: function (data) {
             var containerA = $('#tbodyDispositivoAR');
-            $('#customSwitchCR2').prop('checked', false);
+            $('#SwitchCR2').prop('checked', false);
             $('#bodyModoControlAR').hide();
             for (let index = 0; index < data.length; index++) {
                 if (data[index].dispositivoD == 'ANDROID') {
@@ -1121,7 +1121,7 @@ function dispositivosAndroidRegistrar() {
                     $('#smsReg' + data[index].idV).append(tdSms);
                 }
                 //* *************************************************************
-                $('#customSwitchCR2').prop('checked', true);
+                $('#SwitchCR2').prop('checked', true);
                 $('#bodyModoControlAR').show();
             }
         },

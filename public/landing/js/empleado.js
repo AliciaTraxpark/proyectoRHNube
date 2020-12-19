@@ -3167,72 +3167,11 @@ function enviarCondicion(accion, objCondicion) {
         });
     }
 }
-//* FECHAS
-function agregarFechas() {
-    var m_Anio = parseInt($("#m_ano_fecha").val());
-    var m_Mes = parseInt($("#m_mes_fecha").val() - 1);
-    var m_Dia = parseInt($("#m_dia_fecha").val());
-    var m1_VFecha = new Date(m_Anio, m_Mes, m_Dia);
-    if (
-        m1_VFecha.getFullYear() == m_Anio &&
-        m1_VFecha.getMonth() == m_Mes &&
-        m1_VFecha.getDate() == m_Dia
-    ) {
-        $("#m_validFechaC").hide();
-    } else {
-        $("#m_validFechaC").show();
-        return false;
-    }
-    if (m_Anio != 0 && m_Mes != -1 && m_Dia != 0) {
-        fechaI = new Date(m_Anio, m_Mes, m_Dia);
-    } else {
-        fechaI = "0000-00-00";
-    }
-    if (!$("#checkboxFechaI").is(":checked")) {
-        var mf_Anio = parseInt($("#mf_ano_fecha").val());
-        var mf_Mes = parseInt($("#mf_mes_fecha").val() - 1);
-        var mf_Dia = parseInt($("#mf_dia_fecha").val());
-        var m1f_VFecha = new Date(mf_Anio, mf_Mes, mf_Dia);
-        if (
-            m1f_VFecha.getFullYear() == mf_Anio &&
-            m1f_VFecha.getMonth() == mf_Mes &&
-            m1f_VFecha.getDate() == mf_Dia
-        ) {
-            $("#mf_validFechaC").hide();
-        } else {
-            $("#mf_validFechaC").show();
-            return false;
-        }
-        //* VALIDACION DE FECHAS
-        var momentInicio = moment([m_Anio, m_Mes, m_Dia]);
-        var momentFinal = moment([mf_Anio, mf_Mes, mf_Dia]);
-        if (!momentInicio.isBefore(momentFinal)) {
-            $("#mf_validFechaC").show();
-            return false;
-        } else {
-            $("#mf_validFechaC").hide();
-        }
-        //* ********************
-        if (mf_Anio != 0 && mf_Mes != -1 && mf_Dia != 0) {
-            fechaF = new Date(mf_Anio, mf_Mes, mf_Dia);
-        } else {
-            fechaF = "0000-00-00";
-        }
-    }
-    $("#fechasmodal").modal("toggle");
-    $("#form-registrar").modal("show");
-}
 //CODIGO EMPLEADO
 function valorCodigoEmpleado() {
     var numDocumento = $("#numDocumento").val();
     $("#codigoEmpleado").val(numDocumento);
 }
-//EMPLEADO
-/*$('#guardarEmpleado').click(function () {
-    objEmpleado = datosPersona("POST");
-    enviarEmpleado('', objEmpleado);
-});*/
-
 function datosPersona(method) {
     var celularC = "";
     var telefonoC = "";
@@ -3377,47 +3316,19 @@ function enviarEmpleadoStore(accion, objEmpleado) {
 }
 //GUARDAR DATOS EMPRESARIAL EN GUARDAR EMPLEADO
 function datosEmpresaEmpleado(method) {
-    var m_Anio = parseInt($("#m_ano_fecha").val());
-    var m_Mes = parseInt($("#m_mes_fecha").val() - 1);
-    var m_Dia = parseInt($("#m_dia_fecha").val());
-
-    if (m_Anio != 0 && m_Mes != -1 && m_Dia != 0) {
-        fechaIn = new Date(m_Anio, m_Mes, m_Dia);
-    } else {
-        fechaIn = "0000-00-00";
-    }
-    //////////////////////
-    var mf_Anio = parseInt($("#mf_ano_fecha").val());
-    var mf_Mes = parseInt($("#mf_mes_fecha").val() - 1);
-    var mf_Dia = parseInt($("#mf_dia_fecha").val());
-
-    if (mf_Anio != 0 && mf_Mes != -1 && mf_Dia != 0) {
-        fechaFn = new Date(mf_Anio, mf_Mes, mf_Dia);
-    } else {
-        fechaFn = "0000-00-00";
-    }
-
     nuevoEmpresa = {
         codigoEmpleado: $("#codigoEmpleado").val(),
         cargo: $("#cargo").val(),
         area: $("#area").val(),
-        centroc: $("#centroc").val(),
-        contrato: $("#contrato").val(),
-        fechaI: fechaIn,
-        fechaF: fechaFn,
         nivel: $("#nivel").val(),
         local: $("#local").val(),
-        condicion: $("#condicion").val(),
-        monto: $("#monto").val(),
-        idContrato: $("#idContrato").val(),
+        centroc: $("#centroc").val(),
         _method: method,
     };
     return nuevoEmpresa;
 }
 
 function enviarEmpresarialEmpleado(accion, objEmpleado) {
-    ////////////////////////////////////
-
     var formData = new FormData();
     formData.append("objEmpleado", JSON.stringify(objEmpleado));
     $.ajax({
@@ -4287,7 +4198,7 @@ $("#formContrato_v").on("keyup change", function () {
     $("#estadoCond").val("true");
 
 });
-$("#swF-default-step-3").on("keyup change", function () {
+$("#swF-default-step-4").on("keyup change", function () {
     $("#estadoF").val("true");
 
 });
@@ -4312,15 +4223,15 @@ $("#sw-default-step-2").on("keyup change click", function () {
     console.log($("#estadoPE").val());
 
 });
-$("#sw-default-step-3").on("keyup change", function () {
+$("#sw-default-step-4").on("keyup change", function () {
     $("#estadoPF").val("true");
 
 });
-$("#sw-default-step-4").on("keyup change", function () {
+$("#sw-default-step-5").on("keyup change", function () {
     $("#estadoPC").val("true");
 
 });
-$("#sw-default-step-5").on("keyup change", function () {
+$("#sw-default-step-6").on("keyup change", function () {
     $("#estadoPH").val("true");
 
 });
@@ -6213,23 +6124,23 @@ $(function () {
     fechaValue.setDate(f);
     $("#fechaInput").change();
 })
-; (function (document, window, index) {
-    var inputs = document.querySelectorAll('.inputfile');
-    Array.prototype.forEach.call(inputs, function (input) {
-        var label = input.nextElementSibling,
-            labelVal = label.innerHTML;
+    ; (function (document, window, index) {
+        var inputs = document.querySelectorAll('.inputfile');
+        Array.prototype.forEach.call(inputs, function (input) {
+            var label = input.nextElementSibling,
+                labelVal = label.innerHTML;
 
-        input.addEventListener('change', function (e) {
-            var fileName = '';
-            if (this.files && this.files.length > 1)
-                fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-            else
-                fileName = e.target.value.split('\\').pop();
+            input.addEventListener('change', function (e) {
+                var fileName = '';
+                if (this.files && this.files.length > 1)
+                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                else
+                    fileName = e.target.value.split('\\').pop();
 
-            if (fileName)
-                label.querySelector('span').innerHTML = fileName;
-            else
-                label.innerHTML = labelVal;
+                if (fileName)
+                    label.querySelector('span').innerHTML = fileName;
+                else
+                    label.innerHTML = labelVal;
+            });
         });
-    });
-}(document, window, 0));
+    }(document, window, 0));

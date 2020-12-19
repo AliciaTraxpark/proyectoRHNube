@@ -2639,11 +2639,12 @@ use App\proyecto_empleado;
                         <ul style="background: #fdfdfd!important;">
                             <li><a href="#sw-default-step-1">Personales</a></li>
                             <li><a href="#sw-default-step-2">Empresarial</a></li>
-                            <li><a href="#sw-default-step-3">Foto</a></li>
-                            <li><a href="#sw-default-step-4">Calendario</a></li>
-                            <li><a href="#sw-default-step-5">Horario</a></li>
-                            <li><a href="#sw-default-step-6">Actividades</a></li>
-                            <li><a href="#sw-default-step-7">Dispositivo</a></li>
+                            <li><a href="#sw-default-step-3">Contrato</a></li>
+                            <li><a href="#sw-default-step-4">Foto</a></li>
+                            <li><a href="#sw-default-step-5">Calendario</a></li>
+                            <li><a href="#sw-default-step-6">Horario</a></li>
+                            <li><a href="#sw-default-step-7">Actividades</a></li>
+                            <li><a href="#sw-default-step-8">Dispositivo</a></li>
                         </ul>
                         <input type="hidden" id="estadoPR" value="false">
                         <input type="hidden" id="estadoPE" value="false">
@@ -2917,19 +2918,7 @@ use App\proyecto_empleado;
                             </div>
                             <div id="sw-default-step-2" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default">Codigo Empleado</label>
-                                            <input type="text" class="form-control" name="codigoEmpleado"
-                                                id="codigoEmpleado" tabindex="1"
-                                                onfocus="javascript:valorCodigoEmpleado()" data-toggle="tooltip"
-                                                data-placement="right" maxlength="200"
-                                                title="Número de documento por defecto o Ingrese un código interno"
-                                                data-original-title="Número de documento por defecto o Ingrese un código interno">
-                                        </div>
-                                    </div>
-                                    <div class="col-4"><br></div>
-                                    <div class="col-4">
+                                    <div class="col-12">
                                         <div class="float-md-right">
                                             <a onclick="javascript:mostrarContenidoE()" data-toggle="tooltip"
                                                 data-placement="left" title="ver vídeo" data-original-title="ver vídeo">
@@ -2954,29 +2943,13 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sw-default">Contrato <a
-                                                    onclick="$('#form-registrar').modal('hide');" href="#contratomodal"
-                                                    data-toggle="modal" data-target="#contratomodal"><i
-                                                        class="uil uil-plus"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a id="detalleContrato" onclick="$('#form-registrar').modal('hide');"
-                                                    href="#fechasmodal" data-toggle="modal" data-target="#fechasmodal"
-                                                    data-toggle="tooltip" data-placement="right"
-                                                    title="Detalle de Contrato."
-                                                    data-original-title="Detalle de Contrato."
-                                                    style="cursor: pointer;"><img
-                                                        src="{{ asset('landing/images/adaptive.svg') }}"
-                                                        height="18"></a></label> <span id="validContrato"
-                                                style="color: red;display:none">Eliga
-                                                contrato</span> <span id="detalleContratoS"
-                                                style="color: red;display:none">Indique detalles de contrato</span>
-                                            <select class="form-control" name="contrato" id="contrato"
-                                                onchange="$('#detalleContrato').show();" tabindex="5" required>
-                                                <option value="">Seleccionar</option>
-                                                @foreach ($tipo_cont as $tipo_conts)
-                                                <option value="{{ $tipo_conts->contrato_id }}">
-                                                    {{ $tipo_conts->contrato_descripcion }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label for="sw-default">Codigo Empleado</label>
+                                            <input type="text" class="form-control" name="codigoEmpleado"
+                                                id="codigoEmpleado" tabindex="1"
+                                                onfocus="javascript:valorCodigoEmpleado()" data-toggle="tooltip"
+                                                data-placement="right" maxlength="200"
+                                                title="Número de documento por defecto o Ingrese un código interno"
+                                                data-original-title="Número de documento por defecto o Ingrese un código interno">
                                         </div>
                                     </div> <!-- end col -->
                                     <div class="col-4">
@@ -3038,7 +3011,8 @@ use App\proyecto_empleado;
                                 </div> <!-- end row -->
 
                             </div>
-                            <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
+                            <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important"></div>
+                            <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
                                 <div class="col-12 pb-2">
                                     <div class="float-md-right">
                                         <a onclick="javascript:mostrarContenidoF()" data-toggle="tooltip"
@@ -3056,7 +3030,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end row -->
 
                             </div>
-                            <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
+                            <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="float-md-right">
@@ -3247,7 +3221,7 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal -->
                             </div>
                         </div>
-                        <div id="sw-default-step-5" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="float-md-right">
@@ -3533,11 +3507,11 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </div>
-                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
-                                        <div class="card-body border p-2">
+                                        <div class="card-body p-2">
                                             <div class="row">
                                                 <div class="col-xl-12 text-left">
                                                     <div class="float-md-right">
@@ -3635,7 +3609,7 @@ use App\proyecto_empleado;
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </div>
-                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-3">
                                 <div class="col-xl-12 col-sm-12">
                                     <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
@@ -3664,8 +3638,8 @@ use App\proyecto_empleado;
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchCR1">
-                                                        <label class="custom-control-label" for="customSwitchCR1"
+                                                            id="SwitchCR1">
+                                                        <label class="custom-control-label" for="SwitchCR1"
                                                             style="font-weight: bold">
                                                             <i data-feather="activity"
                                                                 style="height: 15px !important;width: 15px !important;color:white !important">
@@ -3715,8 +3689,8 @@ use App\proyecto_empleado;
                                                 <div class="col">
                                                     <div class="custom-control custom-switch mb-2">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchCR2">
-                                                        <label class="custom-control-label" for="customSwitchCR2"
+                                                            id="SwitchCR2">
+                                                        <label class="custom-control-label" for="SwitchCR2"
                                                             style="font-weight: bold">
                                                             <i data-feather="map-pin"
                                                                 style="height: 15px !important;width: 15px !important;color:white !important">

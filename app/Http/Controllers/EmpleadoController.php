@@ -861,46 +861,6 @@ class EmpleadoController extends Controller
         if ($objEmpleado['centroc'] != '') {
             $empleado->emple_centCosto = $objEmpleado['centroc'];
         }
-
-        if ($objEmpleado['contrato'] != '') {
-            if ($objEmpleado['idContrato'] == '') {
-                $contrato = new contrato();
-                $contrato->id_tipoContrato = $objEmpleado['contrato'];
-                $contrato->fechaInicio = $objEmpleado['fechaI'];
-                $contrato->fechaFinal = $objEmpleado['fechaF'];
-                $contrato->idEmpleado = $idE;
-                $contrato->estado = 1;
-                if ($objEmpleado['condicion'] != '') {
-                    $contrato->monto = $objEmpleado['monto'];
-                    $contrato->id_condicionPago = $objEmpleado['condicion'];
-                }
-                $contrato->save();
-
-                ///////////////////
-                $historial_empleado = new historial_empleado();
-                $historial_empleado->emple_id =  $idE;
-                $historial_empleado->tipo_Hist =  1;
-                $historial_empleado->fecha_historial =  $objEmpleado['fechaI'];
-                $historial_empleado->save();
-                /////////////////////////77
-                $idContrato = $contrato->id;
-            } else {
-                $contrato = contrato::where('id', '=', $objEmpleado['idContrato'])->get()->first();
-                if ($contrato) {
-                    $contrato->id_tipoContrato = $objEmpleado['contrato'];
-                    $contrato->fechaInicio = $objEmpleado['fechaI'];
-                    $contrato->fechaFinal = $objEmpleado['fechaF'];
-                    $contrato->monto = $objEmpleado['monto'];
-                    $contrato->idEmpleado = $idE;
-                    $contrato->estado = 1;
-                    if ($objEmpleado['condicion'] != '') {
-                        $contrato->id_condicionPago = $objEmpleado['condicion'];
-                    }
-                    $contrato->save();
-                }
-                $idContrato = $objEmpleado['idContrato'];
-            }
-        }
         if ($objEmpleado['nivel'] != '') {
             $empleado->emple_nivel = $objEmpleado['nivel'];
         }
