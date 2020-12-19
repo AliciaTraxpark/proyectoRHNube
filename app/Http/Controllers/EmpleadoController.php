@@ -1386,27 +1386,50 @@ class EmpleadoController extends Controller
         return json_encode(array("result" => true));
     }
 
-    public function deleteAll(Request $request)
+    public function bajaEmpleado(Request $request)
     {
-        $ids = $request->ids;
-        $fechaBaja = $request->fechaBaja;
-        $empleado = empleado::whereIn('emple_id', explode(",", $ids))->get();
-        $array = array();
-        foreach ($empleado as $t) {
-            $t->emple_estado = 0;
-            $t->save();
-            $array[] = $t->emple_persona;
-        }
-        $arrayEmp = array();
-        $arrayEmp[] = explode(",", $ids);
-
-        foreach ($arrayEmp[0] as $emp) {
-            $historial_empleado = historial_empleado::where('emple_id', '=', $emp)->whereNull('fecha_baja')->get()->first();
+        $idE = $request->get('idEmpleado');
+        $fechaBaja = $request->get('fechaBaja');
+        $historial_empleado = historial_empleado::where('emple_id', '=', $idE)->whereNull('fecha_baja')->get()->first();
+        if ($historial_empleado) {
+            //* HISTORIAL DE EMPLEADO
             $historial_empleado->fecha_baja = $fechaBaja;
             $historial_empleado->save();
+            //* CONTRATO
+            $contrato = contrato::where('id', '=', $historial_empleado->idContrato)->get()->first();
+            $contrato->fechaFinal = $fechaBaja;
+            $contrato->estado = 0;
+            $contrato->save();
+            //* EMPLEADO
+            $empleado = empleado::where('emple_id', '=', $historial_empleado->emple_id)->get()->first();
+            $empleado->emple_estado = 0;
+            $empleado->save();
+            return $historial_empleado->idhistorial_empleado;
+        } else {
+            return 0;
         }
-        return $historial_empleado->idhistorial_empleado;
     }
+
+    public function storeDocumentoBaja(Request $request, $id)
+    {
+        //* VALIDAR SI ES VACIO O O ACTUALIZAR
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $filesC) {
+                $file = $filesC;
+                $path = public_path() . '/documEmpleado';
+                $fileName = uniqid() . $file->getClientOriginalName();
+                $file->move($path, $fileName);
+
+                $doc_empleado = new doc_empleado();
+                $doc_empleado->idhistorial_empleado = $id;
+                $doc_empleado->rutaDocumento = $fileName;
+                $doc_empleado->save();
+            }
+        }
+
+        return json_encode(array('status' => true));
+    }
+
     public function indexMenu()
     {
         if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
@@ -2806,28 +2829,6 @@ class EmpleadoController extends Controller
             $historial_empleadoN->save();
         }
         return $historial_empleadoN->idhistorial_empleado;
-    }
-
-    public function storeDocumentoBaja(Request $request, $data)
-    {
-
-
-        //VALIDAR SI ES VACIO O O ACTUALIZAR
-        if ($request->hasFile('bajaFile')) {
-            foreach ($request->file('bajaFile') as $filesC) {
-                $file = $filesC;
-                $path = public_path() . '/documEmpleado';
-                $fileName = uniqid() . $file->getClientOriginalName();
-                $file->move($path, $fileName);
-
-                $doc_empleado = new doc_empleado();
-                $doc_empleado->idhistorial_empleado = $data;
-                $doc_empleado->rutaDocumento = $fileName;
-                $doc_empleado->save();
-            }
-        }
-
-        return json_encode(array('status' => true));
     }
 
     public function storeDocumentoAlta(Request $request, $data)

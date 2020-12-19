@@ -1269,6 +1269,17 @@ function archivosDeNuevo(id) {
         },
     });
 }
+//* CHECKBOX DE FECHA INDEFINADA EN NUEVA ALTA
+$("#checkboxFechaIB").on("click", function () {
+    if ($("#checkboxFechaIB").is(':checked')) {
+        $('#m_dia_fechaFB').val(0);
+        $('#m_mes_fechaFB').val(0);
+        $('#m_ano_fechaFB').val(0);
+        $('#ocultarFechaB').hide();
+    } else {
+        $('#ocultarFechaB').show();
+    }
+});
 //* REGISTRAR NUEVA ALTA
 async function nuevaAlta() {
     var contrato = $('#contratoB').val();

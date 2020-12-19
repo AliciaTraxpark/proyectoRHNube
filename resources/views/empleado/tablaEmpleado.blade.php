@@ -946,12 +946,12 @@ function verDEmpleado(idempleadoVer){
             filterColumn($(this).parents('div').attr('data-column'));
         });
 
-        // SELECT DEFECTO PARA BUSQUEDA
+        //* SELECT DEFECTO PARA BUSQUEDA
         $('#select').val(4).trigger('change');
     });
 </script>
 {{-- ELIMINAR VARIOS ELEMENTOS --}}
-<script>
+{{-- <script>
     function eliminarEmpleado() {
         $(function () {
   f = moment().format("YYYY-MM-DD");
@@ -1075,6 +1075,116 @@ data1='/'+data;
         $('.delete_all').click();
     }
 
+</script> --}}
+{{-- ELIMINACION --}}
+<script>
+    // * ABRIR MODAL DE BAJA
+    function marcareliminar(data) {
+        $('input:checkbox[data-id=' + data + ']').prop('checked', true);
+        $('#modalEliminar').modal();
+        //* INICIALIZAR FECHA DE BAJA
+        var fechaValue = $("#fechaSelectBaja").flatpickr({
+            mode: "single",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "Y-m-d",
+            locale: "es",
+            maxDate: "today",
+            wrap: true,
+            allowInput: true,
+            disableMobile: "true"
+        });
+        $(function () {
+            f = moment().format("YYYY-MM-DD");
+            fechaValue.setDate(f);
+        });
+        //* ***********************************
+        //* VALOR A INPUT HIDDEN
+        $('#empleadoEliminacion').val(data);
+    }
+    //* VALIDACION DE ARCHIVOS EN NUEVA BAJA
+    async function validArchivosBajaTabla() {
+        var respuesta = true;
+        $.each($('#bajaFile'), function (i, obj) {
+            $.each(obj.files, function (j, file) {
+                var fileSize = file.size;
+                var sizeKiloBytes = parseInt(fileSize);
+                if (sizeKiloBytes > parseInt($('#bajaFile').attr('size'))) {
+                    respuesta = false;
+                }
+            });
+        });
+        return respuesta;
+    }
+    $('#bajaFile').on("click",function(){
+        $('#validArchivosBaja').hide();
+    });
+    // * FUNCION DE BAJA
+    async function confirmarBaja(){
+        //* FUNCIONES DE VALIDAR ARCHIVO
+        const result = await validArchivosBajaTabla();
+        console.log(result);
+        if (!result) {
+            $('#validArchivosBaja').show();
+            return false;
+        } else {
+            $('#validArchivosBaja').hide();
+        }
+        var idEmpleado = $('#empleadoEliminacion').val();
+        var fechaBaja = $('#fechaInputBaja').val();
+        $.ajax({
+            url: "/eliminarEmpleado",
+            type: 'POST',
+            data: {
+                idEmpleado:idEmpleado,
+                fechaBaja: fechaBaja
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*401: function () {
+                    location.reload();
+                },*/
+                419: function () {
+                    location.reload();
+                }
+            },
+            success: function (data) {
+                archivosDeBajaTabla(data);
+                RefreshTablaEmpleado();
+                $('#modalEliminar').modal('toggle');
+            },
+            error: function(){}
+        });
+    }
+    function archivosDeBajaTabla(id){
+        //* AJAX DE ARCHICOS
+        var formData = new FormData();
+        $.each($('#bajaFile'), function (i, obj) {
+            $.each(obj.files, function (j, file) {
+                formData.append('file[' + j + ']', file);
+            })
+        });
+        $.ajax({
+            contentType: false,
+            processData: false,
+            type: "POST",
+            url: "/empleado/storeDocumentoBaja/" + id,
+            data: formData,
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#bajaFile').val(null);
+                $('.iborrainputfile').text("Seleccionar archivo");
+                RefreshTablaEmpleado();
+            },
+            error: function () {
+            },
+        });
+    }
 </script>
 {{-- CORREO MASIVO--}}
 <script>

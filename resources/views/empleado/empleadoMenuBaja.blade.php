@@ -1446,7 +1446,7 @@
                                         <label for="">Fecha Indefinida</label>
                                         <input type="checkbox" id="checkboxFechaIB" name="checkboxFechaIB">
                                     </div>
-                                    <div id="ocultarFechaEN">
+                                    <div id="ocultarFechaB">
                                         <span id="m_validFechaCFB" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="row">
