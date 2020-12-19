@@ -4150,8 +4150,8 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-xl-12 col-sm-12">
-                                    <div class="table-responsive-xl">
-                                        <table id="editar_tablaHistorial" class="table"
+                                    <div class="table-responsive-sm" style="height: 250px;overflow: auto;">
+                                        <table class="table table-hover" id="editar_tablaHistorial"
                                             style="font-size: 13px!important;">
                                             <thead style="background: #fafafa;">
                                                 <tr>
