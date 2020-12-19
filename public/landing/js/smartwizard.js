@@ -424,7 +424,6 @@ $(document).ready(function () {
 
         if (stepnumber == 1) {
             if (isStepValid == true) {
-
                 if (
                     $("#estadoE").val() == "true" ||
                     $("#estadoCond").val() == "true"
@@ -436,6 +435,33 @@ $(document).ready(function () {
                     $("#estadoCond").val("false");
                 }
             }
+        }
+
+        if (stepnumber == 2) {
+            var idE = $("#v_id").val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/dataHistorialE",
+                data: {
+                    id: idE,
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                success: function (data) {
+
+                    if (data == 0) {
+                        $("#validHE").show();
+                        isStepValid = false;
+                        return false;
+                    } else {
+                        $("#validHE").hide();
+                    }
+                },
+            });
         }
 
         if (stepnumber == 3) {

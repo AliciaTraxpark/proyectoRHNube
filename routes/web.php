@@ -183,6 +183,7 @@ Route::post('/editDetalleC', 'contratoController@editarContrato');
 Route::post('/archivosEditC/{id}', 'contratoController@agregarArchivosEdit');
 Route::post('/nuevaAlta', 'contratoController@nuevaAlta');
 Route::post('/eliminarHistorialC', 'contratoController@eliminarContrato');
+Route::post('/dataHistorialE', 'contratoController@dataHistorialEmpleado');
 //TAREAS
 Route::get('/tareas', 'ControlController@index');
 Route::get('/tareas/show', 'ControlController@show');

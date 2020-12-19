@@ -174,4 +174,16 @@ class contratoController extends Controller
 
         return response()->json(array('status' => true), 200);
     }
+
+    //* COMPROBAR SI CONTIENE HISTORIAL
+    public function dataHistorialEmpleado(Request $request)
+    {
+        $id = $request->get('id');
+        $historial_empleado = historial_empleado::where('emple_id', '=', $id)->get()->first();
+        if ($historial_empleado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
