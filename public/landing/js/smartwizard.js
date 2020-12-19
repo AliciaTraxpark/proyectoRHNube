@@ -457,7 +457,13 @@ $(document).ready(function () {
                         isStepValid = false;
                         return false;
                     } else {
-                        $("#validHE").hide();
+                        if (data.respuesta == false) {
+                            $('#idHistorialE' + data.he).css("background-color", "#ff8585");
+                            isStepValid = false;
+                            return false;
+                        } else {
+                            $("#validHE").hide();
+                        }
                     }
                 },
             });

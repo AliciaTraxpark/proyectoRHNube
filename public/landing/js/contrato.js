@@ -5,17 +5,27 @@ function ModalAbiertoCondicion() {
         $('#contratoDetallesmodalE').modal('hide');
         modalA = 1;
     } else {
-        $('#contratoDetallesmodalEN').modal('hide');
-        modalA = 2;
+        if ($('#contratoDetallesmodalEN').is(':visible')) {
+            $('#contratoDetallesmodalEN').modal('hide');
+            modalA = 2;
+        } else {
+            $('#NuevoContratoDetallesmodalE').modal('hide');
+            modalA = 3;
+        }
     }
 
 }
+
 //* FUNCION DE CERRAR DE MODAL
 function ModalCerrarCondicion() {
     if (modalA === 1) {
         $('#contratoDetallesmodalE').modal('show');
     } else {
-        $('#contratoDetallesmodalEN').modal('show');
+        if (modalA === 2) {
+            $('#contratoDetallesmodalEN').modal('show');
+        } else {
+            $('#NuevoContratoDetallesmodalE').modal('show');
+        }
     }
 }
 //* ********************FORMULARIO EDITAR ********************* *//
@@ -136,7 +146,7 @@ function historialEmp() {
                 $('#gifAlta').hide();
                 altaEmpleado = true;
                 for (var i = 0; i < data.length; i++) {
-                    var trVer = '<tr>';
+                    var trVer = `<tr id="idHistorialE${data[i].id}">`;
                     trVer += `<td style="vertical-align:middle;">
                                         <img src="landing/images/arriba.svg" height="17"> &nbsp;${moment(data[i].fecha_alta).format('DD/MM/YYYY')}
                                         &nbsp;&nbsp;`;
@@ -146,7 +156,11 @@ function historialEmp() {
                         trVer += `<img src="landing/images/abajo.svg" height="17"> &nbsp;------`;
                     }
                     trVer += `</td>`;
-                    trVer += `<td> ${data[i].contrato}</td> `;
+                    if (data[i].contrato == null) {
+                        trVer += `<td>--</td> `;
+                    } else {
+                        trVer += `<td> ${data[i].contrato}</td> `;
+                    }
                     if (data[i].rutaDocumento != null) {
                         var valores = data[i].rutaDocumento;
                         //* SEPARAMOS CADENAS
@@ -182,11 +196,19 @@ function historialEmp() {
                     } else {
                         trVer += `<td> --</td> `;
                     }
-                    trVer += `<td>
+                    if (data[i].idContrato != null) {
+                        trVer += `<td>
                         <a onclick="javascript:mostrarDetallesContrato(${data[i].idContrato})" data-toggle="tooltip" data-placement="right"
                             title="Detalle de Contrato" data-original-title="Detalle de Contrato" style="cursor: pointer;">
                             <img src="landing/images/adaptive.svg" height="18">
                                 </a>`;
+                    } else {
+                        trVer += `<td>
+                        <a onclick="javascript:modalNuevoDetalle(${data[i].id})" data-toggle="tooltip" data-placement="right"
+                            title="Detalle de Contrato" data-original-title="Detalle de Contrato" style="cursor: pointer;">
+                            <img src="landing/images/adaptive.svg" height="18">
+                                </a>`;
+                    }
                     if (data[i].fecha_baja !== null && i != 0) {
                         trVer += `&nbsp;
                                 <a data-toggle="tooltip" title="Eliminar contrato" data-placement="right"
@@ -194,7 +216,7 @@ function historialEmp() {
                                     <img src="admin/images/delete.svg" height="15">
                                 </a>`;
                     }
-                    if (data[i].fecha_baja === null) {
+                    if (data[i].fecha_baja === null && data[i].contrato !== null) {
                         altaEmpleado = false;
                         trVer += `&nbsp;
                                 <a data-toggle="tooltip" name="dBajaName" title="Dar de baja" data-placement="right"
@@ -204,9 +226,10 @@ function historialEmp() {
                     }
                     trVer += '</td>';
                     trVer += '</tr>';
+                    $('#idHistorialE' + data[i].id).css("background-color", "transparent");
                     containerVer.append(trVer);
-                    mostrarBoton();
                 }
+                mostrarBoton();
             } else {
                 $('#nuevaAltaEdit').show();
                 $('#gifAlta').show();
@@ -394,7 +417,237 @@ function archivosDeEdit(id) {
         },
     });
 }
+//: MODAL DE NUEVO DETALLE
+function modalNuevoDetalle(id) {
+    limpiarNuevosDatosDetalle();
+    $('#idHistoE').val(id);
+    $('#form-ver').modal('hide');
+    $('#NuevoContratoDetallesmodalE').modal();
+    validacionNuevoDetalle();
+}
+//: VALIDACIOM DE NUEVO DETALLE
+function validacionNuevoDetalle() {
+    if ($('#v_contratoND').val() != "") {
+        $('#v_condicionND').prop("disabled", false);
+        $('#v_montoND').prop("disabled", false);
+        $('#m_dia_fechaIEND').prop("disabled", false);
+        $('#m_mes_fechaIEND').prop("disabled", false);
+        $('#m_ano_fechaIEND').prop("disabled", false);
+        $('#fileArchivosNuevosD').prop("disabled", false);
+        $('#checkboxFechaIEND').prop("disabled", false);
+        $('#m_dia_fechaFEND').prop("disabled", false);
+        $('#m_mes_fechaFEND').prop("disabled", false);
+        $('#m_ano_fechaFEND').prop("disabled", false);
+        $('#guardarAltaND').prop("disabled", false);
+    } else {
+        $('#v_condicionND').prop("disabled", true);
+        $('#v_montoND').prop("disabled", true);
+        $('#m_dia_fechaIEND').prop("disabled", true);
+        $('#m_mes_fechaIEND').prop("disabled", true);
+        $('#m_ano_fechaIEND').prop("disabled", true);
+        $('#fileArchivosNuevosD').prop("disabled", true);
+        $('#checkboxFechaIEND').prop("disabled", true);
+        $('#m_dia_fechaFEND').prop("disabled", true);
+        $('#m_mes_fechaFEND').prop("disabled", true);
+        $('#m_ano_fechaFEND').prop("disabled", true);
+        $('#guardarAltaND').prop("disabled", true);
+    }
+}
+$('#fileArchivosNuevosD').on("click", function () {
+    $('#validArchivoEditND').hide();
+});
+//: LIMPIAR FORMULARIO DE NUEVO DETALLE
+function limpiarNuevosDatosDetalle() {
+    $('#idHistoE').val(null);
+    $('#v_contratoND').val("");
+    $('#v_condicionND').val("");
+    $('#v_montoND').val("");
+    $('#m_dia_fechaIEND').val(0);
+    $('#m_mes_fechaIEND').val(0);
+    $('#m_ano_fechaIEND').val(0);
+    $('#fileArchivosNuevosD').val(null);
+    $('.iborrainputfile').val("Adjuntar archivo");
+    $('#checkboxFechaIEND').prop("checked", false);
+    $('#m_dia_fechaFEND').val(0);
+    $('#m_mes_fechaFEND').val(0);
+    $('#m_ano_fechaFEND').val(0);
+}
+//: REGISTRAR ARCHIVOS DE NUEVO DETALLE
+async function validArchivosNuevoD() {
+    var respuesta = true;
+    $.each($('#fileArchivosNuevosD'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            if (sizeKiloBytes > parseInt($('#fileArchivosNuevosD').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+//: REGISTRAR ARCHIVO EN DETALLE
+function archivosDeNuevoDetalle(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($('#fileArchivosNuevosD'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            historialEmp();
+        },
+        error: function () {
+        },
+    });
+}
+//: REGISTRAR NUEVO DETALLE
+async function nuevoDetalleC() {
+    var contrato = $('#v_contratoND').val();
+    var condicionPago = $('#v_condicionND').val();
+    var monto = $('#v_montoND').val();
+    var fechaInicial;
+    var fechaFinal = "0000-00-00";
+    console.log($('#idHistoE').val());
+    var idHistorial = $('#idHistoE').val();
+    var idEmpleado = $('#v_id').val();
+
+    //* FUNCIONES DE FECHAS
+    var m_AnioIE = parseInt($('#m_ano_fechaIEND').val());
+    var m_MesIE = parseInt($('#m_mes_fechaIEND').val() - 1);
+    var m_DiaIE = parseInt($('#m_dia_fechaIEND').val());
+    var m1_VFechaIE = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+    if (m1_VFechaIE.isValid()) {
+        $('#m_validFechaCIEND').hide();
+    } else {
+        $('#m_validFechaCIEND').show();
+        return false;
+    }
+    if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
+        fechaInicial = moment([m_AnioIE, m_MesIE, m_DiaIE]).format('YYYY-MM-DD');
+    } else {
+        fechaInicial = '0000-00-00';
+    }
+    if (!$("#checkboxFechaIEND").is(':checked')) {
+        var mf_AnioFE = parseInt($('#m_ano_fechaFEND').val());
+        var mf_MesFE = parseInt($('#m_mes_fechaFEND').val() - 1);
+        var mf_DiaFE = parseInt($('#m_dia_fechaFEND').val());
+        var m1f_VFechaFE = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (m1f_VFechaFE.isValid()) {
+            $('#m_validFechaCFEND').hide();
+        } else {
+            $('#m_validFechaCFEND').show();
+            return false;
+
+        }
+        var momentInicio = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+        var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (!momentInicio.isBefore(momentFinal)) {
+            $('#m_validFechaCFEND').show();
+            return;
+        } else {
+            $('#m_validFechaCFEND').hide();
+        }
+        if (mf_AnioFE != 0 && mf_MesFE != -1 && mf_DiaFE != 0) {
+            fechaFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]).format('YYYY-MM-DD');
+        } else {
+            fechaFinal = '0000-00-00';
+        }
+    }
+    var fechaAlta = fechaInicial;
+    //* FUNCIONES DE VALIDAR ARCHIVO
+    const result = await validArchivosNuevoD();
+    if (!result) {
+        $('#validArchivoEditND').show();
+        return false;
+    } else {
+        $('#validArchivoEditND').hide();
+    }
+    //* *******************************FINALIZACION ******************************************
+    //* AJAX DE NUEVO DETALLE
+    $.ajax({
+        type: "POST",
+        url: "/nuevoDC",
+        data: {
+            contrato: contrato,
+            fechaAlta: fechaAlta,
+            condicionPago: condicionPago,
+            monto: monto,
+            fechaInicial: fechaInicial,
+            fechaFinal: fechaFinal,
+            idHistorial: idHistorial,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            //* REGISTRAR ARCHIVOS EN NUEVO DETALLE
+            archivosDeNuevoDetalle(data);
+            $('#NuevoContratoDetallesmodalE').modal('toggle');
+            $('#form-ver').modal('show');
+            historialEmp();
+            limpiarNuevosDatosDetalle();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nRegisto exitoso.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    element: $('#form-ver'),
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { }
+    });
+}
+//: CHECKBOX DE FECHA INDEFINADA EN NUEVO DETALLE
+$("#checkboxFechaIEND").on("click", function () {
+    if ($("#checkboxFechaIEND").is(':checked')) {
+        $('#m_dia_fechaFEND').val(0);
+        $('#m_mes_fechaFEND').val(0);
+        $('#m_ano_fechaFEND').val(0);
+        $('#ocultarFechaEND').hide();
+    } else {
+        $('#ocultarFechaEND').show();
+    }
+});
 //TODO -> ****************** NUEVA ALTA *************************************
+//* MODAL DE NUEVA ALTA 
+function modalNuevaAlta() {
+    $('#contratoDetallesmodalEN').modal();
+    $('#form-ver').modal('hide');
+    validacionNuevaAlta();
+}
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
 async function validArchivosAltaEdit() {
     var respuesta = true;

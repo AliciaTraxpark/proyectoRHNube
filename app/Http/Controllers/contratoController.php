@@ -181,9 +181,38 @@ class contratoController extends Controller
         $id = $request->get('id');
         $historial_empleado = historial_empleado::where('emple_id', '=', $id)->get()->first();
         if ($historial_empleado) {
-            return 1;
+            if (is_null($historial_empleado->idContrato)) {
+                $arrayR = array("respuesta" => false, "he" => $historial_empleado->idhistorial_empleado);
+                return $arrayR;
+            } else {
+                return 1;
+            }
         } else {
             return 0;
         }
+    }
+
+    //* NUEVO DETALLE DE CONTRATO
+    public function nuevoDetalleC(Request $request)
+    {
+        $idHistorial = $request->get('idHistorial');
+        $historial_empleado = historial_empleado::where('idhistorial_empleado', '=', $idHistorial)->get()->first();
+
+        $contrato = new contrato();
+        $contrato->id_tipoContrato = $request->get('contrato');
+        $contrato->id_condicionPago = $request->get('condicionPago');
+        $contrato->fechaInicio = $request->get('fechaInicial');
+        $contrato->fechaFinal = $request->get('fechaFinal');
+        $contrato->monto = $request->get('monto');
+        $contrato->idEmpleado = $request->get('idEmpleado');
+        $contrato->estado = 1;
+        $contrato->save();
+
+        $idContrato = $contrato->id;
+
+        $historial_empleado->idContrato = $idContrato;
+        $historial_empleado->save();
+
+        return response()->json($idContrato, 200);
     }
 }

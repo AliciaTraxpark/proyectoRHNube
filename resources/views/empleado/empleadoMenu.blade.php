@@ -1983,7 +1983,7 @@ use App\proyecto_empleado;
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
                         Contrato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#contratoDetallesmodalEN').modal('show');javascript:limpiarEditar()">
+                        onclick="javascript:ModalCerrarCondicion();javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -2009,8 +2009,7 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                        onclick="$('#contratoDetallesmodalEN').modal('show');javascript:limpiarEditar()"
+                    <button type="button" onclick="javascript:ModalCerrarCondicion();javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
                 </div>
@@ -2419,7 +2418,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
     {{-- FINALIZACION --}}
-    {{-- NUEVO DETALLE CONTRATO --}}
+    {{-- NUEVA ALTA --}}
     <div id="contratoDetallesmodalEN" class="modal fade" tabindex="-1" role="dialog"
         aria-labelledby="contratoDetallesmodalEN" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-lg d-flex justify-content-center">
@@ -2440,9 +2439,9 @@ use App\proyecto_empleado;
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="sw-default">Contrato
-                                        <a onclick="$('#contratoDetallesmodalEN').modal('hide');$('#contratomodalE').modal('show');"
-                                            data-toggle="modal"><i class="uil uil-plus"
-                                                style="color: darkblue;cursor: pointer;"></i>
+                                        <a onclick="javascript:ModalAbiertoCondicion();$('#contratomodalE').modal('show');"
+                                            data-toggle="modal">
+                                            <i class="uil uil-plus" style="color: darkblue;cursor: pointer;"></i>
                                         </a>
                                     </label>
                                     <select class="form-control" name="v_contratoN" id="v_contratoN" tabindex="5"
@@ -2617,6 +2616,213 @@ use App\proyecto_empleado;
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-sm" style="background-color:#163552;"
                         id="guardarAltaN">Guardar</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {{-- FINALIZACION --}}
+    {{-- NUEVA ALTA --}}
+    <div id="NuevoContratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="NuevoContratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg d-flex justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Dar de alta
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:limpiarNuevosDatosDetalle();$('#form-ver').modal('show');">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idHistoE">
+                    <form action="javascript:nuevoDetalleC()">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="sw-default">Contrato
+                                        <a onclick="$('#NuevoContratoDetallesmodalE').modal('hide');$('#contratomodalE').modal('show');"
+                                            data-toggle="modal"><i class="uil uil-plus"
+                                                style="color: darkblue;cursor: pointer;"></i>
+                                        </a>
+                                    </label>
+                                    <select class="form-control" name="v_contratoND" id="v_contratoND" tabindex="5"
+                                        onclick="javascript:validacionNuevoDetalle()" required>
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($tipo_cont as $tipo_conts)
+                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-2 border-top">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sw-default">Condición Pago
+                                                <a onclick="javascript:ModalAbiertoCondicion();" href="#condicionmodalE"
+                                                    data-toggle="modal" data-target="#condicionmodalE">
+                                                    <i class="uil uil-plus"></i>
+                                                </a>
+                                            </label>
+                                            <select class="form-control" name="v_condicionND" id="v_condicionND"
+                                                required>
+                                                <option value="">Seleccionar</option>
+                                                @foreach ($condicionP as $condicion)
+                                                <option class="" value="{{$condicion->id}}">
+                                                    {{$condicion->condicion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sw-default">Monto</label>
+                                            <input type="number" step=".01" class="form-control" name="v_montoND"
+                                                id="v_montoND">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <span id="m_validFechaCIEND" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_dia_fechaIEND" id="m_dia_fechaIEND"
+                                                    required>
+                                                    <option value="0">Día</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" name="m_mes_fechaIEND" id="m_mes_fechaIEND"
+                                                    required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                        padding-right: 5px;" name="m_ano_fechaIEND"
+                                                    id="m_ano_fechaIEND" required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 pt-1" id="validArchivoEditND" style="display: none;">
+                                                <span style="color: red;">
+                                                    *El tamaño supera el limite de 4 MB.
+                                                </span>
+                                            </div>
+                                            <div class="col-md 12">
+                                                <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
+                                                    <input type="file"
+                                                        accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                        class="inputfile inputfile-1"
+                                                        data-multiple-caption="{count} archivos seleccionados" multiple
+                                                        id="fileArchivosNuevosD" size="4194304">
+                                                    <label for="fileArchivosNuevosD">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                            viewBox="0 0 20 17">
+                                                            <path
+                                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="iborrainputfile">Adjuntar archivo</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
+                                            <label for="">Fecha Indefinida</label>
+                                            <input type="checkbox" id="checkboxFechaIEND" name="checkboxFechaIEND">
+                                        </div>
+                                        <div id="ocultarFechaEND">
+                                            <span id="m_validFechaCFEND" style="color: red;display: none;">*Fecha
+                                                incorrecta.</span>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_dia_fechaFEND"
+                                                        id="m_dia_fechaFEND">
+                                                        <option value="0">Día</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_mes_fechaFEND"
+                                                        id="m_mes_fechaFEND">
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Ene.</option>
+                                                        <option class="" value="2">Feb.</option>
+                                                        <option class="" value="3">Mar.</option>
+                                                        <option class="" value="4">Abr.</option>
+                                                        <option class="" value="5">May.</option>
+                                                        <option class="" value="6">Jun.</option>
+                                                        <option class="" value="7">Jul.</option>
+                                                        <option class="" value="8">Ago.</option>
+                                                        <option class="" value="9">Set.</option>
+                                                        <option class="" value="10">Oct.</option>
+                                                        <option class="" value="11">Nov.</option>
+                                                        <option class="" value="12">Dic.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" style="padding-left: 5px;
+                                                            padding-right: 5px;" name="m_ano_fechaFEND"
+                                                        id="m_ano_fechaFEND">
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                            value="{{$i}}">
+                                                            {{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="javascript:limpiarNuevosDatosDetalle();$('#form-ver').modal('show');"
+                        class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;"
+                        id="guardarAltaND">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -4122,7 +4328,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="col-xl-2 text-left">
                                     <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                        onclick="$('#contratoDetallesmodalEN').modal();$('#form-ver').modal('hide');javascript:validacionNuevaAlta()">
+                                        onclick="javascript:modalNuevaAlta()">
                                         + Nueva alta
                                     </button>
                                     <div class="float-md-right" id="gifAlta" style="display: none">
