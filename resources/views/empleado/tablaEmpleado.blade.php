@@ -950,132 +950,6 @@ function verDEmpleado(idempleadoVer){
         $('#select').val(4).trigger('change');
     });
 </script>
-{{-- ELIMINAR VARIOS ELEMENTOS --}}
-{{-- <script>
-    function eliminarEmpleado() {
-        $(function () {
-  f = moment().format("YYYY-MM-DD");
-  fechaValue.setDate(f);
-  $( "#fechaInput" ).change();
-  })
-        var allVals = [];
-
-
-        $(".sub_chk:checked").each(function () {
-            allVals.push($(this).attr('data-id'));
-        });
-
-        if (allVals.length <= 0) {
-
-    bootbox.alert("Por favor seleccione una fila");
-            return false;
-        } else {
-
-            $('#modalEliminar').modal();
-
-
-        }
-
-    }
-
-    function confirmarEliminacion() {
-        var allVals = [];
-        var fechaBaja=$('#fechaInput').val();
-
-        $(".sub_chk:checked").each(function () {
-            allVals.push($(this).attr('data-id'));
-        });
-        if(allVals!=null){
-
-        }
-        else{
-            console.log('esta vacio');
-        }
-        var join_selected_values = allVals.join(",");
-        var table = $('#tablaEmpleado').DataTable();
-
-        $.ajax({
-            url: "/eliminarEmpleados",
-            type: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            async:'false',
-            statusCode: {
-                /*401: function () {
-                    location.reload();
-                },*/
-                419: function () {
-                    location.reload();
-                }
-            },
-            data: {ids:join_selected_values,fechaBaja} ,
-            success: function (data) {
-                var formData1 = new FormData();
-                var num= document.getElementById('bajaFile').files.length;
-
-for (var i = 0; i < num; i++) {
-formData1.append("bajaFile[]", document.getElementById('bajaFile').files[i]);
-}
-data1='/'+data;
-                 $.ajax({
-                    type: "POST",
-                    url: "/empleado/storeDocumentoBaja" + data1,
-                    data: formData1,
-                    contentType: false,
-                    processData: false,
-                    dataType: "json",
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    statusCode: {
-                        401: function () {
-                            location.reload();
-                        },
-                        419: function () {
-                            location.reload();
-                        },
-                    },
-                    success: function (data) {
-                    },
-                    error: function (data, errorThrown) { },
-                });
-                $('#modalEliminar').modal('hide');
-                RefreshTablaEmpleado();
-                $.notify({
-                    message: '\nEl empleado se dio de baja',
-                    icon: 'landing/images/bell.svg',
-                }, {
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            },
-            error: function (data) {
-                alert(data.responseText);
-            }
-        });
-
-
-
-    }
-
-    function marcareliminar(data) {
-        $('input:checkbox').prop('checked', false);
-
-        $('input:checkbox[data-id=' + data + ']').prop('checked', true);
-        $('.delete_all').click();
-    }
-
-</script> --}}
 {{-- ELIMINACION --}}
 <script>
     // * ABRIR MODAL DE BAJA
@@ -1151,9 +1025,39 @@ data1='/'+data;
                 }
             },
             success: function (data) {
-                archivosDeBajaTabla(data);
-                RefreshTablaEmpleado();
-                $('#modalEliminar').modal('toggle');
+                if(data != 0){
+                    archivosDeBajaTabla(data);
+                    RefreshTablaEmpleado();
+                    $('#modalEliminar').modal('toggle');
+                }else{
+                    $('#modalEliminar').modal('toggle');
+                    alertify
+                    .confirm(
+                        "Para poder dar de baja aun empleado, debe tener por lo menos un historial de contrao.",
+                        function (e) {
+                            if (e) {
+                                editarEmpleado(idEmpleado);
+                                $('#smartwizard1'). smartWizard("goToStep",2);
+                            }
+                        }
+                    )
+                    .setting({
+                        title: "Dar baja",
+                        labels: {
+                            ok: "Aceptar",
+                            cancel: "Cancelar",
+                        },
+                        modal: true,
+                        startMaximized: false,
+                        reverseButtons: true,
+                        resizable: false,
+                        closable: false,
+                        transition: "zoom",
+                        oncancel: function (closeEvent) {
+                            RefreshTablaEmpleado();
+                        },
+                    });
+                }
             },
             error: function(){}
         });
