@@ -1281,7 +1281,7 @@ class EmpleadoController extends Controller
     {
         $idE = $request->get('idEmpleado');
         $fechaBaja = $request->get('fechaBaja');
-        $historial_empleado = historial_empleado::where('emple_id', '=', $idE)->whereNull('fecha_baja')->get()->first();
+        $historial_empleado = historial_empleado::where('emple_id', '=', $idE)->whereNotNull('idContrato')->whereNull('fecha_baja')->get()->first();
         if ($historial_empleado) {
             //* HISTORIAL DE EMPLEADO
             $historial_empleado->fecha_baja = $fechaBaja;

@@ -458,7 +458,7 @@ $(document).ready(function () {
                         return false;
                     } else {
                         if (data.respuesta == false) {
-                            $('#idHistorialE' + data.he).css("background-color", "#ff8585");
+                            $('#idHistorialE' + data.he).css("background-color", "#ffd5cd");
                             isStepValid = false;
                             return false;
                         } else {
