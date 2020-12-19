@@ -1378,7 +1378,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select class="form-control" name="m_dia_fechaIB" id="m_dia_fechaIB"
-                                                required="">
+                                                required>
                                                 <option value="0">Día</option>
                                                 @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
                                                     {{$i}}
@@ -1388,7 +1388,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <select class="form-control" name="m_mes_fechaIB" id="m_mes_fechaIB"
-                                                required="">
+                                                required>
                                                 <option value="0">Mes</option>
                                                 <option class="" value="1">Ene.</option>
                                                 <option class="" value="2">Feb.</option>
