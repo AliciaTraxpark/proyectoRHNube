@@ -452,7 +452,6 @@ $(document).ready(function () {
                     ),
                 },
                 success: function (data) {
-
                     if (data == 0) {
                         $("#validHE").show();
                         isStepValid = false;
