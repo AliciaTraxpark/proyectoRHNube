@@ -437,7 +437,8 @@ class excelEmpleadoController extends Controller
                 }
                 //* CONTRATO
                 if ($row['idtipo_contrato'] != '' || $row['idtipo_contrato'] != null) {
-                    contrato::create([
+
+                    $contradoId = contrato::create([
                         'id_tipoContrato' => $row['idtipo_contrato'],
                         'id_condicionPago' => $row['idcondicion_pago'],
                         'monto' => $emp[23],
@@ -447,8 +448,8 @@ class excelEmpleadoController extends Controller
                     ]);
                     historial_empleado::create([
                         'emple_id'    => $empleadoId->emple_id,
-                        'tipo_Hist'    => 1,
-                        'fecha_historial'    => $emp[24],
+                        'fecha_alta'    => $emp[24],
+                        'idContrato' => $contradoId->id,
                     ]);
                 }
 
@@ -472,13 +473,6 @@ class excelEmpleadoController extends Controller
                         $eventos_empleado_r->save();
                     }
                 }
-                /*
-            modo::create([
-                'idEmpleado'    => $empleadoId->emple_id,
-                'idTipoModo'    => 1,
-                'idTipoDispositivo'       =>2,
-
-            ]); */
             }
         }
     }
