@@ -5497,7 +5497,7 @@ use App\proyecto_empleado;
         </div>
     </div>
 </div>
-<!--VER EMPLEADO-->
+{{-- VER EMPLEADO --}}
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
@@ -5956,7 +5956,8 @@ use App\proyecto_empleado;
             </div>
         </div>
     </div>
-</div><!-- /.modal -->
+</div>
+{{-- FINALIZACION --}}
 <div id="modalIncidencia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">

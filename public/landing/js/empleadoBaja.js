@@ -37,7 +37,7 @@ $("#smartwizardVer").on("showStep", function (
     stepNumber,
     stepDirection
 ) {
-    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 2) {
+    if (stepNumber == 0 || stepNumber == 1 || stepNumber == 3) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
@@ -46,7 +46,17 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-next").attr("disabled", false);
     }
 
-    if (stepNumber == 3 || stepNumber == 4) {
+    if (stepNumber == 2) {
+        $("button.sw-btn-prev").show();
+        $("button.sw-btn-next").show();
+        $("#FinalizarEmpleadoVer").hide();
+        $("#smartwizardVer :input").attr("disabled", true);
+        $("button.sw-btn-prev").attr("disabled", false);
+        $("button.sw-btn-next").attr("disabled", false);
+        historialEmpVer()
+    }
+
+    if (stepNumber == 4 || stepNumber == 5) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
@@ -55,25 +65,20 @@ $("#smartwizardVer").on("showStep", function (
         $("button.sw-btn-next").attr("disabled", false);
         $("#smartwizardVer :input").attr("disabled", false);
     }
-    if (stepNumber == 5) {
+    if (stepNumber == 6) {
         $("button.sw-btn-prev").show();
         $("button.sw-btn-next").show();
         $("#FinalizarEmpleadoVer").hide();
         $("#smartwizardVer :input").attr("disabled", false);
         actividadEmpVer();
     }
-    if (stepNumber == 6) {
-        $("button.sw-btn-prev").show();
-        $("button.sw-btn-next").show();
-        $("#FinalizarEmpleadoVer").hide();
-        dispositivoWindowsVer();
-        dispositivosAndroidVer();
-        $("#smartwizardVer :input").attr("disabled", false);
-    }
     if (stepNumber == 7) {
         $("button.sw-btn-prev").hide();
         $("button.sw-btn-next").hide();
         $("#FinalizarEmpleadoVer").show();
+        dispositivoWindowsVer();
+        dispositivosAndroidVer();
+        $("#smartwizardVer :input").attr("disabled", false);
     }
 });
 // * ********************CRUD DE CONTRATO******************
@@ -1392,6 +1397,139 @@ async function nuevaAlta() {
                     spacing: 35,
                 }
             );
+        },
+        error: function () { }
+    });
+}
+//* CARGAR DATA EN TABLA CONTRATO
+function historialEmpVer() {
+    var value = $('#v_idV').val();
+    $("#reg_tbodyHistorial").empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/empleado/historial",
+        data: {
+            idempleado: value
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            var container = $('#ver_tbodyHistorial');
+            if (data.length != 0) {
+                altaEmpleadoReg = true;
+                for (var i = 0; i < data.length; i++) {
+                    var trReg = `<tr>`;
+                    trReg += `<td style="vertical-align:middle;">
+                                        <img src="landing/images/arriba.svg" height="17"> &nbsp;${moment(data[i].fecha_alta).format('DD/MM/YYYY')}
+                                        &nbsp;&nbsp;`;
+                    if (data[i].fecha_baja != null) {
+                        trReg += `<img src="landing/images/abajo.svg" height="17"> &nbsp;${moment(data[i].fecha_baja).format('DD/MM/YYYY')}`;
+                    } else {
+                        trReg += `<img src="landing/images/abajo.svg" height="17"> &nbsp;------`;
+                    }
+                    trReg += `</td>`;
+                    if (data[i].contrato == null) {
+                        trReg += `<td>--</td> `;
+                    } else {
+                        trReg += `<td> ${data[i].contrato}</td> `;
+                    }
+                    if (data[i].rutaDocumento != null) {
+                        var valores = data[i].rutaDocumento;
+                        //* SEPARAMOS CADENAS
+                        idsV = valores.split(',');
+                        trReg += `<td>
+                        <div class="dropdown" id="documentosVer${i}">
+                            <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                style="cursor: pointer">
+                                <span class="badge badge-soft-primary text-primary">
+                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                </span>
+                                &nbsp;
+                                Documentos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">`;
+                        $.each(idsV, function (index, value) {
+                            var mostrarC = value.substr(13, value.length);
+                            trReg += `<div class="dropdown-item">
+                                        <div class="col-xl-12" style="padding-left: 0px;">
+                                            <div class="float-left mt-1">
+                                                <i class="uil-download-alt font-size-18"></i>
+                                                &nbsp;
+                                                <span class="d-inline-block text-truncate" style="max-width: 150px;">${mostrarC}</span>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        });
+                        trReg += `</ul></div></td> `;
+                    } else {
+                        trReg += `<td> --</td> `;
+                    }
+                    trReg += `<td>
+                                <a onclick="javascript:mostrarDetallesContratoVer(${data[i].idContrato})" data-toggle="tooltip" data-placement="right"
+                                    title="Detalle de Contrato" data-original-title="Detalle de Contrato" style="cursor: pointer;">
+                                    <img src="landing/images/adaptive.svg" height="18">
+                                </a>`;
+                    trReg += '</td>';
+                    trReg += '</tr>';
+                    container.append(trReg);
+                }
+            }
+        },
+        error: function () { }
+    });
+}
+//* FUNCION MOSTRAR DETALLES DE CONTRATO
+function mostrarDetallesContratoVer(id) {
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/detalleC",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.estado == 0) {
+                $('.ocultarFechaIV').hide();
+            } else {
+                $('.ocultarFechaIV').show();
+            }
+            $('#v_contratoV').val(data.tipoContrato);
+            $('#v_condicionV').val(data.condPago);
+            $('#v_montoV').val(data.monto);
+            var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
+            var VFechaDiaIE = new Date(moment(VFechaDaIE));
+            $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());
+            $('#m_mes_fechaIEV').val(moment(VFechaDaIE).month() + 1);
+            $('#m_ano_fechaIEV').val(moment(VFechaDaIE).year());
+            $("#checkboxFechaIEV").prop('checked', false);
+            $('#ocultarFechaEV').show();
+            if (data.fechaFinal == null || data.fechaFinal == "0000-00-00") {
+                $("#checkboxFechaIEV").prop('checked', true);
+                $('#ocultarFechaEV').hide();
+            }
+            var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
+            var VFechaDiaFE = new Date(moment(VFechaDaFE));
+            $('#m_dia_fechaFEV').val(VFechaDiaFE.getDate());
+            $('#m_mes_fechaFEV').val(moment(VFechaDaFE).month() + 1);
+            $('#m_ano_fechaFEV').val(moment(VFechaDaFE).year());
+            $('#verEmpleadoDetalles').modal('hide');
+            $('#fechasmodalVer').modal();
+
         },
         error: function () { }
     });

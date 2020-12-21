@@ -1927,8 +1927,8 @@ function mostrarDetallesContratoVer(id) {
             var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
             var VFechaDiaFE = new Date(moment(VFechaDaFE));
             $('#m_dia_fechaFEV').val(VFechaDiaFE.getDate());
-            $('#mf_mes_fechaFEV').val(moment(VFechaDaFE).month() + 1);
-            $('#mf_ano_fechaFEV').val(moment(VFechaDaFE).year());
+            $('#m_mes_fechaFEV').val(moment(VFechaDaFE).month() + 1);
+            $('#m_ano_fechaFEV').val(moment(VFechaDaFE).year());
             $('#verEmpleadoDetalles').modal('hide');
             $('#fechasmodalVer').modal();
 

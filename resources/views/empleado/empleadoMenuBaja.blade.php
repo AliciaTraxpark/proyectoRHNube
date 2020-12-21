@@ -831,14 +831,36 @@
     </div>
 </div>
 {{-- FINALIZACION DE MODAL --}}
-{{-- MODAL DE VER EMPLEADO --}}
+{{-- VER EMPLEADO --}}
 <div id="verEmpleadoDetalles" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verEmpleadoDetalles"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #163552;">
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
-                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:cerrarVer()">
+                    @if (isset($modifEmp))
+                    @if ($modifEmp==1)
+                    <span class="badge float-left pr-4 pt-0">
+                        <a style="color: #f0f0f0"
+                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                            <span style="font-weight: bold">Editar Empleado</span>
+                        </a>
+                    </span>
+                    @else
+
+                    @endif
+                    @else
+                    <span class="badge float-left pr-4 pt-0">
+                        <a style="color: #f0f0f0"
+                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
+                            <span style="font-weight: bold">Editar Empleado</span>
+                        </a>
+                    </span>
+                    @endif
 
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -848,12 +870,12 @@
                     <ul style="background: #fdfdfd!important;font-size: 13px;">
                         <li><a href="#persona-step-1">Personales</a></li>
                         <li><a href="#sw-default-step-2">Empresarial</a></li>
-                        <li><a href="#sw-default-step-3">Foto</a></li>
-                        <li><a href="#sw-default-step-4">Calendario</a></li>
-                        <li><a href="#sw-default-step-5">Horario</a></li>
-                        <li><a href="#sw-default-step-6">Actividades</a></li>
-                        <li><a href="#sw-default-step-7">Dispositivo</a></li>
-                        <li><a href="#sw-default-step-8">Historial</a></li>
+                        <li><a href="#sw-default-step-3">Contrato</a></li>
+                        <li><a href="#sw-default-step-4">Foto</a></li>
+                        <li><a href="#sw-default-step-5">Calendario</a></li>
+                        <li><a href="#sw-default-step-6">Horario</a></li>
+                        <li><a href="#sw-default-step-7">Actividades</a></li>
+                        <li><a href="#sw-default-step-8">Dispositivo</a></li>
                     </ul>
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
@@ -1023,33 +1045,13 @@
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
-                                        <input type="text" class="form-control" name="v_codigoEmpleadoV" maxlength="200"
-                                            id="v_codigoEmpleadoV" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-4"><br></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
                                         <label for="sw-default">Cargo</label>
                                         <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Contrato
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a id="detalleContratoVer"
-                                                onclick="$('#verEmpleadoDetalles').modal('hide');"
-                                                href="#fechasmodalVer" data-toggle="modal" data-target="#fechasmodalVer"
-                                                data-toggle="tooltip" data-placement="right"
-                                                title="Detalle de Contrato." data-original-title="Detalle de Contrato."
-                                                style="cursor: pointer;">
-                                                <img src="{{asset('landing/images/adaptive.svg')}}" height="18">
-                                            </a>
-                                        </label>
-                                        <input type="text" class="form-control" name="v_contratoV" id="v_contratoV"
-                                            tabindex="5" disabled>
+                                        <label for="sw-default">Codigo Empleado</label>
+                                        <input type="text" class="form-control" name="v_codigoEmpleadoV" maxlength="200"
+                                            id="v_codigoEmpleadoV" disabled>
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-4">
@@ -1079,6 +1081,30 @@
                             </div>
                         </div>
                         <div id="sw-default-step-3" style="font-size: 12px!important">
+                            {{-- CONTENIDO DE LA TABLA --}}
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12">
+                                    <div class="table-responsive-sm" style="height: 250px;overflow: auto;">
+                                        <table class="table table-hover" id="ver_tablaHistorial"
+                                            style="font-size: 13px!important;">
+                                            <thead style="background: #fafafa;">
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Contrato</th>
+                                                    <th>Documento</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ver_tbodyHistorial"
+                                                style="background:#ffffff;color: #585858;font-size: 12px">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- FINALIZACION --}}
+                        </div>
+                        <div id="sw-default-step-4" style="font-size: 12px!important">
                             <br><br>
                             <div class="row">
                                 <div class="col-12">
@@ -1091,7 +1117,7 @@
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
                         </div>
-                        <div id="sw-default-step-4" style="font-size: 12px!important">
+                        <div id="sw-default-step-5" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-md-4 text-right"><label for=""
                                         style="margin-top: 7px;font-weight: 600">Calendario:</label></div>
@@ -1114,7 +1140,7 @@
                                 <div class="col-md-1"><br></div>
                             </div>
                         </div>
-                        <div id="sw-default-step-5" style="font-size: 12px!important">
+                        <div id="sw-default-step-6" style="font-size: 12px!important">
                             <div class="row">
 
                                 <div class="col-md-1"><br></div>
@@ -1122,15 +1148,17 @@
                                 <div class="col-md-1"><br></div>
                             </div>
                         </div>
-                        <div id="sw-default-step-6" class="setup-content" style="font-size: 12px!important">
+                        <div id="sw-default-step-7" class="setup-content" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-body border p-2">
                                             <div class="row pt-3">
                                                 <div class="col-xl-12 col-sm-12">
-                                                    <div class="table-responsive-xl scroll">
-                                                        <table class="table" style="font-size: 13px!important;">
+                                                    <div class="table-responsive-sm"
+                                                        style="height: 250px;overflow: auto;">
+                                                        <table class="table table-hover"
+                                                            style="font-size: 13px!important;">
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
@@ -1149,29 +1177,8 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row pb-1 pl-2">
-                                                <div class="col">
-                                                    <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch6">
-                                                        <label class="custom-control-label" for="customSwitch6"
-                                                            style="font-weight: bold">Modo Control de
-                                                            Asistencia en Puerta</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border p-2" id="bodyModoProyecto_ver">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
-                        <div id="sw-default-step-7" style="font-size: 12px!important">
+                        <div id="sw-default-step-8" style="font-size: 12px!important">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card border"
@@ -1278,33 +1285,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
-                            <div class="col-md-12">
-                                <label for="">Historial de empleado de altas y bajas</label>
-                            </div>
-
-                            <div class="col-xl-12 col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table id="ver_tablaHistorial" class="table" style="font-size: 13px!important;">
-                                        <thead style="background: #fafafa;">
-                                            <tr>
-                                                <th>Fecha</th>
-                                                <th>Documento</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="ver_tbodyHistorial"
-                                            style="background:#ffffff;color: #585858;font-size: 12px">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div><!-- /.modal -->
+</div>
+{{-- FINALIZACION --}}
 {{-- NUEVA ALTA --}}
 <div id="modalAlta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAlta" aria-hidden="true"
     data-backdrop="static">
@@ -1497,7 +1484,8 @@
             <div class="modal-footer">
                 <button type="button" onclick="javascript:limpiarDatosAlta();$('#modalAlta').modal('toggle');"
                     class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-sm" style="background-color:#163552;" id="guardarAltaB">Guardar</button>
+                <button type="submit" class="btn btn-sm" style="background-color:#163552;"
+                    id="guardarAltaB">Guardar</button>
             </div>
             </form>
         </div>
