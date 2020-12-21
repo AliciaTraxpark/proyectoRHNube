@@ -933,7 +933,7 @@ function verDEmpleado(idempleadoVer){
                     $('#modalEliminar').modal('toggle');
                     alertify
                     .confirm(
-                        "Para poder dar de baja aun empleado, debe tener por lo menos un historial de contrao.",
+                        "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Para poder dar de baja aun empleado, debe tener por lo menos un historial de contrao.",
                         function (e) {
                             if (e) {
                                 editarEmpleado(idEmpleado);
