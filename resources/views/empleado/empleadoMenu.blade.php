@@ -1891,7 +1891,7 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="reg_idContratoD">
-                    <form action="javascript:agregarFechas()">
+                    <form action="javascript:editarDetalleCReg()">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-12">
