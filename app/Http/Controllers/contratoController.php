@@ -74,7 +74,7 @@ class contratoController extends Controller
         // DB::enableQueryLog();
         $contrato = DB::table('contrato as c')
             ->join('tipo_contrato as tc', 'tc.contrato_id', '=', 'c.id_tipoContrato')
-            ->join('condicion_pago as cp', 'cp.id', 'c.id_condicionPago')
+            ->leftJoin('condicion_pago as cp', 'cp.id', 'c.id_condicionPago')
             ->join('historial_empleado as he', 'he.idContrato', 'c.id')
             ->leftJoin('doc_empleado as de', 'de.idhistorial_empleado', '=', 'he.idhistorial_empleado')
             ->select('tc.contrato_id as tipoContrato', 'c.id_condicionPago as condPago', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'c.id as idC', 'he.fecha_alta as fechaAlta', 'he.fecha_baja as fechaBaja', 'c.estado')
@@ -185,6 +185,11 @@ class contratoController extends Controller
                 $arrayR = array("respuesta" => false, "he" => $historial_empleado->idhistorial_empleado);
                 return $arrayR;
             } else {
+                $contrato = contrato::where('id', '=', $historial_empleado->idContrato)->get()->first();
+                if (is_null($contrato->id_condicionPago) || is_null($contrato->fechaInicio)) {
+                    $arrayR = array("respuesta" => false, "he" => $historial_empleado->idhistorial_empleado);
+                    return $arrayR;
+                }
                 return 1;
             }
         } else {

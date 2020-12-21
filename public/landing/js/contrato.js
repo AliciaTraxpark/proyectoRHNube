@@ -43,6 +43,7 @@ var altaEmpleado = true;
 var BajaEmp = true;
 //: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
+    console.log(id);
     $.ajax({
         async: false,
         type: "GET",
@@ -196,6 +197,7 @@ function historialEmp() {
                     } else {
                         trVer += `<td> --</td> `;
                     }
+                    console.log(data[i].idContrato);
                     if (data[i].idContrato != null) {
                         trVer += `<td>
                         <a onclick="javascript:mostrarDetallesContrato(${data[i].idContrato})" data-toggle="tooltip" data-placement="right"
