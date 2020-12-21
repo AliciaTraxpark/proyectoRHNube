@@ -792,9 +792,9 @@ $("#smartwizardVer").on("showStep", function (
         actividadEmpVer();
     }
     if (stepNumber == 7) {
-        $("button.sw-btn-prev").show();
-        $("button.sw-btn-next").show();
-        $("#FinalizarEmpleadoVer").hide();
+        $("button.sw-btn-prev").hide();
+        $("button.sw-btn-next").hide();
+        $("#FinalizarEmpleadoVer").show();
         dispositivoWindowsVer();
         dispositivosAndroidVer();
         $("#smartwizardVer :input").attr("disabled", false);

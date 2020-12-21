@@ -1801,6 +1801,7 @@ async function editarDetalleCReg() {
     $('#detallesContratomodal').modal('toggle');
     $('#form-registrar').modal('show');
 }
+//? ********************FINALIZACION********************* *//
 //? ********************FORMULARIO VER EMPLEADO********************* *//
 //* CARGAR DATA EN TABLA CONTRATO
 function historialEmpVer() {
@@ -1882,6 +1883,55 @@ function historialEmpVer() {
                     container.append(trReg);
                 }
             }
+        },
+        error: function () { }
+    });
+}
+//* FUNCION MOSTRAR DETALLES DE CONTRATO
+function mostrarDetallesContratoVer(id) {
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/detalleC",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.estado == 0) {
+                $('.ocultarFechaIV').hide();
+            } else {
+                $('.ocultarFechaIV').show();
+            }
+            $('#v_contratoV').val(data.tipoContrato);
+            $('#v_condicionV').val(data.condPago);
+            $('#v_montoV').val(data.monto);
+            var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
+            var VFechaDiaIE = new Date(moment(VFechaDaIE));
+            $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());
+            $('#m_mes_fechaIEV').val(moment(VFechaDaIE).month() + 1);
+            $('#m_ano_fechaIEV').val(moment(VFechaDaIE).year());
+            $("#checkboxFechaIEV").prop('checked', false);
+            $('#ocultarFechaEV').show();
+            if (data.fechaFinal == null || data.fechaFinal == "0000-00-00") {
+                $("#checkboxFechaIEV").prop('checked', true);
+                $('#ocultarFechaEV').hide();
+            }
+            var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
+            var VFechaDiaFE = new Date(moment(VFechaDaFE));
+            $('#m_dia_fechaFEV').val(VFechaDiaFE.getDate());
+            $('#mf_mes_fechaFEV').val(moment(VFechaDaFE).month() + 1);
+            $('#mf_ano_fechaFEV').val(moment(VFechaDaFE).year());
+            $('#verEmpleadoDetalles').modal('hide');
+            $('#fechasmodalVer').modal();
+
         },
         error: function () { }
     });

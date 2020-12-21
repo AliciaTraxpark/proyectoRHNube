@@ -3061,8 +3061,6 @@ use App\proyecto_empleado;
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
-                                    incorrecta.</span>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV" disabled>
