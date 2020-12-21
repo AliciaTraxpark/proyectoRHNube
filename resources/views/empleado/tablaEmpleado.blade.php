@@ -708,84 +708,6 @@ function verDEmpleado(idempleadoVer){
                 },
                 error: function () {}
             });
-            $.ajax({
-                type:"POST",
-                url: "/empleado/historial",
-                data: {
-                    idempleado:value
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                statusCode: {
-                    419: function () {
-                        location.reload();
-                    }
-                },
-                success: function (data) {
-                    var containerVer = $('#ver_tbodyHistorial');
-            for (var i = 0; i < data.length; i++) {
-
-                    var trVer = '<tr>';
-
-
-                        if(data[i].fecha_historial!=null){
-                            if(data[i].tipo_Hist==1){
-                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/arriba.svg" height="17"> &nbsp;'+moment(data[i].fecha_historial).format('DD/MM/YYYY')+'</td>';
-                            } else
-                            {
-                                trVer+=  '<td style="vertical-align:middle;"><img src="landing/images/abajo.svg" height="17"> &nbsp;'+ moment(data[i].fecha_historial).format('DD/MM/YYYY') +'</td>';
-                            }
-                        } else{
-                            trVer+=  '<td>--</td>';
-                        }
-
-                         if(data[i].rutaDocumento!=null){
-
-                            var valores=data[i].rutaDocumento;
-                            idsV=valores.split(',');
-                            var variableResult=[];
-                            trVer+=  '<td><div class="row">';
-                            $.each( idsV, function( index, value ){
-                                trVer+=
-                                '<div class="col-xl-6 col-md-6" style="padding-left: 0px;">'+
-                                    '<div class="p-2 border rounded" style="padding-top: 1px!important; padding-bottom: 1px!important;">'+
-                                         '<div class="media">'+
-                                            '<div class="avatar-sm font-weight-bold mr-3">'+
-                                                '<span class="avatar-title rounded bg-soft-primary text-primary">'+
-                                                 '<i class="uil-file-plus-alt font-size-18"></i>'+
-                                               ' </span>'+
-                                            '</div>'+
-                                            '<div class="media-body">'+
-                                                '<a href="documEmpleado/'+value+'" target="_blank" class="d-inline-block mt-2">'+value+'</a>'+
-                                             '</div>'+
-                                             '<div class="float-right mt-1">'+
-                                                '<a href="documEmpleado/'+value+'" target="_blank" class="p-2"><i class="uil-download-alt font-size-18"></i></a>'+
-                                            '</div>'+
-                                         '</div>'+
-                                     '</div>'+
-                                '</div>';
-
-                                /* variableResult.push(variableResult1); */
-
-                            })
-
-                            /*   trVer+=variableResult; */
-
-                            trVer+=  '</div></td>';
-                        } else{
-                            trVer+=  '<td>--</td>';
-                        }
-
-
-                            trVer+= '</tr>';
-
-                containerVer.append(trVer);
-
-            }
-                },
-                error: function () {}
-            });
                 $('#selectCalendario_edit3_ver').val(data[0].idcalendar);
                 $('#idselect3').val(data[0].idcalendar);
                 calendario_edit();
@@ -825,28 +747,6 @@ function verDEmpleado(idempleadoVer){
                 if(data[0].foto != ''){
                     $('#v_fotoV').attr("src", "fotosEmpleado/" + data[0].foto);
                     $('#h5Ocultar').hide();
-                }
-                $('#detalleContratoVer').hide();
-                if(data[0].contrato.length >= 1){
-                    $('#detalleContratoVer').show();
-                    $('#v_contratoV').val(data[0].contrato[0].contrato_descripcion);
-                    $('#v_idContratoV').val(data[0].contrato[0].idC);
-                    $('#v_montoV').val(data[0].contrato[0].monto);
-                    $('#v_condicionV').val(data[0].contrato[0].idCond);
-                    var VFechaDaIE=moment(data[0].contrato[0].fechaInicio).format('YYYY-MM-DD');
-                    var VFechaDiaIE = new Date(moment(VFechaDaIE));
-                    $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());
-                    $('#m_mes_fechaIEV').val(moment(VFechaDaIE).month()+1);
-                    $('#m_ano_fechaIEV').val(moment(VFechaDaIE).year());
-                        if (data[0].contrato[0].fechaFinal == null || data[0].contrato[0].fechaFinal == "0000-00-00") {
-                            $("#checkboxFechaIEV").prop('checked', true);
-                            $('#ocultarFechaEV').hide();
-                        }
-                    var VFechaDaFE=moment(data[0].contrato[0].fechaFinal ).format('YYYY-MM-DD');
-                    var VFechaDiaFE = new Date(moment(VFechaDaFE));
-                    $('#m_dia_fechaFEV').val(VFechaDiaFE.getDate());
-                    $('#m_mes_fechaFEV').val(moment(VFechaDaFE).month()+1);
-                    $('#m_ano_fechaFEV').val(moment(VFechaDaFE).year());
                 }
                 $('#ver_tbodyDispositivo').css('pointer-events', 'none');
                 $("#formContratoVer :input").prop('disabled', true);

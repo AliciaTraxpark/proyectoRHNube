@@ -1061,7 +1061,7 @@ function modalCPReg() {
     }
 }
 var altaEmpleadoReg = true;
-//: CARGAR DATA EN TABLA CONTRATO
+//* CARGAR DATA EN TABLA CONTRATO
 function historialEmpReg() {
     var value = $("#idEmpleado").val();
     $("#reg_tbodyHistorial").empty();
@@ -1165,7 +1165,7 @@ function historialEmpReg() {
         error: function () { }
     });
 }
-//: FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
+//* FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
 function mostrarBoton() {
     if (altaEmpleadoReg) {
         $('#reg_nuevaAlta').show();
@@ -1800,4 +1800,89 @@ async function editarDetalleCReg() {
 
     $('#detallesContratomodal').modal('toggle');
     $('#form-registrar').modal('show');
+}
+//? ********************FORMULARIO VER EMPLEADO********************* *//
+//* CARGAR DATA EN TABLA CONTRATO
+function historialEmpVer() {
+    var value = $('#v_idV').val();
+    $("#reg_tbodyHistorial").empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/empleado/historial",
+        data: {
+            idempleado: value
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            var container = $('#ver_tbodyHistorial');
+            if (data.length != 0) {
+                altaEmpleadoReg = true;
+                for (var i = 0; i < data.length; i++) {
+                    var trReg = `<tr>`;
+                    trReg += `<td style="vertical-align:middle;">
+                                        <img src="landing/images/arriba.svg" height="17"> &nbsp;${moment(data[i].fecha_alta).format('DD/MM/YYYY')}
+                                        &nbsp;&nbsp;`;
+                    if (data[i].fecha_baja != null) {
+                        trReg += `<img src="landing/images/abajo.svg" height="17"> &nbsp;${moment(data[i].fecha_baja).format('DD/MM/YYYY')}`;
+                    } else {
+                        trReg += `<img src="landing/images/abajo.svg" height="17"> &nbsp;------`;
+                    }
+                    trReg += `</td>`;
+                    if (data[i].contrato == null) {
+                        trReg += `<td>--</td> `;
+                    } else {
+                        trReg += `<td> ${data[i].contrato}</td> `;
+                    }
+                    if (data[i].rutaDocumento != null) {
+                        var valores = data[i].rutaDocumento;
+                        //* SEPARAMOS CADENAS
+                        idsV = valores.split(',');
+                        trReg += `<td>
+                        <div class="dropdown" id="documentosVer${i}">
+                            <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                style="cursor: pointer">
+                                <span class="badge badge-soft-primary text-primary">
+                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                </span>
+                                &nbsp;
+                                Documentos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">`;
+                        $.each(idsV, function (index, value) {
+                            var mostrarC = value.substr(13, value.length);
+                            trReg += `<div class="dropdown-item">
+                                        <div class="col-xl-12" style="padding-left: 0px;">
+                                            <div class="float-left mt-1">
+                                                <i class="uil-download-alt font-size-18"></i>
+                                                &nbsp;
+                                                <span class="d-inline-block text-truncate" style="max-width: 150px;">${mostrarC}</span>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        });
+                        trReg += `</ul></div></td> `;
+                    } else {
+                        trReg += `<td> --</td> `;
+                    }
+                    trReg += `<td>
+                                <a onclick="javascript:mostrarDetallesContratoVer(${data[i].idContrato})" data-toggle="tooltip" data-placement="right"
+                                    title="Detalle de Contrato" data-original-title="Detalle de Contrato" style="cursor: pointer;">
+                                    <img src="landing/images/adaptive.svg" height="18">
+                                </a>`;
+                    trReg += '</td>';
+                    trReg += '</tr>';
+                    container.append(trReg);
+                }
+            }
+        },
+        error: function () { }
+    });
 }
