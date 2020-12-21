@@ -418,6 +418,9 @@ Route::post('/datosDispoEditar', 'dispositivosController@datosDispoEditar');
 Route::post('/actualizarDispos', 'dispositivosController@actualizarDispos');
 Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
 Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
+Route::post('/cambiarEntrada', 'dispositivosController@cambiarEntrada');
+Route::post('/cambiarSalida', 'dispositivosController@cambiarSalida');
+
 
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');

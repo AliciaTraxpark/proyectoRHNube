@@ -29,6 +29,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     cambiarF();
   });
 function cargartabla (fecha) {
+
     idemp=$('#idempleado').val();
     $('#tableZoom').empty();
     $('#tableZoom').html(' <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">'+
@@ -97,6 +98,7 @@ function cargartabla (fecha) {
         },
         error: function () {}
     });
+
     $.ajax({
         type: "POST",
         url: "/reporteTablaMarca",
@@ -145,6 +147,10 @@ function cargartabla (fecha) {
                 vectorEntrada=dataA[i].entrada;
                 nEntradas=vectorEntrada.split(',');
 
+                //id's
+                vectorIDSEntrada=dataA[i].idMarcacion;
+                nIDSEnt=vectorIDSEntrada.split(',');
+
 
                 cuerpoTDB='';
                 cuerpoVacioTd='';
@@ -152,7 +158,19 @@ function cargartabla (fecha) {
                 if(nEntradas.length<2){
                     if(b==0){
                        if( nEntradas[0]!=0){
-                        cuerpo = '<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+moment(nEntradas[0]).format("HH:mm:ss") +'</td>';
+                        cuerpo = '<td>'+
+                        '<div class="dropdown" id="" '+
+                         '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'+
+                            'style="cursor: pointer">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+moment(nEntradas[0]).format("HH:mm:ss") +
+                         '</a>'+
+                        '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
+                            '<div class="dropdown-item" onclick="cambiarEntrada('+nIDSEnt[0]+')">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12" />Cambiar a salida'+
+                            '</div>'+
+                        '</ul>'+
+                        '</div>'+
+                         '</td>';
                        } else{
                         cuerpo= '<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td> ';
                     }
@@ -168,7 +186,19 @@ function cargartabla (fecha) {
                     }
                     else{
                       if(nEntradas[b]!=0 ){
-                        cuerpo=  '<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+moment(nEntradas[b]).format("HH:mm:ss")+'</td>';
+                        cuerpo = '<td>'+
+                        '<div class="dropdown" id="" '+
+                         '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'+
+                            'style="cursor: pointer">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>'+moment(nEntradas[b]).format("HH:mm:ss") +
+                         '</a>'+
+                        '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
+                            '<div class="dropdown-item" onclick="cambiarEntrada('+nIDSEnt[b]+')">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12" />Cambiar a salida'+
+                            '</div>'+
+                        '</ul>'+
+                        '</div>'+
+                         '</td>';
                     }
                     else{
                         cuerpo= '<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td> ';
@@ -188,11 +218,28 @@ function cargartabla (fecha) {
            if(dataA[i].final!=0 || dataA[i].final!=null ){
             vectorSalida=dataA[i].final;
             nSalidas=vectorSalida.split(',');
+             //id's
+             vectorIDSSalida=dataA[i].idMarcacion;
+             nIDSSalid=vectorIDSSalida.split(',');
            console.log(nSalidas);
              if(nSalidas.length<2){
                 if(b==0){
                     if( nSalidas[0]!=0){
-                    cuerpo+= '<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+moment(nSalidas[0]).format("HH:mm:ss") +'</td>';}
+                        cuerpo+= '<td>'+
+                        '<div class="dropdown" id="" '+
+                         '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'+
+                            'style="cursor: pointer">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+moment(nSalidas[0]).format("HH:mm:ss") +
+                         '</a>'+
+                        '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
+                            '<div class="dropdown-item" onclick="cambiarSalida('+nIDSSalid[0]+')">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />Cambiar a entrada'+
+                            '</div>'+
+                        '</ul>'+
+                        '</div>'+
+                         '</td>';
+
+                }
                     else{
                         cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td> ';
                     }
@@ -205,7 +252,19 @@ function cargartabla (fecha) {
                     cuerpo+= '<td>--</td> ';
                 } else{
                     if(nSalidas[b]!=0){
-                    cuerpo+=  '<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+moment(nSalidas[b]).format("HH:mm:ss")+'</td>';
+                        cuerpo+= '<td>'+
+                        '<div class="dropdown" id="" '+
+                         '<a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'+
+                            'style="cursor: pointer">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>'+moment(nSalidas[b]).format("HH:mm:ss") +
+                         '</a>'+
+                        '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
+                            '<div class="dropdown-item" onclick="cambiarSalida('+nIDSSalid[b]+')">'+
+                            '<img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />Cambiar a entrada'+
+                            '</div>'+
+                        '</ul>'+
+                        '</div>'+
+                         '</td>';
                 }
                 else{
                     cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td> ';
@@ -385,6 +444,7 @@ function cargartabla (fecha) {
 else{
     $('[name="tiempoSitHi"]').hide();
 }
+
     table =
     $("#tablaReport").DataTable({
 
@@ -499,4 +559,63 @@ function cambiartabla(){
     else{
         $('[name="tiempoSitHi"]').hide();
     }
+}
+function cambiarEntrada(idMarca) {
+    $('#tableZoom').hide();
+     $('#espera').show();
+    $.ajax({
+        type: "post",
+        url: "/cambiarEntrada",
+        data: {
+            idMarca
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+          
+            $('#btnRecargaTabla').click();
+            $('#espera').hide();
+            $('#tableZoom').show();
+
+        },
+        error: function () {
+            alert("Hay un error");
+        },
+    });
+}
+function cambiarSalida(idMarca) {
+    $('#tableZoom').hide();
+     $('#espera').show();
+
+    $.ajax({
+        type: "post",
+        url: "/cambiarSalida",
+        data: {
+            idMarca
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+
+            $('#btnRecargaTabla').click();
+            $('#espera').hide();
+            $('#tableZoom').show();
+        },
+
+        error: function () {
+            alert("Hay un error");
+        },
+    });
 }

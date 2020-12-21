@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\dispositivo_controlador;
 use App\dispositivos;
+use App\marcacion_puerta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -330,6 +331,7 @@ class dispositivosController extends Controller
                 /*      */
                 ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
                 ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+                ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
                 ->groupBy('marcm.marcaMov_emple_id')
                    ->whereDate('marcaMov_fecha',$fecha)
                    ->orwhere(function($query) use ($fecha) {
@@ -351,6 +353,7 @@ class dispositivosController extends Controller
                 /*      */
                 ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
                 ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+                ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
                 ->groupBy('marcm.marcaMov_emple_id')
                    ->whereDate('marcaMov_fecha',$fecha)
                    ->orwhere(function($query) use ($fecha,$idemp) {
@@ -384,6 +387,7 @@ class dispositivosController extends Controller
             /*      */
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha) {
@@ -409,6 +413,7 @@ class dispositivosController extends Controller
             /*      */
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha,$idemp) {
@@ -438,6 +443,7 @@ class dispositivosController extends Controller
             /*      */
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha) {
@@ -464,6 +470,7 @@ class dispositivosController extends Controller
             /*      */
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
             ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+            ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
                ->orwhere(function($query) use ($fecha,$idemp) {
@@ -494,6 +501,7 @@ else{
         /*      */
         ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
         ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+        ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
         ->groupBy('marcm.marcaMov_emple_id')
            ->whereDate('marcaMov_fecha',$fecha)
            ->orwhere(function($query) use ($fecha) {
@@ -515,6 +523,7 @@ else{
         /*      */
         ->selectRaw('GROUP_CONCAT(IF(marcaMov_fecha is null,0,marcaMov_fecha) ORDER BY marcm.marcaMov_fecha ASC) as entrada ')
         ->selectRaw('GROUP_CONCAT(IF(marcaMov_salida is null,0,marcaMov_salida) ORDER BY marcm.marcaMov_fecha ASC)  as final  ')
+        ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
         ->groupBy('marcm.marcaMov_emple_id')
            ->whereDate('marcaMov_fecha',$fecha)
            ->orwhere(function($query) use ($fecha,$idemp) {
@@ -600,5 +609,73 @@ else{
     $dispositivos = dispositivos::findOrFail($request->idDisAct);
     $dispositivos->dispo_estadoActivo=1;
     $dispositivos->save();
+ }
+
+ public function cambiarEntrada(Request $request){
+
+    $idMarca=$request->idMarca;
+
+    //PRIMERO VERIFICO SI SOLO TIENE ENTRADA LA MARCACION
+    $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
+    $nuevaFecha=$marcacion_puerta->marcaMov_fecha;
+    if($marcacion_puerta->marcaMov_salida!=null){
+
+        //CAMBIO A NULL LA MARCACION DE ENTRADA
+        $marcacion_puerta->marcaMov_fecha=null;
+        $marcacion_puerta->save();
+
+        //CREO NUEVA MARCACION CON ESA FECHA
+        $nuevaMarcacion=new marcacion_puerta();
+        $nuevaMarcacion->marcaMov_emple_id=$marcacion_puerta->marcaMov_emple_id;
+        $nuevaMarcacion->controladores_idControladores=$marcacion_puerta->controladores_idControladores;
+        $nuevaMarcacion->dispositivos_idDispositivos=$marcacion_puerta->dispositivos_idDispositivos;
+        $nuevaMarcacion->organi_id=$marcacion_puerta->organi_id;
+        $nuevaMarcacion->horarioEmp_id=$marcacion_puerta->horarioEmp_id;
+        $nuevaMarcacion->marcaMov_salida=$nuevaFecha;
+        $nuevaMarcacion->marca_latitud=$marcacion_puerta->marca_latitud;
+        $nuevaMarcacion->marca_longitud=$marcacion_puerta->marca_longitud;
+        $nuevaMarcacion->save();
+
+    }
+    else{
+        $marcacion_puerta->marcaMov_fecha=null;
+        $marcacion_puerta->marcaMov_salida=$nuevaFecha;
+        $marcacion_puerta->save();
+    }
+
+ }
+
+ public function cambiarSalida(Request $request){
+
+    $idMarca=$request->idMarca;
+
+    //PRIMERO VERIFICO SI SOLO TIENE SALIDA LA MARCACION
+    $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
+    $nuevaFecha=$marcacion_puerta->marcaMov_salida;
+    if($marcacion_puerta->marcaMov_fecha!=null){
+
+        //CAMBIO A NULL LA MARCACION DE SALIDA
+        $marcacion_puerta->marcaMov_salida=null;
+        $marcacion_puerta->save();
+
+        //CREO NUEVA MARCACION CON ESA FECHA
+        $nuevaMarcacion=new marcacion_puerta();
+        $nuevaMarcacion->marcaMov_emple_id=$marcacion_puerta->marcaMov_emple_id;
+        $nuevaMarcacion->controladores_idControladores=$marcacion_puerta->controladores_idControladores;
+        $nuevaMarcacion->dispositivos_idDispositivos=$marcacion_puerta->dispositivos_idDispositivos;
+        $nuevaMarcacion->organi_id=$marcacion_puerta->organi_id;
+        $nuevaMarcacion->horarioEmp_id=$marcacion_puerta->horarioEmp_id;
+        $nuevaMarcacion->marcaMov_fecha=$nuevaFecha;
+        $nuevaMarcacion->marca_latitud=$marcacion_puerta->marca_latitud;
+        $nuevaMarcacion->marca_longitud=$marcacion_puerta->marca_longitud;
+        $nuevaMarcacion->save();
+
+    }
+    else{
+        $marcacion_puerta->marcaMov_salida=null;
+        $marcacion_puerta->marcaMov_fecha=$nuevaFecha;
+        $marcacion_puerta->save();
+    }
+
  }
 }
