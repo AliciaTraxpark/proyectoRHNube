@@ -3163,7 +3163,7 @@ use App\proyecto_empleado;
     {{-- FINALIZACION --}}
     <div class="modal fade" style="font-size: 13px" id="form-registrar" tabindex="-1" role="dialog"
         aria-labelledby="form-registrar" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-width: 850px;">
             <div class="modal-content">
                 <div class="modal-header" style="background: #163552;">
                     <h4 class="header-title mt-0 " style="color: #f0f0f0"></i>Datos de empleado</h4>
