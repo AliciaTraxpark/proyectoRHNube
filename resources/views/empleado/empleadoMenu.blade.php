@@ -1279,6 +1279,80 @@ use App\proyecto_empleado;
         </div>
     </div>
     {{-- FINALIZACION DE MODAL --}}
+    {{-- MODAL DE BAJA EN REGISTRAR --}}
+    <div id="modalBajaHistorialReg" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="modalBajaHistorialReg" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Dar de baja
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:cerrarModalHistorialReg()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idHistorialReg">
+                    <form action="javascript:confirmarBajaHistorialReg()">
+                        <div class="col-xl-12">
+                            <div class="form-group row">
+                                <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
+                                    Fecha de baja o cese de empleado(s) :
+                                </label>
+                                <div class="input-group col-md-5 text-center"
+                                    style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaBajaReg">
+                                    <input type="text" id="fechaBajaInputReg" class="col-md-12 form-control" data-input>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control flatpickr">
+                                            <a class="input-button" data-toggle>
+                                                <i class="uil uil-calender"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pt-1" id="validArchivoBajaReg" style="display: none;">
+                            <span style="color: red;">
+                                *El tamaño supera el limite de 4 MB.
+                            </span>
+                        </div>
+                        <div class="col-md 12" id="divbajaEdit">
+                            <label for="">
+                                Adjuntar documento(s)
+                            </label>
+                            <div class="form-group">
+                                <input type="file" name="bajaFileReg" id="bajaFileReg"
+                                    accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                    class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados"
+                                    multiple size="4194304" />
+                                <label for="bajaFileReg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                        <path
+                                            d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                        </path>
+                                    </svg>
+                                    <span class="iborrainputfile">Seleccionar archivo</span>
+                                </label>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        onclick="javascript:cerrarModalHistorialReg()">
+                        Cancelar
+                    </button>
+                    <button type="submit" style="background-color: #163552;" class="btn btn-sm">
+                        Confirmar
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- FINALIZACION DE MODAL --}}
     {{-- CRUD DE AREA EN REGISTRAR --}}
     <div id="areamodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="areamodal" aria-hidden="true"
         data-backdrop="static">
@@ -1516,7 +1590,7 @@ use App\proyecto_empleado;
                         Agregar contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#form-registrar').modal('show');javascript:limpiar()">
+                        onclick="$('#contratoDetallesmodal').modal('show');javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -1541,10 +1615,13 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="$('#form-registrar').modal('show');javascript:limpiar()"
-                        class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" id="guardarContrato" class="btn btn-sm"
-                        style="background-color:#163552;">Guardar</button>
+                    <button type="button" onclick="$('#contratoDetallesmodal').modal('show');javascript:limpiar()"
+                        class="btn btn-sm btn-light" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" id="guardarContrato" class="btn btn-sm" style="background-color:#163552;">
+                        Guardar
+                    </button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -1561,7 +1638,7 @@ use App\proyecto_empleado;
                         Agregar condición de pago
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#fechasmodal').modal('show');javascript:limpiar()">
+                        onclick="javascript:ModalCerrarCondicionReg();javascript:limpiar()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -1586,19 +1663,22 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="$('#fechasmodal').modal('show');javascript:limpiar()"
-                        class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" id="guardarCondicion" class="btn btn-sm"
-                        style="background-color:#163552;">Guardar</button>
+                    <button type="button" onclick="javascript:ModalCerrarCondicionReg();javascript:limpiar()"
+                        class="btn btn-sm btn-light" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" id="guardarCondicion" class="btn btn-sm" style="background-color:#163552;">
+                        Guardar
+                    </button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
     {{-- FINALIZACION DE MODAL --}}
-    {{-- CRUD DE FECHAS DE CONTRATO EN REGISTRAR --}}
-    <div id="fechasmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fechasmodal"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    {{-- CRUD DE DE CONTRATO EN REGISTRAR --}}
+    <div id="contratoDetallesmodal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="contratoDetallesmodal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
@@ -1606,20 +1686,42 @@ use App\proyecto_empleado;
                         Detalles de contrato
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="$('#form-registrar').modal('show');">
+                        onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="formContrato">
-                    <form action="javascript:agregarFechas()">
+                <div class="modal-body">
+                    <form action="javascript:nuevaAltaReg()">
                         {{ csrf_field() }}
-                        <input type="hidden" name="idContrato" id="idContrato">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="sw-default">
+                                        Contrato
+                                        <a onclick="$('#contratoDetallesmodal').modal('hide');" href="#contratomodal"
+                                            data-toggle="modal" data-target="#contratomodal">
+                                            <i class="uil uil-plus"></i>
+                                        </a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </label>
+                                    <span id="validContrato" style="color: red;display:none">*Campo Obligatorio</span>
+                                    <select class="form-control" name="contrato" id="contrato" tabindex="5"
+                                        onclick="javascript:validacionNuevaAltaReg()" required>
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($tipo_cont as $tipo_conts)
+                                        <option value="{{ $tipo_conts->contrato_id }}">
+                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="sw-default">
                                         Condición Pago
-                                        <a onclick="$('#fechasmodal').modal('hide');" href="#condicionmodal"
+                                        <a onclick="javascript:ModalAbiertoCondicionReg()" href="#condicionmodal"
                                             data-toggle="modal" data-target="#condicionmodal">
                                             <i class="uil uil-plus"></i>
                                         </a>
@@ -1682,17 +1784,22 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row pb-2">
+                                    <div class="col-md-12 pt-1" id="validArchivoReg" style="display: none;">
+                                        <span style="color: red;">
+                                            *El tamaño supera el limite de 4 MB.
+                                        </span>
+                                    </div>
                                     <div class="col-md 12">
                                         <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
                                             <input type="file"
                                                 accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                                                 class="inputfile inputfile-1"
                                                 data-multiple-caption="{count} archivos seleccionados" multiple
-                                                id="exampleFormControlFile1">
-                                            <label for="exampleFormControlFile1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile"
-                                                    width="20" height="17" viewBox="0 0 20 17">
+                                                id="reg_fileArchivos" size="4194304">
+                                            <label for="reg_fileArchivos">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
                                                     <path
                                                         d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
                                                     </path>
@@ -1702,13 +1809,10 @@ use App\proyecto_empleado;
                                         </div>
                                     </div>
                                 </div>
-
-                                <br>
                                 <div class="form-group">
-                                    <label id="labelfechaF" style="font-weight: 600">Fecha Final</label>
-                                    <br>
+                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha Final</label>
                                     <label for="">Fecha Indefinida</label>
-                                    <input type="checkbox" id="checkboxFechaI" name="FechaI">
+                                    <input type="checkbox" id="checkboxFechaI" name="checkboxFechaI">
                                 </div>
                                 <div id="ocultarFecha">
                                     <span id="mf_validFechaC" style="color: red;display: none;">
@@ -1758,11 +1862,222 @@ use App\proyecto_empleado;
                         </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button"
+                        onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');"
+                        class="btn btn-sm btn-light" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;"
+                        id="reg_guardarAlta">Guardar</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {{-- FINALIZACION DE MODAL --}}
+    {{-- DETALLES DE CONTRATO EN REGISTRAR --}}
+    <div id="detallesContratomodal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="detallesContratomodal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#163552;">
+                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                        Detalles de contrato
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="reg_idContratoD">
+                    <form action="javascript:agregarFechas()">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="sw-default">
+                                        Contrato
+                                    </label>
+                                    <select class="form-control" id="contratoD" tabindex="5"
+                                        onclick="javascript:validacionNuevaAltaReg()" required disabled>
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($tipo_cont as $tipo_conts)
+                                        <option value="{{ $tipo_conts->contrato_id }}">
+                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sw-default">
+                                        Condición Pago
+                                        <a onclick="javascript:ModalAbiertoCondicionReg()" href="#condicionmodal"
+                                            data-toggle="modal" data-target="#condicionmodal">
+                                            <i class="uil uil-plus"></i>
+                                        </a>
+                                    </label>
+                                    <select class="form-control" id="condicionD" required>
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($condicionP as $condicion)
+                                        <option class="" value="{{$condicion->id}}">
+                                            {{$condicion->condicion}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6" style="padding-top: 2.2em">
+                                <div class="dropdown" id="reg_documentosDetalles">
+                                    <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                        style="cursor: pointer">
+                                        <span class="badge badge-soft-primary text-primary">
+                                            <i class="uil-file-plus-alt font-size-18"></i>
+                                            &nbsp;
+                                            Documentos
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        id="reg_documentosxDetalle">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sw-default">Monto</label>
+                                    <input type="number" step=".01" class="form-control" id="montoD">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <span id="m_validFechaCD" style="color: red;display: none;">
+                                    *Fecha incorrecta.
+                                </span>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD" required>
+                                            <option value="0">Día</option>
+                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                {{$i}}</option>
+                                                @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" name="m_mes_fechaD" id="m_mes_fechaD" required>
+                                            <option value="0">Mes</option>
+                                            <option class="" value="1">Ene.</option>
+                                            <option class="" value="2">Feb.</option>
+                                            <option class="" value="3">Mar.</option>
+                                            <option class="" value="4">Abr.</option>
+                                            <option class="" value="5">May.</option>
+                                            <option class="" value="6">Jun.</option>
+                                            <option class="" value="7">Jul.</option>
+                                            <option class="" value="8">Ago.</option>
+                                            <option class="" value="9">Set.</option>
+                                            <option class="" value="10">Oct.</option>
+                                            <option class="" value="11">Nov.</option>
+                                            <option class="" value="12">Dic.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
+                                            name="m_ano_fechaD" id="m_ano_fechaD" required>
+                                            <option value="0">Año</option>
+                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                </option>
+                                                @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row pb-2">
+                                    <div class="col-md-12 pt-1" id="validArchivoD" style="display: none;">
+                                        <span style="color: red;">
+                                            *El tamaño supera el limite de 4 MB.
+                                        </span>
+                                    </div>
+                                    <div class="col-md 12">
+                                        <div class="form-group" style="margin-top: 14px;margin-bottom: 0px;">
+                                            <input type="file"
+                                                accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                class="inputfile inputfile-1"
+                                                data-multiple-caption="{count} archivos seleccionados" multiple
+                                                id="reg_fileArchivosD" size="4194304">
+                                            <label for="reg_fileArchivosD">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
+                                                    <path
+                                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                </svg>
+                                                <span class="iborrainputfile">Adjuntar archivo</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha Final</label>
+                                    <label class="ocultarFechaD">Fecha Indefinida</label>
+                                    <input type="checkbox" class="ocultarFechaD" id="checkboxFechaID"
+                                        name="checkboxFechaID">
+                                </div>
+                                <div id="ocultarFechaD">
+                                    <span id="mf_validFechaCD" style="color: red;display: none;">
+                                        *Fecha incorrecta.
+                                    </span>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="mf_dia_fechaD" id="mf_dia_fechaD"
+                                                required>
+                                                <option value="0">Día</option>
+                                                @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                    {{$i}}</option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="mf_mes_fechaD" id="mf_mes_fechaD"
+                                                required>
+                                                <option value="0">Mes</option>
+                                                <option class="" value="1">Ene.</option>
+                                                <option class="" value="2">Feb.</option>
+                                                <option class="" value="3">Mar.</option>
+                                                <option class="" value="4">Abr.</option>
+                                                <option class="" value="5">May.</option>
+                                                <option class="" value="6">Jun.</option>
+                                                <option class="" value="7">Jul.</option>
+                                                <option class="" value="8">Ago.</option>
+                                                <option class="" value="9">Set.</option>
+                                                <option class="" value="10">Oct.</option>
+                                                <option class="" value="11">Nov.</option>
+                                                <option class="" value="12">Dic.</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
+                                                name="mf_ano_fechaD" id="mf_ano_fechaD" required>
+                                                <option value="0">Año</option>
+                                                @for ($i = 2014; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
                     <button type="button" onclick="$('#form-registrar').modal('show');" class="btn btn-sm btn-light"
                         data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">
+                        Guardar
+                    </button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -2622,7 +2937,7 @@ use App\proyecto_empleado;
         </div><!-- /.modal-dialog -->
     </div>
     {{-- FINALIZACION --}}
-    {{-- NUEVA ALTA --}}
+    {{-- NUEVO DETALLE --}}
     <div id="NuevoContratoDetallesmodalE" class="modal fade" tabindex="-1" role="dialog"
         aria-labelledby="NuevoContratoDetallesmodalE" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-lg d-flex justify-content-center">
@@ -3217,7 +3532,47 @@ use App\proyecto_empleado;
                                 </div> <!-- end row -->
 
                             </div>
-                            <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important"></div>
+                            <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
+                                {{-- CONTENIDO DE INICIO --}}
+                                <div class="row pb-2" id="reg_nuevaAlta">
+                                    {{-- VALIDACION PARA REGISTRAR NUEVA ALTA OBLIGATORIA --}}
+                                    <div class="col-xl-12" style="display: none" id="reg_validHE">
+                                        <span style="color: red;">
+                                            *Campo Obligatorio
+                                        </span>
+                                    </div>
+                                    {{-- BOTON DE NUEVA ALTA --}}
+                                    <div class="col-xl-2 text-left">
+                                        <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
+                                            onclick="javascript:modalNuevaAltaReg()">
+                                            + Nueva alta
+                                        </button>
+                                    </div>
+                                </div>
+                                {{-- FINALIZACION --}}
+                                {{-- CONTENIDO DE LA TABLA --}}
+                                <div class="row">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="table-responsive-sm" style="height: 250px;overflow: auto;">
+                                            <table class="table table-hover" id="reg_tablaHistorial"
+                                                style="font-size: 13px!important;">
+                                                <thead style="background: #fafafa;">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Contrato</th>
+                                                        <th>Documento</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="reg_tbodyHistorial"
+                                                    style="background:#ffffff;color: #585858;font-size: 12px">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- FINALIZACION --}}
+                            </div>
                             <div id="sw-default-step-4" class="setup-content" style="font-size: 12px!important">
                                 <div class="col-12 pb-2">
                                     <div class="float-md-right">

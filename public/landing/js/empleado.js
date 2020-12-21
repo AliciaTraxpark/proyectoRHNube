@@ -1724,23 +1724,6 @@ function calendario4() {
     calendar4.render();
 }
 /* document.addEventListener("DOMContentLoaded", calendario4); */
-//************* */
-$("#checkboxFechaI").on("click", function () {
-    if ($("#checkboxFechaI").is(":checked")) {
-        $("#labelfechaF").hide();
-        $("#mf_dia_fecha").val("0");
-        $("#mf_mes_fecha").val("0");
-        $("#mf_ano_fecha").val("0");
-        $("#mf_dia_fecha").hide();
-        $("#mf_mes_fecha").hide();
-        $("#mf_ano_fecha").hide();
-    } else {
-        $("#labelfechaF").show();
-        $("#mf_dia_fecha").show();
-        $("#mf_mes_fecha").show();
-        $("#mf_ano_fecha").show();
-    }
-});
 /* document.addEventListener("DOMContentLoaded", calendario3); */
 
 ///inv
@@ -2076,24 +2059,6 @@ function calendario2_ed() {
     calendar2_ed.render();
 }
 /* document.addEventListener("DOMContentLoaded", calendario2_ed); */
-//************* */
-$("#checkboxFechaI").on("click", function () {
-    if ($("#checkboxFechaI").is(":checked")) {
-        $("#labelfechaF").hide();
-        $("#mf_dia_fecha").val("0");
-        $("#mf_mes_fecha").val("0");
-        $("#mf_ano_fecha").val("0");
-        $("#mf_dia_fecha").hide();
-        $("#mf_mes_fecha").hide();
-        $("#mf_ano_fecha").hide();
-    } else {
-        $("#labelfechaF").show();
-        $("#mf_dia_fecha").show();
-        $("#mf_mes_fecha").show();
-        $("#mf_ano_fecha").show();
-    }
-});
-////////////////////////////
 $("#file").fileinput({
     allowedFileExtensions: ["jpg", "jpeg", "png"],
     uploadAsync: false,
@@ -2918,14 +2883,14 @@ function enviarContrato(accion, objContrato) {
                 $("#editarContrato").hide();
                 limpiar();
                 $("#contratomodal").modal("toggle");
-                $("#form-registrar").modal("show");
+                $("#contratoDetallesmodal").modal("show");
                 $.notify(
                     {
                         message: "\nContrato Registrado\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
-                        element: $("#form-registrar"),
+                        element: $("#contratoDetallesmodal"),
                         position: "fixed",
                         icon_type: "image",
                         newest_on_top: true,
@@ -2990,14 +2955,14 @@ function enviarContrato(accion, objContrato) {
                 $("#editarContrato").hide();
                 limpiar();
                 $("#contratomodal").modal("toggle");
-                $("#form-registrar").modal("show");
+                $("#contratoDetallesmodal").modal("show");
                 $.notify(
                     {
                         message: "\nContrato Modificado\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
-                        element: $("#form-registrar"),
+                        element: $("#contratoDetallesmodal"),
                         position: "fixed",
                         icon_type: "image",
                         newest_on_top: true,
@@ -3057,6 +3022,14 @@ function enviarCondicion(accion, objCondicion) {
                         selected: true,
                     })
                 );
+                $("#condicionD").append(
+                    $("<option>", {
+                        //agrego los valores que obtengo de una base de datos
+                        value: data.id,
+                        text: data.condicion,
+                        selected: true,
+                    })
+                );
                 $("#v_condicion").append(
                     $("<option>", {
                         //agrego los valores que obtengo de una base de datos
@@ -3065,18 +3038,19 @@ function enviarCondicion(accion, objCondicion) {
                     })
                 );
                 $("#condicion").val(data.id).trigger("change"); //lo selecciona
+                $("#condicionD").val(data.id).trigger("change"); //lo selecciona
                 $("#textCondicion").val("");
                 $("#editarCondicion").hide();
                 limpiar();
                 $("#condicionmodal").modal("toggle");
-                $("#fechasmodal").modal("show");
+                ModalCerrarCondicionReg();
                 $.notify(
                     {
                         message: "\nCondición de Pago Registrado\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
-                        element: $("#fechasmodal"),
+                        element: modalCPReg(),
                         position: "fixed",
                         icon_type: "image",
                         newest_on_top: true,
@@ -3115,6 +3089,7 @@ function enviarCondicion(accion, objCondicion) {
             },
             success: function (data) {
                 $("#condicion").empty();
+                $("#condicionD").empty();
                 $("#v_condicion").empty();
                 var select = "";
                 $.ajax({
@@ -3132,23 +3107,25 @@ function enviarCondicion(accion, objCondicion) {
                             select += `<option class="" value="${data[i].id}">${data[i].condicion}</option>`;
                         }
                         $("#condicion").append(select);
+                        $("#condicionD").append(select);
                         $("#v_condicion").append(select);
                     },
                     error: function () { },
                 });
+                $("#condicionD").val(data.id).trigger("change"); //lo selecciona
                 $("#condicion").val(data.id).trigger("change"); //lo selecciona
                 $("#textCondicion").val("");
                 $("#editarCondicion").hide();
                 limpiar();
                 $("#condicionmodal").modal("toggle");
-                $("#fechasmodal").modal("show");
+                ModalCerrarCondicionReg();
                 $.notify(
                     {
                         message: "\nCondicion de Pago Modificado\n",
                         icon: "admin/images/checked.svg",
                     },
                     {
-                        element: $("#fechasmodal"),
+                        element: modalCPReg(),
                         position: "fixed",
                         icon_type: "image",
                         newest_on_top: true,
@@ -3586,17 +3563,6 @@ function enviarEmpleadoStore(accion, objEmpleado) {
         error: function (data, errorThrown) { },
     });
 }
-//EMPLEADO ACTUALIZAR
-$("#checkboxFechaIE").on("click", function () {
-    if ($("#checkboxFechaIE").is(":checked")) {
-        $("#m_dia_fechaFE").val("0");
-        $("#m_mes_fechaFE").val("0");
-        $("#m_ano_fechaFE").val("0");
-        $("#ocultarFechaE").hide();
-    } else {
-        $("#ocultarFechaE").show();
-    }
-});
 // DATOS PERSONALES
 function datosPersonaA(method) {
     var celularC = "";
@@ -6079,38 +6045,23 @@ $(function () {
 
     });
 });
-var fechaValue = $("#fechaSelec").flatpickr({
-    mode: "single",
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "d/m/Y",
-    locale: "es",
-    maxDate: "today",
-    wrap: true,
-    allowInput: true,
-});
-$(function () {
-    f = moment().format("YYYY-MM-DD");
-    fechaValue.setDate(f);
-    $("#fechaInput").change();
-})
-    ; (function (document, window, index) {
-        var inputs = document.querySelectorAll('.inputfile');
-        Array.prototype.forEach.call(inputs, function (input) {
-            var label = input.nextElementSibling,
-                labelVal = label.innerHTML;
+(function (document, window, index) {
+    var inputs = document.querySelectorAll('.inputfile');
+    Array.prototype.forEach.call(inputs, function (input) {
+        var label = input.nextElementSibling,
+            labelVal = label.innerHTML;
 
-            input.addEventListener('change', function (e) {
-                var fileName = '';
-                if (this.files && this.files.length > 1)
-                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-                else
-                    fileName = e.target.value.split('\\').pop();
+        input.addEventListener('change', function (e) {
+            var fileName = '';
+            if (this.files && this.files.length > 1)
+                fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+            else
+                fileName = e.target.value.split('\\').pop();
 
-                if (fileName)
-                    label.querySelector('span').innerHTML = fileName;
-                else
-                    label.innerHTML = labelVal;
-            });
+            if (fileName)
+                label.querySelector('span').innerHTML = fileName;
+            else
+                label.innerHTML = labelVal;
         });
-    }(document, window, 0));
+    });
+}(document, window, 0));

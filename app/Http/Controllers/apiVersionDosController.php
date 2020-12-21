@@ -117,6 +117,7 @@ class apiVersionDosController extends Controller
                 ->select('a.Activi_id', 'a.Activi_Nombre')
                 ->where('a.Activi_id', '=', $act->idActividad)
                 ->where('a.controlRemoto', '=', 1)
+                ->where('a.estado', '=', 1)
                 ->get()
                 ->first();
             if ($actividad) {

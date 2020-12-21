@@ -716,23 +716,28 @@ function enviarContratoA(accion, objContrato) {
                     value: data.contrato_id,
                     text: data.contrato_descripcion
                 }));
-                $('#v_contrato').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                $('#v_contratoN').append($('<option>', { //agrego los valores que obtengo de una base de datos
                     value: data.contrato_id,
                     text: data.contrato_descripcion,
                     selected: true
                 }));
-                $('#v_contrato').val(data.contrato_id).trigger("change"); //lo selecciona
+                $('#v_contratoND').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.contrato_id,
+                    text: data.contrato_descripcion,
+                    selected: true
+                }));
+                $('#v_contratoN').val(data.contrato_id).trigger("change"); //lo selecciona
+                $('#v_contratoND').val(data.contrato_id).trigger("change"); //lo selecciona
                 $('#textContratoE').val('');
                 $('#editarContratoA').hide();
                 limpiarEditar();
                 $('#contratomodalE').modal('toggle');
-                $('#fechasmodalE').modal('show');
-                /*  $('#form-ver').modal('show'); */
+                ModalCerrarCondicion();
                 $.notify({
                     message: "\nContrato Registrado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
-                    element: $('#form-ver'),
+                    element: modalCPEdit(),
                     position: 'fixed',
                     icon_type: 'image',
                     newest_on_top: true,
@@ -769,7 +774,8 @@ function enviarContratoA(accion, objContrato) {
             },
             success: function (data) {
                 $('#contrato').empty();
-                $('#v_contrato').empty();
+                $('#v_contratoN').empty();
+                $('#v_contratoND').empty();
                 var select = "";
                 $.ajax({
                     async: false,
@@ -784,21 +790,23 @@ function enviarContratoA(accion, objContrato) {
                             select += `<option class="" value="${data[i].contrato_id}">${data[i].contrato_descripcion}</option>`;
                         }
                         $('#contrato').append(select);
-                        $('#v_contrato').append(select);
+                        $('#v_contratoN').append(select);
+                        $('#v_contratoND').append(select);
                     },
                     error: function () { }
                 });
-                $('#v_contrato').val(data.contrato_id).trigger("change");//lo selecciona
+                $('#v_contratoN').val(data.contrato_id).trigger("change");//lo selecciona
+                $('#v_contratoND').val(data.contrato_id).trigger("change");//lo selecciona
                 $('#textContratoE').val('');
                 $('#editarContratoA').hide();
                 limpiarEditar();
                 $('#contratomodalE').modal('toggle');
-                $('#form-ver').modal('show');
+                ModalCerrarCondicion();
                 $.notify({
                     message: "\nContrato Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
-                    element: $('#form-ver'),
+                    element: modalCPEdit(),
                     position: 'fixed',
                     icon_type: 'image',
                     newest_on_top: true,
@@ -857,17 +865,29 @@ function enviarCondicionA(accion, objCondicion) {
                     text: data.condicion,
                     selected: true
                 }));
+                $('#v_condicionN').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.id,
+                    text: data.condicion,
+                    selected: true
+                }));
+                $('#v_condicionND').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                    value: data.id,
+                    text: data.condicion,
+                    selected: true
+                }));
                 $('#v_condicion').val(data.id).trigger("change"); //lo selecciona
+                $('#v_condicionN').val(data.id).trigger("change"); //lo selecciona
+                $('#v_condicionND').val(data.id).trigger("change"); //lo selecciona
                 $('#textContratoE').val('');
                 $('#editarCondicionA').hide();
                 limpiarEditar();
                 $('#condicionmodalE').modal('toggle');
-                $('#fechasmodalE').modal('show');
+                ModalCerrarCondicion();
                 $.notify({
                     message: "\nCondición de Pago Registrado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
-                    element: $('#fechasmodalE'),
+                    element: modalCPEdit(),
                     position: 'fixed',
                     icon_type: 'image',
                     newest_on_top: true,
@@ -905,6 +925,8 @@ function enviarCondicionA(accion, objCondicion) {
             success: function (data) {
                 $('#condicion').empty();
                 $('#v_condicion').empty();
+                $('#v_condicionN').empty();
+                $('#v_condicionND').empty();
                 var select = "";
                 $.ajax({
                     async: false,
@@ -920,20 +942,24 @@ function enviarCondicionA(accion, objCondicion) {
                         }
                         $('#condicion').append(select);
                         $('#v_condicion').append(select);
+                        $('#v_condicionN').append(select);
+                        $('#v_condicionND').append(select);
                     },
                     error: function () { }
                 });
                 $('#v_condicion').val(data.id).trigger("change"); //lo selecciona
+                $('#v_condicionN').val(data.id).trigger("change"); //lo selecciona
+                $('#v_condicionND').val(data.id).trigger("change"); //lo selecciona
                 $('#textCondicionE').val('');
                 $('#editarCondicionA').hide();
                 limpiarEditar();
                 $('#condicionmodalE').modal('toggle');
-                $('#fechasmodalE').modal('show');
+                ModalCerrarCondicion();
                 $.notify({
                     message: "\nContrato Modificado\n",
                     icon: 'admin/images/checked.svg'
                 }, {
-                    element: $('#fechasmodalE'),
+                    element: modalCPEdit(),
                     position: 'fixed',
                     icon_type: 'image',
                     newest_on_top: true,

@@ -1,3 +1,4 @@
+//? ********************FORMULARIO EDITAR ********************* *//
 var modalA;
 //* FUNCION ABRIR DE MODAL
 function ModalAbiertoCondicion() {
@@ -15,7 +16,6 @@ function ModalAbiertoCondicion() {
     }
 
 }
-
 //* FUNCION DE CERRAR DE MODAL
 function ModalCerrarCondicion() {
     if (modalA === 1) {
@@ -28,23 +28,17 @@ function ModalCerrarCondicion() {
         }
     }
 }
-//* ********************FORMULARIO EDITAR ********************* *//
-//: FECHA DE BAJA EN TABLA CONTRATO
-var fechaValue = $("#fechaBajaEdit").flatpickr({
-    mode: "single",
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "Y-m-d",
-    locale: "es",
-    maxDate: "today",
-    wrap: true,
-    allowInput: true,
-    disableMobile: "true"
-});
-$(function () {
-    f = moment().format("YYYY-MM-DD");
-    fechaValue.setDate(f);
-});
+function modalCPEdit() {
+    if (modalA === 1) {
+        return $('#contratoDetallesmodalE');
+    } else {
+        if (modalA === 2) {
+            return $('#contratoDetallesmodalEN');
+        } else {
+            return $('#NuevoContratoDetallesmodalE');
+        }
+    }
+}
 var altaEmpleado = true;
 //: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
@@ -929,6 +923,22 @@ function eliminarContrato(id) {
 function bajaEmpleadoContrato(id) {
     $('#modalBajaHistorial').modal();
     $('#idHistorialEdit').val(id);
+    //: FECHA DE BAJA EN TABLA CONTRATO
+    var fechaValue = $("#fechaBajaEdit").flatpickr({
+        mode: "single",
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "Y-m-d",
+        locale: "es",
+        maxDate: "today",
+        wrap: true,
+        allowInput: true,
+        disableMobile: "true"
+    });
+    $(function () {
+        f = moment().format("YYYY-MM-DD");
+        fechaValue.setDate(f);
+    });
 }
 //? VALIDACION DE ARCHIVOS EN BAJA
 async function validArchivosBajaEdit() {
@@ -1014,4 +1024,599 @@ async function confirmarBajaHistorial() {
 function cerrarModalHistorial() {
     $('#modalBajaHistorial').modal('toggle');
     $('#form-ver').modal('show');
+}
+//? ********************FINALIZACION********************** *//
+//? ********************FORMULARIO REGISTRAR ********************* *//
+var modalReg;
+//* FUNCION ABRIR DE MODAL
+function ModalAbiertoCondicionReg() {
+    if ($('#contratoDetallesmodal').is(':visible')) {
+        $('#contratoDetallesmodal').modal('hide');
+        modalReg = 1;
+    } else {
+        $('#detallesContratomodal').modal('hide');
+        modalReg = 2;
+    }
+
+}
+//* FUNCION DE CERRAR DE MODAL
+function ModalCerrarCondicionReg() {
+    if (modalReg === 1) {
+        $('#contratoDetallesmodal').modal('show');
+    } else {
+        $('#detallesContratomodal').modal('show');
+    }
+}
+function modalCPReg() {
+    if (modalReg === 1) {
+        return $('#contratoDetallesmodal');
+    } else {
+        return $('#detallesContratomodal');
+    }
+}
+var altaEmpleadoReg = true;
+//: CARGAR DATA EN TABLA CONTRATO
+function historialEmpReg() {
+    var value = $("#idEmpleado").val();
+    $("#reg_tbodyHistorial").empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/empleado/historial",
+        data: {
+            idempleado: value
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            var container = $('#reg_tbodyHistorial');
+            if (data.length != 0) {
+                altaEmpleadoReg = true;
+                for (var i = 0; i < data.length; i++) {
+                    var trReg = `<tr>`;
+                    trReg += `<td style="vertical-align:middle;">
+                                        <img src="landing/images/arriba.svg" height="17"> &nbsp;${moment(data[i].fecha_alta).format('DD/MM/YYYY')}
+                                        &nbsp;&nbsp;`;
+                    if (data[i].fecha_baja != null) {
+                        trReg += `<img src="landing/images/abajo.svg" height="17"> &nbsp;${moment(data[i].fecha_baja).format('DD/MM/YYYY')}`;
+                    } else {
+                        trReg += `<img src="landing/images/abajo.svg" height="17"> &nbsp;------`;
+                    }
+                    trReg += `</td>`;
+                    if (data[i].contrato == null) {
+                        trReg += `<td>--</td> `;
+                    } else {
+                        trReg += `<td> ${data[i].contrato}</td> `;
+                    }
+                    if (data[i].rutaDocumento != null) {
+                        var valores = data[i].rutaDocumento;
+                        //* SEPARAMOS CADENAS
+                        idsV = valores.split(',');
+                        trReg += `<td>
+                        <div class="dropdown" id="documentosReg${i}">
+                            <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                style="cursor: pointer">
+                                <span class="badge badge-soft-primary text-primary">
+                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                </span>
+                                &nbsp;
+                                Documentos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">`;
+                        $.each(idsV, function (index, value) {
+                            var mostrarC = value.substr(13, value.length);
+                            trReg += `<div class="dropdown-item">
+                                        <div class="col-xl-12" style="padding-left: 0px;">
+                                            <div class="float-left mt-1">
+                                                <a href="documEmpleado/${value}" target="_blank" class="p-2">
+                                                    <i class="uil-download-alt font-size-18"></i>
+                                                </a>
+                                                &nbsp;
+                                                <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">${mostrarC}</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        });
+                        trReg += `</ul></div></td> `;
+                    } else {
+                        trReg += `<td> --</td> `;
+                    }
+                    trReg += `<td>
+                                <a onclick="javascript:mostrarDetallesContratoReg(${data[i].idContrato})" data-toggle="tooltip" data-placement="right"
+                                    title="Detalle de Contrato" data-original-title="Detalle de Contrato" style="cursor: pointer;">
+                                    <img src="landing/images/adaptive.svg" height="18">
+                                </a>`;
+                    if (data[i].fecha_baja !== null && i != 0) {
+                        trReg += `&nbsp;
+                                <a data-toggle="tooltip" title="Eliminar contrato" data-placement="right"
+                                    onclick="javascript:eliminarContratoReg(${data[i].id});" style="cursor: pointer">
+                                    <img src="admin/images/delete.svg" height="15">
+                                </a>`;
+                    }
+                    if (data[i].fecha_baja === null) {
+                        altaEmpleadoReg = false;
+                        trReg += `&nbsp;
+                                <a data-toggle="tooltip" name="dBajaName" title="Dar de baja" data-placement="right"
+                                    onclick="javascript:bajaEmpleadoContratoReg(${data[i].id});$('#form-registrar').modal('hide');" style="cursor: pointer">
+                                    <img src="landing/images/abajo.svg" height="17">
+                                </a>`;
+                    }
+                    trReg += '</td>';
+                    trReg += '</tr>';
+                    container.append(trReg);
+                }
+                mostrarBoton();
+            }
+        },
+        error: function () { }
+    });
+}
+//: FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
+function mostrarBoton() {
+    if (altaEmpleadoReg) {
+        $('#reg_nuevaAlta').show();
+    } else {
+        $('#reg_nuevaAlta').hide();
+    }
+}
+//* FUNCION MOSTRAR DETALLES DE CONTRATO
+function mostrarDetallesContratoReg(id) {
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/detalleC",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.estado == 0) {
+                $('.ocultarFechaD').hide();
+            } else {
+                $('.ocultarFechaD').show();
+            }
+            $('#reg_fileArchivosD').val(null);
+            $('.iborrainputfile').text('Adjuntar archivo');
+            $('#contratoD').val(data.tipoContrato);
+            $('#condicionD').val(data.condPago);
+            $('#v_monto').val(data.monto);
+            $('#reg_idContratoD').val(data.idC);
+            var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
+            var VFechaDiaIE = new Date(moment(VFechaDaIE));
+            $('#m_dia_fechaD').val(VFechaDiaIE.getDate());
+            $('#m_mes_fechaD').val(moment(VFechaDaIE).month() + 1);
+            $('#m_ano_fechaD').val(moment(VFechaDaIE).year());
+            $("#checkboxFechaID").prop('checked', false);
+            $('#ocultarFechaD').show();
+            if (data.fechaFinal == null || data.fechaFinal == "0000-00-00") {
+                $("#checkboxFechaID").prop('checked', true);
+                $('#ocultarFechaD').hide();
+            }
+            var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
+            var VFechaDiaFE = new Date(moment(VFechaDaFE));
+            $('#mf_dia_fechaD').val(VFechaDiaFE.getDate());
+            $('#mf_mes_fechaD').val(moment(VFechaDaFE).month() + 1);
+            $('#mf_ano_fechaD').val(moment(VFechaDaFE).year());
+            $('#reg_documentosxDetalle').empty();
+            if (data.rutaDocumento != null) {
+                var dataD = data.rutaDocumento.split(',');
+                var itemsD = "";
+                $.each(dataD, function (index, value) {
+                    var mostrarC = value.substr(13, value.length);
+                    itemsD += `<div class="dropdown-item">
+                                    <div class="col-xl-12" style="padding-left: 0px;">
+                                        <div class="float-left mt-1">
+                                            <a href="documEmpleado/${value}" target="_blank" class="p-2">
+                                                <i class="uil-download-alt font-size-18"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
+                                                <span class="d-inline-block text-truncate" style="max-width: 100px;font-size:12px">${mostrarC}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>`;
+                });
+                $('#reg_documentosxDetalle').append(itemsD);
+            }
+            $('#form-registrar').modal('hide');
+            $('#detallesContratomodal').modal();
+
+        },
+        error: function () { }
+    });
+}
+//* MODAL DE NUEVA ALTA 
+function modalNuevaAltaReg() {
+    $('#contratoDetallesmodal').modal();
+    $('#form-registrar').modal('hide');
+    limpiarNuevosDatosAlta();
+    validacionNuevaAltaReg();
+}
+//* VALIDACION DE NUEVA ALTA
+function validacionNuevaAltaReg() {
+    if ($('#contrato').val() != "") {
+        $('#condicion').prop("disabled", false);
+        $('#monto').prop("disabled", false);
+        $('#m_dia_fecha').prop("disabled", false);
+        $('#m_mes_fecha').prop("disabled", false);
+        $('#m_ano_fecha').prop("disabled", false);
+        $('#reg_fileArchivos').prop("disabled", false);
+        $('#checkboxFechaI').prop("disabled", false);
+        $('#mf_dia_fecha').prop("disabled", false);
+        $('#mf_mes_fecha').prop("disabled", false);
+        $('#mf_ano_fecha').prop("disabled", false);
+        $('#reg_guardarAlta').prop("disabled", false);
+    } else {
+        $('#condicion').prop("disabled", true);
+        $('#monto').prop("disabled", true);
+        $('#m_dia_fecha').prop("disabled", true);
+        $('#m_mes_fecha').prop("disabled", true);
+        $('#m_ano_fecha').prop("disabled", true);
+        $('#reg_fileArchivos').prop("disabled", true);
+        $('#checkboxFechaI').prop("disabled", true);
+        $('#mf_dia_fecha').prop("disabled", true);
+        $('#mf_mes_fecha').prop("disabled", true);
+        $('#mf_ano_fecha').prop("disabled", true);
+        $('#reg_guardarAlta').prop("disabled", true);
+    }
+}
+//* LIMPIAR FORMULARIO EN NUEVA ALTA
+function limpiarNuevosDatosAlta() {
+    $('#contrato').val("");
+    $('#condicion').val("");
+    $('#monto').val("");
+    $('#m_dia_fecha').val(0);
+    $('#m_mes_fecha').val(0);
+    $('#m_ano_fecha').val(0);
+    $('#reg_fileArchivos').val(null);
+    $('.iborrainputfile').val("Adjuntar archivo");
+    $('#checkboxFechaI').prop("checked", false);
+    $('#mf_dia_fecha').val(0);
+    $('#mf_mes_fecha').val(0);
+    $('#mf_ano_fecha').val(0);
+}
+//* CHECKBOX DE FECHA INDEFINIDA
+$("#checkboxFechaI").on("click", function () {
+    if ($("#checkboxFechaI").is(':checked')) {
+        $('#mf_dia_fecha').val(0);
+        $('#mf_mes_fecha').val(0);
+        $('#mf_ano_fecha').val(0);
+        $('#ocultarFecha').hide();
+    } else {
+        $('#ocultarFecha').show();
+    }
+});
+//* VALIDACION DE ARCHIVOS EN BAJA
+async function validArchivosReg() {
+    var respuesta = true;
+    $.each($('#reg_fileArchivos'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            if (sizeKiloBytes > parseInt($('#reg_fileArchivos').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+$('#reg_fileArchivos').on("click", function () {
+    $('#validArchivoReg').hide();
+});
+//* REGISTRAR ARCHIVO EN NUEVA ALTA
+function archivosRegistrar(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($('#reg_fileArchivos'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            historialEmpReg();
+        },
+        error: function () {
+        },
+    });
+}
+//* REGISTRAR NUEVA ALTA
+async function nuevaAltaReg() {
+    var contrato = $('#contrato').val();
+    var condicionPago = $('#condicion').val();
+    var monto = $('#monto').val();
+    var fechaInicial;
+    var fechaFinal = "0000-00-00";
+    var idEmpleado = $("#idEmpleado").val();
+
+    //* FUNCIONES DE FECHAS
+    var m_AnioIE = parseInt($('#m_ano_fecha').val());
+    var m_MesIE = parseInt($('#m_mes_fecha').val() - 1);
+    var m_DiaIE = parseInt($('#m_dia_fecha').val());
+    var m1_VFechaIE = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+    if (m1_VFechaIE.isValid()) {
+        $('#m_validFechaC').hide();
+    } else {
+        $('#m_validFechaC').show();
+        return false;
+    }
+    if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
+        fechaInicial = moment([m_AnioIE, m_MesIE, m_DiaIE]).format('YYYY-MM-DD');
+    } else {
+        fechaInicial = '0000-00-00';
+    }
+    if (!$("#checkboxFechaI").is(':checked')) {
+        var mf_AnioFE = parseInt($('#mf_ano_fecha').val());
+        var mf_MesFE = parseInt($('#mf_mes_fecha').val() - 1);
+        var mf_DiaFE = parseInt($('#mf_dia_fecha').val());
+        var m1f_VFechaFE = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (m1f_VFechaFE.isValid()) {
+            $('#mf_validFechaC').hide();
+        } else {
+            $('#mf_validFechaC').show();
+            return false;
+
+        }
+        var momentInicio = moment([m_AnioIE, m_MesIE, m_DiaIE]);
+        var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
+        if (!momentInicio.isBefore(momentFinal)) {
+            $('#mf_validFechaC').show();
+            return;
+        } else {
+            $('#mf_validFechaC').hide();
+        }
+        if (mf_AnioFE != 0 && mf_MesFE != -1 && mf_DiaFE != 0) {
+            fechaFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]).format('YYYY-MM-DD');
+        } else {
+            fechaFinal = '0000-00-00';
+        }
+    }
+    var fechaAlta = fechaInicial;
+    //* FUNCIONES DE VALIDAR ARCHIVO
+    const result = await validArchivosReg();
+    if (!result) {
+        $('#validArchivoReg').show();
+        return false;
+    } else {
+        $('#validArchivoReg').hide();
+    }
+    //* *******************************FINALIZACION ******************************************
+    //* AJAX DE NUEVA ALTA
+    $.ajax({
+        type: "POST",
+        url: "/nuevaAlta",
+        data: {
+            contrato: contrato,
+            fechaAlta: fechaAlta,
+            condicionPago: condicionPago,
+            monto: monto,
+            fechaInicial: fechaInicial,
+            fechaFinal: fechaFinal,
+            idEmpleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            //* REGISTRAR ARCHIVOS EN NUEVA ALTA
+            archivosRegistrar(data);
+            $('#contratoDetallesmodal').modal('toggle');
+            $('#form-registrar').modal('show');
+            historialEmpReg();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nRegisto exitoso.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    element: $('#form-registrar'),
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { }
+    });
+}
+//* ELIMINAR CONTRATO
+function eliminarContratoReg(id) {
+    //* DESICION DE ELIMINAR CONTRATO
+    alertify
+        .confirm("¿Desea eliminar contrato?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "/eliminarHistorialC",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        historialEmpReg();
+                        $.notifyClose();
+                        $.notify({
+                            message: '\nContrato eliminado',
+                            icon: 'landing/images/bell.svg',
+                        }, {
+                            element: $('#form-registrar'),
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { },
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar contrato",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                historialEmpReg();
+            },
+        });
+}
+//* FUNCION DE MOSTRAR MODAL DE DECICION DE BAJA
+function bajaEmpleadoContratoReg(id) {
+    $('#modalBajaHistorialReg').modal();
+    $('#idHistorialReg').val(id);
+    var fechaValueReg = $("#fechaBajaReg").flatpickr({
+        mode: "single",
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "Y-m-d",
+        locale: "es",
+        maxDate: "today",
+        wrap: true,
+        allowInput: true,
+        disableMobile: "true"
+    });
+    $(function () {
+        f = moment().format("YYYY-MM-DD");
+        fechaValueReg.setDate(f);
+    });
+}
+function cerrarModalHistorialReg() {
+    $('#modalBajaHistorialReg').modal('toggle');
+    $('#form-registrar').modal('show');
+}
+//* VALIDACION DE ARCHIVOS EN BAJA
+async function validArchivosBajaReg() {
+    var respuesta = true;
+    $.each($('#bajaFileReg'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            var fileSize = file.size;
+            var sizeKiloBytes = parseInt(fileSize);
+            if (sizeKiloBytes > parseInt($('#bajaFileReg').attr('size'))) {
+                respuesta = false;
+            }
+        });
+    });
+    return respuesta;
+}
+$('#bajaFileReg').on("click", function () {
+    $('#validArchivoBajaReg').hide();
+});
+//? FUNCION DE GUARDAR ARCHIVOS DE BAJA 
+function archivosDeBajaReg(id) {
+    //* AJAX DE ARCHICOS
+    var formData = new FormData();
+    $.each($('#bajaFileReg'), function (i, obj) {
+        $.each(obj.files, function (j, file) {
+            formData.append('file[' + j + ']', file);
+        })
+    });
+    $.ajax({
+        contentType: false,
+        processData: false,
+        type: "POST",
+        url: "/archivosEditC/" + id,
+        data: formData,
+        dataType: "json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            historialEmpReg();
+        },
+        error: function () {
+        },
+    });
+}
+//? FUNCION GUARDAR DATOS DE BAJA
+async function confirmarBajaHistorialReg() {
+    const result = await validArchivosBajaReg();
+    if (!result) {
+        $('#validArchivoBajaReg').show();
+        return false;
+    } else {
+        $('#validArchivoBajaReg').hide();
+    }
+    var id = $('#idHistorialReg').val();
+    var fechaBaja = $('#fechaBajaInputReg').val();
+    $.ajax({
+        type: "POST",
+        url: "/bajaHistorial",
+        data: {
+            id: id,
+            fechaBaja: fechaBaja
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            archivosDeBajaReg(data);
+            $('#modalBajaHistorialReg').modal('toggle');
+            $('#form-registrar').modal('show');
+            historialEmpReg();
+        },
+        error: function () { }
+    });
 }

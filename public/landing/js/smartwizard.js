@@ -278,6 +278,31 @@ $(document).ready(function () {
                 }
             }
         }
+        if (stepnumber == 2) {
+            var idE = $("#idEmpleado").val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/dataHistorialE",
+                data: {
+                    id: idE,
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                success: function (data) {
+                    if (data == 0) {
+                        $("#reg_validHE").show();
+                        isStepValid = false;
+                        return false;
+                    } else {
+                        $("#reg_validHE").hide();
+                    }
+                },
+            });
+        }
         if (stepnumber == 3) {
             if (isStepValid == true) {
                 if ($("#estadoPF").val() == "true") {
