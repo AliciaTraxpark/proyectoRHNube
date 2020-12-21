@@ -40,6 +40,7 @@ function modalCPEdit() {
     }
 }
 var altaEmpleado = true;
+var BajaEmp = true;
 //: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
     $.ajax({
@@ -62,6 +63,11 @@ function mostrarDetallesContrato(id) {
                 $('.ocultarFechaIE').hide();
             } else {
                 $('.ocultarFechaIE').show();
+            }
+            if (data.fechaBaja !== null) {
+                BajaEmp = false;
+            } else {
+                BajaEmp = true;
             }
             $('#fileDetalleE').val(null);
             $('.iborrainputfile').text('Adjuntar archivo');
@@ -335,7 +341,7 @@ async function editarDetalleCE() {
     }
     //* ***********************************************
     var fechaAlta = fechaInicial;
-    var fechaBaja = (fechaFinal == '0000-00-00') ? null : fechaFinal;
+    var fechaBaja = (fechaFinal == '0000-00-00' || BajaEmpReg == true) ? null : fechaFinal;
     //* AJAX DE EDITAR
     $.ajax({
         type: "POST",
@@ -1167,6 +1173,7 @@ function mostrarBoton() {
         $('#reg_nuevaAlta').hide();
     }
 }
+var BajaEmpReg = true;
 //* FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContratoReg(id) {
     $.ajax({
@@ -1189,6 +1196,11 @@ function mostrarDetallesContratoReg(id) {
                 $('.ocultarFechaD').hide();
             } else {
                 $('.ocultarFechaD').show();
+            }
+            if (data.fechaBaja !== null) {
+                BajaEmpReg = false;
+            } else {
+                BajaEmpReg = true;
             }
             $('#reg_fileArchivosD').val(null);
             $('.iborrainputfile').text('Adjuntar archivo');
@@ -1735,7 +1747,7 @@ async function editarDetalleCReg() {
     }
     //* ***********************************************
     var fechaAlta = fechaInicial;
-    var fechaBaja = (fechaFinal == '0000-00-00') ? null : fechaFinal;
+    var fechaBaja = (fechaFinal == '0000-00-00' || BajaEmpReg == true) ? null : fechaFinal;
     //* AJAX DE EDITAR
     $.ajax({
         type: "POST",
