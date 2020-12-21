@@ -4320,12 +4320,15 @@ use App\proyecto_empleado;
                             </div> <!-- end row -->
                         </div>
                         <div id="sw-default-step-3" class="setup-content" style="font-size: 12px!important">
+                            {{-- CONTENIDO DE INICIO --}}
                             <div class="row pb-2" id="nuevaAltaEdit" style="display: none">
+                                {{-- VALIDACION PARA REGISTRAR NUEVA ALTA OBLIGATORIA --}}
                                 <div class="col-xl-12" style="display: none" id="validHE">
                                     <span style="color: red;">
                                         *Campo Obligatorio
                                     </span>
                                 </div>
+                                {{-- BOTON DE NUEVA ALTA --}}
                                 <div class="col-xl-2 text-left">
                                     <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
                                         onclick="javascript:modalNuevaAlta()">
@@ -4336,6 +4339,8 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
+                            {{-- FINALIZACION --}}
+                            {{-- CONTENIDO DE LA TABLA --}}
                             <div class="row">
                                 <div class="col-xl-12 col-sm-12">
                                     <div class="table-responsive-sm" style="height: 250px;overflow: auto;">
@@ -4356,6 +4361,17 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
+                            {{-- FINALIZACION --}}
+                            {{-- VALIDACION DE NUEVO DETALLE --}}
+                            <div class="row pb-2" id="validDC" style="display: none">
+                                <div class="col-xl-12">
+                                    <span style="color: red;">
+                                        *Columnas sombreadas debe culminar de registrar algunos detalles
+                                        <img src="{{asset('landing/images/adaptive.svg')}}" height="14">
+                                    </span>
+                                </div>
+                            </div>
+                            {{-- FINALIZACION --}}
                         </div>
                         <div id="swF-default-step-4" style="font-size: 12px!important">
                             <div class="row">

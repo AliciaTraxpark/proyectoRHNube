@@ -459,9 +459,11 @@ $(document).ready(function () {
                     } else {
                         if (data.respuesta == false) {
                             $('#idHistorialE' + data.he).css("background-color", "#ffd5cd");
+                            $('#validDC').show();
                             isStepValid = false;
                             return false;
                         } else {
+                            $('#validDC').hide();
                             $("#validHE").hide();
                         }
                     }

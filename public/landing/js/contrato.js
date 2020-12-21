@@ -217,16 +217,19 @@ function historialEmp() {
                                 </a>`;
                     }
                     if (data[i].fecha_baja === null && data[i].contrato !== null) {
-                        altaEmpleado = false;
                         trVer += `&nbsp;
                                 <a data-toggle="tooltip" name="dBajaName" title="Dar de baja" data-placement="right"
                                     onclick="javascript:bajaEmpleadoContrato(${data[i].id});$('#form-ver').modal('hide');" style="cursor: pointer">
                                     <img src="landing/images/abajo.svg" height="17">
                                 </a>`;
                     }
+                    if (data[i].fecha_baja === null || data[i].contrato === null) {
+                        altaEmpleado = false;
+                    }
                     trVer += '</td>';
                     trVer += '</tr>';
                     $('#idHistorialE' + data[i].id).css("background-color", "transparent");
+                    $('#validDC').hide();
                     containerVer.append(trVer);
                 }
                 mostrarBoton();
@@ -240,6 +243,7 @@ function historialEmp() {
 }
 //: FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
 function mostrarBoton() {
+    console.log(altaEmpleado);
     if (altaEmpleado) {
         $('#nuevaAltaEdit').show();
     } else {
