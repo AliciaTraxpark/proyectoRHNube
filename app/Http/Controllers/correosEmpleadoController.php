@@ -8,6 +8,7 @@ use App\Mail\AndroidMail;
 use App\Mail\correoAdministrativo;
 use App\Mail\CorreoEmpleadoMail;
 use App\Mail\CorreoMasivoMail;
+use App\Mail\CorreoRuta;
 use App\Mail\MasivoWindowsMail;
 use App\modo;
 use App\organizacion;
@@ -85,13 +86,13 @@ class correosEmpleadoController extends Controller
         $idV = $request->get('id');
         $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
         if (!empty($vinculacion_ruta->celular)) {
-            $nombrePersona = DB::table('empleado as e')
+            $empleado = DB::table('empleado as e')
                 ->leftJoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-                ->select('p.perso_nombre as nombre')
+                ->select('p.perso_nombre as nombre', 'e.emple_Correo as correo', 'p.perso_id')
                 ->where('e.emple_id', '=', $vinculacion_ruta->idEmpleado)
                 ->get()
                 ->first();
-            $mensaje = "Hola " . $nombrePersona->nombre . " tu credencial de Modo Ruta es: " . $vinculacion_ruta->hash;
+            $mensaje = "Hola " . $empleado->nombre . " tu codigo de Modo Ruta es: " . $vinculacion_ruta->hash;
             $cel = explode("+", $vinculacion_ruta->celular);
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -115,6 +116,12 @@ class correosEmpleadoController extends Controller
                     "Cache-Control: no-cache"
                 ),
             ));
+            //* CORREO DE COPIA
+            if (!empty($empleado->correo)) {
+                $persona = persona::findOrFail($empleado->perso_id);
+                $email = array($empleado->correo);
+                Mail::to($email)->queue(new CorreoRuta($persona, $vinculacion_ruta));
+            }
             $response = curl_exec($curl);
             $err = curl_error($curl);
             if ($err) {
