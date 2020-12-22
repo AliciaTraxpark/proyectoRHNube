@@ -228,6 +228,8 @@ class apiSeguimientoRutaContoller extends Controller
             $actividad = DB::table('actividad as a')
                 ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRuta')
                 ->where('a.Activi_id', '=', $act->idActividad)
+                ->where('a.controlRuta', '=', 1)
+                ->where('a.estado', '=', 1)
                 ->get()
                 ->first();
             $actividad->estado = $actividad->controlRuta;
