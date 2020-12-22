@@ -231,7 +231,7 @@ function onMostrarPantallas() {
                                         nuevaActividadUbicacion = nuevaActividadUbicacion + data[index].minuto[j]["ubicacion"][minutosU].actividad;
                                         nuevoRangoUbicacion = nuevoRangoUbicacion + data[index].minuto[j]["ubicacion"][minutosU].rango;
                                         var ubicaciones = data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"].length;
-                                        ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                        ultimoRecorrido = data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                     }
                                     for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["captura"].length; indexMinutos++) {
                                         var horaInicioCapturaFormat = moment(data[index].minuto[j]["captura"][indexMinutos].hora_ini, "hh:mm:ss");
@@ -295,7 +295,7 @@ function onMostrarPantallas() {
                                 } else {
                                     if (data[index].minuto[j]["ubicacion"].length == 1) {
                                         var ubicaciones = data[index].minuto[j]["ubicacion"][0]["ubicaciones"].length;
-                                        ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                        ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                         if (data[index].minuto[j]["ubicacion"][0].hora_ini < data[index].minuto[j]["captura"][0].hora_ini) {
                                             hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             var horaInicioNow = data[index].minuto[j]["ubicacion"][0].hora_ini;
@@ -364,7 +364,7 @@ function onMostrarPantallas() {
                                             nuevaActividadRango = nuevaActividadRango + data[index].minuto[j]["ubicacion"][minutosU].actividad;
                                             nuevoRangoRango = nuevoRangoRango + data[index].minuto[j]["ubicacion"][minutosU].rango;
                                             var ubicaciones = data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"].length;
-                                            ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            ultimoRecorrido = data[index].minuto[j]["ubicacion"][minutosU]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                         }
                                         if (data[index].minuto[j]["captura"][0].hora_ini < hora_inicioU) {
                                             hora_inicial = data[index].minuto[j]["captura"][0].hora_ini;
@@ -422,9 +422,7 @@ function onMostrarPantallas() {
                             if (data[index].minuto[j]["captura"].length == 0) {
                                 if (data[index].minuto[j]["ubicacion"].length != 0) {
                                     if (ultimoRecorrido != '') {
-                                        var floatlatitud = parseFloat(ultimoRecorrido.split(",")[0]);
-                                        var floatlongitud = parseFloat(ultimoRecorrido.split(",")[1]);
-                                        console.log(floatlatitud);
+                                        var floatlongitud = parseFloat(ultimoRecorrido);
                                     }
                                     if (data[index].minuto[j]["ubicacion"].length == 1) {
                                         sumaRang = parseFloat(data[index].minuto[j]["ubicacion"][0].rango);
@@ -437,17 +435,16 @@ function onMostrarPantallas() {
                                         //* COMPARAR LATITUDES Y LONGITUDES FINALES
                                         var ubicaciones = data[index].minuto[j]["ubicacion"][0]["ubicaciones"].length;
                                         if (ultimoRecorrido != '') {
-                                            if (floatlatitud == data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini &&
-                                                floatlongitud == data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini) {
+                                            if (floatlongitud == data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini) {
                                                 imagenUbicacion = `<img src="landing/images/Estatico.gif" height="120" width="150" class="img-responsive">`;
-                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                             } else {
                                                 imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
-                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                             }
                                         } else {
                                             imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
-                                            ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                         }
                                     } else {
                                         for (let indexMinutos = 0; indexMinutos < data[index].minuto[j]["ubicacion"].length; indexMinutos++) {
@@ -460,17 +457,16 @@ function onMostrarPantallas() {
                                         var lengthUbicacion = data[index].minuto[j]["ubicacion"].length;
                                         var ubicaciones = data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"].length;
                                         if (ultimoRecorrido != '') {
-                                            if (floatlatitud == data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini &&
-                                                floatlongitud == data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini) {
+                                            if (floatlongitud == data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini) {
                                                 imagenUbicacion = `<img src="landing/images/Estatico.gif" height="120" width="150" class="img-responsive">`;
-                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                             } else {
                                                 imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
-                                                ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                             }
                                         } else {
                                             imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
-                                            ultimoRecorrido = "" + data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].latitud_ini + "," + data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini + "";
+                                            ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                         }
                                         sumaRangosTotal += sumaRangos;
                                         sumaActividadTotal += sumaActividad;
