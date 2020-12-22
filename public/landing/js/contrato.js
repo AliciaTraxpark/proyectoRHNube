@@ -197,7 +197,6 @@ function historialEmp() {
                     } else {
                         trVer += `<td> --</td> `;
                     }
-                    console.log(data[i].idContrato);
                     if (data[i].idContrato != null) {
                         trVer += `<td>
                         <a onclick="javascript:mostrarDetallesContrato(${data[i].idContrato})" data-toggle="tooltip" data-placement="right"
@@ -1161,14 +1160,14 @@ function historialEmpReg() {
                     trReg += '</tr>';
                     container.append(trReg);
                 }
-                mostrarBoton();
+                mostrarBotonReg();
             }
         },
         error: function () { }
     });
 }
 //* FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
-function mostrarBoton() {
+function mostrarBotonReg() {
     if (altaEmpleadoReg) {
         $('#reg_nuevaAlta').show();
     } else {
