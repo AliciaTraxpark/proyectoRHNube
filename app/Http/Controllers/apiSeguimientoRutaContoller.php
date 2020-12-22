@@ -232,7 +232,7 @@ class apiSeguimientoRutaContoller extends Controller
                 ->where('a.estado', '=', 1)
                 ->get()
                 ->first();
-            $actividad->estado = $actividad->controlRuta;
+            $actividad->estado = $act->estado;
             array_push($respuesta, $actividad);
         }
 
