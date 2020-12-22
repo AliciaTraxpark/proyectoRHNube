@@ -280,7 +280,7 @@ function onMostrarPantallas() {
                                     } else {
                                         hora_final = moment(nuevaHoraFinUbicacion, "hh:mm:ss").format("hh:mm:ss");
                                     }
-                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
+                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="zoom('${hora + "," + j}')">`;
                                 }
                             }
                             if (data[index].minuto[j]["captura"].length == 1) { //* Solo encontramos una captura en el grupo de minutos
@@ -310,7 +310,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="zoom('${hora + "," + j}')">`;
                                             } else {
                                                 sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
@@ -319,7 +319,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="zoom('${hora + "," + j}')">`;
                                             }
                                             if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
@@ -338,7 +338,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" style="cursor: pointer !important" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" style="cursor: pointer !important" height="18" onclick="zoom('${hora + "," + j}')">`;
                                             } else {
                                                 sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
@@ -347,7 +347,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" style="cursor: pointer !important" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" style="cursor: pointer !important" height="18" onclick="zoom('${hora + "," + j}')">`;
                                             }
                                             if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
@@ -400,7 +400,7 @@ function onMostrarPantallas() {
                                         sumaActividadTotal += sumaActiv;
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
-                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
+                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="zoom('${hora + "," + j}')">`;
                                     }
                                 }
                             } else {
@@ -599,7 +599,7 @@ function onMostrarPantallas() {
                                                                     <div class = "carousel-item active">
                                                                             ${imagenUbicacion}
                                                                             <div class="overlay">
-                                                                                <a class="info" onclick="recorrido('${hora + "," + j}')" style="color:#fdfdfd">
+                                                                                <a class="info" onclick="zoom('${hora + "," + j}')" style="color:#fdfdfd">
                                                                                     <i class="fa fa-map-marker"></i> Recorrido</a>
                                                                                 </a>
                                                                             </div>
@@ -852,50 +852,11 @@ $('#modalRuta').on('shown.bs.modal', function () {
     }, 1000);
 });
 //: ***************************
-//: Detalle de rangos
-function detalleRango(horayJ) {
-    var onlyHora = horayJ.split(",")[0];
-    var min = horayJ.split(",")[1];
-    //: HORAS DE LAS UBICACIONES
-    var horaInicio_ubicacion;
-    var horaFin_ubicacion;
-    var rangoUbicacion;
-    //: **************************
-    //: HORAS DE LAS CAPTURAS
-    var horaInicio_captura;
-    var horaFin_captura;
-    var rangoCaptura;
-    //: **************************
-    for (let index = 0; index < dato.length; index++) {
-        if (dato[index].hora == onlyHora) {
-            for (var j = 0; j < 6; j++) {
-                if (j == min) {
-                    const ubicacion = dato[index].minuto[j].ubicacion;
-                    for (var i = 0; i < ubicacion.length; i++) {
-                        horaInicio_ubicacion = ubicacion[i].hora_ini;
-                        horaFin_ubicacion = ubicacion[i].hora_fin;
-                        rangoUbicacion = enteroTime(ubicacion[i].rango);
-                    }
-                    const captura = dato[index].minuto[j].captura;
-                    for (var m = 0; m < captura.length; m++) {
-                        horaInicio_captura = captura[m].hora_ini;
-                        horaFin_captura = captura[m].hora_fin;
-                        rangoCaptura = enteroTime(captura[m].rango);
-                    }
-                }
-            }
-        }
-    }
-    alertify.alert('Descripcion de rangos',
-        '<span><i class="fa fa-laptop"></i>&nbsp;&nbsp;' + horaInicio_captura + ' - ' + horaFin_captura + '&nbsp;&nbsp;<a class=\"badge badge-soft-primary\">' + rangoCaptura + '</a></span><br>\
-        <span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;' + horaInicio_ubicacion + ' - ' + horaFin_ubicacion + '&nbsp;&nbsp;<a class=\"badge badge-soft-primary\">' + rangoUbicacion + '</a></span><br>'
-    );
-}
-//: ******************
 // ? MOSTRAR IMAGENES GRANDES
 function zoom(horayJ) {
     var onlyHora = horayJ.split(",")[0];
     var j = horayJ.split(",")[1];
+    //* ********CAPTURAS******** *//
     capturas = [];
     dato.forEach((hora) => {
         if (hora.hora == onlyHora) {
@@ -956,6 +917,44 @@ function zoom(horayJ) {
         });
     }
     document.getElementById("zoom").innerHTML = carusel;
+    //* ********UBICACIONES********** *//
+    var arrayDatos = [];
+    var respuesta = [];
+    for (let index = 0; index < dato.length; index++) {
+        if (dato[index].hora === parseInt(onlyHora)) {
+            for (let i = 0; i < 6; i++) {
+                if (i == parseInt(j)) {
+                    const ubicacion = dato[index].minuto[i].ubicacion;
+                    for (var u = 0; u < ubicacion.length; u++) {
+                        const valor = ubicacion[u].ubicaciones;
+                        valor.forEach(element => {
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[u].hora_ini)
+                        });
+                    }
+                }
+            }
+        }
+    }
+    respuesta.push(arrayDatos);
+    var longitudAnterior = '';
+    for (let u = 0; u < arrayDatos.length; u++) {
+        var latitud = arrayDatos[u].split(",")[0];
+        var longitud = arrayDatos[u].split(",")[1];
+        if (longitudAnterior == '') {
+            longitudAnterior = longitud;
+            carusel = `<a href="https://maps.google.com/?q=${latitud},${longitud}" target="_blank"><img src="landing/images/Secuencia 01.gif" height="300" width="350" style="padding-right:10px;padding-bottom:10px"></a>`;
+        } else {
+            if (parseFloat(longitudAnterior) === parseFloat(longitud)) {
+                longitudAnterior = longitud;
+                carusel = `<a href="https://maps.google.com/?q=${latitud},${longitud}" target="_blank"><img src="landing/images/Estatico.gif" height="300" width="350" style="padding-right:10px;padding-bottom:10px"></a>`;
+            } else {
+                longitudAnterior = longitud;
+                carusel = `<a href="https://maps.google.com/?q=${latitud},${longitud}" target="_blank"><img src="landing/images/Secuencia 01.gif" height="300" width="350" style="padding-right:10px;padding-bottom:10px"></a>`;
+            }
+        }
+        document.getElementById("zoom").innerHTML += carusel;
+    }
+    //* ********INSERTAR DATA EN MODAL******* *//
     $("#modalZoom").modal();
 }
 $("#myCarousel").carousel({
