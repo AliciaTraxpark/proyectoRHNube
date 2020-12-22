@@ -28,7 +28,7 @@
     <div class="row page-title">
         <div class="col-md-12">
             {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-            <h4 class="header-title mt-0 "></i>Reporte de marcaciones</h4>
+            <h4 class="header-title mt-0 "></i>Reporte de asistencia</h4>
         </div>
     </div>
 @endsection
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
-                        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;" onclick="javascript:cambiarF()"> <img src="{{asset('landing/images/loupe (1).svg')}}"  height="15"></button>
+                        <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1" style="background-color: #163552;" onclick="javascript:cambiarF()"> <img src="{{asset('landing/images/loupe (1).svg')}}"  height="15"></button>
                     </div>
 
                     {{-- <div class="col-xl-6">
@@ -186,6 +186,10 @@
                             <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar detalles</label>
                         </div>
                     </div>
+                    {{-- GIF DE ESPERA --}}
+                <div id="espera" class="text-center" style="display: none">
+                    <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                </div>
                     <div id="tableZoom" class="col-md-12">
 
                             {{-- <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">

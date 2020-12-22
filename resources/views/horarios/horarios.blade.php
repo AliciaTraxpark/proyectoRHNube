@@ -1338,7 +1338,7 @@ background-color: #ffffff !important;
 
         <div class="modal-content">
            <div class="modal-header" style="background-color:#163552;">
-               <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Alerta de inconsistencia</h5>
+               <h5 class="modal-title"  style="color:#ffffff;font-size:15px">Alerta de inconsistencia de horarios</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                </button>
@@ -1346,7 +1346,7 @@ background-color: #ffffff !important;
            <div class="modal-body">
                <div class="row">
                    <div class="col-md-12">
-                       <label for="">Empleados que no se pudo registrar horarios</label>
+                       <label for="">Los siguientes empleados ya presentan un horario asignado en este rango de horas, revise y vuelva a intentar.</label>
                    </div>
                 <div class="col-md-12">
                     <table id="tablaEmpleadoExcel" class="table nowrap" style="font-size: 12.8px;">

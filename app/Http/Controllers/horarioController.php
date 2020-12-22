@@ -1130,4 +1130,8 @@ class horarioController extends Controller
         $idhorario = $request->valorHorario;
         DB::table('pausas_horario')->where('horario_id', '=',$idhorario)->delete();
     }
+   public function eliminarPausaHorario(Request $request){
+    $idpausa = $request->idpausa;
+    DB::table('pausas_horario')->where('idpausas_horario', '=',$idpausa)->delete();
+   }
 }
