@@ -432,6 +432,8 @@ function onMostrarPantallas() {
                                         sumaActividadTotal += sumaActiv;
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
+                                        hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
+                                        hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
                                         //* COMPARAR LATITUDES Y LONGITUDES FINALES
                                         var ubicaciones = data[index].minuto[j]["ubicacion"][0]["ubicaciones"].length;
                                         if (ultimoRecorrido != '') {
@@ -453,6 +455,7 @@ function onMostrarPantallas() {
                                             sumaActividad = sumaActividad + data[index].minuto[j]["ubicacion"][indexMinutos].actividad;
                                             hora_inicial = data[index].minuto[j]["ubicacion"][0].hora_ini;
                                             hora_final = data[index].minuto[j]["ubicacion"][data[index].minuto[j]["ubicacion"].length - 1].hora_fin;
+                                            console.log(hora_final, data[index].minuto[j]["ubicacion"][data[index].minuto[j]["ubicacion"].length - 1].hora_fin);
                                         }
                                         var lengthUbicacion = data[index].minuto[j]["ubicacion"].length;
                                         var ubicaciones = data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"].length;
@@ -616,7 +619,7 @@ function onMostrarPantallas() {
                                                             </div>
                                                         </div>
                                                         &nbsp;
-                                                        <label style="font-size: 12px" for="">${data[index].minuto[j]["ubicacion"][0].hora_ini} - ${data[index].minuto[j]["ubicacion"][0].hora_fin}</label>
+                                                        <label style="font-size: 12px" for="">${hora_inicial} - ${hora_final}</label>
                                                         <div class="progress" style="background-color: #d4d4d4;" data-toggle="tooltip" data-placement="bottom" title="Actividad por Rango de Tiempo" data-original-title="">
                                                             <div class="progress-bar" role="progressbar" style="width:${promedio}%;background:${nivel}" aria-valuenow=${promedio} aria-valuemin="0" aria-valuemax="100">
                                                                 ${promedio + "%"}
