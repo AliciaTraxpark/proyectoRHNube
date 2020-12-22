@@ -85,13 +85,13 @@ class correosEmpleadoController extends Controller
         $idV = $request->get('id');
         $vinculacion_ruta = vinculacion_ruta::findOrFail($idV);
         if (!empty($vinculacion_ruta->celular)) {
-            $nombrePersona = DB::table('empleado')
-                ->leftJoin('persona as p', 'p.perso_id', '=', 'e.emple_perso')
-                ->select('p.perso_nombre')
+            $nombrePersona = DB::table('empleado as e')
+                ->leftJoin('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('p.perso_nombre as nombre')
                 ->where('e.emple_id', '=', $vinculacion_ruta->idEmpleado)
                 ->get()
                 ->first();
-            $mensaje = "Hola " . $nombrePersona . " tu credencial de Modo Ruta es: " . $vinculacion_ruta->hash;
+            $mensaje = "Hola " . $nombrePersona->nombre . " tu credencial de Modo Ruta es: " . $vinculacion_ruta->hash;
             $cel = explode("+", $vinculacion_ruta->celular);
             $curl = curl_init();
             curl_setopt_array($curl, array(
