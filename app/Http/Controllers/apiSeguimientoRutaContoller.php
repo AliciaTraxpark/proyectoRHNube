@@ -232,8 +232,10 @@ class apiSeguimientoRutaContoller extends Controller
                 ->where('a.estado', '=', 1)
                 ->get()
                 ->first();
-            $actividad->estado = $act->estado;
-            array_push($respuesta, $actividad);
+            if ($actividad) {
+                $actividad->estado = $act->estado;
+                array_push($respuesta, $actividad);
+            }
         }
 
         return response()->json($respuesta, 200);
