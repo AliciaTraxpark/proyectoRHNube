@@ -280,7 +280,7 @@ function onMostrarPantallas() {
                                     } else {
                                         hora_final = moment(nuevaHoraFinUbicacion, "hh:mm:ss").format("hh:mm:ss");
                                     }
-                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                    var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
                                 }
                             }
                             if (data[index].minuto[j]["captura"].length == 1) { //* Solo encontramos una captura en el grupo de minutos
@@ -310,7 +310,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
                                             } else {
                                                 sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
@@ -319,7 +319,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
                                             }
                                             if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
@@ -338,7 +338,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" style="cursor: pointer !important" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             } else {
                                                 sumaRang = parseFloat(data[index].minuto[j]["captura"][0].rango + data[index].minuto[j]["ubicacion"][0].rango);
                                                 sumaActiv = parseFloat(data[index].minuto[j]["captura"][0].tiempoA + data[index].minuto[j]["ubicacion"][0].actividad);
@@ -347,7 +347,7 @@ function onMostrarPantallas() {
                                                 sumaActividadTotal += sumaActiv;
                                                 var totalR = enteroTime(sumaRang);
                                                 totalCM = totalR;
-                                                var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                                var verDetalle = `<img src="landing/images/placeholder.svg" style="cursor: pointer !important" height="18" onclick="recorrido('${hora + "," + j}')">`;
                                             }
                                             if (data[index].minuto[j]["ubicacion"][0].hora_fin > data[index].minuto[j]["captura"][0].hora_fin) {
                                                 hora_final = data[index].minuto[j]["ubicacion"][0].hora_fin;
@@ -400,7 +400,7 @@ function onMostrarPantallas() {
                                         sumaActividadTotal += sumaActiv;
                                         var totalR = enteroTime(sumaRang);
                                         totalCM = totalR;
-                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" onclick="recorrido('${hora + "," + j}')">`;
+                                        var verDetalle = `<img src="landing/images/placeholder.svg" height="18" style="cursor: pointer !important" onclick="recorrido('${hora + "," + j}')">`;
                                     }
                                 }
                             } else {
