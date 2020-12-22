@@ -98,17 +98,10 @@ use App\User;
                 aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header" style="background-color:#163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                Recomendaciones</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                         <div class="modal-body">
                             <div class="row pt-2">
                                 <div class="col-md-12 text-center">
-                                    <img src="{{asset('landing/images/alert.svg')}}" height="25" class="mr-1">
+                                    <img src="{{asset('landing/images/alert.svg')}}" height="20" class="mr-1">
                                     <span>
                                         Recuerda "Habilitar Edición" para ingresar los datos correspodientes.
                                     </span>
@@ -120,10 +113,11 @@ use App\User;
                                 </div>
                             </div>
                             <div class="row pt-2">
-                                <div class="col-md-12 text-center">
+                                <div class="col-md-12 text-left">
                                     <span>
+                                        <img src="{{asset('landing/images/alert1.svg')}}" height="20" class="mr-1">
                                         Los campos en rojo&nbsp;
-                                        <img src="{{asset('landing/images/cuadrado.svg')}}" height="18">&nbsp;
+                                        <img src="{{asset('landing/images/rectangulo.svg')}}" height="18">&nbsp;
                                         son obligatorios.
                                     </span>
                                 </div>

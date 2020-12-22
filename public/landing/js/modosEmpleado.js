@@ -63,7 +63,6 @@ function actividadEmp() {
                 var container = $("#tablaBodyTarea");
                 var td = "";
                 var valorIn = $('#gestActI').val();
-                console.log('valorIn==' + valorIn);
                 for (var $i = 0; $i < data.length; $i++) {
                     td += `<tr onclick="return editarActE(${data[$i].Activi_id})">
                     <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
