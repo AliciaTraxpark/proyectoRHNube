@@ -193,6 +193,7 @@ Route::get('/tareas/proyecto', 'ControlController@proyecto');
 Route::get('/reporteSemanal', 'ControlController@reporteS');
 Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
+Route::get('/empleadosRep', 'ControlController@empledosReporteSemanalMensual');
 Route::get('/mostrarCapturas', 'ControlController@mostrarCapturas');
 //FUNCION PARA MOSTRAR CAPTURAS Y MINIATURAS
 Route::get("mostrarMiniatura/{url}", "ControlController@apiMostrarCapturas");
