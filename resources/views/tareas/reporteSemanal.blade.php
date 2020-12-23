@@ -46,16 +46,16 @@
     }
 
     .flatpickr-day.selected {
-        background: #1f4068 !important;
-        border-color: #1f4068 !important;
+        background: #153e90 !important;
+        border-color: #153e90 !important;
     }
 
     .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: #1f4068 !important;
+        background-color: #153e90 !important;
     }
 
     .flatpickr-day.week.selected {
-        box-shadow: -5px 0 0 #1f4068, 5px 0 0 #1f4068;
+        box-shadow: -5px 0 0 #153e90, 5px 0 0 #153e90;
     }
 
     /* RESPONSIVE */
