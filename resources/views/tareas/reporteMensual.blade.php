@@ -203,58 +203,47 @@
                         </div>
                     </div>
                     <div class="card-body" id="tablaSinActividadD">
-                        <div class="table-responsive-xl">
-                            <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width:
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width:
                                         100%;">
-                                <thead style="background: #fafafa;" id="diasMensual">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>
-                                            <img src="{{
+                                    <thead style="background: #fafafa;" id="diasMensual">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>
+                                                <img src="{{
                                                         URL::asset('admin/assets/images/users/empleado.png')
                                                         }}" class="mr-2" alt="" />Miembro
-                                        </th>
-                                        <th>LUN.</th>
-                                        <th>MAR.</th>
-                                        <th>MIÉ.</th>
-                                        <th>JUE.</th>
-                                        <th>VIE.</th>
-                                        <th>SÁB.</th>
-                                        <th>TOTAL</th>
-                                        <th>ACTIV.</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="empleadoMensual">
-                                </tbody>
-                            </table>
+                                            </th>
+                                            <th>LUN.</th>
+                                            <th>MAR.</th>
+                                            <th>MIÉ.</th>
+                                            <th>JUE.</th>
+                                            <th>VIE.</th>
+                                            <th>SÁB.</th>
+                                            <th>TOTAL</th>
+                                            <th>ACTIV.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="empleadoMensual">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div> <!-- end card body-->
+                    </div>
                     <div class="card-body" id="tablaConActividadD" style="display: none">
-                        <div class="table-responsive-xl">
-                            <table id="actividadDM" class="table nowrap" style="font-size: 13px!important;width:100%;">
-                                <thead style="background: #fafafa;" id="diasActvidad" style="width:100%!important">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>
-                                            <img src="{{
-                                                        URL::asset('admin/assets/images/users/empleado.png')
-                                                        }}" class="mr-2" alt="" />Miembro
-                                        </th>
-                                        <th>LUN.</th>
-                                        <th>MAR.</th>
-                                        <th>MIÉ.</th>
-                                        <th>JUE.</th>
-                                        <th>VIE.</th>
-                                        <th>SÁB.</th>
-                                        <th>TOTAL</th>
-                                        <th>ACTIV.</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="empleadoActividad">
-                                </tbody>
-                            </table>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table id="actividadDM" class="table nowrap"
+                                    style="font-size: 13px!important;width:100%;">
+                                    <thead style="background: #fafafa;" id="diasActvidad" style="width:100%!important">
+                                    </thead>
+                                    <tbody id="empleadoActividad">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div> <!-- end card body-->
+                    </div>
                 </div>
             </div>
         </div>
