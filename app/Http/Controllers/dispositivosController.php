@@ -695,4 +695,22 @@ else{
         return 1;
     }
  }
+
+ public function registrarNSalida(Request $request){
+    $idMarca=$request->idMarca;
+    $hora=$request->hora;
+    $fecha=$request->fecha;
+    $fecha1 = Carbon::create($fecha);
+
+    $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
+    $fechaEntrada=$marcacion_puerta->marcaMov_fecha;
+
+    if( $fecha1->lte($fechaEntrada)){
+        return 0;
+    } else{
+        $marcacion_puerta->marcaMov_salida=$fecha1;
+        $marcacion_puerta->save();
+        return 1;
+    }
+ }
 }
