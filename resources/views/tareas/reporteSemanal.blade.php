@@ -41,6 +41,23 @@
         overflow-y: scroll;
     }
 
+    .flatpickr-weekdays {
+        background: #1f4068 !important;
+    }
+
+    .flatpickr-day.selected {
+        background: #1f4068 !important;
+        border-color: #1f4068 !important;
+    }
+
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #1f4068 !important;
+    }
+
+    .flatpickr-day.week.selected {
+        box-shadow: -5px 0 0 #1f4068, 5px 0 0 #1f4068;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 767.98px) {

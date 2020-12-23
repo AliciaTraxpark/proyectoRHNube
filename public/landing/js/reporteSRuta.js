@@ -5,10 +5,17 @@ var fechaValue = $("#fechaSelec").flatpickr({
     altInput: true,
     altFormat: "D, j F",
     locale: "es",
-    maxDate: "today",
     wrap: true,
     allowInput: true,
-    disableMobile: "true"
+    disableMobile: "true",
+    "plugins": [new weekSelect({})],
+    "onChange": [function () {
+        // extract the week number
+        // note: "this" is bound to the flatpickr instance
+        const weekNumber = this.selectedDates[0]
+            ? this.config.getWeek(this.selectedDates[0])
+            : null;
+    }]
 });
 $(function () {
     f = moment().format("YYYY-MM-DD");
@@ -720,8 +727,9 @@ function sinActividadesDiarias() {
 function changeFecha() {
     dato = $('#fecha').val();
     value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
-    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+    numberWeek = moment(dato, ["YYYY-MM-DD"]).week();
+    firstDate = moment().isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
+    lastDate = moment().isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
     $('#fecha').val(dato);

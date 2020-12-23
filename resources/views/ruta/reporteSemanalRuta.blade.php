@@ -44,6 +44,23 @@
         overflow-y: scroll;
     }
 
+    .flatpickr-weekdays {
+        background: #1f4068 !important;
+    }
+
+    .flatpickr-day.selected {
+        background: #1f4068 !important;
+        border-color: #1f4068 !important;
+    }
+
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #1f4068 !important;
+    }
+
+    .flatpickr-day.week.selected {
+        box-shadow: -5px 0 0 #1f4068, 5px 0 0 #1f4068;
+    }
+
     @media (max-width: 767.98px) {
         .colBtnR {
             text-align: center !important;
@@ -242,6 +259,7 @@
 <script src="{{ URL::asset('admin/assets/libs/apexcharts/apexcharts.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/flatpickr/plugins/weekSelect/weekSelect.js') }}"></script>
 <script src="{{asset('admin/assets/libs/bootstrap-datetimepicker-master/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>

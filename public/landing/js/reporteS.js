@@ -15,8 +15,6 @@ var fechaValue = $("#fechaSelec").flatpickr({
         const weekNumber = this.selectedDates[0]
             ? this.config.getWeek(this.selectedDates[0])
             : null;
-
-        console.log(weekNumber);
     }]
 });
 $(function () {
