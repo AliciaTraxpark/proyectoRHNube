@@ -308,7 +308,20 @@ function cargartabla (fecha) {
                          '</td>';
                 }
                 else{
-                    cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td> ';
+                    cuerpo+= '<td>'+
+                        '<div class=" dropdown " >'+
+                         '<button class="btn  dropdown-toggle" type="button"'+
+                         'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' +
+                            'style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">'+
+                            '<span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span>'+
+                         '</button>'+
+                        ' <form class="dropdown-menu dropdown p-3"  id="UlS'+nIDSSalid[b]+'" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">'+
+                            '<div class="form-group"  >'+
+                             '<input type="text" id="horaSalidaN'+nIDSSalid[b]+'" class="form-control form-control-sm horasSalida" >'+
+                             ' &nbsp; <a onclick="insertarSalida('+nIDSSalid[b]+') " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15">  </a>  </div>'+
+                        '</form>'+
+                       '</div>'+
+                        '</td> ';
                 }
                 }
 
