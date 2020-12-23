@@ -5,10 +5,19 @@ var fechaValue = $("#fechaSelec").flatpickr({
     altInput: true,
     altFormat: "D, j F",
     locale: "es",
-    maxDate: "today",
     wrap: true,
     allowInput: true,
-    disableMobile: "true"
+    disableMobile: "true",
+    "plugins": [new weekSelect({})],
+    "onChange": [function () {
+        // extract the week number
+        // note: "this" is bound to the flatpickr instance
+        const weekNumber = this.selectedDates[0]
+            ? this.config.getWeek(this.selectedDates[0])
+            : null;
+
+        console.log(weekNumber);
+    }]
 });
 $(function () {
     f = moment().format("YYYY-MM-DD");
@@ -780,7 +789,6 @@ function fechaDefecto() {
     $('#fecha').val(dato);
 }
 function buscarReporte() {
-    console.log("ingreso");
     changeFecha();
     $('#busquedaP').show();
     $('#busquedaA').show();
