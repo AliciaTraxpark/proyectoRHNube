@@ -172,7 +172,20 @@ function cargartabla (fecha) {
                         '</div>'+
                          '</td>';
                        } else{
-                        cuerpo= '<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td> ';
+                        cuerpo= '<td>'+
+                        '<div class=" dropdown " >'+
+                         '<button class="btn  dropdown-toggle" type="button"'+
+                         'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' +
+                            'style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">'+
+                            '<span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span>'+
+                         '</button>'+
+                        ' <form class="dropdown-menu dropdown p-3"  id="UlE'+nIDSEnt[0]+'" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">'+
+                            '<div class="form-group"  >'+
+                             '<input type="text" id="horaEntradaN'+nIDSEnt[0]+'" class="form-control form-control-sm horasEntrada" >'+
+                             ' &nbsp; <a onclick="insertarEntrada('+nIDSEnt[0]+') " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15">  </a>  </div>'+
+                        '</form>'+
+                       '</div>'+
+                        '</td> ';
                     }
 
                     } else{
@@ -201,7 +214,21 @@ function cargartabla (fecha) {
                          '</td>';
                     }
                     else{
-                        cuerpo= '<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td> ';
+                        cuerpo= '<td>'+
+                        '<div class=" dropdown " >'+
+                         '<button class="btn  dropdown-toggle" type="button"'+
+                         'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' +
+                            'style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">'+
+                            '<span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span>'+
+                         '</button>'+
+                        ' <form class="dropdown-menu dropdown p-3"  id="UlE'+nIDSEnt[b]+'" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">'+
+                            '<div class="form-group"  >'+
+                             '<input type="text" id="horaEntradaN'+nIDSEnt[b]+'" class="form-control form-control-sm horasEntrada" >'+
+                             ' &nbsp; <a onclick="insertarEntrada('+nIDSEnt[b]+') " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15">  </a>  </div>'+
+                        '</form>'+
+                       '</div>'+
+                        '</td> ';
+
                     }
                     }
 
@@ -221,7 +248,7 @@ function cargartabla (fecha) {
              //id's
              vectorIDSSalida=dataA[i].idMarcacion;
              nIDSSalid=vectorIDSSalida.split(',');
-           console.log(nSalidas);
+
              if(nSalidas.length<2){
                 if(b==0){
                     if( nSalidas[0]!=0){
@@ -241,7 +268,21 @@ function cargartabla (fecha) {
 
                 }
                     else{
-                        cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td> ';
+
+                        cuerpo+= '<td>'+
+                        '<div class=" dropdown " >'+
+                         '<button class="btn  dropdown-toggle" type="button"'+
+                         'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' +
+                            'style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">'+
+                            '<span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span>'+
+                         '</button>'+
+                        ' <form class="dropdown-menu dropdown p-3"  id="UlS'+nIDSSalid[0]+'" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">'+
+                            '<div class="form-group"  >'+
+                             '<input type="text" id="horaSalidaN'+nIDSSalid[0]+'" class="form-control form-control-sm horasSalida" >'+
+                             ' &nbsp; <a onclick="insertarSalida('+nIDSSalid[0]+') " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15">  </a>  </div>'+
+                        '</form>'+
+                       '</div>'+
+                        '</td> ';
                     }
                 } else{
                     cuerpo+= '<td>--</td>';
@@ -267,7 +308,20 @@ function cargartabla (fecha) {
                          '</td>';
                 }
                 else{
-                    cuerpo+= '<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td> ';
+                    cuerpo+= '<td>'+
+                        '<div class=" dropdown " >'+
+                         '<button class="btn  dropdown-toggle" type="button"'+
+                         'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' +
+                            'style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">'+
+                            '<span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span>'+
+                         '</button>'+
+                        ' <form class="dropdown-menu dropdown p-3"  id="UlS'+nIDSSalid[b]+'" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">'+
+                            '<div class="form-group"  >'+
+                             '<input type="text" id="horaSalidaN'+nIDSSalid[b]+'" class="form-control form-control-sm horasSalida" >'+
+                             ' &nbsp; <a onclick="insertarSalida('+nIDSSalid[b]+') " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15">  </a>  </div>'+
+                        '</form>'+
+                       '</div>'+
+                        '</td> ';
                 }
                 }
 
@@ -532,11 +586,33 @@ else{
 
 
 
-
         },
         error: function () {}
     });
 
+    $('.horasEntrada').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate:"00:00:00",
+
+        time_24hr: true,
+        enableSeconds:true,
+       /*  inline:true, */
+        static:true
+    });
+
+    $('.horasSalida').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate:"00:00:00",
+
+        time_24hr: true,
+        enableSeconds:true,
+       /*  inline:true, */
+        static:true
+    });
 
 
 };
@@ -546,11 +622,15 @@ function cambiarF(){
 
     f1 = $("#fechaInput").val();
     f2=moment(f1).format("YYYY-MM-DD");
+    console.log(f2);
+    $('#pasandoV').val(f2);
     if ($.fn.DataTable.isDataTable("#tablaReport")) {
 
         /* $('#tablaReport').DataTable().destroy(); */
     }
+
     cargartabla(f2);
+
 }
 function cambiartabla(){
     if( $('#customSwitDetalles').is(':checked')) {
@@ -578,7 +658,7 @@ function cambiarEntrada(idMarca) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-          
+
             $('#btnRecargaTabla').click();
             $('#espera').hide();
             $('#tableZoom').show();
@@ -614,6 +694,114 @@ function cambiarSalida(idMarca) {
             $('#tableZoom').show();
         },
 
+        error: function () {
+            alert("Hay un error");
+        },
+    });
+}
+
+function insertarEntrada(idMarca){
+    let hora=$('#horaEntradaN'+idMarca+'').val();
+    let fecha= $('#pasandoV').val()+' '+ hora;
+
+    $.ajax({
+        type: "post",
+        url: "/registrarNEntrada",
+        data: {
+            idMarca,hora,fecha
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if(data==1){
+                $('#tableZoom').hide();
+                $('#espera').show();
+            $('#btnRecargaTabla').click();
+            $('#espera').hide();
+            $('#tableZoom').show();
+            } else{
+
+                $.notifyClose();
+                $.notify({
+                    message: '\nHora de entrada debe ser menor que hora de salida.',
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+
+
+        },
+        error: function () {
+            alert("Hay un error");
+        },
+    });
+}
+/////////////////////
+function insertarSalida(idMarca){
+    let hora=$('#horaSalidaN'+idMarca+'').val();
+    let fecha= $('#pasandoV').val()+' '+ hora;
+
+    $.ajax({
+        type: "post",
+        url: "/registrarNSalida",
+        data: {
+            idMarca,hora,fecha
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if(data==1){
+                $('#tableZoom').hide();
+                $('#espera').show();
+            $('#btnRecargaTabla').click();
+            $('#espera').hide();
+            $('#tableZoom').show();
+            } else{
+
+                $.notifyClose();
+                $.notify({
+                    message: '\nHora de salida debe ser mayor a que hora de entrada.',
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+
+
+        },
         error: function () {
             alert("Hay un error");
         },
