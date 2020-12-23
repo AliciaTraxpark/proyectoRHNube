@@ -97,7 +97,6 @@ function sumarHora(a, b) {
     tiempo = (suma < 10) ? '0' + suma : suma;
     resultado.push(tiempo);
     resultado.reverse();
-    console.log(resultado);
     return resultado.join(":");
 }
 
