@@ -428,6 +428,18 @@ function sinActividadD() {
             message: "No se encontraron datos.",
             icon: 'admin/images/warning.svg'
         });
+        var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+        html_trAD += '<th>LUN.</th>';
+        html_trAD += '<th>MAR.</th>';
+        html_trAD += '<th>MIÉ.</th>';
+        html_trAD += '<th>JUE.</th>';
+        html_trAD += '<th>VIE.</th>';
+        html_trAD += '<th>SÁB.</th>';
+        html_trAD += '<th>TOTAL</th>';
+        html_trD += '<th>TOTAL</th>';
+        html_trD += '<th>ACTIV.</th></tr>';
+        // TABLA DEFAULT
+        $('#diasMensual').html(html_trD);
     }
 }
 function conActividadD() {
@@ -656,6 +668,18 @@ function conActividadD() {
             message: "No se encontraron datos.",
             icon: 'admin/images/warning.svg'
         });
+        var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+        html_trAD += '<th>LUN.</th>';
+        html_trAD += '<th>MAR.</th>';
+        html_trAD += '<th>MIÉ.</th>';
+        html_trAD += '<th>JUE.</th>';
+        html_trAD += '<th>VIE.</th>';
+        html_trAD += '<th>SÁB.</th>';
+        html_trAD += '<th>TOTAL</th>';
+        html_trD += '<th>TOTAL</th>';
+        html_trD += '<th>ACTIV.</th></tr>';
+        // TABLA DEFAULT
+        $('#diasActvidad').html(html_trD);
     }
 }
 function changeFecha() {

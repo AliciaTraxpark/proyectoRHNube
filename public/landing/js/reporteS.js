@@ -439,6 +439,12 @@ function conActividadesDiarias() {
             icon: 'admin/images/warning.svg'
         });
         var html_trAD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+        html_trAD += '<th>LUN.</th>';
+        html_trAD += '<th>MAR.</th>';
+        html_trAD += '<th>MIÉ.</th>';
+        html_trAD += '<th>JUE.</th>';
+        html_trAD += '<th>VIE.</th>';
+        html_trAD += '<th>SÁB.</th>';
         html_trAD += '<th>TOTAL</th>';
         html_trAD += '<th>ACTIV.</th></tr>';
         $('#diasActvidad').html(html_trAD);
@@ -696,7 +702,13 @@ function sinActividadesDiarias() {
             icon: 'admin/images/warning.svg'
         });
         var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
-        // TABLA DEFAULT
+        html_trAD += '<th>LUN.</th>';
+        html_trAD += '<th>MAR.</th>';
+        html_trAD += '<th>MIÉ.</th>';
+        html_trAD += '<th>JUE.</th>';
+        html_trAD += '<th>VIE.</th>';
+        html_trAD += '<th>SÁB.</th>';
+        html_trAD += '<th>TOTAL</th>';
         html_trD += '<th>TOTAL</th>';
         html_trD += '<th>ACTIV.</th></tr>';
         // TABLA DEFAULT
