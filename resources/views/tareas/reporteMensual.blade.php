@@ -62,7 +62,8 @@
         overflow-y: scroll;
     }
 
-    .datetimepicker table tr td span.active {
+    .datetimepicker table tr td span.active,
+    .datetimepicker table tr td span.active:hover {
         background-image: linear-gradient(to bottom, #1f4068, #1f4068);
     }
 
