@@ -198,11 +198,11 @@
             <th>
                 <div class="width-100">Apellidos</div>
             </th>
-            <th>
-                <div class="width-100">Control Remoto</div>
+            <th class="text-center">
+                <div class="width-400">Control Remoto</div>
             </th>
-            <th>
-                <div class="width-100">Control Ruta</div>
+            <th class="text-center">
+                <div class="width-400">Control Ruta</div>
             </th>
             <th>
                 <div class="width-400">Asistencia en puerta</div>
