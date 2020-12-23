@@ -2,15 +2,14 @@
 
 namespace App\Mail;
 
-use App\organizacion;
 use App\persona;
-use App\vinculacion;
+use App\vinculacion_ruta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MasivoWindowsMail extends Mailable
+class CorreoRuta extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,14 +18,12 @@ class MasivoWindowsMail extends Mailable
      *
      * @return void
      */
-    public $vinculacion;
     public $persona;
-    public $organizacion;
-    public function __construct(array $vinculacion, persona $persona, organizacion $organizacion)
+    public $vinculacion_ruta;
+    public function __construct(persona $persona, vinculacion_ruta $vinculacion_ruta)
     {
-        $this->vinculacion = $vinculacion;
         $this->persona = $persona;
-        $this->organizacion = $organizacion;
+        $this->vinculacion_ruta = $vinculacion_ruta;
     }
 
     /**
@@ -36,6 +33,6 @@ class MasivoWindowsMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.masivoWindows')->subject('RH nube');
+        return $this->view('mails.vinculacionRuta')->subject('RH nube');
     }
 }

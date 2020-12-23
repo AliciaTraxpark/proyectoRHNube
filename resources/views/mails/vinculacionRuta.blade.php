@@ -1,7 +1,7 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
-    style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+    style="width:100%;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
 
 <head>
     <meta charset="UTF-8">
@@ -262,7 +262,7 @@
 </head>
 
 <body
-    style="width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+    style="width:100%;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
     <div class="es-wrapper-color" style="background-color:#FAFAFA">
         <!--[if gte mso 9]>
 			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
@@ -272,7 +272,7 @@
         <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0"
             style="border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top">
             <tr style="border-collapse:collapse">
-                <td valign="top" style="padding:0;Margin:0">
+                <td valign="top" style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa">
                     <table cellpadding="0" cellspacing="0" class="es-header" align="center"
                         style="border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
                         <tr style="border-collapse:collapse">
@@ -283,50 +283,6 @@
                                     <tr style="border-collapse:collapse">
                                         <td style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;background-color:#163552"
                                             bgcolor="#163552" align="left">
-                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left"
-                                                style="border-collapse:collapse;border-spacing:0px;float:left">
-                                                <tr style="border-collapse:collapse">
-                                                    <td class="es-m-p20b" align="left"
-                                                        style="padding:0;Margin:0;width:270px">
-                                                        <table width="100%" cellspacing="0" cellpadding="0"
-                                                            role="presentation"
-                                                            style="border-collapse:collapse;border-spacing:0px">
-                                                            <tr style="border-collapse:collapse">
-                                                                <td class="es-m-p0l es-m-txt-c" align="left"
-                                                                    style="padding:0;Margin:0;font-size:0px"><img
-                                                                        class="adapt-img"
-                                                                        src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png"
-                                                                        style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="193"></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
-                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="esd-container-frame" width="270" align="left"
-                                                            esdev-config="h18">
-                                                            <table width="100%" cellspacing="0" cellpadding="0">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td align="right"
-                                                                            class="esd-block-text es-p40t es-p40b">
-                                                                            <p style="color: #ffffff;">
-                                                                                <strong>{{$organizacion->organi_razonSocial}}
-                                                                                    - {{$organizacion->organi_ruc}}<span
-                                                                                        style="color:#FFFFFF;"></span></strong>
-                                                                            </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
                                         </td>
                                     </tr>
                                 </table>
@@ -353,99 +309,32 @@
                                                             style="border-collapse:collapse;border-spacing:0px">
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
-                                                                    style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px">
+                                                                    style="padding:0;Margin:0;padding-top:5px;padding-bottom:15px;font-size:0px">
                                                                     <img class="adapt-img"
-                                                                        src="https://i.ibb.co/W0Z6grm/teamwork.png" alt
+                                                                        src="https://i.ibb.co/0D1gH0X/RH-MOVIL-2.png"
+                                                                        alt
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                         width="175"></td>
-                                                            </tr>
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">TE DAMOS LA
-                                                                            BIENVENIDA</strong></h1>
-                                                                    <h1
-                                                                        style="Margin:0;line-height:24px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333">
-                                                                        <strong style="color: #163552;">&nbsp;RH
-                                                                            NUBE</strong></h1>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center;text-transform:
-                                                                        uppercase;">
-                                                                        Hola,&nbsp;{{$persona->perso_nombre}}
-                                                                        &nbsp;{{$persona->perso_apPaterno}}&nbsp;
-                                                                        {{$persona->perso_apMaterno}}</strong>
-                                                                </td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="left"
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        Para empezar usar nuestra plataforma, descargue
-                                                                        la aplicación <strong>RHBOX</strong> que se
-                                                                        encuentra disponible en el siguiente enlace.
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                        Hola&nbsp;{{$persona->perso_nombre}} tu codigo
+                                                                        de Modo Ruta es:
+                                                                        <strong>{{$vinculacion_ruta->hash}}</strong>
                                                                     </p>
                                                                 </td>
-                                                            </tr>
-                                                            @foreach($vinculacion as $vinc)
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="Margin:0;padding-left:10px;padding-right:10px;padding-top:40px;padding-bottom:40px">
-                                                                    <span class="es-button-border"
-                                                                        style="border-style:solid;border-color:#163552;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto"><a
-                                                                            href="{{url('download/' . $vinc['descarga'])}}"
-                                                                            class="es-button" target="_blank"
-                                                                            style="text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;color:#163552;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">
-                                                                            DESCARGAR</a></span></td>
                                                             </tr>
                                                             <tr style="border-collapse:collapse">
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px">
                                                                     <strong
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
-                                                                        Activación de Dispositivo</strong>
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        &nbsp;{{$vinc['licencia']['licencia']}}</p>
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666">
+                                                                        Soporte en Perú</strong>
                                                                 </td>
                                                             </tr>
-
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-top:25px;padding-left:40px;padding-right:40px;padding-bottom:40px">
-                                                                    <strong
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666">
-                                                                        Código</strong>
-                                                                    <p
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        &nbsp;{{$vinc['hash']}}</p>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                            <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-left:40px;padding-right:40px">
-                                                                    <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#163552;text-align:center;text-transform:
-                                                                        uppercase;">
-                                                                        Bienvenido y muchas gracias.
-                                                                    </strong>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- <tr style="border-collapse:collapse">
-                                                                <td align="center"
-                                                                    style="padding:0;Margin:0;padding-right:35px;padding-left:40px;padding-bottom:40px">
-                                                                    <strong
-                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color: #163552;text-align:center">
-                                                                        Y no olvides GUARDAR tu código de seguridad.
-                                                                    </strong>
-                                                                </td>
-                                                            </tr> -->
                                                         </table>
                                                     </td>
                                                 </tr>
@@ -464,13 +353,10 @@
                                     align="center"
                                     style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
                                     <tr style="border-collapse:collapse">
-                                        <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
+                                        <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
                                             bgcolor="#ffffff" align="center">
-                                            <a target="_blank">
-                                                <img class="adapt-img"
-                                                src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png" alt
-                                                    style="display: block;" width="150">
-                                            </a>
+                                            <span
+                                                style="font-size: 14px; color: #333333; line-height: 120%;"><span>info@rhnube.com.pe</span></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -484,8 +370,9 @@
                                     <tr style="border-collapse:collapse">
                                         <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
                                             bgcolor="#ffffff" align="center">
-                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>Contáctanos:
-                                                    https://www.rhnube.com.pe | info@rhnube.com.pe</span></h2>
+                                            <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>WhatsApp:
+                                                    +51
+                                                    914 480 786</span></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -500,8 +387,10 @@
                                         <td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#163552;background-position:left top;border-top: 2px solid #ffffff;border-bottom: 2px solid #ffffff"
                                             bgcolor="#163552" align="center">
                                             <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
-                                                    2020 RH nube Corp - USA | Todos los derechos
-                                                    reservados.</span></span>
+                                                    2020 RH nube
+                                                    Corp - USA | Todos los derechos reservados.</span></span>
+                                            <span
+                                                style="font-size: 14px; color: #333333; line-height: 120%;"><span>www.rhnube.com.pe</span></span>
                                         </td>
                                     </tr>
                                 </table>

@@ -413,7 +413,6 @@
     </div>
 </div>
 {{-- FINALIZACION --}}
-
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">

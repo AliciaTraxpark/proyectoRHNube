@@ -16,27 +16,37 @@ function actividad_empleado() {
             if (data != 0) {
                 var container = $("#regtablaBodyTarea");
                 var td = "";
-                for (var $i = 0; $i < data.length; $i++) {
-                    td += `<tr onclick="return RegeditarActE(${data[$i].Activi_id})">
-                    <input type="hidden" id="idActReg${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
-                    <td class="editable" id="tdActReg${data[$i].Activi_id}">${data[$i].Activi_Nombre}</td>`;
-                    if (data[$i].estadoActividadEmpleado == 1) {
-                        if (data[$i].eliminacionActividadEmpleado == 0) {
+                for (var i = 0; i < data.length; i++) {
+                    td += `<tr onclick="return RegeditarActE(${data[i].Activi_id})">
+                    <input type="hidden" id="idActReg${data[i].Activi_id}" value="${data[i].Activi_Nombre}">
+                    <td class="editable" id="tdActReg${data[i].Activi_id}">${data[i].Activi_Nombre}</td>`;
+                    if (data[i].controlRemoto == 1) {
+                        td += `<td class="text-center"><img src="/admin/images/checkH.svg" height="13" class="mr-2">&nbsp;Si</td>`;
+                    } else {
+                        td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
+                    }
+                    if (data[i].controlRuta == 1) {
+                        td += `<td class="text-center"><img src="/admin/images/checkH.svg" height="13" class="mr-2">&nbsp;Si</td>`;
+                    } else {
+                        td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
+                    }
+                    if (data[i].estadoActividadEmpleado == 1) {
+                        if (data[i].eliminacionActividadEmpleado == 0) {
                             td += `<td><div class="custom-control custom-switch">
-                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}" disabled>
-                                <label class="custom-control-label" for="customSwitchActReg${data[$i].Activi_id}"></label>
-                            </div></td><td></td></tr>`;
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}" disabled>
+                                <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
+                            </div></td></tr>`;
                         } else {
                             td += `<td><div class="custom-control custom-switch">
-                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}">
-                                <label class="custom-control-label" for="customSwitchActReg${data[$i].Activi_id}"></label>
-                            </div></td><td></td></tr>`;
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}">
+                                <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
+                            </div></td></tr>`;
                         }
                     } else {
                         td += `<td><div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitchActReg${data[$i].Activi_id}">
-                        <label class="custom-control-label" for="customSwitchActReg${data[$i].Activi_id}"></label>
-                      </div></td><td></td></tr>`;
+                        <input type="checkbox" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}">
+                        <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
+                      </div></td></tr>`;
                     }
                 }
                 container.append(td);
@@ -63,44 +73,53 @@ function actividadEmp() {
                 var container = $("#tablaBodyTarea");
                 var td = "";
                 var valorIn = $('#gestActI').val();
-                console.log('valorIn==' + valorIn);
-                for (var $i = 0; $i < data.length; $i++) {
-                    td += `<tr onclick="return editarActE(${data[$i].Activi_id})">
-                    <input type="hidden" id="idAct${data[$i].Activi_id}" value="${data[$i].Activi_Nombre}">
-                    <td class="editable" id="tdAct${data[$i].Activi_id}">${data[$i].Activi_Nombre}</td>`;
-                    if (data[$i].estadoActividadEmpleado == 1) {
-                        if (data[$i].eliminacionActividadEmpleado == 0) {
+                for (var i = 0; i < data.length; i++) {
+                    td += `<tr onclick="return editarActE(${data[i].Activi_id})">
+                    <input type="hidden" id="idAct${data[i].Activi_id}" value="${data[i].Activi_Nombre}">
+                    <td class="editable" id="tdAct${data[i].Activi_id}">${data[i].Activi_Nombre}</td>`;
+                    if (data[i].controlRemoto == 1) {
+                        td += `<td class="text-center"><img src="/admin/images/checkH.svg" height="13" class="mr-2">&nbsp;Si</td>`;
+                    } else {
+                        td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
+                    }
+                    if (data[i].controlRuta == 1) {
+                        td += `<td class="text-center"><img src="/admin/images/checkH.svg" height="13" class="mr-2">&nbsp;Si</td>`;
+                    } else {
+                        td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
+                    }
+                    if (data[i].estadoActividadEmpleado == 1) {
+                        if (data[i].eliminacionActividadEmpleado == 0) {
                             td += `<td><div class="custom-control custom-switch">
-                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
-                                <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
-                            </div></td><td></td></tr>`;
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}" disabled>
+                                <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
+                            </div></td></tr>`;
                         } else {
                             if (valorIn == 1) {
                                 td += `<td><div class="custom-control custom-switch">
-                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
-                                <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
-                            </div></td><td></td></tr>`;
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}">
+                                <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
+                            </div></td></tr>`;
                             }
                             else {
                                 td += `<td><div class="custom-control custom-switch">
-                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
-                                <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
-                            </div></td><td></td></tr>`;
+                                <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}" disabled>
+                                <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
+                            </div></td></tr>`;
                             }
 
                         }
                     } else {
                         if (valorIn == 1) {
                             td += `<td><div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}">
-                        <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
-                      </div></td><td></td></tr>`;
+                        <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}">
+                        <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
+                      </div></td></tr>`;
                         }
                         else {
                             td += `<td><div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[$i].Activi_id}" disabled>
-                            <label class="custom-control-label" for="customSwitchAct${data[$i].Activi_id}"></label>
-                          </div></td><td></td></tr>`;
+                            <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}" disabled>
+                            <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
+                          </div></td></tr>`;
                         }
                     }
                 }
@@ -127,18 +146,28 @@ function actividadEmpVer() {
             if (data != 0) {
                 var container = $("#tablaBodyTarea_ver");
                 var td = "";
-                for (var $i = 0; $i < data.length; $i++) {
-                    td += `<tr><td>${data[$i].Activi_Nombre}</td>`;
-                    if (data[$i].estadoActividadEmpleado == 1) {
+                for (var i = 0; i < data.length; i++) {
+                    td += `<tr><td>${data[i].Activi_Nombre}</td>`;
+                    if (data[i].controlRemoto == 1) {
+                        td += `<td class="text-center"><img src="/admin/images/checkH.svg" height="13" class="mr-2">&nbsp;Si</td>`;
+                    } else {
+                        td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
+                    }
+                    if (data[i].controlRuta == 1) {
+                        td += `<td class="text-center"><img src="/admin/images/checkH.svg" height="13" class="mr-2">&nbsp;Si</td>`;
+                    } else {
+                        td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
+                    }
+                    if (data[i].estadoActividadEmpleado == 1) {
                         td += `<td><div class="custom-control custom-switch">
-                        <input type="checkbox" checked="" class="custom-control-input" disabled id="customSwitchActV${data[$i].Activi_id}">
-                        <label class="custom-control-label" for="customSwitchActV${data[$i].Activi_id}"></label>
-                      </div></td><td></td></tr>`;
+                        <input type="checkbox" checked="" class="custom-control-input" disabled id="customSwitchActV${data[i].Activi_id}">
+                        <label class="custom-control-label" for="customSwitchActV${data[i].Activi_id}"></label>
+                      </div></td></tr>`;
                     } else {
                         td += `<td><div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" disabled id="customSwitchActV${data[$i].Activi_id}">
-                        <label class="custom-control-label" for="customSwitchActV${data[$i].Activi_id}"></label>
-                      </div></td><td></td></tr>`;
+                        <input type="checkbox" class="custom-control-input" disabled id="customSwitchActV${data[i].Activi_id}">
+                        <label class="custom-control-label" for="customSwitchActV${data[i].Activi_id}"></label>
+                      </div></td></tr>`;
                     }
                 }
                 container.append(td);

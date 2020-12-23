@@ -1152,7 +1152,7 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="card">
-                                        <div class="card-body border p-2">
+                                        <div class="card-body p-2">
                                             <div class="row pt-3">
                                                 <div class="col-xl-12 col-sm-12">
                                                     <div class="table-responsive-sm"
@@ -1162,8 +1162,19 @@
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
+                                                                    <th class="text-center">
+                                                                        <i data-feather="activity"
+                                                                            style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                                                        &nbsp;
+                                                                        Control Remoto
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        <i data-feather="map-pin"
+                                                                            style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                                                        &nbsp;
+                                                                        Control Ruta
+                                                                    </th>
                                                                     <th>Estado</th>
-                                                                    <th>Total</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="tablaBodyTarea_ver"

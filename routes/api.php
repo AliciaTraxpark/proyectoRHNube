@@ -26,34 +26,6 @@ Route::get('/provincia/{id}/niveles', 'registroEmpresaController@distritos');
 
 Route::get('/departamento/{id}/niveles', 'EmpleadoController@provincias');
 Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
-
-Route::get("empleado", "apiController@api");
-Route::post("tarea", "apiController@apiTarea")->middleware('token')->middleware('apilogger');
-Route::post("logueo", "apiController@logueoEmpleado")->middleware('apilogger');
-Route::post("editarTarea", "apiController@editarApiTarea")->middleware('token')->middleware('apilogger');
-Route::post("control", "apiController@control")->middleware('token')->middleware('apilogger');
-Route::post("captura", "apiController@captura")->middleware('token')->middleware('apilogger');
-// PROYECTO
-Route::post("proyecto", "apiController@selectProyecto")->middleware('token')->middleware('apilogger');
-Route::post("agregarProyecto", "apiController@agregarProyecto")->middleware('token')->middleware('apilogger');
-Route::post("editarProyecto", "apiController@editarProyecto")->middleware('token')->middleware('apilogger');
-Route::post("eliminarProyecto", "apiController@cambiarEstadoProyecto")->middleware('token')->middleware('apilogger');
-// ACTIVIDAD
-Route::post("actividad", "apiController@selectActividad")->middleware('token')->middleware('apilogger');
-Route::post("actividadesEliminadas", "apiController@selectActividadEliminada")->middleware('token')->middleware('apilogger');
-Route::post("agregarActividad", "apiController@apiActividad")->middleware('token')->middleware('apilogger');
-Route::post("editarActividad", "apiController@editarApiActividad")->middleware('token')->middleware('apilogger');
-Route::post("editarEstadoActividad", "apiController@editarEstadoApiActividad")->middleware('token')->middleware('apilogger');
-Route::post("eliminarActividad", "apiController@cambiarEstadoActividad")->middleware('token')->middleware('apilogger');
-//HORARIO
-Route::post("horario", "apiController@horario")->middleware('token')->middleware('apilogger');
-Route::post("ultimoHorario", "apiController@ultimoHorario")->middleware('token')->middleware('apilogger');
-///LOGUEO CON CORREO
-Route::post("logueoV", "apiController@verificacion")->middleware('apilogger');
-
-//LICENCIA
-Route::post("licencia", "apiController@licenciaProducto")->middleware('apilogger');
-
 //* SEGUNDA VERSION
 Route::post("logueoV2", "apiVersionDosController@verificacion")->middleware('apilogger');
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');

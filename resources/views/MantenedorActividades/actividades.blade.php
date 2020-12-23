@@ -27,13 +27,6 @@
         width: 100% !important;
     }
 
-
-
-    .dataTables_scrollHeadInner {
-        margin: 0 auto !important;
-        width: 100% !important;
-    }
-
     .form-control:disabled {
         background-color: #fcfcfc;
     }
@@ -130,6 +123,10 @@
 
         .colResponsive {
             width: 50% !important;
+        }
+
+        .groupResp {
+            text-align: left !important;
         }
     }
 </style>
@@ -236,7 +233,8 @@
                                         <input type="checkbox" class="custom-control-input" id="customCR">
                                         <label class="custom-control-label" for="customCR" style="font-weight: bold">
                                             <i data-feather="activity"
-                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
                                             Control Remoto
                                         </label>
                                     </div>
@@ -246,7 +244,8 @@
                                         <input type="checkbox" class="custom-control-input" id="customCRT">
                                         <label class="custom-control-label" for="customCRT" style="font-weight: bold">
                                             <i data-feather="map-pin"
-                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
                                             Control en Ruta
                                         </label>
                                     </div>
@@ -256,7 +255,8 @@
                                         <input type="checkbox" class="custom-control-input" id="customAP">
                                         <label class="custom-control-label" for="customAP" style="font-weight: bold">
                                             <i data-feather="check-circle"
-                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
                                             Asistencia en Puerta
                                         </label>
                                     </div>
@@ -281,7 +281,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right todosColReg aNuevosR">
-                                    <div class="form-group mb-0 mt-3">
+                                    <div class="form-group mb-0 mt-3 groupResp">
                                         <input type="checkbox" id="checkboxEmpleadosReg">
                                         <label for="" class="mb-0">Seleccionar a todos</label>
                                         <div class="float-left mb-0">
@@ -314,7 +314,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right colAreasReg">
-                                    <div class="form-group mb-0 mt-3">
+                                    <div class="form-group mb-0 mt-3 groupResp">
                                         <input type="checkbox" id="checkboxAreasReg">
                                         <label for="" class="mb-0">Seleccionar todos</label>
                                         <div class="float-left mb-0">
@@ -389,7 +389,8 @@
                                         <input type="checkbox" class="custom-control-input" id="e_customCR">
                                         <label class="custom-control-label" for="e_customCR" style="font-weight: bold">
                                             <i data-feather="activity"
-                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
                                             Control Remoto
                                         </label>
                                     </div>
@@ -399,7 +400,8 @@
                                         <input type="checkbox" class="custom-control-input" id="e_customCRT">
                                         <label class="custom-control-label" for="e_customCRT" style="font-weight: bold">
                                             <i data-feather="map-pin"
-                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
                                             Control en Ruta
                                         </label>
                                     </div>
@@ -409,7 +411,8 @@
                                         <input type="checkbox" class="custom-control-input" id="e_customAP">
                                         <label class="custom-control-label" for="e_customAP" style="font-weight: bold">
                                             <i data-feather="check-circle"
-                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>&nbsp;&nbsp;
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
                                             Asistencia en Puerta
                                         </label>
                                     </div>
@@ -434,7 +437,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right todosCol aNuevosE">
-                                    <div class="form-group mb-0 mt-3">
+                                    <div class="form-group mb-0 mt-3 groupResp">
                                         <input type="checkbox" id="checkboxEmpleadosEditar">
                                         <label for="" class="mb-0">Seleccionar a todos</label>
                                         <div class="float-left mb-0">
@@ -466,7 +469,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right colAreas">
-                                    <div class="form-group mb-0 mt-3">
+                                    <div class="form-group mb-0 mt-3 groupResp">
                                         <input type="checkbox" id="checkboxAreasEditar">
                                         <label for="" class="mb-0">Seleccionar todos</label>
                                         <div class="float-left mb-0">

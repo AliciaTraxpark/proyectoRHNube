@@ -43,29 +43,14 @@ class apiSeguimientoRutaContoller extends Controller
             if ($empleado) {
                 $vinculacion_ruta = vinculacion_ruta::where('id', '=', $idVinculacion)->get()->first();
                 if ($vinculacion_ruta) {
-                    if ($vinculacion_ruta->hash == $codigo) {
-                        // * VERIFICAR IMEI O ANDROID ID
-                        if (is_null($vinculacion_ruta->imei_androidID) == true) {
-                            //? GUARDANDO MODELO DE CELULAR
-                            $vinculacion_ruta->modelo = $request->get('modelo');
-                            $vinculacion_ruta->imei_androidID = $request->get('imei_id');
-                            $vinculacion_ruta->save();
-                            // ? GENERANDO TOKEN
-                            $factory = JWTFactory::customClaims([
-                                'sub' => env('API_id'),
-                            ]);
-                            $payload = $factory->make();
-                            $token = JWTAuth::encode($payload);
-                            $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
-                            return response()->json(array(
-                                "corte" => $organizacion->corteCaptura,
-                                "idEmpleado" => $empleado->emple_id,
-                                "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                "idVinculacion" => $vinculacion_ruta->id,
-                                "token" => $token->get()
-                            ), 200);
-                        } else {
-                            if ($vinculacion_ruta->imei_androidID == $request->get('imei_id')) {
+                    if ($vinculacion_ruta->disponible != "i") {
+                        if ($vinculacion_ruta->hash == $codigo) {
+                            // * VERIFICAR IMEI O ANDROID ID
+                            if (is_null($vinculacion_ruta->imei_androidID) == true) {
+                                //? GUARDANDO MODELO DE CELULAR
+                                $vinculacion_ruta->modelo = $request->get('modelo');
+                                $vinculacion_ruta->imei_androidID = $request->get('imei_id');
+                                $vinculacion_ruta->save();
                                 // ? GENERANDO TOKEN
                                 $factory = JWTFactory::customClaims([
                                     'sub' => env('API_id'),
@@ -81,11 +66,30 @@ class apiSeguimientoRutaContoller extends Controller
                                     "token" => $token->get()
                                 ), 200);
                             } else {
-                                return response()->json(array("message" => "imeiId_erroneo"), 400);
+                                if ($vinculacion_ruta->imei_androidID == $request->get('imei_id')) {
+                                    // ? GENERANDO TOKEN
+                                    $factory = JWTFactory::customClaims([
+                                        'sub' => env('API_id'),
+                                    ]);
+                                    $payload = $factory->make();
+                                    $token = JWTAuth::encode($payload);
+                                    $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+                                    return response()->json(array(
+                                        "corte" => $organizacion->corteCaptura,
+                                        "idEmpleado" => $empleado->emple_id,
+                                        "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                        "idVinculacion" => $vinculacion_ruta->id,
+                                        "token" => $token->get()
+                                    ), 200);
+                                } else {
+                                    return response()->json(array("message" => "imeiId_erroneo"), 400);
+                                }
                             }
+                        } else {
+                            return response()->json(array("message" => "codigo_erroneo"), 400);
                         }
                     } else {
-                        return response()->json(array("message" => "codigo_erroneo"), 400);
+                        return response()->json(array("message" => "dispositivo_de_baja"), 400);
                     }
                 } else {
                     return response()->json(array("message" => "sin_dispositivo"), 400);
@@ -224,10 +228,14 @@ class apiSeguimientoRutaContoller extends Controller
             $actividad = DB::table('actividad as a')
                 ->select('a.Activi_id', 'a.Activi_Nombre', 'a.controlRuta')
                 ->where('a.Activi_id', '=', $act->idActividad)
+                ->where('a.controlRuta', '=', 1)
+                ->where('a.estado', '=', 1)
                 ->get()
                 ->first();
-            $actividad->estado = $actividad->controlRuta;
-            array_push($respuesta, $actividad);
+            if ($actividad) {
+                $actividad->estado = $act->estado;
+                array_push($respuesta, $actividad);
+            }
         }
 
         return response()->json($respuesta, 200);
