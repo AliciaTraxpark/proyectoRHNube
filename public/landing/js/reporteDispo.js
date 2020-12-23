@@ -783,7 +783,7 @@ function insertarSalida(idMarca){
 
                 $.notifyClose();
                 $.notify({
-                    message: '\nHora de salida debe ser menor que hora de entrada.',
+                    message: '\nHora de salida debe ser mayor a que hora de entrada.',
                     icon: '/landing/images/alert1.svg',
                 }, {
                     icon_type: 'image',
