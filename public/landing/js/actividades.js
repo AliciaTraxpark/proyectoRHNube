@@ -1,13 +1,13 @@
 $.fn.select2.defaults.set('language', 'es');
+var table;
 function tablaActividades() {
-    $("#actividades").DataTable({
+    table = $("#actividades").DataTable({
         scrollX: true,
         responsive: true,
         retrieve: true,
         "searching": true,
         "lengthChange": true,
         scrollCollapse: false,
-        // "pageLength": 10,
         "bAutoWidth": true,
         language: {
             "sProcessing": "Procesando...",
@@ -422,7 +422,14 @@ function cambiarEstadoActividad(id) {
             });
     });
 }
-
+$(window).on('resize', function () {
+    $("#actividades").css('width', '100%');
+    table.draw(true);
+});
+$("#actividades").on('shown.bs.collapse', function () {
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+});
 //REMOVER CLASES
 $("#nombreTarea").keyup(function () {
     $(this).removeClass("borderColor");
@@ -809,6 +816,7 @@ $('#e_customAA').on("change.bootstrapSwitch", function (event) {
         $('.todosCol').hide();
         $('.colAreas').show();
         limpiarAsignacionPorEmpleado();
+        $('.aNuevosE').hide();
         datosAsignacionPorArea();
     } else {
         $('.colAreas').hide();
@@ -934,7 +942,7 @@ function datosAsignacionPorArea() {
             } else {
                 $('#checkboxAreasEditarTodos').prop("checked", false);
             }
-            if (data[0].noSelect.length === 0) {
+            if (data[0].noSelect.length === 0 && data[0].select.length != 0) {
                 $('#checkboxAreasEditar').prop("checked", true);
             }
         },
@@ -947,8 +955,6 @@ function limpiarAsignacionPorEmpleado() {
     $('#checkboxEmpleadosEditar').prop("checked", false);
     $('#empleados').empty();
     $('#e_customAE').prop("checked", false);
-    $('.aNuevosE').show();
-    $('.aNuevosR').show();
 }
 //: LIMPIAR EN ASIGNACION POR AREAS
 function limpiarAsignacionPorArea() {
