@@ -99,7 +99,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-xl-2 colBtnR" style="margin-right: 5%;">
         <button type="button" class="btn btn-sm pb-2" style="background-color: #163552;"
             onclick="javascript:mostrarGrafica()">

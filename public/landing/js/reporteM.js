@@ -681,11 +681,40 @@ $(function () {
         placeholder: 'Seleccionar áreas'
     });
     $('#empleadoL').select2({
-        placeholder: 'Seleccionar cargos',
+        placeholder: 'Seleccionar empleados',
         language: "es"
     });
     $('#area').on("change", function (e) {
         fechaDefecto();
+        var area = $(this).val();
+        $('#empleadoL').empty();
+        $.ajax({
+            async: false,
+            url: "/empleadosRep",
+            method: "GET",
+            data: {
+                area: area,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                    location.reload();
+                }*/
+            },
+            success: function (data) {
+                var select = "";
+                for (let i = 0; i < data.length; i++) {
+                    select += `<option value="${data[i].emple_id}">${data[i].nombre} ${data[i].apPaterno} ${data[i].apMaterno}</option>`
+                }
+                $('#empleadoL').append(select);
+            },
+            error: function () { }
+        });
     });
     $('#empleadoL').on("change", function (e) {
         fechaDefecto();

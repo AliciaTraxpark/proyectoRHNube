@@ -722,7 +722,6 @@ $(function () {
     });
     $('#area').on("change", function (e) {
         fechaDefecto();
-        console.log($(this).val());
         var area = $(this).val();
         $('#empleadoL').empty();
         $.ajax({
