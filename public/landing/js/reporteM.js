@@ -463,7 +463,7 @@ function conActividadD() {
             momentValue.format("ddd DD/MM");
             // TABLA CON ACTIVIDAD DIARIA
             html_trAD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
-            html_trAD += '<th><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/></th>';
+            html_trAD += '<th class="text-center"><img src="landing/images/velocimetro (1).svg" class="mr-2" height="17"/></th>';
         }
         html_trAD += '<th>TOTAL</th>';
         html_trAD += '<th>ACTIV.</th></tr>';
