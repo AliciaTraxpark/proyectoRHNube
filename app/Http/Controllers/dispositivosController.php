@@ -678,4 +678,21 @@ else{
     }
 
  }
+ public function registrarNEntrada(Request $request){
+    $idMarca=$request->idMarca;
+    $hora=$request->hora;
+    $fecha=$request->fecha;
+    $fecha1 = Carbon::create($fecha);
+
+    $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
+    $fechaSalida=$marcacion_puerta->marcaMov_salida;
+
+    if( $fecha1->gte($fechaSalida)){
+        return 0;
+    } else{
+        $marcacion_puerta->marcaMov_fecha=$fecha1;
+        $marcacion_puerta->save();
+        return 1;
+    }
+ }
 }

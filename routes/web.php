@@ -426,7 +426,7 @@ Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
 Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
 Route::post('/cambiarEntrada', 'dispositivosController@cambiarEntrada');
 Route::post('/cambiarSalida', 'dispositivosController@cambiarSalida');
-
+Route::post('/registrarNEntrada', 'dispositivosController@registrarNEntrada');
 
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');

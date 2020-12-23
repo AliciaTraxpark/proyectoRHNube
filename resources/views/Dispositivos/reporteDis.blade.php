@@ -12,6 +12,11 @@
     type="text/css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
+    {{-- plugin de ALERTIFY --}}
+<link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+<!-- Semantic UI theme -->
+<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -39,6 +44,9 @@
         body {
             background-color: #ffffff;
         }
+        .flatpickr-calendar.static.open{
+        width: 124px!important;
+    }
         .botonsms{
             background-color: #ffffff;
             border-color: #ffffff;
@@ -186,6 +194,7 @@
                             <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar detalles</label>
                         </div>
                     </div>
+
                     {{-- GIF DE ESPERA --}}
                 <div id="espera" class="text-center" style="display: none">
                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
@@ -233,9 +242,13 @@
     <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
     }}"></script>
+
+    <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
+    <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
     <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
+
 @endsection
 
 @section('script-bottom')
