@@ -212,7 +212,7 @@
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table id="actividadD" class="table nowrap"
-                                    style="font-size: 13px!important;width:100%;">
+                                    style="font-size: 13px!important;width:100%;!important">
                                     <thead style="background: #fafafa;" id="diasActvidad" style="width:100%!important">
                                     </thead>
                                     <tbody id="empleadoActividad">
