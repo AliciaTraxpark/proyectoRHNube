@@ -1,16 +1,13 @@
 @extends('layouts.vertical')
 
-
 @section('css')
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 <link href="{{ URL::asset('admin/assets/libs/chart/Chart.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{
-    URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')
-    }}" rel="stylesheet" />
- <meta name="csrf-token" content="{{ csrf_token() }}">
+<link href="{{URL::asset('admin/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('breadcrumb')
@@ -23,20 +20,22 @@
         </div>
     </div>
 </div>
-<div class="row page-title align-items-center">
-</div>
+<div class="row page-title align-items-center"></div>
 @endsection
+{{-- DASHBOARD DE PRIMERA VEZ --}}
 @if ($variable==0)
 @section('content')
-<div class="row">
+<div class="row pb-3">
     <div class="col-md-12  text-center">
-        <a href="{{route('calendario')}}"><button class="boton btn btn-default mr-1"><span
-                    class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                COMIENZA AHORA</button></a>
+        <a href="{{route('calendario')}}">
+            <button class="boton btn btn-default mr-1">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                COMIENZA AHORA
+            </button>
+        </a>
     </div>
 </div>
-<br><br><br>
-<div class="row" style="opacity: 0.3;">
+<div class="row pb-4" style="opacity: 0.3;">
     <div class="col-md-4">
         <canvas id="areaD" height="250" width="250"></canvas>
     </div>
@@ -47,7 +46,6 @@
         <canvas id="contratoD" height="250" width="250"></canvas>
     </div>
 </div>
-<br><br><br>
 <div class="row" style="opacity: 0.3;">
     <div class="col-md-4">
         <canvas id="centroD" height="250" width="250"></canvas>
@@ -64,15 +62,17 @@
 @section('script')
 <script src="{{asset('landing/js/app-menu.js')}}"></script>
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/Chart.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js') }}"></script>
-<!--<script src="{{ URL::asset('admin/assets/libs/chart/chartjs-plugin-piechart-outlabels.js') }}"></script>-->
+<script src="{{URL::asset('admin/assets/libs/chart/Chart.min.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/chart/Chart.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.js')}}"></script>
+<script src="{{URL::asset('admin/assets/libs/chart/chartjs-plugin-datalabels.min.js')}}"></script>
 <script src="{{asset('landing/js/dashboardD.js')}}"></script>
 @endsection
+{{-- FINALIZACION --}}
+{{-- DASHBOARD CON DATOS --}}
 @else
 @section('content')
+{{-- STYLE --}}
 <style>
     .chart-legend li span {
         display: inline-block;
@@ -103,7 +103,9 @@
 
     .chart-card {
         background-color: #ffffff;
-        box-shadow: 1px 1px 10px rgba(87, 87, 87, 0.5);
+        border-radius: 15px;
+        border: 1px solid #dee2e6 !important;
+        box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);
     }
 
     .classic-tabs>ul.nav>li.nav-item>a {
@@ -114,7 +116,6 @@
         color: #85a2b6 !important;
         border-bottom: 2px solid #f1f2f3 !important;
         font-weight: bold !important;
-        /* add background-color to active links */
     }
 
     @media (max-width: 767.98px) {
@@ -134,13 +135,15 @@
         }
     }
 </style>
+{{-- FINALIZACION --}}
 <div class="row justify-content-center ml-3">
+    {{-- CIUDAD DOMICILIARIA --}}
     <div class="col-md-6" id="divdepartamento" style="min-height: 460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Ciudad
-                    domiciliaria
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Ciudad domiciliaria
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaDepartamento"></p>
@@ -153,8 +156,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001D" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002D" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002D" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -172,13 +176,14 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
+    {{-- TIPO DE CONTRATO --}}
     <div class="col-md-6" id="divcontrato" style="min-height: 460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Tipo
-                    de
-                    Contrato
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Tipo de Contrato
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaContrato"></p>
@@ -191,8 +196,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001C" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002C" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002C" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -210,11 +216,14 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
+    {{-- AREAS --}}
     <div class="col-md-6" id="divarea" style="min-height: 460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Área(s)
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Área(s)
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaArea"></p>
@@ -227,8 +236,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001A" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002A" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002A" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -246,13 +256,14 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
+    {{-- RANGOS DE EDADES --}}
     <div class="col-md-6" id="divedades" style="min-height:460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Rangos
-                    de
-                    Edades
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Rangos de Edades
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaEdades"></p>
@@ -265,8 +276,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001E" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002E" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002E" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -284,13 +296,14 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
+    {{-- CENTRO DE COSTOS --}}
     <div class="col-md-6" id="divcentro" style="min-height: 460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Centro
-                    de
-                    Costos
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Centro de Costos
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaCentro"></p>
@@ -303,8 +316,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001CC" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002CC" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002CC" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -322,11 +336,14 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
+    {{-- LOCALES --}}
     <div class="col-md-6" id="divlocal" style="min-height: 460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Local(es)
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Local(es)
                 </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaLocal"></p>
@@ -339,8 +356,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001L" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002L" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002L" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -358,13 +376,15 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
+    {{-- NIVEL DEL COLABORADOR --}}
     <div class="col-md-6" id="divnivel" style="min-height: 460px">
-        <div class="card chart-card">
+        <div class="card border chart-card">
             <div class="card-body pb-0 text-center">
-                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552"><img
-                        src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">Nivel(es)
-                    del
-                    colaborador</h5>
+                <h5 class="card-title font-weight-bold mb-2 mt-2" style="color: #163552">
+                    <img src="{{asset('landing/images/bookmark.svg')}}" height="20" class="mr-2">
+                    Nivel(es) del colaborador
+                </h5>
                 <div class="d-flex justify-content-center">
                     <p class="align-self-end mt-2" id="fechaNivel"></p>
                 </div>
@@ -376,8 +396,9 @@
                         <a class="nav-link active" data-toggle="tab" href="#panel1001N" role="tab">Grafico</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#panel1002N" role="tab">Información
-                            detallada</a>
+                        <a class="nav-link " data-toggle="tab" href="#panel1002N" role="tab">
+                            Información detallada
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content rounded-bottom">
@@ -395,6 +416,7 @@
             </div>
         </div>
     </div>
+    {{-- FINALIZACION --}}
 </div>
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -405,13 +427,15 @@
                 <h4 class="text-danger mt-4">Su sesión expiró</h4>
                 <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
                 <div class="mt-4">
-                    <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
-                            class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
+                    <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md">
+                        <i class="uil uil-arrow-right mr-1"></i>
+                        Iniciar sesión
+                    </a>
                 </div>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 @if (Auth::user())
 <script>
     $(function() {
@@ -430,6 +454,7 @@
 @endif
 @endsection
 @endif
+{{-- FINALIZACION --}}
 @section('script')
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
 <script src="{{asset('landing/js/app-menu.js')}}"></script>
