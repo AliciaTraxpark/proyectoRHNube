@@ -62,6 +62,10 @@
         overflow-y: scroll;
     }
 
+    .datetimepicker table tr td span.active {
+        background-image: linear-gradient(to bottom, #1f4068, #1f4068);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 767.98px) {
         .colBtnR {
@@ -115,9 +119,9 @@
     /* FINALIZACION */
 </style>
 <div class="row justify-content-center p-5">
-    <div class="col-xl-3" style="padding-left: 2%;padding-right: 0%;">
+    <div class="col-xl-4" style="padding-left: 2%;padding-right: 0%;">
         <div class="input-group col-xl-12 colR">
-            <input type="text" id="fechaMensual" class="form-control">
+            <input type="text" id="fechaMensual" class="form-control text-center">
             <div class="input-group-prepend">
                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
             </div>
