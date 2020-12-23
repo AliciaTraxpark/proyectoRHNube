@@ -718,8 +718,9 @@ function sinActividadesDiarias() {
 function changeFecha() {
     dato = $('#fecha').val();
     value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
-    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+    numberWeek = moment(dato, ["YYYY-MM-DD"]).week();
+    firstDate = moment().isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
+    lastDate = moment().isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
     $('#fecha').val(dato);
@@ -771,13 +772,15 @@ $(function () {
 function fechaDefecto() {
     dato = $('#fecha').val();
     value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
-    firstDate = moment(value, 'YYYY-MM-DD').day(1).format('YYYY-MM-DD');
-    lastDate = moment(value, 'YYYY-MM-DD').day(7).format('YYYY-MM-DD');
+    numberWeek = moment(dato, ["YYYY-MM-DD"]).week();
+    firstDate = moment().isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
+    lastDate = moment().isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
     $('#fecha').val(dato);
 }
 function buscarReporte() {
+    console.log("ingreso");
     changeFecha();
     $('#busquedaP').show();
     $('#busquedaA').show();
