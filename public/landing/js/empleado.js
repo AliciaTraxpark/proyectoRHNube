@@ -5324,7 +5324,14 @@ $('#SwitchPausa_ed').change(function (event) {
         $('input[name="descPausa_ed[]"]').prop('required', true);
         $('#InicioPausa_ed').prop('required', true);
         $('#FinPausa_ed').prop('required', true);
+        $('input[name="descPausa_ed[]"]').prop('required', true);
+        $('input[name="InicioPausa_ed[]"]').prop('required', true);
+        $('input[name="FinPausa_ed[]"]').prop('required', true);
         $('#divPausa_ed').show();
+        $('.flatpickr-input[readonly]').on('focus', function () {
+            $(this).blur()
+        })
+        $('.flatpickr-input[readonly]').prop('readonly', false);
     }
     else {
 
@@ -5503,7 +5510,14 @@ $('#SwitchPausa').change(function (event) {
         $('input[name="descPausa[]"]').prop('required', true);
         $('#InicioPausa').prop('required', true);
         $('#FinPausa').prop('required', true);
+        $('input[name="descPausa[]"]').prop('required', true);
+        $('input[name="InicioPausa[]"]').prop('required', true);
+        $('input[name="FinPausa[]"]').prop('required', true);
         $('#divPausa').show();
+        $('.flatpickr-input[readonly]').on('focus', function () {
+            $(this).blur()
+        })
+        $('.flatpickr-input[readonly]').prop('readonly', false);
     }
     else {
 
