@@ -629,8 +629,9 @@ use App\proyecto_empleado;
     }
 
     .flatpickr-calendar {
-        max-width: 90%;
+        max-width: 130px!important;
     }
+
 
     .btn-outline-secondary {
         border-color: #e3eaef;
