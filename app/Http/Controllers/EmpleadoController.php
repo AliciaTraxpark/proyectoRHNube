@@ -274,7 +274,7 @@ class EmpleadoController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->get();
-                dd(DB::getQueryLog());
+               /*  dd(DB::getQueryLog()); */
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                     ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
