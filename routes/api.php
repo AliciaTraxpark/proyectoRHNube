@@ -30,6 +30,7 @@ Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
 Route::post("logueoV2", "apiVersionDosController@verificacion")->middleware('apilogger');
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
+Route::post("capturaSVG", "apiVersionDosController@capturaSVG")->middleware('token')->middleware('apilogger');
 Route::post("capturaArray", "apiVersionDosController@capturaArray")->middleware('token')->middleware('apilogger');
 Route::post("actividad2", "apiVersionDosController@actividad")->middleware('token')->middleware('apilogger');
 Route::get("downloadUpdate", "apiVersionDosController@downloadActualizacion")->middleware('apilogger');

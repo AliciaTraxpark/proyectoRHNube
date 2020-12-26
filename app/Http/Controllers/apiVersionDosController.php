@@ -292,6 +292,148 @@ class apiVersionDosController extends Controller
         }
     }
 
+    public function capturaSVG(Request $request)
+    {
+        //? VALIDACION DE BACKEND
+        $validacion = Validator::make($request->all(), [
+            'idEmpleado' => 'required',
+            'hora_ini' => 'required',
+            'hora_fin' => 'required',
+            'actividad' => 'required',
+            'miniatura' => 'required',
+            'imagen' => 'required',
+            'idActividad' => 'required'
+        ], [
+            'required' => ':attribute es obligatorio'
+        ]);
+        $errores = [];
+        if ($validacion->fails()) {
+            // dd($validacion->errors());
+            if (isset($validacion->failed()['idEmpleado'])) {
+                array_push($errores, array("campo" => 'idEmpleado', "mensaje" => 'idEmpleado es obligatorio'));
+            }
+            if (isset($validacion->failed()['hora_ini'])) {
+                array_push($errores, array("campo" => 'hora_ini', "mensaje" => 'hora_ini es obligatorio'));
+            }
+            if (isset($validacion->failed()['hora_fin'])) {
+                array_push($errores, array("campo" => 'hora_fin', "mensaje" => 'hora_fin es obligatorio'));
+            }
+            if (isset($validacion->failed()['actividad'])) {
+                array_push($errores, array("campo" => 'actividad', "mensaje" => 'actividad es obligatorio'));
+            }
+            if (isset($validacion->failed()['miniatura'])) {
+                array_push($errores, array("campo" => 'miniatura', "mensaje" => 'miniatura es obligatorio'));
+            }
+            if (isset($validacion->failed()['imagen'])) {
+                array_push($errores, array("campo" => 'imagen', "mensaje" => 'imagen es obligatorio'));
+            }
+            if (isset($validacion->failed()['idActividad'])) {
+                array_push($errores, array("campo" => 'idActividad', "mensaje" => 'idActividad es obligatorio'));
+            }
+            return response()->json(array("errores" => $errores), 404);
+        }
+
+        function carpetaImgSVG($miniatura, $idEmpleado, $horaI, $nombre)
+        {
+            $orgCarpeta = DB::table('empleado as e')
+                ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
+                ->select('o.organi_id', 'o.organi_ruc')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()->first();
+            $codigoHashO = $orgCarpeta->organi_id . $orgCarpeta->organi_ruc;
+            $encodeO = intval($codigoHashO, 36);
+            $empCarpeta = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->select('p.perso_id')
+                ->where('e.emple_id', '=', $idEmpleado)
+                ->get()
+                ->first();
+            $codigoHashE = $idEmpleado . "s" . $empCarpeta->perso_id;
+            $encodeE = intval($codigoHashE, 36);
+            $fechaC = Carbon::parse($horaI)->isoFormat('YYYYMMDD');
+            // dd($fechaC);
+            if (!file_exists(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre)) {
+                File::makeDirectory(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre, $mode = 0777, true, true);
+            }
+            $data = $miniatura;
+            $data = str_replace('data:image/svg+xml;base64,', '', $data);
+            $data = str_replace(' ', '+', $data);
+            $path = app_path();
+            $image = base64_decode($data);
+            $fileName =  '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre . '/' . uniqid() . '.svg';
+            $success = file_put_contents($path . $fileName, $image);
+
+            return $fileName;
+        }
+        $capturaBuscar = captura::where("idEmpleado", "=", $request->get('idEmpleado'))
+            ->where('hora_ini', '=', $request->get('hora_ini'))
+            ->where('actividad', '=', $request->get('actividad'))
+            ->get()
+            ->first();
+
+        if ($capturaBuscar) {
+            $nombreM = carpetaImg($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
+            $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
+            $captura_imagen = new captura_imagen();
+            $captura_imagen->idCaptura = $capturaBuscar->idCaptura;
+            $captura_imagen->miniatura = $nombreM;
+            $captura_imagen->imagen = $nombreI;
+            $captura_imagen->save();
+            return response()->json($capturaBuscar, 200);
+        } else {
+            $nombreM = carpetaImg($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
+            $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
+            $captura = new captura();
+            $captura->estado = $request->get('estado');
+            $captura->actividad = $request->get('actividad');
+            $captura->hora_ini = $request->get('hora_ini');
+            $captura->hora_fin = $request->get('hora_fin');
+            $captura->ultimo_acumulado = $request->get('ultimo_acumulado');
+            $captura->acumulador = $request->get('acumulador');
+            $captura->idHorario_dias = $request->get('idHorario_dias');
+            $captura->idActividad = $request->get('idActividad');
+            $captura->idEmpleado = $request->get('idEmpleado');
+            $captura->save();
+
+            $idCaptura = $captura->idCaptura;
+
+            $captura_imagen = new captura_imagen();
+            $captura_imagen->idCaptura = $idCaptura;
+            $captura_imagen->miniatura = $nombreM;
+            $captura_imagen->imagen = $nombreI;
+            $captura_imagen->save();
+
+            $idHorario = $captura->idHorario_dias;
+
+            //  PROMEDIO CAPTURA
+            $capturaRegistrada = captura::where('idCaptura', '=', $idCaptura)->get()->first();
+            $idHorario_dias = $idHorario;
+            //RESTA POR FECHA HORA DE   CAPTURAS
+            $fecha = Carbon::parse($capturaRegistrada->hora_ini);
+            $fecha1 = Carbon::parse($capturaRegistrada->hora_fin);
+            // ACTIVIDAD DE CAPTURA
+            $activ = $capturaRegistrada->actividad;
+            //VALIDACION DE CERO
+            if ($fecha1->gt($fecha)) {
+                //PROMEDIO
+                $totalP = $fecha1->diffInSeconds($fecha);
+                $promedio = floatval($activ / $totalP);
+                $promedioFinal = $promedio * 100;
+                $round = round($promedioFinal, 2);
+            } else {
+                $totalP = 0;
+                $round = 0;
+            }
+            $promedio_captura = new promedio_captura();
+            $promedio_captura->idCaptura = $idCaptura;
+            $promedio_captura->idHorario = $idHorario_dias;
+            $promedio_captura->promedio = $round;
+            $promedio_captura->tiempo_rango = $totalP;
+            $promedio_captura->save();
+            return response()->json($captura, 200);
+        }
+    }
+
     public function capturaArray(Request $request)
     {
         function carpetaImgA($miniatura, $idEmpleado, $horaI, $nombre)
@@ -629,7 +771,7 @@ class apiVersionDosController extends Controller
                             // *****************
                             // VERSION GLOBAL
                             $versionGlobal = DB::table('versionrhbox as vr')
-                                ->select('vr.descripcion','vr.obligatorio')
+                                ->select('vr.descripcion', 'vr.obligatorio')
                                 ->get()
                                 ->first();
                             // **************
