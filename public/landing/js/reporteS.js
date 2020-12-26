@@ -613,43 +613,6 @@ function sinActividadesDiarias() {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     $('c[r=A1] t', sheet).text('RH nube - Reporte Semanal').attr('s', '2');;
                 },
-                excelStyles: [
-                    {
-                        cells: "sA:B",  // Smart select Columns A and B
-                        style: {
-                            fill: {
-                                pattern: {
-                                    color: 'FCDCDC', // Light red color
-                                }
-                            }
-                        }
-                    },
-                    {
-                        cells: "sC:D",  // Smart select Columns C and D
-                        style: {
-                            fill: {
-                                pattern: {
-                                    color: 'E2EFDA', // Light green color
-                                }
-                            }
-                        }
-                    },
-                    {
-                        cells: "sF",   // Smart select Column F
-                        condition: {                         // Add conditional formatting
-                            type: "cellIs",                  // The value of the cell is
-                            operator: "greaterThanOrEqual",  // greater than or equal to
-                            formula: 10000,                 // this amount
-                        },
-                        style: {
-                            fill: {
-                                pattern: {
-                                    bgColor: "F78989" // Brighter red (Note the Excel gotcha - requires bgColor for conditional formatting)
-                                }
-                            }
-                        }
-                    },
-                ],
                 sheetName: 'Reporte Semanal',
                 autoFilter: false
             }, {
