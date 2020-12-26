@@ -535,7 +535,7 @@ function sinActividadesDiarias() {
         var html_trD = "<tr><th>#</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
         for (var i = 0; i < datos.length; i++) {
             html_tr += '<tr><td>' + (i + 1) + '</td><td>' + datos[i].nombre + ' ' + datos[i].apPaterno + ' ' + datos[i].apMaterno + '</td>';
-            nombre.push(datos[i].nombre + " " + datos[i].apPaterno + " " + datos[i].apMaterno);
+            nombre.push(datos[i].nombre.split('')[0] + datos[i].apPaterno.split('')[0] + datos[i].apMaterno.split('')[0]);
             var total = datos[i].horas.reduce(function (a, b) {
                 return sumarHora(a, b);
             });
