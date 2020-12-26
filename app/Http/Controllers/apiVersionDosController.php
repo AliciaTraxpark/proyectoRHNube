@@ -372,8 +372,8 @@ class apiVersionDosController extends Controller
             ->first();
 
         if ($capturaBuscar) {
-            $nombreM = carpetaImg($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
-            $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
+            $nombreM = carpetaImgSVG($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
+            $nombreI = carpetaImgSVG($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
             $captura_imagen = new captura_imagen();
             $captura_imagen->idCaptura = $capturaBuscar->idCaptura;
             $captura_imagen->miniatura = $nombreM;
@@ -381,8 +381,8 @@ class apiVersionDosController extends Controller
             $captura_imagen->save();
             return response()->json($capturaBuscar, 200);
         } else {
-            $nombreM = carpetaImg($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
-            $nombreI = carpetaImg($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
+            $nombreM = carpetaImgSVG($request->get('miniatura'), $request->get('idEmpleado'), $request->get('hora_ini'), 'miniatura');
+            $nombreI = carpetaImgSVG($request->get('imagen'), $request->get('idEmpleado'), $request->get('hora_ini'), 'captura');
             $captura = new captura();
             $captura->estado = $request->get('estado');
             $captura->actividad = $request->get('actividad');
