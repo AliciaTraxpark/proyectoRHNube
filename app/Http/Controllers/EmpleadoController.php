@@ -274,7 +274,7 @@ class EmpleadoController extends Controller
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
                     ->get();
-                dd(DB::getQueryLog());
+               /*  dd(DB::getQueryLog()); */
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                     ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
@@ -2029,7 +2029,7 @@ class EmpleadoController extends Controller
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
         /* dd($datafechaValida); */
         if ($datafechaValida != null || $datafechaValida != []) {
-            return 'Se ha encontrado cruces al asignar los horarios, inténtalo nuevamente';
+            return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
         } else {
             return 'Cambios guardados';
         }

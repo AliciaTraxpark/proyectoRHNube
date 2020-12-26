@@ -5324,7 +5324,14 @@ $('#SwitchPausa_ed').change(function (event) {
         $('input[name="descPausa_ed[]"]').prop('required', true);
         $('#InicioPausa_ed').prop('required', true);
         $('#FinPausa_ed').prop('required', true);
+        $('input[name="descPausa_ed[]"]').prop('required', true);
+        $('input[name="InicioPausa_ed[]"]').prop('required', true);
+        $('input[name="FinPausa_ed[]"]').prop('required', true);
         $('#divPausa_ed').show();
+        $('.flatpickr-input[readonly]').on('focus', function () {
+            $(this).blur()
+        })
+        $('.flatpickr-input[readonly]').prop('readonly', false);
     }
     else {
 
@@ -5371,29 +5378,48 @@ function addField() {
             let horaF = $('#FinPausa_ed' + newID).val();
             let horaI = $('#InicioPausa_ed' + newID).val();
 
-            if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
+            if($('#horaI_ed').val() > $('#horaF_ed').val()){
+                if( horaF<$('#horaI_ed').val() && horaF>$('#horaF_ed').val()){
+                    $('#FinPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango_ed').hide();
+                    if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                        $('#errorenPausas_ed').show();
+                        $('#FinPausa_ed' + newID).val('');
+                    }
+                    else{
+                        $('#errorenPausas_ed').hide();
+                    }
+                 }
+
+                 if (horaI > horaF) {
+                   /*  $('#FinPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation(); */
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+            } else{
+                if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
                 $('#FinPausa_ed' + newID).val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-            } else {
+             } else{
                 $('#fueraRango_ed').hide();
-                if (horaI > horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
+             }
+
+                if (horaF <= horaI) {
+                    $('#FinPausa_ed'+ newID).val('');
                     $('#errorenPausas_ed').show();
-                    $('#FinPausa_ed' + newID).val('');
-                }
-                else {
+                    event.stopPropagation();
+                } else {
                     $('#errorenPausas_ed').hide();
                 }
             }
 
-            if (horaF < horaI) {
-                $('#FinPausa_ed' + newID).val('');
-                $('#errorenPausas_ed').show();
-                event.stopPropagation();
-            } else {
-                $('#errorenPausas_ed').hide();
-            }
-
+            ////////////////////////////////
 
 
         });
@@ -5403,25 +5429,45 @@ function addField() {
             let horaF = $('#FinPausa_ed' + newID).val();
             let horaI = $('#InicioPausa_ed' + newID).val();
             $('#FinPausa_ed' + newID).prop("disabled", false);
-            if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
+            if($('#horaI_ed').val() > $('#horaF_ed').val()){
 
-                $('#InicioPausa_ed' + newID).val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
+                if( horaI<$('#horaI_ed').val() && horaI>$('#horaF_ed').val()){
+                console.log('moostrando fuera rango 11/11');
+                $('#InicioPausa_ed'+ newID).val('');
+                    $('#fueraRango_ed').show();
+
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango_ed').hide();
+                 }
+
+            } else{
+                if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+
+                    $('#InicioPausa_ed'+ newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango_ed').hide();
+                 }
             }
 
-            if (horaF == null || horaF == '') {
 
+            if(horaF==null || horaF==''){
+
+            } else{
+                if($('#horaI_ed').val() < $('#horaF_ed').val()){
+            if (horaF <= horaI) {
+                $('#InicioPausa_ed'+ newID).val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
             } else {
-                if (horaF < horaI) {
-                    $('#InicioPausa_ed' + newID).val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas').hide();
-                }
+                $('#errorenPausas_ed').hide();
+            }
+            } else
+            {
+            $('#errorenPausas_ed').hide();
+            }
             }
 
         });
@@ -5464,7 +5510,14 @@ $('#SwitchPausa').change(function (event) {
         $('input[name="descPausa[]"]').prop('required', true);
         $('#InicioPausa').prop('required', true);
         $('#FinPausa').prop('required', true);
+        $('input[name="descPausa[]"]').prop('required', true);
+        $('input[name="InicioPausa[]"]').prop('required', true);
+        $('input[name="FinPausa[]"]').prop('required', true);
         $('#divPausa').show();
+        $('.flatpickr-input[readonly]').on('focus', function () {
+            $(this).blur()
+        })
+        $('.flatpickr-input[readonly]').prop('readonly', false);
     }
     else {
 
@@ -5511,28 +5564,48 @@ function addFieldRe() {
             let horaF = $('#FinPausa' + newID).val();
             let horaI = $('#InicioPausa' + newID).val();
 
-            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+
+            if($('#horaI').val() > $('#horaF').val()){
+                if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+                    $('#FinPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango').hide();
+                    if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                        $('#errorenPausas').show();
+                        $('#FinPausa' + newID).val('');
+                    }
+                    else{
+                        $('#errorenPausas').hide();
+                    }
+                 }
+
+                 if (horaI > horaF) {
+                   /*  $('#FinPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation(); */
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            } else{
+                if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
                 $('#FinPausa' + newID).val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-            } else {
+             } else{
                 $('#fueraRango').hide();
-                if (horaI > horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
+             }
+
+                if (horaF <= horaI) {
+                    $('#FinPausa'+ newID).val('');
                     $('#errorenPausas').show();
-                    $('#FinPausa' + newID).val('');
-                }
-                else {
+                    event.stopPropagation();
+                } else {
                     $('#errorenPausas').hide();
                 }
             }
 
-            if (horaF < horaI) {
-                $('#FinPausa' + newID).val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
-            } else {
-                $('#errorenPausas').hide();
-            }
 
 
 
@@ -5543,27 +5616,47 @@ function addFieldRe() {
             let horaF = $('#FinPausa' + newID).val();
             let horaI = $('#InicioPausa' + newID).val();
             $('#FinPausa' + newID).prop("disabled", false);
-            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
 
-                $('#InicioPausa' + newID).val('');
-                $('#fueraRango').show();
+            if($('#horaI').val() > $('#horaF').val()){
+
+                if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
+                console.log('moostrando fuera rango 11/11');
+                $('#InicioPausa'+ newID).val('');
+                    $('#fueraRango').show();
+
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango').hide();
+                 }
+
+            } else{
+                if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
+
+                    $('#InicioPausa'+ newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango').hide();
+                 }
+            }
+
+
+            if(horaF==null || horaF==''){
+
+            } else{
+                if($('#horaI').val() < $('#horaF').val()){
+            if (horaF <= horaI) {
+                $('#InicioPausa'+ newID).val('');
+                $('#errorenPausas').show();
                 event.stopPropagation();
             } else {
-                $('#fueraRango').hide();
+                $('#errorenPausas').hide();
             }
-
-            if (horaF == null || horaF == '') {
-
-            } else {
-                if (horaF < horaI) {
-                    $('#InicioPausa' + newID).val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas').hide();
-                }
-            }
-
+        } else
+        {
+            $('#errorenPausas').hide();
+        }
+        }
         });
     });
 
@@ -5831,49 +5924,47 @@ $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if ($('#horaI').val() > $('#horaF').val()) {
-            if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
+        if($('#horaI').val() > $('#horaF').val()){
+            if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
                 $('#FinPausa').val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-            } else {
+             } else{
                 $('#fueraRango').hide();
-                if (horaI > horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
+                if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
                     $('#errorenPausas').show();
                     $('#FinPausa').val('');
                 }
-                else {
+                else{
                     $('#errorenPausas').hide();
                 }
-            }
 
-            if (horaI > horaF) {
-                /*  $('#FinPausa').val('');
-                 $('#errorenPausas').show();
-                 event.stopPropagation(); */
-            } else {
-                $('#errorenPausas').hide();
-            }
-        }
-        else {
-            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
-                $('#FinPausa').val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
-            }
-            if (horaF < horaI) {
-                $('#FinPausa').val('');
+             }
+
+             if (horaI > horaF) {
+               /*  $('#FinPausa').val('');
                 $('#errorenPausas').show();
-                event.stopPropagation();
+                event.stopPropagation(); */
             } else {
                 $('#errorenPausas').hide();
             }
         }
-
-
-
+        else{
+           if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
+            $('#FinPausa').val('');
+            $('#fueraRango').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango').hide();
+         }
+         if (horaF <= horaI) {
+            $('#FinPausa').val('');
+            $('#errorenPausas').show();
+            event.stopPropagation();
+        } else {
+            $('#errorenPausas').hide();
+        }
+        }
 
     });
 });
@@ -5882,33 +5973,34 @@ $(function () {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
         $('#FinPausa').prop("disabled", false);
-        if ($('#horaI').val() > $('#horaF').val()) {
+        if($('#horaI').val() > $('#horaF').val()){
 
-            if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
-                console.log('moostrando fuera rango 11/11');
+            if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
+            console.log('moostrando fuera rango 11/11');
                 $('#InicioPausa').val('');
                 $('#fueraRango').show();
 
                 event.stopPropagation();
-            } else {
+             } else{
                 $('#fueraRango').hide();
-            }
+             }
 
-        } else {
-            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
+        } else
+        {
+            if(horaI<$('#horaI').val() || horaI>$('#horaF').val() ){
 
-                $('#InicioPausa').val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
-            }
+            $('#InicioPausa').val('');
+            $('#fueraRango').show();
+            event.stopPropagation();
+         } else{
+            $('#fueraRango').hide();
+         }
         }
 
-        console.log(horaF);
-        if (horaF == null || horaF == '') {
-            var horafinal1 = $('#horaF').val();
-            splih1 = horafinal1.split(":");
+         console.log(horaF);
+         if(horaF==null || horaF==''){
+            var horafinal1=$('#horaF').val();
+            splih1=horafinal1.split(":");
             console.log(splih1[0]);
             console.log('nada me da');
             $('#FinPausa').val('').flatpickr({
@@ -5916,25 +6008,30 @@ $(function () {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour: splih1[0]
+                defaultHour:splih1[0]
             });
 
-        }
-        else {
+         }
+         else{
             console.log('secumple');
-            if ($('#horaI').val() < $('#horaF').val()) {
-                if (horaF < horaI) {
-                    $('#InicioPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas').hide();
-                }
+            if($('#horaI').val() < $('#horaF').val()){
+            if (horaF <= horaI) {
+                $('#InicioPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
             } else {
                 $('#errorenPausas').hide();
             }
+        } else
+        {
+            $('#errorenPausas').hide();
         }
+         }
 
+         $('#FinPausa').on('focus', function () {
+            $(this).blur();
+        })
+        $('#FinPausa').removeAttr("readonly");
 
     });
 });
@@ -5944,27 +6041,49 @@ $(function () {
     $(document).on('change', '#FinPausa_ed', function (event) {
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
-        if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
-            $('#FinPausa_ed').val('');
-            $('#fueraRango_ed').show();
-            event.stopPropagation();
-        } else {
-            $('#fueraRango_ed').hide();
-            if (horaI > horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
-                $('#errorenPausas_ed').show();
-                $('#FinPausa_ed').val('');
+
+        if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+            if (horaF < $("#horaI_ed").val() && horaF > $("#horaF_ed").val()) {
+              $("#FinPausa_ed").val("");
+              $("#fueraRango_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+              if (
+                horaI >= horaF &&
+                horaF <= $("#horaI_ed").val() &&
+                horaF > $("#horaF_ed").val()
+              ) {
+                $("#errorenPausas_ed").show();
+                $("#FinPausa_ed").val("");
+              } else {
+                $("#errorenPausas_ed").hide();
+              }
             }
-            else {
-                $('#errorenPausas_ed').hide();
+
+            if (horaI > horaF) {
+              /*  $('#FinPausa').val('');
+                  $('#errorenPausas').show();
+                  event.stopPropagation(); */
+            } else {
+              $("#errorenPausas_ed").hide();
             }
-        }
-        if (horaF < horaI) {
-            $('#FinPausa_ed').val('');
-            $('#errorenPausas_ed').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas_ed').hide();
-        }
+          } else {
+            if (horaF < $("#horaI_ed").val() || horaF > $("#horaF_ed").val()) {
+              $("#FinPausa_ed").val("");
+              $("#fueraRango_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+            }
+            if (horaF <= horaI) {
+              $("#FinPausa_ed").val("");
+              $("#errorenPausas_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#errorenPausas_ed").hide();
+            }
+          }
 
 
     });
@@ -5974,39 +6093,59 @@ $(function () {
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
         $('#FinPausa_ed').prop("disabled", false);
-        if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
+        if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+            if (horaI < $("#horaI_ed").val() && horaI > $("#horaF_ed").val()) {
+              console.log("moostrando fuera rango 11/11");
+              $("#InicioPausa_ed").val("");
+              $("#fueraRango_ed").show();
 
-            $('#InicioPausa_ed').val('');
-            $('#fueraRango_ed').show();
-            event.stopPropagation();
-        } else {
-            $('#fueraRango_ed').hide();
-        }
-        console.log(horaF);
-        if (horaF == null || horaF == '') {
-            var horafinal1 = $('#horaF_ed').val();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+            }
+          } else {
+            if (horaI < $("#horaI_ed").val() || horaI > $("#horaF_ed").val()) {
+              $("#InicioPausa_ed").val("");
+              $("#fueraRango_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+            }
+          }
+
+          console.log(horaF);
+          if (horaF == null || horaF == "") {
+            var horafinal1 = $("#horaF_ed").val();
             splih1 = horafinal1.split(":");
             console.log(splih1[0]);
-            console.log('nada me da');
-            $('#FinPausa_ed').val('').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                defaultHour: splih1[0]
+            console.log("nada me da");
+            $("#FinPausa_ed").val("").flatpickr({
+              enableTime: true,
+              noCalendar: true,
+              dateFormat: "H:i",
+              time_24hr: true,
+              defaultHour: splih1[0],
             });
-
-        }
-        else {
-            console.log('secumple');
-            if (horaF < horaI) {
-                $('#InicioPausa_ed').val('');
-                $('#errorenPausas_ed').show();
+          } else {
+            console.log("secumple");
+            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+              if (horaF <= horaI) {
+                $("#InicioPausa_ed").val("");
+                $("#errorenPausas_ed").show();
                 event.stopPropagation();
+              } else {
+                $("#errorenPausas_ed").hide();
+              }
             } else {
-                $('#errorenPausas_ed').hide();
+              $("#errorenPausas_ed").hide();
             }
-        }
+          }
+
+          $("#FinPausa_ed").on("focus", function () {
+            $(this).blur();
+          });
+          $("#FinPausa_ed").removeAttr("readonly");
+
 
 
     });
