@@ -159,7 +159,6 @@ function reporteEmpleado() {
                 // ? DATOS DE CAPTURA PARA LA TABLA 
                 var html_tr = '';
                 for (var i = 0; i < data.captura.length; i++) {
-                    html_tr += '<tr><td class="text-center">' + data.captura[i].idCaptura + '</td>';
                     html_tr += '<td class="text-center">' + data.captura[i].hora_ini + '</td>';
                     html_tr += '<td class="text-center">' + data.captura[i].hora_fin + '</td>';
                     if (data.captura[i].horario === '0') {
