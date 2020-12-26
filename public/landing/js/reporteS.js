@@ -410,7 +410,15 @@ function conActividadesDiarias() {
                     distributed: true
                 }
             },
-            colors: ['#00005c'],
+            colors: [function ({ value, seriesIndex, w }) {
+                if (value >= 50) {
+                    return '#81b214'
+                } else if (value > 35 && value < 50) {
+                    return '#f3c623'
+                } else {
+                    return '#FF0000'
+                }
+            }],
             dataLabels: {
                 enabled: false
             },
@@ -527,7 +535,7 @@ function sinActividadesDiarias() {
         var html_trD = "<tr><th>#</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
         for (var i = 0; i < datos.length; i++) {
             html_tr += '<tr><td>' + (i + 1) + '</td><td>' + datos[i].nombre + ' ' + datos[i].apPaterno + ' ' + datos[i].apMaterno + '</td>';
-            nombre.push(datos[i].nombre.split('')[0] + datos[i].apPaterno.split('')[0] + datos[i].apMaterno.split('')[0]);
+            nombre.push(datos[i].nombre + " " + datos[i].apPaterno + " " + datos[i].apMaterno);
             var total = datos[i].horas.reduce(function (a, b) {
                 return sumarHora(a, b);
             });
@@ -722,7 +730,15 @@ function sinActividadesDiarias() {
                     distributed: true
                 }
             },
-            colors: ['#00005c'],
+            colors: [function ({ value, seriesIndex, w }) {
+                if (value >= 50) {
+                    return '#81b214'
+                } else if (value > 35 && value < 50) {
+                    return '#f3c623'
+                } else {
+                    return '#FF0000'
+                }
+            }],
             dataLabels: {
                 enabled: false
             },
