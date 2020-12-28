@@ -1120,6 +1120,7 @@ async function confirmarBajaHistorial() {
                 $('#form-ver').modal('show');
                 historialEmp();
             } else {
+                historialEmp();
                 $('#alertFechaBaja').empty();
                 var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
                                 <span style="font-size: 14px;">Su fecha de baja debe ser mayor a la fecha de alta de su contrato ${moment(data.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
@@ -1794,6 +1795,7 @@ async function confirmarBajaHistorialReg() {
                 $('#form-registrar').modal('show');
                 historialEmpReg();
             } else {
+                historialEmpReg();
                 $('#alertFechaBajaReg').empty();
                 var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
                                 <span style="font-size: 14px;">Su fecha de baja debe ser mayor a la fecha de alta de su contrato ${moment(data.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
