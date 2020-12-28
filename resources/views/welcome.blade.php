@@ -284,8 +284,8 @@
                             </p>
                             <div class="row justify-content-center">
                                 <div class="col-md-8 text-right btnResp">
-                                    <a {{-- href="{{route('registroPersona')}} " --}}>
-                                        <button onclick=" $('#modal-error').modal('show')" 
+                                    <a href="{{route('registroPersona')}} " >
+                                        <button {{-- onclick=" $('#modal-error').modal('show')"  --}}
                                             class="btn btn-opacity-comienza mr-1">Crear mi cuenta
                                         </button>
                                     </a>
