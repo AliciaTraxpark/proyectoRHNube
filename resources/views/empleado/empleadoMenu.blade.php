@@ -1749,6 +1749,8 @@ use App\proyecto_empleado;
                                 <span id="m_validFechaC" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
+                                <div class="alert alert-danger" role="alert" style="display: none;"
+                                    id="alertErrorFechaReg"></div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fecha" id="m_dia_fecha" required="">
@@ -1759,20 +1761,20 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <select class="form-control" name="m_mes_fecha" id="m_mes_fecha" required="">
+                                        <select class="form-control" name="m_mes_fecha" id="m_mes_fecha" required>
                                             <option value="0">Mes</option>
-                                            <option class="" value="1">Ene.</option>
-                                            <option class="" value="2">Feb.</option>
-                                            <option class="" value="3">Mar.</option>
-                                            <option class="" value="4">Abr.</option>
-                                            <option class="" value="5">May.</option>
-                                            <option class="" value="6">Jun.</option>
-                                            <option class="" value="7">Jul.</option>
-                                            <option class="" value="8">Ago.</option>
-                                            <option class="" value="9">Set.</option>
-                                            <option class="" value="10">Oct.</option>
-                                            <option class="" value="11">Nov.</option>
-                                            <option class="" value="12">Dic.</option>
+                                            <option class="" value="1">Enero</option>
+                                            <option class="" value="2">Febrero</option>
+                                            <option class="" value="3">Marzo</option>
+                                            <option class="" value="4">Abril</option>
+                                            <option class="" value="5">Mayo</option>
+                                            <option class="" value="6">Junio</option>
+                                            <option class="" value="7">Julio</option>
+                                            <option class="" value="8">Agosto</option>
+                                            <option class="" value="9">Septiembre</option>
+                                            <option class="" value="10">Octubre</option>
+                                            <option class="" value="11">Noviembre</option>
+                                            <option class="" value="12">Diciembre</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
@@ -1830,21 +1832,20 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select class="form-control" name="mf_mes_fecha" id="mf_mes_fecha"
-                                                required="">
+                                            <select class="form-control" name="mf_mes_fecha" id="mf_mes_fecha" required>
                                                 <option value="0">Mes</option>
-                                                <option class="" value="1">Ene.</option>
-                                                <option class="" value="2">Feb.</option>
-                                                <option class="" value="3">Mar.</option>
-                                                <option class="" value="4">Abr.</option>
-                                                <option class="" value="5">May.</option>
-                                                <option class="" value="6">Jun.</option>
-                                                <option class="" value="7">Jul.</option>
-                                                <option class="" value="8">Ago.</option>
-                                                <option class="" value="9">Set.</option>
-                                                <option class="" value="10">Oct.</option>
-                                                <option class="" value="11">Nov.</option>
-                                                <option class="" value="12">Dic.</option>
+                                                <option class="" value="1">Enero</option>
+                                                <option class="" value="2">Febrero</option>
+                                                <option class="" value="3">Marzo</option>
+                                                <option class="" value="4">Abril</option>
+                                                <option class="" value="5">Mayo</option>
+                                                <option class="" value="6">Junio</option>
+                                                <option class="" value="7">Julio</option>
+                                                <option class="" value="8">Agosto</option>
+                                                <option class="" value="9">Septiembre</option>
+                                                <option class="" value="10">Octubre</option>
+                                                <option class="" value="11">Noviembre</option>
+                                                <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -1935,7 +1936,7 @@ use App\proyecto_empleado;
                                     <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                         style="cursor: pointer">
                                         <span class="badge badge-soft-primary text-primary">
-                                            <i class="uil-file-plus-alt font-size-18"></i>
+                                            <i class="uil-file-alt font-size-18"></i>
                                             &nbsp;
                                             Documentos
                                         </span>
@@ -1958,6 +1959,8 @@ use App\proyecto_empleado;
                                 <span id="m_validFechaCD" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
+                                <div class="alert alert-danger" role="alert" style="display: none;"
+                                    id="alertErrorFechaDetalleReg"></div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD" required>
@@ -1970,18 +1973,18 @@ use App\proyecto_empleado;
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_mes_fechaD" id="m_mes_fechaD" required>
                                             <option value="0">Mes</option>
-                                            <option class="" value="1">Ene.</option>
-                                            <option class="" value="2">Feb.</option>
-                                            <option class="" value="3">Mar.</option>
-                                            <option class="" value="4">Abr.</option>
-                                            <option class="" value="5">May.</option>
-                                            <option class="" value="6">Jun.</option>
-                                            <option class="" value="7">Jul.</option>
-                                            <option class="" value="8">Ago.</option>
-                                            <option class="" value="9">Set.</option>
-                                            <option class="" value="10">Oct.</option>
-                                            <option class="" value="11">Nov.</option>
-                                            <option class="" value="12">Dic.</option>
+                                            <option class="" value="1">Enero</option>
+                                            <option class="" value="2">Febrero</option>
+                                            <option class="" value="3">Marzo</option>
+                                            <option class="" value="4">Abril</option>
+                                            <option class="" value="5">Mayo</option>
+                                            <option class="" value="6">Junio</option>
+                                            <option class="" value="7">Julio</option>
+                                            <option class="" value="8">Agosto</option>
+                                            <option class="" value="9">Septiembre</option>
+                                            <option class="" value="10">Octubre</option>
+                                            <option class="" value="11">Noviembre</option>
+                                            <option class="" value="12">Diciembre</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
@@ -2043,18 +2046,18 @@ use App\proyecto_empleado;
                                             <select class="form-control" name="mf_mes_fechaD" id="mf_mes_fechaD"
                                                 required>
                                                 <option value="0">Mes</option>
-                                                <option class="" value="1">Ene.</option>
-                                                <option class="" value="2">Feb.</option>
-                                                <option class="" value="3">Mar.</option>
-                                                <option class="" value="4">Abr.</option>
-                                                <option class="" value="5">May.</option>
-                                                <option class="" value="6">Jun.</option>
-                                                <option class="" value="7">Jul.</option>
-                                                <option class="" value="8">Ago.</option>
-                                                <option class="" value="9">Set.</option>
-                                                <option class="" value="10">Oct.</option>
-                                                <option class="" value="11">Nov.</option>
-                                                <option class="" value="12">Dic.</option>
+                                                <option class="" value="1">Enero</option>
+                                                <option class="" value="2">Febrero</option>
+                                                <option class="" value="3">Marzo</option>
+                                                <option class="" value="4">Abril</option>
+                                                <option class="" value="5">Mayo</option>
+                                                <option class="" value="6">Junio</option>
+                                                <option class="" value="7">Julio</option>
+                                                <option class="" value="8">Agosto</option>
+                                                <option class="" value="9">Septiembre</option>
+                                                <option class="" value="10">Octubre</option>
+                                                <option class="" value="11">Noviembre</option>
+                                                <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -2415,7 +2418,7 @@ use App\proyecto_empleado;
                                     <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                         style="cursor: pointer">
                                         <span class="badge badge-soft-primary text-primary">
-                                            <i class="uil-file-plus-alt font-size-18"></i>
+                                            <i class="uil-file-alt font-size-18"></i>
                                             &nbsp;
                                             Documentos
                                         </span>
@@ -2458,8 +2461,11 @@ use App\proyecto_empleado;
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                        <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
-                                            incorrecta.</span>
+                                        <span id="m_validFechaCIE" style="color: red;display: none;">
+                                            *Fecha incorrecta.
+                                        </span>
+                                        <div class="alert alert-danger" role="alert" style="display: none;"
+                                            id="alertErrorFecha"></div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
@@ -2473,20 +2479,20 @@ use App\proyecto_empleado;
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_mes_fechaIE" id="m_mes_fechaIE"
-                                                    required="">
+                                                    required>
                                                     <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
+                                                    <option class="" value="1">Enero</option>
+                                                    <option class="" value="2">Febrero</option>
+                                                    <option class="" value="3">Marzo</option>
+                                                    <option class="" value="4">Abril</option>
+                                                    <option class="" value="5">Mayo</option>
+                                                    <option class="" value="6">Junio</option>
+                                                    <option class="" value="7">Julio</option>
+                                                    <option class="" value="8">Agosto</option>
+                                                    <option class="" value="9">Septiembre</option>
+                                                    <option class="" value="10">Octubre</option>
+                                                    <option class="" value="11">Noviembre</option>
+                                                    <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -2551,18 +2557,18 @@ use App\proyecto_empleado;
                                                     <select class="form-control" name="m_mes_fechaFE"
                                                         id="m_mes_fechaFE">
                                                         <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
+                                                        <option class="" value="1">Enero</option>
+                                                        <option class="" value="2">Febrero</option>
+                                                        <option class="" value="3">Marzo</option>
+                                                        <option class="" value="4">Abril</option>
+                                                        <option class="" value="5">Mayo</option>
+                                                        <option class="" value="6">Junio</option>
+                                                        <option class="" value="7">Julio</option>
+                                                        <option class="" value="8">Agosto</option>
+                                                        <option class="" value="9">Septiembre</option>
+                                                        <option class="" value="10">Octubre</option>
+                                                        <option class="" value="11">Noviembre</option>
+                                                        <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -2664,6 +2670,8 @@ use App\proyecto_empleado;
                                         <label for="" style="font-weight: 600">Fecha Inicial</label>
                                         <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
+                                        <div class="alert alert-danger" role="alert" style="display: none;"
+                                            id="alertErrorFechaAlta"></div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_dia_fechaIEN" id="m_dia_fechaIEN"
@@ -2677,20 +2685,20 @@ use App\proyecto_empleado;
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_mes_fechaIEN" id="m_mes_fechaIEN"
-                                                    required="">
+                                                    required>
                                                     <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
+                                                    <option class="" value="1">Enero</option>
+                                                    <option class="" value="2">Febrero</option>
+                                                    <option class="" value="3">Marzo</option>
+                                                    <option class="" value="4">Abril</option>
+                                                    <option class="" value="5">Mayo</option>
+                                                    <option class="" value="6">Junio</option>
+                                                    <option class="" value="7">Julio</option>
+                                                    <option class="" value="8">Agosto</option>
+                                                    <option class="" value="9">Septiembre</option>
+                                                    <option class="" value="10">Octubre</option>
+                                                    <option class="" value="11">Noviembre</option>
+                                                    <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -2754,18 +2762,18 @@ use App\proyecto_empleado;
                                                     <select class="form-control" name="m_mes_fechaFEN"
                                                         id="m_mes_fechaFEN">
                                                         <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
+                                                        <option class="" value="1">Enero</option>
+                                                        <option class="" value="2">Febrero</option>
+                                                        <option class="" value="3">Marzo</option>
+                                                        <option class="" value="4">Abril</option>
+                                                        <option class="" value="5">Mayo</option>
+                                                        <option class="" value="6">Junio</option>
+                                                        <option class="" value="7">Julio</option>
+                                                        <option class="" value="8">Agosto</option>
+                                                        <option class="" value="9">Septiembre</option>
+                                                        <option class="" value="10">Octubre</option>
+                                                        <option class="" value="11">Noviembre</option>
+                                                        <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -2884,20 +2892,20 @@ use App\proyecto_empleado;
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_mes_fechaIEND" id="m_mes_fechaIEND"
-                                                    required="">
+                                                    required>
                                                     <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
+                                                    <option class="" value="1">Enero</option>
+                                                    <option class="" value="2">Febrero</option>
+                                                    <option class="" value="3">Marzo</option>
+                                                    <option class="" value="4">Abril</option>
+                                                    <option class="" value="5">Mayo</option>
+                                                    <option class="" value="6">Junio</option>
+                                                    <option class="" value="7">Julio</option>
+                                                    <option class="" value="8">Agosto</option>
+                                                    <option class="" value="9">Septiembre</option>
+                                                    <option class="" value="10">Octubre</option>
+                                                    <option class="" value="11">Noviembre</option>
+                                                    <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -2961,18 +2969,18 @@ use App\proyecto_empleado;
                                                     <select class="form-control" name="m_mes_fechaFEND"
                                                         id="m_mes_fechaFEND">
                                                         <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
+                                                        <option class="" value="1">Enero</option>
+                                                        <option class="" value="2">Febrero</option>
+                                                        <option class="" value="3">Marzo</option>
+                                                        <option class="" value="4">Abril</option>
+                                                        <option class="" value="5">Mayo</option>
+                                                        <option class="" value="6">Junio</option>
+                                                        <option class="" value="7">Julio</option>
+                                                        <option class="" value="8">Agosto</option>
+                                                        <option class="" value="9">Septiembre</option>
+                                                        <option class="" value="10">Octubre</option>
+                                                        <option class="" value="11">Noviembre</option>
+                                                        <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -3075,18 +3083,18 @@ use App\proyecto_empleado;
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_mes_fechaIEV" id="m_mes_fechaIEV" disabled>
                                             <option value="0">Mes</option>
-                                            <option class="" value="1">Ene.</option>
-                                            <option class="" value="2">Feb.</option>
-                                            <option class="" value="3">Mar.</option>
-                                            <option class="" value="4">Abr.</option>
-                                            <option class="" value="5">May.</option>
-                                            <option class="" value="6">Jun.</option>
-                                            <option class="" value="7">Jul.</option>
-                                            <option class="" value="8">Ago.</option>
-                                            <option class="" value="9">Set.</option>
-                                            <option class="" value="10">Oct.</option>
-                                            <option class="" value="11">Nov.</option>
-                                            <option class="" value="12">Dic.</option>
+                                            <option class="" value="1">Enero</option>
+                                            <option class="" value="2">Febrero</option>
+                                            <option class="" value="3">Marzo</option>
+                                            <option class="" value="4">Abril</option>
+                                            <option class="" value="5">Mayo</option>
+                                            <option class="" value="6">Junio</option>
+                                            <option class="" value="7">Julio</option>
+                                            <option class="" value="8">Agosto</option>
+                                            <option class="" value="9">Septiembre</option>
+                                            <option class="" value="10">Octubre</option>
+                                            <option class="" value="11">Noviembre</option>
+                                            <option class="" value="12">Diciembre</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
@@ -3124,18 +3132,18 @@ use App\proyecto_empleado;
                                             <select class="form-control" name="m_mes_fechaFEV" id="m_mes_fechaFEV"
                                                 disabled>
                                                 <option value="0">Mes</option>
-                                                <option class="" value="1">Ene.</option>
-                                                <option class="" value="2">Feb.</option>
-                                                <option class="" value="3">Mar.</option>
-                                                <option class="" value="4">Abr.</option>
-                                                <option class="" value="5">May.</option>
-                                                <option class="" value="6">Jun.</option>
-                                                <option class="" value="7">Jul.</option>
-                                                <option class="" value="8">Ago.</option>
-                                                <option class="" value="9">Set.</option>
-                                                <option class="" value="10">Oct.</option>
-                                                <option class="" value="11">Nov.</option>
-                                                <option class="" value="12">Dic.</option>
+                                                <option class="" value="1">Enero</option>
+                                                <option class="" value="2">Febrero</option>
+                                                <option class="" value="3">Marzo</option>
+                                                <option class="" value="4">Abril</option>
+                                                <option class="" value="5">Mayo</option>
+                                                <option class="" value="6">Junio</option>
+                                                <option class="" value="7">Julio</option>
+                                                <option class="" value="8">Agosto</option>
+                                                <option class="" value="9">Septiembre</option>
+                                                <option class="" value="10">Octubre</option>
+                                                <option class="" value="11">Noviembre</option>
+                                                <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -6209,6 +6217,7 @@ document.getElementsByName("editarEName").remove();
 
 
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 
 <script src="{{ asset('admin/packages/core/main.js') }}"></script>
 <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>

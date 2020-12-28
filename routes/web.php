@@ -185,6 +185,8 @@ Route::post('/nuevaAlta', 'contratoController@nuevaAlta');
 Route::post('/eliminarHistorialC', 'contratoController@eliminarContrato');
 Route::post('/dataHistorialE', 'contratoController@dataHistorialEmpleado');
 Route::post('/nuevoDC', 'contratoController@nuevoDetalleC');
+Route::post('/validFechaDetalle', 'contratoController@validacionFechaInicioDetalle');
+Route::post('/validFechaAlta', 'contratoController@validacionFechaInicio');
 //TAREAS
 Route::get('/tareas', 'ControlController@index');
 Route::get('/tareas/show', 'ControlController@show');

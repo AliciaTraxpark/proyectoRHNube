@@ -220,4 +220,32 @@ class contratoController extends Controller
 
         return response()->json($idContrato, 200);
     }
+
+    //* VALIDACION DE FECHA DE INICIO DE CONTRATO EN DETALLES DE CONTRATO
+    public function validacionFechaInicioDetalle(Request $request)
+    {
+        $idContrato = $request->get('contrato');
+        $respuesta = [];
+
+        $contrato = contrato::where('id', '=', $idContrato)->get()->first();
+        //* BUSCAR CONTRATO MENOR
+        $contratoMenor = contrato::select('fechaFinal')->where('id', '<', $idContrato)->where('idEmpleado', '=', $contrato->idEmpleado)->orderBy('id', 'desc')->get()->first();
+        if ($contratoMenor) {
+            array_push($respuesta, $contratoMenor);
+        }
+
+        return response()->json($respuesta, 200);
+    }
+
+    //* VALIDACION DE FECHA DE INICIO EN NUEVA ALTA
+    public function validacionFechaInicio(Request $request)
+    {
+        $idEmpleado = $request->get('empleado');
+        $respuesta = [];
+        $ultimoContrato = contrato::select('fechaFinal')->where('idEmpleado', '=', $idEmpleado)->orderBy('id', 'desc')->get()->first();
+        if ($ultimoContrato) {
+            array_push($respuesta, $ultimoContrato);
+        }
+        return response()->json($respuesta, 200);
+    }
 }

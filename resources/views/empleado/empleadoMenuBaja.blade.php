@@ -840,28 +840,6 @@
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
                 <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:cerrarVer()">
-                    @if (isset($modifEmp))
-                    @if ($modifEmp==1)
-                    <span class="badge float-left pr-4 pt-0">
-                        <a style="color: #f0f0f0"
-                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                            <span style="font-weight: bold">Editar Empleado</span>
-                        </a>
-                    </span>
-                    @else
-
-                    @endif
-                    @else
-                    <span class="badge float-left pr-4 pt-0">
-                        <a style="color: #f0f0f0"
-                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                            <span style="font-weight: bold">Editar Empleado</span>
-                        </a>
-                    </span>
-                    @endif
-
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1371,8 +1349,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                    <span id="validFechaCIB" style="color: red;display: none;">*Fecha
-                                        incorrecta.</span>
+                                    <span id="validFechaCIB" style="color: red;display: none;">
+                                        *Fecha incorrecta.
+                                    </span>
+                                    <div class="alert alert-danger" role="alert" style="display: none;"
+                                        id="alertErrorFechaAlta"></div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select class="form-control" name="m_dia_fechaIB" id="m_dia_fechaIB"
@@ -1388,18 +1369,18 @@
                                             <select class="form-control" name="m_mes_fechaIB" id="m_mes_fechaIB"
                                                 required>
                                                 <option value="0">Mes</option>
-                                                <option class="" value="1">Ene.</option>
-                                                <option class="" value="2">Feb.</option>
-                                                <option class="" value="3">Mar.</option>
-                                                <option class="" value="4">Abr.</option>
-                                                <option class="" value="5">May.</option>
-                                                <option class="" value="6">Jun.</option>
-                                                <option class="" value="7">Jul.</option>
-                                                <option class="" value="8">Ago.</option>
-                                                <option class="" value="9">Set.</option>
-                                                <option class="" value="10">Oct.</option>
-                                                <option class="" value="11">Nov.</option>
-                                                <option class="" value="12">Dic.</option>
+                                                <option class="" value="1">Enero</option>
+                                                <option class="" value="2">Febrero</option>
+                                                <option class="" value="3">Marzo</option>
+                                                <option class="" value="4">Abril</option>
+                                                <option class="" value="5">Mayo</option>
+                                                <option class="" value="6">Junio</option>
+                                                <option class="" value="7">Julio</option>
+                                                <option class="" value="8">Agosto</option>
+                                                <option class="" value="9">Septiembre</option>
+                                                <option class="" value="10">Octubre</option>
+                                                <option class="" value="11">Noviembre</option>
+                                                <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -1459,18 +1440,18 @@
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_mes_fechaFB" id="m_mes_fechaFB">
                                                     <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
+                                                    <option class="" value="1">Enero</option>
+                                                    <option class="" value="2">Febrero</option>
+                                                    <option class="" value="3">Marzo</option>
+                                                    <option class="" value="4">Abril</option>
+                                                    <option class="" value="5">Mayo</option>
+                                                    <option class="" value="6">Junio</option>
+                                                    <option class="" value="7">Julio</option>
+                                                    <option class="" value="8">Agosto</option>
+                                                    <option class="" value="9">Septiembre</option>
+                                                    <option class="" value="10">Octubre</option>
+                                                    <option class="" value="11">Noviembre</option>
+                                                    <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -1515,6 +1496,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{ asset('admin/packages/core/main.js') }}"></script>
 <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>

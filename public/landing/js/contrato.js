@@ -43,7 +43,6 @@ var altaEmpleado = true;
 var BajaEmp = true;
 //: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
-    console.log(id);
     $.ajax({
         async: false,
         type: "GET",
@@ -70,6 +69,7 @@ function mostrarDetallesContrato(id) {
             } else {
                 BajaEmp = true;
             }
+            $('#alertErrorFecha').hide();
             $('#fileDetalleE').val(null);
             $('.iborrainputfile').text('Adjuntar archivo');
             $('#v_contrato').val(data.tipoContrato);
@@ -114,6 +114,9 @@ function mostrarDetallesContrato(id) {
                                 </div>`;
                 });
                 $('#documentosxDetalle').append(itemsD);
+            } else {
+                itemsVacio = `<span class="p-2" style="font-size:12px">No hay documentos</span>`;
+                $('#documentosxDetalle').append(itemsVacio);
             }
             $('#form-ver').modal('hide');
             $('#contratoDetallesmodalE').modal();
@@ -145,6 +148,7 @@ function historialEmp() {
             var containerVer = $('#editar_tbodyHistorial');
             if (data.length != 0) {
                 $('#gifAlta').hide();
+                $("#validHE").hide();
                 altaEmpleado = true;
                 for (var i = 0; i < data.length; i++) {
                     var trVer = `<tr id="idHistorialE${data[i].id}">`;
@@ -171,7 +175,7 @@ function historialEmp() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-17"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
@@ -244,7 +248,6 @@ function historialEmp() {
 }
 //: FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
 function mostrarBoton() {
-    console.log(altaEmpleado);
     if (altaEmpleado) {
         $('#nuevaAltaEdit').show();
     } else {
@@ -269,7 +272,6 @@ async function validArchivosEdit() {
         $.each(obj.files, function (j, file) {
             var fileSize = file.size;
             var sizeKiloBytes = parseInt(fileSize);
-            console.log(sizeKiloBytes, $('#fileDetalleE').attr('size'));
             if (sizeKiloBytes > parseInt($('#fileDetalleE').attr('size'))) {
                 respuesta = false;
             }
@@ -281,9 +283,40 @@ async function validArchivosEdit() {
 $('#fileDetalleE').on("click", function () {
     $('#validArchivoEdit').hide();
 });
+//: FUNCION PARA VALIDAR FECHA INICIO
+async function validarFechaInicio(fechaInicio, idContrato) {
+    var resultado = {};
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/validFechaDetalle",
+        data: {
+            contrato: idContrato
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var momentFechaInicio = moment(fechaInicio);
+                var momentFechaAnterior = moment(data[0].fechaFinal);
+                if (momentFechaInicio.isBefore(momentFechaAnterior)) {
+                    resultado = { "respuesta": false, "fecha": data[0].fechaFinal };
+                }
+            }
+        },
+        error: function () { }
+    });
+
+    return resultado;
+}
 //:EDITAR DETALLES DE CONTRATO
 async function editarDetalleCE() {
-    console.log($('#fechaBajaInputE').val());
     var idContrato = $('#idContratoD').val();
     var condicionPago = $('#v_condicion').val();
     var monto = $('#v_monto').val();
@@ -341,8 +374,23 @@ async function editarDetalleCE() {
         $('#validArchivoEdit').hide();
     }
     //* ***********************************************
+    //* FUNCIONES DE VALIDAR FECHA INICIO
+    const respFecha = await validarFechaInicio(fechaInicial, idContrato);
+    if (respFecha.respuesta != undefined) {
+        if (!respFecha.respuesta) {
+            $('#alertErrorFecha').empty();
+            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+            $('#alertErrorFecha').append(errorAlert);
+            $('#alertErrorFecha').show();
+            return false;
+        } else {
+            $('#alertErrorFecha').hide();
+        }
+    }
+    //* *****************************************
     var fechaAlta = fechaInicial;
-    var fechaBaja = (fechaFinal == '0000-00-00' || BajaEmpReg == true) ? null : fechaFinal;
+    var fechaBaja = (fechaFinal == '0000-00-00' || BajaEmp == true) ? null : fechaFinal;
     //* AJAX DE EDITAR
     $.ajax({
         type: "POST",
@@ -524,7 +572,6 @@ async function nuevoDetalleC() {
     var monto = $('#v_montoND').val();
     var fechaInicial;
     var fechaFinal = "0000-00-00";
-    console.log($('#idHistoE').val());
     var idHistorial = $('#idHistoE').val();
     var idEmpleado = $('#v_id').val();
 
@@ -651,6 +698,7 @@ $("#checkboxFechaIEND").on("click", function () {
 function modalNuevaAlta() {
     $('#contratoDetallesmodalEN').modal();
     $('#form-ver').modal('hide');
+    limpiarNuevosDatosAlta();
     validacionNuevaAlta();
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
@@ -695,6 +743,38 @@ function archivosDeNuevo(id) {
         error: function () {
         },
     });
+}
+//* FUNCION PARA VALIDAR FECHA INICIO
+async function validarFechaInicioAlta(fechaInicio, idEmpleado) {
+    var resultado = {};
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/validFechaAlta",
+        data: {
+            empleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var momentFechaInicio = moment(fechaInicio);
+                var momentFechaAnterior = moment(data[0].fechaFinal);
+                if (momentFechaInicio.isBefore(momentFechaAnterior)) {
+                    resultado = { "respuesta": false, "fecha": data[0].fechaFinal };
+                }
+            }
+        },
+        error: function () { }
+    });
+
+    return resultado;
 }
 //* REGISTRAR NUEVA ALTA
 async function nuevaAltaEditar() {
@@ -756,6 +836,21 @@ async function nuevaAltaEditar() {
     } else {
         $('#validArchivoEditN').hide();
     }
+    //* FUNCIONES DE VALIDAR FECHA INICIO
+    const respFecha = await validarFechaInicioAlta(fechaInicial, idEmpleado);
+    if (respFecha.respuesta != undefined) {
+        if (!respFecha.respuesta) {
+            $('#alertErrorFechaAlta').empty();
+            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+            $('#alertErrorFechaAlta').append(errorAlert);
+            $('#alertErrorFechaAlta').show();
+            return false;
+        } else {
+            $('#alertErrorFechaAlta').hide();
+        }
+    }
+    //* *****************************************
     //* *******************************FINALIZACION ******************************************
     //* AJAX DE NUEVA ALTA
     $.ajax({
@@ -835,7 +930,7 @@ function limpiarNuevosDatosAlta() {
     $('#m_dia_fechaFEN').val(0);
     $('#m_mes_fechaFEN').val(0);
     $('#m_ano_fechaFEN').val(0);
-    $('#contratoDetallesmodalEN').modal('toggle');
+    $('#ocultarFechaEN').show();
 }
 //* VALIDACION DE NUEVA ALTA
 function validacionNuevaAlta() {
@@ -992,9 +1087,7 @@ function archivosDeBaja(id) {
 }
 //? FUNCION GUARDAR DATOS DE BAJA
 async function confirmarBajaHistorial() {
-    console.log("ingreso");
     const result = await validArchivosBajaEdit();
-    console.log(result);
     if (!result) {
         $('#validArchivoBajaE').show();
         return false;
@@ -1084,6 +1177,7 @@ function historialEmpReg() {
         success: function (data) {
             var container = $('#reg_tbodyHistorial');
             if (data.length != 0) {
+                $("#reg_validHE").hide();
                 altaEmpleadoReg = true;
                 for (var i = 0; i < data.length; i++) {
                     var trReg = `<tr>`;
@@ -1110,7 +1204,7 @@ function historialEmpReg() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-17"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
@@ -1203,6 +1297,7 @@ function mostrarDetallesContratoReg(id) {
             } else {
                 BajaEmpReg = true;
             }
+            $('#alertErrorFechaDetalleReg').hide();
             $('#reg_fileArchivosD').val(null);
             $('.iborrainputfile').text('Adjuntar archivo');
             $('#contratoD').val(data.tipoContrato);
@@ -1258,7 +1353,7 @@ function mostrarDetallesContratoReg(id) {
 function modalNuevaAltaReg() {
     $('#contratoDetallesmodal').modal();
     $('#form-registrar').modal('hide');
-    limpiarNuevosDatosAlta();
+    limpiarNuevosDatosAltaReg();
     validacionNuevaAltaReg();
 }
 //* VALIDACION DE NUEVA ALTA
@@ -1290,7 +1385,7 @@ function validacionNuevaAltaReg() {
     }
 }
 //* LIMPIAR FORMULARIO EN NUEVA ALTA
-function limpiarNuevosDatosAlta() {
+function limpiarNuevosDatosAltaReg() {
     $('#contrato').val("");
     $('#condicion').val("");
     $('#monto').val("");
@@ -1303,6 +1398,7 @@ function limpiarNuevosDatosAlta() {
     $('#mf_dia_fecha').val(0);
     $('#mf_mes_fecha').val(0);
     $('#mf_ano_fecha').val(0);
+    $('#ocultarFecha').show();
 }
 //* CHECKBOX DE FECHA INDEFINIDA
 $("#checkboxFechaI").on("click", function () {
@@ -1369,6 +1465,38 @@ function archivosRegistrar(id) {
         },
     });
 }
+//* FUNCION PARA VALIDAR FECHA INICIO
+async function validarFechaInicioAltaReg(fechaInicio, idEmpleado) {
+    var resultado = {};
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/validFechaAlta",
+        data: {
+            empleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var momentFechaInicio = moment(fechaInicio);
+                var momentFechaAnterior = moment(data[0].fechaFinal);
+                if (momentFechaInicio.isBefore(momentFechaAnterior)) {
+                    resultado = { "respuesta": false, "fecha": data[0].fechaFinal };
+                }
+            }
+        },
+        error: function () { }
+    });
+
+    return resultado;
+}
 //* REGISTRAR NUEVA ALTA
 async function nuevaAltaReg() {
     var contrato = $('#contrato').val();
@@ -1428,6 +1556,20 @@ async function nuevaAltaReg() {
         return false;
     } else {
         $('#validArchivoReg').hide();
+    }
+    //* FUNCIONES DE VALIDAR FECHA INICIO
+    const respFecha = await validarFechaInicioAltaReg(fechaInicial, idEmpleado);
+    if (respFecha.respuesta != undefined) {
+        if (!respFecha.respuesta) {
+            $('#alertErrorFechaReg').empty();
+            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+            $('#alertErrorFechaReg').append(errorAlert);
+            $('#alertErrorFechaReg').show();
+            return false;
+        } else {
+            $('#alertErrorFechaReg').hide();
+        }
     }
     //* *******************************FINALIZACION ******************************************
     //* AJAX DE NUEVA ALTA
@@ -1688,7 +1830,39 @@ function archivosDeDetalleCReg(id) {
         },
     });
 }
-//:EDITAR DETALLES DE CONTRATO
+//* FUNCION PARA VALIDAR FECHA INICIO
+async function validarFechaInicioReg(fechaInicio, idContrato) {
+    var resultado = {};
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/validFechaDetalle",
+        data: {
+            contrato: idContrato
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var momentFechaInicio = moment(fechaInicio);
+                var momentFechaAnterior = moment(data[0].fechaFinal);
+                if (momentFechaInicio.isBefore(momentFechaAnterior)) {
+                    resultado = { "respuesta": false, "fecha": data[0].fechaFinal };
+                }
+            }
+        },
+        error: function () { }
+    });
+
+    return resultado;
+}
+//* EDITAR DETALLES DE CONTRATO
 async function editarDetalleCReg() {
     var idContrato = $('#reg_idContratoD').val();
     var condicionPago = $('#condicionD').val();
@@ -1747,6 +1921,21 @@ async function editarDetalleCReg() {
         $('#validArchivoD').hide();
     }
     //* ***********************************************
+    //* FUNCIONES DE VALIDAR FECHA INICIO
+    const respFecha = await validarFechaInicioReg(fechaInicial, idContrato);
+    if (respFecha.respuesta != undefined) {
+        if (!respFecha.respuesta) {
+            $('#alertErrorFechaDetalleReg').empty();
+            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+            $('#alertErrorFechaDetalleReg').append(errorAlert);
+            $('#alertErrorFechaDetalleReg').show();
+            return false;
+        } else {
+            $('#alertErrorFechaDetalleReg').hide();
+        }
+    }
+    //* *****************************************
     var fechaAlta = fechaInicial;
     var fechaBaja = (fechaFinal == '0000-00-00' || BajaEmpReg == true) ? null : fechaFinal;
     //* AJAX DE EDITAR
@@ -1852,7 +2041,7 @@ function historialEmpVer() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-17"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
