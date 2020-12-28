@@ -1819,6 +1819,8 @@ use Carbon\Carbon;
                                             <span id="m_validFechaC" style="color: red;display: none;">
                                                 *Fecha incorrecta.
                                             </span>
+                                            <div class="alert alert-danger" role="alert" style="display: none;"
+                                                id="alertErrorFechaReg"></div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="m_dia_fecha" id="m_dia_fecha"
@@ -1907,7 +1909,7 @@ use Carbon\Carbon;
                                                     </div>
                                                     <div class="col-md-4">
                                                         <select class="form-control" name="mf_mes_fecha"
-                                                            id="mf_mes_fecha" required="">
+                                                            id="mf_mes_fecha" required>
                                                             <option value="0">Mes</option>
                                                             <option class="" value="1">Enero</option>
                                                             <option class="" value="2">Febrero</option>
@@ -1948,6 +1950,227 @@ use Carbon\Carbon;
                                 </button>
                                 <button type="submit" class="btn btn-sm" style="background-color:#163552;"
                                     id="reg_guardarAlta">Guardar</button>
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                {{-- FINALIZACION DE MODAL --}}
+                {{-- DETALLES DE CONTRATO EN REGISTRAR --}}
+                <div id="detallesContratomodal" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="detallesContratomodal" aria-hidden="true" data-backdrop="static"
+                    data-keyboard="false">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#163552;">
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Detalles de contrato
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" id="reg_idContratoD">
+                                <form action="javascript:editarDetalleCReg()">
+                                    {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="form-group">
+                                                <label for="sw-default">
+                                                    Contrato
+                                                </label>
+                                                <select class="form-control" id="contratoD" tabindex="5"
+                                                    onclick="javascript:validacionNuevaAltaReg()" required disabled>
+                                                    <option value="">Seleccionar</option>
+                                                    @foreach ($tipo_cont as $tipo_conts)
+                                                    <option value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="sw-default">
+                                                    Condición Pago
+                                                    <a onclick="javascript:ModalAbiertoCondicionReg()"
+                                                        href="#condicionmodal" data-toggle="modal"
+                                                        data-target="#condicionmodal">
+                                                        <i class="uil uil-plus"></i>
+                                                    </a>
+                                                </label>
+                                                <select class="form-control" id="condicionD" required>
+                                                    <option value="">Seleccionar</option>
+                                                    @foreach ($condicionP as $condicion)
+                                                    <option class="" value="{{$condicion->id}}">
+                                                        {{$condicion->condicion}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6" style="padding-top: 2.2em">
+                                            <div class="dropdown" id="reg_documentosDetalles">
+                                                <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
+                                                    style="cursor: pointer">
+                                                    <span class="badge badge-soft-primary text-primary">
+                                                        <i class="uil-file-alt font-size-18"></i>
+                                                        &nbsp;
+                                                        Documentos
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                    id="reg_documentosxDetalle">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="sw-default">Monto</label>
+                                                <input type="number" step=".01" class="form-control" id="montoD">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                            <span id="m_validFechaCD" style="color: red;display: none;">
+                                                *Fecha incorrecta.
+                                            </span>
+                                            <div class="alert alert-danger" role="alert" style="display: none;"
+                                                id="alertErrorFechaDetalleReg"></div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD"
+                                                        required>
+                                                        <option value="0">Día</option>
+                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                            {{$i}}</option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" name="m_mes_fechaD" id="m_mes_fechaD"
+                                                        required>
+                                                        <option value="0">Mes</option>
+                                                        <option class="" value="1">Enero</option>
+                                                        <option class="" value="2">Febrero</option>
+                                                        <option class="" value="3">Marzo</option>
+                                                        <option class="" value="4">Abril</option>
+                                                        <option class="" value="5">Mayo</option>
+                                                        <option class="" value="6">Junio</option>
+                                                        <option class="" value="7">Julio</option>
+                                                        <option class="" value="8">Agosto</option>
+                                                        <option class="" value="9">Septiembre</option>
+                                                        <option class="" value="10">Octubre</option>
+                                                        <option class="" value="11">Noviembre</option>
+                                                        <option class="" value="12">Diciembre</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control"
+                                                        style="padding-left: 5px;padding-right: 5px;"
+                                                        name="m_ano_fechaD" id="m_ano_fechaD" required>
+                                                        <option value="0">Año</option>
+                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                            value="{{$i}}">{{$i}}
+                                                            </option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row pb-2">
+                                                <div class="col-md-12 pt-1" id="validArchivoD" style="display: none;">
+                                                    <span style="color: red;">
+                                                        *El tamaño supera el limite de 4 MB.
+                                                    </span>
+                                                </div>
+                                                <div class="col-md 12">
+                                                    <div class="form-group"
+                                                        style="margin-top: 14px;margin-bottom: 0px;">
+                                                        <input type="file"
+                                                            accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                                                            class="inputfile inputfile-1"
+                                                            data-multiple-caption="{count} archivos seleccionados"
+                                                            multiple id="reg_fileArchivosD" size="4194304">
+                                                        <label for="reg_fileArchivosD">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="17" viewBox="0 0 20 17">
+                                                                <path
+                                                                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                                </path>
+                                                            </svg>
+                                                            <span class="iborrainputfile">Adjuntar archivo</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha
+                                                    Final</label>
+                                                <label class="ocultarFechaD">Fecha Indefinida</label>
+                                                <input type="checkbox" class="ocultarFechaD" id="checkboxFechaID"
+                                                    name="checkboxFechaID">
+                                            </div>
+                                            <div id="ocultarFechaD">
+                                                <span id="mf_validFechaCD" style="color: red;display: none;">
+                                                    *Fecha incorrecta.
+                                                </span>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" name="mf_dia_fechaD"
+                                                            id="mf_dia_fechaD" required>
+                                                            <option value="0">Día</option>
+                                                            @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                                {{$i}}</option>
+                                                                @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" name="mf_mes_fechaD"
+                                                            id="mf_mes_fechaD" required>
+                                                            <option value="0">Mes</option>
+                                                            <option class="" value="1">Enero</option>
+                                                            <option class="" value="2">Febrero</option>
+                                                            <option class="" value="3">Marzo</option>
+                                                            <option class="" value="4">Abril</option>
+                                                            <option class="" value="5">Mayo</option>
+                                                            <option class="" value="6">Junio</option>
+                                                            <option class="" value="7">Julio</option>
+                                                            <option class="" value="8">Agosto</option>
+                                                            <option class="" value="9">Septiembre</option>
+                                                            <option class="" value="10">Octubre</option>
+                                                            <option class="" value="11">Noviembre</option>
+                                                            <option class="" value="12">Diciembre</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control"
+                                                            style="padding-left: 5px;padding-right: 5px;"
+                                                            name="mf_ano_fechaD" id="mf_ano_fechaD" required>
+                                                            <option value="0">Año</option>
+                                                            @for ($i = 2014; $i <2100; $i++) <option class=""
+                                                                value="{{$i}}">{{$i}}
+                                                                </option>
+                                                                @endfor
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" onclick="$('#form-registrar').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">
+                                    Cerrar
+                                </button>
+                                <button type="submit" class="btn btn-sm" style="background-color:#163552;">
+                                    Guardar
+                                </button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -2302,7 +2525,7 @@ use Carbon\Carbon;
                                                 <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                                     style="cursor: pointer">
                                                     <span class="badge badge-soft-primary text-primary">
-                                                        <i class="uil-file-plus-alt font-size-18"></i>
+                                                        <i class="uil-file-alt font-size-18"></i>
                                                         &nbsp;
                                                         Documentos
                                                     </span>
@@ -2322,8 +2545,8 @@ use Carbon\Carbon;
                                                             Condición Pago
                                                             <a onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
-                                                                data-target="#condicionmodalE">
-                                                                <i class="uil uil-plus"></i>
+                                                                data-target="#condicionmodalE"><i
+                                                                    class="uil uil-plus"></i>
                                                             </a>
                                                         </label>
                                                         <select class="form-control" name="v_condicion" id="v_condicion"
@@ -2350,10 +2573,12 @@ use Carbon\Carbon;
                                                     <span id="m_validFechaCIE" style="color: red;display: none;">
                                                         *Fecha incorrecta.
                                                     </span>
+                                                    <div class="alert alert-danger" role="alert" style="display: none;"
+                                                        id="alertErrorFecha"></div>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_dia_fechaIE"
-                                                                id="m_dia_fechaIE" required>
+                                                                id="m_dia_fechaIE" required="">
                                                                 <option value="0">Día</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2381,9 +2606,9 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control"
-                                                                style="padding-left: 5px;padding-right: 5px;"
-                                                                name="m_ano_fechaIE" id="m_ano_fechaIE" required>
+                                                            <select class="form-control" style="padding-left: 5px;
+                                                        padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
+                                                                required="">
                                                                 <option value="0">Año</option>
                                                                 @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2430,9 +2655,9 @@ use Carbon\Carbon;
                                                             name="checkboxFechaIE" class="ocultarFechaIE">
                                                     </div>
                                                     <div id="ocultarFechaE">
-                                                        <span id="m_validFechaCFE" style="color: red;display: none;">
-                                                            *Fecha incorrecta.
-                                                        </span>
+                                                        <span id="m_validFechaCFE"
+                                                            style="color: red;display: none;">*Fecha
+                                                            incorrecta.</span>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <select class="form-control" name="m_dia_fechaFE"
@@ -2463,9 +2688,9 @@ use Carbon\Carbon;
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <select class="form-control"
-                                                                    style="padding-left: 5px;padding-right: 5px;"
-                                                                    name="m_ano_fechaFE" id="m_ano_fechaFE">
+                                                                <select class="form-control" style="padding-left: 5px;
+                                                            padding-right: 5px;" name="m_ano_fechaFE"
+                                                                    id="m_ano_fechaFE">
                                                                     <option value="0">Año</option>
                                                                     @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                         value="{{$i}}">
@@ -2536,13 +2761,11 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Condición Pago
-                                                            <a onclick="javascript:ModalAbiertoCondicion();"
+                                                        <label for="sw-default">Condición Pago <a
+                                                                onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
-                                                                data-target="#condicionmodalE">
-                                                                <i class="uil uil-plus"></i>
-                                                            </a>
-                                                        </label>
+                                                                data-target="#condicionmodalE"><i
+                                                                    class="uil uil-plus"></i></a></label>
                                                         <select class="form-control" name="v_condicionN"
                                                             id="v_condicionN" required>
                                                             <option value="">Seleccionar</option>
@@ -2564,13 +2787,14 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                                    <span id="m_validFechaCIEN" style="color: red;display: none;">
-                                                        *Fecha incorrecta.
-                                                    </span>
+                                                    <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
+                                                        incorrecta.</span>
+                                                    <div class="alert alert-danger" role="alert" style="display: none;"
+                                                        id="alertErrorFechaAlta"></div>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_dia_fechaIEN"
-                                                                id="m_dia_fechaIEN" required>
+                                                                id="m_dia_fechaIEN" required="">
                                                                 <option value="0">Día</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2598,9 +2822,9 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control"
-                                                                style="padding-left: 5px;padding-right: 5px;"
-                                                                name="m_ano_fechaIEN" id="m_ano_fechaIEN" required>
+                                                            <select class="form-control" style="padding-left: 5px;
+                                                        padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
+                                                                required="">
                                                                 <option value="0">Año</option>
                                                                 @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2609,6 +2833,7 @@ use Carbon\Carbon;
                                                                     @endfor
                                                             </select>
                                                         </div>
+
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12 pt-1" id="validArchivoEditN"
@@ -2646,9 +2871,9 @@ use Carbon\Carbon;
                                                             name="checkboxFechaIEN">
                                                     </div>
                                                     <div id="ocultarFechaEN">
-                                                        <span id="m_validFechaCFEN" style="color: red;display: none;">
-                                                            *Fecha incorrecta.
-                                                        </span>
+                                                        <span id="m_validFechaCFEN"
+                                                            style="color: red;display: none;">*Fecha
+                                                            incorrecta.</span>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <select class="form-control" name="m_dia_fechaFEN"
@@ -2664,24 +2889,24 @@ use Carbon\Carbon;
                                                                 <select class="form-control" name="m_mes_fechaFEN"
                                                                     id="m_mes_fechaFEN">
                                                                     <option value="0">Mes</option>
-                                                                    <option class="" value="1">Ene.</option>
-                                                                    <option class="" value="2">Feb.</option>
-                                                                    <option class="" value="3">Mar.</option>
-                                                                    <option class="" value="4">Abr.</option>
-                                                                    <option class="" value="5">May.</option>
-                                                                    <option class="" value="6">Jun.</option>
-                                                                    <option class="" value="7">Jul.</option>
-                                                                    <option class="" value="8">Ago.</option>
-                                                                    <option class="" value="9">Set.</option>
-                                                                    <option class="" value="10">Oct.</option>
-                                                                    <option class="" value="11">Nov.</option>
-                                                                    <option class="" value="12">Dic.</option>
+                                                                    <option class="" value="1">Enero</option>
+                                                                    <option class="" value="2">Febrero</option>
+                                                                    <option class="" value="3">Marzo</option>
+                                                                    <option class="" value="4">Abril</option>
+                                                                    <option class="" value="5">Mayo</option>
+                                                                    <option class="" value="6">Junio</option>
+                                                                    <option class="" value="7">Julio</option>
+                                                                    <option class="" value="8">Agosto</option>
+                                                                    <option class="" value="9">Septiembre</option>
+                                                                    <option class="" value="10">Octubre</option>
+                                                                    <option class="" value="11">Noviembre</option>
+                                                                    <option class="" value="12">Diciembre</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <select class="form-control"
-                                                                    style="padding-left: 5px;padding-right: 5px;"
-                                                                    name="m_ano_fechaFEN" id="m_ano_fechaFEN">
+                                                                <select class="form-control" style="padding-left: 5px;
+                                                            padding-right: 5px;" name="m_ano_fechaFEN"
+                                                                    id="m_ano_fechaFEN">
                                                                     <option value="0">Año</option>
                                                                     @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                         value="{{$i}}">
@@ -6257,6 +6482,7 @@ use Carbon\Carbon;
     <script src="{{asset('admin/assets/libs/bootstrap-fileinput/es.js')}}"></script>
     <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{asset('admin/assets/libs/moment/moment.min.js')}}"></script>
+    <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
     <script src="{{asset('admin/packages/core/main.js')}}"></script>
     <script src="{{asset('admin/packages/core/locales/es.js')}}"></script>
     <script src="{{asset('admin/packages/daygrid/main.js')}}"></script>
