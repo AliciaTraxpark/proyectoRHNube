@@ -108,7 +108,6 @@
                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
-                                <th class="text-center">Id Captura</th>
                                 <th class="text-center">Hora Inicio</th>
                                 <th class="text-center">Hora Fin</th>
                                 <th class="text-center">Horario</th>
