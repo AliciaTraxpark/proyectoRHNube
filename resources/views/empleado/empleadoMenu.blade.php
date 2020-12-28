@@ -1749,6 +1749,8 @@ use App\proyecto_empleado;
                                 <span id="m_validFechaC" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
+                                <div class="alert alert-danger" role="alert" style="display: none;"
+                                    id="alertErrorFechaReg"></div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fecha" id="m_dia_fecha" required="">
@@ -1957,6 +1959,8 @@ use App\proyecto_empleado;
                                 <span id="m_validFechaCD" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
+                                <div class="alert alert-danger" role="alert" style="display: none;"
+                                    id="alertErrorFechaDetalleReg"></div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD" required>
@@ -2457,8 +2461,11 @@ use App\proyecto_empleado;
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                        <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
-                                            incorrecta.</span>
+                                        <span id="m_validFechaCIE" style="color: red;display: none;">
+                                            *Fecha incorrecta.
+                                        </span>
+                                        <div class="alert alert-danger" role="alert" style="display: none;"
+                                            id="alertErrorFecha"></div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
@@ -2663,6 +2670,8 @@ use App\proyecto_empleado;
                                         <label for="" style="font-weight: 600">Fecha Inicial</label>
                                         <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
+                                        <div class="alert alert-danger" role="alert" style="display: none;"
+                                            id="alertErrorFechaAlta"></div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_dia_fechaIEN" id="m_dia_fechaIEN"
@@ -6208,6 +6217,7 @@ document.getElementsByName("editarEName").remove();
 
 
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 
 <script src="{{ asset('admin/packages/core/main.js') }}"></script>
 <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>
