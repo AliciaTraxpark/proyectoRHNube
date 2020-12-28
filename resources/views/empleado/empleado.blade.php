@@ -1208,6 +1208,8 @@ use Carbon\Carbon;
                                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
                                                 Fecha de baja o cese de empleado(s) :
                                             </label>
+                                            <div class="alert alert-danger" role="alert" style="display: none;"
+                                                id="alertFechaBajaH"></div>
                                             <div class="input-group col-md-5 text-center"
                                                 style="padding-left: 0px;padding-right: 0px;top: 10px;"
                                                 id="fechaSelectBaja">
@@ -1284,6 +1286,9 @@ use Carbon\Carbon;
                                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
                                                 Fecha de baja o cese de empleado(s) :
                                             </label>
+                                            <div class="alert alert-danger" role="alert" style="display: none;"
+                                                id="alertFechaBaja">
+                                            </div>
                                             <div class="input-group col-md-5 text-center"
                                                 style="padding-left: 0px;padding-right: 0px;top: 10px;"
                                                 id="fechaBajaEdit">
@@ -1362,6 +1367,9 @@ use Carbon\Carbon;
                                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
                                                 Fecha de baja o cese de empleado(s) :
                                             </label>
+                                            <div class="alert alert-danger" role="alert" style="display: none;"
+                                                id="alertFechaBajaReg">
+                                            </div>
                                             <div class="input-group col-md-5 text-center"
                                                 style="padding-left: 0px;padding-right: 0px;top: 10px;"
                                                 id="fechaBajaReg">
@@ -1423,7 +1431,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -1468,7 +1477,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Cargo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -1513,7 +1523,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Centro Costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -1559,7 +1570,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Local</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -1603,7 +1615,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Nivel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -2183,7 +2196,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     área</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2227,7 +2241,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Cargo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2270,7 +2285,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Centro Costo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2313,7 +2329,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Local</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2357,7 +2374,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Nivel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
@@ -2400,7 +2418,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Contrato</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:ModalCerrarCondicion();javascript:limpiarEditar()">
@@ -2445,7 +2464,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Agregar
                                     Condición de Pago</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="javascript:ModalCerrarCondicion();javascript:limpiarEditar()">
@@ -2649,8 +2669,10 @@ use Carbon\Carbon;
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                                        <label for="" class="ocultarFechaIE">Fecha Indefinida</label>
+                                                        <label for="" style="font-weight: 600">Fecha
+                                                            Final</label><br>
+                                                        <label for="" class="ocultarFechaIE">Fecha
+                                                            Indefinida</label>
                                                         <input type="checkbox" id="checkboxFechaIE"
                                                             name="checkboxFechaIE" class="ocultarFechaIE">
                                                     </div>
@@ -2865,7 +2887,8 @@ use Carbon\Carbon;
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="" style="font-weight: 600">Fecha Final</label><br>
+                                                        <label for="" style="font-weight: 600">Fecha
+                                                            Final</label><br>
                                                         <label for="">Fecha Indefinida</label>
                                                         <input type="checkbox" id="checkboxFechaIEN"
                                                             name="checkboxFechaIEN">
@@ -3084,7 +3107,8 @@ use Carbon\Carbon;
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="" style="font-weight: 600">Fecha Final</label><br>
+                                                        <label for="" style="font-weight: 600">Fecha
+                                                            Final</label><br>
                                                         <label for="">Fecha Indefinida</label>
                                                         <input type="checkbox" id="checkboxFechaIEND"
                                                             name="checkboxFechaIEND">
@@ -3160,7 +3184,8 @@ use Carbon\Carbon;
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
-                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Detalles
+                                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                    Detalles
                                     de contrato
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
@@ -3383,7 +3408,8 @@ use Carbon\Carbon;
                                                         <label for="sw-default">Correo Electrónico</label>
                                                         <span id="validCorreo" style="color: red;">*Campo
                                                             Obligatorio</span>
-                                                        <span id="emailR" style="color: red;">*Correo registrado</span>
+                                                        <span id="emailR" style="color: red;">*Correo
+                                                            registrado</span>
                                                         <input type="email" class="form-control" id="email" name="email"
                                                             tabindex="7">
                                                     </div>
@@ -3897,7 +3923,8 @@ use Carbon\Carbon;
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="nolaborableTem()"><img
                                                                                 src="{{ asset('admin/images/evento.svg') }}"
-                                                                                height="20"> Día no laborable</button>
+                                                                                height="20"> Día no
+                                                                            laborable</button>
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <button type="button"
@@ -4067,7 +4094,8 @@ use Carbon\Carbon;
                                                                                 class="custom-control-input"
                                                                                 id="horAdicSwitch_re">
                                                                             <label class="custom-control-label"
-                                                                                for="horAdicSwitch_re">Permite marcar
+                                                                                for="horAdicSwitch_re">Permite
+                                                                                marcar
                                                                                 horas
                                                                                 adicionales.</label>
 
@@ -4154,7 +4182,8 @@ use Carbon\Carbon;
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
-                                                                                <label for="">Hora de fin(24h):</label>
+                                                                                <label for="">Hora de
+                                                                                    fin(24h):</label>
                                                                                 <input type="text" id="horaF"
                                                                                     class="form-control form-control-sm"
                                                                                     required>
@@ -4162,7 +4191,8 @@ use Carbon\Carbon;
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
-                                                                                <label for="">Horas obligadas:</label>
+                                                                                <label for="">Horas
+                                                                                    obligadas:</label>
                                                                                 <div class="input-group form-control-sm"
                                                                                     style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
@@ -4261,12 +4291,14 @@ use Carbon\Carbon;
                                                                                     style="color: #80211e;display: none">Hora
                                                                                     no
                                                                                     esta
-                                                                                    dentro de rango de horario</span>
+                                                                                    dentro de rango de
+                                                                                    horario</span>
                                                                                 <span id="errorenPausas"
                                                                                     style="color: #80211e;display: none">-
                                                                                     Fin de
                                                                                     pausa
-                                                                                    debe ser mayor a inicio pausa</span>
+                                                                                    debe ser mayor a inicio
+                                                                                    pausa</span>
 
                                                                             </div>
                                                                         </div>
@@ -4912,7 +4944,8 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sw-default" class="labelNivel">Nivel del Colaborador<a
+                                                    <label for="sw-default" class="labelNivel">Nivel del
+                                                        Colaborador<a
                                                             onclick="$('#form-ver').modal('hide');$('#nivelmodalE').modal('show');"
                                                             data-toggle="modal"><i class="uil uil-plus"
                                                                 style="color: darkblue;cursor: pointer;"></i></a></label>
@@ -5139,7 +5172,8 @@ use Carbon\Carbon;
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="nolaborable_ed()"><img
                                                                                 src="{{ asset('admin/images/evento.svg') }}"
-                                                                                height="20"> Día no laborable</button>
+                                                                                height="20"> Día no
+                                                                            laborable</button>
                                                                     </div>
                                                                     <div class="col-md-3 text-center">
                                                                         <button type="button"
@@ -5308,7 +5342,8 @@ use Carbon\Carbon;
                                                                                 class="custom-control-input"
                                                                                 id="horAdicSwitch">
                                                                             <label class="custom-control-label"
-                                                                                for="horAdicSwitch">Permite marcar horas
+                                                                                for="horAdicSwitch">Permite marcar
+                                                                                horas
                                                                                 adicionales.</label>
 
                                                                         </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -5400,7 +5435,8 @@ use Carbon\Carbon;
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
-                                                                                <label for="">Hora de fin(24h):</label>
+                                                                                <label for="">Hora de
+                                                                                    fin(24h):</label>
                                                                                 <input type="text" id="horaF_ed"
                                                                                     class="form-control form-control-sm"
                                                                                     required>
@@ -5408,7 +5444,8 @@ use Carbon\Carbon;
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
-                                                                                <label for="">Horas obligadas:</label>
+                                                                                <label for="">Horas
+                                                                                    obligadas:</label>
                                                                                 <div class="input-group form-control-sm"
                                                                                     style="bottom: 4px;
                                                                    padding-left: 0px; padding-right: 0px;">
@@ -5502,8 +5539,8 @@ use Carbon\Carbon;
                                                                                 <label class="custom-control-label"
                                                                                     for="SwitchPausa_ed"
                                                                                     style="font-weight: bold;padding-top: 1px">Pausas
-                                                                                    en el horario</label> &nbsp; <span
-                                                                                    id="fueraRango_ed"
+                                                                                    en el horario</label> &nbsp;
+                                                                                <span id="fueraRango_ed"
                                                                                     style="color: #80211e;display: none">Hora
                                                                                     no
                                                                                     esta dentro de rango de
