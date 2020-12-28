@@ -52,19 +52,23 @@ class contratoController extends Controller
 
         //* HISTORIAL EMPLEADO
         $historial_empleado = historial_empleado::where('idhistorial_empleado', '=', $id)->get()->first();
-        $historial_empleado->fecha_baja = $fechaBaja;
-        $historial_empleado->save();
+        if (Carbon::parse($fechaBaja)->gt(Carbon::parse($historial_empleado->fecha_alta))) {
+            $historial_empleado->fecha_baja = $fechaBaja;
+            $historial_empleado->save();
 
-        $contrato = contrato::where('id', '=', $historial_empleado->idContrato)->get()->first();
-        $contrato->fechaFinal = $request->get('fechaBaja');
-        $contrato->estado = 0;
-        $contrato->save();
+            $contrato = contrato::where('id', '=', $historial_empleado->idContrato)->get()->first();
+            $contrato->fechaFinal = $request->get('fechaBaja');
+            $contrato->estado = 0;
+            $contrato->save();
 
-        $empleado = empleado::where('emple_id', '=', $historial_empleado->emple_id)->get()->first();
-        $empleado->emple_estado = 0;
-        $empleado->save();
+            $empleado = empleado::where('emple_id', '=', $historial_empleado->emple_id)->get()->first();
+            $empleado->emple_estado = 0;
+            $empleado->save();
 
-        return response()->json($historial_empleado->idContrato, 200);
+            return response()->json($historial_empleado->idContrato, 200);
+        } else {
+            return response()->json(array("respuesta" => false, "fecha" => $historial_empleado->fecha_alta), 200);
+        }
     }
 
     //* FUNCION DETALLES DE CONTRATO

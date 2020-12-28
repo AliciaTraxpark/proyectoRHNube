@@ -1024,6 +1024,7 @@ function eliminarContrato(id) {
 //? FUNCION DE MOSTRAR MODAL DE DECICION DE BAJA
 function bajaEmpleadoContrato(id) {
     $('#modalBajaHistorial').modal();
+    $('#alertFechaBaja').hide();
     $('#idHistorialEdit').val(id);
     //: FECHA DE BAJA EN TABLA CONTRATO
     var fechaValue = $("#fechaBajaEdit").flatpickr({
@@ -1032,7 +1033,6 @@ function bajaEmpleadoContrato(id) {
         altInput: true,
         altFormat: "Y-m-d",
         locale: "es",
-        maxDate: "today",
         wrap: true,
         allowInput: true,
         disableMobile: "true"
@@ -1113,10 +1113,19 @@ async function confirmarBajaHistorial() {
             }
         },
         success: function (data) {
-            archivosDeBaja(data);
-            $('#modalBajaHistorial').modal('toggle');
-            $('#form-ver').modal('show');
-            historialEmp();
+            if (data.respuesta != false) {
+                $('#alertFechaBaja').hide();
+                archivosDeBaja(data);
+                $('#modalBajaHistorial').modal('toggle');
+                $('#form-ver').modal('show');
+                historialEmp();
+            } else {
+                $('#alertFechaBaja').empty();
+                var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha de baja debe ser mayor a la fecha de alta de su contrato ${moment(data.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+                $('#alertFechaBaja').append(errorAlert);
+                $('#alertFechaBaja').show();
+            }
         },
         error: function () { }
     });
@@ -1778,10 +1787,19 @@ async function confirmarBajaHistorialReg() {
             }
         },
         success: function (data) {
-            archivosDeBajaReg(data);
-            $('#modalBajaHistorialReg').modal('toggle');
-            $('#form-registrar').modal('show');
-            historialEmpReg();
+            if (data.respuesta != false) {
+                $('#alertFechaBajaReg').hide();
+                archivosDeBajaReg(data);
+                $('#modalBajaHistorialReg').modal('toggle');
+                $('#form-registrar').modal('show');
+                historialEmpReg();
+            } else {
+                $('#alertFechaBajaReg').empty();
+                var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha de baja debe ser mayor a la fecha de alta de su contrato ${moment(data.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+                $('#alertFechaBajaReg').append(errorAlert);
+                $('#alertFechaBajaReg').show();
+            }
         },
         error: function () { }
     });

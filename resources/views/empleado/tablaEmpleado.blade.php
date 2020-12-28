@@ -863,7 +863,6 @@ function verDEmpleado(idempleadoVer){
             altInput: true,
             altFormat: "Y-m-d",
             locale: "es",
-            maxDate: "today",
             wrap: true,
             allowInput: true,
             disableMobile: "true"
@@ -875,6 +874,7 @@ function verDEmpleado(idempleadoVer){
         //* ***********************************
         //* VALOR A INPUT HIDDEN
         $('#empleadoEliminacion').val(data);
+        $('#alertFechaBajaH').hide();
     }
     //* VALIDACION DE ARCHIVOS EN NUEVA BAJA
     async function validArchivosBajaTabla() {
@@ -926,9 +926,18 @@ function verDEmpleado(idempleadoVer){
             },
             success: function (data) {
                 if(data != 0){
-                    archivosDeBajaTabla(data);
-                    RefreshTablaEmpleado();
-                    $('#modalEliminar').modal('toggle');
+                    if(data.respuesta != false){
+                        $('#alertFechaBajaH').hide();
+                        archivosDeBajaTabla(data);
+                        RefreshTablaEmpleado();
+                        $('#modalEliminar').modal('toggle');
+                    }else{
+                        $('#alertFechaBajaH').empty();
+                        var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                        <span style="font-size: 14px;">Su fecha de baja debe ser mayor a la fecha de alta de su contrato ${moment(data.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+                        $('#alertFechaBajaH').append(errorAlert);
+                        $('#alertFechaBajaH').show();
+                    }
                 }else{
                     $('#modalEliminar').modal('toggle');
                     alertify

@@ -1157,6 +1157,9 @@ use App\proyecto_empleado;
                                 <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
                                     Fecha de baja o cese de empleado(s) :
                                 </label>
+                                <div class="alert alert-danger" role="alert" style="display: none;"
+                                    id="alertFechaBajaH">
+                                </div>
                                 <div class="input-group col-md-5 text-center"
                                     style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaSelectBaja">
                                     <input type="text" id="fechaInputBaja" class="col-md-12 form-control" data-input>
@@ -1228,6 +1231,8 @@ use App\proyecto_empleado;
                                 <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
                                     Fecha de baja o cese de empleado(s) :
                                 </label>
+                                <div class="alert alert-danger" role="alert" style="display: none;" id="alertFechaBaja">
+                                </div>
                                 <div class="input-group col-md-5 text-center"
                                     style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaBajaEdit">
                                     <input type="text" id="fechaBajaInput" class="col-md-12 form-control" data-input>
@@ -1302,6 +1307,9 @@ use App\proyecto_empleado;
                                 <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
                                     Fecha de baja o cese de empleado(s) :
                                 </label>
+                                <div class="alert alert-danger" role="alert" style="display: none;"
+                                    id="alertFechaBajaReg">
+                                </div>
                                 <div class="input-group col-md-5 text-center"
                                     style="padding-left: 0px;padding-right: 0px;top: 10px;" id="fechaBajaReg">
                                     <input type="text" id="fechaBajaInputReg" class="col-md-12 form-control" data-input>
