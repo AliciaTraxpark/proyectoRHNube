@@ -1388,18 +1388,18 @@
                                             <select class="form-control" name="m_mes_fechaIB" id="m_mes_fechaIB"
                                                 required>
                                                 <option value="0">Mes</option>
-                                                <option class="" value="1">Ene.</option>
-                                                <option class="" value="2">Feb.</option>
-                                                <option class="" value="3">Mar.</option>
-                                                <option class="" value="4">Abr.</option>
-                                                <option class="" value="5">May.</option>
-                                                <option class="" value="6">Jun.</option>
-                                                <option class="" value="7">Jul.</option>
-                                                <option class="" value="8">Ago.</option>
-                                                <option class="" value="9">Set.</option>
-                                                <option class="" value="10">Oct.</option>
-                                                <option class="" value="11">Nov.</option>
-                                                <option class="" value="12">Dic.</option>
+                                                <option class="" value="1">Enero</option>
+                                                <option class="" value="2">Febrero</option>
+                                                <option class="" value="3">Marzo</option>
+                                                <option class="" value="4">Abril</option>
+                                                <option class="" value="5">Mayo</option>
+                                                <option class="" value="6">Junio</option>
+                                                <option class="" value="7">Julio</option>
+                                                <option class="" value="8">Agosto</option>
+                                                <option class="" value="9">Septiembre</option>
+                                                <option class="" value="10">Octubre</option>
+                                                <option class="" value="11">Noviembre</option>
+                                                <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -1459,18 +1459,18 @@
                                             <div class="col-md-4">
                                                 <select class="form-control" name="m_mes_fechaFB" id="m_mes_fechaFB">
                                                     <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
+                                                    <option class="" value="1">Enero</option>
+                                                    <option class="" value="2">Febrero</option>
+                                                    <option class="" value="3">Marzo</option>
+                                                    <option class="" value="4">Abril</option>
+                                                    <option class="" value="5">Mayo</option>
+                                                    <option class="" value="6">Junio</option>
+                                                    <option class="" value="7">Julio</option>
+                                                    <option class="" value="8">Agosto</option>
+                                                    <option class="" value="9">Septiembre</option>
+                                                    <option class="" value="10">Octubre</option>
+                                                    <option class="" value="11">Noviembre</option>
+                                                    <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">

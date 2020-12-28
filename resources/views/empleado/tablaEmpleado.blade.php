@@ -933,7 +933,7 @@ function verDEmpleado(idempleadoVer){
                     $('#modalEliminar').modal('toggle');
                     alertify
                     .confirm(
-                        "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp;Para poder dar de baja aun empleado, debe tener por lo menos un historial de contrao.",
+                        "<img src=\"landing/images/alert.svg\" height=\"20\" class=\"mr-1\">&nbsp; No se puede dar de baja si el empleado no tiene fecha de alta ¿ Deseas agregar fecha de alta?.",
                         function (e) {
                             if (e) {
                                 editarEmpleado(idEmpleado);

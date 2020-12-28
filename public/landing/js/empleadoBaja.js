@@ -1230,6 +1230,7 @@ function limpiarDatosAlta() {
     $('#m_dia_fechaFB').val(0);
     $('#m_mes_fechaFB').val(0);
     $('#m_ano_fechaFB').val(0);
+    $('#ocultarFechaB').show();
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA
 async function validArchivosAlta() {
@@ -1341,7 +1342,6 @@ async function nuevaAlta() {
     var fechaAlta = fechaInicial;
     //* FUNCIONES DE VALIDAR ARCHIVO
     const result = await validArchivosAlta();
-    console.log(result);
     if (!result) {
         $('#validArchivoB').show();
         return false;

@@ -43,7 +43,6 @@ var altaEmpleado = true;
 var BajaEmp = true;
 //: FUNCION MOSTRAR DETALLES DE CONTRATO
 function mostrarDetallesContrato(id) {
-    console.log(id);
     $.ajax({
         async: false,
         type: "GET",
@@ -114,6 +113,9 @@ function mostrarDetallesContrato(id) {
                                 </div>`;
                 });
                 $('#documentosxDetalle').append(itemsD);
+            } else {
+                itemsVacio = `<span class="p-2" style="font-size:12px">No hay documentos</span>`;
+                $('#documentosxDetalle').append(itemsVacio);
             }
             $('#form-ver').modal('hide');
             $('#contratoDetallesmodalE').modal();
@@ -145,6 +147,7 @@ function historialEmp() {
             var containerVer = $('#editar_tbodyHistorial');
             if (data.length != 0) {
                 $('#gifAlta').hide();
+                $("#validHE").hide();
                 altaEmpleado = true;
                 for (var i = 0; i < data.length; i++) {
                     var trVer = `<tr id="idHistorialE${data[i].id}">`;
@@ -171,7 +174,7 @@ function historialEmp() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-17"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
@@ -244,7 +247,6 @@ function historialEmp() {
 }
 //: FUNCION PARA MOSTRAR BOTON @NUEVA ALTA
 function mostrarBoton() {
-    console.log(altaEmpleado);
     if (altaEmpleado) {
         $('#nuevaAltaEdit').show();
     } else {
@@ -269,7 +271,6 @@ async function validArchivosEdit() {
         $.each(obj.files, function (j, file) {
             var fileSize = file.size;
             var sizeKiloBytes = parseInt(fileSize);
-            console.log(sizeKiloBytes, $('#fileDetalleE').attr('size'));
             if (sizeKiloBytes > parseInt($('#fileDetalleE').attr('size'))) {
                 respuesta = false;
             }
@@ -283,7 +284,6 @@ $('#fileDetalleE').on("click", function () {
 });
 //:EDITAR DETALLES DE CONTRATO
 async function editarDetalleCE() {
-    console.log($('#fechaBajaInputE').val());
     var idContrato = $('#idContratoD').val();
     var condicionPago = $('#v_condicion').val();
     var monto = $('#v_monto').val();
@@ -524,7 +524,6 @@ async function nuevoDetalleC() {
     var monto = $('#v_montoND').val();
     var fechaInicial;
     var fechaFinal = "0000-00-00";
-    console.log($('#idHistoE').val());
     var idHistorial = $('#idHistoE').val();
     var idEmpleado = $('#v_id').val();
 
@@ -651,6 +650,7 @@ $("#checkboxFechaIEND").on("click", function () {
 function modalNuevaAlta() {
     $('#contratoDetallesmodalEN').modal();
     $('#form-ver').modal('hide');
+    limpiarNuevosDatosAlta();
     validacionNuevaAlta();
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
@@ -835,7 +835,7 @@ function limpiarNuevosDatosAlta() {
     $('#m_dia_fechaFEN').val(0);
     $('#m_mes_fechaFEN').val(0);
     $('#m_ano_fechaFEN').val(0);
-    $('#contratoDetallesmodalEN').modal('toggle');
+    $('#ocultarFechaEN').show();
 }
 //* VALIDACION DE NUEVA ALTA
 function validacionNuevaAlta() {
@@ -992,9 +992,7 @@ function archivosDeBaja(id) {
 }
 //? FUNCION GUARDAR DATOS DE BAJA
 async function confirmarBajaHistorial() {
-    console.log("ingreso");
     const result = await validArchivosBajaEdit();
-    console.log(result);
     if (!result) {
         $('#validArchivoBajaE').show();
         return false;
@@ -1110,7 +1108,7 @@ function historialEmpReg() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-17"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
@@ -1258,7 +1256,7 @@ function mostrarDetallesContratoReg(id) {
 function modalNuevaAltaReg() {
     $('#contratoDetallesmodal').modal();
     $('#form-registrar').modal('hide');
-    limpiarNuevosDatosAlta();
+    limpiarNuevosDatosAltaReg();
     validacionNuevaAltaReg();
 }
 //* VALIDACION DE NUEVA ALTA
@@ -1290,7 +1288,7 @@ function validacionNuevaAltaReg() {
     }
 }
 //* LIMPIAR FORMULARIO EN NUEVA ALTA
-function limpiarNuevosDatosAlta() {
+function limpiarNuevosDatosAltaReg() {
     $('#contrato').val("");
     $('#condicion').val("");
     $('#monto').val("");
@@ -1852,7 +1850,7 @@ function historialEmpVer() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-plus-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-17"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
