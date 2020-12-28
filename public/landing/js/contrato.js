@@ -1082,6 +1082,7 @@ function historialEmpReg() {
         success: function (data) {
             var container = $('#reg_tbodyHistorial');
             if (data.length != 0) {
+                $("#reg_validHE").hide();
                 altaEmpleadoReg = true;
                 for (var i = 0; i < data.length; i++) {
                     var trReg = `<tr>`;
@@ -1301,6 +1302,7 @@ function limpiarNuevosDatosAltaReg() {
     $('#mf_dia_fecha').val(0);
     $('#mf_mes_fecha').val(0);
     $('#mf_ano_fecha').val(0);
+    $('#ocultarFecha').show();
 }
 //* CHECKBOX DE FECHA INDEFINIDA
 $("#checkboxFechaI").on("click", function () {
