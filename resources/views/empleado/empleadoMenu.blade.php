@@ -629,7 +629,7 @@ use App\proyecto_empleado;
     }
 
     .flatpickr-calendar {
-        max-width: 130px!important;
+        max-width: 90%;
     }
 
 

@@ -764,9 +764,9 @@ use Carbon\Carbon;
         .form-control {
             font-size: 12px;
         }
-        .flatpickr-calendar {
+      /*   .flatpickr-calendar {
         max-width: 130px!important;
-    }
+    } */
         .container {
             margin-left: 40px;
             margin-right: 28px;
