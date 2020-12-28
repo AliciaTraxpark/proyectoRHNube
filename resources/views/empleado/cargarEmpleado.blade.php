@@ -296,7 +296,7 @@ use App\User;
                                         <img src="{{asset('landing/images/load.gif')}}" height="100">
                                     </div>
                                     <div id="cargaCompleta" style="display: none"><br>
-                                        <h4><img src="{{asset('landing/images/exito.svg')}}" height="22">&nbsp;Carga de
+                                        <h4><img src="{{asset('landing/images/exito.svg')}}" height="22">&nbsp;¡Carga de
                                             empleados exitosa!</h4>
 
                                         @if ($usuario==0)
@@ -304,7 +304,8 @@ use App\User;
                                             @else
                                             <a href="{{('/empleados')}}">
                                                 @endif
-                                                <button class="boton btn btn-default mr-1">&nbsp; OK &nbsp;</button></a>
+                                                <button class="boton btn btn-default mr-1">&nbsp; Aceptar
+                                                    &nbsp;</button></a>
                                             <br><br>
                                     </div>
 
