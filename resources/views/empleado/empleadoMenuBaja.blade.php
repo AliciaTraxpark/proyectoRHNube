@@ -840,28 +840,6 @@
                 <h4 class="header-title mt-0 " style="color: #f0f0f0">Datos de empleado</h4><br>
                 <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
                     onclick="javascript:cerrarVer()">
-                    @if (isset($modifEmp))
-                    @if ($modifEmp==1)
-                    <span class="badge float-left pr-4 pt-0">
-                        <a style="color: #f0f0f0"
-                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                            <span style="font-weight: bold">Editar Empleado</span>
-                        </a>
-                    </span>
-                    @else
-
-                    @endif
-                    @else
-                    <span class="badge float-left pr-4 pt-0">
-                        <a style="color: #f0f0f0"
-                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                            <img src="{{asset('admin/images/edit.svg')}}" height="15">
-                            <span style="font-weight: bold">Editar Empleado</span>
-                        </a>
-                    </span>
-                    @endif
-
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1371,8 +1349,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                    <span id="validFechaCIB" style="color: red;display: none;">*Fecha
-                                        incorrecta.</span>
+                                    <span id="validFechaCIB" style="color: red;display: none;">
+                                        *Fecha incorrecta.
+                                    </span>
+                                    <div class="alert alert-danger" role="alert" style="display: none;"
+                                        id="alertErrorFechaAlta"></div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select class="form-control" name="m_dia_fechaIB" id="m_dia_fechaIB"
@@ -1515,6 +1496,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script src="{{ asset('admin/assets/libs/smartwizard/jquery.smartWizard.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/moment/moment.min.js') }}"></script>
+<script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="{{ asset('admin/packages/core/main.js') }}"></script>
 <script src="{{ asset('admin/packages/core/locales/es.js') }}"></script>

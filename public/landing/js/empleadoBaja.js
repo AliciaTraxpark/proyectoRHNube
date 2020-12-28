@@ -1286,6 +1286,38 @@ $("#checkboxFechaIB").on("click", function () {
         $('#ocultarFechaB').show();
     }
 });
+//* FUNCION PARA VALIDAR FECHA INICIO
+async function validarFechaAlta(fechaInicio, idEmpleado) {
+    var resultado = {};
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/validFechaAlta",
+        data: {
+            empleado: idEmpleado
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var momentFechaInicio = moment(fechaInicio);
+                var momentFechaAnterior = moment(data[0].fechaFinal);
+                if (momentFechaInicio.isBefore(momentFechaAnterior)) {
+                    resultado = { "respuesta": false, "fecha": data[0].fechaFinal };
+                }
+            }
+        },
+        error: function () { }
+    });
+
+    return resultado;
+}
 //* REGISTRAR NUEVA ALTA
 async function nuevaAlta() {
     var contrato = $('#contratoB').val();
@@ -1347,6 +1379,20 @@ async function nuevaAlta() {
         return false;
     } else {
         $('#validArchivoB').hide();
+    }
+    //* FUNCIONES DE VALIDAR FECHA INICIO
+    const respFecha = await validarFechaAlta(fechaInicial, idEmpleado);
+    if (respFecha.respuesta != undefined) {
+        if (!respFecha.respuesta) {
+            $('#alertErrorFechaAlta').empty();
+            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                                <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
+            $('#alertErrorFechaAlta').append(errorAlert);
+            $('#alertErrorFechaAlta').show();
+            return false;
+        } else {
+            $('#alertErrorFechaAlta').hide();
+        }
     }
     //* *******************************FINALIZACION ******************************************
     //* AJAX DE NUEVA ALTA
