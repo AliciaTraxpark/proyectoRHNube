@@ -111,13 +111,13 @@ function calendario_edit() {
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales'+'******Pausas:******    '+cadenaPausas + '</label>'});
+                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales <br>'+'******Pausas:******    '+cadenaPausas + '</label>'});
                         } else {
-                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario'+'    ******Pausas:******     '+cadenaPausas});
+                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario <br>'+'    ******Pausas:******     '+cadenaPausas});
                         }
                     }
                     else {
-                        $(info.el).tooltip({   html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF+'    ******Pausas:******     ' +cadenaPausas });
+                        $(info.el).tooltip({   html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF+' <br>    ******Pausas:******     ' +cadenaPausas });
                     }
                 }
                 else{
