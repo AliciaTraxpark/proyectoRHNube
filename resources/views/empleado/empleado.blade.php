@@ -764,7 +764,8 @@ use Carbon\Carbon;
         .form-control {
             font-size: 12px;
         }
-      /*   .flatpickr-calendar {
+
+        /*   .flatpickr-calendar {
         max-width: 130px!important;
     } */
         .container {
@@ -1830,20 +1831,20 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="m_mes_fecha" id="m_mes_fecha"
-                                                        required="">
+                                                        required>
                                                         <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
+                                                        <option class="" value="1">Enero</option>
+                                                        <option class="" value="2">Febrero</option>
+                                                        <option class="" value="3">Marzo</option>
+                                                        <option class="" value="4">Abril</option>
+                                                        <option class="" value="5">Mayo</option>
+                                                        <option class="" value="6">Junio</option>
+                                                        <option class="" value="7">Julio</option>
+                                                        <option class="" value="8">Agosto</option>
+                                                        <option class="" value="9">Septiembre</option>
+                                                        <option class="" value="10">Octubre</option>
+                                                        <option class="" value="11">Noviembre</option>
+                                                        <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -1908,18 +1909,18 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="mf_mes_fecha"
                                                             id="mf_mes_fecha" required="">
                                                             <option value="0">Mes</option>
-                                                            <option class="" value="1">Ene.</option>
-                                                            <option class="" value="2">Feb.</option>
-                                                            <option class="" value="3">Mar.</option>
-                                                            <option class="" value="4">Abr.</option>
-                                                            <option class="" value="5">May.</option>
-                                                            <option class="" value="6">Jun.</option>
-                                                            <option class="" value="7">Jul.</option>
-                                                            <option class="" value="8">Ago.</option>
-                                                            <option class="" value="9">Set.</option>
-                                                            <option class="" value="10">Oct.</option>
-                                                            <option class="" value="11">Nov.</option>
-                                                            <option class="" value="12">Dic.</option>
+                                                            <option class="" value="1">Enero</option>
+                                                            <option class="" value="2">Febrero</option>
+                                                            <option class="" value="3">Marzo</option>
+                                                            <option class="" value="4">Abril</option>
+                                                            <option class="" value="5">Mayo</option>
+                                                            <option class="" value="6">Junio</option>
+                                                            <option class="" value="7">Julio</option>
+                                                            <option class="" value="8">Agosto</option>
+                                                            <option class="" value="9">Septiembre</option>
+                                                            <option class="" value="10">Octubre</option>
+                                                            <option class="" value="11">Noviembre</option>
+                                                            <option class="" value="12">Diciembre</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
@@ -2321,8 +2322,8 @@ use Carbon\Carbon;
                                                             Condición Pago
                                                             <a onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
-                                                                data-target="#condicionmodalE"><i
-                                                                    class="uil uil-plus"></i>
+                                                                data-target="#condicionmodalE">
+                                                                <i class="uil uil-plus"></i>
                                                             </a>
                                                         </label>
                                                         <select class="form-control" name="v_condicion" id="v_condicion"
@@ -2346,12 +2347,13 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                                    <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
-                                                        incorrecta.</span>
+                                                    <span id="m_validFechaCIE" style="color: red;display: none;">
+                                                        *Fecha incorrecta.
+                                                    </span>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_dia_fechaIE"
-                                                                id="m_dia_fechaIE" required="">
+                                                                id="m_dia_fechaIE" required>
                                                                 <option value="0">Día</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2362,26 +2364,26 @@ use Carbon\Carbon;
                                                         </div>
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_mes_fechaIE"
-                                                                id="m_mes_fechaIE" required="">
+                                                                id="m_mes_fechaIE" required>
                                                                 <option value="0">Mes</option>
-                                                                <option class="" value="1">Ene.</option>
-                                                                <option class="" value="2">Feb.</option>
-                                                                <option class="" value="3">Mar.</option>
-                                                                <option class="" value="4">Abr.</option>
-                                                                <option class="" value="5">May.</option>
-                                                                <option class="" value="6">Jun.</option>
-                                                                <option class="" value="7">Jul.</option>
-                                                                <option class="" value="8">Ago.</option>
-                                                                <option class="" value="9">Set.</option>
-                                                                <option class="" value="10">Oct.</option>
-                                                                <option class="" value="11">Nov.</option>
-                                                                <option class="" value="12">Dic.</option>
+                                                                <option class="" value="1">Enero</option>
+                                                                <option class="" value="2">Febrero</option>
+                                                                <option class="" value="3">Marzo</option>
+                                                                <option class="" value="4">Abril</option>
+                                                                <option class="" value="5">Mayo</option>
+                                                                <option class="" value="6">Junio</option>
+                                                                <option class="" value="7">Julio</option>
+                                                                <option class="" value="8">Agosto</option>
+                                                                <option class="" value="9">Septiembre</option>
+                                                                <option class="" value="10">Octubre</option>
+                                                                <option class="" value="11">Noviembre</option>
+                                                                <option class="" value="12">Diciembre</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
-                                                                required="">
+                                                            <select class="form-control"
+                                                                style="padding-left: 5px;padding-right: 5px;"
+                                                                name="m_ano_fechaIE" id="m_ano_fechaIE" required>
                                                                 <option value="0">Año</option>
                                                                 @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2428,9 +2430,9 @@ use Carbon\Carbon;
                                                             name="checkboxFechaIE" class="ocultarFechaIE">
                                                     </div>
                                                     <div id="ocultarFechaE">
-                                                        <span id="m_validFechaCFE"
-                                                            style="color: red;display: none;">*Fecha
-                                                            incorrecta.</span>
+                                                        <span id="m_validFechaCFE" style="color: red;display: none;">
+                                                            *Fecha incorrecta.
+                                                        </span>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <select class="form-control" name="m_dia_fechaFE"
@@ -2446,23 +2448,24 @@ use Carbon\Carbon;
                                                                 <select class="form-control" name="m_mes_fechaFE"
                                                                     id="m_mes_fechaFE">
                                                                     <option value="0">Mes</option>
-                                                                    <option class="" value="1">Ene.</option>
-                                                                    <option class="" value="2">Feb.</option>
-                                                                    <option class="" value="3">Mar.</option>
-                                                                    <option class="" value="4">Abr.</option>
-                                                                    <option class="" value="5">May.</option>
-                                                                    <option class="" value="6">Jun.</option>
-                                                                    <option class="" value="7">Jul.</option>
-                                                                    <option class="" value="8">Ago.</option>
-                                                                    <option class="" value="9">Set.</option>
-                                                                    <option class="" value="10">Oct.</option>
-                                                                    <option class="" value="11">Nov.</option>
-                                                                    <option class="" value="12">Dic.</option>
+                                                                    <option class="" value="1">Enero</option>
+                                                                    <option class="" value="2">Febrero</option>
+                                                                    <option class="" value="3">Marzo</option>
+                                                                    <option class="" value="4">Abril</option>
+                                                                    <option class="" value="5">Mayo</option>
+                                                                    <option class="" value="6">Junio</option>
+                                                                    <option class="" value="7">Julio</option>
+                                                                    <option class="" value="8">Agosto</option>
+                                                                    <option class="" value="9">Septiembre</option>
+                                                                    <option class="" value="10">Octubre</option>
+                                                                    <option class="" value="11">Noviembre</option>
+                                                                    <option class="" value="12">Diciembre</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaFE" id="m_ano_fechaFE">
+                                                                <select class="form-control"
+                                                                    style="padding-left: 5px;padding-right: 5px;"
+                                                                    name="m_ano_fechaFE" id="m_ano_fechaFE">
                                                                     <option value="0">Año</option>
                                                                     @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                         value="{{$i}}">
@@ -2533,11 +2536,13 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Condición Pago <a
-                                                                onclick="javascript:ModalAbiertoCondicion();"
+                                                        <label for="sw-default">Condición Pago
+                                                            <a onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
-                                                                data-target="#condicionmodalE"><i
-                                                                    class="uil uil-plus"></i></a></label>
+                                                                data-target="#condicionmodalE">
+                                                                <i class="uil uil-plus"></i>
+                                                            </a>
+                                                        </label>
                                                         <select class="form-control" name="v_condicionN"
                                                             id="v_condicionN" required>
                                                             <option value="">Seleccionar</option>
@@ -2559,12 +2564,13 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label for="" style="font-weight: 600">Fecha Inicial</label>
-                                                    <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
-                                                        incorrecta.</span>
+                                                    <span id="m_validFechaCIEN" style="color: red;display: none;">
+                                                        *Fecha incorrecta.
+                                                    </span>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_dia_fechaIEN"
-                                                                id="m_dia_fechaIEN" required="">
+                                                                id="m_dia_fechaIEN" required>
                                                                 <option value="0">Día</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2575,26 +2581,26 @@ use Carbon\Carbon;
                                                         </div>
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_mes_fechaIEN"
-                                                                id="m_mes_fechaIEN" required="">
+                                                                id="m_mes_fechaIEN" required>
                                                                 <option value="0">Mes</option>
-                                                                <option class="" value="1">Ene.</option>
-                                                                <option class="" value="2">Feb.</option>
-                                                                <option class="" value="3">Mar.</option>
-                                                                <option class="" value="4">Abr.</option>
-                                                                <option class="" value="5">May.</option>
-                                                                <option class="" value="6">Jun.</option>
-                                                                <option class="" value="7">Jul.</option>
-                                                                <option class="" value="8">Ago.</option>
-                                                                <option class="" value="9">Set.</option>
-                                                                <option class="" value="10">Oct.</option>
-                                                                <option class="" value="11">Nov.</option>
-                                                                <option class="" value="12">Dic.</option>
+                                                                <option class="" value="1">Enero</option>
+                                                                <option class="" value="2">Febrero</option>
+                                                                <option class="" value="3">Marzo</option>
+                                                                <option class="" value="4">Abril</option>
+                                                                <option class="" value="5">Mayo</option>
+                                                                <option class="" value="6">Junio</option>
+                                                                <option class="" value="7">Julio</option>
+                                                                <option class="" value="8">Agosto</option>
+                                                                <option class="" value="9">Septiembre</option>
+                                                                <option class="" value="10">Octubre</option>
+                                                                <option class="" value="11">Noviembre</option>
+                                                                <option class="" value="12">Diciembre</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
-                                                                required="">
+                                                            <select class="form-control"
+                                                                style="padding-left: 5px;padding-right: 5px;"
+                                                                name="m_ano_fechaIEN" id="m_ano_fechaIEN" required>
                                                                 <option value="0">Año</option>
                                                                 @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -2603,7 +2609,6 @@ use Carbon\Carbon;
                                                                     @endfor
                                                             </select>
                                                         </div>
-
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12 pt-1" id="validArchivoEditN"
@@ -2641,9 +2646,9 @@ use Carbon\Carbon;
                                                             name="checkboxFechaIEN">
                                                     </div>
                                                     <div id="ocultarFechaEN">
-                                                        <span id="m_validFechaCFEN"
-                                                            style="color: red;display: none;">*Fecha
-                                                            incorrecta.</span>
+                                                        <span id="m_validFechaCFEN" style="color: red;display: none;">
+                                                            *Fecha incorrecta.
+                                                        </span>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <select class="form-control" name="m_dia_fechaFEN"
@@ -2674,8 +2679,9 @@ use Carbon\Carbon;
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaFEN" id="m_ano_fechaFEN">
+                                                                <select class="form-control"
+                                                                    style="padding-left: 5px;padding-right: 5px;"
+                                                                    name="m_ano_fechaFEN" id="m_ano_fechaFEN">
                                                                     <option value="0">Año</option>
                                                                     @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                         value="{{$i}}">
@@ -2727,7 +2733,8 @@ use Carbon\Carbon;
                                             <div class="form-group">
                                                 <label for="sw-default">Contrato
                                                     <a onclick="$('#NuevoContratoDetallesmodalE').modal('hide');$('#contratomodalE').modal('show');"
-                                                        data-toggle="modal"><i class="uil uil-plus"
+                                                        data-toggle="modal">
+                                                        <i class="uil uil-plus"
                                                             style="color: darkblue;cursor: pointer;"></i>
                                                     </a>
                                                 </label>
@@ -2792,20 +2799,20 @@ use Carbon\Carbon;
                                                         </div>
                                                         <div class="col-md-4">
                                                             <select class="form-control" name="m_mes_fechaIEND"
-                                                                id="m_mes_fechaIEND" required="">
+                                                                id="m_mes_fechaIEND" required>
                                                                 <option value="0">Mes</option>
-                                                                <option class="" value="1">Ene.</option>
-                                                                <option class="" value="2">Feb.</option>
-                                                                <option class="" value="3">Mar.</option>
-                                                                <option class="" value="4">Abr.</option>
-                                                                <option class="" value="5">May.</option>
-                                                                <option class="" value="6">Jun.</option>
-                                                                <option class="" value="7">Jul.</option>
-                                                                <option class="" value="8">Ago.</option>
-                                                                <option class="" value="9">Set.</option>
-                                                                <option class="" value="10">Oct.</option>
-                                                                <option class="" value="11">Nov.</option>
-                                                                <option class="" value="12">Dic.</option>
+                                                                <option class="" value="1">Enero</option>
+                                                                <option class="" value="2">Febrero</option>
+                                                                <option class="" value="3">Marzo</option>
+                                                                <option class="" value="4">Abril</option>
+                                                                <option class="" value="5">Mayo</option>
+                                                                <option class="" value="6">Junio</option>
+                                                                <option class="" value="7">Julio</option>
+                                                                <option class="" value="8">Agosto</option>
+                                                                <option class="" value="9">Septiembre</option>
+                                                                <option class="" value="10">Octubre</option>
+                                                                <option class="" value="11">Noviembre</option>
+                                                                <option class="" value="12">Diciembre</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
@@ -2876,24 +2883,24 @@ use Carbon\Carbon;
                                                                 <select class="form-control" name="m_mes_fechaFEND"
                                                                     id="m_mes_fechaFEND">
                                                                     <option value="0">Mes</option>
-                                                                    <option class="" value="1">Ene.</option>
-                                                                    <option class="" value="2">Feb.</option>
-                                                                    <option class="" value="3">Mar.</option>
-                                                                    <option class="" value="4">Abr.</option>
-                                                                    <option class="" value="5">May.</option>
-                                                                    <option class="" value="6">Jun.</option>
-                                                                    <option class="" value="7">Jul.</option>
-                                                                    <option class="" value="8">Ago.</option>
-                                                                    <option class="" value="9">Set.</option>
-                                                                    <option class="" value="10">Oct.</option>
-                                                                    <option class="" value="11">Nov.</option>
-                                                                    <option class="" value="12">Dic.</option>
+                                                                    <option class="" value="1">Enero</option>
+                                                                    <option class="" value="2">Febrero</option>
+                                                                    <option class="" value="3">Marzo</option>
+                                                                    <option class="" value="4">Abril</option>
+                                                                    <option class="" value="5">Mayo</option>
+                                                                    <option class="" value="6">Junio</option>
+                                                                    <option class="" value="7">Julio</option>
+                                                                    <option class="" value="8">Agosto</option>
+                                                                    <option class="" value="9">Septiembre</option>
+                                                                    <option class="" value="10">Octubre</option>
+                                                                    <option class="" value="11">Noviembre</option>
+                                                                    <option class="" value="12">Diciembre</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaFEND"
-                                                                    id="m_ano_fechaFEND">
+                                                                <select class="form-control"
+                                                                    style="padding-left: 5px;padding-right: 5px;"
+                                                                    name="m_ano_fechaFEND" id="m_ano_fechaFEND">
                                                                     <option value="0">Año</option>
                                                                     @for ($i = 2000; $i <2100; $i++) <option class=""
                                                                         value="{{$i}}">
@@ -2994,18 +3001,18 @@ use Carbon\Carbon;
                                                     <select class="form-control" name="m_mes_fechaIEV"
                                                         id="m_mes_fechaIEV" disabled>
                                                         <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
+                                                        <option class="" value="1">Enero</option>
+                                                        <option class="" value="2">Febrero</option>
+                                                        <option class="" value="3">Marzo</option>
+                                                        <option class="" value="4">Abril</option>
+                                                        <option class="" value="5">Mayo</option>
+                                                        <option class="" value="6">Junio</option>
+                                                        <option class="" value="7">Julio</option>
+                                                        <option class="" value="8">Agosto</option>
+                                                        <option class="" value="9">Septiembre</option>
+                                                        <option class="" value="10">Octubre</option>
+                                                        <option class="" value="11">Noviembre</option>
+                                                        <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -3044,18 +3051,18 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="m_mes_fechaFEV"
                                                             id="m_mes_fechaFEV" disabled>
                                                             <option value="0">Mes</option>
-                                                            <option class="" value="1">Ene.</option>
-                                                            <option class="" value="2">Feb.</option>
-                                                            <option class="" value="3">Mar.</option>
-                                                            <option class="" value="4">Abr.</option>
-                                                            <option class="" value="5">May.</option>
-                                                            <option class="" value="6">Jun.</option>
-                                                            <option class="" value="7">Jul.</option>
-                                                            <option class="" value="8">Ago.</option>
-                                                            <option class="" value="9">Set.</option>
-                                                            <option class="" value="10">Oct.</option>
-                                                            <option class="" value="11">Nov.</option>
-                                                            <option class="" value="12">Dic.</option>
+                                                            <option class="" value="1">Enero</option>
+                                                            <option class="" value="2">Febrero</option>
+                                                            <option class="" value="3">Marzo</option>
+                                                            <option class="" value="4">Abril</option>
+                                                            <option class="" value="5">Mayo</option>
+                                                            <option class="" value="6">Junio</option>
+                                                            <option class="" value="7">Julio</option>
+                                                            <option class="" value="8">Agosto</option>
+                                                            <option class="" value="9">Septiembre</option>
+                                                            <option class="" value="10">Octubre</option>
+                                                            <option class="" value="11">Noviembre</option>
+                                                            <option class="" value="12">Diciembre</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
