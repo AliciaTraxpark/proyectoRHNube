@@ -1424,12 +1424,11 @@ async function nuevaAlta() {
             $.notifyClose();
             $.notify(
                 {
-                    message: "\nRegisto exitoso.",
+                    message: "\nAlta exitosa.",
                     icon: "admin/images/checked.svg",
                 },
                 {
                     position: "fixed",
-                    element: $('#form-ver'),
                     icon_type: "image",
                     newest_on_top: true,
                     delay: 5000,
@@ -1579,4 +1578,9 @@ function mostrarDetallesContratoVer(id) {
         },
         error: function () { }
     });
+}
+
+function cerrarVer() {
+    $("#smartwizardVer").smartWizard("reset");
+    $('#smartwizardVer :input[type="text"]').val("");
 }
