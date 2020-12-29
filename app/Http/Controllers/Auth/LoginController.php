@@ -64,7 +64,7 @@ class LoginController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-            Auth::logoutOtherDevices(request()->input('password'));
+            /* Auth::logoutOtherDevices(request()->input('password')); */
             $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
            /*  dd( $usuario_organizacion); */
             if($usuario_organizacion==null){
@@ -150,7 +150,7 @@ class LoginController extends Controller
     {
 
         if (Auth::check()) {
-            Auth::logoutOtherDevices(request()->input('password'));
+            /* Auth::logoutOtherDevices(request()->input('password')); */
             return redirect('/dashboard');
         } else {
             return view('welcome');
