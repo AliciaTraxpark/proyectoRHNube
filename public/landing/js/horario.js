@@ -3020,7 +3020,203 @@ function editarHorario() {
         }
       }
 
-    //////////////////////////////////
+    //////////////////////////////////3ro
+    if ($("#SwitchPausa_ed").is(":checked")) {
+        //PAUSAS de editar  PRIMERA   VALIDADAS
+        let horaF8 = $("#FinPausa_edRN").val();
+        let horaI8 = $("#InicioPausa_edRN").val();
+        if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+          if (horaF8 < $("#horaI_ed").val() && horaF8 > $("#horaF_ed").val()) {
+            $("#FinPausa_edRN").val("");
+            $("#fueraRango_ed").show();
+            event.stopPropagation();
+          } else {
+            $("#fueraRango_ed").hide();
+            if (
+              horaI8 >= horaF8 &&
+              horaF8 <= $("#horaI_ed").val() &&
+              horaF8 > $("#horaF_ed").val()
+            ) {
+              $("#errorenPausas_ed").show();
+              $("#FinPausa_edRN").val("");
+            } else {
+              $("#errorenPausas_ed").hide();
+            }
+          }
+
+          if (horaI8 > horaF8) {
+            /*  $('#FinPausa').val('');
+                  $('#errorenPausas').show();
+                  event.stopPropagation(); */
+          } else {
+            $("#errorenPausas_ed").hide();
+          }
+        } else {
+          if (horaF8 < $("#horaI_ed").val() || horaF8 > $("#horaF_ed").val()) {
+            $("#FinPausa_edRN").val("");
+            $("#fueraRango_ed").show();
+            event.stopPropagation();
+          } else {
+            $("#fueraRango_ed").hide();
+          }
+          if (horaF8 <= horaI8) {
+            $("#FinPausa_edRN").val("");
+            $("#errorenPausas_ed").show();
+            event.stopPropagation();
+          } else {
+            $("#errorenPausas_ed").hide();
+          }
+        }
+
+        let horaF9 = $("#FinPausa_edRN").val();
+        let horaI9 = $("#InicioPausa_edRN").val();
+        $("#FinPausa_edRN").prop("disabled", false);
+
+        if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+          if (horaI9 < $("#horaI_ed").val() && horaI9 > $("#horaF_ed").val()) {
+            console.log("moostrando fuera rango 11/11");
+            $("#InicioPausa_edRN").val("");
+            $("#fueraRango_ed").show();
+
+            event.stopPropagation();
+          } else {
+            $("#fueraRango_ed").hide();
+          }
+        } else {
+          if (horaI9 < $("#horaI_ed").val() || horaI9 > $("#horaF_ed").val()) {
+            $("#InicioPausa_edRN").val("");
+            $("#fueraRango_ed").show();
+            event.stopPropagation();
+          } else {
+            $("#fueraRango_ed").hide();
+          }
+        }
+
+
+        if (horaF9 == null || horaF9 == "") {
+          var horafinal1 = $("#horaF_ed").val();
+          splih1 = horafinal1.split(":");
+          console.log(splih1[0]);
+          console.log("nada me da");
+          $("#FinPausa_edRN").val("").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            defaultHour: splih1[0],
+          });
+        } else {
+          console.log("secumple");
+          if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+            if (horaF9 <= horaI9) {
+              $("#InicioPausa_edRN").val("");
+              $("#errorenPausas_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#errorenPausas_ed").hide();
+            }
+          } else {
+            $("#errorenPausas_ed").hide();
+          }
+        }
+
+        $("#FinPausa_edRN").on("focus", function () {
+          $(this).blur();
+        });
+        $("#FinPausa_edRN").removeAttr("readonly");
+
+        /////////////////////////////////////
+        //////////PAUSAS2 VALIDADAS//
+
+        for (newID3 =100; newID3 <130; newID3++) {
+          console.log('soyNuw'+ newID3);
+          let horaF10 = $("#FinPausa_edRN" + newID3).val();
+          let horaI10 = $("#InicioPausa_edRN" + newID3).val();
+          $("#FinPausa_edRN" + newID3).prop("disabled", false);
+          if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+            if (horaI10 < $("#horaI_ed").val() && horaI10 > $("#horaF_ed").val()) {
+              console.log("moostrando fuera rango 11/11");
+              $("#InicioPausa_edRN" + newID3).val("");
+              $("#fueraRango_ed").show();
+
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+            }
+          } else {
+            if (horaI10 < $("#horaI_ed").val() || horaI10 > $("#horaF_ed").val()) {
+              $("#InicioPausa_edRN" + newID3).val("");
+              $("#fueraRango_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+            }
+          }
+
+          if (horaF10 == null || horaF10 == "") {
+          } else {
+            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+              if (horaF10 <= horaI10) {
+                $("#InicioPausa_edRN" + newID3).val("");
+                $("#errorenPausas_ed").show();
+                event.stopPropagation();
+              } else {
+                $("#errorenPausas_ed").hide();
+              }
+            } else {
+              $("#errorenPausas_ed").hide();
+            }
+          }
+
+          ///////////
+
+          if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+            if (horaF10 < $("#horaI_ed").val() && horaF10 > $("#horaF_ed").val()) {
+              $("#FinPausa_edRN" + newID3).val("");
+              $("#fueraRango_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+              if (
+                horaI10 >= horaF10 &&
+                horaF10 <= $("#horaI_ed").val() &&
+                horaF10 > $("#horaF_ed").val()
+              ) {
+                $("#errorenPausas_ed").show();
+                $("#FinPausa_edRN" + newID3).val("");
+              } else {
+                $("#errorenPausas_ed").hide();
+              }
+            }
+
+            if (horaI10 > horaF10) {
+              /*  $('#FinPausa').val('');
+                       $('#errorenPausas').show();
+                       event.stopPropagation(); */
+            } else {
+              $("#errorenPausas_ed").hide();
+            }
+          } else {
+            if (horaF10 < $("#horaI_ed").val() || horaF10 > $("#horaF_ed").val()) {
+              $("#FinPausa_edRN" + newID3).val("");
+              $("#fueraRango_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#fueraRango_ed").hide();
+            }
+
+            if (horaF10 <= horaI10) {
+              $("#FinPausa_edRN" + newID3).val("");
+              $("#errorenPausas_ed").show();
+              event.stopPropagation();
+            } else {
+              $("#errorenPausas_ed").hide();
+            }
+          }
+        }
+      }
+
+    ///////////////////////////////////
     var idhorario = $('#idhorario_ed').val();
 
     var descried = $('#descripcionCa_ed').val();
