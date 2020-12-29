@@ -1200,7 +1200,8 @@ a:not([href]):not([tabindex]){
 
         <div id="horarioEditar" class="modal fade"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 650px;" >
-
+                <input type="hidden" id="maxIn">
+                <input type="hidden" id="minIn">
             <div class="modal-content">
                <div class="modal-header" style="background-color:#163552;">
                    <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar horario</h5>
