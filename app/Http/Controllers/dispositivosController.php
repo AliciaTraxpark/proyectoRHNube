@@ -370,8 +370,11 @@ class dispositivosController extends Controller
         ->where('invem.area_id', '=', null)
         ->where('invem.emple_id', '!=', null)
         ->get()->first();
+        $IDIN= $invitadod->idinvitado;
        if($invitado_empleadoIn!=null){
+
         if($idemp==0 || $idemp==' '){
+
             $marcaciones=DB::table('marcacion_puerta as marcm')
             ->select('e.emple_id','marcm.marcaMov_id','emple_nDoc','perso_nombre','perso_apPaterno','perso_apMaterno',
             'cargo_descripcion' ,'marcm.organi_id')
@@ -390,10 +393,13 @@ class dispositivosController extends Controller
             ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
-               ->orwhere(function($query) use ($fecha) {
+               ->orwhere(function($query) use ($fecha, $IDIN) {
                    $query->where('marcaMov_fecha', null)
                    ->whereDate('marcaMov_salida',$fecha)
-
+                   ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                   ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                   ->where('invi.estado', '=', 1)
+                   ->where('invi.idinvitado', '=', $IDIN)
                    ->where('marcm.organi_id','=',session('sesionidorg'));
                })
            ->get() ;
@@ -416,10 +422,14 @@ class dispositivosController extends Controller
             ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
-               ->orwhere(function($query) use ($fecha,$idemp) {
+               ->orwhere(function($query) use ($fecha,$idemp,$IDIN) {
                    $query->where('marcaMov_fecha', null)
                    ->whereDate('marcaMov_salida',$fecha)
                    ->where('e.emple_id',$idemp)
+                   ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                   ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                   ->where('invi.estado', '=', 1)
+                   ->where('invi.idinvitado', '=', $IDIN)
                    ->where('marcm.organi_id','=',session('sesionidorg'));
                })
            ->get() ;
@@ -446,10 +456,14 @@ class dispositivosController extends Controller
             ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
-               ->orwhere(function($query) use ($fecha) {
+               ->orwhere(function($query) use ($fecha,$IDIN) {
                    $query->where('marcaMov_fecha', null)
                    ->whereDate('marcaMov_salida',$fecha)
-
+                   ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                   ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                   ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                   ->where('invi.estado', '=', 1)
+                  ->where('invi.idinvitado', '=', $IDIN)
                    ->where('marcm.organi_id','=',session('sesionidorg'));
                })
            ->get() ;
@@ -473,10 +487,15 @@ class dispositivosController extends Controller
             ->selectRaw('GROUP_CONCAT(marcm.marcaMov_id ORDER BY marcm.marcaMov_fecha ASC)  as idMarcacion ')
             ->groupBy('marcm.marcaMov_emple_id')
                ->whereDate('marcaMov_fecha',$fecha)
-               ->orwhere(function($query) use ($fecha,$idemp) {
+               ->orwhere(function($query) use ($fecha,$idemp,$IDIN) {
                    $query->where('marcaMov_fecha', null)
                    ->whereDate('marcaMov_salida',$fecha)
                    ->where('e.emple_id',$idemp)
+                   ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                   ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                   ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                   ->where('invi.estado', '=', 1)
+                  ->where('invi.idinvitado', '=', $IDIN)
                    ->where('marcm.organi_id','=',session('sesionidorg'));
                })
            ->get() ;
