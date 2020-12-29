@@ -1208,6 +1208,54 @@ function registrarHorario() {
         $('#errorenPausas').hide();
     }
     }
+
+    ///////////
+
+
+            if($('#horaI').val() > $('#horaF').val()){
+                if( horaF3<$('#horaI').val() && horaF3>$('#horaF').val()){
+                    $('#FinPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                 } else{
+                    $('#fueraRango').hide();
+                    if (horaI3 >= horaF3 && horaF3<=$('#horaI').val() && horaF3> $('#horaF').val() ) {
+                        $('#errorenPausas').show();
+                        $('#FinPausa' + newID).val('');
+                    }
+                    else{
+                        $('#errorenPausas').hide();
+                    }
+                 }
+
+                 if (horaI3 > horaF3) {
+                   /*  $('#FinPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation(); */
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            } else{
+                if(horaF3<$('#horaI').val() ||horaF3>$('#horaF').val() ){
+                $('#FinPausa' + newID).val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+             } else{
+                $('#fueraRango').hide();
+             }
+
+                if (horaF3 <= horaI3) {
+                    $('#FinPausa'+ newID).val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            }
+
+
+
+
     }
 
     //////////////////////////////
