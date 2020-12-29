@@ -1047,6 +1047,7 @@ function registrarHorario() {
     $('#InicioPausa').prop('required', true);
     $('#FinPausa').prop('required', true);
 
+    if ($('#SwitchPausa').is(":checked")) {
         //PAUSAS PRIMERA   VALIDADAS
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
@@ -1257,7 +1258,7 @@ function registrarHorario() {
 
 
     }
-
+}
     //////////////////////////////
 
 
@@ -2604,6 +2605,7 @@ function editarHorarioLista(idsedit) {
 
 }
 function editarHorario() {
+
     var idhorario = $('#idhorario_ed').val();
 
     var descried = $('#descripcionCa_ed').val();
