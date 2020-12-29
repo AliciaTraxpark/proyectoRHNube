@@ -115,7 +115,10 @@ function mostrarDetallesContrato(id) {
                 });
                 $('#documentosxDetalle').append(itemsD);
             } else {
-                itemsVacio = `<span class="p-2" style="font-size:12px">No hay documentos</span>`;
+                itemsVacio = `<span class="p-2" style="font-size:12px">
+                                <img src="landing/images/doc.svg" height="25"> &nbsp;
+                                No hay documentos
+                            </span>`;
                 $('#documentosxDetalle').append(itemsVacio);
             }
             $('#form-ver').modal('hide');
@@ -1351,6 +1354,12 @@ function mostrarDetallesContratoReg(id) {
                                 </div>`;
                 });
                 $('#reg_documentosxDetalle').append(itemsD);
+            } else {
+                itemsVacio = `<span class="p-2" style="font-size:12px">
+                                    <img src="landing/images/doc.svg" height="25"> &nbsp;
+                                    No hay documentos
+                                </span>`;
+                $('#reg_documentosxDetalle').append(itemsVacio);
             }
             $('#form-registrar').modal('hide');
             $('#detallesContratomodal').modal();
