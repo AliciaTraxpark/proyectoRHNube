@@ -4021,10 +4021,11 @@ $('#SwitchPausa_ed').change(function (event) {
                         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
                         '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
                         '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
-                        '&nbsp; <button class="btn btn-sm bt_plus_ed" id="ed_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                        '&nbsp; <a style="cursor: pointer" id="btnPbed_100" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_ed" id="ed_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
                          ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
                         '</div>'
                         );
+                        $("#btnPbed_100").bind("click", delRow_ed);
                         $('.flatpickr-input[readonly]').on('focus', function () {
                             $(this).blur()
                         })
@@ -4166,33 +4167,98 @@ function addField_ed() {
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
     $newClone.children("button").attr("id",'ed_'+newID)
+    $newClone.children("a").attr("id",'btnPbed_'+ newID)
     //Inserto el div clonado y modificado despues del div original
     $newClone.insertAfter($('#divEd_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-    $("#ed_" + clickID).css("backgroundColor", "#f6cfcf");
+   /*  $("#ed_" + clickID).css("backgroundColor", "#f6cfcf");
     $("#ed_" + clickID).css("border-Color", "#f6cfcf");
     $("#ed_" + clickID).css("color", "#d11010");
     $("#ed_" + clickID).css("height", "22px");
     $("#ed_" + clickID).css("font-weight", "600");
     $("#ed_" + clickID).css("margin-top", "5px");
-    $("#ed_" + clickID).css("font-size", "12px");
+    $("#ed_" + clickID).css("font-size", "12px"); */
     $("#ed_" + clickID).css("width", "19px");
     $("#ed_" + clickID).css("margin-left", "20-px");
     $('input[name="descPausa_ed[]"]').prop('required', true);
     $('input[name="InicioPausa_ed[]"]').prop('required', true);
     $('input[name="FinPausa_ed[]"]').prop('required', true);
-    $("#ed_" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField_ed);
+    $("#btnPbed_"+clickID-1).remove();
+    var clicmased=clickID;
+    $("#ed_"+clicmased+".bt_plus_ed").remove();
+    /* $("#ed_" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField_ed); */
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
     $("#ed_" + clickID).bind("click", delRow_ed);
+    $("#btnPbed_" + clickID).bind("click", delRow_ed);
+   $("#idPausaMayor_ed").val(clickID+1);
 }
 function delRow_ed() {
+    console.log('estro a eliiminar');
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
+    var idDiv_ed='idDiv'+$(this).parent('div').attr("id");
+   var nuevoId_edit= idDiv_ed.slice(-3);
+  var idpausa_editM= $("#idPausaMayor_ed").val();
+   console.log(idpausa_editM+'-'+nuevoId_edit);
+
+    if($('#PausasHorar_ed').is(':empty')){
+        $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+    }
+    else{
+        if(idpausa_editM==nuevoId_edit){
+            $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed('+nuevoId_edit+')" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+        }
+    }
+
+    $(".bt_plus").each(function (el) {
+        $(this).bind("click", addField);
+    });
+}
+function  nuevoDivPausas_ed(npa){
+    $('#btnnuevoDivPausas_ed').hide();
+    $("#PausasHorar_ed").append('<div id="divEd_'+npa+'" class="row col-md-12" style=" margin-bottom: 8px;">' +
+                        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
+                        '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
+                        '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
+                        '&nbsp; <a style="cursor: pointer" id="btnPbed_'+npa+'" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_ed" id="ed_'+npa+'" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+                        '</div>'
+                        );
+                        $("#btnPbed_"+npa).bind("click", delRow_ed);
+                        $('.flatpickr-input[readonly]').on('focus', function () {
+                            $(this).blur()
+                        })
+                        $('.flatpickr-input[readonly]').prop('readonly', false)
+                        $(".bt_plus_ed").each(function (el) {
+                            $(this).bind("click", addField_ed);
+                        });
+                        $('#InicioPausa_ed').flatpickr({
+                            enableTime: true,
+                            noCalendar: true,
+                            dateFormat: "H:i",
+                            time_24hr: true
+                        });
+                        let horafinal=$('#horaF_ed').val();
+                        splih=horafinal.split(":");
+                        console.log(splih[0]);
+                        $('#FinPausa_ed').flatpickr({
+                            enableTime: true,
+                            noCalendar: true,
+                            dateFormat: "H:i",
+                            time_24hr: true,
+                            defaultHour:splih[0]
+                        });
+
+        $('input[name="descPausa_ed[]"]').prop('required', true);
+        $('#InicioPausa_ed').prop('required', true);
+        $('#FinPausa_ed').prop('required', true);
 }
 /////////////////////////
 function addField_edNR() {
