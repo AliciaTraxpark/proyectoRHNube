@@ -462,14 +462,14 @@ function onMostrarPantallas() {
                                         if (ultimoRecorrido != '') {
                                             if (floatlongitud == data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini) {
                                                 imagenUbicacion = `<img src="landing/images/Estatico.gif" height="120" width="150" class="img-responsive">`;
-                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
+                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                             } else {
                                                 imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
-                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
+                                                ultimoRecorrido = data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                             }
                                         } else {
                                             imagenUbicacion = `<img src="landing/images/Secuencia 01.gif" height="120" width="150" class="img-responsive">`;
-                                            ultimoRecorrido = data[index].minuto[j]["ubicacion"][0]["ubicaciones"][ubicaciones - 1].longitud_ini;
+                                            ultimoRecorrido = data[index].minuto[j]["ubicacion"][lengthUbicacion - 1]["ubicaciones"][ubicaciones - 1].longitud_ini;
                                         }
                                         sumaRangosTotal += sumaRangos;
                                         sumaActividadTotal += sumaActividad;
