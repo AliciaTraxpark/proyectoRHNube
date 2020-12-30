@@ -1002,9 +1002,11 @@ function abrirHorario() {
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" disabled >' +
-        '&nbsp; <button class="btn btn-sm bt_plus" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        '&nbsp; <a style="cursor: pointer" id="btnPb_100" ><img src="/admin/images/delete.svg" height="15"></a><button class="btn btn-sm bt_plus" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
         '</div>');
+        $("#btnPb_100").bind("click", delRow);
+        $("#idPausaMayor").val(100);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
@@ -1164,7 +1166,7 @@ function registrarHorario() {
 
 
     //////////PAUSAS2 VALIDADAS//
-    for(newID=100;newID<120; newID++){
+    for(newID=100;newID<130; newID++){
        /*  console.log('soyNuw'+ newID); */
         let horaF3 = $('#FinPausa'+ newID).val();
         let horaI3 = $('#InicioPausa'+ newID).val();
@@ -2728,7 +2730,7 @@ function editarHorario() {
 
     /////////////////////////////////////
     //////////PAUSAS2 VALIDADAS//
-    for(newID=100;newID<120; newID++){
+    for(newID=100;newID<130; newID++){
         /*  console.log('soyNuw'+ newID); */
          let horaF3 = $('#FinPausa_ed'+ newID).val();
          let horaI3 = $('#InicioPausa_ed'+ newID).val();
@@ -3744,13 +3746,16 @@ function addField() {
     // Esta parte no es necesaria pero yo la utilizaba ya que cada campo de mi formulario tenia un autosuggest,
     // así que dejo como seria por si a alguien le hace falta.
     var clickID = parseInt($(this).parent('div').attr('id').replace('div_', ''));
+    /* var clickIDDelete = parseInt($(this).parent('a').attr('id').replace('btnPb_', '')); */
     // Genero el nuevo numero id
     var newID = (clickID + 1);
+    var newIDelete = (clickID + 1);
     // Creo un clon del elemento div que contiene los campos de texto
     $newClone = $('#div_' + clickID).clone(true);
+   /*  $newCloneDelete = $('#btnPb_' + clickID).clone(true); */
     //Le asigno el nuevo numero id
     $newClone.attr("id", 'div_' + newID);
-
+   /*  $newCloneDelete.attr("id", 'btnPb_' + newIDelete); */
     //Asigno nuevo id al primer campo input dentro del div y le borro cualquier valor
     // que tenga asi no copia lo ultimo que hayas escrito.(igual que antes no es necesario tener un id)
     $newClone.children("input").eq(0).attr("id", 'descPausa' + newID).val('');
@@ -3876,33 +3881,88 @@ function addField() {
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
     $newClone.children("button").attr("id", newID)
+    $newClone.children("a").attr("id",'btnPb_'+ newID)
     //Inserto el div clonado y modificado despues del div original
     $newClone.insertAfter($('#div_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-    $("#" + clickID).css("backgroundColor", "#f6cfcf");
+   /*  $("#" + clickID).css("backgroundColor", "#f6cfcf");
     $("#" + clickID).css("border-Color", "#f6cfcf");
     $("#" + clickID).css("color", "#d11010");
     $("#" + clickID).css("height", "22px");
     $("#" + clickID).css("font-weight", "600");
     $("#" + clickID).css("margin-top", "5px");
-    $("#" + clickID).css("font-size", "12px");
+    $("#" + clickID).css("font-size", "12px");*/
+    //////////////
+    console.log(clickID);
+    $("#btnPb_"+clickID-1).remove();
+    var clicmas=clickID;
+    $("#"+clicmas+".bt_plus").remove();
     $("#" + clickID).css("width", "19px");
     $("#" + clickID).css("margin-left", "20-px");
     $('input[name="descPausa[]"]').prop('required', true);
     $('input[name="InicioPausa[]"]').prop('required', true);
     $('input[name="FinPausa[]"]').prop('required', true);
-    $("#" + clickID).html('-').unbind("click", addField);
+   /*  $("#" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField); */
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
-    $("#" + clickID).bind("click", delRow);
+    $("#btnPb_" + clickID).bind("click", delRow);
+    $("#idPausaMayor").val(clickID+1);
 }
 function delRow() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
+    var elementoborradoID=$(this).parent('button').attr("id");
+    var elementoborradoIDInput=$("#idPausaMayor").val();
+    var eleMasuno=elementoborradoIDInput+1;
+    console.log('valores'+elementoborradoID+'-'+elementoborradoIDInput);
+    if(elementoborradoIDInput=elementoborradoID){
+
+        $('#inputPausa').append('<button class="btn btn-sm" id="btnnuevoDivPausas" onclick="nuevoDivPausas('+eleMasuno+')" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+console.log('este es el ultimo'+elementoborradoIDInput);
+    }
+
+
+    if($('#inputPausa').is(':empty')){
+        $('#inputPausa').append('<button class="btn btn-sm" id="btnnuevoDivPausas" onclick="nuevoDivPausas(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+    }
+    $(".bt_plus").each(function (el) {
+        $(this).bind("click", addField);
+    });
+}
+function nuevoDivPausas(npa){
+    $('#btnnuevoDivPausas').hide();
+    $('#inputPausa').append('<div id="div_'+npa+'" class="row col-md-12" style=" margin-bottom: 8px;">' +
+        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
+        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" disabled >' +
+        '&nbsp; <a style="cursor: pointer" id="btnPb_'+npa+'" ><img src="/admin/images/delete.svg" height="15"></a><button class="btn btn-sm bt_plus" id="'+npa+'" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+        '</div>');
+        $("#btnPb_"+npa).bind("click", delRow);
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+    $(".bt_plus").each(function (el) {
+        $(this).bind("click", addField);
+    });
+    $('#InicioPausa').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        defaultHour:null
+    });
+
+    $('input[name="descPausa[]"]').prop('required', false);
+    $('input[name="InicioPausa[]"]').prop('required', false);
+    $('input[name="FinPausa[]"]').prop('required', false);
 }
 $('#SwitchPausa_ed').change(function (event) {
     if ( $('input[name="descPausa_edRegist[]"]').length) {
@@ -4122,7 +4182,7 @@ function addField_ed() {
     $('input[name="descPausa_ed[]"]').prop('required', true);
     $('input[name="InicioPausa_ed[]"]').prop('required', true);
     $('input[name="FinPausa_ed[]"]').prop('required', true);
-    $("#ed_" + clickID).html('-').unbind("click", addField_ed);
+    $("#ed_" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField_ed);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
@@ -4249,7 +4309,7 @@ function addField_edNR() {
     $('input[name="descPausa_edRN[]"]').prop('required', true);
     $('input[name="InicioPausa_edRN[]"]').prop('required', true);
     $('input[name="FinPausa_edRN[]"]').prop('required', true);
-    $("#edA_" + clickID).html('-').unbind("click", addField_edNR);
+    $("#edA_" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField_edNR);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
