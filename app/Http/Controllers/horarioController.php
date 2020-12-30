@@ -1011,7 +1011,10 @@ class horarioController extends Controller
                     }
                 }
             }
-            $descPausaRN = $request->get('descPausa_edRN');
+
+
+        }
+        $descPausaRN = $request->get('descPausa_edRN');
             $IniPausaRN = $request->get('pausaInicio_edRN');
             $FinPausaRN = $request->get('finPausa_edRN');
             if ($descPausaRN) {
@@ -1029,9 +1032,6 @@ class horarioController extends Controller
                     }
                 }
             }
-
-        }
-
 
 
         return ($horarion);
