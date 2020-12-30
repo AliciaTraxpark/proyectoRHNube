@@ -20,6 +20,52 @@
 </div>
 @endsection
 @section('content')
+{{-- STYLOS --}}
+<style>
+
+</style>
+{{-- FINALIZACION --}}
+{{-- BOTONOS DE PANEL --}}
+<div class="row pr-3 pl-3 pt-3">
+    <div class="col-md-6 text-left colResponsive">
+        <button type="button" class="btn btn-sm mt-1"
+            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
+            onclick="javascript:asignarActividadMasiso()">
+            <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
+            Asignar Punto de control
+        </button>
+    </div>
+    <div class="col-md-6 text-right colResponsive">
+        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">
+            + Nuevo Punto de control
+        </button>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- TABLA DE PUNTOS DE CONTROL --}}
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="puntosC" class="table nowrap" style="font-size: 13px!important;width:100%;">
+                    <thead style="background: #fafafa;" style="width:100%!important">
+                        <tr>
+                            <th>#</th>
+                            <th>Punto control</th>
+                            <th>Código</th>
+                            <th class="text-center">Control en ruta</th>
+                            <th class="text-center">Asistencia en puerta</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="puntoOrganizacion" style="width:100%!important"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
 {{-- MODAL DE SESSION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -70,5 +116,6 @@
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('landing/js/puntoControl.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

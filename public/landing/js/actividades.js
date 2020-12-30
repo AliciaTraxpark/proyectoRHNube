@@ -9,6 +9,13 @@ function tablaActividades() {
         "lengthChange": true,
         scrollCollapse: false,
         "bAutoWidth": true,
+        columnDefs: [
+            { targets: 3, sortable: false },
+            { targets: 4, sortable: false },
+            { targets: 5, sortable: false },
+            { targets: 6, sortable: false },
+            { targets: 7, sortable: false }
+        ],
         language: {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -422,10 +429,6 @@ function cambiarEstadoActividad(id) {
             });
     });
 }
-$(window).on('resize', function () {
-    $("#actividades").css('width', '100%');
-    table.draw(true);
-});
 $("#actividades").on('shown.bs.collapse', function () {
     $($.fn.dataTable.tables(true)).DataTable()
         .columns.adjust();
@@ -1929,5 +1932,11 @@ $('#checkboxEmpleadosTodos').on("change.bootstrapSwitch", function (event) {
         $('#empleAsignar').val(EmpleadosAsig).trigger('change');
         $('.aNuevos').show();
     }
+});
+$(function () {
+    $(window).on('resize', function () {
+        $("#actividades").css('width', '100%');
+        table.draw(true);
+    });
 });
 //* ************************ FINALIZACION ****************************** *//

@@ -64,30 +64,34 @@ class ActividadesController extends Controller
 
     public function actividades()
     {
-        $invitadod = DB::table('invitado')
-            ->where('user_Invitado', '=', Auth::user()->id)
-            ->where('rol_id', '=', 3)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()->first();
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
-        if ($invitadod) {
-            if ($invitadod->rol_id != 1) {
-                if ($invitadod->gestionActiv == 1) {
-                    $permiso_invitado = DB::table('permiso_invitado')
-                        ->where('idinvitado', '=', $invitadod->idinvitado)
-                        ->get()->first();
-                    return view('MantenedorActividades.actividades', [
-                        'agregarActi' => $permiso_invitado->agregarActi, 'modifActi' => $permiso_invitado->modifActi, 'bajaActi' => $permiso_invitado->bajaActi
-                    ]);
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if ($invitadod->gestionActiv == 1) {
+                        $permiso_invitado = DB::table('permiso_invitado')
+                            ->where('idinvitado', '=', $invitadod->idinvitado)
+                            ->get()->first();
+                        return view('MantenedorActividades.actividades', [
+                            'agregarActi' => $permiso_invitado->agregarActi, 'modifActi' => $permiso_invitado->modifActi, 'bajaActi' => $permiso_invitado->bajaActi
+                        ]);
+                    } else {
+                        return redirect('/dashboard');
+                    }
+                    /*   */
                 } else {
-                    return redirect('/dashboard');
+                    return view('MantenedorActividades.actividades');
                 }
-                /*   */
             } else {
                 return view('MantenedorActividades.actividades');
             }
-        } else {
-            return view('MantenedorActividades.actividades');
         }
     }
 
