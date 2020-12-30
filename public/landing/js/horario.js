@@ -2423,9 +2423,10 @@ function editarHorarioLista(idsedit) {
                         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_edRN[]" id="descPausa_edRN" >' +
                         '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edRN[]"  id="InicioPausa_edRN" >' +
                         '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_edRN[]"  id="FinPausa_edRN" >' +
-                        '&nbsp; <button class="btn btn-sm bt_plus_edAgr" id="edA_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                        '&nbsp; <a style="cursor: pointer" id="btnPbedA_100" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_edAgr" id="edA_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
                         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
                         '</div>');
+
                     } else{
                         $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
                         '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
@@ -2437,7 +2438,7 @@ function editarHorarioLista(idsedit) {
                         '</div>');
                     }
 
-
+                    $("#btnPbedA_100").bind("click", delRow_edRN);
                       /*  */
                       $(document).on('change', '#FinPausa_edRN', function (event) {
                         let horaF = $('#FinPausa_edRN').val();
@@ -4359,33 +4360,48 @@ function addField_edNR() {
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
     $newClone.children("button").attr("id",'edA_'+newID)
+    $newClone.children("a").attr("id",'btnPbedA_'+ newID)
     //Inserto el div clonado y modificado despues del div original
     $newClone.insertAfter($('#divEdRN_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-    $("#edA_" + clickID).css("backgroundColor", "#f6cfcf");
+   /*  $("#edA_" + clickID).css("backgroundColor", "#f6cfcf");
     $("#edA_" + clickID).css("border-Color", "#f6cfcf");
     $("#edA_" + clickID).css("color", "#d11010");
     $("#edA_" + clickID).css("height", "22px");
     $("#edA_" + clickID).css("font-weight", "600");
     $("#edA_" + clickID).css("margin-top", "5px");
-    $("#edA_" + clickID).css("font-size", "12px");
+    $("#edA_" + clickID).css("font-size", "12px"); */
     $("#edA_" + clickID).css("width", "19px");
     $("#edA_" + clickID).css("margin-left", "20-px");
     $('input[name="descPausa_edRN[]"]').prop('required', true);
     $('input[name="InicioPausa_edRN[]"]').prop('required', true);
     $('input[name="FinPausa_edRN[]"]').prop('required', true);
-    $("#edA_" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField_edNR);
+    $("#btnPbedA_"+clickID-1).remove();
+    var clicmased=clickID;
+    $("#edA_"+clicmased+".bt_plus_edAgr").remove();
+
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
     $("#edA_" + clickID).bind("click", delRow_edRN);
+    $("#btnPbedA_" + clickID).bind("click", delRow_edRN);
+    $("#idPausaMayor_edA").val(clickID+1);
 }
 function delRow_edRN() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
+    var idDiv_ed='idDiv'+$(this).parent('div').attr("id");
+   var nuevoId_edit= idDiv_ed.slice(-3);
+  var idpausa_editM= $("#idPausaMayor_edA").val();
+   console.log(idpausa_editM+'-'+nuevoId_edit);
+
+ /*   if($('#PausasHorar_ed').is(':empty')){
+    $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+    ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+} */
 }
 ////////////////////////
 $(function () {
