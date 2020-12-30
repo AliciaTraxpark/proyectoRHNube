@@ -649,81 +649,33 @@ class apiVersionDosController extends Controller
             if ($empleado) {
                 $vinculacion = vinculacion::where('id', '=', $explode[1])->get()->first();
                 if ($vinculacion) {
-                    $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
-                    if ($licencia) {
-                        if ($vinculacion->hash == $request->get('codigo')) {
-                            // OBTENER HORAS
-                            $fecha = Carbon::now();
-                            $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                            $horas = DB::table('empleado as e')
-                                ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                                ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
-                                ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
-                                ->select(
-                                    DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
-                                )
-                                ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
-                                ->where('e.emple_id', '=', $empleado->emple_id)
-                                ->get()
-                                ->first();
-                            // *****************
-                            // VERSION GLOBAL
-                            $versionGlobal = DB::table('versionrhbox as vr')
-                                ->select('vr.descripcion', 'vr.obligatorio')
-                                ->get()
-                                ->first();
-                            // **************
-                            if ($vinculacion->serieDisco ==  null) {
-                                if ($vinculacion->idSoftware == null) {
-                                    // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
-                                    $software_vinculacion = new software_vinculacion();
-                                    $software_vinculacion->version = $request->get('version');
-                                    $software_vinculacion->fechaActualizacion = Carbon::now();
-                                    $software_vinculacion->save();
-
-                                    $idSoftware = $software_vinculacion->id;
-
-                                    // UNIR SOFTWARE A VINCULACIÓN
-                                    $vinculacion->idSoftware = $idSoftware;
-                                } else {
-                                    $software_vinculacion = software_vinculacion::findOrFail($vinculacion->idSoftware);
-                                    if ($software_vinculacion) {
-                                        if ($software_vinculacion->version != $request->get('version')) {
-                                            $software_vinculacion->version = $request->get('version');
-                                            $software_vinculacion->fechaActualizacion = Carbon::now();
-                                            $software_vinculacion->save();
-                                        }
-                                    } else {
-                                        return response()->json("software_erroneo", 400);
-                                    }
-                                }
-                                $vinculacion->pc_mac = $request->get('pc_mac');
-                                $vinculacion->serieDisco = $request->get('serieD');
-                                $vinculacion->save();
-                                $factory = JWTFactory::customClaims([
-                                    'sub' => env('API_id'),
-                                ]);
-                                $payload = $factory->make();
-                                $token = JWTAuth::encode($payload);
-                                $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
-
-                                //* TIEMPO EN EL SERVIDOR
-                                $fecha = Carbon::now('America/Lima');
-                                $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
-                                return response()->json(array(
-                                    "corte" => $organizacion->corteCaptura,
-                                    "idEmpleado" => $empleado->emple_id,
-                                    "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
-                                    'idUser' => $idOrganizacion,
-                                    'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
-                                    'version' => $software_vinculacion->version,
-                                    'versionGlobal' => $versionGlobal->descripcion,
-                                    'versionObligatorio' => $versionGlobal->obligatorio,
-                                    'horaActual' => $horaActual,
-                                    'token' => $token->get()
-                                ), 200);
-                            } else {
-                                if ($vinculacion->serieDisco == $request->get('serieD')) {
+                    $empleadoHash = empleado::select('emple_nDoc')->where('emple_id', '=', $vinculacion->idEmpleado)->get()->first();
+                    if ($empleadoHash->emple_nDoc == $nroD) {
+                        $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
+                        if ($licencia) {
+                            if ($vinculacion->hash == $request->get('codigo')) {
+                                // OBTENER HORAS
+                                $fecha = Carbon::now();
+                                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                                $horas = DB::table('empleado as e')
+                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                                    ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                                    ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                                    ->select(
+                                        DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
+                                    )
+                                    ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                                    ->where('e.emple_id', '=', $empleado->emple_id)
+                                    ->get()
+                                    ->first();
+                                // *****************
+                                // VERSION GLOBAL
+                                $versionGlobal = DB::table('versionrhbox as vr')
+                                    ->select('vr.descripcion', 'vr.obligatorio')
+                                    ->get()
+                                    ->first();
+                                // **************
+                                if ($vinculacion->serieDisco ==  null) {
                                     if ($vinculacion->idSoftware == null) {
                                         // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
                                         $software_vinculacion = new software_vinculacion();
@@ -748,6 +700,7 @@ class apiVersionDosController extends Controller
                                         }
                                     }
                                     $vinculacion->pc_mac = $request->get('pc_mac');
+                                    $vinculacion->serieDisco = $request->get('serieD');
                                     $vinculacion->save();
                                     $factory = JWTFactory::customClaims([
                                         'sub' => env('API_id'),
@@ -755,12 +708,14 @@ class apiVersionDosController extends Controller
                                     $payload = $factory->make();
                                     $token = JWTAuth::encode($payload);
                                     $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+
                                     //* TIEMPO EN EL SERVIDOR
                                     $fecha = Carbon::now('America/Lima');
                                     $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                                     return response()->json(array(
                                         "corte" => $organizacion->corteCaptura,
-                                        "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                        "idEmpleado" => $empleado->emple_id,
+                                        "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                         'idUser' => $idOrganizacion,
                                         'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                         'version' => $software_vinculacion->version,
@@ -770,9 +725,9 @@ class apiVersionDosController extends Controller
                                         'token' => $token->get()
                                     ), 200);
                                 } else {
-                                    if (strpos($vinculacion->serieDisco, 'RHbox')) {
+                                    if ($vinculacion->serieDisco == $request->get('serieD')) {
                                         if ($vinculacion->idSoftware == null) {
-                                            //* AGREGAR TABLA DE SOFTWARE VINCULACIÓN
+                                            // AGREGAR TABLA DE SOFTWARE VINCULACIÓN
                                             $software_vinculacion = new software_vinculacion();
                                             $software_vinculacion->version = $request->get('version');
                                             $software_vinculacion->fechaActualizacion = Carbon::now();
@@ -780,7 +735,7 @@ class apiVersionDosController extends Controller
 
                                             $idSoftware = $software_vinculacion->id;
 
-                                            //* UNIR SOFTWARE A VINCULACIÓN
+                                            // UNIR SOFTWARE A VINCULACIÓN
                                             $vinculacion->idSoftware = $idSoftware;
                                         } else {
                                             $software_vinculacion = software_vinculacion::findOrFail($vinculacion->idSoftware);
@@ -795,7 +750,6 @@ class apiVersionDosController extends Controller
                                             }
                                         }
                                         $vinculacion->pc_mac = $request->get('pc_mac');
-                                        $vinculacion->serieDisco = $request->get('serieD');
                                         $vinculacion->save();
                                         $factory = JWTFactory::customClaims([
                                             'sub' => env('API_id'),
@@ -803,14 +757,12 @@ class apiVersionDosController extends Controller
                                         $payload = $factory->make();
                                         $token = JWTAuth::encode($payload);
                                         $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
-
                                         //* TIEMPO EN EL SERVIDOR
                                         $fecha = Carbon::now('America/Lima');
                                         $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
                                         return response()->json(array(
                                             "corte" => $organizacion->corteCaptura,
-                                            "idEmpleado" => $empleado->emple_id,
-                                            "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                            "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                             'idUser' => $idOrganizacion,
                                             'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
                                             'version' => $software_vinculacion->version,
@@ -819,14 +771,67 @@ class apiVersionDosController extends Controller
                                             'horaActual' => $horaActual,
                                             'token' => $token->get()
                                         ), 200);
+                                    } else {
+                                        if (strpos($vinculacion->serieDisco, 'RHbox')) {
+                                            if ($vinculacion->idSoftware == null) {
+                                                //* AGREGAR TABLA DE SOFTWARE VINCULACIÓN
+                                                $software_vinculacion = new software_vinculacion();
+                                                $software_vinculacion->version = $request->get('version');
+                                                $software_vinculacion->fechaActualizacion = Carbon::now();
+                                                $software_vinculacion->save();
+
+                                                $idSoftware = $software_vinculacion->id;
+
+                                                //* UNIR SOFTWARE A VINCULACIÓN
+                                                $vinculacion->idSoftware = $idSoftware;
+                                            } else {
+                                                $software_vinculacion = software_vinculacion::findOrFail($vinculacion->idSoftware);
+                                                if ($software_vinculacion) {
+                                                    if ($software_vinculacion->version != $request->get('version')) {
+                                                        $software_vinculacion->version = $request->get('version');
+                                                        $software_vinculacion->fechaActualizacion = Carbon::now();
+                                                        $software_vinculacion->save();
+                                                    }
+                                                } else {
+                                                    return response()->json("software_erroneo", 400);
+                                                }
+                                            }
+                                            $vinculacion->pc_mac = $request->get('pc_mac');
+                                            $vinculacion->serieDisco = $request->get('serieD');
+                                            $vinculacion->save();
+                                            $factory = JWTFactory::customClaims([
+                                                'sub' => env('API_id'),
+                                            ]);
+                                            $payload = $factory->make();
+                                            $token = JWTAuth::encode($payload);
+                                            $organizacion = organizacion::where('organi_id', '=', $idOrganizacion)->get()->first();
+
+                                            //* TIEMPO EN EL SERVIDOR
+                                            $fecha = Carbon::now('America/Lima');
+                                            $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
+                                            return response()->json(array(
+                                                "corte" => $organizacion->corteCaptura,
+                                                "idEmpleado" => $empleado->emple_id,
+                                                "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
+                                                'idUser' => $idOrganizacion,
+                                                'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                                'version' => $software_vinculacion->version,
+                                                'versionGlobal' => $versionGlobal->descripcion,
+                                                'versionObligatorio' => $versionGlobal->obligatorio,
+                                                'horaActual' => $horaActual,
+                                                'token' => $token->get()
+                                            ), 200);
+                                        }
+                                        return response()->json("disco_erroneo", 400);
                                     }
-                                    return response()->json("disco_erroneo", 400);
                                 }
                             }
+                            return response()->json("codigo_erroneo", 400);
                         }
-                        return response()->json("codigo_erroneo", 400);
+                        return response()->json("licencia_de_baja", 400);
+                    } else {
+                        return response()->json("codigo_incorrecto", 400);
                     }
-                    return response()->json("licencia_de_baja", 400);
                 }
                 return response()->json("sin_dispositivo", 400);
             }
