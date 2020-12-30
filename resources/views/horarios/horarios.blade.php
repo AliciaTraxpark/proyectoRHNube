@@ -1162,7 +1162,7 @@ background-color: #ffffff !important;
                                                     id="SwitchPausa_ed">
                                                 <label class="custom-control-label"
                                                     for="SwitchPausa_ed"
-                                                    style="font-weight: bold;padding-top: 1px">Pausas en el horario</label>  &nbsp; <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
+                                                    style="font-weight: bold;padding-top: 1px">Pausas en el horario</label>  &nbsp; <span id="fueraRango_ed" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas_ed" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span><span id="errorenPausasCruzadas_ed" style="color: #80211e;display: none">- Los rangos de pausas no pueden cruzarse, revísalo e inténtalo nuevamente.</span>
 
                                             </div>
                                          </div>
