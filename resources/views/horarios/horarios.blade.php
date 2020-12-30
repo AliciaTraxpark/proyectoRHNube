@@ -1080,6 +1080,7 @@ background-color: #ffffff !important;
                            <div class="modal-body" style="font-size:12px!important">
                                <div class="row">
                                 <input type="hidden" id="idPausaMayor_ed">
+                                <input type="hidden" id="idPausaMayor_edA">
                                    <div class="col-md-12">
                                     <form id="frmHorEditar" action="javascript:editarHorario()">
                                        <div class="row"><input type="hidden" id="idhorario_ed">
