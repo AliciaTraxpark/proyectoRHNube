@@ -11,7 +11,6 @@ class actividad extends Model
     protected $fillable = [
         'Activi_id',
         'Activi_Nombre',
-        'empleado_emple_id',
         'controlRemoto',
         'controlRuta',
         'asistenciaPuerta',
