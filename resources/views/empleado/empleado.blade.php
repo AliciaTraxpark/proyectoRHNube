@@ -1206,7 +1206,7 @@ use Carbon\Carbon;
                                     <div class="col-xl-12">
                                         <div class="form-group row">
                                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
-                                                Fecha de baja o cese de empleado(s) :
+                                                Fecha de baja o cese de empleado(s)
                                             </label>
                                             <div class="alert alert-danger" role="alert" style="display: none;"
                                                 id="alertFechaBajaH"></div>
@@ -1284,7 +1284,7 @@ use Carbon\Carbon;
                                     <div class="col-xl-12">
                                         <div class="form-group row">
                                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
-                                                Fecha de baja o cese de empleado(s) :
+                                                Fecha de baja o cese de empleado(s)
                                             </label>
                                             <div class="alert alert-danger" role="alert" style="display: none;"
                                                 id="alertFechaBaja">
@@ -1365,7 +1365,7 @@ use Carbon\Carbon;
                                     <div class="col-xl-12">
                                         <div class="form-group row">
                                             <label class="col-lg-7 col-form-label" style="padding-top: 14px;">
-                                                Fecha de baja o cese de empleado(s) :
+                                                Fecha de baja o cese de empleado(s)
                                             </label>
                                             <div class="alert alert-danger" role="alert" style="display: none;"
                                                 id="alertFechaBajaReg">
