@@ -257,7 +257,7 @@ function conActividadesDiarias() {
             "scrollX": true,
             retrieve: true,
             "ordering": false,
-            "autoWidth": false,
+            "bAutoWidth": false,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",

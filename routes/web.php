@@ -422,7 +422,7 @@ Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 Route::post('/comprobarMovil', 'dispositivosController@comprobarMovil');
 Route::get('/reporteAsistencia', 'dispositivosController@reporteMarcaciones');
-Route::post('/reporteTablaMarca', 'dispositivosController@reporteTabla');
+Route::get('/reporteTablaMarca', 'dispositivosController@reporteTabla');
 Route::post('/datosDispoEditar', 'dispositivosController@datosDispoEditar');
 Route::post('/actualizarDispos', 'dispositivosController@actualizarDispos');
 Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
