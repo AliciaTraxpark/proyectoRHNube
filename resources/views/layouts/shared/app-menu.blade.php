@@ -167,7 +167,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <li>
                 <a href="/dispositivos">Dispositivos</a>
                 <a href="/controladores">Controladores</a>
-                <a href="/reporteAsistencia">Reporte de asistencia</a>
+                <a href="/reporteAsistencia">Detalle de asistencia</a>
 
             </li>
         </ul>
@@ -296,7 +296,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/controladores">Controladores</a>
                 @endif
                 @if ($invitadod->reporteAsisten==1)
-                <a href="/reporteAsistencia">Reporte de asistencia</a>
+                <a href="/reporteAsistencia">Detalle de asistencia</a>
                 @endif
 
             </li>
