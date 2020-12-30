@@ -1022,7 +1022,7 @@ a:not([href]):not([tabindex]){
                                         id="SwitchPausa">
                                     <label class="custom-control-label"
                                         for="SwitchPausa"
-                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp; <span id="fueraRango" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span>
+                                        style="font-weight: bold;padding-top: 1px">Pausas en el horario</label> &nbsp; <span id="fueraRango" style="color: #80211e;display: none">Hora no esta dentro de rango de horario</span> <span id="errorenPausas" style="color: #80211e;display: none">- Fin de pausa debe ser mayor a inicio pausa</span> <span id="errorenPausasCruzadas" style="color: #80211e;display: none">- Los rangos de pausas no pueden cruzarse, revísalo e inténtalo nuevamente.</span>
                                 </div>
                              </div>
 

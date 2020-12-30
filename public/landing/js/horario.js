@@ -1045,6 +1045,8 @@ function abrirHorarioen() {
 
 }
 function registrarHorario() {
+    var variablesiPau=1;
+    var esperandoP=0;
     /////////////////////////////////////////
     $('#InicioPausa').prop('required', true);
     $('#FinPausa').prop('required', true);
@@ -1292,54 +1294,343 @@ function registrarHorario() {
             finPausa.push($(this).val());
         });
     }
+    if ($("#SwitchPausa").is(":checked")) {
+    $.each(pausaInicio, function (ind, elem) {
+        if(ind>0){
+            if(ind=1){
+                if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
+                    variablesiPau=1;
+                    $('#errorenPausasCruzadas').hide();
+                }
+                else{
+                    if(pausaInicio[ind]<pausaInicio[ind-1] && pausaInicio[ind]<finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
 
+                    }
 
-    $('#btnGuardaHorario').prop('disabled', true);
-    $.ajax({
-        type: "post",
-        url: "/guardarHorario",
-        data: {
+                }
+                if(finPausa[ind]>pausaInicio[ind-1] && finPausa[ind]>finPausa[ind-1] ){
+                    if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
 
-            descripcion,
-            toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            419: function () {
-                location.reload();
+                    }
+
+                }
+                else{
+                    if(finPausa[ind]<pausaInicio[ind-1] && finPausa[ind]<finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+                }
             }
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
+            if(ind=2){
+                if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
+                    variablesiPau=1;
+                    $('#errorenPausasCruzadas').hide();
+                }
+                else{
+                    if(pausaInicio[ind]<pausaInicio[ind-1] && pausaInicio[ind]<finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
 
-            $('#horarioAgregar').modal('hide');
-            $('#tablaEmpleado').DataTable().ajax.reload();
+                    }
 
-            if ($('#asignarHorario').is(':visible')) {
-                $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: data.horario_id,
-                    text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
-                    selected: true
+                }
+                if(finPausa[ind]>pausaInicio[ind-1] && finPausa[ind]>finPausa[ind-1] ){
+                    if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
 
-                }));
-            } else {
-                $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: data.horario_id,
-                    text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
+                    }
 
-                }));
+                }
+                else{
+                    if(finPausa[ind]<pausaInicio[ind-1] && finPausa[ind]<finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+                }
+                ///////////////////////////////
+                if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
+                    variablesiPau=1;
+                    $('#errorenPausasCruzadas').hide();
+                }
+                else{
+                    if(pausaInicio[ind]<pausaInicio[ind-2] && pausaInicio[ind]<finPausa[ind-2] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                if(finPausa[ind]>pausaInicio[ind-2] && finPausa[ind]>finPausa[ind-2] ){
+                    if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                else{
+                    if(finPausa[ind]<pausaInicio[ind-2] && finPausa[ind]<finPausa[ind-2] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+                }
+            }
+
+            if(ind=3){
+                if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
+                    variablesiPau=1;
+                    $('#errorenPausasCruzadas').hide();
+                }
+                else{
+                    if(pausaInicio[ind]<pausaInicio[ind-1] && pausaInicio[ind]<finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                if(finPausa[ind]>pausaInicio[ind-1] && finPausa[ind]>finPausa[ind-1] ){
+                    if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                else{
+                    if(finPausa[ind]<pausaInicio[ind-1] && finPausa[ind]<finPausa[ind-1] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+                }
+                ///////////////////////////////
+                if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
+                    variablesiPau=1;
+                    $('#errorenPausasCruzadas').hide();
+                }
+                else{
+                    if(pausaInicio[ind]<pausaInicio[ind-2] && pausaInicio[ind]<finPausa[ind-2] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                if(finPausa[ind]>pausaInicio[ind-2] && finPausa[ind]>finPausa[ind-2] ){
+                    if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                else{
+                    if(finPausa[ind]<pausaInicio[ind-2] && finPausa[ind]<finPausa[ind-2] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+                }
+
+                if(pausaInicio[ind]>pausaInicio[ind-3] && pausaInicio[ind]>finPausa[ind-3] ){
+                    variablesiPau=1;
+                    $('#errorenPausasCruzadas').hide();
+                }
+                else{
+                    if(pausaInicio[ind]<pausaInicio[ind-3] && pausaInicio[ind]<finPausa[ind-3] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                if(finPausa[ind]>pausaInicio[ind-3] && finPausa[ind]>finPausa[ind-3] ){
+                    if(pausaInicio[ind]>pausaInicio[ind-3] && pausaInicio[ind]>finPausa[ind-3] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+
+                }
+                else{
+                    if(finPausa[ind]<pausaInicio[ind-3] && finPausa[ind]<finPausa[ind-3] ){
+                        variablesiPau=1;
+                        $('#errorenPausasCruzadas').hide();
+                    } else{
+                        variablesiPau=0;
+                        $('#errorenPausasCruzadas').show();
+
+                    }
+                }
             }
 
 
-        },
-        error: function () {
-            alert("Hay un error");
+
         }
-    });
+        esperandoP=1;
+      });
+      if(variablesiPau==1 && esperandoP==1){
+        $('#btnGuardaHorario').prop('disabled', true);
+        $.ajax({
+           type: "post",
+           url: "/guardarHorario",
+           data: {
+
+               descripcion,
+               toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
+           },
+           statusCode: {
+               401: function () {
+                   location.reload();
+               },
+               419: function () {
+                   location.reload();
+               }
+           },
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           success: function (data) {
+
+               $('#horarioAgregar').modal('hide');
+               $('#tablaEmpleado').DataTable().ajax.reload();
+
+               if ($('#asignarHorario').is(':visible')) {
+                   $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                       value: data.horario_id,
+                       text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
+                       selected: true
+
+                   }));
+               } else {
+                   $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                       value: data.horario_id,
+                       text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
+
+                   }));
+               }
+
+
+           },
+           error: function () {
+               alert("Hay un error");
+           }
+       });
+   }
+    }
+    else{
+       
+            $('#btnGuardaHorario').prop('disabled', true);
+            $.ajax({
+               type: "post",
+               url: "/guardarHorario",
+               data: {
+
+                   descripcion,
+                   toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
+               },
+               statusCode: {
+                   401: function () {
+                       location.reload();
+                   },
+                   419: function () {
+                       location.reload();
+                   }
+               },
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               success: function (data) {
+
+                   $('#horarioAgregar').modal('hide');
+                   $('#tablaEmpleado').DataTable().ajax.reload();
+
+                   if ($('#asignarHorario').is(':visible')) {
+                       $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                           value: data.horario_id,
+                           text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
+                           selected: true
+
+                       }));
+                   } else {
+                       $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                           value: data.horario_id,
+                           text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
+
+                       }));
+                   }
+
+
+               },
+               error: function () {
+                   alert("Hay un error");
+               }
+           });
+
+    }
+      console.log(variablesiPau);
+
+
 }
 function registrarhDias(idhorar) {
     H1 = $('#horario1').val();
