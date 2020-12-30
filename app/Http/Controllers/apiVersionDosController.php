@@ -830,7 +830,7 @@ class apiVersionDosController extends Controller
                         }
                         return response()->json("licencia_de_baja", 400);
                     } else {
-                        return response()->json("codigo_incorrecto", 400);
+                        return response()->json("codigo_no_exite", 400);
                     }
                 }
                 return response()->json("sin_dispositivo", 400);
