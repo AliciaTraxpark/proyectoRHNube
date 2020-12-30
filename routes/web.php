@@ -471,3 +471,6 @@ Route::post('/ubicacionesPersonalizadas', 'controlRutaController@obtenerUbicacio
 
 //INCIDENCIAS
 Route::get('/incidencias', 'incidenciasController@index');
+
+//* PUNTOS DE CONTROL
+Route::get('/puntoControl', 'PuntosControlController@index');

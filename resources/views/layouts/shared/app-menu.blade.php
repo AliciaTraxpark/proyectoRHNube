@@ -122,6 +122,12 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li>
     <li>
+        <a href="/puntoControl">
+            <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
+            <span>Puntos de Control</span>
+        </a>
+    </li>
+    <li>
 
         <a href="javascript: void(0);">
             <i data-feather="activity"></i>
