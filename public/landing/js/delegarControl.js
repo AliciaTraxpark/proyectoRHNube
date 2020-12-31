@@ -730,6 +730,7 @@ function editarInv(idi) {
             $("#agregarInvitado_edit").modal("show");
             if (data[0].rol_id != 3) {
                 $("#opcionesAPuerta_edit").hide();
+                $("#opcionesActiv_edit").hide();
             }
         },
         error: function (data) {
