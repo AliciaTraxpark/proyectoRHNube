@@ -112,7 +112,7 @@ function registrarInvit() {
     var booCheck;
     if ($("#asistPuertaCheck").is(":checked")  &&  !$("#adminCheck").is(":checked")) {
         if(!$("#verCheckPuerta").is(":checked") &&  !$("#AgregarCheckPuerta").is(":checked") &&
-        !$("#ModifCheckPuerta").is(":checked")  && !$("#ReporteAsistCheck").is(":checked") ){
+        !$("#ModifCheckPuerta").is(":checked")  && !$("#ReporteAsistCheck").is(":checked") && !$("#MoReporteAsistCheck").is(":checked") ){
             booCheck=0;
         }
         else{
@@ -252,6 +252,13 @@ function registrarInvit() {
                         swReporteAsis = 0;
                     }
 
+                    var swMoReporteAsis;
+                    if ($("#MoReporteAsistCheck").is(":checked")) {
+                        swMoReporteAsis = 1;
+                    } else {
+                        swMoReporteAsis = 0;
+                    }
+
                     var checkTodoEmp;
                     if ($("#TodoECheck").is(":checked")) {
                         checkTodoEmp = 1;
@@ -355,6 +362,7 @@ function registrarInvit() {
                                 switchCRuta,
                                 checkTodoEmp,
                                 swReporteAsis,
+                                swMoReporteAsis
                             },
                             statusCode: {
                                 419: function () {
@@ -410,6 +418,7 @@ function registrarInvit() {
                                 switchCRuta,
                                 checkTodoEmp,
                                 swReporteAsis,
+                                swMoReporteAsis
                             },
                             statusCode: {
                                 419: function () {
@@ -1495,5 +1504,28 @@ $("#ModifCheckPuerta_edit").change(function (event) {
        } else{
            $("#verCheckPuerta_edit").prop("disabled",false);
        }
+    }
+});
+
+/* VALIDACION CHECK MODIFICACAR REPORTE */
+$("#MoReporteAsistCheck").change(function (event) {
+    if ($("#MoReporteAsistCheck").prop("checked")) {
+        $("#ReporteAsistCheck").prop("checked",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta").prop("checked")) {
+        } else{
+            $("#ReporteAsistCheck").prop("disabled",false);
+        }
+    }
+});
+
+/* VALIDACION VER REPORTE */
+$("#ReporteAsistCheck").change(function (event) {
+    if ($("#MoReporteAsistCheck").prop("checked")) {
+        $("#ReporteAsistCheck").prop("checked",true);
+    }
+    else{
+
     }
 });

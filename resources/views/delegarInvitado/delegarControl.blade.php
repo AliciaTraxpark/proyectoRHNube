@@ -336,12 +336,25 @@
                                             </div>
                                         </div>
                                         <br><br>
-                                        <div class="col-md-8 " id="divReporteAsis"  >
-                                            <label for="">Reporte:</label>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="ReporteAsistCheck">
-                                                <label class="form-check-label" for="ReporteAsistCheck"
-                                                    style="margin-top: 2px;">Ver  </label><br>
+                                        <div class="col-md-8" id="divReporteAsis"  >
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="">Reporte:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="ReporteAsistCheck">
+                                                        <label class="form-check-label" for="ReporteAsistCheck"
+                                                            style="margin-top: 2px;">Ver reporte de asistencia(por empleado y por fecha)  </label><br>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck">
+                                                        <label class="form-check-label" for="MoReporteAsistCheck"
+                                                            style="margin-top: 2px;">Modificación de reporte  </label><br>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 

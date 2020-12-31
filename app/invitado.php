@@ -24,7 +24,8 @@ class invitado extends Model
         'gestionActiv',
         'asistePuerta',
         'reporteAsisten',
-        'ControlRuta'
+        'ControlRuta',
+        'ModificarReportePuerta'
     ];
 
 }
