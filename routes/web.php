@@ -475,3 +475,4 @@ Route::get('/incidencias', 'incidenciasController@index');
 //* PUNTOS DE CONTROL
 Route::get('/puntoControl', 'PuntosControlController@index');
 Route::get('/puntosControlOrg', 'PuntosControlController@puntosControlOrganizacion');
+Route::post('/puntoControlData', 'PuntosControlController@puntoDeControl');

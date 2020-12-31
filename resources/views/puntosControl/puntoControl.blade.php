@@ -82,14 +82,14 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="hidden" id="idPuntoC">
+                        <input type="hidden" id="e_idPuntoC">
                         <form action="javascript:editarActividadTarea()" id="FormEditarActividadTarea">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Punto Control:</label>
                                         <input type="text" class="form-control form-control-sm" id="e_descripcionPunto"
-                                            maxlength="40" required disabled>
+                                            maxlength="100" required disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row pt-2 border-top rowEmpleadosPuntoEditar">
+                            <div class="row pt-2 border-top rowEmpleadosEditar">
                                 <div class="col-md-12 text-left">
                                     <label for="">Asignar por:</label>
                                 </div>
@@ -137,7 +137,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-12 text-right">
+                                <div class="col-md-12 text-right colxEmpleados">
                                     <div class="form-group mb-0 mt-3">
                                         <input type="checkbox" id="e_todosEmpleados">
                                         <label for="" class="mb-0">Seleccionar a todos</label>
@@ -148,7 +148,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 colxEmpleados">
                                     <select id="e_empleadosPunto" data-plugin="customselect" class="form-control"
                                         multiple="multiple">
                                     </select>
@@ -164,7 +164,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-12 text-right">
+                                <div class="col-md-12 text-right colxAreas">
                                     <div class="form-group mb-0 mt-3">
                                         <input type="checkbox" id="e_todasAreas">
                                         <label for="" class="mb-0">Seleccionar todos</label>
@@ -175,7 +175,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 text-left">
+                                <div class="col-md-12 text-left colxAreas">
                                     <select id="e_areasPunto" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple">
                                     </select>
