@@ -1591,6 +1591,14 @@ function verificarSIEdito(){
             if(data[0]==1){
                 console.log(data[1]);
                 $('#agregarInvitado').modal('hide');
+                var dialog = bootbox.dialog({
+                    message: "Invitado ya registrado, mostrando detalles...",
+                    closeButton: false,
+                });
+                setTimeout(function () {
+                    dialog.modal("hide");
+                }, 1000);
+                
                 editarInv(data[1]);
             }
             else {
