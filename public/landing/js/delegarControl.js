@@ -534,6 +534,7 @@ function editarInv(idi) {
                 $("#divControlRuta_edit").hide();
                 $("#divReporteAsis_edit").hide();
                  $("#opcionesGE_edit").hide();
+                 $("#opcionesAPuerta_edit").hide();
             } else {
                 $("#adminCheck_edit").prop("checked", false);
                 $("#divInvitado_edit").show();
@@ -727,6 +728,9 @@ function editarInv(idi) {
             $("#spanBooCk_edit").hide();
             $("#spanChEmple_edit").hide();
             $("#agregarInvitado_edit").modal("show");
+            if (data[0].rol_id != 3) {
+                $("#opcionesAPuerta_edit").hide();
+            }
         },
         error: function (data) {
             alert("Ocurrio un error");
