@@ -705,6 +705,12 @@ function editarInv(idi) {
                 $("#ReporteAsistCheck_edit").prop("checked", false);
             }
 
+            if (data[0].ModificarReportePuerta == 1) {
+                $("#MoReporteAsistCheck_edit").prop("checked", true);
+            } else {
+                $("#MoReporteAsistCheck_edit").prop("checked", false);
+            }
+
             //modo CR
             if (data[0].modoCR == 1) {
                 $("#ControlReCheck_edit").prop("checked", true);
@@ -884,7 +890,7 @@ function registrarInvit_edit() {
 
     if ($("#asistPuertaCheck_edit").is(":checked") &&  !$("#adminCheck_edit").is(":checked")) {
         if(!$("#verCheckPuerta_edit").is(":checked") &&  !$("#AgregarCheckPuerta_edit").is(":checked") &&
-        !$("#ModifCheckPuerta_edit").is(":checked")  && !$("#ReporteAsistCheck_edit").is(":checked") ){
+        !$("#ModifCheckPuerta_edit").is(":checked")  && !$("#ReporteAsistCheck_edit").is(":checked") && !$("#MoReporteAsistCheck_edit").is(":checked") ){
             booCheck_edit=0;
         }
         else{
@@ -997,6 +1003,12 @@ function registrarInvit_edit() {
         } else {
             swReporteAsis_ed = 0;
         }
+        var swMoReporteAsis_ed;
+        if ($("#MoReporteAsistCheck_edit").is(":checked")) {
+            swMoReporteAsis_ed = 1;
+        } else {
+            swMoReporteAsis_ed = 0;
+        }
 
         var checkTodoEmp_ed;
         if ($("#TodoECheck_edit").is(":checked")) {
@@ -1092,6 +1104,7 @@ function registrarInvit_edit() {
                     switchCRemo_ed,
                     switchCRuta_ed,
                     swReporteAsis_ed,
+                    swMoReporteAsis_ed,
                     checkTodoEmp_ed,
                     agregarEmp_ed,
                     modifEmp_ed,
@@ -1145,6 +1158,7 @@ function registrarInvit_edit() {
                         switchCRemo_ed,
                         switchCRuta_ed,
                         swReporteAsis_ed,
+                        swMoReporteAsis_ed,
                         checkTodoEmp_ed,
                         agregarEmp_ed,
                         modifEmp_ed,
@@ -1524,6 +1538,29 @@ $("#MoReporteAsistCheck").change(function (event) {
 $("#ReporteAsistCheck").change(function (event) {
     if ($("#MoReporteAsistCheck").prop("checked")) {
         $("#ReporteAsistCheck").prop("checked",true);
+    }
+    else{
+
+    }
+});
+
+/* VALIDACION CHECK EDITAR MODIFICACAR REPORTE */
+$("#MoReporteAsistCheck_edit").change(function (event) {
+    if ($("#MoReporteAsistCheck_edit").prop("checked")) {
+        $("#ReporteAsistCheck_edit").prop("checked",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta_edit").prop("checked")) {
+        } else{
+            $("#ReporteAsistCheck_edit").prop("disabled",false);
+        }
+    }
+});
+
+/* VALIDACION VER EDITAR REPORTE */
+$("#ReporteAsistCheck_edit").change(function (event) {
+    if ($("#MoReporteAsistCheck_edit").prop("checked")) {
+        $("#ReporteAsistCheck_edit").prop("checked",true);
     }
     else{
 

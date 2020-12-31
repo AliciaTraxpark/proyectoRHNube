@@ -654,12 +654,27 @@
                                         </div>
                                         <br><br>
                                         <div class="col-md-8 " id="divReporteAsis_edit"  >
-                                            <label for="">Reporte:</label>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="ReporteAsistCheck_edit">
-                                                <label class="form-check-label" for="ReporteAsistCheck_edit"
-                                                    style="margin-top: 2px;">Ver</label><br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                     <label for="">Reporte:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="ReporteAsistCheck_edit">
+                                                        <label class="form-check-label" for="ReporteAsistCheck_edit"
+                                                            style="margin-top: 2px;">Ver reporte de asistencia(por empleado y por fecha)</label><br>
+                                                     </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck_edit">
+                                                        <label class="form-check-label" for="MoReporteAsistCheck_edit"
+                                                            style="margin-top: 2px;">Modificación de reporte  </label><br>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -727,12 +742,14 @@
                                     <div  id="divArea_edit">
                                         <div class="col-md-12">
                                             <div class="row">
-                                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                                <div class="col-md-12 form-check" style="display: flex;justify-content: space-between;">
                                                     <label for="" class="col-md-10">Seleccionar por area(s):</label>
+                                                    <div class="form-check" style="padding-right: 10px">
                                                     <input type="checkbox" style="font-size: 11.4px"
                                                         class="form-check-input" id="selectAreaCheck_edit">
                                                     <label class="form-check-label" for="selectAreaCheck_edit"
                                                         style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Todos, incluidos nuevos.</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
