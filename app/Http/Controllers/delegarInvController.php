@@ -114,6 +114,7 @@ class delegarInvController extends Controller
         $switchActividades=$request->switchActividades;
         $switchasisPuerta=$request->switchasisPuerta;
         $switchCRemo=$request->switchCRemo;
+        $switchCRuta=$request->switchCRuta;
         $checkTodoEmp=$request->checkTodoEmp;
         $swReporteAsis=$request->swReporteAsis;
 
@@ -139,6 +140,7 @@ class delegarInvController extends Controller
         $invitado->estado_condic=1;
         $invitado->permiso_Emp=$permisoEmp;
         $invitado->modoCR=$switchCRemo;
+        $invitado->ControlRuta=$switchCRuta;
         $invitado->gestionActiv=$switchActividades;
         $invitado->asistePuerta=$switchasisPuerta;
         $invitado->verTodosEmps=$checkTodoEmp;
@@ -451,6 +453,7 @@ class delegarInvController extends Controller
     $switchActividades_ed=$request->switchActividades_ed;
     $switchasisPuerta_ed=$request->switchasisPuerta_ed;
     $switchCRemo_ed=$request->switchCRemo_ed;
+    $switchCRuta_ed=$request->switchCRuta_ed;
     $swReporteAsis_ed=$request->swReporteAsis_ed;
     $checkTodoEmp_ed=$request->checkTodoEmp_ed;
 
@@ -485,7 +488,7 @@ class delegarInvController extends Controller
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
-           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed ]);
 
@@ -509,7 +512,7 @@ class delegarInvController extends Controller
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
-           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed]);
 
@@ -595,6 +598,7 @@ class delegarInvController extends Controller
     $switchActividades=$request->switchActividades;
     $switchasisPuerta=$request->switchasisPuerta;
     $switchCRemo=$request->switchCRemo;
+    $switchCRuta=$request->switchCRuta;
     $checkTodoEmp=$request->checkTodoEmp;
     $swReporteAsis=$request->swReporteAsis;
 
@@ -620,6 +624,7 @@ class delegarInvController extends Controller
     $invitado->estado_condic=1;
     $invitado->permiso_Emp=$permisoEmp;
     $invitado->modoCR=$switchCRemo;
+    $invitado->ControlRuta=$switchCRuta;
     $invitado->gestionActiv=$switchActividades;
     $invitado->asistePuerta=$switchasisPuerta;
     $invitado->verTodosEmps=$checkTodoEmp;
@@ -682,6 +687,7 @@ public function editarInviArea(Request $request){
     $switchActividades_ed=$request->switchActividades_ed;
     $switchasisPuerta_ed=$request->switchasisPuerta_ed;
     $switchCRemo_ed=$request->switchCRemo_ed;
+    $switchCRuta_ed=$request->switchCRuta_ed;
     $swReporteAsis_ed=$request->swReporteAsis_ed;
     $checkTodoEmp_ed=$request->checkTodoEmp_ed;
 
@@ -715,7 +721,7 @@ public function editarInviArea(Request $request){
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
-           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed ]);
            //actualizar permiso invitado
@@ -740,7 +746,7 @@ public function editarInviArea(Request $request){
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
-           'modoCR'=> $switchCRemo_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed, 'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed]);
 

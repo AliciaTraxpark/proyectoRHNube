@@ -281,6 +281,24 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
     @endif
 
+    @if ($invitadod->ControlRuta==1)
+
+    <li>
+        <a href="javascript: void(0);">
+            <i data-feather="map-pin"></i>
+            <span>Modo: Control en Ruta</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/ruta">Detalle Diario</a>
+                <a href="/rutaReporte">Reporte Semanal</a>
+            </li>
+        </ul>
+    </li>
+    @endif
+
     @if ($invitadod->asistePuerta==1)
     <li>
         <a href="javascript: void(0);">

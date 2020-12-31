@@ -293,6 +293,13 @@
                                             style="margin-top: 2px;"><i data-feather="activity" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control remoto</label><br>
                                     </div>
                                 </div>
+                                <div class="col-md-8 " id="divControlRuta"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="ControlRutaCheck">
+                                        <label class="custom-control-label" for="ControlRutaCheck"
+                                            style="margin-top: 2px;"><i data-feather="map-pin" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control en Ruta</label><br>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-8 " id="divAsisPu"  style="padding-top: 10px;">
                                     <div class="custom-control custom-switch">
@@ -587,6 +594,13 @@
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck_edit">
                                         <label class="custom-control-label" for="ControlReCheck_edit"
                                             style="margin-top: 2px;"><i data-feather="activity" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control remoto</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 " id="divControlRuta_edit"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="ControlRutaCheck_edit">
+                                        <label class="custom-control-label" for="ControlRutaCheck_edit"
+                                            style="margin-top: 2px;"><i data-feather="map-pin" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control en ruta</label><br>
                                     </div>
                                 </div>
 

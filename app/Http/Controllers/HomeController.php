@@ -60,13 +60,19 @@ class HomeController extends Controller
                             if ($invitadod->modoCR == 1) {
                                 return redirect('/controlRemoto');
                             } else {
-                                if ($invitadod->asistePuerta == 1) {
+                                if($invitadod->ControlRuta == 1){
+                                    return redirect('/ruta');
+                                }
+                                else{
+                                   if ($invitadod->asistePuerta == 1) {
                                     if ($invitadod->reporteAsisten == 1) {
                                         return redirect('/reporteAsistencia');
                                     } else {
                                         return redirect('/dispositivos');
                                     }
                                 }
+                                }
+
                             }
                         }
                     }

@@ -30,6 +30,7 @@ function abrirRegist() {
     $("#verCheckPuerta").prop("required", false);
     $("#divAsisPu").show();
     $("#divControlRe").show();
+    $("#divControlRuta").show();
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
     $("#verCheckPuerta").prop("disabled", false);
@@ -138,7 +139,7 @@ function registrarInvit() {
 
     ///////////////////////////////////////////////
 
-    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
+    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#ControlRutaCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
 
         $('#divParaSelec').show();
         return false;
@@ -235,6 +236,13 @@ function registrarInvit() {
                         switchCRemo = 1;
                     } else {
                         switchCRemo = 0;
+                    }
+
+                    var switchCRuta;
+                    if ($("#ControlRutaCheck").is(":checked")) {
+                        switchCRuta = 1;
+                    } else {
+                        switchCRuta = 0;
                     }
 
                     var swReporteAsis;
@@ -344,6 +352,7 @@ function registrarInvit() {
                                 switchActividades,
                                 switchasisPuerta,
                                 switchCRemo,
+                                switchCRuta,
                                 checkTodoEmp,
                                 swReporteAsis,
                             },
@@ -398,6 +407,7 @@ function registrarInvit() {
                                 switchActividades,
                                 switchasisPuerta,
                                 switchCRemo,
+                                switchCRuta,
                                 checkTodoEmp,
                                 swReporteAsis,
                             },
@@ -450,6 +460,7 @@ $("#adminCheck").click(function () {
         $("#opcionesActiv").hide();
         $("#divAsisPu").hide();
         $("#divControlRe").hide();
+        $("#divControlRuta").hide();
         $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
         $("#verCheckPuerta").prop("required", false);
@@ -466,6 +477,7 @@ $("#adminCheck").click(function () {
 
         $("#divAsisPu").show();
         $("#divControlRe").show();
+        $("#divControlRuta").show();
         $("#divReporteAsis").show();
         $("#divGestActivi").show();
 
@@ -510,6 +522,7 @@ function editarInv(idi) {
                 $("#divAsisPu_edit").hide();
                 $("#opcionesAPuerta_edit").hide();
                 $("#divControlRe_edit").hide();
+                $("#divControlRuta_edit").hide();
                 $("#divReporteAsis_edit").hide();
                  $("#opcionesGE_edit").hide();
             } else {
@@ -519,6 +532,7 @@ function editarInv(idi) {
 
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
+                $("#divControlRuta_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
 
@@ -688,6 +702,13 @@ function editarInv(idi) {
             } else {
                 $("#ControlReCheck_edit").prop("checked", false);
             }
+             //modo ruta
+             if (data[0].ControlRuta == 1) {
+                $("#ControlRutaCheck_edit").prop("checked", true);
+            } else {
+                $("#ControlRutaCheck_edit").prop("checked", false);
+            }
+
             $("#spanBooCk_edit").hide();
             $("#spanChEmple_edit").hide();
             $("#agregarInvitado_edit").modal("show");
@@ -711,6 +732,7 @@ $("#adminCheck_edit").click(function () {
         $("#divAsisPu_edit").hide();
         $("#opcionesAPuerta_edit").hide();
         $("#divControlRe_edit").hide();
+        $("#divControlRuta_edit").hide();
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
         $("#divParaSelec_edit").hide();
@@ -764,6 +786,7 @@ $("#adminCheck_edit").click(function () {
 
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
+                $("#divControlRuta_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
 
@@ -876,7 +899,7 @@ function registrarInvit_edit() {
     }
      ///////////////////////////////////////////////
 
-     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
+     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#ControlRutaCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
 
         $('#divParaSelec_edit').show();
         return false;
@@ -950,6 +973,13 @@ function registrarInvit_edit() {
             switchCRemo_ed = 1;
         } else {
             switchCRemo_ed = 0;
+        }
+
+        var switchCRuta_ed;
+        if ($("#ControlRutaCheck_edit").is(":checked")) {
+            switchCRuta_ed = 1;
+        } else {
+            switchCRuta_ed = 0;
         }
 
         var swReporteAsis_ed;
@@ -1051,6 +1081,7 @@ function registrarInvit_edit() {
                     switchActividades_ed,
                     switchasisPuerta_ed,
                     switchCRemo_ed,
+                    switchCRuta_ed,
                     swReporteAsis_ed,
                     checkTodoEmp_ed,
                     agregarEmp_ed,
@@ -1103,6 +1134,7 @@ function registrarInvit_edit() {
                         switchActividades_ed,
                         switchasisPuerta_ed,
                         switchCRemo_ed,
+                        switchCRuta_ed,
                         swReporteAsis_ed,
                         checkTodoEmp_ed,
                         agregarEmp_ed,
