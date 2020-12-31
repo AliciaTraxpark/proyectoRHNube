@@ -66,6 +66,141 @@
     </div>
 </div>
 {{-- FINALIZACION --}}
+{{-- MODAL DE EDITAR --}}
+<div id="editarPuntoControl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editarPuntoControl"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Editar Punto de Control
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" id="idPuntoC">
+                        <form action="javascript:editarActividadTarea()" id="FormEditarActividadTarea">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Punto Control:</label>
+                                        <input type="text" class="form-control form-control-sm" id="e_descripcionPunto"
+                                            maxlength="40" required disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="e_codigoPunto"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_puntoCRT">
+                                        <label class="custom-control-label" for="e_puntoCRT" style="font-weight: bold">
+                                            <i data-feather="map-pin"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Control en Ruta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_puntoAP">
+                                        <label class="custom-control-label" for="e_puntoAP" style="font-weight: bold">
+                                            <i data-feather="check-circle"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Asistencia en Puerta
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-2 border-top rowEmpleadosPuntoEditar">
+                                <div class="col-md-12 text-left">
+                                    <label for="">Asignar por:</label>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorE">
+                                        <label class="custom-control-label" for="e_puntosPorE"
+                                            style="font-weight: bold">
+                                            Seleccionar por empleados
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="e_todosEmpleados">
+                                        <label for="" class="mb-0">Seleccionar a todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara empleados con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <select id="e_empleadosPunto" data-plugin="customselect" class="form-control"
+                                        multiple="multiple">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-2 rowAreasEditar">
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
+                                        <label class="custom-control-label" for="e_puntosPorA"
+                                            style="font-weight: bold">
+                                            Seleccionar por áreas
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="e_todasAreas">
+                                        <label for="" class="mb-0">Seleccionar todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara áreas con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <select id="e_areasPunto" data-plugin="customselect"
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarModo()">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm ">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
 {{-- MODAL DE SESSION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -84,7 +219,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {{-- FINALIZACION --}}
-{{-- visibilidad de switch --}}
 @if (Auth::user())
 <script>
     $(function() {

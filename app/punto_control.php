@@ -17,9 +17,6 @@ class punto_control extends Model
         'asistenciaPuerta',
         'porEmpleados',
         'porAreas',
-        'longitud',
-        'latitud',
-        'radio',
         'organi_id',
         'estado'
     ];
