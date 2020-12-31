@@ -22,7 +22,17 @@
 @section('content')
 {{-- STYLOS --}}
 <style>
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background: #ced0d3;
+    }
 
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #52565b;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        overflow-y: scroll;
+    }
 </style>
 {{-- FINALIZACION --}}
 {{-- BOTONOS DE PANEL --}}
@@ -83,7 +93,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input type="hidden" id="e_idPuntoC">
-                        <form action="javascript:editarActividadTarea()" id="FormEditarActividadTarea">
+                        <form action="javascript:editarPuntoControl()" id="FormEditarActividadTarea">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

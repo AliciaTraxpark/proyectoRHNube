@@ -1,5 +1,5 @@
 var table = {};
-
+//* INICIALIZACION DE TABLA
 function tablaPuntos() {
     table = $("#puntosC").DataTable({
         scrollX: true,
@@ -44,6 +44,7 @@ function tablaPuntos() {
         }
     });
 }
+//* CARGAR DATOS DE TABLA
 function puntosControlOrganizacion() {
     if ($.fn.DataTable.isDataTable("#puntosC")) {
         $('#puntosC').DataTable().destroy();
@@ -121,6 +122,10 @@ function puntosControlOrganizacion() {
     });
 }
 puntosControlOrganizacion();
+// ! ******************* FORMULARIO DE EDITAR **********************
+$('#e_empleadosPunto').select2({
+    tags: "true"
+});
 function editarActividad(id) {
     $.ajax({
         async: false,
@@ -158,6 +163,7 @@ function editarActividad(id) {
                 $('#e_puntosPorE').prop("checked", true);
                 $('.colxEmpleados').show();
                 $('.colxAreas').hide();
+                empleadosPuntos(data[0].id);
             } else {
                 $('#e_puntosPorE').prop("checked", false);
                 $('.colxEmpleados').hide();
@@ -185,6 +191,123 @@ $('#e_puntoCRT').on("change.bootstrapSwitch", function (event) {
         $('.rowAreasEditar').hide();
     }
 });
+function empleadosPuntos(id) {
+    $('#e_empleadosPunto').empty();
+    $.ajax({
+        async: false,
+        url: "/puntoControlxEmpleados",
+        method: "POST",
+        data: {
+            idPunto: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var itemsSelect = "";
+            //* EMPLEADOS SELECCIONADOS
+            for (let index = 0; index < data[0].select.length; index++) {
+                itemsSelect += `<option value="${data[0].select[index].emple_id}" selected="selected">${data[0].select[index].nombre} ${data[0].select[index].apPaterno} ${data[0].select[index].apMaterno}</option>`;
+            }
+            //* EMPLEADOS NO SELECCIONADOS
+            for (let item = 0; item < data[0].noSelect.length; item++) {
+                itemsSelect += `<option value="${data[0].noSelect[item].emple_id}">${data[0].noSelect[item].nombre} ${data[0].noSelect[item].apPaterno} ${data[0].noSelect[item].apMaterno}</option>`;
+            }
+            $('#e_empleadosPunto').append(itemsSelect);
+            if (data[0].select.length != 0 && data[0].noSelect.length == 0) {
+                $('#e_todosEmpleados').prop("checked", true);
+            } else {
+                $('#e_todosEmpleados').prop("checked", false);
+            }
+        },
+        error: function () { }
+    });
+}
+//* EDITAR PUNTO DE CONTROL
+function editarPuntoControl() {
+    var idPunto = $('#e_idPuntoC').val();
+    var codigo = $('#e_codigoPunto').val();
+    var empleados = $('#e_empleadosPunto').val();
+    var areas = $('#e_areasPunto').val();
+    var porEmpleados;
+    var porAreas;
+    var controlRuta;
+    var asistenciaPuerta;
+    // * CONTROL EN RUTA
+    if ($('#e_puntoCRT').is(":checked")) {
+        controlRuta = 1;
+    } else {
+        controlRuta = 0;
+    }
+    //* ASISTENCIA EN PUERTA
+    if ($('#e_puntoAP').is(":checked")) {
+        asistenciaPuerta = 1;
+    } else {
+        asistenciaPuerta = 0;
+    }
+    //* POR EMPLEADOS
+    if ($('#e_puntosPorE').is(":checked")) {
+        porEmpleados = 1;
+    } else {
+        porEmpleados = 0;
+    }
+    //* POR AREAS
+    if ($('#e_puntosPorA').is(":checked")) {
+        porAreas = 1;
+    } else {
+        porAreas = 0;
+    }
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/editPuntoControl",
+        data: {
+            id: idPunto,
+            cr: controlRuta,
+            ap: asistenciaPuerta,
+            codigo: codigo,
+            empleados: empleados,
+            areas: areas,
+            porEmpleados: porEmpleados,
+            porAreas: porAreas
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            limpiarPuntoEnEditar();
+            puntosControlOrganizacion();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nPunto Control modificado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+            $('#editarPuntoControl').modal("toggle")
+        },
+        error: function () { }
+    });
+}
+function limpiarPuntoEnEditar() {
+    $('#e_idPuntoC').val("");
+    $('#e_codigoPunto').val("");
+}
+// ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
         $('#puntosC').css('width', '100%');
