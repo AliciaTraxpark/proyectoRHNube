@@ -173,7 +173,7 @@
                                         <label for="">Email de invitado:</label> <span id="spanEm"
                                             style="display: none;color:#911818">*Email ya registrado como invitado o ya
                                             existe en la organizacion.</span>
-                                        <input type="email" class="form-control form-control-sm" id="emailInvi"
+                                        <input type="email" onblur="verificarSIEdito()" class="form-control form-control-sm" id="emailInvi"
                                             required>
                                     </div>
                                 </div>

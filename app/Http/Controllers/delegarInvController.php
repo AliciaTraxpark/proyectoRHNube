@@ -800,4 +800,23 @@ public function editarInviArea(Request $request){
            ////////////////////////////////////////////////////////////////
     }
 }
+
+public function verificarEmaDSiEdi(Request $request){
+    $email=$request->email;
+    $invitado=DB::table('invitado')
+    ->where('organi_id','=',session('sesionidorg'))
+    ->where('email_inv','=',  $email)
+    ->get();
+
+    $usuario_organizacion=DB::table('usuario_organizacion')
+    ->join('users','usuario_organizacion.user_id','=','users.id')
+    ->where('organi_id','=',session('sesionidorg'))
+    ->where('users.email','=',  $email)
+    ->get();
+    if(count($invitado) || count($usuario_organizacion)){
+        return [1, $invitado[0]->idinvitado];
+    } else{
+        return 0;
+    }
+}
 }

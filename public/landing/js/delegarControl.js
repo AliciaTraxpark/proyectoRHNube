@@ -1571,3 +1571,35 @@ $("#ReporteAsistCheck_edit").change(function (event) {
 
     }
 });
+function verificarSIEdito(){
+    var emailInv = $("#emailInvi").val();
+    $.ajax({
+        type: "post",
+        url: "/verificarEmaDSiEdi",
+        data: {
+            email: emailInv,
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if(data[0]==1){
+                console.log(data[1]);
+                $('#agregarInvitado').modal('hide');
+                editarInv(data[1]);
+            }
+            else {
+                console.log(data[0]);
+            }
+
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+}

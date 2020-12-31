@@ -391,6 +391,7 @@ Route::post('/verificaremCla', 'delegarInvController@validaremailC');
 Route::post('/validaremailCInvita', 'delegarInvController@validaremailCInvita');
 Route::post('/registrarEmailBD', 'delegarInvController@registrarEmailBD');
 Route::post('/verificarEmaD', 'delegarInvController@verificarEmaD');
+Route::post('/verificarEmaDSiEdi', 'delegarInvController@verificarEmaDSiEdi');
 Route::post('/verificarInvitadoreg', 'delegarInvController@verificarInvitadoreg');
 Route::post('/datosInvitado', 'delegarInvController@datosInvitado');
 Route::post('/editarInviAdm', 'delegarInvController@editarInviAdm');
