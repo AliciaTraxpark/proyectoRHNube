@@ -339,7 +339,7 @@
                                         <div class="col-md-8" id="divReporteAsis"  >
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label for="">Reporte:</label>
+                                                    <label for="">Detalle de asistencia:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="form-check">
@@ -352,7 +352,7 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck">
                                                         <label class="form-check-label" for="MoReporteAsistCheck"
-                                                            style="margin-top: 2px;">Modificación de reporte  </label><br>
+                                                            style="margin-top: 2px;">Modificación   </label><br>
                                                     </div>
                                                 </div>
                                             </div>
@@ -656,7 +656,7 @@
                                         <div class="col-md-8 " id="divReporteAsis_edit"  >
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                     <label for="">Reporte:</label>
+                                                     <label for="">Detalle de asistencia:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="form-check">
@@ -669,7 +669,7 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck_edit">
                                                         <label class="form-check-label" for="MoReporteAsistCheck_edit"
-                                                            style="margin-top: 2px;">Modificación de reporte  </label><br>
+                                                            style="margin-top: 2px;">Modificación   </label><br>
                                                     </div>
                                                 </div>
                                             </div>
