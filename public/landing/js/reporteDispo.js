@@ -632,14 +632,16 @@ function cargartabla(fecha) {
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");
-                    //: HORA 
+                    //: HORA
                     for (let h = 0; h < 24; h++) {
                         for (let j = 0; j < data[index].marcaciones.length; j++) {
                             var marcacionData = data[index].marcaciones[j];
                             if (marcacionData.entrada != 0) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
-                                    tbodyEntradaySalida += `<td><div class="dropdown" id="">
-                                                                <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                                    var permisoModificarCS=$('#modifReporte').val();
+                                    if(permisoModificarCS==1){
+                                        tbodyEntradaySalida += `<td><div class="dropdown" id="">
+                                                                <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                 style="cursor: pointer">
                                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                     ${moment(marcacionData.entrada).format("HH:mm:ss")}
@@ -651,9 +653,16 @@ function cargartabla(fecha) {
                                                                     </div>
                                                                 </ul>
                                                             </div></td>`;
+                                    }
+                                    else{
+                                        tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(marcacionData.entrada).format("HH:mm:ss")}</td>`;
+                                    }
+
                                     if (marcacionData.salida != 0) {
-                                        tbodyEntradaySalida += `<td><div class="dropdown" id="">
-                                                                <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false 
+                                        var permisoModificarCE1=$('#modifReporte').val();
+                                        if(permisoModificarCE1==1){
+                                            tbodyEntradaySalida += `<td><div class="dropdown" id="">
+                                                                <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false
                                                                 style="cursor: pointer">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                     ${moment(marcacionData.salida).format("HH:mm:ss")}
@@ -665,6 +674,11 @@ function cargartabla(fecha) {
                                                                     </div>
                                                                 </ul>
                                                             </div></td>`;
+                                        } else{
+                                            tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
+
+                                        }
+
                                         var horaFinal = moment(marcacionData.salida);
                                         var horaInicial = moment(marcacionData.entrada);
                                         if (horaFinal.isSameOrAfter(horaInicial)) {
@@ -692,9 +706,11 @@ function cargartabla(fecha) {
                                             sumaTiempos = moment(sumaTiempos).add(horasTiempo, 'hours');
                                         }
                                     } else {
-                                        tbodyEntradaySalida += `<td><div class="dropdown" id="">
-                                                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" 
-                                                                    aria-haspopup="true" aria-expanded="false" 
+                                        var permisoModificarS=$('#modifReporte').val();
+                                        if(permisoModificarS==1){
+                                            tbodyEntradaySalida += `<td><div class="dropdown" id="">
+                                                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false"
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                     <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
@@ -708,6 +724,11 @@ function cargartabla(fecha) {
                                                                     </div>
                                                                 </form>
                                                             </div></td>`;
+                                        }
+                                        else{
+                                            tbodyEntradaySalida +=`<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
+                                        }
+
                                         tbodyEntradaySalida += `<td name="tiempoSitHi">
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
@@ -720,7 +741,10 @@ function cargartabla(fecha) {
                                 if (marcacionData.salida != 0) {
                                     if (h == moment(marcacionData.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
-                                        tbodyEntradaySalida += `<td>
+
+                                        var permisoModificarE=$('#modifReporte').val();
+                                        if(permisoModificarE==1){
+                                            tbodyEntradaySalida += `<td>
                                                                 <div class=" dropdown">
                                                                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                         style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -732,16 +756,23 @@ function cargartabla(fecha) {
                                                                     <form class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
                                                                         <div class="form-group">
                                                                             <input type="text" id="horaEntradaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasEntrada">
-                                                                            &nbsp; 
+                                                                            &nbsp;
                                                                             <a onclick="insertarEntrada(${marcacionData.idMarcacion})" style="cursor: pointer">
                                                                                 <img src="admin/images/checkH.svg" height="15">
-                                                                            </a>  
+                                                                            </a>
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                             </td>`;
+                                        }
+                                        else{
+                                            tbodyEntradaySalida += `<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td>`;
+                                        }
+
                                         //* COLUMNA DE SALIDA
-                                        tbodyEntradaySalida += `<td>
+                                        var permisoModificarCE2=$('#modifReporte').val();
+                                        if(permisoModificarCE2==1){
+                                            tbodyEntradaySalida += `<td>
                                                                 <div class="dropdown" id="">
                                                                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                         style="cursor: pointer">
@@ -756,6 +787,10 @@ function cargartabla(fecha) {
                                                                     </ul>
                                                                 </div>
                                                             </td>`;
+                                        } else{
+                                            tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
+                                        }
+
                                         tbodyEntradaySalida += `<td name="tiempoSitHi">
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>

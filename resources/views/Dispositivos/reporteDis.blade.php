@@ -236,6 +236,16 @@
 </div>
 </div>
 </div>
+    {{-- modificar --}}
+    @if (isset($modifReporte))
+    @if ($modifReporte==1)
+    <input type="hidden" id="modifReporte" value="1">
+    @else
+    <input type="hidden" id="modifReporte" value="0">
+    @endif
+    @else
+    <input type="hidden" id="modifReporte" value="1">
+    @endif
 @endsection
 @section('script')
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
