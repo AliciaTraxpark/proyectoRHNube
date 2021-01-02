@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
+    <img height="1" width="1" style="display:none;" alt=""
+        src="https://px.ads.linkedin.com/collect/?pid=2668442&conversionId=3456930&fmt=gif" />
 </head>
 
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">

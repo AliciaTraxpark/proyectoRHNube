@@ -473,3 +473,11 @@ Route::post('/ubicacionesPersonalizadas', 'controlRutaController@obtenerUbicacio
 
 //INCIDENCIAS
 Route::get('/incidencias', 'incidenciasController@index');
+
+//* PUNTOS DE CONTROL
+Route::get('/puntoControl', 'PuntosControlController@index');
+Route::get('/puntosControlOrg', 'PuntosControlController@puntosControlOrganizacion');
+Route::post('/puntoControlData', 'PuntosControlController@puntoDeControl');
+Route::post('/puntoControlxEmpleados', 'PuntosControlController@empleadosPorPuntos');
+Route::post('/editPuntoControl', 'PuntosControlController@editarPuntoControl');
+Route::post('/puntoControlxAreas', 'PuntosControlController@areasPorEmpleados');
