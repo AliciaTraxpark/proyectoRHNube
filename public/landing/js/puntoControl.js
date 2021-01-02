@@ -43,6 +43,10 @@ function tablaPuntos() {
             }
         }
     });
+    $(window).on('resize', function () {
+        $('#puntosC').css('width', '100%');
+        table.draw(true);
+    });
 }
 //* CARGAR DATOS DE TABLA
 function puntosControlOrganizacion() {
@@ -128,6 +132,9 @@ $('#e_empleadosPunto').select2({
 });
 $('#e_areasPunto').select2({
     tags: "true"
+});
+$("#e_codigoPunto").keyup(function () {
+    $(this).removeClass("borderColor");
 });
 function editarActividad(id) {
     $.ajax({
@@ -321,30 +328,62 @@ function editarPuntoControl() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            limpiarPuntoEnEditar();
-            puntosControlOrganizacion();
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nPunto Control modificado.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-            $('#editarPuntoControl').modal("toggle")
+            if (data != 0) {
+                limpiarPuntoEnEditar();
+                puntosControlOrganizacion();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nPunto Control modificado.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+                $('#editarPuntoControl').modal("toggle");
+            } else {
+                $("#e_codigoPunto").addClass("borderColor");
+                $.notifyClose();
+                $.notify(
+                    {
+                        message:
+                            "\nYa existe un punto de control con este codigo.",
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $('#editarPuntoControl'),
+                        position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 2000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
         },
         error: function () { }
     });

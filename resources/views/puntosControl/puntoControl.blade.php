@@ -22,6 +22,10 @@
 @section('content')
 {{-- STYLOS --}}
 <style>
+    .borderColor {
+        border-color: red;
+    }
+
     .select2-container--default .select2-results__option[aria-selected=true] {
         background: #ced0d3;
     }
