@@ -717,11 +717,36 @@ class dispositivosController extends Controller
         $fechaEntrada = $marcacion_puerta->marcaMov_fecha;
 
         if ($fecha1->lte($fechaEntrada)) {
-            return 0;
+            return [0,'Hora de salida debe ser mayor a que hora de entrada.'];
         } else {
-            $marcacion_puerta->marcaMov_salida = $fecha1;
-            $marcacion_puerta->save();
-            return 1;
+            $fecha111 = Carbon::create($marcacion_puerta->marcaMov_fecha)->toDateString();
+            $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
+                ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
+                ->where('mv.marcaMov_fecha', '!=',null )
+                ->whereDate('mv.marcaMov_fecha', '=',$fecha111 )
+            /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
+                ->orderby('marcaMov_fecha','ASC')
+                ->get()->last();
+
+            if($marcacion_puerta00){
+                $fechaEPosterir=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                if( $fechaEPosterir->lte($fecha1) ){
+                    return [0,'Hora de salida debe ser menor que ultima hora de entrada de la siguiente marcacion.'];
+                }
+                else{
+                    $marcacion_puerta->marcaMov_salida = $fecha1;
+                    $marcacion_puerta->save();
+                    return 1;
+                }
+            }
+            else{
+                $marcacion_puerta->marcaMov_salida = $fecha1;
+                $marcacion_puerta->save();
+                return 1;
+            }
+
+//////////////////////////////////////////////////////////////////
+
         }
     }
 

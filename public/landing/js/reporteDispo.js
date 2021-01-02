@@ -1094,7 +1094,8 @@ function insertarSalida(idMarca) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            if (data == 1) {
+            console.log('data[0]'+data[0]);
+            if (data[0] == 1) {
                 $('#tableZoom').hide();
                 $('#espera').show();
                 $('#btnRecargaTabla').click();
@@ -1104,7 +1105,7 @@ function insertarSalida(idMarca) {
 
                 $.notifyClose();
                 $.notify({
-                    message: '\nHora de salida debe ser mayor a que hora de entrada.',
+                    message: data[1],
                     icon: '/landing/images/alert1.svg',
                 }, {
                     icon_type: 'image',
