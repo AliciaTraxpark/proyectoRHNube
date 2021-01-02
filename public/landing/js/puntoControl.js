@@ -127,6 +127,8 @@ function puntosControlOrganizacion() {
 }
 puntosControlOrganizacion();
 // ! ******************* FORMULARIO DE EDITAR **********************
+var empleadosSelectEdit;
+var areasSelectEdit;
 $('#e_empleadosPunto').select2({
     tags: "true"
 });
@@ -181,6 +183,7 @@ function editarPunto(id) {
                 $('.colxEmpleados').show();
                 $('.colxAreas').hide();
                 empleadosPuntos(data[0].id);
+                empleadosSelectEdit = $('#e_empleadosPunto').val();
             } else {
                 $('#e_puntosPorE').prop("checked", false);
                 $('.colxEmpleados').hide();
@@ -190,6 +193,7 @@ function editarPunto(id) {
                 $('.colxEmpleados').hide();
                 $('.colxAreas').show();
                 areasPuntos(data[0].id);
+                areasSelectEdit = $('#e_areasPunto').val();
             } else {
                 $('#e_puntosPorA').prop("checked", false);
                 $('.colxAreas').hide();
@@ -400,6 +404,14 @@ $("#e_empleadosPunto").on("change", function (e) {
         $('#e_todosEmpleados').prop("checked", false);
     }
 });
+//* SELECT DE AREAS EN EDITAR
+$('#e_areasPunto').on("change", function (e) {
+    if ($('#e_areasPunto').select2('data').length === $("#e_areasPunto >option").length) {
+        $('#e_todasAreas').prop("checked", true);
+    } else {
+        $('#e_todasAreas').prop("checked", false);
+    }
+});
 //* FUNCION PARA LIMPIAR POR AREAS
 function limpiarxArea() {
     $('.colxAreas').hide();
@@ -414,7 +426,7 @@ function limpiarxEmpleado() {
     $('#e_todosEmpleados').prop("checked", false);
     $('#e_empleadosPunto').empty();
 }
-// ? SWITCH DE SELECCIONAR POR EMPLEADO
+//* SWITCH DE SELECCIONAR POR EMPLEADO
 $('#e_puntosPorE').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         limpiarxArea();
@@ -426,7 +438,7 @@ $('#e_puntosPorE').on("change.bootstrapSwitch", function (event) {
         limpiarxEmpleado();
     }
 });
-// ? SWITCH DE SELECCIONAR POR ÁREAS
+//* SWITCH DE SELECCIONAR POR ÁREAS
 $('#e_puntosPorA').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         limpiarxEmpleado();
@@ -438,6 +450,7 @@ $('#e_puntosPorA').on("change.bootstrapSwitch", function (event) {
         $('.colxAreas').hide();
     }
 });
+//* VALIDACIONES EN EDITAR
 $('#FormEditarPuntoControl').attr('novalidate', true);
 $('#FormEditarPuntoControl').submit(function (e) {
     e.preventDefault();
@@ -498,6 +511,24 @@ $('#FormEditarPuntoControl').submit(function (e) {
         }
     }
     this.submit();
+});
+//* CHECKBOX DE TODOS LOS EMPLEADOS
+$('#e_todosEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#e_empleadosPunto > option").prop("selected", "selected");
+        $('#e_empleadosPunto').trigger("change");
+    } else {
+        $('#e_empleadosPunto').val(empleadosSelectEdit).trigger('change');
+    }
+});
+//* CHECKBOX DE TODAS LAS AREAS
+$('#e_todasAreas').click(function () {
+    if ($(this).is(':checked')) {
+        $("#e_todasAreas > option").prop("selected", "selected");
+        $('#e_todasAreas').trigger("change");
+    } else {
+        $('#e_todasAreas').val(areasSelectEdit).trigger('change');
+    }
 });
 // ! ****************** FINALIZACION *****************************
 $(function () {
