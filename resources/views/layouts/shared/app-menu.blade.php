@@ -167,8 +167,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <li>
                 <a href="/dispositivos">Dispositivos</a>
                 <a href="/controladores">Controladores</a>
-                <a href="/reporteAsistencia">Detalle de asistencia por fecha</a>
-               {{--  <a href="">Reporte de asistencia por empleado</a> --}}
+                <a href="/reporteAsistencia">Detalle de asistencia</a>
+                <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
 
             </li>
         </ul>
@@ -314,10 +314,15 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/dispositivos">Dispositivos</a>
                 <a href="/controladores">Controladores</a>
                 @endif
-                @if ($invitadod->reporteAsisten==1)
-                <a href="/reporteAsistencia">Detalle de asistencia por fecha</a>
-              {{--   <a href="">Reporte de asistencia por empleado</a> --}}
+                @if ($invitadod->ModificarReportePuerta==1)
+                <a href="/reporteAsistencia">Detalle de asistencia</a>
+
                 @endif
+                @if ($invitadod->reporteAsisten==1)
+               
+               <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
+                @endif
+
 
             </li>
         </ul>

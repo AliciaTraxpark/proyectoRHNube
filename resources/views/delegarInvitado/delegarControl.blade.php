@@ -352,7 +352,7 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck">
                                                         <label class="form-check-label" for="MoReporteAsistCheck"
-                                                            style="margin-top: 2px;">Modificación   </label><br>
+                                                            style="margin-top: 2px;">Gestion de detalle de asistencia   </label><br>
                                                     </div>
                                                 </div>
                                             </div>
@@ -669,7 +669,7 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck_edit">
                                                         <label class="form-check-label" for="MoReporteAsistCheck_edit"
-                                                            style="margin-top: 2px;">Modificación   </label><br>
+                                                            style="margin-top: 2px;">Gestion de detalle de asistencia  </label><br>
                                                     </div>
                                                 </div>
                                             </div>
