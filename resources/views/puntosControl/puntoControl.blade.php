@@ -33,6 +33,10 @@
     .select2-container--default .select2-selection--multiple {
         overflow-y: scroll;
     }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
+    }
 </style>
 {{-- FINALIZACION --}}
 {{-- BOTONOS DE PANEL --}}
@@ -199,9 +203,12 @@
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="javascript:limpiarModo()">Cancelar</button>
-                            <button type="submit" name="" style="background-color: #163552;"
-                                class="btn btn-sm ">Guardar</button>
+                                onclick="javascript:limpiarPuntoEnEditar()">
+                                Cancelar
+                            </button>
+                            <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">
+                                Guardar
+                            </button>
                             </form>
                         </div>
                     </div>

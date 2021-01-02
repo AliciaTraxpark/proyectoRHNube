@@ -108,6 +108,7 @@ class PuntosControlController extends Controller
     {
         $empleadosSinPuntoC = [];
         $respuesta = [];
+        $empleadosPuntos = [];
         // TODOS LOS EMPLEADOS
         $empleados = DB::table('empleado as e')
             ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
@@ -138,6 +139,49 @@ class PuntosControlController extends Controller
         }
         //* DATOS PARA RESULTADO
         array_push($respuesta, array("select" => $empleadosPuntos, "noSelect" => $empleadosSinPuntoC));
+
+        return response()->json($respuesta, 200);
+    }
+
+    //* AREAS POR PUNTOS
+    public function areasPorEmpleados(Request $request)
+    {
+        $areasSinPuntosC = [];
+        $respuesta = [];
+        $areasPunto = [];
+        // TODOS LAS AREAS
+        $areas = DB::table('empleado as e')
+            ->join('area as a', 'a.area_id', '=', 'e.emple_area')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->groupBy('a.area_id')
+            ->get();
+
+        //* AREAS CONDICHA ACTIVIDAD
+        $areasPunto = DB::table('punto_control as pc')
+            ->join('punto_control_area as pca', 'pca.idPuntoControl', '=', 'pc.id')
+            ->join('area as a', 'a.area_id', '=', 'pca.idArea')
+            ->select('a.area_id', 'a.area_descripcion')
+            ->where('a.organi_id', '=', session('sesionidorg'))
+            ->where('pca.estado', '=', 1)
+            ->where('pc.id', '=', $request->get('id'))
+            ->groupBy('a.area_id')
+            ->get();
+
+        // * RECORRIDO DE AREAS
+        for ($index = 0; $index < sizeof($areas); $index++) {
+            $estado = true;
+            foreach ($areasPunto as $ap) {
+                if ($areas[$index]->area_id == $ap->area_id) {
+                    $estado = false;
+                }
+            }
+            if ($estado) {
+                array_push($areasSinPuntosC, $areas[$index]);
+            }
+        }
+        array_push($respuesta, array("select" => $areasPunto, "noSelect" => $areasSinPuntosC));
 
         return response()->json($respuesta, 200);
     }
@@ -230,7 +274,7 @@ class PuntosControlController extends Controller
                             }
                         }
                         if ($busqueda) {
-                            $puntoCE = punto_control_empleado::where('idActividad', '=', $puntoControl->id)
+                            $puntoCE = punto_control_empleado::where('idPuntoControl', '=', $puntoControl->id)
                                 ->where('idEmpleado', '=', $pcem->idEmpleado)->get()->first();
                             $puntoCE->estado = 0;
                             $puntoCE->save();

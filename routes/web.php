@@ -478,3 +478,4 @@ Route::get('/puntosControlOrg', 'PuntosControlController@puntosControlOrganizaci
 Route::post('/puntoControlData', 'PuntosControlController@puntoDeControl');
 Route::post('/puntoControlxEmpleados', 'PuntosControlController@empleadosPorPuntos');
 Route::post('/editPuntoControl', 'PuntosControlController@editarPuntoControl');
+Route::post('/puntoControlxAreas', 'PuntosControlController@areasPorEmpleados');
