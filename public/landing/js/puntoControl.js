@@ -438,6 +438,15 @@ $('#e_puntosPorA').on("change.bootstrapSwitch", function (event) {
         $('.colxAreas').hide();
     }
 });
+$('#FormEditarPuntoControl').attr('novalidate', true);
+$('#FormEditarPuntoControl').submit(function (e){
+    e.preventDefault();
+    if($('#e_puntosPorE').is(":checked")){
+        if($('#e_areasPunto').val){
+
+        }
+    }
+});
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {

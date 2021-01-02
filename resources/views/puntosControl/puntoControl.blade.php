@@ -101,7 +101,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input type="hidden" id="e_idPuntoC">
-                        <form action="javascript:editarPuntoControl()" id="FormEditarActividadTarea">
+                        <form action="javascript:editarPuntoControl()" id="FormEditarPuntoControl">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
