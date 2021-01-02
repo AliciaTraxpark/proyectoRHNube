@@ -219,15 +219,55 @@ class apimovilController extends Controller
             }
             $marcacion_puerta->save();
             } else{
-                $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+
+                $fecha1 = Carbon::create($req['fechaMarcacion'])->toDateString();
+
+                $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
-                ->where('mv.marcaMov_salida', '=',null )
+                ->where('mv.marcaMov_salida', '!=',null )
+                ->where('mv.marcaMov_fecha', '!=',null )
+                ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
+            /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
                 ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
-                ->orderby('marcaMov_id','DESC')->take(1)
-                ->get();
+                ->orderby('marcaMov_fecha','ASC')
+                ->get()->last();
 
-             if($marcacion_puerta1->isEmpty()){
+                if($marcacion_puerta00){
+                   /*  dd($marcacion_puerta00); */
+                   if($marcacion_puerta00->marcaMov_fecha > $req['fechaMarcacion']){
+                       $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                       ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
+                       ->where('mv.marcaMov_salida', '=',null )
+                       ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
+                       ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
+                       ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
+                       ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                       ->orderby('marcaMov_fecha','ASC')
+                       ->get()->first();
+                   }
+                   else{
+                    $marcacion_puerta1=[];
+                    $marcacion_puerta1==null;
+                   }
+
+
+
+                } else{
+                    $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                    ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
+                    ->where('mv.marcaMov_salida', '=',null )
+                    ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
+                    ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
+                    ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
+                    ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                    ->orderby('marcaMov_fecha','ASC')
+                    ->get()->last();
+                }
+
+               /*  dd($marcacion_puerta1->marcaMov_id); */
+
+             if($marcacion_puerta1==null){
                 $marcacion_puerta=new marcacion_puerta();
            /*  $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
             $marcacion_puerta->marcaMov_salida= $req['fechaMarcacion'];
@@ -250,14 +290,16 @@ class apimovilController extends Controller
             }
             $marcacion_puerta->save();
             } else{
-                $marcacion_puerta =DB::table('marcacion_puerta as mv')
+               /*  $marcacion_puerta =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                 ->where('mv.marcaMov_salida', '=',null )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
                 ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
                 ->orderby('marcaMov_id','DESC')->take(1)
-                ->update(['mv.marcaMov_salida' => $req['fechaMarcacion']]);
-
+                ->update(['mv.marcaMov_salida' => $req['fechaMarcacion']]); */
+                $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
+                $marcacion_puerta->marcaMov_salida=$req['fechaMarcacion'];
+                $marcacion_puerta->save();
             }
             }
 

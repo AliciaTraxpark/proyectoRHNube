@@ -173,7 +173,7 @@
                                         <label for="">Email de invitado:</label> <span id="spanEm"
                                             style="display: none;color:#911818">*Email ya registrado como invitado o ya
                                             existe en la organizacion.</span>
-                                        <input type="email" class="form-control form-control-sm" id="emailInvi"
+                                        <input type="email" onblur="verificarSIEdito()" class="form-control form-control-sm" id="emailInvi"
                                             required>
                                     </div>
                                 </div>
@@ -293,6 +293,13 @@
                                             style="margin-top: 2px;"><i data-feather="activity" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control remoto</label><br>
                                     </div>
                                 </div>
+                                <div class="col-md-8 " id="divControlRuta"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="ControlRutaCheck">
+                                        <label class="custom-control-label" for="ControlRutaCheck"
+                                            style="margin-top: 2px;"><i data-feather="map-pin" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control en Ruta</label><br>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-8 " id="divAsisPu"  style="padding-top: 10px;">
                                     <div class="custom-control custom-switch">
@@ -329,12 +336,25 @@
                                             </div>
                                         </div>
                                         <br><br>
-                                        <div class="col-md-8 " id="divReporteAsis"  >
-                                            <label for="">Reporte:</label>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="ReporteAsistCheck">
-                                                <label class="form-check-label" for="ReporteAsistCheck"
-                                                    style="margin-top: 2px;">Ver  </label><br>
+                                        <div class="col-md-8" id="divReporteAsis"  >
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="">Detalle de asistencia:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="ReporteAsistCheck">
+                                                        <label class="form-check-label" for="ReporteAsistCheck"
+                                                            style="margin-top: 2px;">Ver reporte de asistencia(por empleado y por fecha)  </label><br>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck">
+                                                        <label class="form-check-label" for="MoReporteAsistCheck"
+                                                            style="margin-top: 2px;">Gestion de detalle de asistencia   </label><br>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -589,6 +609,13 @@
                                             style="margin-top: 2px;"><i data-feather="activity" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control remoto</label><br>
                                     </div>
                                 </div>
+                                <div class="col-md-8 " id="divControlRuta_edit"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="ControlRutaCheck_edit">
+                                        <label class="custom-control-label" for="ControlRutaCheck_edit"
+                                            style="margin-top: 2px;"><i data-feather="map-pin" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Modo: Control en ruta</label><br>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-8 " id="divAsisPu_edit"  style="padding-top: 10px;">
                                     <div class="custom-control custom-switch">
@@ -627,12 +654,27 @@
                                         </div>
                                         <br><br>
                                         <div class="col-md-8 " id="divReporteAsis_edit"  >
-                                            <label for="">Reporte:</label>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="ReporteAsistCheck_edit">
-                                                <label class="form-check-label" for="ReporteAsistCheck_edit"
-                                                    style="margin-top: 2px;">Ver</label><br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                     <label for="">Detalle de asistencia:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="ReporteAsistCheck_edit">
+                                                        <label class="form-check-label" for="ReporteAsistCheck_edit"
+                                                            style="margin-top: 2px;">Ver reporte de asistencia(por empleado y por fecha)</label><br>
+                                                     </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="MoReporteAsistCheck_edit">
+                                                        <label class="form-check-label" for="MoReporteAsistCheck_edit"
+                                                            style="margin-top: 2px;">Gestion de detalle de asistencia  </label><br>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -700,12 +742,14 @@
                                     <div  id="divArea_edit">
                                         <div class="col-md-12">
                                             <div class="row">
-                                                <div class="col-md-12 form-check" style="padding-left: 4px;">
+                                                <div class="col-md-12 form-check" style="display: flex;justify-content: space-between;">
                                                     <label for="" class="col-md-10">Seleccionar por area(s):</label>
+                                                    <div class="form-check" style="padding-right: 10px">
                                                     <input type="checkbox" style="font-size: 11.4px"
                                                         class="form-check-input" id="selectAreaCheck_edit">
                                                     <label class="form-check-label" for="selectAreaCheck_edit"
                                                         style="font-style: oblique;margin-top: 2px;font-size: 11.4px">Todos, incluidos nuevos.</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

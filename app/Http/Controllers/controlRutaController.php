@@ -18,27 +18,151 @@ class controlRutaController extends Controller
 
     public function index()
     {
-        return view('ruta.rutaDiaria');
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if ($invitadod->ControlRuta == 1) {
+
+                        return view('ruta.rutaDiaria');
+                    } else {
+                        return redirect('/dashboard');
+                    }
+                    /*   */
+                } else {
+                    return view('ruta.rutaDiaria');
+                }
+            } else {
+                return view('ruta.rutaDiaria');
+            }
+        }
+
+
     }
 
     public function indexReporte()
     {
-        $areas = DB::table('area as a')
-            ->select('a.area_id', 'a.area_descripcion')
-            ->where('a.organi_id', '=', session('sesionidorg'))
-            ->get();
-        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            $usuario_organizacion = DB::table('usuario_organizacion as uso')
             ->where('uso.organi_id', '=', session('sesionidorg'))
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
-        if ($usuario_organizacion->rol_id == 3) {
-            $invitado = DB::table('invitado as in')
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->where('rol_id', '=', 3)
-                ->where('in.user_Invitado', '=', Auth::user()->id)
-                ->get()->first();
 
-            if ($invitado->verTodosEmps == 1) {
+
+            if ($usuario_organizacion->rol_id == 3) {
+                $invitado = DB::table('invitado as in')
+                    ->where('organi_id', '=', session('sesionidorg'))
+                    ->where('rol_id', '=', 3)
+                    ->where('in.user_Invitado', '=', Auth::user()->id)
+                    ->get()->first();
+
+                if ($invitado->verTodosEmps == 1) {
+
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->groupBy('e.emple_id')
+                        ->get();
+
+                    //AREA
+                    $areas =  DB::table('empleado as e')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->select(
+                            'a.area_id',
+                            'a.area_descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->groupBy('e.emple_area')
+                        ->get();
+
+                } else {
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()->first();
+
+                    if ($invitado_empleadoIn != null) {
+
+                        //* EMPLEADO
+                        $empleado = DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                        //? AREA
+                        $areas =  DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->select(
+                                'a.area_id',
+                                'a.area_descripcion'
+                            )
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->groupBy('e.emple_area')
+                            ->get();
+
+                    } else {
+                         //* EMPLEADO
+                        $empleado = DB::table('empleado as e')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->groupBy('e.emple_id')
+                            ->get();
+
+                            //? AREA
+                        $areas =  DB::table('empleado as e')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->select(
+                            'a.area_id',
+                            'a.area_descripcion'
+                        )
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                        ->groupBy('e.emple_area')
+                        ->get();
+                    }
+                }
+            } else {
+                // * EMPLEADO
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
@@ -47,53 +171,44 @@ class controlRutaController extends Controller
                     ->where('e.emple_estado', '=', 1)
                     ->groupBy('e.emple_id')
                     ->get();
-            } else {
-                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                    ->where('invem.idinvitado', '=',  $invitado->idinvitado)
-                    ->where('invem.area_id', '=', null)
-                    ->where('invem.emple_id', '!=', null)
-                    ->get()->first();
 
-                if ($invitado_empleadoIn != null) {
-                    $empleado = DB::table('empleado as e')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.emple_estado', '=', 1)
-                        ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                        ->groupBy('e.emple_id')
-                        ->get();
-                } else {
-                    $empleado = DB::table('empleado as e')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.emple_estado', '=', 1)
-                        ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                        ->groupBy('e.emple_id')
-                        ->get();
-                }
+                //? AREA
+                $areas =  DB::table('empleado as e')
+                    ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                    ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                    ->select(
+                        'a.area_id',
+                        'a.area_descripcion'
+                    )
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.emple_estado', '=', 1)
+                    ->groupBy('e.emple_area')
+                    ->get();
             }
-        } else {
-            $empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->groupBy('e.emple_id')
-                ->get();
+
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('rol_id', '=', 3)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
+
+                if ($invitadod) {
+                    if ($invitadod->rol_id != 1) {
+                        if ($invitadod->ControlRuta == 1) {
+
+                            return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
+                        } else {
+                            return redirect('/dashboard');
+                        }
+                    } else {
+                        return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
+                    }
+                } else {
+                    return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
+                }
+
         }
 
-        return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
     }
 
     public function showConRuta(Request $request)
@@ -235,7 +350,7 @@ class controlRutaController extends Controller
         // dd($control, $control_ruta);
         $respuesta = array();
         $fechaIgual = array(); //* ARRAYS CON FECHA DE BUSQUEDA
-        $fechaDiferente = array(); //* ARRAYS CON FECHA DIFERENTE 
+        $fechaDiferente = array(); //* ARRAYS CON FECHA DIFERENTE
         if (!empty($control) && !empty($control_ruta)) { //* CUANDO LOS DOS ARRAYS CONTIENE DATOS
             //* RECORREMOS EN FORMATO HORAS
             for ($hora = 0; $hora < 24; $hora++) {
@@ -963,7 +1078,7 @@ class controlRutaController extends Controller
                 }
                 return true;
             }
-            $capturaUbicacion = []; //* GUARDAR NUEVA DATA 
+            $capturaUbicacion = []; //* GUARDAR NUEVA DATA
             //* UNIR DATOS EN UNO SOLO
             //TODO-> SOLO SI @tiempoDiaCaptura y @tiempoDiaUbicacion CONTIENEN DATOS
             if (sizeof($tiempoDiaCaptura) != 0 && sizeof($tiempoDiaUbicacion) != 0) {
@@ -982,7 +1097,7 @@ class controlRutaController extends Controller
                                     $horaUbicacion = $tiempoDiaUbicacion[$j]["datos"][$d];
                                     for ($hora = 0; $hora < 24; $hora++) { //* Recorremos en formato de 24 horas
                                         if (isset($horaCaptura[$hora]) && isset($horaUbicacion[$hora])) { //* CAPTURA Y UBICACION CONTIENE LA MISMA HORA
-                                            //* Recorremos en formato minutos 
+                                            //* Recorremos en formato minutos
                                             for ($m = 0; $m < 6; $m++) {
                                                 if (isset($horaCaptura[$hora]["minuto"][$m]) && isset($horaUbicacion[$hora]["minuto"][$m])) { //* Comparamos si existe
                                                     $arrayMinutoCaptura = $horaCaptura[$hora]["minuto"][$m];

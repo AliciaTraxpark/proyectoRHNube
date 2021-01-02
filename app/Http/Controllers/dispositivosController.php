@@ -275,7 +275,7 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
                 } else {
                     return redirect('/dashboard');
                 }
@@ -722,6 +722,156 @@ class dispositivosController extends Controller
             $marcacion_puerta->marcaMov_salida = $fecha1;
             $marcacion_puerta->save();
             return 1;
+        }
+    }
+
+    public function reporteMarcacionesEmp()
+    {
+        $organizacion = DB::table('organizacion')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
+        $nombreOrga = $organizacion->organi_razonSocial;
+
+
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+
+
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->get();
+                } else {
+                    $empleados = DB::table('empleado as e')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->get();
+                }
+            }
+        } else {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
+        }
+
+
+        if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                if ($invitadod->reporteAsisten == 1) {
+
+                    return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                } else {
+                    return redirect('/dashboard');
+                }
+                /*   */
+            } else {
+                return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            }
+        } else {
+            return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+        }
+    }
+
+    public function ReporteFecha()
+    {
+        $organizacion = DB::table('organizacion')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
+        $nombreOrga = $organizacion->organi_razonSocial;
+
+
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('rol_id', '=', 3)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->get();
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+
+
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->get();
+                } else {
+                    $empleados = DB::table('empleado as e')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->get();
+                }
+            }
+        } else {
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
+        }
+
+
+        if ($invitadod) {
+            if ($invitadod->rol_id != 1) {
+                if ($invitadod->reporteAsisten == 1) {
+
+                    return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                } else {
+                    return redirect('/dashboard');
+                }
+                /*   */
+            } else {
+                return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            }
+        } else {
+            return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
         }
     }
 }

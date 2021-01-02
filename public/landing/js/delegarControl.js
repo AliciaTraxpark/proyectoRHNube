@@ -30,6 +30,7 @@ function abrirRegist() {
     $("#verCheckPuerta").prop("required", false);
     $("#divAsisPu").show();
     $("#divControlRe").show();
+    $("#divControlRuta").show();
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
     $("#verCheckPuerta").prop("disabled", false);
@@ -111,7 +112,7 @@ function registrarInvit() {
     var booCheck;
     if ($("#asistPuertaCheck").is(":checked")  &&  !$("#adminCheck").is(":checked")) {
         if(!$("#verCheckPuerta").is(":checked") &&  !$("#AgregarCheckPuerta").is(":checked") &&
-        !$("#ModifCheckPuerta").is(":checked")  && !$("#ReporteAsistCheck").is(":checked") ){
+        !$("#ModifCheckPuerta").is(":checked")  && !$("#ReporteAsistCheck").is(":checked") && !$("#MoReporteAsistCheck").is(":checked") ){
             booCheck=0;
         }
         else{
@@ -138,7 +139,7 @@ function registrarInvit() {
 
     ///////////////////////////////////////////////
 
-    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
+    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#ControlRutaCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
 
         $('#divParaSelec').show();
         return false;
@@ -237,11 +238,25 @@ function registrarInvit() {
                         switchCRemo = 0;
                     }
 
+                    var switchCRuta;
+                    if ($("#ControlRutaCheck").is(":checked")) {
+                        switchCRuta = 1;
+                    } else {
+                        switchCRuta = 0;
+                    }
+
                     var swReporteAsis;
                     if ($("#ReporteAsistCheck").is(":checked")) {
                         swReporteAsis = 1;
                     } else {
                         swReporteAsis = 0;
+                    }
+
+                    var swMoReporteAsis;
+                    if ($("#MoReporteAsistCheck").is(":checked")) {
+                        swMoReporteAsis = 1;
+                    } else {
+                        swMoReporteAsis = 0;
                     }
 
                     var checkTodoEmp;
@@ -344,8 +359,10 @@ function registrarInvit() {
                                 switchActividades,
                                 switchasisPuerta,
                                 switchCRemo,
+                                switchCRuta,
                                 checkTodoEmp,
                                 swReporteAsis,
+                                swMoReporteAsis
                             },
                             statusCode: {
                                 419: function () {
@@ -398,8 +415,10 @@ function registrarInvit() {
                                 switchActividades,
                                 switchasisPuerta,
                                 switchCRemo,
+                                switchCRuta,
                                 checkTodoEmp,
                                 swReporteAsis,
+                                swMoReporteAsis
                             },
                             statusCode: {
                                 419: function () {
@@ -450,6 +469,7 @@ $("#adminCheck").click(function () {
         $("#opcionesActiv").hide();
         $("#divAsisPu").hide();
         $("#divControlRe").hide();
+        $("#divControlRuta").hide();
         $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
         $("#verCheckPuerta").prop("required", false);
@@ -466,6 +486,7 @@ $("#adminCheck").click(function () {
 
         $("#divAsisPu").show();
         $("#divControlRe").show();
+        $("#divControlRuta").show();
         $("#divReporteAsis").show();
         $("#divGestActivi").show();
 
@@ -510,8 +531,10 @@ function editarInv(idi) {
                 $("#divAsisPu_edit").hide();
                 $("#opcionesAPuerta_edit").hide();
                 $("#divControlRe_edit").hide();
+                $("#divControlRuta_edit").hide();
                 $("#divReporteAsis_edit").hide();
                  $("#opcionesGE_edit").hide();
+                 $("#opcionesAPuerta_edit").hide();
             } else {
                 $("#adminCheck_edit").prop("checked", false);
                 $("#divInvitado_edit").show();
@@ -519,6 +542,7 @@ function editarInv(idi) {
 
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
+                $("#divControlRuta_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
 
@@ -682,15 +706,32 @@ function editarInv(idi) {
                 $("#ReporteAsistCheck_edit").prop("checked", false);
             }
 
+            if (data[0].ModificarReportePuerta == 1) {
+                $("#MoReporteAsistCheck_edit").prop("checked", true);
+            } else {
+                $("#MoReporteAsistCheck_edit").prop("checked", false);
+            }
+
             //modo CR
             if (data[0].modoCR == 1) {
                 $("#ControlReCheck_edit").prop("checked", true);
             } else {
                 $("#ControlReCheck_edit").prop("checked", false);
             }
+             //modo ruta
+             if (data[0].ControlRuta == 1) {
+                $("#ControlRutaCheck_edit").prop("checked", true);
+            } else {
+                $("#ControlRutaCheck_edit").prop("checked", false);
+            }
+
             $("#spanBooCk_edit").hide();
             $("#spanChEmple_edit").hide();
             $("#agregarInvitado_edit").modal("show");
+            if (data[0].rol_id != 3) {
+                $("#opcionesAPuerta_edit").hide();
+                $("#opcionesActiv_edit").hide();
+            }
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -711,6 +752,7 @@ $("#adminCheck_edit").click(function () {
         $("#divAsisPu_edit").hide();
         $("#opcionesAPuerta_edit").hide();
         $("#divControlRe_edit").hide();
+        $("#divControlRuta_edit").hide();
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
         $("#divParaSelec_edit").hide();
@@ -764,6 +806,7 @@ $("#adminCheck_edit").click(function () {
 
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
+                $("#divControlRuta_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
 
@@ -852,7 +895,7 @@ function registrarInvit_edit() {
 
     if ($("#asistPuertaCheck_edit").is(":checked") &&  !$("#adminCheck_edit").is(":checked")) {
         if(!$("#verCheckPuerta_edit").is(":checked") &&  !$("#AgregarCheckPuerta_edit").is(":checked") &&
-        !$("#ModifCheckPuerta_edit").is(":checked")  && !$("#ReporteAsistCheck_edit").is(":checked") ){
+        !$("#ModifCheckPuerta_edit").is(":checked")  && !$("#ReporteAsistCheck_edit").is(":checked") && !$("#MoReporteAsistCheck_edit").is(":checked") ){
             booCheck_edit=0;
         }
         else{
@@ -876,7 +919,7 @@ function registrarInvit_edit() {
     }
      ///////////////////////////////////////////////
 
-     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
+     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#ControlRutaCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
 
         $('#divParaSelec_edit').show();
         return false;
@@ -952,11 +995,24 @@ function registrarInvit_edit() {
             switchCRemo_ed = 0;
         }
 
+        var switchCRuta_ed;
+        if ($("#ControlRutaCheck_edit").is(":checked")) {
+            switchCRuta_ed = 1;
+        } else {
+            switchCRuta_ed = 0;
+        }
+
         var swReporteAsis_ed;
         if ($("#ReporteAsistCheck_edit").is(":checked")) {
             swReporteAsis_ed = 1;
         } else {
             swReporteAsis_ed = 0;
+        }
+        var swMoReporteAsis_ed;
+        if ($("#MoReporteAsistCheck_edit").is(":checked")) {
+            swMoReporteAsis_ed = 1;
+        } else {
+            swMoReporteAsis_ed = 0;
         }
 
         var checkTodoEmp_ed;
@@ -1051,7 +1107,9 @@ function registrarInvit_edit() {
                     switchActividades_ed,
                     switchasisPuerta_ed,
                     switchCRemo_ed,
+                    switchCRuta_ed,
                     swReporteAsis_ed,
+                    swMoReporteAsis_ed,
                     checkTodoEmp_ed,
                     agregarEmp_ed,
                     modifEmp_ed,
@@ -1103,7 +1161,9 @@ function registrarInvit_edit() {
                         switchActividades_ed,
                         switchasisPuerta_ed,
                         switchCRemo_ed,
+                        switchCRuta_ed,
                         swReporteAsis_ed,
+                        swMoReporteAsis_ed,
                         checkTodoEmp_ed,
                         agregarEmp_ed,
                         modifEmp_ed,
@@ -1465,3 +1525,89 @@ $("#ModifCheckPuerta_edit").change(function (event) {
        }
     }
 });
+
+/* VALIDACION CHECK MODIFICACAR REPORTE */
+$("#MoReporteAsistCheck").change(function (event) {
+    if ($("#MoReporteAsistCheck").prop("checked")) {
+        $("#ReporteAsistCheck").prop("checked",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta").prop("checked")) {
+        } else{
+            $("#ReporteAsistCheck").prop("disabled",false);
+        }
+    }
+});
+
+/* VALIDACION VER REPORTE */
+$("#ReporteAsistCheck").change(function (event) {
+    if ($("#MoReporteAsistCheck").prop("checked")) {
+        $("#ReporteAsistCheck").prop("checked",true);
+    }
+    else{
+
+    }
+});
+
+/* VALIDACION CHECK EDITAR MODIFICACAR REPORTE */
+$("#MoReporteAsistCheck_edit").change(function (event) {
+    if ($("#MoReporteAsistCheck_edit").prop("checked")) {
+        $("#ReporteAsistCheck_edit").prop("checked",true);
+    }
+    else{
+        if ($("#ModifCheckPuerta_edit").prop("checked")) {
+        } else{
+            $("#ReporteAsistCheck_edit").prop("disabled",false);
+        }
+    }
+});
+
+/* VALIDACION VER EDITAR REPORTE */
+$("#ReporteAsistCheck_edit").change(function (event) {
+    if ($("#MoReporteAsistCheck_edit").prop("checked")) {
+        $("#ReporteAsistCheck_edit").prop("checked",true);
+    }
+    else{
+
+    }
+});
+function verificarSIEdito(){
+    var emailInv = $("#emailInvi").val();
+    $.ajax({
+        type: "post",
+        url: "/verificarEmaDSiEdi",
+        data: {
+            email: emailInv,
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if(data[0]==1){
+                console.log(data[1]);
+                $('#agregarInvitado').modal('hide');
+                var dialog = bootbox.dialog({
+                    message: "Invitado ya registrado, mostrando detalles...",
+                    closeButton: false,
+                });
+                setTimeout(function () {
+                    dialog.modal("hide");
+                }, 1000);
+                
+                editarInv(data[1]);
+            }
+            else {
+                console.log(data[0]);
+            }
+
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+}

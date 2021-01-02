@@ -33,7 +33,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-        <h4 class="header-title mt-0 "></i>Detalle de asistencia</h4>
+        <h4 class="header-title mt-0 "></i>Reporte de asistencia por empleado</h4>
     </div>
 </div>
 @endsection
@@ -144,9 +144,9 @@
                 <div class="row justify-content-center">
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-xl-4">
+                    <div class="col-xl-6">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Fecha:</label>
+                            <label class="col-lg-4 col-form-label">Rango de fechas:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
@@ -161,13 +161,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-7 col-sm-6">
+                    <div class="col-xl-5 col-sm-6">
                         <div class="form-group   row">
                             <label class="col-lg-3 col-form-label">Empleado</label>
                             <div class="col-lg-9">
                                 <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
                                     class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option value="0" selected>Todos los empleados</option>
+                                    <option value="0" selected></option>
                                     @foreach ($empleado as $empleados)
                                     <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
                                         {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
@@ -270,7 +270,7 @@
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
+<script src="{{ asset('landing/js/reporteDispoEmpleado.js') }}"></script>
 
 @endsection
 

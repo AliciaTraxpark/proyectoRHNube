@@ -1,6 +1,6 @@
 //* FECHA
 var fechaValue = $("#fechaSelec").flatpickr({
-    mode: "single",
+    mode: "range",
     dateFormat: "Y-m-d",
     altInput: true,
     altFormat: "D, j F",

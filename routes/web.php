@@ -391,6 +391,7 @@ Route::post('/verificaremCla', 'delegarInvController@validaremailC');
 Route::post('/validaremailCInvita', 'delegarInvController@validaremailCInvita');
 Route::post('/registrarEmailBD', 'delegarInvController@registrarEmailBD');
 Route::post('/verificarEmaD', 'delegarInvController@verificarEmaD');
+Route::post('/verificarEmaDSiEdi', 'delegarInvController@verificarEmaDSiEdi');
 Route::post('/verificarInvitadoreg', 'delegarInvController@verificarInvitadoreg');
 Route::post('/datosInvitado', 'delegarInvController@datosInvitado');
 Route::post('/editarInviAdm', 'delegarInvController@editarInviAdm');
@@ -431,7 +432,8 @@ Route::post('/cambiarEntrada', 'dispositivosController@cambiarEntrada');
 Route::post('/cambiarSalida', 'dispositivosController@cambiarSalida');
 Route::post('/registrarNEntrada', 'dispositivosController@registrarNEntrada');
 Route::post('/registrarNSalida', 'dispositivosController@registrarNSalida');
-
+Route::get('/ReporteEmpleado', 'dispositivosController@reporteMarcacionesEmp');
+Route::get('/ReporteFecha', 'dispositivosController@ReporteFecha');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
