@@ -182,6 +182,7 @@ function editarActividad(id) {
                 $('#e_puntosPorA').prop("checked", true);
                 $('.colxEmpleados').hide();
                 $('.colxAreas').show();
+                areasPuntos(data[0].id);
             } else {
                 $('#e_puntosPorA').prop("checked", false);
                 $('.colxAreas').hide();
@@ -258,6 +259,7 @@ function areasPuntos(id) {
                 itemsSelect += `<option value="${data[0].noSelect[item].area_id}"> Área: ${data[0].noSelect[item].area_descripcion}</option>`;
             }
             $('#e_areasPunto').append(itemsSelect);
+            console.log(data[0].select.length, data[0].noSelect.length);
             if (data[0].select.length != 0 && data[0].noSelect.length == 0) {
                 $('#e_todasAreas').prop("checked", true);
             } else {

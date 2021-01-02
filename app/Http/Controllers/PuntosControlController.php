@@ -159,15 +159,18 @@ class PuntosControlController extends Controller
             ->get();
 
         //* AREAS CONDICHA ACTIVIDAD
+        // DB::enableQueryLog();
         $areasPunto = DB::table('punto_control as pc')
             ->join('punto_control_area as pca', 'pca.idPuntoControl', '=', 'pc.id')
             ->join('area as a', 'a.area_id', '=', 'pca.idArea')
             ->select('a.area_id', 'a.area_descripcion')
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('pca.estado', '=', 1)
-            ->where('pc.id', '=', $request->get('id'))
+            ->where('pc.id', '=', $request->get('idPunto'))
             ->groupBy('a.area_id')
             ->get();
+        // dd(DB::getQueryLog());
+        // dd($areasPunto);
 
         // * RECORRIDO DE AREAS
         for ($index = 0; $index < sizeof($areas); $index++) {
