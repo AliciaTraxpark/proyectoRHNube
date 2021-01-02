@@ -104,7 +104,7 @@ function puntosControlOrganizacion() {
                     }
 
                     tbody += `<td class="text-center">
-                                <a onclick="javascript:editarActividad(${data[index].id})" style="cursor: pointer">
+                                <a onclick="javascript:editarPunto(${data[index].id})" style="cursor: pointer">
                                     <img src="/admin/images/edit.svg" height="15">
                                 </a>
                                 &nbsp;&nbsp;&nbsp;
@@ -136,7 +136,7 @@ $('#e_areasPunto').select2({
 $("#e_codigoPunto").keyup(function () {
     $(this).removeClass("borderColor");
 });
-function editarActividad(id) {
+function editarPunto(id) {
     $.ajax({
         async: false,
         url: "/puntoControlData",
@@ -197,7 +197,7 @@ function editarActividad(id) {
         },
         error: function () { }
     });
-    $('#editarPuntoControl').modal();
+    $('#modaleditarPuntoControl').modal();
 }
 //* CHANGE DE SWITCH DE CONTROLES
 $('#e_puntoCRT').on("change.bootstrapSwitch", function (event) {
@@ -352,7 +352,7 @@ function editarPuntoControl() {
                         spacing: 35,
                     }
                 );
-                $('#editarPuntoControl').modal("toggle");
+                $('#modaleditarPuntoControl').modal("toggle");
             } else {
                 $("#e_codigoPunto").addClass("borderColor");
                 $.notifyClose();
@@ -363,7 +363,7 @@ function editarPuntoControl() {
                         icon: "admin/images/warning.svg",
                     },
                     {
-                        element: $('#editarPuntoControl'),
+                        element: $('#modaleditarPuntoControl'),
                         position: "fixed",
                         mouse_over: "pause",
                         placement: {
@@ -439,13 +439,65 @@ $('#e_puntosPorA').on("change.bootstrapSwitch", function (event) {
     }
 });
 $('#FormEditarPuntoControl').attr('novalidate', true);
-$('#FormEditarPuntoControl').submit(function (e){
+$('#FormEditarPuntoControl').submit(function (e) {
     e.preventDefault();
-    if($('#e_puntosPorE').is(":checked")){
-        if($('#e_areasPunto').val){
-
+    if ($('#e_puntosPorE').is(":checked")) {
+        if ($('#e_empleadosPunto').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar empleados.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#modaleditarPuntoControl"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
         }
     }
+    if ($('#e_puntosPorA').is(":checked")) {
+        if ($('#e_areasPunto').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar áreas.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#modaleditarPuntoControl"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    this.submit();
 });
 // ! ****************** FINALIZACION *****************************
 $(function () {

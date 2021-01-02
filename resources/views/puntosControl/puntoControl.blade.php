@@ -85,8 +85,8 @@
 </div>
 {{-- FINALIZACION --}}
 {{-- MODAL DE EDITAR --}}
-<div id="editarPuntoControl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editarPuntoControl"
-    aria-hidden="true" data-backdrop="static">
+<div id="modaleditarPuntoControl" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modaleditarPuntoControl" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  modal-lg d-flex justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
