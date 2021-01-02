@@ -33,7 +33,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-        <h4 class="header-title mt-0 "></i>Detalle de asistencia</h4>
+        <h4 class="header-title mt-0 "></i>Reporte de asistencia por fecha</h4>
     </div>
 </div>
 @endsection
@@ -239,12 +239,12 @@
     {{-- modificar --}}
     @if (isset($modifReporte))
     @if ($modifReporte==1)
-    <input type="hidden" id="modifReporte" value="1">
+    <input type="hidden" id="modifReporte" value="0">
     @else
     <input type="hidden" id="modifReporte" value="0">
     @endif
     @else
-    <input type="hidden" id="modifReporte" value="1">
+    <input type="hidden" id="modifReporte" value="0">
     @endif
 @endsection
 @section('script')
