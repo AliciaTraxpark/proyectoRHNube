@@ -530,6 +530,7 @@ $('#e_todasAreas').click(function () {
         $('#e_todasAreas').val(areasSelectEdit).trigger('change');
     }
 });
+
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
