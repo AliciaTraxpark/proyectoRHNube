@@ -470,6 +470,9 @@ Route::get('/personalizadoRuta', 'controlRutaController@reportePersonalizadoRuta
 Route::post('/empleadosRutaOrg/{id}', 'controlRutaController@buscarEmpleado');
 Route::post('/ubicacionesPersonalizadas', 'controlRutaController@obtenerUbicaciones');
 //* *******************************************************************************
+// * *************** REPORTE PERSONALIZADO DE RUTA SIN PROCESAR ********************
+Route::get('/personalizadoRutaSP', 'controlRutaController@reportePersonalizadoProvicional');
+Route::post('/ubicacionesPersonalizadasSP', 'controlRutaController@obtenerUbicacionesP');
 
 //INCIDENCIAS
 Route::get('/incidencias', 'incidenciasController@index');

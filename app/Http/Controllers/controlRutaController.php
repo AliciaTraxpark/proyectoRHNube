@@ -43,8 +43,6 @@ class controlRutaController extends Controller
                 return view('ruta.rutaDiaria');
             }
         }
-
-
     }
 
     public function indexReporte()
@@ -53,9 +51,9 @@ class controlRutaController extends Controller
             return redirect('/elegirorganizacion');
         } else {
             $usuario_organizacion = DB::table('usuario_organizacion as uso')
-            ->where('uso.organi_id', '=', session('sesionidorg'))
-            ->where('uso.user_id', '=', Auth::user()->id)
-            ->get()->first();
+                ->where('uso.organi_id', '=', session('sesionidorg'))
+                ->where('uso.user_id', '=', Auth::user()->id)
+                ->get()->first();
 
 
             if ($usuario_organizacion->rol_id == 3) {
@@ -88,7 +86,6 @@ class controlRutaController extends Controller
                         ->where('e.emple_estado', '=', 1)
                         ->groupBy('e.emple_area')
                         ->get();
-
                 } else {
                     $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                         ->where('invem.idinvitado', '=',  $invitado->idinvitado)
@@ -127,9 +124,8 @@ class controlRutaController extends Controller
                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
                             ->groupBy('e.emple_area')
                             ->get();
-
                     } else {
-                         //* EMPLEADO
+                        //* EMPLEADO
                         $empleado = DB::table('empleado as e')
                             ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -143,22 +139,22 @@ class controlRutaController extends Controller
                             ->groupBy('e.emple_id')
                             ->get();
 
-                            //? AREA
+                        //? AREA
                         $areas =  DB::table('empleado as e')
-                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
-                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                        ->select(
-                            'a.area_id',
-                            'a.area_descripcion'
-                        )
-                        ->where('e.organi_id', '=', session('sesionidorg'))
-                        ->where('e.emple_estado', '=', 1)
-                        ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=', $invitado->idinvitado)
-                        ->groupBy('e.emple_area')
-                        ->get();
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->join('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->select(
+                                'a.area_id',
+                                'a.area_descripcion'
+                            )
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                            ->groupBy('e.emple_area')
+                            ->get();
                     }
                 }
             } else {
@@ -192,23 +188,21 @@ class controlRutaController extends Controller
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->get()->first();
 
-                if ($invitadod) {
-                    if ($invitadod->rol_id != 1) {
-                        if ($invitadod->ControlRuta == 1) {
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    if ($invitadod->ControlRuta == 1) {
 
-                            return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
-                        } else {
-                            return redirect('/dashboard');
-                        }
-                    } else {
                         return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
+                    } else {
+                        return redirect('/dashboard');
                     }
                 } else {
                     return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
                 }
-
+            } else {
+                return view('ruta.reporteSemanalRuta', ['areas' => $areas, 'empleado' => $empleado]);
+            }
         }
-
     }
 
     public function showConRuta(Request $request)
@@ -1671,7 +1665,7 @@ class controlRutaController extends Controller
         return response()->json($respuesta, 200);
     }
 
-    //* REPORTE PERSONALIZADO
+    //* *************REPORTE PERSONALIZADO******************
     public function reportePersonalizadoRuta(Request $request)
     {
         $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
@@ -1731,6 +1725,68 @@ class controlRutaController extends Controller
             ->groupBy('u.id')
             ->get();
 
+        $dispositivos = DB::table('vinculacion_ruta as vr')
+            ->select(
+                DB::raw("CASE WHEN (vr.modelo) IS NULL THEN 0 ELSE vr.modelo END AS nombreCel")
+            )
+            ->where('vr.idEmpleado', '=', $idEmpleado)
+            ->groupBy('vr.id')
+            ->get();
+
+        return response()->json(array("ubicacion" => $ubicacion, "dispositivo" => $dispositivos));
+    }
+
+    // ! **************REPORTE CON DATA PROVISIONAL**********
+    public function reportePersonalizadoProvicional(Request $request)
+    {
+        $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
+        $usuario_organizacion = DB::table('usuario_organizacion as uso')
+            ->where('uso.organi_id', '=', null)
+            ->where('uso.user_id', '=', Auth::user()->id)
+            ->get()->first();
+        if ($usuario_organizacion) {
+            if ($usuario_organizacion->rol_id == 4) {
+                return view('ruta.reportePersonalizadoP', ['organizacion' => $organizacion, 'idrol' => $usuario_organizacion->rol_id]);
+            }
+        } else {
+            if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+                return redirect('/elegirorganizacion');
+            } else {
+                $usuario_organizacionR = DB::table('usuario_organizacion as uso')
+                    ->where('uso.organi_id', '=', session('sesionidorg'))
+                    ->where('uso.user_id', '=', Auth::user()->id)
+                    ->get()->first();
+                return view('ruta.reportePersonalizadoP', ['organizacion' => $organizacion, 'idrol' => $usuario_organizacionR->rol_id]);
+            }
+        }
+    }
+
+    public function obtenerUbicacionesP(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $fecha = $request->get('fecha');
+
+        // DB::enableQueryLog();
+        $ubicacion = DB::table('ubicacion_sin_procesar as u')
+            ->leftJoin('horario_dias as hd', 'hd.id', '=', 'u.idHorario_dias')
+            ->select(
+                'u.id',
+                'u.hora_ini',
+                'u.hora_fin',
+                'u.actividad_ubicacion as actividad',
+                DB::raw("CASE WHEN(u.idHorario_dias) IS NULL THEN 0 ELSE DATE(hd.start) END AS horario"),
+                DB::raw('TIME_FORMAT(SEC_TO_TIME(u.rango), "%H:%i:%s") as rango'),
+                'u.latitud_ini',
+                'u.longitud_ini',
+                'u.latitud_fin',
+                'u.longitud_fin'
+
+            )
+            ->where('u.idEmpleado', '=', $idEmpleado)
+            ->where(DB::raw('DATE(u.hora_ini)'), '=', $fecha)
+            ->groupBy('u.id')
+            ->get();
+        // dd(DB::getQueryLog());
         $dispositivos = DB::table('vinculacion_ruta as vr')
             ->select(
                 DB::raw("CASE WHEN (vr.modelo) IS NULL THEN 0 ELSE vr.modelo END AS nombreCel")
