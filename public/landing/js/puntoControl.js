@@ -178,6 +178,7 @@ function editarPunto(id) {
             } else {
                 $('#e_puntoAP').prop("checked", false);
             }
+            // * POR EMPLEADOS
             if (data[0].porEmpleados == 1) {
                 $('#e_puntosPorE').prop("checked", true);
                 $('.colxEmpleados').show();
@@ -188,6 +189,7 @@ function editarPunto(id) {
                 $('#e_puntosPorE').prop("checked", false);
                 $('.colxEmpleados').hide();
             }
+            // * POR AREAS
             if (data[0].porAreas == 1) {
                 $('#e_puntosPorA').prop("checked", true);
                 $('.colxEmpleados').hide();
@@ -198,6 +200,34 @@ function editarPunto(id) {
                 $('#e_puntosPorA').prop("checked", false);
                 $('.colxAreas').hide();
             }
+            // * GEOLOCALIZACIÓN
+            $('#e_rowGeo').empty();
+            var geo = data[0].geo;
+            var colGeo = "";
+            for (let index = 0; index < geo.length; index++) {
+                colGeo += `<div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Latitud:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm" id="e_latitud${geo[index].idGeo}" 
+                                            value="${geo[index].latitud}" maxlength="40">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Longitud:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm" id="e_longitud${geo[index].idGeo}" 
+                                            value="${geo[index].longitud}" maxlength="40">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Radio:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm" id="e_radio${geo[index].idGeo}" 
+                                            value="${geo[index].radio}" maxlength="40">
+                                    </div>
+                                </div>`;
+            }
+            $('#e_rowGeo').append(colGeo);
         },
         error: function () { }
     });

@@ -41,6 +41,12 @@
     .form-control:disabled {
         background-color: #fcfcfc;
     }
+
+    #mapid {
+        padding: 0;
+        width: auto;
+        height: 480px;
+    }
 </style>
 {{-- FINALIZACION --}}
 {{-- BOTONOS DE PANEL --}}
@@ -172,7 +178,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-2 rowAreasEditar">
+                            <div class="row pt-2 pb-2 border-bottom rowAreasEditar">
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
@@ -197,6 +203,22 @@
                                     <select id="e_areasPunto" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple">
                                     </select>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-md-12 text-left">
+                                    <label for="">
+                                        Geolocalización
+                                        <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row" id="e_rowGeo"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div id="mapid"></div>
+                                    </div>
                                 </div>
                             </div>
                     </div>
