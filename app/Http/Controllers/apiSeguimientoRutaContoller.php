@@ -10,6 +10,7 @@ use App\organizacion;
 use App\persona;
 use App\ubicacion;
 use App\ubicacion_ruta;
+use App\ubicacion_sin_procesar;
 use App\vinculacion_ruta;
 use Carbon\Carbon;
 use DateTime;
@@ -158,6 +159,27 @@ class apiSeguimientoRutaContoller extends Controller
             //: OBTENER ACTIVIDAD PARA LA UBICACION
             $vinculacion_ruta = vinculacion_ruta::where('id', '=', $ubicaciones['idVinculacion'])->get()->first();
             if ($vinculacion_ruta) { //: Ingersamos si encontramos la vinculación
+                // ! DATA PARA TABLA PROVISIONAL
+                $ubicacionSinProcesar = new ubicacion_sin_procesar();
+                $ubicacionSinProcesar->hora_ini = $ubicaciones["hora_ini"];
+                $ubicacionSinProcesar->hora_fin = $ubicaciones["hora_fin"];
+                if (isset($ubicaciones['idHorario_dias'])) {
+                    $ubicacionSinProcesar->idHorario_dias = $ubicaciones["idHorario_dias"];
+                }
+                $ubicacionSinProcesar->idActividad = $ubicaciones["idActividad"];
+                $ubicacionSinProcesar->idEmpleado = $ubicaciones["idEmpleado"];
+                $ubicacionSinProcesar->latitud_ini = $ubicaciones["latitud_ini"];
+                $ubicacionSinProcesar->longitud_ini = $ubicaciones["longitud_ini"];
+                $ubicacionSinProcesar->latitud_fin = $ubicaciones["latitud_fin"];
+                $ubicacionSinProcesar->longitud_fin = $ubicaciones["longitud_fin"];
+                $fechaP = Carbon::parse($ubicaciones['hora_ini']);
+                $fechaP1 = Carbon::parse($ubicaciones['hora_fin']);
+                $ubicacionSinProcesar->rango = $fechaP1->diffInSeconds($fechaP);
+                $promedio = floatval($fechaP1->diffInSeconds($fechaP) * $vinculacion_ruta->actividad);
+                $activi = round(($promedio / 100), 2);
+                $ubicacionSinProcesar->actividad_ubicacion = $activi;
+                $ubicacionSinProcesar->save();
+                // ! FINALIZACION
                 //: Bsucar coincidencias de ubicaciones -> por motivos de bucles
                 $buscarUbicacion = ubicacion::where('hora_ini', '=', $ubicaciones['hora_ini'])->where('hora_fin', '=', $ubicaciones['hora_fin'])
                     ->where('idEmpleado', '=', $ubicaciones['idEmpleado'])->get()->first();
