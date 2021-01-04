@@ -717,7 +717,7 @@ class dispositivosController extends Controller
         $fechaEntrada = $marcacion_puerta->marcaMov_fecha;
 
         if ($fecha1->lte($fechaEntrada)) {
-            return [0,'Hora de salida debe ser mayor a que hora de entrada.'];
+            return [0,'Hora de salida debe ser mayor a la hora de entrada.'];
         } else {
             $fecha111 = Carbon::create($marcacion_puerta->marcaMov_fecha)->toDateString();
             $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
@@ -731,7 +731,7 @@ class dispositivosController extends Controller
             if($marcacion_puerta00){
                 $fechaEPosterir=Carbon::create($marcacion_puerta00->marcaMov_fecha);
                 if( $fechaEPosterir->lte($fecha1) ){
-                    return [0,'Hora de salida debe ser menor que ultima hora de entrada de la siguiente marcacion.'];
+                    return [0,'Tienes registrado otra entrada, la hora de salida debe ser menor a esta.'];
                 }
                 else{
                     $marcacion_puerta->marcaMov_salida = $fecha1;
