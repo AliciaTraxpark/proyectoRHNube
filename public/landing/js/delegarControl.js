@@ -1597,8 +1597,8 @@ function verificarSIEdito(){
                 });
                 setTimeout(function () {
                     dialog.modal("hide");
-                }, 1000);
-                
+                }, 1800);
+
                 editarInv(data[1]);
             }
             else {

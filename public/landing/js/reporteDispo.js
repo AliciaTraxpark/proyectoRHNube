@@ -909,6 +909,7 @@ function cargartabla(fecha) {
                 }
             } else {
                 $('#tbodyD').empty();
+                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
             }
         },
         error: function () { }

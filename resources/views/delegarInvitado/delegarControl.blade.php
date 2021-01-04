@@ -336,7 +336,7 @@
                                             </div>
                                         </div>
                                         <br><br>
-                                        <div class="col-md-8" id="divReporteAsis"  >
+                                        <div class="col-md-10" id="divReporteAsis"  >
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label for="">Detalle de asistencia:</label>
@@ -653,7 +653,7 @@
                                             </div>
                                         </div>
                                         <br><br>
-                                        <div class="col-md-8 " id="divReporteAsis_edit"  >
+                                        <div class="col-md-10" id="divReporteAsis_edit"  >
                                             <div class="row">
                                                 <div class="col-md-12">
                                                      <label for="">Detalle de asistencia:</label>

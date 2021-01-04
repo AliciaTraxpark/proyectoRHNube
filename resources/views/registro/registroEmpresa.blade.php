@@ -29,6 +29,10 @@
             -moz-appearance: textfield;
         }
 
+        .tipoOrga_responsive{
+            display: flex;
+        }
+
         @media (max-width: 767px) {
             .navbar {
                 padding: 0% !important;
@@ -115,7 +119,12 @@
             .textC {
                 text-align: center !important;
             }
+
+            .tipoOrga_responsive{
+                display: block;
+            }
         }
+
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -260,56 +269,59 @@
                                         name="pagWeb" id="pagWeb" value="{{ old('pagWeb') }}">
                                 </div>
                             </div>
-                            <div class="row pb-3">
+                            <div class="row pb-3" >
                                 <div class="col-md-12">
                                     <label class="normal" for="">Tipo de organización</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="control">
-                                        <input type="hidden" class="form-control" id="inputOrgani" name="inputOrgani">
-                                        <label class="radio normal">
-                                            <input type="radio" name="tipo" id="tipo" value="Empresa" required>
-                                            Empresa
-                                        </label>
+                                <div class="container tipoOrga_responsive">
+                                    <div class="col-md-3">
+                                        <div class="control">
+                                            <input type="hidden" class="form-control" id="inputOrgani" name="inputOrgani">
+                                            <label class="radio normal">
+                                                <input type="radio" name="tipo" id="tipo" value="Empresa" required>
+                                                Empresa
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="control">
-                                        <label class="radio normal">
-                                            <input type="radio" name="tipo" id="tipo" value="Gobierno" required>
-                                            Gobierno
-                                        </label>
+                                    <div class="col-md-3">
+                                        <div class="control">
+                                            <label class="radio normal">
+                                                <input type="radio" name="tipo" id="tipo" value="Gobierno" required>
+                                                Gobierno
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="control">
-                                        <label class="radio normal">
-                                            <input type="radio" name="tipo" id="tipo" value="ONG" required>
-                                            ONG
-                                        </label>
+                                    <div class="col-md-2">
+                                        <div class="control">
+                                            <label class="radio normal">
+                                                <input type="radio" name="tipo" id="tipo" value="ONG" required>
+                                                ONG
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="control">
-                                        <label class="radio normal">
-                                            <input type="radio" name="tipo" id="tipo" value="Asociación" required>
-                                            Asociación
-                                        </label>
+                                    <div class="col-md-3">
+                                        <div class="control">
+                                            <label class="radio normal">
+                                                <input type="radio" name="tipo" id="tipo" value="Asociación" required>
+                                                Asociación
+                                            </label>
+                                        </div>
                                     </div>
+                                    <div class="col-md-2 pb-3">
+                                        <div class="control">
+                                            <label class="radio normal">
+                                                <input type="radio" name="tipo" id="tipo" value="Otros" required>
+                                                Otros
+                                            </label>
+                                            &nbsp;
+                                            <a data-toggle="modal" id="organizacionPersonalizado">
+                                                <img class="mt-0" style="cursor: pointer"
+                                                    src="{{asset('landing/images/plus.svg')}}" height="15">
+                                            </a>
+                                        </div>
+                                    </div>  
                                 </div>
-                                <div class="col-md-2 pb-3">
-                                    <div class="control">
-                                        <label class="radio normal">
-                                            <input type="radio" name="tipo" id="tipo" value="Otros" required>
-                                            Otros
-                                        </label>
-                                        &nbsp;
-                                        <a data-toggle="modal" id="organizacionPersonalizado">
-                                            <img class="mt-0" style="cursor: pointer"
-                                                src="{{asset('landing/images/plus.svg')}}" height="15">
-                                        </a>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="container col-md-3">

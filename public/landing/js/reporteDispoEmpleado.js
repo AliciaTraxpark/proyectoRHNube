@@ -8,6 +8,12 @@ var fechaValue = $("#fechaSelec").flatpickr({
     maxDate: "today",
     wrap: true,
     allowInput: true,
+    onChange:function(selectedDates){
+        var _this=this;
+        var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+        $('#ID_START').val(dateArr[0]);
+        $('#ID_END').val(dateArr[1]);
+    },
 });
 $(function () {
     $('#idempleado').select2({
@@ -24,7 +30,9 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
     $("#fechaInput").change();
-    cambiarF();
+    $('#ID_START').val(f);
+    $('#ID_END').val(f);
+   /*  cambiarF(); */
 });
 // function cargartabla(fecha) {
 
@@ -566,13 +574,34 @@ $(function () {
 
 // }
 
-function cargartabla(fecha) {
+function cargartabla(fecha1,fecha2) {
+
     var idemp = $('#idempleado').val();
+    if(idemp==0){
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccione empleado.',
+            icon: '/landing/images/alert1.svg',
+        }, {
+            icon_type: 'image',
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return false;
+    }
     $.ajax({
         type: "GET",
-        url: "/reporteTablaMarca",
+        url: "/reporteTablaEmp",
         data: {
-            fecha, idemp
+            fecha1,fecha2, idemp
         },
         async: false,
         headers: {
@@ -604,8 +633,9 @@ function cargartabla(fecha) {
                 //* ARMAR CABEZERA
                 var theadTabla = `<tr>
                                     <th>CC&nbsp;</th>
-                                    <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th>Fecha&nbsp;</th>
+                                    <th>Horario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+
                                     <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
                     theadTabla += `<th>Hora de entrada</th>
@@ -622,8 +652,12 @@ function cargartabla(fecha) {
                 for (let index = 0; index < data.length; index++) {
                     tbody += `<tr>
                     <td>${(index + 1)}&nbsp;</td>
-                    <td>${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    if (data[index].horario != 0) {
+                        tbody += `<td>${data[index].horario}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    } else {
+                        tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
                     if (data[index].cargo_descripcion != null) {
                         tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
@@ -909,6 +943,7 @@ function cargartabla(fecha) {
                 }
             } else {
                 $('#tbodyD').empty();
+                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
             }
         },
         error: function () { }
@@ -940,15 +975,16 @@ function cargartabla(fecha) {
 
 function cambiarF() {
 
-    f1 = $("#fechaInput").val();
+    f1 = $("#ID_START").val();
     f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
+    f3 = $("#ID_END").val();
     if ($.fn.DataTable.isDataTable("#tablaReport")) {
 
         /* $('#tablaReport').DataTable().destroy(); */
     }
-
-    cargartabla(f2);
+    console.log(f2);
+    cargartabla(f2,f3);
 
 }
 function cambiartabla() {
