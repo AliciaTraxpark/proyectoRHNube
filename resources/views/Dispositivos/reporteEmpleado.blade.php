@@ -147,6 +147,8 @@
                     <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label">Rango de fechas:</label>
+                            <input type="hidden" id="ID_START">
+                            <input type="hidden" id="ID_END">
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
                                 <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
@@ -218,8 +220,9 @@
                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                     <tr>
                         <th>CC</th>
-                        <th>DNI</th>
-                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Horario</th>
+
                         <th>Cargo</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
@@ -239,12 +242,12 @@
     {{-- modificar --}}
     @if (isset($modifReporte))
     @if ($modifReporte==1)
-    <input type="hidden" id="modifReporte" value="1">
+    <input type="hidden" id="modifReporte" value="0">
     @else
     <input type="hidden" id="modifReporte" value="0">
     @endif
     @else
-    <input type="hidden" id="modifReporte" value="1">
+    <input type="hidden" id="modifReporte" value="0">
     @endif
 @endsection
 @section('script')

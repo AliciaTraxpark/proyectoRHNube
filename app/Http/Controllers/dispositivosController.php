@@ -899,4 +899,183 @@ class dispositivosController extends Controller
             return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
         }
     }
+
+    public function reporteTablaEmp(Request $request)
+    {
+        $fechaR = $request->fecha1;
+        /*  dd($fechaR); */
+        $idemp = $request->idemp;
+        $fecha = Carbon::create($fechaR);
+       /*  $año = $fecha->year;
+        $mes = $fecha->month;
+        $dia = $fecha->day;
+        $ndia = $dia + 1; */
+
+        $fecha2 = $request->fecha2;
+        $fechaF = Carbon::create($fecha2);
+
+        function agruparEmpleadosMarcaciones2($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $empleado) {
+                $fechando=$empleado->entradaModif;
+                $fechaCarb = Carbon::create($fechando);
+                $fechando2 = $fechaCarb->isoFormat('YYYY-MM-DD');
+
+
+                if (!isset($resultado[$fechando2])) {
+                    $resultado[$fechando2] = $empleado;
+                }
+                if (!isset($resultado[$fechando2]->marcaciones)) {
+                    $resultado[$fechando2]->marcaciones = array();
+                }
+                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida);
+                array_push($resultado[$fechando2]->marcaciones, $arrayMarcacion);
+            }
+            return array_values($resultado);
+            dd(array_values($resultado));
+        }
+
+        $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('rol_id', '=', 3)
+            ->get()->first();
+        if ($invitadod) {
+            if ($invitadod->verTodosEmps == 1) {
+
+                    $marcaciones = DB::table('empleado as e')
+                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->select(
+                            'e.emple_id',
+                            DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                            'mp.marcaMov_id',
+                            'e.emple_nDoc',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'mp.organi_id',
+
+                            DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                            'mp.marcaMov_id as idMarcacion'
+                        )
+                        ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha,$fechaF])
+                        ->where('e.emple_id', $idemp)
+                        ->where('mp.organi_id', '=', session('sesionidorg'))
+                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+
+                        ->get();
+                    $marcaciones = agruparEmpleadosMarcaciones2($marcaciones);
+
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+
+                        $marcaciones = DB::table('empleado as e')
+                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                                'mp.marcaMov_id',
+                                'e.emple_nDoc',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'mp.organi_id',
+
+                                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                                'mp.marcaMov_id as idMarcacion'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha,$fechaF])
+                            ->where('e.emple_id', $idemp)
+                            ->where('mp.organi_id', '=', session('sesionidorg'))
+                            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+
+                            ->get();
+                        $marcaciones = agruparEmpleadosMarcaciones2($marcaciones);
+
+                } else {
+
+                        $marcaciones = DB::table('empleado as e')
+                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->select(
+                                'e.emple_id',
+                                DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                                'mp.marcaMov_id',
+                                'e.emple_nDoc',
+                                'p.perso_nombre',
+                                'p.perso_apPaterno',
+                                'p.perso_apMaterno',
+                                'c.cargo_descripcion',
+                                'mp.organi_id',
+                                DB::raw('IF(mp.marcaMov_fecha is null, 0 ,mp.marcaMov_salida) as entradaModif'),
+                                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                                'mp.marcaMov_id as idMarcacion'
+                            )
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha,$fechaF])
+                            ->where('e.emple_id', $idemp)
+                            ->where('mp.organi_id', '=', session('sesionidorg'))
+                            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+
+                            ->get();
+                        $marcaciones = agruparEmpleadosMarcaciones2($marcaciones);
+
+                }
+            }
+        } else {
+
+                $marcaciones = DB::table('empleado as e')
+                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->select(
+                        'e.emple_id',
+                        DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                        'mp.marcaMov_id',
+                        'e.emple_nDoc',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'mp.organi_id',
+
+                        DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                        'mp.marcaMov_id as idMarcacion'
+                    )
+                    ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'),[$fecha,$fechaF])
+                    ->where('e.emple_id', $idemp)
+                    ->where('mp.organi_id', '=', session('sesionidorg'))
+                    ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                    ->get();
+                $marcaciones = agruparEmpleadosMarcaciones2($marcaciones);
+
+        }
+        return response()->json($marcaciones, 200);
+    }
 }

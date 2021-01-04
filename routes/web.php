@@ -434,6 +434,7 @@ Route::post('/registrarNEntrada', 'dispositivosController@registrarNEntrada');
 Route::post('/registrarNSalida', 'dispositivosController@registrarNSalida');
 Route::get('/ReporteEmpleado', 'dispositivosController@reporteMarcacionesEmp');
 Route::get('/ReporteFecha', 'dispositivosController@ReporteFecha');
+Route::get('/reporteTablaEmp', 'dispositivosController@reporteTablaEmp');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
