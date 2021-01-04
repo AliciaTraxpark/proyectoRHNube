@@ -949,9 +949,12 @@ class dispositivosController extends Controller
                         ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->select(
                             'e.emple_id',
                             DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                             'mp.marcaMov_id',
                             'e.emple_nDoc',
                             'p.perso_nombre',
@@ -986,9 +989,12 @@ class dispositivosController extends Controller
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->select(
                                 'e.emple_id',
                                 DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -1020,9 +1026,12 @@ class dispositivosController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->select(
                                 'e.emple_id',
                                 DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -1053,9 +1062,13 @@ class dispositivosController extends Controller
                     ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                     ->select(
                         'e.emple_id',
                         DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                         'mp.marcaMov_id',
                         'e.emple_nDoc',
                         'p.perso_nombre',

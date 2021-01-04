@@ -652,8 +652,12 @@ function cargartabla(fecha1,fecha2) {
                 for (let index = 0; index < data.length; index++) {
                     tbody += `<tr>
                     <td>${(index + 1)}&nbsp;</td>
-                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td>${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    if (data[index].horario != 0) {
+                        tbody += `<td>${data[index].horario}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    } else {
+                        tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
                     if (data[index].cargo_descripcion != null) {
                         tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
