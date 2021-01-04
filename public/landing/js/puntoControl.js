@@ -210,14 +210,14 @@ function editarPunto(id) {
                                     <div class="form-group">
                                         <label for="">Latitud:</label>
                                         <input type="number" step="any" class="form-control form-control-sm" id="e_latitud${geo[index].idGeo}" 
-                                            value="${geo[index].latitud}" maxlength="40">
+                                            value="${geo[index].latitud}" onblur="javascript:blurLatitud('${geo[index].latitud}',${geo[index].idGeo})">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Longitud:</label>
                                         <input type="number" step="any" class="form-control form-control-sm" id="e_longitud${geo[index].idGeo}" 
-                                            value="${geo[index].longitud}" maxlength="40">
+                                            value="${geo[index].longitud}" onblur="javascript:blurLongitud('${geo[index].longitud}',${geo[index].idGeo})">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -562,6 +562,7 @@ $('#e_todasAreas').click(function () {
     }
 });
 //* INICIALIZAR PLUGIN DE MAPA
+var layerGroup = new L.layerGroup();
 function inicialiarMap(geo) {
     console.log(geo);
     var mapId = L.map('mapid', {
@@ -581,15 +582,19 @@ function inicialiarMap(geo) {
         var posicionGeo = new L.Marker(latlng, { draggable: true })
             .on('dragend', function () {
                 var coord = String(posicionGeo.getLatLng()).split(',');
-                console.log(coord);
                 var lat = coord[0].split('(');
-                console.log(lat);
                 var lng = coord[1].split(')');
-                console.log(lng);
-
+                $('#e_latitud' + geo[index].idGeo).val(parseFloat(lat[1]));
+                $('#e_longitud' + geo[index].idGeo).val(parseFloat(lng[0]));
             });
-        var layerGroup = L.layerGroup([posicionGeo]).addTo(mapId);
-
+        layerGroup.addLayer(posicionGeo);
+        layerGroup.addTo(mapId);
+        layerGroup.eachLayer(function (layer) {
+            layer._leaflet_id = geo[index].idGeo;
+            console.log(layer._leaflet_id);
+        });
+        console.log(layerGroup);
+        console.log(layerGroup.getLayer(29));
         var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
         arrayMarkerBounds.push(markerBounds);
     }
@@ -603,6 +608,28 @@ function inicialiarMap(geo) {
         fillOpacity: 0.5,
         radius: 50
     }).addTo(mapId);
+}
+function blurLatitud(latitud, id) {
+    console.log(latitud);
+    console.log($('#e_latitud' + id).val());
+    console.log(parseFloat($('#e_latitud' + id).val()) !== parseFloat(latitud));
+    if ($('#e_latitud' + id).val() != latitud) {
+        var latlngActualizado = L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+        console.log(layerGroup.getLayers());
+        layerGroup.removeLayer(id);
+        L.layerGroup({ marker: latlngActualizado, id: id }).addTo(mapId);
+    }
+}
+function blurLongitud(longitud, id) {
+    console.log(longitud);
+    console.log($('#e_longitud' + id).val());
+    console.log(parseFloat($('#e_longitud' + id).val()) !== parseFloat(longitud));
+    if ($('#e_longitud' + id).val() != latitud) {
+        var latlngActualizado = L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+        layerGroup.removeLayer(id);
+        L.layerGroup({ marker: latlngActualizado, id: id })
+        layerGroup.getLayer(id).setLatLng(new L.LatLng(latlngActualizado));
+    }
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {
