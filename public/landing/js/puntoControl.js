@@ -204,6 +204,7 @@ function editarPunto(id) {
             $('#e_rowGeo').empty();
             var geo = data[0].geo;
             var colGeo = "";
+            inicialiarMap(geo);
             for (let index = 0; index < geo.length; index++) {
                 colGeo += `<div class="col-md-4">
                                     <div class="form-group">
@@ -228,7 +229,6 @@ function editarPunto(id) {
                                 </div>`;
             }
             $('#e_rowGeo').append(colGeo);
-            inicialiarMap();
         },
         error: function () { }
     });
@@ -562,10 +562,10 @@ $('#e_todasAreas').click(function () {
     }
 });
 //* INICIALIZAR PLUGIN DE MAPA
-function inicialiarMap() {
-    console.log("ingreso");
+function inicialiarMap(geo) {
+    console.log(geo);
     var mapId = L.map('mapid', {
-        center: [51.505, -0.09],
+        center: [-9.189967, -75.015152],
         zoom: 10
     });
     mapId.invalidateSize();
@@ -573,16 +573,35 @@ function inicialiarMap() {
         mapId.invalidateSize();
     }, 1000);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapId);
-    mapId.fitBounds([
-        [-11.9936, -77.1086]
-    ]);
-    var posicionUno = new L.Marker([-11.9936, -77.1086]);
-    var layerGroup = L.layerGroup([posicionUno]).addTo(mapId);
-    var circle = L.circle([-11.9936, -77.1086], {
+    var arrayMarkerBounds = [];
+    // ? RECORRER ARRAYS DE GEOLICALIZACION
+    for (let index = 0; index < geo.length; index++) {
+        var latlng = L.latLng(geo[index].latitud, geo[index].longitud);
+        // * POSICION DE POPUP
+        var posicionGeo = new L.Marker(latlng, { draggable: true })
+            .on('dragend', function () {
+                var coord = String(posicionGeo.getLatLng()).split(',');
+                console.log(coord);
+                var lat = coord[0].split('(');
+                console.log(lat);
+                var lng = coord[1].split(')');
+                console.log(lng);
+
+            });
+        var layerGroup = L.layerGroup([posicionGeo]).addTo(mapId);
+
+        var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
+        arrayMarkerBounds.push(markerBounds);
+    }
+    // * POSICIONES PARA CENTRAR MAPA
+    mapId.fitBounds(arrayMarkerBounds);
+    mapId.setZoom(1); //: -> ZOOM COMPLETO
+    // * DIBIJAR CIRCULO
+    var circle = L.circleMarker([-6.90742, -79.8641], {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
-        radius: 33
+        radius: 50
     }).addTo(mapId);
 }
 // ! ****************** FINALIZACION *****************************

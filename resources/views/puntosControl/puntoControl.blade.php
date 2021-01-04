@@ -53,7 +53,7 @@
     #mapid {
         padding: 0;
         width: auto;
-        height: 480px;
+        height: 380px;
     }
 </style>
 {{-- FINALIZACION --}}
@@ -101,7 +101,7 @@
 {{-- MODAL DE EDITAR --}}
 <div id="modaleditarPuntoControl" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="modaleditarPuntoControl" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex justify-content-center">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
