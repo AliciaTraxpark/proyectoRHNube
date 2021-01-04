@@ -8,8 +8,16 @@
 <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/leaflet.css')}}" rel="stylesheet"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/leaflet-search.src.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/easy-button.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{URL::asset('admin/assets/libs/leaflet/Control.FullScreen.css')}}" rel="stylesheet" type="text/css" />
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('breadcrumb')
@@ -216,9 +224,7 @@
                                     <div class="row" id="e_rowGeo"></div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="row">
-                                        <div id="mapid"></div>
-                                    </div>
+                                    <div id="mapid"></div>
                                 </div>
                             </div>
                     </div>
@@ -291,6 +297,13 @@
 <script src="{{ URL::asset('admin/assets/libs/multiselect/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-src.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/ActiveLayers.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/SelectLayers.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/easy-button.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/puntoControl.js')}}"></script>

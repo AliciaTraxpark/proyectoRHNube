@@ -228,6 +228,7 @@ function editarPunto(id) {
                                 </div>`;
             }
             $('#e_rowGeo').append(colGeo);
+            inicialiarMap();
         },
         error: function () { }
     });
@@ -560,7 +561,30 @@ $('#e_todasAreas').click(function () {
         $('#e_todasAreas').val(areasSelectEdit).trigger('change');
     }
 });
-
+//* INICIALIZAR PLUGIN DE MAPA
+function inicialiarMap() {
+    console.log("ingreso");
+    var mapId = L.map('mapid', {
+        center: [51.505, -0.09],
+        zoom: 10
+    });
+    mapId.invalidateSize();
+    window.setTimeout(function () {
+        mapId.invalidateSize();
+    }, 1000);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapId);
+    mapId.fitBounds([
+        [-11.9936, -77.1086]
+    ]);
+    var posicionUno = new L.Marker([-11.9936, -77.1086]);
+    var layerGroup = L.layerGroup([posicionUno]).addTo(mapId);
+    var circle = L.circle([-11.9936, -77.1086], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 33
+    }).addTo(mapId);
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
