@@ -702,9 +702,9 @@ function eliminarGeo(id) {
             layerGroup.removeLayer(layer);
         }
     });
-    $('#e_latitud' + id).val("")
+    $('#e_latitud' + id).val("");
     $('#e_radio' + id).val("");
-    $('#e_longitud' + id).val("")
+    $('#e_longitud' + id).val("");
     $('#colEliminar' + id).hide();
 }
 // ! ****************** FINALIZACION *****************************
