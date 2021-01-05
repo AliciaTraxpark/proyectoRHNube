@@ -562,6 +562,7 @@ $('#e_todasAreas').click(function () {
 //* INICIALIZAR PLUGIN DE MAPA
 var layerGroup = new L.layerGroup();
 function inicialiarMap(geo) {
+    console.log(geo);
     var mapId = L.map('mapid', {
         center: [-9.189967, -75.015152],
         zoom: 10
@@ -575,7 +576,7 @@ function inicialiarMap(geo) {
     var posicionGeo = {};
     // ? RECORRER ARRAYS DE GEOLICALIZACION
     for (let index = 0; index < geo.length; index++) {
-        var latlng = L.latLng(geo[index].latitud, geo[index].longitud);
+        var latlng = new L.latLng(geo[index].latitud, geo[index].longitud);
         // * POSICION DE POPUP
         posicionGeo = new L.Marker(latlng, { myCustomId: geo[index].idGeo, draggable: true })
             .on('dragend', function () {
@@ -587,22 +588,19 @@ function inicialiarMap(geo) {
             });
         layerGroup.addLayer(posicionGeo);
         layerGroup.addTo(mapId);
-        // layerGroup.eachLayer(function (layer) {
-        //     layer._leaflet_id = geo[index].idGeo;
-        // });
         var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
         arrayMarkerBounds.push(markerBounds);
+        // * POSICION DE CIRCULO
+        var circle = L.circleMarker(latlng, {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: geo[index].radio
+        }).addTo(mapId);
     }
     // * POSICIONES PARA CENTRAR MAPA
     mapId.fitBounds(arrayMarkerBounds);
     mapId.setZoom(1); //: -> ZOOM COMPLETO
-    // * DIBIJAR CIRCULO
-    var circle = L.circleMarker([-6.90742, -79.8641], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 50
-    }).addTo(mapId);
 }
 function blurLatitud(latitud, id) {
     if ($('#e_latitud' + id).val() != latitud) {
