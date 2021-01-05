@@ -616,11 +616,14 @@ function blurLatitud(latitud, id) {
     }
 }
 function blurLongitud(longitud, id) {
-    if ($('#e_longitud' + id).val() != latitud) {
-        var latlngActualizado = L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
-        layerGroup.removeLayer(id);
-        L.layerGroup({ marker: latlngActualizado, id: id })
-        layerGroup.getLayer(id).setLatLng(new L.LatLng(latlngActualizado));
+    if ($('#e_longitud' + id).val() != longitud) {
+        layerGroup.eachLayer(function (layer) {
+            if (layer.options.myCustomId == id) {
+                console.log(layer.options.myCustomId);
+                var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+                layer.setLatLng(latlngActualizado);
+            }
+        });
     }
 }
 // ! ****************** FINALIZACION *****************************
