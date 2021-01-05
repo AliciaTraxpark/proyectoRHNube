@@ -613,7 +613,9 @@ function cargartabla(fecha) {
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
                 }
-                theadTabla += `<th>Tiempo total</th></tr>`;
+                theadTabla += `<th>Tiempo total</th> <th >Tardanza</th>
+                <th >Faltas</th>
+                <th >Incidencias</th></tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
                 // ! *********** BODY DE TABLA**********
@@ -812,7 +814,7 @@ function cargartabla(fecha) {
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
-                            </td></tr>`;
+                            </td><td>---</td><td>---</td><td>---</td></tr>`;
                 }
                 $('#tbodyD').html(tbody);
 
@@ -878,7 +880,7 @@ function cargartabla(fecha) {
             } else {
                 $('#btnsDescarga').hide();
                 $('#tbodyD').empty();
-                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
             }
 
 
@@ -907,7 +909,9 @@ if (data.length != 0) {
                         <th class="tableHi">Hora de salida</th>
                         <th class="tableHi" id="tSitioI" name="tiempoSitHi">Tiempo en sitio</th>`;
     }
-    theadTablaI += `<th class="tableHi" >Tiempo total</th></tr>`;
+    theadTablaI += `<th class="tableHi" >Tiempo total</th>  <th class="tableHi">Tardanza</th>
+    <th class="tableHi">Faltas</th>
+    <th class="tableHi">Incidencias</th></tr>`;
     //* DIBUJAMOS CABEZERA
     $('#theadDI').html(theadTablaI);
     // ! *********** BODY DE TABLA**********
@@ -1044,7 +1048,7 @@ if (data.length != 0) {
 
                         ${sumaTiemposI.format("HH:mm:ss")}
 
-                </td></tr>`;
+                </td><td>---</td><td>---</td><td>---</td></tr>`;
     }
     var fechaAsisteDH=moment($('#pasandoV').val()).format('DD/MM/YYYY')
     $('#fechaAsiste').html(fechaAsisteDH);
