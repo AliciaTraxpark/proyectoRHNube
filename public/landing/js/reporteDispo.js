@@ -593,6 +593,7 @@ function cargartabla(fecha) {
                 }
                 // ! *********** CABEZERA DE TABLA**********
                 $('#theadD').empty();
+                $('#btnsDescarga').show();
                 //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
                 var cantidadColumnasHoras = 0;
                 for (let i = 0; i < data.length; i++) {
@@ -820,6 +821,8 @@ function cargartabla(fecha) {
                     "scrollX": true,
                     "ordering": false,
                     "autoWidth": false,
+                    "bInfo" : false ,
+                    "bLengthChange" : false,
                     fixedHeader: true,
                     language: {
                         sProcessing: "Procesando...",
@@ -855,44 +858,9 @@ function cargartabla(fecha) {
                     initComplete: function () {
                         setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
                     },
-                    dom: 'Bfrtip',
-                    buttons: [{
-                        extend: 'excel',
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                        customize: function (xlsx) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                        },
-                        sheetName: 'Exported data',
-                        autoFilter: false
-                    }, {
-                        extend: "pdfHtml5",
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        title: 'REPORTE ASISTENCIA',
-                        customize: function (doc) {
-                            doc['styles'] = {
-                                userTable: {
-                                    margin: [0, 15, 0, 15]
-                                },
-                                title: {
-                                    color: '#163552',
-                                    fontSize: '20',
-                                    alignment: 'center'
-                                },
-                                tableHeader: {
-                                    bold: !0,
-                                    fontSize: 11,
-                                    color: '#FFFFFF',
-                                    fillColor: '#163552',
-                                    alignment: 'center'
-                                }
-                            };
-                        }
-                    }],
-                    paging: true
+
+
+
 
                 });
                 $(window).on('resize', function () {
@@ -908,9 +876,182 @@ function cargartabla(fecha) {
                     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
                 }
             } else {
+                $('#btnsDescarga').hide();
                 $('#tbodyD').empty();
                 $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
             }
+
+
+/* CREANDO TABLAS PARA IMPORTAR */
+
+if (data.length != 0) {
+
+    // ! *********** CABEZERA DE TABLA**********
+    $('#theadDI').empty();
+    //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
+    var cantidadColumnasHorasI = 0;
+    for (let i = 0; i < data.length; i++) {
+        //* OBTENER CANTIDAD TOTAL DE COLUMNAS
+        if (cantidadColumnasHorasI < data[i].marcaciones.length) {
+            cantidadColumnasHorasI = data[i].marcaciones.length;
+        }
+    }
+    //* ARMAR CABEZERA
+    var theadTablaI = `<tr class="tableHi">
+                        <th class="tableHi" >CC&nbsp;</th>
+                        <th class="tableHi" >DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th class="tableHi">Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th class="tableHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+    for (let j = 0; j < cantidadColumnasHorasI; j++) {
+        theadTablaI += `<th class="tableHi">Hora de entrada</th>
+                        <th class="tableHi">Hora de salida</th>
+                        <th class="tableHi" id="tSitioI" name="tiempoSitHi">Tiempo en sitio</th>`;
+    }
+    theadTablaI += `<th class="tableHi" >Tiempo total</th></tr>`;
+    //* DIBUJAMOS CABEZERA
+    $('#theadDI').html(theadTablaI);
+    // ! *********** BODY DE TABLA**********
+    $('#tbodyDI').empty();
+    var tbodyI = "";
+    //* ARMAMOS BODY DE TABLA
+    for (let index = 0; index < data.length; index++) {
+        tbodyI += `<tr class="tableHi">
+        <td class="tableHi">${(index + 1)}&nbsp;</td>
+        <td class="tableHi">${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td class="tableHi">${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+        if (data[index].cargo_descripcion != null) {
+            tbodyI += `<td class="tableHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+        } else {
+            tbodyI += `<td class="tableHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+        }
+        //* ARMAR Y ORDENAR MARCACIONES
+        var tbodyEntradaySalidaI = "";
+        var sumaTiemposI = moment("00:00:00", "HH:mm:ss");
+        //: HORA
+        for (let h = 0; h < 24; h++) {
+            for (let j = 0; j < data[index].marcaciones.length; j++) {
+                var marcacionData = data[index].marcaciones[j];
+                if (marcacionData.entrada != 0) {
+                    if (h == moment(marcacionData.entrada).format("HH")) {
+                        var permisoModificarCS=$('#modifReporte').val();
+                        if(permisoModificarCS==1){
+                            tbodyEntradaySalidaI += `<td class="tableHi">
+                                                        ${moment(marcacionData.entrada).format("HH:mm:ss")}
+                                                   </td>`;
+                        }
+                        else{
+                            tbodyEntradaySalidaI += `<td class="tableHi">${moment(marcacionData.entrada).format("HH:mm:ss")}</td>`;
+                        }
+
+                        if (marcacionData.salida != 0) {
+                            var permisoModificarCE1=$('#modifReporte').val();
+                            if(permisoModificarCE1==1){
+                                tbodyEntradaySalidaI += `<td class="tableHi">
+                                                        ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                    </td>`;
+                            } else{
+                                tbodyEntradaySalidaI += `<td class="tableHi">${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
+
+                            }
+
+                            var horaFinal = moment(marcacionData.salida);
+                            var horaInicial = moment(marcacionData.entrada);
+                            if (horaFinal.isSameOrAfter(horaInicial)) {
+                                var tiempoRestante = horaFinal - horaInicial;
+                                var segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                var minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                var horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                if (horasTiempo < 10) {
+                                    horasTiempo = '0' + horasTiempo;
+                                }
+                                if (minutosTiempo < 10) {
+                                    minutosTiempo = '0' + minutosTiempo;
+                                }
+                                if (segundosTiempo < 10) {
+                                    segundosTiempo = '0' + segundosTiempo;
+                                }
+                                tbodyEntradaySalidaI += `<td class="tableHi" name="tiempoSitHi">
+
+                                                            ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+
+                                                    </td>`;
+                                sumaTiemposI = moment(sumaTiemposI).add(segundosTiempo, 'seconds');
+                                sumaTiemposI = moment(sumaTiemposI).add(minutosTiempo, 'minutes');
+                                sumaTiemposI = moment(sumaTiemposI).add(horasTiempo, 'hours');
+                            }
+                        } else {
+                            var permisoModificarS=$('#modifReporte').val();
+                            if(permisoModificarS==1){
+                                tbodyEntradaySalidaI += `<td class="tableHi">
+                                                            No tiene salida
+                                                       </td>`;
+                            }
+                            else{
+                                tbodyEntradaySalidaI +=`<td class="tableHi">No tiene salida</td>`;
+                            }
+
+                            tbodyEntradaySalidaI += `<td class="tableHi" name="tiempoSitHi">
+
+                                                    --:--:--
+
+                                            </td>`;
+                        }
+                    }
+                } else {
+                    if (marcacionData.salida != 0) {
+                        if (h == moment(marcacionData.salida).format("HH")) {
+                            //* COLUMNA DE ENTRADA
+
+                            var permisoModificarE=$('#modifReporte').val();
+                            if(permisoModificarE==1){
+                                tbodyEntradaySalidaI += `<td class="tableHi">
+
+                                                                No tiene entrada
+
+                                                </td>`;
+                            }
+                            else{
+                                tbodyEntradaySalidaI += `<td class="tableHi">No tiene entrada</td>`;
+                            }
+
+                            //* COLUMNA DE SALIDA
+                            var permisoModificarCE2=$('#modifReporte').val();
+                            if(permisoModificarCE2==1){
+                                tbodyEntradaySalidaI += `<td class="tableHi">
+
+                                                            ${moment(marcacionData.salida).format("HH:mm:ss")}
+
+                                                </td>`;
+                            } else{
+                                tbodyEntradaySalidaI += `<td class="tableHi"> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
+                            }
+
+                            tbodyEntradaySalidaI += `<td class="tableHi" name="tiempoSitHi">
+
+                                                    --:--:--
+
+                                            </td>`;
+                        }
+                    }
+                }
+            }
+        }
+        for (let m = data[index].marcaciones.length; m < cantidadColumnasHorasI; m++) {
+            tbodyEntradaySalidaI += `<td class="tableHi">---</td><td class="tableHi" >---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
+        }
+        tbodyI += tbodyEntradaySalidaI;
+        tbodyI += `<td class="tableHi" id="TiempoTotal${data[index].emple_id}">
+
+                        ${sumaTiemposI.format("HH:mm:ss")}
+
+                </td></tr>`;
+    }
+    var fechaAsisteDH=moment($('#pasandoV').val()).format('DD/MM/YYYY')
+    $('#fechaAsiste').html(fechaAsisteDH);
+    $('#tbodyDI').html(tbodyI);
+} else{
+    $('#tbodyDI').empty();
+}
         },
         error: function () { }
     });
@@ -1130,3 +1271,43 @@ function insertarSalida(idMarca) {
         },
     });
 }
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }
+function toExcel() {
+
+   let file = new Blob([$('#tableZoomI').html()], {type:"application/vnd.ms-excel"});
+let url = URL.createObjectURL(file);
+let a = $("<a />", {
+  href: url,
+  download: "Asistencia.xls"}).appendTo("body").get(0).click();
+ /*  e.preventDefault(); */
+/*  var cuerpoexcel=$('#tableZoomI').html();
+ atob(cuerpoexcel);
+ var blob = new Blob([ s2ab(atob()), {type:"application/vnd.ms-excel"}]
+  );
+  const link = document.createElement("a");
+  link.href = window.URL.createObjectURL(blob);
+  link.download = `report_${new Date().getTime()}.xlsx`;
+  link.click(); */
+}
+function generatePDF() {
+
+
+
+    var element = $('#tableZoomI').html();
+var opt = {
+  margin:       0.5,
+  filename:     'Asistencia.pdf',
+  image:        { type: 'jpeg', quality: 0.98 },
+  html2canvas:  { scale: 2 },
+  jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
+};
+
+
+html2pdf().from(element).set(opt).save();
+
+  }

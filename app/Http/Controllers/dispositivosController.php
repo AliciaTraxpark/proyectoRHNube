@@ -219,7 +219,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-
+        $ruc=$organizacion->organi_ruc;
+        $direccion=$organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -275,16 +276,17 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                    'ruc' => $ruc, 'direccion' => $direccion ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados,'ruc' => $ruc, 'direccion' => $direccion ]);
             }
         } else {
-            return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion ]);
         }
     }
 
@@ -756,7 +758,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-
+        $ruc=$organizacion->organi_ruc;
+        $direccion=$organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -812,16 +815,17 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                    return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                    'ruc' => $ruc, 'direccion' => $direccion ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
             }
         } else {
-            return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
         }
     }
 
@@ -831,7 +835,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-
+        $ruc=$organizacion->organi_ruc;
+        $direccion=$organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -887,16 +892,17 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                    return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                    'ruc' => $ruc, 'direccion' => $direccion ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados,  'ruc' => $ruc, 'direccion' => $direccion]);
             }
         } else {
-            return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados,  'ruc' => $ruc, 'direccion' => $direccion]);
         }
     }
 
