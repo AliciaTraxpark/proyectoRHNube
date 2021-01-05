@@ -205,33 +205,54 @@ function editarPunto(id) {
             var colGeo = "";
             inicialiarMap(geo);
             for (let index = 0; index < geo.length; index++) {
-                colGeo += `<div class="col-md-4">
+                colGeo += `<div class="col-md-12">
+                            <div class="row">
+                            <input type="hidden" class="rowIdGeo" value="${geo[index].idGeo}">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Latitud:</label>
-                                        <input type="number" step="any" class="form-control form-control-sm" id="e_latitud${geo[index].idGeo}" 
-                                            value="${geo[index].latitud}" onblur="javascript:blurLatitud('${geo[index].latitud}',${geo[index].idGeo})">
+                                        <div class="form-group row pl-2">
+                                            <input type="number" step="any" class="form-control form-control-sm col-10" id="e_latitud${geo[index].idGeo}" 
+                                                value="${geo[index].latitud}" onkeyup="javascript:changeLatitud(${geo[index].idGeo})">
+                                            <a onclick="javascript:blurLatitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLat${geo[index].idGeo}">
+                                                <img src="admin/images/checkH.svg" height="15">
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Longitud:</label>
-                                        <input type="number" step="any" class="form-control form-control-sm" id="e_longitud${geo[index].idGeo}" 
-                                            value="${geo[index].longitud}" onblur="javascript:blurLongitud('${geo[index].longitud}',${geo[index].idGeo})">
+                                        <div class="form-group row pl-2">
+                                            <input type="number" step="any" class="form-control form-control-sm col-10" id="e_longitud${geo[index].idGeo}" 
+                                                value="${geo[index].longitud}" onkeyup="javascript:changeLongitud(${geo[index].idGeo})">
+                                            <a onclick="javascript:blurLongitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLng${geo[index].idGeo}">
+                                                <img src="admin/images/checkH.svg" height="15">
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Radio:</label>
-                                        <input type="number" step="any" class="form-control form-control-sm" id="e_radio${geo[index].idGeo}" 
-                                            value="${geo[index].radio}" maxlength="40">
+                                        <div class="form-group row pl-2">
+                                            <input type="number" class="form-control form-control-sm col-10" id="e_radio${geo[index].idGeo}" 
+                                                value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
+                                            <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}">
+                                                <img src="admin/images/checkH.svg" height="15">
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>`;
+                                </div>
+                            </div>
+                        </div>`;
             }
             $('#e_rowGeo').append(colGeo);
         },
         error: function () { }
     });
     $('#modaleditarPuntoControl').modal();
+    contenido();
 }
 //* CHANGE DE SWITCH DE CONTROLES
 $('#e_puntoCRT').on("change.bootstrapSwitch", function (event) {
@@ -319,6 +340,7 @@ function editarPuntoControl() {
     var porAreas;
     var controlRuta;
     var asistenciaPuerta;
+    var puntosGeo = contenido();
     // * CONTROL EN RUTA
     if ($('#e_puntoCRT').is(":checked")) {
         controlRuta = 1;
@@ -355,7 +377,8 @@ function editarPuntoControl() {
             empleados: empleados,
             areas: areas,
             porEmpleados: porEmpleados,
-            porAreas: porAreas
+            porAreas: porAreas,
+            puntosGeo: puntosGeo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -562,9 +585,17 @@ $('#e_todasAreas').click(function () {
 //* INICIALIZAR PLUGIN DE MAPA
 var layerGroup = new L.layerGroup();
 var circle = {};
+var mapId = {};
 function inicialiarMap(geo) {
-    console.log(geo);
-    var mapId = L.map('mapid', {
+    if (mapId.options != undefined) {
+        layerGroup.eachLayer(function (layer) { layerGroup.removeLayer(layer); });
+        mapId.remove();
+        $('#mapid').html("");
+        $('#e_colMapa').empty();
+        var agregaridMapa = `<div id="mapid"></div>`;
+        $('#e_colMapa').append(agregaridMapa);
+    }
+    mapId = new L.map('mapid', {
         center: [-9.189967, -75.015152],
         zoom: 10
     });
@@ -579,30 +610,6 @@ function inicialiarMap(geo) {
     for (let index = 0; index < geo.length; index++) {
         var latlng = new L.latLng(geo[index].latitud, geo[index].longitud);
         // * POSICION DE POPUP
-        // posicionGeo = new L.Marker(latlng, { myCustomId: geo[index].idGeo, draggable: true })
-        //     .on('dragend', function () {
-        //         var coord = String(posicionGeo.getLatLng()).split(',');
-        //         var lat = coord[0].split('(');
-        //         var lng = coord[1].split(')');
-        //         $('#e_latitud' + geo[index].idGeo).val(parseFloat(lat[1]));
-        //         $('#e_longitud' + geo[index].idGeo).val(parseFloat(lng[0]));
-        //     });
-        // layerGroup.addLayer(posicionGeo);
-        // // layerGroup.addTo(mapId);
-        // var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
-        // arrayMarkerBounds.push(markerBounds);
-        // // * POSICION DE CIRCULO
-        // circle = new L.circle(latlng, {
-        //     color: 'red',
-        //     fillColor: '#f03',
-        //     fillOpacity: 0.5,
-        //     radius: geo[index].radio,
-        //     idCircle: geo[index].idGeo,
-        //     metric: false,
-        //     draggable: true
-        // });
-        // layerGroup.addLayer(circle);
-        // layerGroup.addTo(mapId);
         var ecm = new L.editableCircleMarker(latlng, geo[index].radio, {
             color: 'red',
             fillColor: '#f03',
@@ -622,25 +629,56 @@ function inicialiarMap(geo) {
     // mapId.fitBounds(arrayMarkerBounds);
     mapId.setZoom(1); //: -> ZOOM COMPLETO
 }
-function blurLatitud(latitud, id) {
-    if ($('#e_latitud' + id).val() != latitud) {
-        layerGroup.eachLayer(function (layer) {
-            if (layer.options.idCircle == id) {
-                var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
-                layer.setLatLng(latlngActualizado);
-            }
-        });
-    }
+// * BOTON DE ACEPTAR CAMBIOS
+function changeLatitud(id) {
+    $('#e_cambiaLat' + id).show();
 }
-function blurLongitud(longitud, id) {
-    if ($('#e_longitud' + id).val() != longitud) {
-        layerGroup.eachLayer(function (layer) {
-            if (layer.options.idCircle == id) {
-                var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
-                layer.setLatLng(latlngActualizado);
-            }
-        });
-    }
+function changeLongitud(id) {
+    $('#e_cambiaLng' + id).show();
+}
+function changeRadio(id) {
+    $('#e_cambiaR' + id).show();
+}
+// * CAMBIAR POSICIONES EN MAPA
+function blurLatitud(id) {
+    layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+            layer.setLatLng(latlngActualizado);
+        }
+    });
+    $('#e_cambiaLat' + id).hide();
+}
+function blurLongitud(id) {
+    layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+            layer.setLatLng(latlngActualizado);
+        }
+    });
+    $('#e_cambiaLng' + id).hide();
+}
+function blurRadio(id) {
+    layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            var radioActualizado = parseInt($('#e_radio' + id).val());
+            layer.setRadius(radioActualizado);
+        }
+    });
+    $('#e_cambiaR' + id).hide();
+}
+function contenido() {
+    var resultado = [];
+    $('.rowIdGeo').each(function () {
+        console.log($(this).val());
+        var idG = $(this).val();
+        var latitudG = $('#e_latitud' + idG).val();
+        var longitudG = $('#e_longitud' + idG).val();
+        var radioG = $('#e_radio' + idG).val();
+        var objGeo = { "idGeo": $(this).val(), "latitud": latitudG, "longitud": longitudG, "radio": radioG };
+        resultado.push(objGeo);
+    });
+    return resultado;
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {

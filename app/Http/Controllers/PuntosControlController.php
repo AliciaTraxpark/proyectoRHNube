@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\punto_control;
 use App\punto_control_area;
 use App\punto_control_empleado;
+use App\punto_control_geo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -345,6 +346,20 @@ class PuntosControlController extends Controller
                     foreach ($punto_area as $pa) {
                         $pa->estado = 0;
                         $pa->save();
+                    }
+                }
+            }
+            // * ACTUALIZAR O INSERTAR GEOLICALIZACION
+            // dd($request->get('puntosGeo'));
+            if (!empty($request->get('puntosGeo'))) {
+                foreach ($request->get('puntosGeo') as $punto) {
+                    // * BUSCAR PUNTO CONTROL GEO
+                    $puntoControlGeo = punto_control_geo::where('id', '=', $punto["idGeo"])->get()->first();
+                    if ($puntoControlGeo) {
+                        $puntoControlGeo->latitud = $punto["latitud"];
+                        $puntoControlGeo->longitud = $punto["longitud"];
+                        $puntoControlGeo->radio = $punto["radio"];
+                        $puntoControlGeo->save();
                     }
                 }
             }

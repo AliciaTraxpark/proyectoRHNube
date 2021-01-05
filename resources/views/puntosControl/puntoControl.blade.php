@@ -223,7 +223,7 @@
                                 <div class="col-md-12">
                                     <div class="row" id="e_rowGeo"></div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="e_colMapa">
                                     <div id="mapid"></div>
                                 </div>
                             </div>
