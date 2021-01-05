@@ -250,7 +250,7 @@
                                     onclick="javascript:limpiartextSexo()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div>
+                            </div> 
                             <div class="modal-body">
                                 {{ csrf_field() }}
                                 <div class="col-md-12">
@@ -275,7 +275,7 @@
                 <form method="POST" action="javascript:agregarempleado()">
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-9 pb-2" id="validCorreo" style="display: none">
                                     <span class="pt-2 pb-2" style="color:red;">*Correo electrónico incorrecto.</span>
@@ -368,40 +368,42 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" >
                                     <label class="normal" for="">Género:</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="control">
-                                        <label class="radio normal">
-                                            <input type="radio" name="sexo" id="sexo" value="Mujer" required>
-                                            Mujer
-                                        </label>
+                                <div class="container">
+                                    <div class="col-md-3 d-inline-block">
+                                        <div class="control">
+                                            <label class="radio normal">
+                                                <input type="radio" name="sexo" id="sexo" value="Mujer" required>
+                                                Mujer
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="control">
-                                        <label class="radio normal">
-                                            <input type="radio" name="sexo" id="sexo" value="Hombre" required>
-                                            Hombre
-                                        </label>
+                                    <div class="col-md-3 d-inline-block">
+                                        <div class="control">
+                                            <label class="radio normal">
+                                                <input type="radio" name="sexo" id="sexo" value="Hombre" required>
+                                                Hombre
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="control">
-                                        <label class="radio normal" data-toggle="tooltip" data-placement="bottom"
-                                            title="" data-original-title="Puedes
-                                                elegir personalizado si no
-                                                deseas especificar tu sexo.">
-                                            <input type="radio" name="sexo" id="sexo" value="Personalizado" required>
-                                            Personalizado
-                                        </label>
-                                        &nbsp;
-                                        <a data-toggle="modal" id="generoPersonalizado" style="display: none">
-                                            <img src="{{asset('landing/images/plus.svg')}}" style="cursor: pointer"
-                                                height="15">
-                                        </a>
-                                    </div>
+                                    <div class="col-md-4 d-inline-block">
+                                        <div class="control">
+                                            <label class="radio normal" data-toggle="tooltip" data-placement="bottom"
+                                                title="" data-original-title="Puedes
+                                                    elegir personalizado si no
+                                                    deseas especificar tu sexo.">
+                                                <input type="radio" name="sexo" id="sexo" value="Personalizado" required>
+                                                Personalizado
+                                            </label>
+                                            &nbsp;
+                                            <a data-toggle="modal" id="generoPersonalizado" style="display: none">
+                                                <img src="{{asset('landing/images/plus.svg')}}" style="cursor: pointer"
+                                                    height="15">
+                                            </a>
+                                        </div>
+                                    </div>   
                                 </div>
                             </div>
                         </div>
