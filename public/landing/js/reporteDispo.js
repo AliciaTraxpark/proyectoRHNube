@@ -1048,7 +1048,7 @@ if (data.length != 0) {
 
                         ${sumaTiemposI.format("HH:mm:ss")}
 
-                </td><td>---</td><td>---</td><td>---</td></tr>`;
+                </td><td class="tableHi">---</td><td class="tableHi">---</td><td class="tableHi">---</td></tr>`;
     }
     var fechaAsisteDH=moment($('#pasandoV').val()).format('DD/MM/YYYY')
     $('#fechaAsiste').html(fechaAsisteDH);
