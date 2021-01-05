@@ -67,6 +67,10 @@
         background-image: linear-gradient(to bottom, #1f4068, #1f4068);
     }
 
+    .page-link{
+        font-size: 13px;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 767.98px) {
         .colBtnR {
@@ -114,6 +118,10 @@
 
         .imgR {
             margin-left: 19% !important;
+        }
+
+        .dataTables_info{
+            display: none;
         }
     }
 

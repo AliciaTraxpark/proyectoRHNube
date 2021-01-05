@@ -275,7 +275,7 @@
                 <form method="POST" action="javascript:agregarempleado()">
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-9 pb-2" id="validCorreo" style="display: none">
                                     <span class="pt-2 pb-2" style="color:red;">*Correo electrónico incorrecto.</span>

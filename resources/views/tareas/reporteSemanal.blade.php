@@ -58,6 +58,10 @@
         box-shadow: -5px 0 0 #153e90, 5px 0 0 #153e90;
     }
 
+    .page-link{
+        font-size: 13px;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 767.98px) {
@@ -91,6 +95,10 @@
 
         .imgR {
             margin-left: 19% !important;
+        }
+
+        .dataTables_info{
+            display: none;
         }
     }
 
