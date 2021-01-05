@@ -561,6 +561,7 @@ $('#e_todasAreas').click(function () {
 });
 //* INICIALIZAR PLUGIN DE MAPA
 var layerGroup = new L.layerGroup();
+var circle = {};
 function inicialiarMap(geo) {
     console.log(geo);
     var mapId = L.map('mapid', {
@@ -591,16 +592,21 @@ function inicialiarMap(geo) {
         var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
         arrayMarkerBounds.push(markerBounds);
         // * POSICION DE CIRCULO
-        var circle = L.circleMarker(latlng, {
+        circle = new L.circle(latlng, {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: geo[index].radio
-        }).addTo(mapId);
+            radius: geo[index].radio,
+            idCircle: geo[index].idGeo,
+            metric: false
+        });
+        layerGroup.addLayer(circle);
+        layerGroup.addTo(mapId);
     }
     // * POSICIONES PARA CENTRAR MAPA
     mapId.fitBounds(arrayMarkerBounds);
     mapId.setZoom(1); //: -> ZOOM COMPLETO
+    console.log(layerGroup);
 }
 function blurLatitud(latitud, id) {
     if ($('#e_latitud' + id).val() != latitud) {
