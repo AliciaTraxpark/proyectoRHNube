@@ -356,10 +356,14 @@ class PuntosControlController extends Controller
                     // * BUSCAR PUNTO CONTROL GEO
                     $puntoControlGeo = punto_control_geo::where('id', '=', $punto["idGeo"])->get()->first();
                     if ($puntoControlGeo) {
-                        $puntoControlGeo->latitud = $punto["latitud"];
-                        $puntoControlGeo->longitud = $punto["longitud"];
-                        $puntoControlGeo->radio = $punto["radio"];
-                        $puntoControlGeo->save();
+                        if (!is_null($punto["latitud"]) && !is_null($punto["longitud"]) && !is_null($punto["radio"])) {
+                            $puntoControlGeo->latitud = $punto["latitud"];
+                            $puntoControlGeo->longitud = $punto["longitud"];
+                            $puntoControlGeo->radio = $punto["radio"];
+                            $puntoControlGeo->save();
+                        } else {
+                            $puntoControlGeo->delete();
+                        }
                     }
                 }
             }

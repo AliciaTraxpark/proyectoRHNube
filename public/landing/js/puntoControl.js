@@ -250,8 +250,8 @@ function editarPunto(id) {
                             </div>
                         </div>`;
                 if (index != 0) {
-                    colGeo += `<div class="col-lg-1 text-left" style="padding-top:2.5em">
-                                    <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
+                    colGeo += `<div class="col-md-1 text-left" style="padding-top:2.5em" id="colEliminar${geo[index].idGeo}">
+                                    <a onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
                                         data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                                         <img src="/admin/images/delete.svg" height="15">
                                     </a>
@@ -617,7 +617,6 @@ function inicialiarMap(geo) {
     }, 1000);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapId);
     var arrayMarkerBounds = [];
-    var posicionGeo = {};
     // ? RECORRER ARRAYS DE GEOLICALIZACION
     for (let index = 0; index < geo.length; index++) {
         var latlng = new L.latLng(geo[index].latitud, geo[index].longitud);
@@ -636,9 +635,11 @@ function inicialiarMap(geo) {
             });
         layerGroup.addLayer(ecm);
         layerGroup.addTo(mapId);
+        var markerBounds = new L.latLngBounds([latlng]);
+        arrayMarkerBounds.push(markerBounds);
     }
     // * POSICIONES PARA CENTRAR MAPA
-    // mapId.fitBounds(arrayMarkerBounds);
+    mapId.fitBounds(arrayMarkerBounds);
     mapId.setZoom(1); //: -> ZOOM COMPLETO
 }
 // * BOTON DE ACEPTAR CAMBIOS
@@ -679,6 +680,7 @@ function blurRadio(id) {
     });
     $('#e_cambiaR' + id).hide();
 }
+// * OBTENER DIVS DE GEO
 function contenido() {
     var resultado = [];
     $('.rowIdGeo').each(function () {
@@ -691,6 +693,19 @@ function contenido() {
         resultado.push(objGeo);
     });
     return resultado;
+}
+// * ELIMINAR GEO
+function eliminarGeo(id) {
+    $('#colGeo' + id).hide();
+    layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            layerGroup.removeLayer(layer);
+        }
+    });
+    $('#e_latitud' + id).val("")
+    $('#e_radio' + id).val("");
+    $('#e_longitud' + id).val("")
+    $('#colEliminar' + id).hide();
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {
