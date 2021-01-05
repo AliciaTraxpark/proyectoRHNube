@@ -579,40 +579,53 @@ function inicialiarMap(geo) {
     for (let index = 0; index < geo.length; index++) {
         var latlng = new L.latLng(geo[index].latitud, geo[index].longitud);
         // * POSICION DE POPUP
-        posicionGeo = new L.Marker(latlng, { myCustomId: geo[index].idGeo, draggable: true })
-            .on('dragend', function () {
-                var coord = String(posicionGeo.getLatLng()).split(',');
-                var lat = coord[0].split('(');
-                var lng = coord[1].split(')');
-                $('#e_latitud' + geo[index].idGeo).val(parseFloat(lat[1]));
-                $('#e_longitud' + geo[index].idGeo).val(parseFloat(lng[0]));
-            });
-        layerGroup.addLayer(posicionGeo);
-        layerGroup.addTo(mapId);
-        var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
-        arrayMarkerBounds.push(markerBounds);
-        // * POSICION DE CIRCULO
-        circle = new L.circle(latlng, {
+        // posicionGeo = new L.Marker(latlng, { myCustomId: geo[index].idGeo, draggable: true })
+        //     .on('dragend', function () {
+        //         var coord = String(posicionGeo.getLatLng()).split(',');
+        //         var lat = coord[0].split('(');
+        //         var lng = coord[1].split(')');
+        //         $('#e_latitud' + geo[index].idGeo).val(parseFloat(lat[1]));
+        //         $('#e_longitud' + geo[index].idGeo).val(parseFloat(lng[0]));
+        //     });
+        // layerGroup.addLayer(posicionGeo);
+        // // layerGroup.addTo(mapId);
+        // var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
+        // arrayMarkerBounds.push(markerBounds);
+        // // * POSICION DE CIRCULO
+        // circle = new L.circle(latlng, {
+        //     color: 'red',
+        //     fillColor: '#f03',
+        //     fillOpacity: 0.5,
+        //     radius: geo[index].radio,
+        //     idCircle: geo[index].idGeo,
+        //     metric: false,
+        //     draggable: true
+        // });
+        // layerGroup.addLayer(circle);
+        // layerGroup.addTo(mapId);
+        var ecm = new L.editableCircleMarker(latlng, geo[index].radio, {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: geo[index].radio,
             idCircle: geo[index].idGeo,
-            metric: false
-        });
-        layerGroup.addLayer(circle);
+            metric: false,
+            draggable: true
+        })
+            .on('move', function (e) {
+                $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
+                $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+            });
+        layerGroup.addLayer(ecm);
         layerGroup.addTo(mapId);
     }
     // * POSICIONES PARA CENTRAR MAPA
-    mapId.fitBounds(arrayMarkerBounds);
+    // mapId.fitBounds(arrayMarkerBounds);
     mapId.setZoom(1); //: -> ZOOM COMPLETO
-    console.log(layerGroup);
 }
 function blurLatitud(latitud, id) {
     if ($('#e_latitud' + id).val() != latitud) {
         layerGroup.eachLayer(function (layer) {
-            if (layer.options.myCustomId == id) {
-                console.log(layer.options.myCustomId);
+            if (layer.options.idCircle == id) {
                 var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
                 layer.setLatLng(latlngActualizado);
             }
@@ -622,8 +635,7 @@ function blurLatitud(latitud, id) {
 function blurLongitud(longitud, id) {
     if ($('#e_longitud' + id).val() != longitud) {
         layerGroup.eachLayer(function (layer) {
-            if (layer.options.myCustomId == id) {
-                console.log(layer.options.myCustomId);
+            if (layer.options.idCircle == id) {
                 var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
                 layer.setLatLng(latlngActualizado);
             }

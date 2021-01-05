@@ -304,6 +304,7 @@
 <script src="{{ URL::asset('admin/assets/libs/leaflet/leaflet-routing-machine.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/easy-button.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/leaflet/Control.FullScreen.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/leaflet/editablecirclemarker.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
 <script src="{{asset('landing/js/puntoControl.js')}}"></script>
