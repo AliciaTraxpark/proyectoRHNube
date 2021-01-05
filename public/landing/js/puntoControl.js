@@ -205,7 +205,7 @@ function editarPunto(id) {
             var colGeo = "";
             inicialiarMap(geo);
             for (let index = 0; index < geo.length; index++) {
-                colGeo += `<div class="col-md-12">
+                colGeo += `<div class="col-md-11" id="colGeo${geo[index].idGeo}">
                             <div class="row">
                             <input type="hidden" class="rowIdGeo" value="${geo[index].idGeo}">
                                 <div class="col-md-4">
@@ -214,7 +214,8 @@ function editarPunto(id) {
                                         <div class="form-group row pl-2">
                                             <input type="number" step="any" class="form-control form-control-sm col-10" id="e_latitud${geo[index].idGeo}" 
                                                 value="${geo[index].latitud}" onkeyup="javascript:changeLatitud(${geo[index].idGeo})">
-                                            <a onclick="javascript:blurLatitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLat${geo[index].idGeo}">
+                                            <a onclick="javascript:blurLatitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLat${geo[index].idGeo}"
+                                                data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
                                                 <img src="admin/images/checkH.svg" height="15">
                                             </a>
                                         </div>
@@ -226,7 +227,8 @@ function editarPunto(id) {
                                         <div class="form-group row pl-2">
                                             <input type="number" step="any" class="form-control form-control-sm col-10" id="e_longitud${geo[index].idGeo}" 
                                                 value="${geo[index].longitud}" onkeyup="javascript:changeLongitud(${geo[index].idGeo})">
-                                            <a onclick="javascript:blurLongitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLng${geo[index].idGeo}">
+                                            <a onclick="javascript:blurLongitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLng${geo[index].idGeo}"
+                                                data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
                                                 <img src="admin/images/checkH.svg" height="15">
                                             </a>
                                         </div>
@@ -234,11 +236,12 @@ function editarPunto(id) {
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">Radio:</label>
+                                        <label for="">Radio (m<sup>2</sup>):</label>
                                         <div class="form-group row pl-2">
                                             <input type="number" class="form-control form-control-sm col-10" id="e_radio${geo[index].idGeo}" 
                                                 value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
-                                            <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}">
+                                            <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}"
+                                                data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
                                                 <img src="admin/images/checkH.svg" height="15">
                                             </a>
                                         </div>
@@ -246,8 +249,17 @@ function editarPunto(id) {
                                 </div>
                             </div>
                         </div>`;
+                if (index != 0) {
+                    colGeo += `<div class="col-lg-1 text-left" style="padding-top:2.5em">
+                                    <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
+                                        data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
+                                        <img src="/admin/images/delete.svg" height="15">
+                                    </a>
+                                </div>`;
+                }
             }
             $('#e_rowGeo').append(colGeo);
+            $('[data-toggle="tooltip"]').tooltip();
         },
         error: function () { }
     });
