@@ -150,7 +150,6 @@ function editarPunto(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-            console.log(data);
             $('#e_idPuntoC').val(data[0].id);
             $('#e_descripcionPunto').val(data[0].descripcion);
             if (data[0].codigoControl == null) {
@@ -301,7 +300,6 @@ function areasPuntos(id) {
                 itemsSelect += `<option value="${data[0].noSelect[item].area_id}"> Área: ${data[0].noSelect[item].area_descripcion}</option>`;
             }
             $('#e_areasPunto').append(itemsSelect);
-            console.log(data[0].select.length, data[0].noSelect.length);
             if (data[0].select.length != 0 && data[0].noSelect.length == 0) {
                 $('#e_todasAreas').prop("checked", true);
             } else {
@@ -564,7 +562,6 @@ $('#e_todasAreas').click(function () {
 //* INICIALIZAR PLUGIN DE MAPA
 var layerGroup = new L.layerGroup();
 function inicialiarMap(geo) {
-    console.log(geo);
     var mapId = L.map('mapid', {
         center: [-9.189967, -75.015152],
         zoom: 10
@@ -575,11 +572,12 @@ function inicialiarMap(geo) {
     }, 1000);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mapId);
     var arrayMarkerBounds = [];
+    var posicionGeo = {};
     // ? RECORRER ARRAYS DE GEOLICALIZACION
     for (let index = 0; index < geo.length; index++) {
         var latlng = L.latLng(geo[index].latitud, geo[index].longitud);
         // * POSICION DE POPUP
-        var posicionGeo = new L.Marker(latlng, { draggable: true })
+        posicionGeo = new L.Marker(latlng, { myCustomId: geo[index].idGeo, draggable: true })
             .on('dragend', function () {
                 var coord = String(posicionGeo.getLatLng()).split(',');
                 var lat = coord[0].split('(');
@@ -589,12 +587,9 @@ function inicialiarMap(geo) {
             });
         layerGroup.addLayer(posicionGeo);
         layerGroup.addTo(mapId);
-        layerGroup.eachLayer(function (layer) {
-            layer._leaflet_id = geo[index].idGeo;
-            console.log(layer._leaflet_id);
-        });
-        console.log(layerGroup);
-        console.log(layerGroup.getLayer(29));
+        // layerGroup.eachLayer(function (layer) {
+        //     layer._leaflet_id = geo[index].idGeo;
+        // });
         var markerBounds = L.latLngBounds([posicionGeo.getLatLng()]);
         arrayMarkerBounds.push(markerBounds);
     }
@@ -610,20 +605,17 @@ function inicialiarMap(geo) {
     }).addTo(mapId);
 }
 function blurLatitud(latitud, id) {
-    console.log(latitud);
-    console.log($('#e_latitud' + id).val());
-    console.log(parseFloat($('#e_latitud' + id).val()) !== parseFloat(latitud));
     if ($('#e_latitud' + id).val() != latitud) {
-        var latlngActualizado = L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
-        console.log(layerGroup.getLayers());
-        layerGroup.removeLayer(id);
-        L.layerGroup({ marker: latlngActualizado, id: id }).addTo(mapId);
+        layerGroup.eachLayer(function (layer) {
+            if (layer.options.myCustomId == id) {
+                console.log(layer.options.myCustomId);
+                var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+                layer.setLatLng(latlngActualizado);
+            }
+        });
     }
 }
 function blurLongitud(longitud, id) {
-    console.log(longitud);
-    console.log($('#e_longitud' + id).val());
-    console.log(parseFloat($('#e_longitud' + id).val()) !== parseFloat(longitud));
     if ($('#e_longitud' + id).val() != latitud) {
         var latlngActualizado = L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
         layerGroup.removeLayer(id);
