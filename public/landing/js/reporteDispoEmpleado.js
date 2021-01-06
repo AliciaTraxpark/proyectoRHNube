@@ -943,10 +943,10 @@ function cargartabla(fecha1,fecha2) {
                                     <th class="">Fecha&nbsp;</th>
                                    `;
                 for (let j = 0; j < cantidadColumnasHorasI; j++) {
-                    theadTablaI += `<th class="" colspan="2">Horario</th>
-                                     <th class="" colspan="2">Hora de entrada</th>
-                                    <th class="" colspan="2">Hora de salida</th>
-                                    <th  class=""colspan="2" id="" name="tiempoSitHi">Tiempo en sitio</th>`;
+                    theadTablaI += `<th class="" >Horario</th>
+                                     <th class="">Hora de entrada</th>
+                                    <th class="" >Hora de salida</th>
+                                    <th  class="" id="" name="tiempoSitHi">Tiempo en sitio</th>`;
                 }
                 theadTablaI += `<th class="">Tiempo total</th><th>Tardanza</th>
                 <th>Faltas</th>
@@ -955,7 +955,7 @@ function cargartabla(fecha1,fecha2) {
 
                  var inicioR=moment($('#ID_START').val()).format('DD/MM/YYYY');
                  var finR=moment($('#ID_END').val()).format('DD/MM/YYYY');
-                $('#RangoFechas').html('De '+inicioR+' '+' a '+' '+finR)
+                $('#RangoFechas').html(' De '+inicioR+' '+' a '+' '+finR)
 
 
 
@@ -996,27 +996,27 @@ function cargartabla(fecha1,fecha2) {
                                 if (h == moment(marcacionDataI.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
                                     if (marcacionDataI.horario != 0) {
-                                        tbodyIEntradaySalida += `<td colspan="2" >${marcacionDataI.horario}</td>`;
+                                        tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
                                     } else {
-                                        tbodyIEntradaySalida += `<td colspan="2">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        tbodyIEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
                                     if(permisoModificarCS==1){
-                                        tbodyIEntradaySalida += `<td colspan="2">
+                                        tbodyIEntradaySalida += `<td >
                                                                     ${moment(marcacionDataI.entrada).format("HH:mm:ss")}
                                                                </td>`;
                                     }
                                     else{
-                                        tbodyIEntradaySalida += `<td colspan="2">${moment(marcacionDataI.entrada).format("HH:mm:ss")}</td>`;
+                                        tbodyIEntradaySalida += `<td >${moment(marcacionDataI.entrada).format("HH:mm:ss")}</td>`;
                                     }
 
                                     if (marcacionDataI.salida != 0) {
                                         var permisoModificarCE1=$('#modifReporte').val();
                                         if(permisoModificarCE1==1){
-                                            tbodyIEntradaySalida += `<td colspan="2">
+                                            tbodyIEntradaySalida += `<td >
                                                                     ${moment(marcacionDataI.salida).format("HH:mm:ss")}
                                                                 </td>`;
                                         } else{
-                                            tbodyIEntradaySalida += `<td colspan="2"> ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
+                                            tbodyIEntradaySalida += `<td> ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
 
                                         }
 
@@ -1036,7 +1036,7 @@ function cargartabla(fecha1,fecha2) {
                                             if (segundosTiempo < 10) {
                                                 segundosTiempo = '0' + segundosTiempo;
                                             }
-                                            tbodyIEntradaySalida += `<td colspan="2" name="tiempoSitHi">
+                                            tbodyIEntradaySalida += `<td  name="tiempoSitHi">
 
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
 
@@ -1048,15 +1048,15 @@ function cargartabla(fecha1,fecha2) {
                                     } else {
                                         var permisoModificarS=$('#modifReporte').val();
                                         if(permisoModificarS==1){
-                                            tbodyIEntradaySalida += `<td colspan="2">
+                                            tbodyIEntradaySalida += `<td >
                                                                         No tiene salida
                                                                   </td>`;
                                         }
                                         else{
-                                            tbodyIEntradaySalida +=`<td colspan="2">No tiene salida</td>`;
+                                            tbodyIEntradaySalida +=`<td >No tiene salida</td>`;
                                         }
 
-                                        tbodyIEntradaySalida += `<td colspan="2" name="tiempoSitHi">
+                                        tbodyIEntradaySalida += `<td  name="tiempoSitHi">
 
                                                                 --:--:--
 
@@ -1068,13 +1068,13 @@ function cargartabla(fecha1,fecha2) {
                                     if (h == moment(marcacionDataI.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
                                         if (marcacionDataI.horario != 0) {
-                                            tbodyIEntradaySalida += `<td colspan="2">${marcacionDataI.horario}</td>`;
+                                            tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
                                         } else {
-                                            tbodyIEntradaySalida += `<td colspan="2">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                            tbodyIEntradaySalida += `<td  >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
                                         var permisoModificarE=$('#modifReporte').val();
                                         if(permisoModificarE==1){
-                                            tbodyIEntradaySalida += `<td colspan="2">
+                                            tbodyIEntradaySalida += `<td  >
 
                                                                             No tiene entrada
 
@@ -1082,22 +1082,22 @@ function cargartabla(fecha1,fecha2) {
                                                             </td>`;
                                         }
                                         else{
-                                            tbodyIEntradaySalida += `<td colspan="2">No tiene entrada</td>`;
+                                            tbodyIEntradaySalida += `<td  >No tiene entrada</td>`;
                                         }
 
                                         //* COLUMNA DE SALIDA
                                         var permisoModificarCE2=$('#modifReporte').val();
                                         if(permisoModificarCE2==1){
-                                            tbodyIEntradaySalida += `<td colspan="2">
+                                            tbodyIEntradaySalida += `<td  >
 
                                                                         ${moment(marcacionDataI.salida).format("HH:mm:ss")}
 
                                                             </td>`;
                                         } else{
-                                            tbodyIEntradaySalida += `<td colspan="2"> ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
+                                            tbodyIEntradaySalida += `<td  > ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
                                         }
 
-                                        tbodyIEntradaySalida += `<td colspan="2" name="tiempoSitHi">
+                                        tbodyIEntradaySalida += `<td   name="tiempoSitHi">
 
                                                                 --:--:--
 
@@ -1108,7 +1108,7 @@ function cargartabla(fecha1,fecha2) {
                         }
                     }
                     for (let m = data[index].marcaciones.length; m < cantidadColumnasHorasI; m++) {
-                        tbodyIEntradaySalida += `<td colspan="2">---</td><td colspan="2">---</td><td colspan="2">---</td><td colspan="2" name="tiempoSitHi">---</td>`;
+                        tbodyIEntradaySalida += `<td  >---</td><td  >---</td><td  >---</td><td   name="tiempoSitHi">---</td>`;
                     }
                     tbodyI += tbodyIEntradaySalida;
                     tbodyI += `<td id="TiempoTotal${data[index].emple_id}">
@@ -1355,30 +1355,83 @@ function insertarSalida(idMarca) {
         },
     });
 }
-function doit(type, fn, dl) {
+/* function doit(type, fn, dl) {
 	var elt = document.getElementById('tableZoomI');
-    var wb = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
+    var wb = XLSX.utils.table_to_book(elt, {sheet:"Asistencia"});
 
 	return dl ?
 		XLSX.write(wb, {bookType:type, cellStyles: true, bookSST:true, type: 'base64'}) :
         XLSX.writeFile(wb, fn || ('AsistenciaEmpleado.' + (type || 'xlsx')));
 
-}
+} */
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }
+  function doexcel(){
+      var wb = XLSX.utils.table_to_book(document.getElementById("tableZoomI"),{sheet:"Sheet 1"})	//my html table
+
+       wb["Sheets"]["Sheet 1"]["!cols"] = [{ wpx : 149 },{ wpx : 130 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
+        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
+        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
+        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },];
+
+     console.log(wb);
+
+      var wbout = XLSX.write(wb, {bookType:'xlsx',  bookSST:true, type: 'binary'});
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Asistencia.xlsx');
+  }
 function generatePDF() {
 
 
 
-    var element = $('#tableZoomI').html();
-var opt = {
+   /*  var element = $('#tableZoomI').html();
+/* var opt = {
   margin:       0.5,
   filename:     'Asistencia.pdf',
   image:        { type: 'jpeg', quality: 0.98 },
   html2canvas:  { scale: 2 },
   jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
-};
+}; */
 
 
-html2pdf().from(element).set(opt).save();
+/* html2pdf().from(element).set(opt).save(); */
+var doc = new jsPDF('l', 'pt', 'legal');
+    var htmlstring = '';
+    var tempVarToCheckPageHeight = 0;
+    var pageHeight = 0;
+    pageHeight = doc.internal.pageSize.height;
+    specialElementHandlers = {
+        // element with id of "bypass" - jQuery style selector
+        '#bypassme': function(element, renderer) {
+            // true = "handled elsewhere, bypass text extraction"
+            return true
+        }
+    };
+   /*  margins = {
+        top: 150,
+        bottom: 60,
+        left: 40,
+        right: 40,
+        width: 600
+    }; */
+    var y = 20;
+    doc.setLineWidth(2);
+
+    doc.autoTable({
+        html: '#Encabezado',
+        startY: 40,
+        theme:'plain'
+
+    })
+    doc.autoTable({
+        html: '#tablaReportI',
+        startY: 250
+
+    })
+    doc.save('Asistencia.pdf');
 
   }
 

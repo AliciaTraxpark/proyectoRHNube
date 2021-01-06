@@ -22,7 +22,9 @@
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -221,9 +223,10 @@
         <div id="espera" class="text-center" style="display: none">
             <img src="{{ asset('landing/images/loading.gif') }}" height="100">
         </div>
+
         <div class="col-md-12">
             <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga" style="display: none">
-                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="doit('xlsx')">
+                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="doexcel()">
                     <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
                 </button>
                  <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
@@ -238,85 +241,56 @@
         </style>
        {{--  TABLAS OCULTA --}}
        <div id="tableZoomI" class="col-md-12" style="display: none" >
-        <table>
+        <table id="Encabezado" class="table" style="font-size: 12.8px;border-collapse: collapse;">
             <thead>
-                <tr><br></tr>
+
                 <tr>
 
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th  style=" font-weight: 600;" colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
+                    <th  style=" font-weight: 600;text-align: center " colspan="3">
+                        CONTROL DE REGISTRO DE ASISTENCIA</th>
                 </tr>
                 <tr>
 
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th><br><br></th>
-                    <th><br><br></th>
+
                     <th  id="RangoFechas"></th>
                 </tr>
             </thead>
             <tbody>
 
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td  colspan="2">Razon social:</td>
-                    <td  colspan="3">{{$organizacion}}</td>
+
+                    <td  >Razon social:</td>
+                    <td >{{$organizacion}}</td>
                 </tr>
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td colspan="2">Direccion:</td>
-                    <td colspan="3">{{$direccion}}</td>
+
+                    <td >Direccion:</td>
+                    <td >{{$direccion}}</td>
                 </tr>
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td colspan="2">Numero de Ruc:</td>
-                    <td colspan="2">{{$ruc}}</td>
+
+                    <td >Numero de Ruc:</td>
+                    <td >{{$ruc}}</td>
                 </tr>
 
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td colspan="2">DNI:</td>
+
+                    <td >DNI:</td>
                     <td  id="ponerDNI" colspan="1" > </td>
                 </tr>
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td colspan="2">Apellidos y nombres:</td>
+
+                    <td >Apellidos y nombres:</td>
                     <td id="ponerApe" colspan="1" > </td>
                 </tr>
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td colspan="2">Area:</td>
+
+                    <td >Area:</td>
                     <td  id="ponerArea" colspan="1" > </td>
                 </tr>
                 <tr>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td><br><br></td>
-                    <td colspan="2">cargo:</td>
+
+                    <td >cargo:</td>
                     <td   id="ponerCarg" colspan="1" > </td>
                 </tr>
                 <tr>
