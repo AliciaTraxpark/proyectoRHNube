@@ -216,9 +216,11 @@ function editarPunto(id) {
                                     <div class="card border" 
                                         style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header" style="padding: 0.25rem 1.25rem;">
-                                            <span>GPS ${index + 1}</span>
+                                            <span style="font-weight: bold;">Datos GPS</span>
+                                            <img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody(${geo[index].idGeo})"
+                                                style="cursor: pointer;">
                                         </div>
-                                        <div class="card-body" style="padding:0.3rem">
+                                        <div class="card-body" style="padding:0.3rem" id="bodyGPS${geo[index].idGeo}">
                                             <div class="col-md-12">
                                                 <div class="form-group row" style="margin-bottom: 0.4rem;">
                                                     <label class="col-lg-4 col-form-label">Latitud:</label>
@@ -842,6 +844,10 @@ function edit_agregarGPS() {
     });
     mapId.fitBounds(arrayMarkerBounds);
     variableU++;
+}
+// * TOGGLE BODY
+function toggleBody(id) {
+    $('#bodyGPS' + id).toggle();
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {
