@@ -215,9 +215,9 @@
                             </div>
                             <div class="row pt-2">
                                 <div class="col-md-12 text-left">
-                                    <label for="">
-                                        Geolocalización
+                                    <label for="" style="font-weight: bold;">
                                         <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
+                                        Geolocalización
                                     </label>
                                 </div>
                                 <div class="col-md-4">

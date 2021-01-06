@@ -217,6 +217,11 @@ function editarPunto(id) {
                                         style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                             <span style="font-weight: bold;">Datos GPS</span>
+                                            &nbsp;
+                                            <a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
+                                                data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
+                                                <img src="/admin/images/delete.svg" height="13">
+                                            </a>
                                             <img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody(${geo[index].idGeo})"
                                                 style="cursor: pointer;">
                                         </div>
