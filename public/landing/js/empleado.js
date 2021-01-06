@@ -1254,7 +1254,7 @@ function calendario2() {
             $('#fueraHSwitch_re').prop('disabled', false);
             $('#horAdicSwitch_re').prop('checked', false);
             $('#horCompSwitch_re').prop('checked', true);
-
+           
             $("#horarioAsignar").modal("show");
         },
         eventClick: function (info) {
@@ -1858,6 +1858,7 @@ function calendario2_ed() {
             $('#fueraHSwitch').prop('disabled', false);
             $('#horAdicSwitch').prop('checked', false);
             $('#horCompSwitch_re').hide();
+            $('#nHorasAdic').hide();
             $('#horCompSwitch').prop('checked', true);
             $("#horarioAsignar_ed").modal("show");
         },
