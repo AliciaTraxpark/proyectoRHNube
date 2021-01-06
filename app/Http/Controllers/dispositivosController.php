@@ -937,7 +937,7 @@ class dispositivosController extends Controller
                     $resultado[$fechando2]->marcaciones = array();
                 }
                 $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
-                "horario" => $empleado->horario);
+                "horario" => $empleado->horario,"horarioIni" => $empleado->horarioIni,"horarioFin" => $empleado->horarioFin);
                 array_push($resultado[$fechando2]->marcaciones, $arrayMarcacion);
             }
             return array_values($resultado);
@@ -971,6 +971,8 @@ class dispositivosController extends Controller
                             'c.cargo_descripcion',
                             'mp.organi_id',
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                             DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                             'mp.marcaMov_id as idMarcacion'
@@ -1012,6 +1014,8 @@ class dispositivosController extends Controller
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -1050,6 +1054,8 @@ class dispositivosController extends Controller
                                 'mp.organi_id',
 
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -1088,6 +1094,8 @@ class dispositivosController extends Controller
                         'c.cargo_descripcion',
                         'mp.organi_id',
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                         DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                         'mp.marcaMov_id as idMarcacion'
