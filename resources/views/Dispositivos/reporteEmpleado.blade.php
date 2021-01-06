@@ -12,6 +12,10 @@
     type="text/css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="{{asset('admin/assets/js/html2pdf.bundle.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/Blob.js')}}"></script>
+<script src="{{asset('admin/assets/js/FileSaver.js')}}"></script>
+<script src="{{asset('admin/assets/js/Shim.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/xlsx.full.min.js')}}"></script>
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 {{-- plugin de ALERTIFY --}}
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
@@ -216,18 +220,153 @@
         <div id="espera" class="text-center" style="display: none">
             <img src="{{ asset('landing/images/loading.gif') }}" height="100">
         </div>
+        <div class="col-md-12">
+            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga">
+                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="doit('xlsx')">
+                    <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
+                </button>
+                 <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
+                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
+                 </button>
+            </div>
+        </div>
+        <style>
+            .tableHi{
+                    border: 1px solid rgb(20, 19, 19)!important; border-collapse: collapse!important;
+                }
+        </style>
+       {{--  TABLAS OCULTA --}}
+       <div id="tableZoomI" class="col-md-12" style="display: none" >
+        <table>
+            <thead>
+                <tr><br></tr>
+                <tr>
+
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th  style=" font-weight: 600;" colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
+                </tr>
+                <tr>
+
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th><br><br></th>
+                    <th  id="RangoFechas"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td  colspan="2">Razon social:</td>
+                    <td  colspan="3">{{$organizacion}}</td>
+                </tr>
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td colspan="2">Direccion:</td>
+                    <td colspan="3">{{$direccion}}</td>
+                </tr>
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td colspan="2">Numero de Ruc:</td>
+                    <td colspan="2">{{$ruc}}</td>
+                </tr>
+
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td colspan="2">DNI:</td>
+                    <td  id="ponerDNI" colspan="1" > </td>
+                </tr>
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td colspan="2">Apellidos y nombres:</td>
+                    <td id="ponerApe" colspan="1" > </td>
+                </tr>
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td colspan="2">Area:</td>
+                    <td  id="ponerArea" colspan="1" > </td>
+                </tr>
+                <tr>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td><br><br></td>
+                    <td colspan="2">cargo:</td>
+                    <td   id="ponerCarg" colspan="1" > </td>
+                </tr>
+                <tr>
+                   <td>
+                       <br>
+                   </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table id="tablaReportI"  border=1  class=" " style="font-size: 12.8px;border-collapse: collapse;">
+
+            <thead id="theadDI" >
+
+                <tr>
+                    <th>CC</th>
+                    <th>Fecha</th>
+                    {{-- <th>Horario</th>
+
+                    <th>Cargo</th> --}}
+                    <th colspan="2">Horario</th>
+                    <th colspan="2" id="hEntradaI">Hora de entrada</th>
+                    <th colspan="2" id="hSalidaI">Hora de salida</th>
+                    <th colspan="2" id="tSitioI">Tiempo en sitio</th>
+                    <th colspan="2">Tardanza</th>
+                    <th colspan="2">Faltas</th>
+                    <th colspan="2">Incidencias</th>
+                </tr>
+            </thead>
+            <tbody class="" id="tbodyIDI">
+            </tbody>
+        </table>
+
+    </div>
+       {{--  --}}
         <div id="tableZoom" class="col-md-12">
             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                     <tr>
                         <th>CC</th>
                         <th>Fecha</th>
-                        <th>Horario</th>
+                        {{-- <th>Horario</th>
 
-                        <th>Cargo</th>
+                        <th>Cargo</th> --}}
+                        <th>Horario</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
+                        <th>Tardanza</th>
+                        <th>Faltas</th>
+                        <th>Incidencias</th>
                     </tr>
                 </thead>
                 <tbody id="tbodyD">
