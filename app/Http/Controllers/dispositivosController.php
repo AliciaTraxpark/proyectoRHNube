@@ -766,6 +766,7 @@ class dispositivosController extends Controller
             $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
                 ->where('mv.marcaMov_fecha', '!=',null )
+                ->where('mv.marcaMov_fecha', '!=',$fechaEntrada )
                 ->whereDate('mv.marcaMov_fecha', '=',$fecha111 )
             /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
                 ->orderby('marcaMov_fecha','ASC')
