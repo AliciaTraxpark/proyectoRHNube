@@ -168,7 +168,8 @@
                             <div class="card border"
                                 style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);"
                                 id="e_cardEA">
-                                <div class="card-header" style="padding: 0.25rem 1.25rem;">
+                                <div class="card-header"
+                                    style="padding: 0.25rem 1.25rem;background: #dee2e6;border-radius: 5px">
                                     <span style="font-weight: bold;">Empleado y Areas</span>
                                     <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
                                         height="13" style="cursor: pointer;" onclick="javascript:e_toggleEA()">
@@ -236,7 +237,8 @@
                             </div>
                             <div class="card-border"
                                 style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
-                                <div class="card-header" style="padding: 0.25rem 1.25rem;">
+                                <div class="card-header"
+                                    style="padding: 0.25rem 1.25rem;background: #dee2e6;border-radius: 5px">
                                     <span style="font-weight: bold;">Geolocalización</span>
                                     <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
                                         height="13" style="cursor: pointer;" onclick="javascript:e_toggleG()">
