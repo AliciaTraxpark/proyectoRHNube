@@ -64,7 +64,7 @@
 <div class="row justify-content-center">
     <div class="col-md-8 pt-5">
         <div class="card border"
-            tyle="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+            style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
             <div class="card-header"
                 style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row pl-2">

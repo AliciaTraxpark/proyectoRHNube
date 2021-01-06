@@ -53,7 +53,7 @@
     #mapid {
         padding: 0;
         width: auto;
-        height: 380px;
+        height: 480px;
     }
 </style>
 {{-- FINALIZACION --}}
@@ -101,7 +101,7 @@
 {{-- MODAL DE EDITAR --}}
 <div id="modaleditarPuntoControl" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="modaleditarPuntoControl" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable" style="max-width: 900px;">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -220,10 +220,10 @@
                                         <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
                                     </label>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="row" id="e_rowGeo"></div>
                                 </div>
-                                <div class="col-md-12" id="e_colMapa">
+                                <div class="col-md-8" id="e_colMapa">
                                     <div id="mapid"></div>
                                 </div>
                             </div>
