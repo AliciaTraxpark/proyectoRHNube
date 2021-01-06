@@ -204,7 +204,11 @@ class apimovilController extends Controller
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
             $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
-            $marcacion_puerta->marcaIdActivi=$req['activ_id'];
+            if(empty($req['activ_id'])) {}
+            else{
+                $marcacion_puerta->marcaIdActivi=$req['activ_id'];
+            }
+
 
              if(empty($req['idHoraEmp'])) {}
             else{
@@ -276,7 +280,10 @@ class apimovilController extends Controller
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
             $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
-            $marcacion_puerta->marcaIdActivi=$req['activ_id'];
+            if(empty($req['activ_id'])) {}
+            else{
+                $marcacion_puerta->marcaIdActivi=$req['activ_id'];
+            }
 
             if(empty($req['idHoraEmp'])) {}
             else{
