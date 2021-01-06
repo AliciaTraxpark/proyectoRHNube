@@ -269,25 +269,32 @@
                     <div class="col-md-12">
                         <form action="javascript:edit_agregarGPS()">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Latitud:</label>
                                         <input type="number" step="any" class="form-control form-control-sm"
                                             id="e_gpsLatitud" required>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Longitud:</label>
                                         <input type="number" step="any" class="form-control form-control-sm"
                                             id="e_gpsLongitud" required>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Radio:</label>
                                         <input type="number" class="form-control form-control-sm" id="e_gpsRadio"
                                             required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Color:</label>
+                                        <input type="color" class="form-control form-control-sm" id="e_gpsColor"
+                                            value="#0000ff" required>
                                     </div>
                                 </div>
                             </div>

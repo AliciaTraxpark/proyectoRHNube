@@ -153,6 +153,7 @@ function editarPunto(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            console.log(data);
             $('#e_idPuntoC').val(data[0].id);
             $('#e_descripcionPunto').val(data[0].descripcion);
             if (data[0].codigoControl == null) {
@@ -256,6 +257,17 @@ function editarPunto(id) {
                                             value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
                                         <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}"
                                             data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
+                                            <img src="admin/images/checkH.svg" height="15">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row" style="margin-bottom: 0.4rem;">
+                                        <label class="col-lg-4 col-form-label">Color:</label>
+                                        <input type="color" class="form-control form-control-sm col-6" id="e_color${geo[index].idGeo}" 
+                                            value="${geo[index].color}" onchange="javascript:changeColor(${geo[index].idGeo})">
+                                        <a onclick="javascript:blurColor(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaC${geo[index].idGeo}"
+                                            data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
                                             <img src="admin/images/checkH.svg" height="15">
                                         </a>
                                     </div>
@@ -636,8 +648,8 @@ function inicialiarMap(geo) {
         var latlng = new L.latLng(geo[index].latitud, geo[index].longitud);
         // * POSICION DE POPUP
         var ecm = new L.editableCircleMarker(latlng, geo[index].radio, {
-            color: 'red',
-            fillColor: '#f03',
+            color: geo[index].color,
+            fillColor: geo[index].color,
             fillOpacity: 0.5,
             idCircle: geo[index].idGeo,
             metric: false,
@@ -667,6 +679,9 @@ function changeLongitud(id) {
 function changeRadio(id) {
     $('#e_cambiaR' + id).show();
 }
+function changeColor(id) {
+    $('#e_cambiaC' + id).show();
+}
 // * CAMBIAR POSICIONES EN MAPA
 function blurLatitud(id) {
     layerGroup.eachLayer(function (layer) {
@@ -695,6 +710,18 @@ function blurRadio(id) {
     });
     $('#e_cambiaR' + id).hide();
 }
+function blurColor(id) {
+    layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            var colorActualizado = $('#e_color' + id).val();
+            layer.setCircleStyle({
+                color: colorActualizado,
+                fillColor: colorActualizado
+            });
+        }
+    });
+    $('#e_cambiaC' + id).hide();
+}
 // * OBTENER DIVS DE GEO
 function contenido() {
     var resultado = [];
@@ -703,7 +730,8 @@ function contenido() {
         var latitudG = $('#e_latitud' + idG).val();
         var longitudG = $('#e_longitud' + idG).val();
         var radioG = $('#e_radio' + idG).val();
-        var objGeo = { "idGeo": $(this).val(), "latitud": latitudG, "longitud": longitudG, "radio": radioG };
+        var colorG = $('#e_color' + idG).val();
+        var objGeo = { "idGeo": $(this).val(), "latitud": latitudG, "longitud": longitudG, "radio": radioG, "color": colorG };
         resultado.push(objGeo);
     });
     return resultado;
@@ -719,6 +747,7 @@ function eliminarGeo(id) {
     $('#e_latitud' + id).val("");
     $('#e_radio' + id).val("");
     $('#e_longitud' + id).val("");
+    $('#e_color' + id).val("");
     $('#colEliminar' + id).hide();
     var contarDisponibles = 0;
     $('.rowIdGeo').each(function () {
@@ -754,6 +783,7 @@ function edit_agregarGPS() {
     var latitud = $('#e_gpsLatitud').val();
     var longitud = $('#e_gpsLongitud').val();
     var radio = $('#e_gpsRadio').val();
+    var color = $('#e_gpsColor').val();
     colGeo = `<div class="col-lg-12" id="colGeoNuevo${variableU}">
                 <div class="row">
                     <input type="hidden" class="rowIdGeo" value="Nuevo${variableU}">
@@ -804,6 +834,17 @@ function edit_agregarGPS() {
                                 </a>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Color:</label>
+                            <input type="color" class="form-control form-control-sm col-6" id="e_colorNuevo${variableU}" 
+                                value="${color}" onchange="javascript:changeColor('Nuevo${variableU}')">
+                            <a onclick="javascript:blurColor('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaCNuevo${variableU}"
+                                data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
+                                <img src="admin/images/checkH.svg" height="15">
+                            </a>
+                        </div>
+                    </div>
                     </div>
                     </div>
                     </div>
@@ -811,7 +852,6 @@ function edit_agregarGPS() {
                     </div>
                     </div>`;
     container.append(colGeo);
-    var idGp = $('#idGPSN').val();
     $('#modalGpsEditar').modal('toggle');
     e_limpiarGPS();
     var contarDisponibles = 0;
@@ -835,13 +875,14 @@ function edit_agregarGPS() {
     var nuevoLat = $('#e_latitudNuevo' + variableU).val();
     var nuevoLng = $('#e_longitudNuevo' + variableU).val();
     var nuevoRadio = parseInt($('#e_radioNuevo' + variableU).val());
+    var nuevoColor = $('#e_colorNuevo' + variableU).val()
     var latlng = new L.latLng(nuevoLat, nuevoLng);
     var idNuevo = 'Nuevo' + variableU;
     console.log(idNuevo);
     // * POSICION DE POPUP
     var nuevo = new L.editableCircleMarker(latlng, nuevoRadio, {
-        color: 'red',
-        fillColor: '#f03',
+        color: nuevoColor,
+        fillColor: nuevoColor,
         fillOpacity: 0.5,
         idCircle: idNuevo,
         metric: false,

@@ -71,7 +71,8 @@ class PuntosControlController extends Controller
                     "idGeo" => $punto->idGeo,
                     "latitud" => $punto->latitud,
                     "longitud" => $punto->longitud,
-                    "radio" => $punto->radio
+                    "radio" => $punto->radio,
+                    "color" => $punto->color
                 );
                 array_push($resultado[$punto->id]->geo, $arrayGeo);
             }
@@ -93,7 +94,8 @@ class PuntosControlController extends Controller
                 'pcg.id as idGeo',
                 'pcg.latitud',
                 'pcg.longitud',
-                'pcg.radio'
+                'pcg.radio',
+                'pcg.color'
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
             ->where('pc.id', '=', $idPunto)
@@ -360,6 +362,7 @@ class PuntosControlController extends Controller
                             $puntoControlGeo->latitud = $punto["latitud"];
                             $puntoControlGeo->longitud = $punto["longitud"];
                             $puntoControlGeo->radio = $punto["radio"];
+                            $puntoControlGeo->color = $punto["color"];
                             $puntoControlGeo->save();
                         } else {
                             $puntoControlGeo->delete();
@@ -370,6 +373,7 @@ class PuntosControlController extends Controller
                             $nuevoPuntoGeo->latitud = $punto["latitud"];
                             $nuevoPuntoGeo->longitud = $punto["longitud"];
                             $nuevoPuntoGeo->radio = $punto["radio"];
+                            $nuevoPuntoGeo->color = $punto["color"];
                             $nuevoPuntoGeo->idPuntoControl = $puntoControl->id;
                             $nuevoPuntoGeo->save();
                         }

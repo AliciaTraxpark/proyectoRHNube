@@ -14,7 +14,8 @@ class punto_control_geo extends Model
         'idPuntoControl',
         'latitud',
         'longitud',
-        'radio'
+        'radio',
+        'color'
     ];
     public $timestamps = false;
 }
