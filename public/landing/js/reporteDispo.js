@@ -609,7 +609,7 @@ function cargartabla(fecha) {
                                     <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
-                    theadTabla += `<th>Hora de entrada</th>
+                    theadTabla += `<th>Horario</th><th>Hora de entrada</th>
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
                 }
@@ -642,6 +642,11 @@ function cargartabla(fecha) {
                             if (marcacionData.entrada != 0) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
+                                    if (marcacionData.horario != 0) {
+                                        tbodyEntradaySalida += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    }
                                     if(permisoModificarCS==1){
                                         tbodyEntradaySalida += `<td><div class="dropdown" id="">
                                                                 <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -744,7 +749,11 @@ function cargartabla(fecha) {
                                 if (marcacionData.salida != 0) {
                                     if (h == moment(marcacionData.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
-
+                                        if (marcacionData.horario != 0) {
+                                            tbodyEntradaySalida += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                        } else {
+                                            tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        }
                                         var permisoModificarE=$('#modifReporte').val();
                                         if(permisoModificarE==1){
                                             tbodyEntradaySalida += `<td>
@@ -806,7 +815,7 @@ function cargartabla(fecha) {
                         }
                     }
                     for (let m = data[index].marcaciones.length; m < cantidadColumnasHoras; m++) {
-                        tbodyEntradaySalida += `<td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
+                        tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
                     }
                     tbody += tbodyEntradaySalida;
                     tbody += `<td id="TiempoTotal${data[index].emple_id}">
@@ -905,7 +914,7 @@ if (data.length != 0) {
                         <th class="tableHi">Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th class="tableHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
     for (let j = 0; j < cantidadColumnasHorasI; j++) {
-        theadTablaI += `<th class="tableHi">Hora de entrada</th>
+        theadTablaI += `<th class="tableHi">Horario </th> <th class="tableHi">Hora de entrada</th>
                         <th class="tableHi">Hora de salida</th>
                         <th class="tableHi" id="tSitioI" name="tiempoSitHi">Tiempo en sitio</th>`;
     }
@@ -938,6 +947,11 @@ if (data.length != 0) {
                 if (marcacionData.entrada != 0) {
                     if (h == moment(marcacionData.entrada).format("HH")) {
                         var permisoModificarCS=$('#modifReporte').val();
+                        if (marcacionData.horario != 0) {
+                            tbodyEntradaySalidaI += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                        } else {
+                            tbodyEntradaySalidaI += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        }
                         if(permisoModificarCS==1){
                             tbodyEntradaySalidaI += `<td class="tableHi">
                                                         ${moment(marcacionData.entrada).format("HH:mm:ss")}
@@ -1005,7 +1019,11 @@ if (data.length != 0) {
                     if (marcacionData.salida != 0) {
                         if (h == moment(marcacionData.salida).format("HH")) {
                             //* COLUMNA DE ENTRADA
-
+                            if (marcacionData.horario != 0) {
+                                tbodyEntradaySalidaI += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                            } else {
+                                tbodyEntradaySalidaI += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                            }
                             var permisoModificarE=$('#modifReporte').val();
                             if(permisoModificarE==1){
                                 tbodyEntradaySalidaI += `<td class="tableHi">
@@ -1041,7 +1059,7 @@ if (data.length != 0) {
             }
         }
         for (let m = data[index].marcaciones.length; m < cantidadColumnasHorasI; m++) {
-            tbodyEntradaySalidaI += `<td class="tableHi">---</td><td class="tableHi" >---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
+            tbodyEntradaySalidaI += `<td class="tableHi">---</td><td class="tableHi">---</td><td class="tableHi" >---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
         }
         tbodyI += tbodyEntradaySalidaI;
         tbodyI += `<td class="tableHi" id="TiempoTotal${data[index].emple_id}">

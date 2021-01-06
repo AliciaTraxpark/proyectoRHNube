@@ -269,6 +269,7 @@
                         <th class="tableHi" >DNI</th>
                         <th class="tableHi" >Nombre</th>
                         <th  class="tableHi">Cargo</th>
+                        <th class="tableHi">Horario</th>
                         <th  class="tableHi" id="hEntradaI">Hora de entrada</th>
                         <th  class="tableHi"  id="hSalidaI">Hora de salida</th>
                         <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
@@ -290,6 +291,7 @@
                         <th>DNI</th>
                         <th>Nombre</th>
                         <th>Cargo</th>
+                        <th >Horario</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
