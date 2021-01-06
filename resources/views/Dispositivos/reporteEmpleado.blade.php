@@ -22,6 +22,7 @@
 {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -221,7 +222,7 @@
             <img src="{{ asset('landing/images/loading.gif') }}" height="100">
         </div>
         <div class="col-md-12">
-            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga">
+            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga" style="display: none">
                 <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="doit('xlsx')">
                     <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
                 </button>
