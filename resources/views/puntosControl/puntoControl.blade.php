@@ -53,7 +53,7 @@
     #mapid {
         padding: 0;
         width: auto;
-        height: 480px;
+        height: 380px;
     }
 </style>
 {{-- FINALIZACION --}}
@@ -155,76 +155,107 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row pt-2 border-top rowEmpleadosEditar">
                                 <div class="col-md-12 text-left">
-                                    <label for="">Asignar por:</label>
-                                </div>
-                                <div class="col-md-12 text-left">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorE">
-                                        <label class="custom-control-label" for="e_puntosPorE"
-                                            style="font-weight: bold">
-                                            Seleccionar por empleados
-                                        </label>
+                                    <div class="form-group mb-0 mt-0 mb-2">
+                                        <input type="checkbox" id="e_verificacion" class="ml-1 mt-1">
+                                        <img src="{{asset('landing/images/placeholder.svg')}}" class="ml-4 mb-1"
+                                            height="18">
+                                        <label for="" class="mb-0 mr-2" style="font-weight: bold">Verificación de
+                                            GPS</label>
                                     </div>
                                 </div>
-                                <div class="col-md-12 text-right colxEmpleados">
-                                    <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="e_todosEmpleados">
-                                        <label for="" class="mb-0">Seleccionar a todos</label>
-                                        <div class="float-left mb-0">
-                                            <span style="font-size: 11px;">
-                                                *Se visualizara empleados con esta actividad asignada
-                                            </span>
+                            </div>
+                            <div class="card border"
+                                style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);"
+                                id="e_cardEA">
+                                <div class="card-header" style="padding: 0.25rem 1.25rem;">
+                                    <span style="font-weight: bold;">Empleado y Areas</span>
+                                    <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                        height="13" style="cursor: pointer;" onclick="javascript:e_toggleEA()">
+                                </div>
+                                <div class="card-body" id="e_bodyEA">
+                                    <div class="row pt-1 rowEmpleadosEditar">
+                                        <div class="col-md-12 text-left">
+                                            <label for="">Asignar por:</label>
+                                        </div>
+                                        <div class="col-md-12 text-left">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="e_puntosPorE">
+                                                <label class="custom-control-label" for="e_puntosPorE"
+                                                    style="font-weight: bold">
+                                                    Seleccionar por empleados
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right colxEmpleados">
+                                            <div class="form-group mb-0 mt-3">
+                                                <input type="checkbox" id="e_todosEmpleados">
+                                                <label for="" class="mb-0">Seleccionar a todos</label>
+                                                <div class="float-left mb-0">
+                                                    <span style="font-size: 11px;">
+                                                        *Se visualizara empleados con esta actividad asignada
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 colxEmpleados">
+                                            <select id="e_empleadosPunto" data-plugin="customselect"
+                                                class="form-control" multiple="multiple">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2 pb-2 rowAreasEditar">
+                                        <div class="col-md-12 text-left">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
+                                                <label class="custom-control-label" for="e_puntosPorA"
+                                                    style="font-weight: bold">
+                                                    Seleccionar por áreas
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right colxAreas">
+                                            <div class="form-group mb-0 mt-3">
+                                                <input type="checkbox" id="e_todasAreas">
+                                                <label for="" class="mb-0">Seleccionar todos</label>
+                                                <div class="float-left mb-0">
+                                                    <span style="font-size: 11px;">
+                                                        *Se visualizara áreas con esta actividad asignada
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-left colxAreas">
+                                            <select id="e_areasPunto" data-plugin="customselect"
+                                                class="form-control form-control-sm select2Multiple"
+                                                multiple="multiple">
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 colxEmpleados">
-                                    <select id="e_empleadosPunto" data-plugin="customselect" class="form-control"
-                                        multiple="multiple">
-                                    </select>
-                                </div>
                             </div>
-                            <div class="row pt-2 pb-2 rowAreasEditar">
-                                <div class="col-md-12 text-left">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
-                                        <label class="custom-control-label" for="e_puntosPorA"
-                                            style="font-weight: bold">
-                                            Seleccionar por áreas
-                                        </label>
-                                    </div>
+                            <div class="card-border"
+                                style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                <div class="card-header" style="padding: 0.25rem 1.25rem;">
+                                    <span style="font-weight: bold;">Geolocalización</span>
+                                    <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                        height="13" style="cursor: pointer;" onclick="javascript:e_toggleG()">
                                 </div>
-                                <div class="col-md-12 text-right colxAreas">
-                                    <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="e_todasAreas">
-                                        <label for="" class="mb-0">Seleccionar todos</label>
-                                        <div class="float-left mb-0">
-                                            <span style="font-size: 11px;">
-                                                *Se visualizara áreas con esta actividad asignada
-                                            </span>
+                                <div class="card-body" id="e_bodyG">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left pb-2" id="e_buttonAgregarGPS">
+                                            <button type="button" class="btn btn-sm mt-1"
+                                                style="background-color: #163552;" onclick="javascript:e_agregarGPS()">
+                                                + Nuevo GPS
+                                            </button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row" id="e_rowGeo"></div>
+                                        </div>
+                                        <div class="col-md-8" id="e_colMapa">
+                                            <div id="mapid"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12 text-left colxAreas">
-                                    <select id="e_areasPunto" data-plugin="customselect"
-                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row border-top pt-2">
-                                <div class="col-md-12 text-left pb-2" id="e_buttonAgregarGPS">
-                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                                        onclick="javascript:e_agregarGPS()">
-                                        + Nuevo GPS
-                                    </button>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="row" id="e_rowGeo"></div>
-                                </div>
-                                <div class="col-md-8" id="e_colMapa">
-                                    <div id="mapid"></div>
                                 </div>
                             </div>
                     </div>
@@ -285,7 +316,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">Radio:</label>
+                                        <label for="">Radio (m):</label>
                                         <input type="number" class="form-control form-control-sm" id="e_gpsRadio"
                                             required>
                                     </div>

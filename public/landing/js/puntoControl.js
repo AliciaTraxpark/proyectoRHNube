@@ -169,11 +169,13 @@ function editarPunto(id) {
                 //* MOSTRAR ASIGNACION DE EMPLEADOS Y AREAS
                 $('.rowEmpleadosEditar').show();
                 $('.rowAreasEditar').show();
+                $('#e_cardEA').show();
             } else {
                 $('#e_puntoCRT').prop("checked", false);
                 //* OCULTAR ASIGNACION DE EMPLEADOS Y AREAS
                 $('.rowEmpleadosEditar').hide();
                 $('.rowAreasEditar').hide();
+                $('#e_cardEA').hide();
             }
             //* ASISTENCIA EN PUERTA
             if (data[0].asistenciaPuerta == 1) {
@@ -252,7 +254,7 @@ function editarPunto(id) {
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group row" style="margin-bottom: 0.4rem;">
-                                        <label class="col-lg-4 col-form-label">Radio (m<sup>2</sup>):</label>
+                                        <label class="col-lg-4 col-form-label">Radio (m):</label>
                                         <input type="number" class="form-control form-control-sm col-6" id="e_radio${geo[index].idGeo}" 
                                             value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
                                         <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}"
@@ -669,6 +671,17 @@ function inicialiarMap(geo) {
     mapId.setZoom(1); //: -> ZOOM COMPLETO
     mapId.on("click", addMarker);
 }
+// * TOGGLE DE BODY
+function e_toggleEA() {
+    $('#e_bodyEA').toggle();
+}
+function e_toggleG() {
+    $('#e_bodyG').toggle();
+    if (mapId.options != undefined) {
+        mapId.invalidateSize();
+    }
+}
+e_toggleG();
 // * BOTON DE ACEPTAR CAMBIOS
 function changeLatitud(id) {
     $('#e_cambiaLat' + id).show();
@@ -824,7 +837,7 @@ function edit_agregarGPS() {
                     </div>
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
-                            <label class="col-lg-4 col-form-label">Radio (m<sup>2</sup>):</label>
+                            <label class="col-lg-4 col-form-label">Radio (m):</label>
                             <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}" 
                                 value="${radio}" onkeyup="javascript:changeRadio('Nuevo${variableU}')">
                                 <a onclick="javascript:blurRadio('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaRNuevo${variableU}"
@@ -993,7 +1006,7 @@ function addMarker(e) {
                     </div>
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
-                            <label class="col-lg-4 col-form-label">Radio (m<sup>2</sup>):</label>
+                            <label class="col-lg-4 col-form-label">Radio (m):</label>
                             <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}" 
                                 value="100" onkeyup="javascript:changeRadio('Nuevo${variableU}')">
                                 <a onclick="javascript:blurRadio('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaRNuevo${variableU}"
