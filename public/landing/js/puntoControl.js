@@ -114,7 +114,6 @@ function puntosControlOrganizacion() {
                                 </a>
                             </td>`;
                     tbody += `</tr>`;
-                    console.log(tbody);
                 }
                 bodyTabla.append(tbody);
                 tablaPuntos();
@@ -217,71 +216,61 @@ function editarPunto(id) {
                                         style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                             <span style="font-weight: bold;">Datos GPS</span>
-                                            &nbsp;
-                                            <a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
-                                                data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
-                                                <img src="/admin/images/delete.svg" height="13">
-                                            </a>
-                                            <img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody(${geo[index].idGeo})"
-                                                style="cursor: pointer;">
-                                        </div>
-                                        <div class="card-body" style="padding:0.3rem" id="bodyGPS${geo[index].idGeo}">
-                                            <div class="col-md-12">
-                                                <div class="form-group row" style="margin-bottom: 0.4rem;">
-                                                    <label class="col-lg-4 col-form-label">Latitud:</label>
-                                                    <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitud${geo[index].idGeo}" 
-                                                        value="${geo[index].latitud}" onkeyup="javascript:changeLatitud(${geo[index].idGeo})">
-                                                    <a onclick="javascript:blurLatitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLat${geo[index].idGeo}"
-                                                        data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
-                                                        <img src="admin/images/checkH.svg" height="15">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group row" style="margin-bottom: 0.4rem;">
-                                                    <label class="col-lg-4 col-form-label">Longitud:</label>
-                                                    <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitud${geo[index].idGeo}" 
-                                                        value="${geo[index].longitud}" onkeyup="javascript:changeLongitud(${geo[index].idGeo})">
-                                                    <a onclick="javascript:blurLongitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLng${geo[index].idGeo}"
-                                                        data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
-                                                        <img src="admin/images/checkH.svg" height="15">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group row" style="margin-bottom: 0.4rem;">
-                                                    <label class="col-lg-4 col-form-label">Radio (m<sup>2</sup>):</label>
-                                                    <input type="number" class="form-control form-control-sm col-6" id="e_radio${geo[index].idGeo}" 
-                                                        value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
-                                                    <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}"
-                                                        data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
-                                                        <img src="admin/images/checkH.svg" height="15">
-                                                    </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            &nbsp;`;
+                if (index != 0) {
+                    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
+                                    data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
+                                    <img src="/admin/images/delete.svg" height="13">
+                                </a>`;
+                }
+                colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody(${geo[index].idGeo})"
+                            style="cursor: pointer;">
+                            </div>
+                            <div class="card-body" style="padding:0.3rem" id="bodyGPS${geo[index].idGeo}">
+                                <div class="col-md-12">
+                                    <div class="form-group row" style="margin-bottom: 0.4rem;">
+                                        <label class="col-lg-4 col-form-label">Latitud:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitud${geo[index].idGeo}" 
+                                            value="${geo[index].latitud}" onkeyup="javascript:changeLatitud(${geo[index].idGeo})">
+                                        <a onclick="javascript:blurLatitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLat${geo[index].idGeo}"
+                                            data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
+                                            <img src="admin/images/checkH.svg" height="15">
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row" style="margin-bottom: 0.4rem;">
+                                        <label class="col-lg-4 col-form-label">Longitud:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitud${geo[index].idGeo}" 
+                                            value="${geo[index].longitud}" onkeyup="javascript:changeLongitud(${geo[index].idGeo})">
+                                        <a onclick="javascript:blurLongitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLng${geo[index].idGeo}"
+                                            data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
+                                            <img src="admin/images/checkH.svg" height="15">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row" style="margin-bottom: 0.4rem;">
+                                        <label class="col-lg-4 col-form-label">Radio (m<sup>2</sup>):</label>
+                                        <input type="number" class="form-control form-control-sm col-6" id="e_radio${geo[index].idGeo}" 
+                                            value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
+                                        <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}"
+                                            data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
+                                            <img src="admin/images/checkH.svg" height="15">
+                                        </a>
+                                    </div>
+                                </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
                         </div>`;
-                // if (index != 0) {
-                //     colGeo += `<div class="col-md-1 text-left" style="padding-top:2.5em" id="colEliminar${geo[index].idGeo}">
-                //                     <a onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
-                //                         data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
-                //                         <img src="/admin/images/delete.svg" height="15">
-                //                     </a>
-                //                     &nbsp;`;
-                // } else {
-                //     colGeo += `<div class="col-md-1 text-left" style="padding-top:2.5em">`;
-                // }
-                // if (index == geo.length - 1) {
-                //     colGeo += `<a style="cursor: pointer" data-toggle="tooltip" data-placement="right" 
-                //                     title="Agregar GPS" data-original-title="Agregar GPS" onclick="javascript:e_agregarGPS(${geo[index].idGeo})" id="e_AGPS${geo[index].idGeo}">
-                //                     <img src="/landing/images/plusGps.svg" height="18">
-                //                 </a>`;
-                // }
-                // colGeo += `</div>`;
+                if (index == 4) {
+                    $('#e_buttonAgregarGPS').hide();
+                } else {
+                    $('#e_buttonAgregarGPS').show();
+                }
             }
             $('#e_rowGeo').append(colGeo);
             $('[data-toggle="tooltip"]').tooltip();
@@ -731,21 +720,31 @@ function eliminarGeo(id) {
     $('#e_radio' + id).val("");
     $('#e_longitud' + id).val("");
     $('#colEliminar' + id).hide();
+    var contarDisponibles = 0;
+    $('.rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#e_latitud' + idG).val();
+        if (latitudG != "") {
+            contarDisponibles = contarDisponibles + 1
+        }
+    });
+    console.log(contarDisponibles < 4);
+    if (contarDisponibles < 4) {
+        $('#e_buttonAgregarGPS').show();
+    } else {
+        $('#e_buttonAgregarGPS').hide();
+    }
 }
 // * AGREGAR GPS MODAL
-function e_agregarGPS(id) {
+function e_agregarGPS() {
     $('#modaleditarPuntoControl').modal('hide');
     $('#modalGpsEditar').modal();
-    $('#idGPSN').val(id);
-    console.log($('#idGPSN').val());
 }
 // * LIMPIAR AGREGAR GPS
 function e_limpiarGPS() {
     $('#e_gpsLatitud').val("");
     $('#e_gpsLongitud').val("");
     $('#e_gpsRadio').val("");
-    var idGp = $('#idGPSN').val();
-    $('#e_AGPS' + idGp).show();
     $('#modaleditarPuntoControl').modal('show');
 }
 var variableU = 1;
@@ -755,69 +754,83 @@ function edit_agregarGPS() {
     var latitud = $('#e_gpsLatitud').val();
     var longitud = $('#e_gpsLongitud').val();
     var radio = $('#e_gpsRadio').val();
-    colGeo = `<div class="col-lg-11" id="colGeoNuevo${variableU}">
-                    <div class="row">
+    colGeo = `<div class="col-lg-12" id="colGeoNuevo${variableU}">
+                <div class="row">
                     <input type="hidden" class="rowIdGeo" value="Nuevo${variableU}">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Latitud:</label>
-                                <div class="form-group row pl-2">
-                                    <input type="number" step="any" class="form-control form-control-sm col-10" id="e_latitudNuevo${variableU}" 
-                                        value="${latitud}" onkeyup="javascript:changeLatitud('Nuevo${variableU}')">
-                                    <a onclick="javascript:blurLatitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLatNuevo${variableU}"
-                                        data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
-                                        <img src="admin/images/checkH.svg" height="15">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Longitud:</label>
-                                <div class="form-group row pl-2">
-                                    <input type="number" step="any" class="form-control form-control-sm col-10" id="e_longitudNuevo${variableU}" 
-                                        value="${longitud}" onkeyup="javascript:changeLongitud('Nuevo${variableU}')">
-                                    <a onclick="javascript:blurLongitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLngNuevo${variableU}"
-                                        data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
-                                        <img src="admin/images/checkH.svg" height="15">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Radio (m<sup>2</sup>):</label>
-                                <div class="form-group row pl-2">
-                                    <input type="number" class="form-control form-control-sm col-10" id="e_radioNuevo${variableU}" 
-                                        value="${radio}" onkeyup="javascript:changeRadio('Nuevo${variableU}')">
-                                    <a onclick="javascript:blurRadio('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaRNuevo${variableU}"
-                                        data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
-                                        <img src="admin/images/checkH.svg" height="15">
-                                    </a>
-                                </div>
-                            </div>
+                    <div class="col-md-12">
+                        <div class="card border" 
+                            style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                            <div class="card-header" style="padding: 0.25rem 1.25rem;">
+                                <span style="font-weight: bold;">Datos GPS</span>
+                                &nbsp;`;
+    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip" 
+                    data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
+                    <img src="/admin/images/delete.svg" height="13">
+                </a>`;
+    colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody('Nuevo${variableU}')"
+                    style="cursor: pointer;">
+                </div>
+                <div class="card-body" style="padding:0.3rem" id="bodyGPSNuevo${variableU}">
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Latitud:</label>
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitudNuevo${variableU}" 
+                                value="${latitud}" onkeyup="javascript:changeLatitud('Nuevo${variableU}')">
+                            <a onclick="javascript:blurLatitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLatNuevo${variableU}"
+                                data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
+                                <img src="admin/images/checkH.svg" height="15">
+                            </a>
                         </div>
                     </div>
-                </div>`;
-    colGeo += `<div class="col-md-1 text-left" style="padding-top:2.5em" id="colEliminarNuevo${variableU}">
-                <a onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip" 
-                    data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
-                    <img src="/admin/images/delete.svg" height="15">
-                </a>
-            &nbsp;`;
-    colGeo += `<a style="cursor: pointer" data-toggle="tooltip" data-placement="right" title="Agregar GPS" 
-                    data-original-title="Agregar GPS" onclick="javascript:e_agregarGPS('Nuevo${variableU}')" id="e_AGPSNuevo${variableU}">
-                    <img src="/landing/images/plusGps.svg" height="18">
-                </a>`;
-    colGeo += `</div>`;
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Longitud:</label>
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitudNuevo${variableU}" 
+                                value="${longitud}" onkeyup="javascript:changeLongitud('Nuevo${variableU}')">
+                                <a onclick="javascript:blurLongitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLngNuevo${variableU}"
+                                    data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
+                                    <img src="admin/images/checkH.svg" height="15">
+                                </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Radio (m<sup>2</sup>):</label>
+                            <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}" 
+                                value="${radio}" onkeyup="javascript:changeRadio('Nuevo${variableU}')">
+                                <a onclick="javascript:blurRadio('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaRNuevo${variableU}"
+                                    data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
+                                    <img src="admin/images/checkH.svg" height="15">
+                                </a>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>`;
     container.append(colGeo);
     var idGp = $('#idGPSN').val();
     $('#modalGpsEditar').modal('toggle');
     e_limpiarGPS();
-    console.log(idGp);
-    $('#e_AGPS' + idGp).hide();
+    var contarDisponibles = 0;
+    $('.rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#e_latitud' + idG).val();
+        if (latitudG != "") {
+            contarDisponibles = contarDisponibles + 1
+        }
+    });
     $('#modaleditarPuntoControl').modal('show');
     $('[data-toggle="tooltip"]').tooltip();
+    console.log(contarDisponibles);
+    console.log(contarDisponibles < 4);
+    if (contarDisponibles < 4) {
+        $('#e_buttonAgregarGPS').show();
+    } else {
+        $('#e_buttonAgregarGPS').hide();
+    }
     var arrayMarkerBounds = [];
     var nuevoLat = $('#e_latitudNuevo' + variableU).val();
     var nuevoLng = $('#e_longitudNuevo' + variableU).val();
@@ -848,6 +861,19 @@ function edit_agregarGPS() {
         arrayMarkerBounds.push(markerBounds);
     });
     mapId.fitBounds(arrayMarkerBounds);
+    var contarDisponibles = 0;
+    $('.rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#e_latitud' + idG).val();
+        if (latitudG != "") {
+            contarDisponibles = contarDisponibles + 1
+        }
+    });
+    if (contarDisponibles < 4) {
+        $('#e_buttonAgregarGPS').show();
+    } else {
+        $('#e_buttonAgregarGPS').hide();
+    }
     variableU++;
 }
 // * TOGGLE BODY

@@ -186,7 +186,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-2 pb-2 border-bottom rowAreasEditar">
+                            <div class="row pt-2 pb-2 rowAreasEditar">
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
@@ -213,12 +213,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row pt-2">
-                                <div class="col-md-12 text-left">
-                                    <label for="" style="font-weight: bold;">
-                                        <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
-                                        Geolocalización
-                                    </label>
+                            <div class="row border-top pt-2">
+                                <div class="col-md-12 text-left pb-2" id="e_buttonAgregarGPS">
+                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+                                        onclick="javascript:e_agregarGPS()">
+                                        + Nuevo GPS
+                                    </button>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row" id="e_rowGeo"></div>
@@ -267,7 +267,6 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="hidden" id="idGPSN">
                         <form action="javascript:edit_agregarGPS()">
                             <div class="row">
                                 <div class="col-md-4">
