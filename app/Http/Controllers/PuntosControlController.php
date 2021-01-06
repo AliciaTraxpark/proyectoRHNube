@@ -364,6 +364,15 @@ class PuntosControlController extends Controller
                         } else {
                             $puntoControlGeo->delete();
                         }
+                    } else {
+                        if (!is_null($punto["latitud"]) && !is_null($punto["longitud"]) && !is_null($punto["radio"])) {
+                            $nuevoPuntoGeo = new punto_control_geo();
+                            $nuevoPuntoGeo->latitud = $punto["latitud"];
+                            $nuevoPuntoGeo->longitud = $punto["longitud"];
+                            $nuevoPuntoGeo->radio = $punto["radio"];
+                            $nuevoPuntoGeo->idPuntoControl = $puntoControl->id;
+                            $nuevoPuntoGeo->save();
+                        }
                     }
                 }
             }

@@ -252,7 +252,7 @@ function editarPunto(id) {
                 if (index == geo.length - 1) {
                     colGeo += `<div class="col-md-2 text-left" style="padding-top:2.5em" id="colEliminar${geo[index].idGeo}">
                                     <a style="cursor: pointer" data-toggle="tooltip" data-placement="right" 
-                                        title="Agregar GPS" data-original-title="Agregar GPS" onclick="javascript:e_agregarGPS()">
+                                        title="Agregar GPS" data-original-title="Agregar GPS" onclick="javascript:e_agregarGPS(${geo[index].idGeo})" id="e_AGPS${geo[index].idGeo}">
                                         <img src="/landing/images/add-location-point.svg" height="25">
                                     </a>
                                     &nbsp;`;
@@ -717,15 +717,19 @@ function eliminarGeo(id) {
     $('#colEliminar' + id).hide();
 }
 // * AGREGAR GPS MODAL
-function e_agregarGPS() {
+function e_agregarGPS(id) {
     $('#modaleditarPuntoControl').modal('hide');
     $('#modalGpsEditar').modal();
+    $('#idGPSN').val(id);
+    console.log($('#idGPSN').val());
 }
 // * LIMPIAR AGREGAR GPS
 function e_limpiarGPS() {
     $('#e_gpsLatitud').val("");
     $('#e_gpsLongitud').val("");
     $('#e_gpsRadio').val("");
+    var idGp = $('#idGPSN').val();
+    $('#e_AGPS' + idGp).show();
     $('#modaleditarPuntoControl').modal('show');
 }
 var variableU = 1;
@@ -780,8 +784,8 @@ function edit_agregarGPS() {
                     </div>
                 </div>`;
     colGeo += `<div class="col-md-2 text-left" style="padding-top:2.5em" id="colEliminarNuevo${variableU}">
-                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right" 
-                    title="Agregar GPS" data-original-title="Agregar GPS" onclick="javascript:e_agregarGPS()">
+                <a style="cursor: pointer" data-toggle="tooltip" data-placement="right" title="Agregar GPS" 
+                    data-original-title="Agregar GPS" onclick="javascript:e_agregarGPS('Nuevo${variableU}')" id="e_AGPSNuevo${variableU}">
                     <img src="/landing/images/add-location-point.svg" height="25">
                 </a>
             &nbsp;`;
@@ -791,7 +795,11 @@ function edit_agregarGPS() {
                 </a>`;
     colGeo += `</div>`;
     container.append(colGeo);
+    var idGp = $('#idGPSN').val();
     $('#modalGpsEditar').modal('toggle');
+    e_limpiarGPS();
+    console.log(idGp);
+    $('#e_AGPS' + idGp).hide();
     $('#modaleditarPuntoControl').modal('show');
     $('[data-toggle="tooltip"]').tooltip();
     var arrayMarkerBounds = [];
