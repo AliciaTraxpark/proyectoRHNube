@@ -219,6 +219,7 @@ class apimovilController extends Controller
                     $tardanzaNuevo=new tardanza();
                     $tardanzaNuevo->emple_id=$req['idEmpleado'];
                     $tardanzaNuevo->fecha=$fechaEntradaTard;
+                    $tardanzaNuevo->tiempoTardanza='00:00:00';
                     $tardanzaNuevo->save();
                 }else{
 
@@ -312,6 +313,7 @@ class apimovilController extends Controller
                     $tardanzaNuevo1=new tardanza();
                     $tardanzaNuevo1->emple_id=$req['idEmpleado'];
                     $tardanzaNuevo1->fecha=$fechaEntradaTard1;
+                    $tardanzaNuevo1->tiempoTardanza='00:00:00';
                     $tardanzaNuevo1->save();
                 }else{
 
