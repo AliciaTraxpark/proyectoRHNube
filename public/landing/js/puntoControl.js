@@ -1795,6 +1795,47 @@ function r_toggleG() {
         map.invalidateSize();
     }
 }
+// ? NUEVOS INPUTS
+var r_contarInput = 0;
+function r_nuevaDesc() {
+    var estadoInput = true;
+    $('.r_colD').each(function () {
+        var idI = $(this).val();
+        console.log($(this).val());
+        if ($('#r_nuevaD' + idI).val() == "" && $('#r_nuevaD' + idI).is(":visible")) {
+            estadoInput = false;
+            $('#r_nuevaD' + idI).addClass("borderColor");
+        } else {
+            $('#r_nuevaD' + idI).removeClass("borderColor");
+        }
+    });
+    if (estadoInput) {
+        var nuevoInput = `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
+                        <input type="hidden" class="r_colD" value="New${contarInput}">
+                        <input type="text" class="form-control form-control-sm col-6 r_inpNew${contarInput}" id="r_nuevaDNew${contarInput}" maxlength="50" placeholder="Nueva Descripcion">
+                        <a onclick="javascript:r_eliminarI('New${contarInput}')" style="cursor: pointer;" class="col-2 pt-1 r_inpNew${contarInput}" id="r_cambiaC"
+                            data-toggle="tooltip" data-placement="right" title="Eliminar descripcion" data-original-title="Eliminar descripcion">
+                                <img src="/admin/images/delete.svg" height="13">
+                        </a>
+                    </div>`;
+        $('#r_colDescripciones').append(nuevoInput);
+    }
+    $('#r_colDescripciones').show();
+    var contarEstado = 0;
+    $('.r_colD').each(function () {
+        var idI = $(this).val();
+        console.log($(this).val());
+        if ($('#r_nuevaD' + idI).is(":visible")) {
+            contarEstado = contarEstado + 1;
+        }
+    });
+    if (contarEstado < 3) {
+        $('#r_agregarD').show();
+    } else {
+        $('#r_agregarD').hide();
+    }
+    r_contarInput = r_contarInput + 1;
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
