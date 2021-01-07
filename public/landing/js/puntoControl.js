@@ -1615,6 +1615,63 @@ $('#a_areasPunto').on("change", function (e) {
     }
 });
 // ! ****************** FINALIZACION *****************************
+// ! ****************** FORMULARIO REGISTRAR *********************
+var r_layerGroup = new L.layerGroup();
+var r_circle = {};
+var map = {};
+function modalRegistrar() {
+    $('#modalRegistrarPunto').modal();
+    r_limpiarxEmpleado();
+    a_limpiarxArea();
+    $('#r_cardEA').hide();
+    r_inicialiarMap();
+}
+function r_inicialiarMap() {
+    if (map.options != undefined) {
+        r_layerGroup.eachLayer(function (layer) { layerGroup.removeLayer(layer); });
+        map.remove();
+        $('#map').html("");
+        $('#r_colMapa').empty();
+        var agregaridMapa = `<div id="map"></div>`;
+        $('#r_colMapa').append(agregaridMapa);
+    }
+    map = new L.map('map', {
+        center: [-9.189967, -75.015152],
+        zoom: 9
+    });
+    map.invalidateSize();
+    window.setTimeout(function () {
+        map.invalidateSize();
+    }, 1000);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+}
+//? FUNCION PARA LIMPIAR POR EMPLEADO
+function r_limpiarxEmpleado() {
+    $('.colxEmpleados').hide();
+    $('#r_puntosPorE').prop("checked", false);
+    $('#r_todosEmpleados').prop("checked", false);
+    $('#r_empleadosPunto').empty();
+}
+//? FUNCION PARA LIMPIAR POR AREAS
+function a_limpiarxArea() {
+    $('.colxAreas').hide();
+    $('#r_puntosPorA').prop("checked", false);
+    $('#r_todasAreas').prop("checked", false);
+    $('#r_areasPunto').empty();
+}
+//? CHANGE DE SWITCH DE CONTROLES
+$('#r_puntoCRT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.rowEmpleadosEditar').show();
+        $('.rowAreasEditar').show();
+        $('#r_cardEA').show();
+    } else {
+        $('.rowEmpleadosEditar').hide();
+        $('.rowAreasEditar').hide();
+        $('#r_cardEA').hide();
+    }
+});
+// ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
         $('#puntosC').css('width', '100%');

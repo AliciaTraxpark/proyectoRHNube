@@ -56,6 +56,12 @@
         height: 380px;
     }
 
+    #map {
+        padding: 0;
+        width: auto;
+        height: 380px;
+    }
+
     /* MODIFICAR ESTILOS DE ALERTIFY */
     .alertify .ajs-header {
         font-weight: normal;
@@ -112,7 +118,7 @@
     </div>
     <div class="col-md-6 text-right colResponsive">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">
+            onclick="javascript:modalRegistrar()">
             + Nuevo Punto de control
         </button>
     </div>
@@ -483,6 +489,196 @@
                                     <select id="a_areasPunto" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple">
                                     </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarPuntoEnEditar()">
+                                Cancelar
+                            </button>
+                            <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">
+                                Guardar
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE REGISTRAR --}}
+<div id="modalRegistrarPunto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarPunto"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable" style="max-width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Registrar Punto de Control
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:editarPuntoControl()" id="FormEditarPuntoControl">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Punto Control:</label>
+                                        <input type="text" class="form-control form-control-sm" id="r_descripcionPunto"
+                                            maxlength="100" required>
+                                        <a class="pt-1" onclick="javascript:r_nuevaDesc()"
+                                            style="color: #5369f8;cursor: pointer" id="r_agregarD">
+                                            + añadir más descripciones
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Código:</label>
+                                        <input type="text" class="form-control form-control-sm" id="r_codigoPunto"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="display: none" id="r_colDescripciones"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="r_puntoCRT">
+                                        <label class="custom-control-label" for="r_puntoCRT" style="font-weight: bold">
+                                            <i data-feather="map-pin"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Control en Ruta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="r_puntoAP">
+                                        <label class="custom-control-label" for="r_puntoAP" style="font-weight: bold">
+                                            <i data-feather="check-circle"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Asistencia en Puerta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="form-group mb-0 mt-0 mb-2">
+                                        <input type="checkbox" id="r_verificacion" class="ml-1 mt-1">
+                                        <img src="{{asset('landing/images/placeholder.svg')}}" class="ml-4 mb-1"
+                                            height="18">
+                                        <label for="" class="mb-0 mr-2" style="font-weight: bold">
+                                            Verificación de GPS
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border"
+                                style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);"
+                                id="r_cardEA">
+                                <div class="card-header"
+                                    style="padding: 0.25rem 1.25rem;background: #dee2e6;border-radius: 5px">
+                                    <span style="font-weight: bold;">Empleado y Areas</span>
+                                    <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                        height="13" style="cursor: pointer;" onclick="javascript:r_toggleEA()">
+                                </div>
+                                <div class="card-body" id="r_bodyEA">
+                                    <div class="row pt-1 rowEmpleadosEditar">
+                                        <div class="col-md-12 text-left">
+                                            <label for="">Asignar por:</label>
+                                        </div>
+                                        <div class="col-md-12 text-left">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="r_puntosPorE">
+                                                <label class="custom-control-label" for="r_puntosPorE"
+                                                    style="font-weight: bold">
+                                                    Seleccionar por empleados
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right colxEmpleados">
+                                            <div class="form-group mb-0 mt-3">
+                                                <input type="checkbox" id="r_todosEmpleados">
+                                                <label for="" class="mb-0">Seleccionar a todos</label>
+                                                <div class="float-left mb-0">
+                                                    <span style="font-size: 11px;">
+                                                        *Se visualizara empleados con esta actividad asignada
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 colxEmpleados">
+                                            <select id="r_empleadosPunto" data-plugin="customselect"
+                                                class="form-control" multiple="multiple">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2 pb-2 rowAreasEditar">
+                                        <div class="col-md-12 text-left">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="r_puntosPorA">
+                                                <label class="custom-control-label" for="r_puntosPorA"
+                                                    style="font-weight: bold">
+                                                    Seleccionar por áreas
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right colxAreas">
+                                            <div class="form-group mb-0 mt-3">
+                                                <input type="checkbox" id="r_todasAreas">
+                                                <label for="" class="mb-0">Seleccionar todos</label>
+                                                <div class="float-left mb-0">
+                                                    <span style="font-size: 11px;">
+                                                        *Se visualizara áreas con esta actividad asignada
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-left colxAreas">
+                                            <select id="r_areasPunto" data-plugin="customselect"
+                                                class="form-control form-control-sm select2Multiple"
+                                                multiple="multiple">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-border"
+                                style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                <div class="card-header"
+                                    style="padding: 0.25rem 1.25rem;background: #dee2e6;border-radius: 5px">
+                                    <span style="font-weight: bold;">Geolocalización</span>
+                                    <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                        height="13" style="cursor: pointer;" onclick="javascript:r_toggleG()">
+                                </div>
+                                <div class="card-body" id="r_bodyG">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left pb-2" id="r_buttonAgregarGPS">
+                                            <button type="button" class="btn btn-sm mt-1"
+                                                style="background-color: #163552;" onclick="javascript:r_agregarGPS()">
+                                                + Nuevo GPS
+                                            </button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row" id="r_rowGeo"></div>
+                                        </div>
+                                        <div class="col-md-8" id="r_colMapa">
+                                            <div id="map"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                     </div>
