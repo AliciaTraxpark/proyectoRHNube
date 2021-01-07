@@ -216,6 +216,7 @@ function editarPunto(id) {
             var geo = data[0].geo;
             var colGeo = "";
             inicialiarMap(geo);
+            // *GEOLICALIZACION
             for (let index = 0; index < geo.length; index++) {
                 colGeo += `<div class="col-lg-12" id="colGeo${geo[index].idGeo}">
                             <div class="row">
@@ -293,6 +294,24 @@ function editarPunto(id) {
                 }
             }
             $('#e_rowGeo').append(colGeo);
+            // * DETALLES
+            var det = data[0].detalles;
+            $('#e_colDescipciones').empty();
+            $('#e_colDescipciones').hide();
+            var nuevoInput = "";
+            for (let item = 0; item < det.length; item++) {
+                nuevoInput += `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
+                                    <input type="hidden" class="e_colD" value="${det[item].idDetalle}">
+                                    <input type="text" class="form-control form-control-sm col-6" id="e_nuevaD${det[item].idDetalle}" maxlength="100" 
+                                        placeholder="Nueva Descripcion" value="${det[item].detalle}">
+                                    <a onclick="javascript:blurColor()" style="cursor: pointer;" class="col-2 pt-1" id="e_cambiaC"
+                                        data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
+                                            <img src="/admin/images/delete.svg" height="13">
+                                    </a>
+                                </div>`;
+                $('#e_colDescipciones').show();
+            }
+            $('#e_colDescipciones').append(nuevoInput);
             $('[data-toggle="tooltip"]').tooltip();
         },
         error: function () { }
@@ -684,8 +703,10 @@ function inicialiarMap(geo) {
         var markerBounds = new L.latLngBounds([latlng]);
         arrayMarkerBounds.push(markerBounds);
     }
-    // * POSICIONES PARA CENTRAR MAPA
-    mapId.fitBounds(arrayMarkerBounds);
+    if (arrayMarkerBounds.length != 0) {
+        // * POSICIONES PARA CENTRAR MAPA
+        mapId.fitBounds(arrayMarkerBounds);
+    }
     mapId.setZoom(1); //: -> ZOOM COMPLETO
     mapId.on("click", addMarker);
 }
