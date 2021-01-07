@@ -742,22 +742,68 @@ function changeColor(id) {
 }
 // * CAMBIAR POSICIONES EN MAPA
 function blurLatitud(id) {
-    layerGroup.eachLayer(function (layer) {
-        if (layer.options.idCircle == id) {
-            var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
-            layer.setLatLng(latlngActualizado);
+    if ($('#e_latitud' + id).val() != "" && $('#e_longitud' + id).val() != "") {
+        layerGroup.eachLayer(function (layer) {
+            if (layer.options.idCircle == id) {
+                var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+                layer.setLatLng(latlngActualizado);
+            }
+        });
+        $('#e_cambiaLat' + id).hide();
+        $('#validGeo' + id).empty();
+        $('#validGeo' + id).hide();
+    } else {
+        if ($('#e_longitud' + id).val() == "" && $('#e_latitud' + id).val() == "") {
+            $('#validGeo' + id).empty();
+            var spanValid = `* Latitud y Longitud son obligatorios`;
+            $('#validGeo' + id).append(spanValid);
+            $('#validGeo' + id).show();
+        } else {
+            if ($('#e_longitud' + id).val() == "") {
+                $('#validGeo' + id).empty();
+                var spanValid = `* Longitud es obligatorio`;
+                $('#validGeo' + id).append(spanValid);
+                $('#validGeo' + id).show();
+            } else {
+                $('#validGeo' + id).empty();
+                var spanValid = `* Latitud es obligatorio`;
+                $('#validGeo' + id).append(spanValid);
+                $('#validGeo' + id).show();
+            }
         }
-    });
-    $('#e_cambiaLat' + id).hide();
+    }
 }
 function blurLongitud(id) {
-    layerGroup.eachLayer(function (layer) {
-        if (layer.options.idCircle == id) {
-            var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
-            layer.setLatLng(latlngActualizado);
+    if ($('#e_latitud' + id).val() != "" && $('#e_longitud' + id).val() != "") {
+        layerGroup.eachLayer(function (layer) {
+            if (layer.options.idCircle == id) {
+                var latlngActualizado = new L.latLng($('#e_latitud' + id).val(), $('#e_longitud' + id).val());
+                layer.setLatLng(latlngActualizado);
+            }
+        });
+        $('#e_cambiaLng' + id).hide();
+        $('#validGeo' + id).empty();
+        $('#validGeo' + id).hide();
+    } else {
+        if ($('#e_longitud' + id).val() == "" && $('#e_latitud' + id).val() == "") {
+            $('#validGeo' + id).empty();
+            var spanValid = `* Latitud y Longitud son obligatorios`;
+            $('#validGeo' + id).append(spanValid);
+            $('#validGeo' + id).show();
+        } else {
+            if ($('#e_longitud' + id).val() == "") {
+                $('#validGeo' + id).empty();
+                var spanValid = `* Longitud es obligatorio`;
+                $('#validGeo' + id).append(spanValid);
+                $('#validGeo' + id).show();
+            } else {
+                $('#validGeo' + id).empty();
+                var spanValid = `* Latitud es obligatorio`;
+                $('#validGeo' + id).append(spanValid);
+                $('#validGeo' + id).show();
+            }
         }
-    });
-    $('#e_cambiaLng' + id).hide();
+    }
 }
 function blurRadio(id) {
     if ($('#e_radio' + id).val() > 5) {
@@ -772,7 +818,7 @@ function blurRadio(id) {
         $('#validGeo' + id).hide();
     } else {
         $('#validGeo' + id).empty();
-        var spanValid = `* radio debe ser mayor  5 metros`;
+        var spanValid = `* Radio debe ser mayor  5 metros`;
         $('#validGeo' + id).append(spanValid);
         $('#validGeo' + id).show();
     }
@@ -846,8 +892,8 @@ var variableU = 1;
 // * AGREGAR GPS
 function edit_agregarGPS() {
     var container = $('#e_rowGeo');
-    var latitud = $('#e_gpsLatitud').val();
-    var longitud = $('#e_gpsLongitud').val();
+    var latitud = parseFloat($('#e_gpsLatitud').val()).toFixed(5);
+    var longitud = parseFloat($('#e_gpsLongitud').val()).toFixed(5);
     var radio = $('#e_gpsRadio').val();
     var color = $('#e_gpsColor').val();
     colGeo = `<div class="col-lg-12" id="colGeoNuevo${variableU}">
@@ -938,8 +984,8 @@ function edit_agregarGPS() {
         $('#e_buttonAgregarGPS').hide();
     }
     var arrayMarkerBounds = [];
-    var nuevoLat = $('#e_latitudNuevo' + variableU).val();
-    var nuevoLng = $('#e_longitudNuevo' + variableU).val();
+    var nuevoLat = parseFloat($('#e_latitudNuevo' + variableU).val()).toFixed(5);
+    var nuevoLng = parseFloat($('#e_longitudNuevo' + variableU).val()).toFixed(5);
     var nuevoRadio = parseInt($('#e_radioNuevo' + variableU).val());
     var nuevoColor = $('#e_colorNuevo' + variableU).val()
     var latlng = new L.latLng(nuevoLat, nuevoLng);
