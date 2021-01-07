@@ -66,17 +66,20 @@ class PuntosControlController extends Controller
                         "verificacion" => $punto->verificacion
                     );
                 }
+                // * GEOLICALIZACION
                 if (!isset($resultado[$punto->id]->geo)) {
                     $resultado[$punto->id]->geo = array();
                 }
-                $arrayGeo = array(
-                    "idGeo" => $punto->idGeo,
-                    "latitud" => $punto->latitud,
-                    "longitud" => $punto->longitud,
-                    "radio" => $punto->radio,
-                    "color" => $punto->color
-                );
-                array_push($resultado[$punto->id]->geo, $arrayGeo);
+                if (!is_null($punto->idGeo)) {
+                    $arrayGeo = array(
+                        "idGeo" => $punto->idGeo,
+                        "latitud" => $punto->latitud,
+                        "longitud" => $punto->longitud,
+                        "radio" => $punto->radio,
+                        "color" => $punto->color
+                    );
+                    array_push($resultado[$punto->id]->geo, $arrayGeo);
+                }
             }
             return array_values($resultado);
         }
@@ -84,7 +87,7 @@ class PuntosControlController extends Controller
         $idPunto = $request->get('idPunto');
 
         $puntoC = DB::table('punto_control as pc')
-            ->join('punto_control_geo as pcg', 'pcg.idPuntoControl', '=', 'pc.id')
+            ->leftJoin('punto_control_geo as pcg', 'pcg.idPuntoControl', '=', 'pc.id')
             ->select(
                 'pc.id',
                 'pc.descripcion',
@@ -98,13 +101,22 @@ class PuntosControlController extends Controller
                 'pcg.latitud',
                 'pcg.longitud',
                 'pcg.radio',
-                'pcg.color'
+                'pcg.color',
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
             ->where('pc.id', '=', $idPunto)
             ->get();
 
         $puntoC = agruparGeoEnPuntos($puntoC);
+        // * BUSCAR DETALLES
+        foreach ($puntoC as $pc) {
+            $arrayDetalle = [];
+            $detalle = punto_control_detalle::where('idPuntoControl', '=', $pc->id)->get();
+            foreach ($detalle as $d) {
+                array_push($arrayDetalle, array("idDetalle" => $d->id, "detalle" => $d->descripcion));
+            }
+            $pc->detalles = $arrayDetalle;
+        }
 
         return response()->json($puntoC, 200);
     }
