@@ -664,7 +664,7 @@ class ActividadesController extends Controller
         }
     }
 
-    // ? FUNCION DE ASIGNAR ACTIVIDADES POR AREAS
+    // ? FUNCION DE ASIGNAR ACTIVIDADES MASIVOS
     public function asignacionPorAreas(Request $request)
     {
         $empleados = $request->get('empleados');

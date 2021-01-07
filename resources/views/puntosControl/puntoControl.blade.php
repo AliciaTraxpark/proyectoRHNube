@@ -419,7 +419,7 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:editarPuntoControl()" id="FormEditarPuntoControl">
+                        <form action="javascript:asignarPunto()" id="FormAsignarPuntoControl">
                             <div class="row border-bottom pb-2">
                                 <div class="col-md-12">
                                     <label class="mb-0">Punto Control</label>

@@ -442,4 +442,171 @@ class PuntosControlController extends Controller
         $punto = punto_control::findOrFail($idPunto);
         return response()->json($punto, 200);
     }
+
+    // * ASIGNACION DE PUNTOS MASIVO
+    public function asignacionDePuntos(Request $request)
+    {
+        $empleados = $request->get('empleados');
+        $puntoControl = $request->get('idPunto');
+        $areas = $request->get('areas');
+        $porEmpleados = $request->get('porEmpleados');
+        $porAreas = $request->get('porAreas');
+
+        $puntoB = punto_control::findOrFail($puntoControl);
+        if ($puntoB) {
+            $puntoB->porEmpleados = $porEmpleados;
+            $puntoB->porAreas = $porAreas;
+            $puntoB->save();
+        }
+        // * ACTUALIZACION PUNTO DE CONTROL DE EMPLEADOS
+        $punto_empleado = punto_control_empleado::where('idPuntoControl', '=', $puntoB->id)->get();
+        if ($puntoB->porEmpleados == 1) {
+            // * ARRAY DE EMPLEADOS SI ESTA VACIO
+            if (is_null($empleados)) {
+                foreach ($punto_empleado as $pe) {
+                    $pe->estado = 0;
+                    $pe->save();
+                }
+            } else {
+                if (sizeof($punto_empleado) == 0) {
+                    foreach ($empleados as $emple) {
+                        // * ASIGNAR EMPLEADOS A PUNTO DE CONTROL
+                        $nuevoPuntoE = new punto_control_empleado();
+                        $nuevoPuntoE->idPuntoControl = $puntoB->id;
+                        $nuevoPuntoE->idEmpleado = $emple;
+                        $nuevoPuntoE->estado = 1;
+                        $nuevoPuntoE->save();
+                    }
+                } else {
+                    // * BUSCAR EMPLEADOS EN LA TABLA PUNTO CONTROL EMPLEADO
+                    foreach ($empleados as $emple) {
+                        $estado = true;
+                        for ($index = 0; $index < sizeof($punto_empleado); $index++) {
+                            if ($punto_empleado[$index]->idEmpleado == $emple) {
+                                $estado = false;
+                            }
+                        }
+                        if ($estado) {
+                            $nuevoPuntoE = new punto_control_empleado();
+                            $nuevoPuntoE->idPuntoControl = $puntoB->id;
+                            $nuevoPuntoE->idEmpleado = $emple;
+                            $nuevoPuntoE->estado = 0;
+                            $nuevoPuntoE->save();
+                        } else {
+                            $pe = punto_control_empleado::where('idPuntoControl', '=', $puntoB->id)
+                                ->where('idEmpleado', '=', $emple)->get()->first();
+                            $pe->estado = 1;
+                            $pe->save();
+                        }
+                    }
+                    // * COMPARAR LOS PUNTOS DE CONTROL CON LA LISTA DE EMPLEADOS
+                    foreach ($punto_empleado as $puntoE) {
+                        $estadoB = true;
+                        foreach ($empleados as $emple) {
+                            if ($puntoE->idEmpleado == $emple) {
+                                $estadoB = false;
+                            }
+                        }
+                        if ($estadoB) {
+                            $puntoE->estado = 0;
+                            $puntoE->save();
+                        }
+                    }
+                }
+            }
+            // * DESACTIVAMOS POR AREAS
+            $punto_area = punto_control_area::where('idPuntoControl', '=', $puntoB->id)->get();
+            foreach ($punto_area as $pa) {
+                $pa->estado = 0;
+                $pa->save();
+            }
+        } else {
+            if ($puntoB->porAreas == 1) {
+                // * FOREACH PARA BUSCAR EMPLEADO POR AREAS
+                foreach ($areas as $a) {
+                    $empleadoArea = DB::table('empleado as e')
+                        ->select('e.emple_id')
+                        ->where('e.emple_area', '=', $a)
+                        ->where('e.emple_estado', '=', 1)
+                        ->get();
+                    // * BUSCAR EMPLEADOS EN ACTIVIDAD EMPLEADO
+                    foreach ($punto_empleado as $puntE) {
+                        $busqueda = true;
+                        foreach ($empleadoArea as $ea) {
+                            if ($puntE->idEmpleado == $ea->emple_id) {
+                                $busqueda = false;
+                            }
+                        }
+                        if ($busqueda) {
+                            $pe = punto_control_empleado::where('idPuntoControl', '=', $puntoB->id)
+                                ->where('idEmpleado', '=', $puntE->idEmpleado)->get()->first();
+                            $pe->estado = 0;
+                            $pe->save();
+                        }
+                    }
+                    // * BUSCAR EMPLEADOS DE AREA EN PUNTO CONTROL EMPLEADO
+                    foreach ($empleadoArea as $ea) {
+                        $busqueda = true;
+                        foreach ($punto_empleado as $puntEm) {
+                            if ($puntEm->idEmpleado == $ea->emple_id) {
+                                $busqueda = false;
+                            }
+                        }
+                        if ($busqueda) {
+                            $nuevoPuntoEmpleado = new punto_control_empleado();
+                            $nuevoPuntoEmpleado->idPuntoControl = $puntoB->id;
+                            $nuevoPuntoEmpleado->idEmpleado = $ea->emple_id;
+                            $nuevoPuntoEmpleado->estado = 1;
+                            $nuevoPuntoEmpleado->save();
+                        } else {
+                            $pe = punto_control_empleado::where('idPuntoControl', '=', $puntoB->id)
+                                ->where('idEmpleado', '=', $ea->emple_id)->get()->first();
+                            $pe->estado = 1;
+                            $pe->save();
+                        }
+                    }
+                    // * BUSCAR PUNTO CONTROL AREA
+                    $buscarPuntoArea = punto_control_area::where('idPuntoControl', '=', $puntoB->id)
+                        ->where('idArea', '=', $a)->get()->first();
+                    if (!$buscarPuntoArea) {
+                        $punto_area = new punto_control_area();
+                        $punto_area->idPuntoControl = $puntoB->id;
+                        $punto_area->idArea = $a;
+                        $punto_area->estado = 1;
+                        $punto_area->save();
+                    } else {
+                        if ($buscarPuntoArea->estado == 0) {
+                            $buscarPuntoArea->estado = 1;
+                            $buscarPuntoArea->save();
+                        }
+                    }
+                }
+                $punto_area = punto_control_area::where('idPuntoControl', '=', $puntoB->id)->get();
+                foreach ($punto_area as $area) {
+                    $busqueda = true;
+                    foreach ($areas as $a) {
+                        if ($area->idArea == $a) {
+                            $busqueda = false;
+                        }
+                    }
+                    if ($busqueda) {
+                        $area->estado = 0;
+                        $area->save();
+                    }
+                }
+            } else {
+                foreach ($punto_empleado as $pe) {
+                    $pe->estado = 0;
+                    $pe->save();
+                }
+                // * DESACTIVAMOS POR AREAS
+                $punto_area = punto_control_area::where('idPuntoControl', '=', $puntoB->id)->get();
+                foreach ($punto_area as $pa) {
+                    $pa->estado = 0;
+                    $pa->save();
+                }
+            }
+        }
+        return response()->json($empleados, 200);
+    }
 }
