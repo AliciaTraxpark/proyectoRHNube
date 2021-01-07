@@ -1616,6 +1616,12 @@ $('#a_areasPunto').on("change", function (e) {
 });
 // ! ****************** FINALIZACION *****************************
 // ! ****************** FORMULARIO REGISTRAR *********************
+$('#r_empleadosPunto').select2({
+    tags: "true"
+});
+$('#r_areasPunto').select2({
+    tags: "true"
+});
 var r_layerGroup = new L.layerGroup();
 var r_circle = {};
 var map = {};
@@ -1671,6 +1677,77 @@ $('#r_puntoCRT').on("change.bootstrapSwitch", function (event) {
         $('#r_cardEA').hide();
     }
 });
+//? CHANGE DE SWITCH POR EMPLEADOS
+$('#r_puntosPorE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.colxAreas').hide();
+        $('.colxEmpleados').show();
+        $('#r_puntosPorA').prop("checked", false);
+        $('#r_areasPunto').empty();
+        r_empleadosPuntos();
+    } else {
+        $('.colxEmpleados').hide();
+        $('#r_puntosPorE').prop("checked", false);
+        $('#r_empleadosPunto').empty();
+        r_limpiarxEmpleado();
+    }
+});
+//? CHANGE DE SWITCH POR AREAS
+$('#r_puntosPorA').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        $('.colxEmpleados').hide();
+        $('.colxAreas').show();
+        $('#r_puntosPorE').prop("checked", false);
+        $('#r_empleadosPunto').empty();
+        r_areasPuntos();
+    } else {
+        $('.colxAreas').hide();
+        $('#r_puntosPorA').prop("checked", false);
+        $('#r_areasPunto').empty();
+        r_limpiarxEmpleado();
+    }
+});
+//? POR EMPLEADOS 
+function r_empleadosPuntos() {
+    $('#r_empleadosPunto').empty();
+    $.ajax({
+        async: false,
+        url: "/puntoEmpleado",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var itemsSelect = "";
+            for (let index = 0; index < data.length; index++) {
+                itemsSelect += `<option value="${data[index].emple_id}">${data[index].nombre} ${data[index].apPaterno} ${data[index].apMaterno}</option>`;
+            }
+            $('#r_empleadosPunto').append(itemsSelect);
+        },
+        error: function () { }
+    });
+}
+//? POR ARES
+function r_areasPuntos() {
+    $('#r_areasPunto').empty();
+    $.ajax({
+        async: false,
+        url: "/puntoArea",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            var itemsSelect = "";
+            //* EMPLEADOS SELECCIONADOS
+            for (let index = 0; index < data.length; index++) {
+                itemsSelect += `<option value="${data[index].area_id}"> Área: ${data[index].area_descripcion}</option>`;
+            }
+            $('#r_areasPunto').append(itemsSelect);
+        },
+        error: function () { }
+    });
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {

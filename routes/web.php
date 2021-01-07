@@ -488,3 +488,5 @@ Route::post('/puntoControlxAreas', 'PuntosControlController@areasPorEmpleados');
 Route::get('/listaPunto', 'PuntosControlController@listaPuntoControl');
 Route::post('/datosPuntoC', 'PuntosControlController@datosPuntoControl');
 Route::post('/asignacionPunto', 'PuntosControlController@asignacionDePuntos');
+Route::get('/puntoEmpleado', 'PuntosControlController@empleadosPuntos');
+Route::get('/puntoArea', 'PuntosControlController@areasPuntos');

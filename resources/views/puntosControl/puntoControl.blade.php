@@ -613,11 +613,6 @@
                                             <div class="form-group mb-0 mt-3">
                                                 <input type="checkbox" id="r_todosEmpleados">
                                                 <label for="" class="mb-0">Seleccionar a todos</label>
-                                                <div class="float-left mb-0">
-                                                    <span style="font-size: 11px;">
-                                                        *Se visualizara empleados con esta actividad asignada
-                                                    </span>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12 colxEmpleados">
@@ -640,11 +635,6 @@
                                             <div class="form-group mb-0 mt-3">
                                                 <input type="checkbox" id="r_todasAreas">
                                                 <label for="" class="mb-0">Seleccionar todos</label>
-                                                <div class="float-left mb-0">
-                                                    <span style="font-size: 11px;">
-                                                        *Se visualizara áreas con esta actividad asignada
-                                                    </span>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12 text-left colxAreas">
