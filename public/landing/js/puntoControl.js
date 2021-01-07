@@ -228,12 +228,10 @@ function editarPunto(id) {
                                         <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                             <span style="font-weight: bold;">Datos GPS</span>
                                             &nbsp;`;
-                if (index != 0) {
-                    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
-                                    data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
-                                    <img src="/admin/images/delete.svg" height="13">
-                                </a>`;
-                }
+                colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
+                                data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
+                                <img src="/admin/images/delete.svg" height="13">
+                            </a>`;
                 colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody(${geo[index].idGeo})"
                             style="cursor: pointer;">
                             </div>
@@ -1248,6 +1246,15 @@ function e_eliminarI(id) {
         $('#e_agregarD').hide();
     }
 }
+// ! ****************** FINALIZACION *****************************
+// ! ****************** FORMULARIO DE ASIGNAR ********************
+$('#a_punto').select2({
+    tags: "true"
+});
+function asignacionPunto() {
+    $('#modalAsignacionPunto').modal();
+}
+
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {

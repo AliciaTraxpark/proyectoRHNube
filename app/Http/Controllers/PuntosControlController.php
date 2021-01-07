@@ -421,4 +421,17 @@ class PuntosControlController extends Controller
             return 0;
         }
     }
+
+    // * SELECT DE PUNTOS DE CONTROL
+    public function listaPuntoControl()
+    {
+        $puntoControl = DB::table('punto_control as pc')
+            ->select('pc.id as idPunto', 'pc.descripcion')
+            ->where('pc.organi_id', '=', session('sesionidorg'))
+            ->where('pc.estado', '=', 1)
+            ->where('pc.controlRuta', '=', 1)
+            ->get();
+
+        return response()->json($puntoControl, 200);
+    }
 }

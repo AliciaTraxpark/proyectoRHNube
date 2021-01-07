@@ -105,8 +105,7 @@
 <div class="row pr-3 pl-3 pt-3">
     <div class="col-md-6 text-left colResponsive">
         <button type="button" class="btn btn-sm mt-1"
-            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
-            onclick="javascript:asignarActividadMasiso()">
+            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b" onclick="javascript:asignacionPunto()">
             <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
             Asignar Punto de control
         </button>
@@ -404,6 +403,111 @@
     </div>
 </div>
 {{-- FINALIZACION --}}
+{{-- MODAL DE ASIGNACION --}}
+<div id="modalAsignacionPunto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAsignacionPunto"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable" style="max-width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Asignacion Punto de Control
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:editarPuntoControl()" id="FormEditarPuntoControl">
+                            <div class="row border-bottom pb-2">
+                                <div class="col-md-12">
+                                    <label class="mb-0">Punto Control</label>
+                                    <select id="a_punto" data-plugin="customselect" class="form-control" required>
+                                        <option value="" disabled selected>Seleccionar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-1 rowEmpleadosEditar">
+                                <div class="col-md-12 text-left">
+                                    <label for="">Asignar por:</label>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorE">
+                                        <label class="custom-control-label" for="e_puntosPorE"
+                                            style="font-weight: bold">
+                                            Seleccionar por empleados
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right colxEmpleados">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="e_todosEmpleados">
+                                        <label for="" class="mb-0">Seleccionar a todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara empleados con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 colxEmpleados">
+                                    <select id="e_empleadosPunto" data-plugin="customselect" class="form-control"
+                                        multiple="multiple">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-2 pb-2 rowAreasEditar">
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
+                                        <label class="custom-control-label" for="e_puntosPorA"
+                                            style="font-weight: bold">
+                                            Seleccionar por áreas
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right colxAreas">
+                                    <div class="form-group mb-0 mt-3">
+                                        <input type="checkbox" id="e_todasAreas">
+                                        <label for="" class="mb-0">Seleccionar todos</label>
+                                        <div class="float-left mb-0">
+                                            <span style="font-size: 11px;">
+                                                *Se visualizara áreas con esta actividad asignada
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left colxAreas">
+                                    <select id="e_areasPunto" data-plugin="customselect"
+                                        class="form-control form-control-sm select2Multiple" multiple="multiple">
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:limpiarPuntoEnEditar()">
+                                Cancelar
+                            </button>
+                            <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">
+                                Guardar
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
 {{-- MODAL DE SESSION --}}
 <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -420,7 +524,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>
 {{-- FINALIZACION --}}
 @if (Auth::user())
 <script>
