@@ -435,7 +435,7 @@
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="e_puntosPorE">
-                                        <label class="custom-control-label" for="e_puntosPorE"
+                                        <label class="custom-control-label" for="a_puntosPorE"
                                             style="font-weight: bold">
                                             Seleccionar por empleados
                                         </label>
@@ -443,7 +443,7 @@
                                 </div>
                                 <div class="col-md-12 text-right colxEmpleados">
                                     <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="e_todosEmpleados">
+                                        <input type="checkbox" id="a_todosEmpleados">
                                         <label for="" class="mb-0">Seleccionar a todos</label>
                                         <div class="float-left mb-0">
                                             <span style="font-size: 11px;">
@@ -453,7 +453,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 colxEmpleados">
-                                    <select id="e_empleadosPunto" data-plugin="customselect" class="form-control"
+                                    <select id="a_empleadosPunto" data-plugin="customselect" class="form-control"
                                         multiple="multiple">
                                     </select>
                                 </div>

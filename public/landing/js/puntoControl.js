@@ -1251,10 +1251,54 @@ function e_eliminarI(id) {
 $('#a_punto').select2({
     tags: "true"
 });
+function listaPuntos() {
+    $('#a_punto').empty();
+    var container = $('#a_punto');
+    $.ajax({
+        async: false,
+        url: "/listaPunto",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.idPunto}"> Actividad : ${element.descripcion} </option>`;
+            });
+            container.append(option);
+        },
+        error: function () { },
+    });
+}
+//: FUNCION PARA LIMPIAR POR EMPLEADO
+function a_limpiarxEmpleado() {
+    $('.colxEmpleados').hide();
+    $('#a_puntosPorE').prop("checked", false);
+    $('#a_todosEmpleados').prop("checked", false);
+    $('#a_empleadosPunto').empty();
+}
+//: FUNCION PARA LIMPIAR POR AREAS
+function a_limpiarxArea() {
+    $('.colxAreas').hide();
+    $('#a_puntosPorA').prop("checked", false);
+    $('#a_todasAreas').prop("checked", false);
+    $('#a_areasPunto').empty();
+}
 function asignacionPunto() {
     $('#modalAsignacionPunto').modal();
+    a_limpiarxArea();
+    a_limpiarxEmpleado();
+    listaPuntos();
 }
-
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
