@@ -390,6 +390,7 @@ function editarPuntoControl() {
     var asistenciaPuerta;
     var verificacion;
     var puntosGeo = contenido();
+    var descripciones = contenidoDes();
     // * CONTROL EN RUTA
     if ($('#e_puntoCRT').is(":checked")) {
         controlRuta = 1;
@@ -434,7 +435,8 @@ function editarPuntoControl() {
             porEmpleados: porEmpleados,
             porAreas: porAreas,
             puntosGeo: puntosGeo,
-            verificacion: verificacion
+            verificacion: verificacion,
+            descripciones: descripciones
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1055,6 +1057,44 @@ function addMarker(e) {
 // * TOGGLE BODY
 function toggleBody(id) {
     $('#bodyGPS' + id).toggle();
+}
+// * NUEVAS DESCRIPCIONES
+var contarInput = 0;
+function e_nuevaDesc() {
+    // $('#e_colDescipciones').empty();
+    var estadoInput = true;
+    $('.e_colD').each(function () {
+        var idI = $(this).val();
+        console.log($(this).val());
+        if ($('#e_nuevaD' + idI).val() == "") {
+            estadoInput = false;
+        }
+    });
+    if (estadoInput) {
+        var nuevoInput = `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
+                        <input type="hidden" class="e_colD" value="New${contarInput}">
+                        <input type="text" class="form-control form-control-sm col-6" id="e_nuevaDNew${contarInput}" maxlength="100" placeholder="Nueva Descripcion">
+                        <a onclick="javascript:blurColor()" style="cursor: pointer;" class="col-2 pt-1" id="e_cambiaC"
+                            data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
+                                <img src="/admin/images/delete.svg" height="13">
+                        </a>
+                    </div>`;
+        $('#e_colDescipciones').append(nuevoInput);
+    }
+    $('#e_colDescipciones').show();
+    contarInput = contarInput + 1;
+}
+// * CONTENIDO DE NUEVAS DESCRIPCIONES
+function contenidoDes() {
+    var resultado = [];
+    $('.e_colD').each(function () {
+        var idI = $(this).val();
+        var descripcionI = $('#e_nuevaD' + idI).val();
+        var objInput = { "id": $(this).val(), "descripcion": descripcionI };
+        resultado.push(objInput);
+    });
+
+    return resultado;
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {

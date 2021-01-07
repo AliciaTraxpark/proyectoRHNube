@@ -122,6 +122,10 @@
                                         <label for="">Punto Control:</label>
                                         <input type="text" class="form-control form-control-sm" id="e_descripcionPunto"
                                             maxlength="100" required disabled>
+                                        <a class="pt-1" onclick="javascript:e_nuevaDesc()"
+                                            style="color: #5369f8;cursor: pointer">
+                                            + añadir más descripciones
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -131,6 +135,7 @@
                                             maxlength="40">
                                     </div>
                                 </div>
+                                <div class="col-md-6" style="display: none" id="e_colDescipciones"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-left">

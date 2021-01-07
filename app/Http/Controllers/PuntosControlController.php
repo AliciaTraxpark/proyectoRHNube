@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\punto_control;
 use App\punto_control_area;
+use App\punto_control_detalle;
 use App\punto_control_empleado;
 use App\punto_control_geo;
 use Illuminate\Http\Request;
@@ -379,6 +380,26 @@ class PuntosControlController extends Controller
                             $nuevoPuntoGeo->color = $punto["color"];
                             $nuevoPuntoGeo->idPuntoControl = $puntoControl->id;
                             $nuevoPuntoGeo->save();
+                        }
+                    }
+                }
+            }
+            if (!empty($request->get('descripciones'))) {
+                foreach ($request->get('descripciones') as $desc) {
+                    $puntoControlDet = punto_control_detalle::where('id', '=', $desc["id"])->get()->first();
+                    if ($puntoControlDet) {
+                        if (!is_null($desc["descripcion"])) {
+                            $puntoControlDet->descripcion = $desc["descripcion"];
+                            $puntoControlDet->save();
+                        } else {
+                            $puntoControlDet->delete();
+                        }
+                    } else {
+                        if (!is_null($desc["descripcion"])) {
+                            $nuevoPuntoDet = new punto_control_detalle();
+                            $nuevoPuntoDet->descripcion = $desc["descripcion"];
+                            $nuevoPuntoDet->idPuntoControl = $puntoControl->id;
+                            $nuevoPuntoDet->save();
                         }
                     }
                 }
