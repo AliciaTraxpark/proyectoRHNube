@@ -61,7 +61,8 @@ class PuntosControlController extends Controller
                         "asistenciaPuerta" => $punto->asistenciaPuerta,
                         "codigoControl" => $punto->codigoControl,
                         "porEmpleados" => $punto->porEmpleados,
-                        "porAreas" => $punto->porAreas
+                        "porAreas" => $punto->porAreas,
+                        "verificacion" => $punto->verificacion
                     );
                 }
                 if (!isset($resultado[$punto->id]->geo)) {
@@ -91,6 +92,7 @@ class PuntosControlController extends Controller
                 'pc.codigoControl',
                 'pc.porEmpleados',
                 'pc.porAreas',
+                'pc.verificacion',
                 'pcg.id as idGeo',
                 'pcg.latitud',
                 'pcg.longitud',

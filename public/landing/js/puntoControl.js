@@ -205,6 +205,12 @@ function editarPunto(id) {
                 $('#e_puntosPorA').prop("checked", false);
                 $('.colxAreas').hide();
             }
+            // * VERIFICACION
+            if (data[0].verificacion == 1) {
+                $('#e_verificacion').prop("checked", true);
+            } else {
+                $('#e_verificacion').prop("checked", false);
+            }
             // * GEOLOCALIZACIÓN
             $('#e_rowGeo').empty();
             var geo = data[0].geo;
@@ -299,9 +305,11 @@ $('#e_puntoCRT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $('.rowEmpleadosEditar').show();
         $('.rowAreasEditar').show();
+        $('#e_cardEA').show();
     } else {
         $('.rowEmpleadosEditar').hide();
         $('.rowAreasEditar').hide();
+        $('#e_cardEA').hide();
     }
 });
 //* SELECT DE EMPLEADOS

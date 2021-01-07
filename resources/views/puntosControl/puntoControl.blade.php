@@ -160,8 +160,9 @@
                                         <input type="checkbox" id="e_verificacion" class="ml-1 mt-1">
                                         <img src="{{asset('landing/images/placeholder.svg')}}" class="ml-4 mb-1"
                                             height="18">
-                                        <label for="" class="mb-0 mr-2" style="font-weight: bold">Verificación de
-                                            GPS</label>
+                                        <label for="" class="mb-0 mr-2" style="font-weight: bold">
+                                            Verificación de GPS
+                                        </label>
                                     </div>
                                 </div>
                             </div>
