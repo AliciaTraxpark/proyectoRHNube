@@ -1399,7 +1399,6 @@ $('#a_punto').on("change", function () {
             }*/
         },
         success: function (data) {
-            console.log(data);
             if (data.porEmpleados == 1) {
                 a_empleadosPuntos(data.id);
                 $('.colxEmpleados').show();
@@ -1417,6 +1416,30 @@ $('#a_punto').on("change", function () {
         },
         error: function () { },
     });
+});
+//: SWITCH DE SELECCIONAR POR EMPLEADO
+$('#a_puntosPorE').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        a_limpiarxArea();
+        $('.colxEmpleados').show();
+        var id = $('#a_punto').val();
+        a_empleadosPuntos(id);
+    } else {
+        $('.colxEmpleados').hide();
+        a_limpiarxEmpleado();
+    }
+});
+//* SWITCH DE SELECCIONAR POR ÁREAS
+$('#a_puntosPorA').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        a_limpiarxEmpleado();
+        $('.colxAreas').show();
+        var id = $('#a_punto').val();
+        a_areasPuntos(id);
+    } else {
+        a_limpiarxArea();
+        $('.colxAreas').hide();
+    }
 });
 // ! ****************** FINALIZACION *****************************
 $(function () {
