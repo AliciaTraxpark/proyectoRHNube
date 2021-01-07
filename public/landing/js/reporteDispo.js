@@ -609,13 +609,11 @@ function cargartabla(fecha) {
                                     <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
-                    theadTabla += `<th>Horario</th><th>Hora de entrada</th>
+                    theadTabla += `<th>Actividad</th><th>Hora de entrada</th>
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
                 }
-                theadTabla += `<th>Tiempo total</th> <th >Tardanza</th>
-                <th >Faltas</th>
-                <th >Incidencias</th></tr>`;
+                theadTabla += `<th>Tiempo total</th> </tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
                 // ! *********** BODY DE TABLA**********
@@ -818,32 +816,6 @@ function cargartabla(fecha) {
                         tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
                     }
                     tbody += tbodyEntradaySalida;
-                    var permisoModificarE=$('#modifReporte').val();
-                 if(permisoModificarE==1){
-                    tbody += `<td id="TiempoTotal${data[index].emple_id}">
-                                <a class="badge badge-soft-primary mr-2">
-                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                    ${sumaTiempos.format("HH:mm:ss")}
-                                </a>
-                            </td><td><div class="dropdown" id="">
-                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"
-                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                <a class="badge badge-soft-danger mr-2">
-                                    <img src="landing/images/relojdp.svg" height="12" class="mr-2">
-                                    ${data[index].tardanza}
-                                </a>
-
-                            </button>
-                            <form class="dropdown-menu dropdown p-3" id="idta ${data[index].idtardanza}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
-                                <div class="form-group">
-                                    <input type="text" id="horaNtard${data[index].idtardanza}" class="form-control form-control-sm horasSalida" >
-                                    &nbsp; <a onclick="insertarNtard(${data[index].idtardanza}) " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15"></a>
-                                </div>
-                            </form>
-                        </div></td><td>---</td><td>---</td></tr>`;
-                 }
-                 else{
 
 
                         tbody += `<td id="TiempoTotal${data[index].emple_id}">
@@ -851,13 +823,8 @@ function cargartabla(fecha) {
                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                             ${sumaTiempos.format("HH:mm:ss")}
                         </a>
-                    </td><td>
-                        <a class="badge badge-soft-danger mr-2">
-                            <img src="landing/images/relojdp.svg" height="12" class="mr-2">
-                            ${data[index].tardanza}
-                        </a>
-                        </td><td>---</td><td>---</td></tr>`;
-                 }
+                    </td></tr>`;
+
 
 
                 }
@@ -869,7 +836,7 @@ function cargartabla(fecha) {
                     for(cc=0;  cc < cantidadColumnasHoras; cc++){
                         tbodyTR+='<td></td><td></td><td></td><td name="tiempoSitHi"></td>';
                     }
-                    tbodyTR+='<td></td><td></td><td></td><td><br><br></td><</tr>';
+                    tbodyTR+='<td><br><br></td></tr>';
 
                     $('#tbodyD').append(tbodyTR);
 
@@ -962,13 +929,11 @@ if (data.length != 0) {
                         <th class="tableHi">Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th class="tableHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
     for (let j = 0; j < cantidadColumnasHorasI; j++) {
-        theadTablaI += `<th class="tableHi">Horario </th> <th class="tableHi">Hora de entrada</th>
+        theadTablaI += `<th class="tableHi">Actividad </th> <th class="tableHi">Hora de entrada</th>
                         <th class="tableHi">Hora de salida</th>
                         <th class="tableHi" id="tSitioI" name="tiempoSitHi">Tiempo en sitio</th>`;
     }
-    theadTablaI += `<th class="tableHi" >Tiempo total</th>  <th class="tableHi">Tardanza</th>
-    <th class="tableHi">Faltas</th>
-    <th class="tableHi">Incidencias</th></tr>`;
+    theadTablaI += `<th class="tableHi" >Tiempo total</th>  </tr>`;
     //* DIBUJAMOS CABEZERA
     $('#theadDI').html(theadTablaI);
     // ! *********** BODY DE TABLA**********
@@ -1114,7 +1079,7 @@ if (data.length != 0) {
 
                         ${sumaTiemposI.format("HH:mm:ss")}
 
-                </td><td class="tableHi">${data[index].tardanza}</td><td class="tableHi">---</td><td class="tableHi">---</td></tr>`;
+                </td></tr>`;
     }
     var fechaAsisteDH=moment($('#pasandoV').val()).format('DD/MM/YYYY')
     $('#fechaAsiste').html(fechaAsisteDH);
