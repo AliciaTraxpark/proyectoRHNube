@@ -56,7 +56,7 @@
     <div class="account-pages my-5">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-xl-5">
+                <div class="col-xl-5 col-sm-7 col-md-6">
                     <div class="card border"
                         style="border-radius: 15px;border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                         <div class="card-body p-0">
@@ -92,8 +92,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-center pb-5" id="btnDownload" style="display: none">
-                                <div class="col-md-6 text-right">
+                            <div class="row justify-content-center pb-5" id="btnDownload" style="display: none;">
+                                <div class="col-md-6 col-sm-6 col-6 text-right">
                                     <a id="enlace32">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 5px;font-weight: 300">
@@ -102,7 +102,7 @@
                                         </button>
                                     </a>
                                 </div>
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-6 col-sm-6 col-6 text-left">
                                     <a id="enlace64">
                                         <button type="button" class="btn btn-sm btn-opacity-primary"
                                             style="font-size: 13.5px;border-radius: 5px;font-weight: 300">

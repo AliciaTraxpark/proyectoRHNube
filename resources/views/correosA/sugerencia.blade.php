@@ -46,7 +46,7 @@
                             <form action="javascript:enviarS();">
                                 <div class="form-group">
                                     <label for="email" style="font-weight: bold">Para:</label>
-                                    <input type="email" class="form-control" value="{{$correo}}" disabled>
+                                    <input type="email" class="form-control" value="{{$correo}}">
                                 </div>
 
                                 <div class="form-group">

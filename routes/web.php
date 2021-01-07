@@ -405,6 +405,7 @@ Route::get('/soporte', 'soportesPorCorreoController@soporte');
 Route::post('/envioTicketCorreo', 'soportesPorCorreoController@envioTicketSoporte');
 Route::get('/sugerencia', 'soportesPorCorreoController@sugerencia');
 Route::post('/envioSugerenciaCorreo', 'soportesPorCorreoController@envioSugerencia');
+Route::post('/agendaReunion', 'soportesPorCorreoController@envioAgendaReunion')->name('agendaReunionMail');
 
 // REPORTE PERSONALIZADO
 Route::get('/reportePersonalizado', 'ControlController@vistaReporte');
