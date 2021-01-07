@@ -206,6 +206,7 @@ class PuntosControlController extends Controller
             $puntoControl->asistenciaPuerta = $request->get('ap');
             $puntoControl->porEmpleados = $request->get('porEmpleados');
             $puntoControl->porAreas = $request->get('porAreas');
+            $puntoControl->verificacion = $request->get('verificacion');
             $puntoControl->save();
 
             //* BUSCAR EMPLEADOS CON PUNTO DE CONTROL

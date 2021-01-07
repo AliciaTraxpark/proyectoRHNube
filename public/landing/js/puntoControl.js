@@ -388,6 +388,7 @@ function editarPuntoControl() {
     var porAreas;
     var controlRuta;
     var asistenciaPuerta;
+    var verificacion;
     var puntosGeo = contenido();
     // * CONTROL EN RUTA
     if ($('#e_puntoCRT').is(":checked")) {
@@ -413,6 +414,12 @@ function editarPuntoControl() {
     } else {
         porAreas = 0;
     }
+    // * VERIFICACION
+    if ($('#e_verificacion').is(":checked")) {
+        verificacion = 1;
+    } else {
+        verificacion = 0;
+    }
     $.ajax({
         async: false,
         type: "POST",
@@ -426,7 +433,8 @@ function editarPuntoControl() {
             areas: areas,
             porEmpleados: porEmpleados,
             porAreas: porAreas,
-            puntosGeo: puntosGeo
+            puntosGeo: puntosGeo,
+            verificacion: verificacion
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
