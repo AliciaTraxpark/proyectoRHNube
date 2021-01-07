@@ -1784,6 +1784,17 @@ $('#r_areasPunto').on("change", function (e) {
         $('#r_todasAreas').prop("checked", false);
     }
 });
+// ? TOGGLE EMPLEADO Y AREA
+function r_toggleEA() {
+    $('#r_bodyEA').toggle();
+}
+// ? TOGGLE GPS
+function r_toggleG() {
+    $('#r_bodyG').toggle();
+    if (map.options != undefined) {
+        map.invalidateSize();
+    }
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
