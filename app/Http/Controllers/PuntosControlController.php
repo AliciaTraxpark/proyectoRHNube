@@ -434,4 +434,12 @@ class PuntosControlController extends Controller
 
         return response()->json($puntoControl, 200);
     }
+
+    // * DATOS DE PUNTO PARA CONTROL
+    public function datosPuntoControl(Request $request)
+    {
+        $idPunto = $request->get('idP');
+        $punto = punto_control::findOrFail($idPunto);
+        return response()->json($punto, 200);
+    }
 }

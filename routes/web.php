@@ -486,3 +486,4 @@ Route::post('/puntoControlxEmpleados', 'PuntosControlController@empleadosPorPunt
 Route::post('/editPuntoControl', 'PuntosControlController@editarPuntoControl');
 Route::post('/puntoControlxAreas', 'PuntosControlController@areasPorEmpleados');
 Route::get('/listaPunto', 'PuntosControlController@listaPuntoControl');
+Route::post('/datosPuntoC', 'PuntosControlController@datosPuntoControl');

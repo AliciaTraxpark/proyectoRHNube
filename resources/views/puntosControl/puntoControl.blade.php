@@ -406,7 +406,7 @@
 {{-- MODAL DE ASIGNACION --}}
 <div id="modalAsignacionPunto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAsignacionPunto"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable" style="max-width: 900px;">
+    <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -434,7 +434,7 @@
                                 </div>
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorE">
+                                        <input type="checkbox" class="custom-control-input" id="a_puntosPorE">
                                         <label class="custom-control-label" for="a_puntosPorE"
                                             style="font-weight: bold">
                                             Seleccionar por empleados
@@ -461,8 +461,8 @@
                             <div class="row pt-2 pb-2 rowAreasEditar">
                                 <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="e_puntosPorA">
-                                        <label class="custom-control-label" for="e_puntosPorA"
+                                        <input type="checkbox" class="custom-control-input" id="a_puntosPorA">
+                                        <label class="custom-control-label" for="a_puntosPorA"
                                             style="font-weight: bold">
                                             Seleccionar por áreas
                                         </label>
@@ -470,7 +470,7 @@
                                 </div>
                                 <div class="col-md-12 text-right colxAreas">
                                     <div class="form-group mb-0 mt-3">
-                                        <input type="checkbox" id="e_todasAreas">
+                                        <input type="checkbox" id="a_todasAreas">
                                         <label for="" class="mb-0">Seleccionar todos</label>
                                         <div class="float-left mb-0">
                                             <span style="font-size: 11px;">
@@ -480,7 +480,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-left colxAreas">
-                                    <select id="e_areasPunto" data-plugin="customselect"
+                                    <select id="a_areasPunto" data-plugin="customselect"
                                         class="form-control form-control-sm select2Multiple" multiple="multiple">
                                     </select>
                                 </div>
