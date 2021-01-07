@@ -305,7 +305,7 @@ function editarPunto(id) {
                                     <input type="text" class="form-control form-control-sm col-6 e_inp${det[item].idDetalle}" id="e_nuevaD${det[item].idDetalle}" maxlength="50" 
                                         placeholder="Nueva Descripcion" value="${det[item].detalle}">
                                     <a onclick="javascript:e_eliminarI(${det[item].idDetalle})" style="cursor: pointer;" class="col-2 pt-1 e_inp${det[item].idDetalle}" id="e_cambiaC"
-                                        data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
+                                        data-toggle="tooltip" data-placement="right" title="Eliminar descripcion" data-original-title="Eliminar descripcion">
                                             <img src="/admin/images/delete.svg" height="13">
                                     </a>
                                 </div>`;
@@ -1093,6 +1093,9 @@ function e_nuevaDesc() {
         console.log($(this).val());
         if ($('#e_nuevaD' + idI).val() == "" && $('#e_nuevaD' + idI).is(":visible")) {
             estadoInput = false;
+            $('#e_nuevaD' + idI).addClass("borderColor");
+        } else {
+            $('#e_nuevaD' + idI).removeClass("borderColor");
         }
     });
     if (estadoInput) {
@@ -1100,7 +1103,7 @@ function e_nuevaDesc() {
                         <input type="hidden" class="e_colD" value="New${contarInput}">
                         <input type="text" class="form-control form-control-sm col-6 e_inpNew${contarInput}" id="e_nuevaDNew${contarInput}" maxlength="50" placeholder="Nueva Descripcion">
                         <a onclick="javascript:e_eliminarI('New${contarInput}')" style="cursor: pointer;" class="col-2 pt-1 e_inpNew${contarInput}" id="e_cambiaC"
-                            data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
+                            data-toggle="tooltip" data-placement="right" title="Eliminar descripcion" data-original-title="Eliminar descripcion">
                                 <img src="/admin/images/delete.svg" height="13">
                         </a>
                     </div>`;
