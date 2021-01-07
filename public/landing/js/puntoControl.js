@@ -302,7 +302,7 @@ function editarPunto(id) {
             for (let item = 0; item < det.length; item++) {
                 nuevoInput += `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
                                     <input type="hidden" class="e_colD" value="${det[item].idDetalle}">
-                                    <input type="text" class="form-control form-control-sm col-6 e_inp${det[item].idDetalle}" id="e_nuevaD${det[item].idDetalle}" maxlength="100" 
+                                    <input type="text" class="form-control form-control-sm col-6 e_inp${det[item].idDetalle}" id="e_nuevaD${det[item].idDetalle}" maxlength="50" 
                                         placeholder="Nueva Descripcion" value="${det[item].detalle}">
                                     <a onclick="javascript:e_eliminarI(${det[item].idDetalle})" style="cursor: pointer;" class="col-2 pt-1 e_inp${det[item].idDetalle}" id="e_cambiaC"
                                         data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
@@ -310,6 +310,11 @@ function editarPunto(id) {
                                     </a>
                                 </div>`;
                 $('#e_colDescipciones').show();
+                if (det.length < 3) {
+                    $('#e_agregarD').show();
+                } else {
+                    $('#e_agregarD').hide();
+                }
             }
             $('#e_colDescipciones').append(nuevoInput);
             $('[data-toggle="tooltip"]').tooltip();
@@ -1082,19 +1087,18 @@ function toggleBody(id) {
 // * NUEVAS DESCRIPCIONES
 var contarInput = 0;
 function e_nuevaDesc() {
-    // $('#e_colDescipciones').empty();
     var estadoInput = true;
     $('.e_colD').each(function () {
         var idI = $(this).val();
         console.log($(this).val());
-        if ($('#e_nuevaD' + idI).val() == "") {
+        if ($('#e_nuevaD' + idI).val() == "" && $('#e_nuevaD' + idI).is(":visible")) {
             estadoInput = false;
         }
     });
     if (estadoInput) {
         var nuevoInput = `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
                         <input type="hidden" class="e_colD" value="New${contarInput}">
-                        <input type="text" class="form-control form-control-sm col-6 e_inpNew${contarInput}" id="e_nuevaDNew${contarInput}" maxlength="100" placeholder="Nueva Descripcion">
+                        <input type="text" class="form-control form-control-sm col-6 e_inpNew${contarInput}" id="e_nuevaDNew${contarInput}" maxlength="50" placeholder="Nueva Descripcion">
                         <a onclick="javascript:e_eliminarI('New${contarInput}')" style="cursor: pointer;" class="col-2 pt-1 e_inpNew${contarInput}" id="e_cambiaC"
                             data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
                                 <img src="/admin/images/delete.svg" height="13">
@@ -1103,6 +1107,20 @@ function e_nuevaDesc() {
         $('#e_colDescipciones').append(nuevoInput);
     }
     $('#e_colDescipciones').show();
+    var contarEstado = 0;
+    $('.e_colD').each(function () {
+        var idI = $(this).val();
+        console.log($(this).val());
+        if ($('#e_nuevaD' + idI).is(":visible")) {
+            contarEstado = contarEstado + 1;
+        }
+    });
+    console.log(contarEstado);
+    if (contarEstado < 3) {
+        $('#e_agregarD').show();
+    } else {
+        $('#e_agregarD').hide();
+    }
     contarInput = contarInput + 1;
 }
 // * CONTENIDO DE NUEVAS DESCRIPCIONES
@@ -1121,6 +1139,20 @@ function contenidoDes() {
 function e_eliminarI(id) {
     $('#e_nuevaD' + id).val("");
     $('.e_inp' + id).hide();
+    // ? CONTAR INPUTS VISIBLES
+    var contarEstado = 0;
+    $('.e_colD').each(function () {
+        var idI = $(this).val();
+        console.log($(this).val());
+        if ($('#e_nuevaD' + idI).val() == "" && $('#e_nuevaD' + idI).is(":visible")) {
+            contarEstado = contarEstado + 1;
+        }
+    });
+    if (contarEstado < 3) {
+        $('#e_agregarD').show();
+    } else {
+        $('#e_agregarD').hide();
+    }
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {

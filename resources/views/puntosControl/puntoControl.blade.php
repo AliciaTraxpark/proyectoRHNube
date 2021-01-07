@@ -123,7 +123,7 @@
                                         <input type="text" class="form-control form-control-sm" id="e_descripcionPunto"
                                             maxlength="100" required disabled>
                                         <a class="pt-1" onclick="javascript:e_nuevaDesc()"
-                                            style="color: #5369f8;cursor: pointer">
+                                            style="color: #5369f8;cursor: pointer" id="e_agregarD">
                                             + añadir más descripciones
                                         </a>
                                     </div>
