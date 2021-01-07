@@ -1659,7 +1659,7 @@ function r_limpiarxEmpleado() {
     $('#r_empleadosPunto').empty();
 }
 //? FUNCION PARA LIMPIAR POR AREAS
-function a_limpiarxArea() {
+function r_limpiarxArea() {
     $('.colxAreas').hide();
     $('#r_puntosPorA').prop("checked", false);
     $('#r_todasAreas').prop("checked", false);
@@ -1675,6 +1675,8 @@ $('#r_puntoCRT').on("change.bootstrapSwitch", function (event) {
         $('.rowEmpleadosEditar').hide();
         $('.rowAreasEditar').hide();
         $('#r_cardEA').hide();
+        r_limpiarxArea();
+        r_limpiarxEmpleado();
     }
 });
 //? CHANGE DE SWITCH POR EMPLEADOS
@@ -1748,6 +1750,40 @@ function r_areasPuntos() {
         error: function () { }
     });
 }
+//? CHECKBOX DE TODOS LOS EMPLEADOS
+$('#r_todosEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#r_empleadosPunto > option").prop("selected", "selected");
+        $('#r_empleadosPunto').trigger("change");
+    } else {
+        $('#r_empleadosPunto').val("").trigger('change');
+    }
+});
+//? CHECKBOX DE TODAS LAS AREAS
+$('#r_todasAreas').click(function () {
+    if ($(this).is(':checked')) {
+        $("#r_areasPunto > option").prop("selected", "selected");
+        $('#r_areasPunto').trigger("change");
+    } else {
+        $('#r_areasPunto').val("").trigger('change');
+    }
+});
+//? SELECT DE EMPLEADOS EN EDITAR
+$("#r_empleadosPunto").on("change", function (e) {
+    if ($("#r_empleadosPunto").select2('data').length === $("#r_empleadosPunto >option").length) {
+        $('#r_todosEmpleados').prop("checked", true);
+    } else {
+        $('#r_todosEmpleados').prop("checked", false);
+    }
+});
+//? SELECT DE AREAS EN EDITAR
+$('#r_areasPunto').on("change", function (e) {
+    if ($('#r_areasPunto').select2('data').length === $("#r_areasPunto >option").length) {
+        $('#r_todasAreas').prop("checked", true);
+    } else {
+        $('#r_todasAreas').prop("checked", false);
+    }
+});
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
