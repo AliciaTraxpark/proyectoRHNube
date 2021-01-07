@@ -657,10 +657,10 @@ $('#e_todosEmpleados').click(function () {
 //* CHECKBOX DE TODAS LAS AREAS
 $('#e_todasAreas').click(function () {
     if ($(this).is(':checked')) {
-        $("#e_todasAreas > option").prop("selected", "selected");
-        $('#e_todasAreas').trigger("change");
+        $("#e_areasPunto > option").prop("selected", "selected");
+        $('#e_areasPunto').trigger("change");
     } else {
-        $('#e_todasAreas').val(areasSelectEdit).trigger('change');
+        $('#e_areasPunto').val(areasSelectEdit).trigger('change');
     }
 });
 //* INICIALIZAR PLUGIN DE MAPA
@@ -1248,6 +1248,8 @@ function e_eliminarI(id) {
 }
 // ! ****************** FINALIZACION *****************************
 // ! ****************** FORMULARIO DE ASIGNAR ********************
+var a_empleadosSelectEdit;
+var a_areasSelectEdit;
 $('#a_punto').select2({
     tags: "true"
 });
@@ -1403,6 +1405,7 @@ $('#a_punto').on("change", function () {
                 a_empleadosPuntos(data.id);
                 $('.colxEmpleados').show();
                 $('#a_puntosPorE').prop("checked", true);
+                a_empleadosSelectEdit = $('#a_empleadosPunto').val();
             } else {
                 a_limpiarxEmpleado();
             }
@@ -1410,6 +1413,7 @@ $('#a_punto').on("change", function () {
                 a_areasPuntos(data.id);
                 $('.colxAreas').show();
                 $('#a_puntosPorA').prop("checked", true);
+                a_areasSelectEdit = $('#a_areasPunto').val();
             } else {
                 a_limpiarxArea();
             }
@@ -1576,6 +1580,40 @@ function asignarPunto() {
         error: function () { },
     });
 }
+//: CHECKBOX DE TODOS LOS EMPLEADOS
+$('#a_todosEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#a_empleadosPunto > option").prop("selected", "selected");
+        $('#a_empleadosPunto').trigger("change");
+    } else {
+        $('#a_empleadosPunto').val(a_empleadosSelectEdit).trigger('change');
+    }
+});
+//: CHECKBOX DE TODAS LAS AREAS
+$('#a_todasAreas').click(function () {
+    if ($(this).is(':checked')) {
+        $("#a_areasPunto > option").prop("selected", "selected");
+        $('#a_areasPunto').trigger("change");
+    } else {
+        $('#a_areasPunto').val(a_areasSelectEdit).trigger('change');
+    }
+});
+//: SELECT DE EMPLEADOS EN EDITAR
+$("#a_empleadosPunto").on("change", function (e) {
+    if ($("#a_empleadosPunto").select2('data').length === $("#a_empleadosPunto >option").length) {
+        $('#a_todosEmpleados').prop("checked", true);
+    } else {
+        $('#a_todosEmpleados').prop("checked", false);
+    }
+});
+//: SELECT DE AREAS EN EDITAR
+$('#a_areasPunto').on("change", function (e) {
+    if ($('#a_areasPunto').select2('data').length === $("#a_areasPunto >option").length) {
+        $('#a_todasAreas').prop("checked", true);
+    } else {
+        $('#a_todasAreas').prop("checked", false);
+    }
+});
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
