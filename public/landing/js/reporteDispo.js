@@ -640,8 +640,8 @@ function cargartabla(fecha) {
                             if (marcacionData.entrada != 0) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
-                                    if (marcacionData.horario != 0) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                    if (marcacionData.actividad != 0) {
+                                        tbodyEntradaySalida += `<td>${marcacionData.actividad} </td>`;
                                     } else {
                                         tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
@@ -747,8 +747,8 @@ function cargartabla(fecha) {
                                 if (marcacionData.salida != 0) {
                                     if (h == moment(marcacionData.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
-                                        if (marcacionData.horario != 0) {
-                                            tbodyEntradaySalida += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                        if (marcacionData.actividad != 0) {
+                                            tbodyEntradaySalida += `<td>${marcacionData.actividad}</td>`;
                                         } else {
                                             tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
@@ -960,8 +960,8 @@ if (data.length != 0) {
                 if (marcacionData.entrada != 0) {
                     if (h == moment(marcacionData.entrada).format("HH")) {
                         var permisoModificarCS=$('#modifReporte').val();
-                        if (marcacionData.horario != 0) {
-                            tbodyEntradaySalidaI += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                        if (marcacionData.actividad != 0) {
+                            tbodyEntradaySalidaI += `<td>${marcacionData.actividad}  </td>`;
                         } else {
                             tbodyEntradaySalidaI += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                         }
@@ -1032,8 +1032,8 @@ if (data.length != 0) {
                     if (marcacionData.salida != 0) {
                         if (h == moment(marcacionData.salida).format("HH")) {
                             //* COLUMNA DE ENTRADA
-                            if (marcacionData.horario != 0) {
-                                tbodyEntradaySalidaI += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                            if (marcacionData.actividad != 0) {
+                                tbodyEntradaySalidaI += `<td>${marcacionData.actividad} </td>`;
                             } else {
                                 tbodyEntradaySalidaI += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                             }
