@@ -818,14 +818,62 @@ function cargartabla(fecha) {
                         tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
                     }
                     tbody += tbodyEntradaySalida;
+                    var permisoModificarE=$('#modifReporte').val();
+                 if(permisoModificarE==1){
                     tbody += `<td id="TiempoTotal${data[index].emple_id}">
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
-                            </td><td>---</td><td>---</td><td>---</td></tr>`;
+                            </td><td><div class="dropdown" id="">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                <a class="badge badge-soft-danger mr-2">
+                                    <img src="landing/images/relojdp.svg" height="12" class="mr-2">
+                                    ${data[index].tardanza}
+                                </a>
+
+                            </button>
+                            <form class="dropdown-menu dropdown p-3" id="idta ${data[index].idtardanza}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
+                                <div class="form-group">
+                                    <input type="text" id="horaNtard${data[index].idtardanza}" class="form-control form-control-sm horasSalida" >
+                                    &nbsp; <a onclick="insertarNtard(${data[index].idtardanza}) " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15"></a>
+                                </div>
+                            </form>
+                        </div></td><td>---</td><td>---</td></tr>`;
+                 }
+                 else{
+
+
+                        tbody += `<td id="TiempoTotal${data[index].emple_id}">
+                        <a class="badge badge-soft-primary mr-2">
+                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                            ${sumaTiempos.format("HH:mm:ss")}
+                        </a>
+                    </td><td>
+                        <a class="badge badge-soft-danger mr-2">
+                            <img src="landing/images/relojdp.svg" height="12" class="mr-2">
+                            ${data[index].tardanza}
+                        </a>
+                        </td><td>---</td><td>---</td></tr>`;
+                 }
+
+
                 }
                 $('#tbodyD').html(tbody);
+                if(data.length==1){
+                    var tbodyTR='';
+
+                     tbodyTR+='<tr><td></td><td></td><td></td><td></td>';
+                    for(cc=0;  cc < cantidadColumnasHoras; cc++){
+                        tbodyTR+='<td></td><td></td><td></td><td name="tiempoSitHi"></td>';
+                    }
+                    tbodyTR+='<td></td><td></td><td></td><td><br><br></td><</tr>';
+
+                    $('#tbodyD').append(tbodyTR);
+
+                }
 
                 table = $("#tablaReport").DataTable({
                     "searching": false,
@@ -1066,7 +1114,7 @@ if (data.length != 0) {
 
                         ${sumaTiemposI.format("HH:mm:ss")}
 
-                </td><td class="tableHi">---</td><td class="tableHi">---</td><td class="tableHi">---</td></tr>`;
+                </td><td class="tableHi">${data[index].tardanza}</td><td class="tableHi">---</td><td class="tableHi">---</td></tr>`;
     }
     var fechaAsisteDH=moment($('#pasandoV').val()).format('DD/MM/YYYY')
     $('#fechaAsiste').html(fechaAsisteDH);
@@ -1333,3 +1381,56 @@ var opt = {
 html2pdf().from(element).set(opt).save();
 
   }
+  function insertarNtard(idtardanza) {
+    let hora = $('#horaNtard' + idtardanza + '').val();
+    let fecha = $('#pasandoV').val() + ' ' + hora;
+
+    $.ajax({
+        type: "post",
+        url: "/registrarNTardanza",
+        data: {
+            idtardanza, hora, fecha
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data == 1) {
+                $('#tableZoom').hide();
+                $('#espera').show();
+                $('#btnRecargaTabla').click();
+                $('#espera').hide();
+                $('#tableZoom').show();
+            } else {
+
+                $.notifyClose();
+                $.notify({
+                    message: '\nHora de entrada debe ser menor que hora de salida.',
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+
+
+        },
+        error: function () {
+            alert("Hay un error");
+        },
+    });
+}
