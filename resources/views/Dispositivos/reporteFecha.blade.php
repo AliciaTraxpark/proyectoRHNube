@@ -11,6 +11,7 @@
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="{{asset('admin/assets/js/html2pdf.bundle.min.js')}}"></script>
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 {{-- plugin de ALERTIFY --}}
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
@@ -213,6 +214,73 @@
         <div id="espera" class="text-center" style="display: none">
             <img src="{{ asset('landing/images/loading.gif') }}" height="100">
         </div>
+        <div class="col-md-12">
+            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga">
+                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="toExcel()">
+                    <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
+                </button>
+                 <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
+                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
+                 </button>
+            </div>
+        </div>
+
+
+        <div id="tableZoomI" class="col-md-12 " style="display: none">
+            <table>
+                <thead>
+                    <tr>
+                        <th><br><br></th>
+                        <th  colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td  colspan="3">Razon social:</td>
+                        <td  colspan="3">{{$organizacion}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Direccion:</td>
+                        <td colspan="3">{{$direccion}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Numero de Ruc:</td>
+                        <td colspan="1">{{$ruc}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Fecha:</td>
+                        <td colspan="1" id="fechaAsiste"> </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><br></td>
+                        <td colspan="3"><br></td>
+                    </tr>
+                </tbody>
+            </table>
+            <style>
+                .tableHi{
+                    border: 0.2px solid rgb(182, 182, 182)!important; border-collapse: collapse!important;
+                }
+            </style>
+            <table id="tablaReportI" class="table tableHi"  style="font-size: 12.8px;">
+                <thead id="theadDI" class="tableHi" >
+                    <tr class="tableHi">
+                        <th class="tableHi"  >CC</th>
+                        <th class="tableHi" >DNI</th>
+                        <th class="tableHi" >Nombre</th>
+                        <th  class="tableHi">Cargo</th>
+                        <th class="tableHi">Actividad</th>
+                        <th  class="tableHi" id="hEntradaI">Hora de entrada</th>
+                        <th  class="tableHi"  id="hSalidaI">Hora de salida</th>
+                        <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tbodyDI">
+                </tbody>
+            </table>
+
+        </div>
         <div id="tableZoom" class="col-md-12">
             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
@@ -221,9 +289,11 @@
                         <th>DNI</th>
                         <th>Nombre</th>
                         <th>Cargo</th>
+                        <th >Actividad</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
+                       
                     </tr>
                 </thead>
                 <tbody id="tbodyD">

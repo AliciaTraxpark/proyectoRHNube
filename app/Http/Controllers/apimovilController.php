@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SoporteApiMovil;
 use App\Mail\SugerenciaApiMovil;
 use App\reporte_marcacionesp;
+use App\tardanza;
 use Illuminate\Database\Eloquent\Collection;
 
 class apimovilController extends Controller
@@ -197,6 +198,35 @@ class apimovilController extends Controller
 
        foreach($request->all() as $req){
             if($req['tipoMarcacion']==1){
+/*
+                AGREGANDO O NO TARDANZA */
+                $fechaEntradaTard = Carbon::create($req['fechaMarcacion'])->toDateString();
+                $tardanza=DB::table('tardanza')
+                ->where('emple_id', '=',$req['idEmpleado'] )
+                ->whereDate('fecha', '=',$fechaEntradaTard )
+                ->get();
+
+                /* if($tardanza==null){
+                    $tardanzaNuevo=new tardanza();
+                    $tardanzaNuevo->emple_id=$req['idEmpleado'];
+                    $tardanzaNuevo->fecha=$fechaEntradaTard;
+                    $tardanzaNuevo->save();
+                }
+                else{
+
+                } */
+                if($tardanza->isEmpty()){
+                    $tardanzaNuevo=new tardanza();
+                    $tardanzaNuevo->emple_id=$req['idEmpleado'];
+                    $tardanzaNuevo->fecha=$fechaEntradaTard;
+                    $tardanzaNuevo->tiempoTardanza='00:00:00';
+                    $tardanzaNuevo->save();
+                }else{
+
+                }
+
+
+                /* ---------------------------------------------------------------------- */
                 $marcacion_puerta=new marcacion_puerta();
          /*   $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
            $marcacion_puerta->marcaMov_fecha= $req['fechaMarcacion'];
@@ -204,6 +234,11 @@ class apimovilController extends Controller
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
             $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
+            if(empty($req['activ_id'])) {}
+            else{
+                $marcacion_puerta->marcaIdActivi=$req['activ_id'];
+            }
+
 
              if(empty($req['idHoraEmp'])) {}
             else{
@@ -268,6 +303,22 @@ class apimovilController extends Controller
                /*  dd($marcacion_puerta1->marcaMov_id); */
 
              if($marcacion_puerta1==null){
+                $fechaEntradaTard1 = Carbon::create($req['fechaMarcacion'])->toDateString();
+                $tardanza1=DB::table('tardanza')
+                ->where('emple_id', '=',$req['idEmpleado'] )
+                ->whereDate('fecha', '=',$fechaEntradaTard1 )
+                ->get();
+
+                if($tardanza1->isEmpty()){
+                    $tardanzaNuevo1=new tardanza();
+                    $tardanzaNuevo1->emple_id=$req['idEmpleado'];
+                    $tardanzaNuevo1->fecha=$fechaEntradaTard1;
+                    $tardanzaNuevo1->tiempoTardanza='00:00:00';
+                    $tardanzaNuevo1->save();
+                }else{
+
+                }
+
                 $marcacion_puerta=new marcacion_puerta();
            /*  $marcacion_puerta->marcaMov_tipo=$req['tipoMarcacion']; */
             $marcacion_puerta->marcaMov_salida= $req['fechaMarcacion'];
@@ -275,6 +326,10 @@ class apimovilController extends Controller
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
             $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
+            if(empty($req['activ_id'])) {}
+            else{
+               /*  $marcacion_puerta->marcaIdActivi=$req['activ_id']; */
+            }
 
             if(empty($req['idHoraEmp'])) {}
             else{

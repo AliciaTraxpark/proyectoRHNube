@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\dispositivo_controlador;
 use App\dispositivos;
 use App\marcacion_puerta;
+use App\tardanza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -219,7 +220,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-
+        $ruc=$organizacion->organi_ruc;
+        $direccion=$organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -275,16 +277,17 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                    'ruc' => $ruc, 'direccion' => $direccion ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados,'ruc' => $ruc, 'direccion' => $direccion ]);
             }
         } else {
-            return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion ]);
         }
     }
 
@@ -310,7 +313,8 @@ class dispositivosController extends Controller
                 if (!isset($resultado[$empleado->emple_id]->marcaciones)) {
                     $resultado[$empleado->emple_id]->marcaciones = array();
                 }
-                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida);
+                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
+                "horario" => $empleado->horario,"horarioIni" => $empleado->horarioIni,"horarioFin" => $empleado->horarioFin,"actividad" => $empleado->actividad);
                 array_push($resultado[$empleado->emple_id]->marcaciones, $arrayMarcacion);
             }
             return array_values($resultado);
@@ -328,8 +332,15 @@ class dispositivosController extends Controller
                         ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                         ->select(
                             'e.emple_id',
+                            'ta.tiempoTardanza as tardanza',
+                            'ta.fecha as feTardanza',
+                            'ta.idtardanza',
                             'mp.marcaMov_id',
                             'e.emple_nDoc',
                             'p.perso_nombre',
@@ -337,11 +348,16 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
+                            DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                             DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                             'mp.marcaMov_id as idMarcacion'
                         )
                         ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+                        ->where('ta.fecha', '=', $fecha)
                         ->where('mp.organi_id', '=', session('sesionidorg'))
                         ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                         ->get();
@@ -351,8 +367,15 @@ class dispositivosController extends Controller
                         ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                         ->select(
                             'e.emple_id',
+                            'ta.tiempoTardanza as tardanza',
+                            'ta.fecha as feTardanza',
+                            'ta.idtardanza',
                             'mp.marcaMov_id',
                             'e.emple_nDoc',
                             'p.perso_nombre',
@@ -360,12 +383,17 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
+                            DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                             DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                             'mp.marcaMov_id as idMarcacion'
                         )
                         ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                         ->where('e.emple_id', $idemp)
+                        ->where('ta.fecha', '=', $fecha)
                         ->where('mp.organi_id', '=', session('sesionidorg'))
                         ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                         ->get();
@@ -385,8 +413,15 @@ class dispositivosController extends Controller
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
+                                'ta.tiempoTardanza as tardanza',
+                                'ta.fecha as feTardanza',
+                                'ta.idtardanza',
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -394,6 +429,10 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -401,6 +440,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+                            ->where('ta.fecha', '=', $fecha)
                             ->where('mp.organi_id', '=', session('sesionidorg'))
                             ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                             ->get();
@@ -412,8 +452,15 @@ class dispositivosController extends Controller
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
+                               'ta.tiempoTardanza as tardanza',
+                               'ta.fecha as feTardanza',
+                               'ta.idtardanza',
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -421,6 +468,10 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -429,6 +480,7 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                             ->where('e.emple_id', $idemp)
+                            ->where('ta.fecha', '=', $fecha)
                             ->where('mp.organi_id', '=', session('sesionidorg'))
                             ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                             ->get();
@@ -443,8 +495,15 @@ class dispositivosController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
+                                'ta.tiempoTardanza as tardanza',
+                                'ta.fecha as feTardanza',
+                                'ta.idtardanza',
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -452,6 +511,10 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -459,6 +522,7 @@ class dispositivosController extends Controller
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+                            ->where('ta.fecha', '=', $fecha)
                             ->where('mp.organi_id', '=', session('sesionidorg'))
                             ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                             ->get();
@@ -471,8 +535,15 @@ class dispositivosController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                          ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                          ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                          ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
+                                'ta.tiempoTardanza as tardanza',
+                                'ta.fecha as feTardanza',
+                                'ta.idtardanza',
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -480,6 +551,10 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -488,6 +563,7 @@ class dispositivosController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                             ->where('e.emple_id', $idemp)
+                            ->where('ta.fecha', '=', $fecha)
                             ->where('mp.organi_id', '=', session('sesionidorg'))
                             ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                             ->get();
@@ -501,8 +577,15 @@ class dispositivosController extends Controller
                     ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                    ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                     ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                     ->select(
                         'e.emple_id',
+                        'ta.tiempoTardanza as tardanza',
+                        'ta.fecha as feTardanza',
+                        'ta.idtardanza',
                         'mp.marcaMov_id',
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -510,11 +593,16 @@ class dispositivosController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'mp.organi_id',
+                        DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                         DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                         'mp.marcaMov_id as idMarcacion'
                     )
                     ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+                    ->where('ta.fecha', '=', $fecha)
                     ->where('mp.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                     ->get();
@@ -524,8 +612,15 @@ class dispositivosController extends Controller
                     ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                    ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                    ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                     ->select(
                         'e.emple_id',
+                        'ta.tiempoTardanza as tardanza',
+                        'ta.fecha as feTardanza',
+                        'ta.idtardanza',
                         'mp.marcaMov_id',
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -533,12 +628,17 @@ class dispositivosController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'mp.organi_id',
+                        DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                         DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                         'mp.marcaMov_id as idMarcacion'
                     )
                     ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                     ->where('e.emple_id', $idemp)
+                    ->where('ta.fecha', '=', $fecha)
                     ->where('mp.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                     ->get();
@@ -723,6 +823,7 @@ class dispositivosController extends Controller
             $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
                 ->where('mv.marcaMov_fecha', '!=',null )
+                ->where('mv.marcaMov_fecha', '!=',$fechaEntrada )
                 ->whereDate('mv.marcaMov_fecha', '=',$fecha111 )
             /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
                 ->orderby('marcaMov_fecha','ASC')
@@ -756,7 +857,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-
+        $ruc=$organizacion->organi_ruc;
+        $direccion=$organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -812,16 +914,17 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                    return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                    'ruc' => $ruc, 'direccion' => $direccion ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
             }
         } else {
-            return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
         }
     }
 
@@ -831,7 +934,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-
+        $ruc=$organizacion->organi_ruc;
+        $direccion=$organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -887,16 +991,17 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta ]);
+                    return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                    'ruc' => $ruc, 'direccion' => $direccion ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+                return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados,  'ruc' => $ruc, 'direccion' => $direccion]);
             }
         } else {
-            return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados]);
+            return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados,  'ruc' => $ruc, 'direccion' => $direccion]);
         }
     }
 
@@ -930,7 +1035,8 @@ class dispositivosController extends Controller
                 if (!isset($resultado[$fechando2]->marcaciones)) {
                     $resultado[$fechando2]->marcaciones = array();
                 }
-                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida);
+                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
+                "horario" => $empleado->horario,"horarioIni" => $empleado->horarioIni,"horarioFin" => $empleado->horarioFin);
                 array_push($resultado[$fechando2]->marcaciones, $arrayMarcacion);
             }
             return array_values($resultado);
@@ -949,12 +1055,13 @@ class dispositivosController extends Controller
                         ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->select(
                             'e.emple_id',
                             DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                            'ar.area_descripcion',
                             'mp.marcaMov_id',
                             'e.emple_nDoc',
                             'p.perso_nombre',
@@ -962,7 +1069,9 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
-
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                             DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                             DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                             'mp.marcaMov_id as idMarcacion'
@@ -989,12 +1098,13 @@ class dispositivosController extends Controller
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->select(
                                 'e.emple_id',
                                 DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                'ar.area_descripcion',
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -1002,7 +1112,9 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
-
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -1024,14 +1136,14 @@ class dispositivosController extends Controller
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->select(
                                 'e.emple_id',
                                 DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                'ar.area_descripcion',
                                 'mp.marcaMov_id',
                                 'e.emple_nDoc',
                                 'p.perso_nombre',
@@ -1039,7 +1151,10 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
-                                DB::raw('IF(mp.marcaMov_fecha is null, 0 ,mp.marcaMov_salida) as entradaModif'),
+
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                                 'mp.marcaMov_id as idMarcacion'
@@ -1062,13 +1177,14 @@ class dispositivosController extends Controller
                     ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                     ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                     ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                     ->select(
                         'e.emple_id',
                         DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
 
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                        'ar.area_descripcion',
                         'mp.marcaMov_id',
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -1076,7 +1192,9 @@ class dispositivosController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'mp.organi_id',
-
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
+                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
                         DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                         DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                         'mp.marcaMov_id as idMarcacion'
@@ -1090,5 +1208,19 @@ class dispositivosController extends Controller
 
         }
         return response()->json($marcaciones, 200);
+    }
+
+    public function registrarNTardanza(Request $request)
+    {
+        $idtardanza = $request->idtardanza;
+        $hora = $request->hora;
+       /*  $fecha = $request->fecha;
+        $fecha1 = Carbon::create($fecha); */
+
+        $tardanza = tardanza::findOrFail($idtardanza);
+        $tardanza->tiempoTardanza = $hora;
+        $tardanza->save();
+        return 1;
+
     }
 }

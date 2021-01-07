@@ -620,6 +620,7 @@ function cargartabla(fecha1,fecha2) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
                 }
+                $('#btnsDescarga').show();
                 // ! *********** CABEZERA DE TABLA**********
                 $('#theadD').empty();
                 //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
@@ -634,15 +635,16 @@ function cargartabla(fecha1,fecha2) {
                 var theadTabla = `<tr>
                                     <th>CC&nbsp;</th>
                                     <th>Fecha&nbsp;</th>
-                                    <th>Horario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-
-                                    <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                   `;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
-                    theadTabla += `<th>Hora de entrada</th>
+                    theadTabla += `<th>Horario</th> <th>Rango</th>
+                                     <th>Hora de entrada</th>
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
                 }
-                theadTabla += `<th>Tiempo total</th></tr>`;
+                theadTabla += `<th>Tiempo total</th> <th>Tardanza</th>
+                <th>Faltas</th>
+                <th>Incidencias</th></tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
                 // ! *********** BODY DE TABLA**********
@@ -653,16 +655,16 @@ function cargartabla(fecha1,fecha2) {
                     tbody += `<tr>
                     <td>${(index + 1)}&nbsp;</td>
                     <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    if (data[index].horario != 0) {
+                  /*   if (data[index].horario != 0) {
                         tbody += `<td>${data[index].horario}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
                         tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    }
-                    if (data[index].cargo_descripcion != null) {
+                    } */
+                   /*  if (data[index].cargo_descripcion != null) {
                         tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
                         tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    }
+                    } */
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");
@@ -673,6 +675,11 @@ function cargartabla(fecha1,fecha2) {
                             if (marcacionData.entrada != 0) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
+                                    if (marcacionData.horario != 0) {
+                                        tbodyEntradaySalida += `<td>${marcacionData.horario}</td><td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    }
                                     if(permisoModificarCS==1){
                                         tbodyEntradaySalida += `<td><div class="dropdown" id="">
                                                                 <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -775,7 +782,11 @@ function cargartabla(fecha1,fecha2) {
                                 if (marcacionData.salida != 0) {
                                     if (h == moment(marcacionData.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
-
+                                        if (marcacionData.horario != 0) {
+                                            tbodyEntradaySalida += `<td>${marcacionData.horario}</td><td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                        } else {
+                                            tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td><td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        }
                                         var permisoModificarE=$('#modifReporte').val();
                                         if(permisoModificarE==1){
                                             tbodyEntradaySalida += `<td>
@@ -837,7 +848,7 @@ function cargartabla(fecha1,fecha2) {
                         }
                     }
                     for (let m = data[index].marcaciones.length; m < cantidadColumnasHoras; m++) {
-                        tbodyEntradaySalida += `<td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
+                        tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
                     }
                     tbody += tbodyEntradaySalida;
                     tbody += `<td id="TiempoTotal${data[index].emple_id}">
@@ -845,11 +856,14 @@ function cargartabla(fecha1,fecha2) {
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
-                            </td></tr>`;
+                            </td> <td>--</td>
+                            <td>--</td>
+                            <td>--</td></tr>`;
                 }
                 $('#tbodyD').html(tbody);
 
                 table = $("#tablaReport").DataTable({
+                    "bLengthChange" : false,
                     "searching": false,
                     "scrollX": true,
                     "ordering": false,
@@ -889,44 +903,7 @@ function cargartabla(fecha1,fecha2) {
                     initComplete: function () {
                         setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
                     },
-                    dom: 'Bfrtip',
-                    buttons: [{
-                        extend: 'excel',
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                        customize: function (xlsx) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                        },
-                        sheetName: 'Exported data',
-                        autoFilter: false
-                    }, {
-                        extend: "pdfHtml5",
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        title: 'REPORTE ASISTENCIA',
-                        customize: function (doc) {
-                            doc['styles'] = {
-                                userTable: {
-                                    margin: [0, 15, 0, 15]
-                                },
-                                title: {
-                                    color: '#163552',
-                                    fontSize: '20',
-                                    alignment: 'center'
-                                },
-                                tableHeader: {
-                                    bold: !0,
-                                    fontSize: 11,
-                                    color: '#FFFFFF',
-                                    fillColor: '#163552',
-                                    alignment: 'center'
-                                }
-                            };
-                        }
-                    }],
-                    paging: true
+
 
                 });
                 $(window).on('resize', function () {
@@ -942,9 +919,223 @@ function cargartabla(fecha1,fecha2) {
                     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
                 }
             } else {
+                $('#btnsDescarga').hide();
                 $('#tbodyD').empty();
-                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
             }
+
+            /* CREANDO TABLAS PARA IMPORTAR */
+            if (data.length != 0) {
+
+                // ! *********** CABEZERA DE TABLA**********
+                $('#theadDI').empty();
+                //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
+                var cantidadColumnasHorasI = 0;
+                for (let i = 0; i < data.length; i++) {
+                    //* OBTENER CANTIDAD TOTAL DE COLUMNAS
+                    if (cantidadColumnasHorasI < data[i].marcaciones.length) {
+                        cantidadColumnasHorasI = data[i].marcaciones.length;
+                    }
+                }
+                //* ARMAR CABEZERA
+                var theadTablaI = `<tr class="">
+                                    <th class="">CC&nbsp;</th>
+                                    <th class="">Fecha&nbsp;</th>
+                                   `;
+                for (let j = 0; j < cantidadColumnasHorasI; j++) {
+                    theadTablaI += `<th class="" >Horario</th> <th>Rango </th>
+                                     <th class="">Hora de entrada</th>
+                                    <th class="" >Hora de salida</th>
+                                    <th  class="" id="" name="tiempoSitHi">Tiempo en sitio</th>`;
+                }
+                theadTablaI += `<th class="">Tiempo total</th><th>Tardanza</th>
+                <th>Faltas</th>
+                <th>Incidencias</th></tr>`;
+
+
+                 var inicioR=moment($('#ID_START').val()).format('DD/MM/YYYY');
+                 var finR=moment($('#ID_END').val()).format('DD/MM/YYYY');
+                $('#RangoFechas').html(' De '+inicioR+' '+' a '+' '+finR)
+
+
+
+                //* DIBUJAMOS CABEZERA
+                $('#theadDI').html(theadTablaI);
+                // ! *********** BODY DE TABLA**********
+                $('#tbodyIDI').empty();
+                var tbodyI = "";
+                //* ARMAMOS BODY DE TABLA
+                for (let index = 0; index < data.length; index++) {
+                    $('#ponerDNI').html(data[index].emple_nDoc);
+                    $('#ponerApe').html(data[index].perso_apPaterno+' '+data[index].perso_apMaterno+' '+data[index].perso_nombre);
+                    if (data[index].area_descripcion != null) {
+                         $('#ponerArea').html(data[index].area_descripcion);
+                    }
+                    else{
+                        $('#ponerArea').html('--');
+                    }
+
+                    if (data[index].cargo_descripcion != null) {
+                        $('#ponerCarg').html(data[index].cargo_descripcion);
+                   }
+                   else{
+                    $('#ponerCarg').html('--');
+                   }
+                    tbodyI += `<tr>
+                    <td>${(index + 1)}&nbsp;</td>
+                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+
+                    //* ARMAR Y ORDENAR MARCACIONES
+                    var tbodyIEntradaySalida = "";
+                    var sumaTiemposI = moment("00:00:00", "HH:mm:ss");
+                    //: HORA
+                    for (let h = 0; h < 24; h++) {
+                        for (let j = 0; j < data[index].marcaciones.length; j++) {
+                            var marcacionDataI = data[index].marcaciones[j];
+                            if (marcacionDataI.entrada != 0) {
+                                if (h == moment(marcacionDataI.entrada).format("HH")) {
+                                    var permisoModificarCS=$('#modifReporte').val();
+                                    if (marcacionDataI.horario != 0) {
+                                        tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td><td>${marcacionDataI.horarioIni} -${marcacionDataI.horarioFin} </td>`;
+                                    } else {
+                                        tbodyIEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    }
+                                    if(permisoModificarCS==1){
+                                        tbodyIEntradaySalida += `<td >
+                                                                    ${moment(marcacionDataI.entrada).format("HH:mm:ss")}
+                                                               </td>`;
+                                    }
+                                    else{
+                                        tbodyIEntradaySalida += `<td >${moment(marcacionDataI.entrada).format("HH:mm:ss")}</td>`;
+                                    }
+
+                                    if (marcacionDataI.salida != 0) {
+                                        var permisoModificarCE1=$('#modifReporte').val();
+                                        if(permisoModificarCE1==1){
+                                            tbodyIEntradaySalida += `<td >
+                                                                    ${moment(marcacionDataI.salida).format("HH:mm:ss")}
+                                                                </td>`;
+                                        } else{
+                                            tbodyIEntradaySalida += `<td> ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
+
+                                        }
+
+                                        var horaFinal = moment(marcacionDataI.salida);
+                                        var horaInicial = moment(marcacionDataI.entrada);
+                                        if (horaFinal.isSameOrAfter(horaInicial)) {
+                                            var tiempoRestante = horaFinal - horaInicial;
+                                            var segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                            var minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                            var horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                            if (horasTiempo < 10) {
+                                                horasTiempo = '0' + horasTiempo;
+                                            }
+                                            if (minutosTiempo < 10) {
+                                                minutosTiempo = '0' + minutosTiempo;
+                                            }
+                                            if (segundosTiempo < 10) {
+                                                segundosTiempo = '0' + segundosTiempo;
+                                            }
+                                            tbodyIEntradaySalida += `<td  name="tiempoSitHi">
+
+                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+
+                                                                </td>`;
+                                            sumaTiemposI = moment(sumaTiemposI).add(segundosTiempo, 'seconds');
+                                            sumaTiemposI = moment(sumaTiemposI).add(minutosTiempo, 'minutes');
+                                            sumaTiemposI = moment(sumaTiemposI).add(horasTiempo, 'hours');
+                                        }
+                                    } else {
+                                        var permisoModificarS=$('#modifReporte').val();
+                                        if(permisoModificarS==1){
+                                            tbodyIEntradaySalida += `<td >
+                                                                        No tiene salida
+                                                                  </td>`;
+                                        }
+                                        else{
+                                            tbodyIEntradaySalida +=`<td >No tiene salida</td>`;
+                                        }
+
+                                        tbodyIEntradaySalida += `<td  name="tiempoSitHi">
+
+                                                                --:--:--
+
+                                                        </td>`;
+                                    }
+                                }
+                            } else {
+                                if (marcacionDataI.salida != 0) {
+                                    if (h == moment(marcacionDataI.salida).format("HH")) {
+                                        //* COLUMNA DE ENTRADA
+                                        if (marcacionDataI.horario != 0) {
+                                            tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td><td>${marcacionDataI.horarioIni} -${marcacionDataI.horarioFin} </td>`;
+                                        } else {
+                                            tbodyIEntradaySalida += `<td  >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td  >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        }
+                                        var permisoModificarE=$('#modifReporte').val();
+                                        if(permisoModificarE==1){
+                                            tbodyIEntradaySalida += `<td  >
+
+                                                                            No tiene entrada
+
+
+                                                            </td>`;
+                                        }
+                                        else{
+                                            tbodyIEntradaySalida += `<td  >No tiene entrada</td>`;
+                                        }
+
+                                        //* COLUMNA DE SALIDA
+                                        var permisoModificarCE2=$('#modifReporte').val();
+                                        if(permisoModificarCE2==1){
+                                            tbodyIEntradaySalida += `<td  >
+
+                                                                        ${moment(marcacionDataI.salida).format("HH:mm:ss")}
+
+                                                            </td>`;
+                                        } else{
+                                            tbodyIEntradaySalida += `<td  > ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
+                                        }
+
+                                        tbodyIEntradaySalida += `<td   name="tiempoSitHi">
+
+                                                                --:--:--
+
+                                                        </td>`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (let m = data[index].marcaciones.length; m < cantidadColumnasHorasI; m++) {
+                        tbodyIEntradaySalida += `<td  >---</td><td  >---</td><td  >---</td><td  >---</td><td   name="tiempoSitHi">---</td>`;
+                    }
+                    tbodyI += tbodyIEntradaySalida;
+                    tbodyI += `<td id="TiempoTotal${data[index].emple_id}">
+
+                                    ${sumaTiemposI.format("HH:mm:ss")}
+
+                            </td><td>--</td>
+                            <td>--</td>
+                            <td>--</td></tr>`;
+                }
+                $('#tbodyIDI').html(tbodyI);
+
+
+                if ($('#customSwitDetalles').is(':checked')) {
+                    $('[name="tiempoSitHi"]').show();
+
+                }
+                else {
+                    $('[name="tiempoSitHi"]').hide();
+
+                }
+            } else {
+                $('#tbodyIDI').empty();
+                $('#tbodyIDI').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
+            }
+            /*  */
+
         },
         error: function () { }
     });
@@ -1164,3 +1355,83 @@ function insertarSalida(idMarca) {
         },
     });
 }
+/* function doit(type, fn, dl) {
+	var elt = document.getElementById('tableZoomI');
+    var wb = XLSX.utils.table_to_book(elt, {sheet:"Asistencia"});
+
+	return dl ?
+		XLSX.write(wb, {bookType:type, cellStyles: true, bookSST:true, type: 'base64'}) :
+        XLSX.writeFile(wb, fn || ('AsistenciaEmpleado.' + (type || 'xlsx')));
+
+} */
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }
+  function doexcel(){
+      var wb = XLSX.utils.table_to_book(document.getElementById("tableZoomI"),{sheet:"Sheet 1"})	//my html table
+
+       wb["Sheets"]["Sheet 1"]["!cols"] = [{ wpx : 149 },{ wpx : 130 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
+        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
+        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
+        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },];
+
+     console.log(wb);
+
+      var wbout = XLSX.write(wb, {bookType:'xlsx',  bookSST:true, type: 'binary'});
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Asistencia.xlsx');
+  }
+function generatePDF() {
+
+
+
+   /*  var element = $('#tableZoomI').html();
+/* var opt = {
+  margin:       0.5,
+  filename:     'Asistencia.pdf',
+  image:        { type: 'jpeg', quality: 0.98 },
+  html2canvas:  { scale: 2 },
+  jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
+}; */
+
+
+/* html2pdf().from(element).set(opt).save(); */
+var doc = new jsPDF('l', 'pt', 'legal');
+    var htmlstring = '';
+    var tempVarToCheckPageHeight = 0;
+    var pageHeight = 0;
+    pageHeight = doc.internal.pageSize.height;
+    specialElementHandlers = {
+        // element with id of "bypass" - jQuery style selector
+        '#bypassme': function(element, renderer) {
+            // true = "handled elsewhere, bypass text extraction"
+            return true
+        }
+    };
+   /*  margins = {
+        top: 150,
+        bottom: 60,
+        left: 40,
+        right: 40,
+        width: 600
+    }; */
+    var y = 20;
+    doc.setLineWidth(2);
+
+    doc.autoTable({
+        html: '#Encabezado',
+        startY: 40,
+        theme:'plain'
+
+    })
+    doc.autoTable({
+        html: '#tablaReportI',
+        startY: 250
+
+    })
+    doc.save('Asistencia.pdf');
+
+  }
+

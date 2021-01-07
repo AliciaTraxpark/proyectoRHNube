@@ -1250,10 +1250,11 @@ function calendario2() {
             $('#nHorasAdic').hide();
             $('#nHorasAdic_re').hide();
             $("#selectHorario").trigger("change");
-            $('#fueraHSwitch_re').prop('checked', true)
-            $('#fueraHSwitch_re').prop('disabled', false)
-            $('#horAdicSwitch_re').prop('checked', false)
-            $('#horCompSwitch_re').prop('checked', true)
+            $('#fueraHSwitch_re').prop('checked', true);
+            $('#fueraHSwitch_re').prop('disabled', false);
+            $('#horAdicSwitch_re').prop('checked', false);
+            $('#horCompSwitch_re').prop('checked', true);
+           
             $("#horarioAsignar").modal("show");
         },
         eventClick: function (info) {
@@ -1853,10 +1854,12 @@ function calendario2_ed() {
             $("#selectHorario_ed").val("Seleccionar horario");
             $('#errorSel').hide();
             $("#selectHorario_ed").trigger("change");
-            $('#fueraHSwitch').prop('checked', true)
-            $('#fueraHSwitch').prop('disabled', false)
-            $('#horAdicSwitch').prop('checked', false)
-            $('#horCompSwitch').prop('checked', true)
+            $('#fueraHSwitch').prop('checked', true);
+            $('#fueraHSwitch').prop('disabled', false);
+            $('#horAdicSwitch').prop('checked', false);
+            $('#horCompSwitch_re').hide();
+            $('#nHorasAdic').hide();
+            $('#horCompSwitch').prop('checked', true);
             $("#horarioAsignar_ed").modal("show");
         },
         eventClick: function (info) {
@@ -6241,12 +6244,10 @@ $(function () {
         if ($('#horAdicSwitch').prop('checked')) {
             $('#nHorasAdic').show();
 
-            $('#fueraHSwitch').prop('checked', true);
-            $('#fueraHSwitch').prop('disabled', true);
 
         } else {
             $('#nHorasAdic').hide();
-            $('#fueraHSwitch').prop('disabled', false);
+
         }
 
     });
@@ -6258,12 +6259,9 @@ $(function () {
         if ($('#horAdicSwitch_re').prop('checked')) {
             $('#nHorasAdic_re').show();
 
-            $('#fueraHSwitch_re').prop('checked', true);
-            $('#fueraHSwitch_re').prop('disabled', true);
-
         } else {
             $('#nHorasAdic_re').hide();
-            $('#fueraHSwitch_re').prop('disabled', false);
+
         }
 
     });
