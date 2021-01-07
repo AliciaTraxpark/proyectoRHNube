@@ -302,9 +302,9 @@ function editarPunto(id) {
             for (let item = 0; item < det.length; item++) {
                 nuevoInput += `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
                                     <input type="hidden" class="e_colD" value="${det[item].idDetalle}">
-                                    <input type="text" class="form-control form-control-sm col-6" id="e_nuevaD${det[item].idDetalle}" maxlength="100" 
+                                    <input type="text" class="form-control form-control-sm col-6 e_inp${det[item].idDetalle}" id="e_nuevaD${det[item].idDetalle}" maxlength="100" 
                                         placeholder="Nueva Descripcion" value="${det[item].detalle}">
-                                    <a onclick="javascript:blurColor()" style="cursor: pointer;" class="col-2 pt-1" id="e_cambiaC"
+                                    <a onclick="javascript:e_eliminarI(${det[item].idDetalle})" style="cursor: pointer;" class="col-2 pt-1 e_inp${det[item].idDetalle}" id="e_cambiaC"
                                         data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
                                             <img src="/admin/images/delete.svg" height="13">
                                     </a>
@@ -1094,8 +1094,8 @@ function e_nuevaDesc() {
     if (estadoInput) {
         var nuevoInput = `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
                         <input type="hidden" class="e_colD" value="New${contarInput}">
-                        <input type="text" class="form-control form-control-sm col-6" id="e_nuevaDNew${contarInput}" maxlength="100" placeholder="Nueva Descripcion">
-                        <a onclick="javascript:blurColor()" style="cursor: pointer;" class="col-2 pt-1" id="e_cambiaC"
+                        <input type="text" class="form-control form-control-sm col-6 e_inpNew${contarInput}" id="e_nuevaDNew${contarInput}" maxlength="100" placeholder="Nueva Descripcion">
+                        <a onclick="javascript:e_eliminarI('New${contarInput}')" style="cursor: pointer;" class="col-2 pt-1 e_inpNew${contarInput}" id="e_cambiaC"
                             data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
                                 <img src="/admin/images/delete.svg" height="13">
                         </a>
@@ -1116,6 +1116,11 @@ function contenidoDes() {
     });
 
     return resultado;
+}
+// * ELIMINAR INPUT
+function e_eliminarI(id) {
+    $('#e_nuevaD' + id).val("");
+    $('.e_inp' + id).hide();
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {
