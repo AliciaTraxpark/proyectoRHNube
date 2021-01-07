@@ -314,7 +314,7 @@ class dispositivosController extends Controller
                     $resultado[$empleado->emple_id]->marcaciones = array();
                 }
                 $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
-                "horario" => $empleado->horario,"horarioIni" => $empleado->horarioIni,"horarioFin" => $empleado->horarioFin);
+                "horario" => $empleado->horario,"horarioIni" => $empleado->horarioIni,"horarioFin" => $empleado->horarioFin,"actividad" => $empleado->actividad);
                 array_push($resultado[$empleado->emple_id]->marcaciones, $arrayMarcacion);
             }
             return array_values($resultado);
@@ -335,6 +335,7 @@ class dispositivosController extends Controller
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                         ->select(
                             'e.emple_id',
                             'ta.tiempoTardanza as tardanza',
@@ -347,6 +348,7 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
+                            DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -368,6 +370,7 @@ class dispositivosController extends Controller
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                         ->select(
                             'e.emple_id',
                             'ta.tiempoTardanza as tardanza',
@@ -380,6 +383,7 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
+                            DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -412,6 +416,7 @@ class dispositivosController extends Controller
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
                                 'ta.tiempoTardanza as tardanza',
@@ -424,6 +429,7 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -449,6 +455,7 @@ class dispositivosController extends Controller
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
                                'ta.tiempoTardanza as tardanza',
@@ -461,6 +468,7 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -490,6 +498,7 @@ class dispositivosController extends Controller
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                             ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
                                 'ta.tiempoTardanza as tardanza',
@@ -502,6 +511,7 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -528,6 +538,7 @@ class dispositivosController extends Controller
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                           ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                           ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                          ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                             ->select(
                                 'e.emple_id',
                                 'ta.tiempoTardanza as tardanza',
@@ -540,6 +551,7 @@ class dispositivosController extends Controller
                                 'p.perso_apMaterno',
                                 'c.cargo_descripcion',
                                 'mp.organi_id',
+                                DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                                 DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -568,6 +580,7 @@ class dispositivosController extends Controller
                     ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                     ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                     ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                     ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                     ->select(
                         'e.emple_id',
                         'ta.tiempoTardanza as tardanza',
@@ -580,6 +593,7 @@ class dispositivosController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'mp.organi_id',
+                        DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -601,6 +615,7 @@ class dispositivosController extends Controller
                     ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                     ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                     ->leftJoin('tardanza as ta', 'e.emple_id', '=', 'ta.emple_id')
+                    ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                     ->select(
                         'e.emple_id',
                         'ta.tiempoTardanza as tardanza',
@@ -613,6 +628,7 @@ class dispositivosController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'mp.organi_id',
+                        DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                         DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
