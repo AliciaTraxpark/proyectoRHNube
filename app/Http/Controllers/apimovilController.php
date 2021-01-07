@@ -328,7 +328,7 @@ class apimovilController extends Controller
             $marcacion_puerta->organi_id=$req['organi_id'];
             if(empty($req['activ_id'])) {}
             else{
-                $marcacion_puerta->marcaIdActivi=$req['activ_id'];
+               /*  $marcacion_puerta->marcaIdActivi=$req['activ_id']; */
             }
 
             if(empty($req['idHoraEmp'])) {}
