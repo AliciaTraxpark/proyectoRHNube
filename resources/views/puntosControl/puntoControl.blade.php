@@ -326,7 +326,7 @@
                                     <div class="form-group">
                                         <label for="">Radio (m):</label>
                                         <input type="number" class="form-control form-control-sm" id="e_gpsRadio"
-                                            required>
+                                            min="10" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

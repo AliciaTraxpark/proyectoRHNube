@@ -222,6 +222,7 @@ function editarPunto(id) {
                             <div class="row">
                                 <input type="hidden" class="rowIdGeo" value="${geo[index].idGeo}">
                                 <div class="col-md-12">
+                                    <span id="validGeo${geo[index].idGeo}" style="color: red;display:none"></span>
                                     <div class="card border" 
                                         style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header" style="padding: 0.25rem 1.25rem;">
@@ -759,13 +760,22 @@ function blurLongitud(id) {
     $('#e_cambiaLng' + id).hide();
 }
 function blurRadio(id) {
-    layerGroup.eachLayer(function (layer) {
-        if (layer.options.idCircle == id) {
-            var radioActualizado = parseInt($('#e_radio' + id).val());
-            layer.setRadius(radioActualizado);
-        }
-    });
-    $('#e_cambiaR' + id).hide();
+    if ($('#e_radio' + id).val() > 5) {
+        layerGroup.eachLayer(function (layer) {
+            if (layer.options.idCircle == id) {
+                var radioActualizado = parseInt($('#e_radio' + id).val());
+                layer.setRadius(radioActualizado);
+            }
+        });
+        $('#e_cambiaR' + id).hide();
+        $('#validGeo' + id).empty();
+        $('#validGeo' + id).hide();
+    } else {
+        $('#validGeo' + id).empty();
+        var spanValid = `* radio debe ser mayor  5 metros`;
+        $('#validGeo' + id).append(spanValid);
+        $('#validGeo' + id).show();
+    }
 }
 function blurColor(id) {
     layerGroup.eachLayer(function (layer) {
@@ -844,6 +854,7 @@ function edit_agregarGPS() {
                 <div class="row">
                     <input type="hidden" class="rowIdGeo" value="Nuevo${variableU}">
                     <div class="col-md-12">
+                        <span id="validGeoNuevo${variableU}" style="color: red;display:none"></span>
                         <div class="card border" 
                             style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
