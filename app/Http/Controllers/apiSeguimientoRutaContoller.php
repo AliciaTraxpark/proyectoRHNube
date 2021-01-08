@@ -264,7 +264,7 @@ class apiSeguimientoRutaContoller extends Controller
     }
 
     // ? OBTENER TIRMPO DEL RHBOX Y HORA ACTUAL DEL SERVIDOR
-    public function tiempoRHbox(Request $request)
+    public function tiempoRuta(Request $request)
     {
         $empleado = empleado::findOrFail($request->get('idEmpleado'));
         if ($empleado) {

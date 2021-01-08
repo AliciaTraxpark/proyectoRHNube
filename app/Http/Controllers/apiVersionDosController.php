@@ -294,6 +294,7 @@ class apiVersionDosController extends Controller
 
     public function capturaArray(Request $request)
     {
+        $respuesta = []; //: -> ARRAY DE RESPUESTA
         //* VALIDACION DE BACKEND
         foreach ($request->all() as $key => $atributo) {
             $errores = [];
@@ -355,7 +356,6 @@ class apiVersionDosController extends Controller
             $codigoHashE = $idEmpleado . "s" . $empCarpeta->perso_id;
             $encodeE = intval($codigoHashE, 36);
             $fechaC = Carbon::parse($horaI)->isoFormat('YYYYMMDD');
-            // dd($fechaC);
             if (!file_exists(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre)) {
                 File::makeDirectory(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre, $mode = 0777, true, true);
             }
@@ -369,6 +369,7 @@ class apiVersionDosController extends Controller
 
             return $fileName;
         }
+        // * FOREACH PARA REGISTRAR DATOS
         foreach ($request->all() as $key => $value) {
             $capturaBuscar = captura::where("idEmpleado", "=", $value['idEmpleado'])
                 ->where('hora_ini', '=', $value['hora_ini'])
@@ -387,12 +388,9 @@ class apiVersionDosController extends Controller
                 $nombreM = carpetaImgA($value['miniatura'], $value['idEmpleado'], $value['hora_ini'], 'miniatura');
                 $nombreI = carpetaImgA($value['imagen'], $value['idEmpleado'], $value['hora_ini'], 'captura');
                 $captura = new captura();
-                $captura->estado = $value['estado'];
                 $captura->actividad = $value['actividad'];
                 $captura->hora_ini = $value['hora_ini'];
                 $captura->hora_fin = $value['hora_fin'];
-                $captura->ultimo_acumulado = $value['ultimo_acumulado'];
-                $captura->acumulador = $value['acumulador'];
                 $captura->idHorario_dias = $value['idHorario_dias'];
                 $captura->idActividad = $value['idActividad'];
                 $captura->idEmpleado = $value['idEmpleado'];
@@ -401,7 +399,7 @@ class apiVersionDosController extends Controller
                 $idCaptura = $captura->idCaptura;
                 $idHorario = $captura->idHorario_dias;
 
-                //CAPTURA_IMAGEN
+                //* CAPTURA_IMAGEN
                 $captura_imagen = new captura_imagen();
                 $captura_imagen->idCaptura = $idCaptura;
                 $captura_imagen->miniatura = $nombreM;
@@ -434,8 +432,17 @@ class apiVersionDosController extends Controller
                 $promedio_captura->tiempo_rango = $totalP;
                 $promedio_captura->save();
             }
+            $fechaS = Carbon::now('America/Lima');
+            $horaActual = $fechaS->isoFormat('YYYY-MM-DD HH:mm:ss');
+            $arrayRespuesta = array(
+                "hora_fin" => $value['hora_fin'],
+                "hora_servidor" => $horaActual,
+                "mensaje" => "registro exitoso"
+            );
+            array_push($respuesta, $arrayRespuesta);
         }
-        return response()->json($request->all(), 200);
+
+        return response()->json($respuesta, 200);
     }
 
     public function ticketSoporte(Request $request)
@@ -654,21 +661,254 @@ class apiVersionDosController extends Controller
                         $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
                         if ($licencia) {
                             if ($vinculacion->hash == $request->get('codigo')) {
-                                // OBTENER HORAS
+                                //* OBTENER HORAS
                                 $fecha = Carbon::now();
                                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                                $horas = DB::table('empleado as e')
+                                // * FUNCION PARA UNIR DATOS POR HORAS Y MINUTOS
+                                function horasRemotoJson($array)
+                                {
+                                    $resultado = array();
+
+                                    foreach ($array  as $dato) {
+                                        $hora = explode(":", $dato->hora);
+                                        $horaInteger = intval($hora[0]); //: CONVERTIR DE STRING A ENTERO
+                                        $minuto = substr($hora[1], 0, 1);
+                                        $minutoInteger = intval($minuto);
+                                        if (!isset($resultado[$horaInteger])) {
+                                            $resultado[$horaInteger] = array("hora" => $horaInteger, "fecha" => $dato->fecha, "minuto" => array());
+                                        }
+                                        if (!isset($resultado[$horaInteger]["minuto"][$minutoInteger])) {
+                                            $resultado[$horaInteger]["minuto"][$minutoInteger] = array();
+                                        }
+                                        array_push($resultado[$horaInteger]["minuto"][$minutoInteger], $dato);
+                                    }
+                                    return array_values($resultado);
+                                }
+                                $horasRHbox = DB::table('empleado as e')
                                     ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
                                     ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
                                     ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
                                     ->select(
-                                        DB::raw('TIME_FORMAT(SEC_TO_TIME(SUM(promedio.tiempo_rango)), "%H:%i:%s") as Total_Envio')
+                                        DB::raw('TIME(cp.hora_ini) as hora_ini'),
+                                        DB::raw('TIME(cp.hora_fin) as hora_fin'),
+                                        DB::raw('DATE(cp.hora_ini) as fecha'),
+                                        DB::raw('TIME(cp.hora_ini) as hora'),
+                                        'promedio.tiempo_rango as rango'
                                     )
                                     ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
                                     ->where('e.emple_id', '=', $empleado->emple_id)
-                                    ->get()
-                                    ->first();
-                                // *****************
+                                    ->orderBy('cp.hora_ini', 'asc')
+                                    ->get();
+                                $horasRHbox = horasRemotoJson($horasRHbox);
+                                //* OBTENER HORAS DEL EMPLEADO EN RUTA
+                                $horasRuta = DB::table('empleado as e')
+                                    ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                                    ->leftJoin('horario_dias as h', 'h.id', '=', 'u.idHorario_dias')
+                                    ->select(
+                                        DB::raw('TIME(u.hora_ini) as hora_ini'),
+                                        DB::raw('TIME(u.hora_fin) as hora_fin'),
+                                        DB::raw('DATE(u.hora_ini) as fecha'),
+                                        DB::raw('TIME(u.hora_ini) as hora'),
+                                        'u.rango as rango'
+                                    )
+                                    ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                                    ->where('e.emple_id', '=', $empleado->emple_id)
+                                    ->orderBy('u.hora_ini', 'asc')
+                                    ->get();
+                                $horasRuta = horasRemotoJson($horasRuta);
+                                //* FUNCION DE RANGOS DE HORAS
+                                function checkHoraApiRemoto($hora_ini, $hora_fin, $hora_now)
+                                {
+                                    $horaI = Carbon::parse($hora_ini);
+                                    $horaF = Carbon::parse($hora_fin);
+                                    $horaN = Carbon::parse($hora_now);
+
+                                    if ($horaN->gte($horaI) && $horaN->lt($horaF)) {
+                                        return true;
+                                    } else return false;
+                                }
+                                //* ******************************************
+                                if (sizeof($horasRHbox) != 0 && sizeof($horasRuta) != 0) {
+                                    $rango = 0;
+                                    for ($hora = 0; $hora < 24; $hora++) {
+                                        $busquedaHora = true;
+                                        for ($i = 0; $i < sizeof($horasRHbox); $i++) {
+                                            for ($j = 0; $j < sizeof($horasRuta); $j++) {
+                                                //* RECORREMOS EN FORMATO HORAS
+                                                if ($horasRHbox[$i]["hora"] == $hora && $horasRuta[$j]["hora"] == $hora) {
+                                                    $busquedaHora = false;
+                                                    //* RECORREMOS EN FORMATO MINUTOS
+                                                    for ($m = 0; $m < 6; $m++) {
+                                                        if (isset($horasRHbox[$i]["minuto"][$m]) && isset($horasRuta[$j]["minuto"][$m])) {
+                                                            $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                            $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                            //: DATOS DE RH BOX
+                                                            $horaInicioRHbox = "23:00:00";
+                                                            $horaFinRHbox = "00:00:00";
+                                                            $rangoRHbox = 0;
+                                                            //: DATOS DE RUTA
+                                                            $horaInicioRuta = "23:00:00";
+                                                            $horaFinRuta = "00:00:00";
+                                                            $rangoRuta = 0;
+                                                            //* RECORREMOS MINUTOS RH BOX
+                                                            for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                                if (Carbon::parse($horaInicioRHbox) > Carbon::parse($arrayMinutoRHbox[$index]->hora_ini)) {
+                                                                    $horaInicioRHbox = $arrayMinutoRHbox[$index]->hora_ini;
+                                                                }
+                                                                if (Carbon::parse($horaFinRHbox) < Carbon::parse($arrayMinutoRHbox[$index]->hora_fin)) {
+                                                                    $horaFinRHbox = $arrayMinutoRHbox[$index]->hora_fin;
+                                                                }
+                                                                $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                            }
+                                                            //* RECORREMOS MINUTOS RUTA
+                                                            for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                                if (Carbon::parse($horaInicioRuta) > Carbon::parse($arrayMinutoRuta[$element]->hora_ini)) {
+                                                                    $horaInicioRuta = $arrayMinutoRuta[$element]->hora_ini;
+                                                                }
+                                                                if (Carbon::parse($horaFinRuta) < Carbon::parse($arrayMinutoRuta[$element]->hora_fin)) {
+                                                                    $horaFinRuta = $arrayMinutoRuta[$element]->hora_fin;
+                                                                }
+                                                                $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                            }
+                                                            //* COMPARAMOS TIEMPOS
+                                                            if (Carbon::parse($horaInicioRHbox) < Carbon::parse($horaInicioRuta)) {
+                                                                //* PARAMETROS PARA ENVIAR A FUNCION
+                                                                $horaInicioRango = $horaInicioRHbox;
+                                                                $horaFinRango = $horaFinRHbox;
+                                                                $horaNowRango = $horaInicioRuta;
+                                                                //* *********************************
+                                                                $check = checkHoraApiRemoto($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                                if ($check) {
+                                                                    $nuevoRango = ($rangoRHbox + $rangoRuta) / 2;
+                                                                    $rango = $rango + $nuevoRango;
+                                                                } else {
+                                                                    $nuevoRango = $rangoRHbox + $rangoRuta;
+                                                                    $rango = $rango + $nuevoRango;
+                                                                }
+                                                            } else {
+                                                                //* PARAMETROS PARA ENVIAR A FUNCION
+                                                                $horaInicioRango = $horaInicioRuta;
+                                                                $horaFinRango = $horaFinRuta;
+                                                                $horaNowRango = $horaInicioRHbox;
+                                                                //* *********************************
+                                                                $check = checkHoraApiRemoto($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                                if ($check) {
+                                                                    $nuevoRango = ($rangoRHbox + $rangoRuta) / 2;
+                                                                    $rango = $rango + $nuevoRango;
+                                                                } else {
+                                                                    $nuevoRango = $rangoRHbox + $rangoRuta;
+                                                                    $rango = $rango + $nuevoRango;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            if (isset($horasRHbox[$i]["minuto"][$m])) {
+                                                                $rangoRHbox = 0;
+                                                                $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                                //* RECORREMOS MINUTOS RH BOX
+                                                                for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                                    $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                                }
+                                                                $rango = $rango + $rangoRHbox;
+                                                            } else {
+                                                                if (isset($horasRuta[$j]["minuto"][$m])) {
+                                                                    $rangoRuta = 0;
+                                                                    $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                                    //* RECORREMOS MINUTOS RUTA
+                                                                    for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                                        $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                                    }
+                                                                    $rango = $rango + $rangoRuta;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if ($busquedaHora) {
+                                            for ($i = 0; $i < sizeof($horasRHbox); $i++) {
+                                                if ($horasRHbox[$i]["hora"] == $hora) {
+                                                    //* RECORREMOS EN FORMATO MINUTOS
+                                                    for ($m = 0; $m < 6; $m++) {
+                                                        if (isset($horasRHbox[$i]["minuto"][$m])) {
+                                                            $rangoRHbox = 0;
+                                                            $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                            //* RECORREMOS MINUTOS RH BOX
+                                                            for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                                $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                            }
+                                                            $rango = $rango + $rangoRHbox;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            for ($j = 0; $j < sizeof($horasRuta); $j++) {
+                                                if ($horasRuta[$j]["hora"] == $hora) {
+                                                    //* RECORREMOS EN FORMATO MINUTOS
+                                                    for ($m = 0; $m < 6; $m++) {
+                                                        if (isset($horasRuta[$j]["minuto"][$m])) {
+                                                            $rangoRuta = 0;
+                                                            $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                            //* RECORREMOS MINUTOS RUTA
+                                                            for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                                $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                            }
+                                                            $rango = $rango + $rangoRuta;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (sizeof($horasRHbox) != 0) {
+                                        $rango = 0;
+                                        for ($i = 0; $i < sizeof($horasRHbox); $i++) {
+                                            //* RECORREMOS EN FORMATO HORAS
+                                            for ($hora = 0; $hora < 24; $hora++) {
+                                                if ($horasRHbox[$i]["hora"] == $hora) {
+                                                    //* RECORREMOS EN FORMATO MINUTOS
+                                                    for ($m = 0; $m < 6; $m++) {
+                                                        if (isset($horasRHbox[$i]["minuto"][$m])) {
+                                                            $rangoRHbox = 0;
+                                                            $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                            //* RECORREMOS MINUTOS RH BOX
+                                                            for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                                $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                            }
+                                                            $rango = $rango + $rangoRHbox;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        if (sizeof($horasRuta) != 0) {
+                                            $rango = 0;
+                                            for ($j = 0; $j < sizeof($horasRuta); $j++) {
+                                                //* RECORREMOS EN FORMATO HORAS
+                                                for ($hora = 0; $hora < 24; $hora++) {
+                                                    if ($horasRuta[$j]["hora"] == $hora) {
+                                                        //* RECORREMOS EN FORMATO MINUTOS
+                                                        for ($m = 0; $m < 6; $m++) {
+                                                            if (isset($horasRuta[$j]["minuto"][$m])) {
+                                                                $rangoRuta = 0;
+                                                                $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                                //* RECORREMOS MINUTOS RUTA
+                                                                for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                                    $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                                }
+                                                                $rango = $rango + $rangoRuta;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            $rango = 0;
+                                        }
+                                    }
+                                }
                                 // VERSION GLOBAL
                                 $versionGlobal = DB::table('versionrhbox as vr')
                                     ->select('vr.descripcion', 'vr.obligatorio')
@@ -717,7 +957,7 @@ class apiVersionDosController extends Controller
                                         "idEmpleado" => $empleado->emple_id,
                                         "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                         'idUser' => $idOrganizacion,
-                                        'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                        'tiempo' => gmdate('H:i:s', $rango),
                                         'version' => $software_vinculacion->version,
                                         'versionGlobal' => $versionGlobal->descripcion,
                                         'versionObligatorio' => $versionGlobal->obligatorio,
@@ -764,7 +1004,7 @@ class apiVersionDosController extends Controller
                                             "corte" => $organizacion->corteCaptura,
                                             "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                             'idUser' => $idOrganizacion,
-                                            'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                            'tiempo' => gmdate('H:i:s', $rango),
                                             'version' => $software_vinculacion->version,
                                             'versionGlobal' => $versionGlobal->descripcion,
                                             'versionObligatorio' => $versionGlobal->obligatorio,
@@ -814,7 +1054,7 @@ class apiVersionDosController extends Controller
                                                 "idEmpleado" => $empleado->emple_id,
                                                 "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                                 'idUser' => $idOrganizacion,
-                                                'tiempo' => $horas->Total_Envio == null ? "00:00:00" : $horas->Total_Envio,
+                                                'tiempo' => gmdate('H:i:s', $rango),
                                                 'version' => $software_vinculacion->version,
                                                 'versionGlobal' => $versionGlobal->descripcion,
                                                 'versionObligatorio' => $versionGlobal->obligatorio,
@@ -882,7 +1122,7 @@ class apiVersionDosController extends Controller
     }
 
     //? TIEMPO DEL SERVIDOR
-    public function tiempoControlRuta()
+    public function horaServidor()
     {
         $fecha = Carbon::now('America/Lima');
         $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
