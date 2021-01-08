@@ -2032,6 +2032,10 @@ function r_eliminarGeo(id) {
         $('#r_buttonAgregarGPS').hide();
     }
 }
+// ? TOGGLE DE GPS
+function r_toggleBody(id) {
+    $('#r_bodyGPS' + id).toggle();
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
