@@ -442,14 +442,17 @@ class apimovilController extends Controller
             ->where('cc.organi_id', '=', $organi_id)
             ->get();
 
-        if(!$centroCosto->isEmpty()){
+        if($centroCosto!=null){
              return response()->json(array('status'=>200,"centroCosto"=>$centroCosto));
         }
         else{
             return response()->json(array('status'=>400,'title' => 'Centros de costos no encontrados',
             'detail' => 'No se encontro centro de costos en esta organizacion'),400);
         }
+    }
 
+    //PUNTO CONTROL
+    public function puntoControl(Request $request){
 
     }
 }
