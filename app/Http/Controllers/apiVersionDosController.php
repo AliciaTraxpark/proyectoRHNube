@@ -889,7 +889,7 @@ class apiVersionDosController extends Controller
     }
 
     //? TIEMPO DEL SERVIDOR
-    public function tiempoControlRuta()
+    public function horaServidor()
     {
         $fecha = Carbon::now('America/Lima');
         $horaActual = $fecha->isoFormat('YYYY-MM-DDTHH:mm:ss');
