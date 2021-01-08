@@ -453,6 +453,40 @@ class apimovilController extends Controller
 
     //PUNTO CONTROL
     public function puntoControl(Request $request){
+        $organi_id=$request->organi_id;
+        $punto_control = DB::table('punto_control as pc')
+            ->select(
+                'pc.id',
+                'pc.descripcion',
+                'pc.codigoControl',
+                'pc.verificacion',
+                'pc.estado'
+            )
+            ->where('pc.organi_id', '=', $organi_id)
+            ->where('pc.asistenciaPuerta', '=', 1)
+            ->where('pc.estado', '=',1)
+            ->get();
+
+
+            foreach ($punto_control as $tab) {
+                $punto_control_geo = DB::table('punto_control_geo as pcg')
+                    ->select('pcg.id','pcg.latitud','pcg.longitud',	'pcg.radio')
+                    ->where('pcg.idPuntoControl', '=', $tab->id)
+                    ->distinct('pcg.id')
+                    ->get();
+
+                $tab->puntosGeo = $punto_control_geo;
+
+            }
+
+
+        if($punto_control!=null){
+             return response()->json(array('status'=>200,"puntosControl"=>$punto_control));
+        }
+        else{
+            return response()->json(array('status'=>400,'title' => 'puntos de control no encontrados',
+            'detail' => 'No se encontro puntos de control en esta organizacion'),400);
+        }
 
     }
 }
