@@ -294,6 +294,7 @@ class apiVersionDosController extends Controller
 
     public function capturaArray(Request $request)
     {
+        $respuesta = []; //: -> ARRAY DE RESPUESTA
         //* VALIDACION DE BACKEND
         foreach ($request->all() as $key => $atributo) {
             $errores = [];
@@ -355,7 +356,6 @@ class apiVersionDosController extends Controller
             $codigoHashE = $idEmpleado . "s" . $empCarpeta->perso_id;
             $encodeE = intval($codigoHashE, 36);
             $fechaC = Carbon::parse($horaI)->isoFormat('YYYYMMDD');
-            // dd($fechaC);
             if (!file_exists(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre)) {
                 File::makeDirectory(app_path() . '/images/' . $encodeO . '/' . $encodeE . '/' . $fechaC . '/' . $nombre, $mode = 0777, true, true);
             }
@@ -369,6 +369,7 @@ class apiVersionDosController extends Controller
 
             return $fileName;
         }
+        // * FOREACH PARA REGISTRAR DATOS
         foreach ($request->all() as $key => $value) {
             $capturaBuscar = captura::where("idEmpleado", "=", $value['idEmpleado'])
                 ->where('hora_ini', '=', $value['hora_ini'])
@@ -387,12 +388,9 @@ class apiVersionDosController extends Controller
                 $nombreM = carpetaImgA($value['miniatura'], $value['idEmpleado'], $value['hora_ini'], 'miniatura');
                 $nombreI = carpetaImgA($value['imagen'], $value['idEmpleado'], $value['hora_ini'], 'captura');
                 $captura = new captura();
-                $captura->estado = $value['estado'];
                 $captura->actividad = $value['actividad'];
                 $captura->hora_ini = $value['hora_ini'];
                 $captura->hora_fin = $value['hora_fin'];
-                $captura->ultimo_acumulado = $value['ultimo_acumulado'];
-                $captura->acumulador = $value['acumulador'];
                 $captura->idHorario_dias = $value['idHorario_dias'];
                 $captura->idActividad = $value['idActividad'];
                 $captura->idEmpleado = $value['idEmpleado'];
@@ -401,7 +399,7 @@ class apiVersionDosController extends Controller
                 $idCaptura = $captura->idCaptura;
                 $idHorario = $captura->idHorario_dias;
 
-                //CAPTURA_IMAGEN
+                //* CAPTURA_IMAGEN
                 $captura_imagen = new captura_imagen();
                 $captura_imagen->idCaptura = $idCaptura;
                 $captura_imagen->miniatura = $nombreM;
@@ -434,8 +432,17 @@ class apiVersionDosController extends Controller
                 $promedio_captura->tiempo_rango = $totalP;
                 $promedio_captura->save();
             }
+            $fechaS = Carbon::now('America/Lima');
+            $horaActual = $fechaS->isoFormat('YYYY-MM-DD HH:mm:ss');
+            $arrayRespuesta = array(
+                "hora_fin" => $value['hora_fin'],
+                "hora_servidor" => $horaActual,
+                "mensaje" => "registro exitoso"
+            );
+            array_push($respuesta, $arrayRespuesta);
         }
-        return response()->json($request->all(), 200);
+
+        return response()->json($respuesta, 200);
     }
 
     public function ticketSoporte(Request $request)
