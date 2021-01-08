@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use LengthException;
 
 class dispositivosController extends Controller
@@ -1040,7 +1041,7 @@ class dispositivosController extends Controller
                 "actividad" => $empleado->actividad);
                 array_push($resultado[$fechando2]->marcaciones, $arrayMarcacion);
             }
-            return array_values($resultado);
+           dd (array_values($resultado));
 
         }
         function agruparEmpleadosMarcaciones3($array)
@@ -1192,43 +1193,63 @@ class dispositivosController extends Controller
                 }
             }
         } else {
-                 /* PARA OBTENER SIN ACTIVIDAD  */
-                 $marcaciones = DB::table('empleado as e')
-                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                    ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-                    ->select(
-                        'e.emple_id',
-                        DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                        'acti.Activi_id',
-                        'ar.area_descripcion',
-                        'mp.marcaMov_id',
-                        'e.emple_nDoc',
-                        'p.perso_nombre',
-                        'p.perso_apPaterno',
-                        'p.perso_apMaterno',
-                        'c.cargo_descripcion',
-                        'mp.organi_id',
-                        DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad'),
 
-                        DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                        'mp.marcaMov_id as idMarcacion'
-                    )
-                    ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'),[$fecha,$fechaF])
-                   ->where('e.emple_id', $idemp)
+              $marcaciones = DB::table('empleado as e')
+              ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+              ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+              ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+              ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+              ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
+              ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+              ->select(
+                  'e.emple_id',
+                  DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                  DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_id) as idhorario'),
 
-                    ->where('mp.organi_id', '=', session('sesionidorg'))
-                    ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                  'ar.area_descripcion',
+                  /* 'mp.marcaMov_id', */
+                  'e.emple_nDoc',
+                  'p.perso_nombre',
+                  'p.perso_apPaterno',
+                  'p.perso_apMaterno',
+                  'c.cargo_descripcion',
+                  'mp.organi_id',
+                   DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_Nombre) as actividad')
+
+
+              )
+               ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'),[$fecha,$fechaF])
+             ->where('e.emple_id', $idemp)
+               ->groupBy( DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),DB::raw('IF(acti.Activi_id is null, 0 , acti.Activi_id)'))
+              ->where('mp.organi_id', '=', session('sesionidorg'))
+              /* ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC')) */
+              ->get();
+
+              foreach ($marcaciones as $tab) {
+                $fechaEntr1= Carbon::create($tab->entradaModif);
+                $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
+
+                $marcacion_puerta = DB::table('marcacion_puerta as map')
+                    ->select('map.marcaMov_id as idMarcacion','map.marcaMov_emple_id',
+
+                    DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+                    DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida'))
+                    ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
+                    ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'),[$fecha,$fechaF])
+                    ->where('map.marcaMov_emple_id','=',$idemp)
+                    ->whereDate( DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'),'=',$fechaEntr2)
+                    ->where(DB::raw('IF(map.marcaIdActivi is null, 0 , map.marcaIdActivi)'),'=',$tab->idactividad)
+
+                  /*    ->distinct('map.marcaMov_id') */
                     ->get();
-                $marcaciones = agruparEmpleadosMarcaciones2($marcaciones);
+
+                $tab->marcaciones = $marcacion_puerta;
+            }
 
 
-
-        }
-        return response()->json($marcaciones, 200);
+        } $marcacionesX=Arr::flatten($marcaciones);
+        return response()->json($marcacionesX, 200);
     }
 
     public function registrarNTardanza(Request $request)
