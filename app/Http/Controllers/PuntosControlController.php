@@ -35,7 +35,7 @@ class PuntosControlController extends Controller
                 'pc.descripcion',
                 'pc.controlRuta',
                 'pc.asistenciaPuerta',
-                DB::raw("CASE WHEN(pc.codigoControl) IS NULL THEN 'No definido' ELSE pc.codigoControl END AS codigoP"),
+                DB::raw("CASE WHEN(pc.codigoControl) IS NULL THEN 'No definido' ELSE pc.codigoControl END AS codigoP")
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
             ->where('pc.estado', '=', 1)
