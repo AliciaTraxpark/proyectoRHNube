@@ -67,7 +67,7 @@ function puntosControlOrganizacion() {
                 var bodyTabla = $('#puntoOrganizacion');
                 var tbody = "";
                 for (let index = 0; index < data.length; index++) {
-                    tbody += `<tr>
+                    tbody += `<tr onclick="return cambiarEstadoPunto('${data[index].id}')">
                                 <td>${(index + 1)}</td>
                                 <td>${data[index].descripcion}</td>
                                 <td>${data[index].codigoP}</td>`;
@@ -92,14 +92,14 @@ function puntosControlOrganizacion() {
                         tbody += `<td class="text-center">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="switchPuntoAPOrg${data[index].id}" checked>
-                                        <label class="custom-control-label" for="switchPuntoCROrg${data[index].id}" style="font-weight: bold"></label>
+                                        <label class="custom-control-label" for="switchPuntoAPOrg${data[index].id}" style="font-weight: bold"></label>
                                     </div>
                                 </td>`;
                     } else {
                         tbody += `<td class="text-center">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="switchPuntoAPOrg${data[index].id}">
-                                        <label class="custom-control-label" for="switchPuntoCROrg${data[index].id}" style="font-weight: bold"></label>
+                                        <label class="custom-control-label" for="switchPuntoAPOrg${data[index].id}" style="font-weight: bold"></label>
                                     </div>
                                 </td>`;
                     }
@@ -109,7 +109,7 @@ function puntosControlOrganizacion() {
                                     <img src="/admin/images/edit.svg" height="15">
                                 </a>
                                 &nbsp;&nbsp;&nbsp;
-                                <a onclick="javascript:eliminarActividad(${data[index].id})" style="cursor: pointer">
+                                <a onclick="javascript:eliminarPunto(${data[index].id})" style="cursor: pointer">
                                     <img src="/admin/images/delete.svg" height="15">
                                 </a>
                             </td>`;
@@ -2515,7 +2515,7 @@ function registrarPunto() {
 // ? RECUPERAR PUNTO
 function recuperarPunto(id) {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/recuperarPunto",
         data: {
             id: id
@@ -2608,6 +2608,177 @@ function limpiarPunto() {
     $('#r_cardEA').hide();
 }
 // ! ****************** FINALIZACION *****************************
+// * ELIMINAR PUNTO CONTROL
+function eliminarPunto(id) {
+    alertify
+        .confirm("¿Desea eliminar punto Control?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "/cambiarEstadoP",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    success: function (data) {
+                        puntosControlOrganizacion();
+                        $.notifyClose();
+                        $.notify({
+                            message: '\nPunto control eliminado',
+                            icon: 'landing/images/bell.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { },
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar punto control",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+}
+// * CAMBIAR ESTADOS DE SWITCH
+function cambiarEstadoDeControles(id, valor, control) {
+    $.ajax({
+        type: "POST",
+        url: "/cambiarEstadoControlesP",
+        data: {
+            id: id,
+            valor: valor,
+            control: control
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            puntosControlOrganizacion();
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nPunto control modificado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
+    });
+}
+
+function cambiarEstadoPunto(id) {
+
+    $("#switchPuntoCROrg" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "CR";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado del punto control?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoDeControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Punto Control",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    puntosControlOrganizacion();
+                },
+            });
+    });
+
+    $("#switchPuntoAPOrg" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "AP";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado del punto control?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoDeControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Punto Control",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    puntosControlOrganizacion();
+                },
+            });
+    });
+}
+$('#r_descripcionPunto').keyup(function () {
+    $(this).removeClass("borderColor");
+});
+$('#r_codigoPunto').keyup(function () {
+    $(this).removeClass("borderColor");
+});
 $(function () {
     $(window).on('resize', function () {
         $('#puntosC').css('width', '100%');

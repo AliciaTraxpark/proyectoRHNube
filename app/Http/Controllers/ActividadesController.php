@@ -222,7 +222,8 @@ class ActividadesController extends Controller
         $actividad = actividad::findOrFail($idA);
         $empleados = $request->get('empleados');
         $areas = $request->get('areas');
-        $buscarCodigo = actividad::where('codigoActividad', '=', $request->get('codigo'))->where('Activi_id', '!=', $idA)->get()->first();
+        $buscarCodigo = actividad::where('codigoActividad', '=', $request->get('codigo'))->where('Activi_id', '!=', $idA)
+            ->whereNotNull('codigoActividad')->get()->first();
         if (!$buscarCodigo) {
             if ($actividad) {
                 //* ACTUALIZAR ATRIBUTOS DE ACTIVIDAD

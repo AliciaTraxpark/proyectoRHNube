@@ -494,3 +494,5 @@ Route::get('/puntoEmpleado', 'PuntosControlController@empleadosPuntos');
 Route::get('/puntoArea', 'PuntosControlController@areasPuntos');
 Route::post('/registrarPuntoC', 'PuntosControlController@registrarPunto');
 Route::post('/recuperarPunto', 'PuntosControlController@recuperarPunto');
+Route::post('/cambiarEstadoP', 'PuntosControlController@cambiarEstadoPunto');
+Route::post('/cambiarEstadoControlesP', 'PuntosControlController@cambiarEstadoActividadControl');

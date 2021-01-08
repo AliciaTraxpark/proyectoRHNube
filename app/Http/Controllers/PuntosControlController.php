@@ -210,7 +210,8 @@ class PuntosControlController extends Controller
         $empleados = $request->get('empleados');
         $areas = $request->get('areas');
 
-        $buscarCodigo = punto_control::where('codigoControl', '=', $request->get('codigo'))->where('id', '!=', $request->get('id'))->get()->first();
+        $buscarCodigo = punto_control::where('codigoControl', '=', $request->get('codigo'))->where('id', '!=', $request->get('id'))
+            ->whereNotNull('codigoControl')->get()->first();
 
         if (!$buscarCodigo) {
             $puntoControl = punto_control::findOrFail($request->get('id'));
@@ -737,6 +738,39 @@ class PuntosControlController extends Controller
         $punto = punto_control::findOrFail($idPunto);
         if ($punto) {
             $punto->estado = 1;
+            $punto->save();
+        }
+
+        return response()->json($punto, 200);
+    }
+
+    // * CAMBIAR ESTADO PUNTO CONTROL
+    public function cambiarEstadoPunto(Request $request)
+    {
+        $idPunto = $request->get('id');
+        $punto = punto_control::findOrFail($idPunto);
+        if ($punto) {
+            $punto->estado = 0;
+            $punto->save();
+        }
+
+        return response()->json($punto, 200);
+    }
+
+    // * CAMBIAR ESTADO DE SWITCH
+    public function cambiarEstadoActividadControl(Request $request)
+    {
+        $idActividad = $request->get('id');
+        $control = $request->get('control');
+        // BUSCAMOS ACTIVIDAD
+        $punto = punto_control::findOrFail($idActividad);
+        if ($punto) {
+            if ($control == "CR") {
+                $punto->controlRuta = $request->get('valor');
+            }
+            if ($control == "AP") {
+                $punto->asistenciaPuerta = $request->get('valor');
+            }
             $punto->save();
         }
 
