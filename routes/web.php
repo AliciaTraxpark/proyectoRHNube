@@ -405,6 +405,7 @@ Route::get('/soporte', 'soportesPorCorreoController@soporte');
 Route::post('/envioTicketCorreo', 'soportesPorCorreoController@envioTicketSoporte');
 Route::get('/sugerencia', 'soportesPorCorreoController@sugerencia');
 Route::post('/envioSugerenciaCorreo', 'soportesPorCorreoController@envioSugerencia');
+Route::post('/agendaReunion', 'soportesPorCorreoController@envioAgendaReunion')->name('agendaReunionMail');
 
 // REPORTE PERSONALIZADO
 Route::get('/reportePersonalizado', 'ControlController@vistaReporte');
@@ -435,6 +436,7 @@ Route::post('/registrarNSalida', 'dispositivosController@registrarNSalida');
 Route::get('/ReporteEmpleado', 'dispositivosController@reporteMarcacionesEmp');
 Route::get('/ReporteFecha', 'dispositivosController@ReporteFecha');
 Route::get('/reporteTablaEmp', 'dispositivosController@reporteTablaEmp');
+Route::post('/registrarNTardanza', 'dispositivosController@registrarNTardanza');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');

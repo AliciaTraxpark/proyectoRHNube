@@ -5208,12 +5208,11 @@ $(function () {
                 defaultDate:"02:00"
             });
             $('#nHorasAdic').val( "02:00"); */
-            $('#fueraHSwitch').prop('checked', true);
-            $('#fueraHSwitch').prop('disabled', true);
+
 
         } else{
             $('#nHorasAdic').hide();
-            $('#fueraHSwitch').prop('disabled', false);
+           
         }
 
     });

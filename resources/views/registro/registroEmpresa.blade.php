@@ -125,6 +125,19 @@
             }
         }
 
+        @media (min-width: 0px) {
+            footer {
+              font-size: 15px;
+              color: #555;
+              background: #eee;
+              text-align: center;
+              position: fixed;
+              display: block;
+              width: 100%;
+              bottom: 0;
+            }
+        }
+
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
@@ -334,13 +347,20 @@
                     </div>
                 </form>
             </section>
-            <footer class="border-top">
-                <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?>- RH nube Corp - USA | Todos los
-                    derechos reservados.</p>
-            </footer>
-
         </div>
     </div>
+    <footer class="border-top" style="background:#163552; bottom: 0 !important; z-index: 100 !important;">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date("
+                    Y" ); ?> - RH nube Corp - USA | Todos los derechos
+                reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+        </div>
+    </footer>
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.maxLength)
