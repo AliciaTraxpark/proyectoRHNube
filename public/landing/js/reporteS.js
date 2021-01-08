@@ -844,8 +844,8 @@ function changeFecha() {
     dato = $('#fecha').val();
     value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
     numberWeek = moment(dato, ["YYYY-MM-DD"]).week();
-    firstDate = moment().isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
-    lastDate = moment().isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
+    firstDate = moment(dato).isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
+    lastDate = moment(dato).isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
     $('#fecha').val(dato);
@@ -898,8 +898,8 @@ function fechaDefecto() {
     dato = $('#fecha').val();
     value = moment(dato, ["YYYY-MM-DD"]).format("YYYY-MM-DD");
     numberWeek = moment(dato, ["YYYY-MM-DD"]).week();
-    firstDate = moment().isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
-    lastDate = moment().isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
+    firstDate = moment(dato).isoWeek(numberWeek).startOf("isoweek").format('YYYY-MM-DD');
+    lastDate = moment(dato).isoWeek(numberWeek).endOf("isoweek").format('YYYY-MM-DD');
     $('#fecha').val(firstDate + "   a   " + lastDate);
     onSelectFechas();
     $('#fecha').val(dato);
