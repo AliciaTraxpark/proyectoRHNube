@@ -614,9 +614,9 @@ function cargartabla(fecha) {
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
                                     <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
                 }
-                theadTabla += `<th>Tiempo total</th> <th >Tardanza</th>
-                <th >Faltas</th>
-                <th >Incidencias</th> </tr>`;
+                theadTabla += `<th>Tiempo total</th> <th >Tardanza T.</th>
+                <th >Faltas T.</th>
+                <th >Incidencias T.</th> </tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
                 // ! *********** BODY DE TABLA**********
@@ -940,9 +940,9 @@ if (data.length != 0) {
                         <th class="tableHi" id="tSitioI" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
                         <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
     }
-    theadTablaI += `<th class="tableHi" >Tiempo total</th>  <th >Tardanza</th>
-    <th >Faltas</th>
-    <th >Incidencias</th> </tr>`;
+    theadTablaI += `<th class="tableHi" >Tiempo total</th>  <th >Tardanza T.</th>
+    <th >Faltas T.</th>
+    <th >Incidencias T.</th> </tr>`;
     //* DIBUJAMOS CABEZERA
     $('#theadDI').html(theadTablaI);
     // ! *********** BODY DE TABLA**********

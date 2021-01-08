@@ -273,9 +273,9 @@
                         <th  class="tableHi" id="hEntradaI">Hora de entrada</th>
                         <th  class="tableHi"  id="hSalidaI">Hora de salida</th>
                         <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
-                        <th class="tableHi">Tardanza</th>
-                        <th class="tableHi">Faltas</th>
-                        <th class="tableHi">Incidencias</th>
+                        <th class="tableHi">Tardanza T.</th>
+                        <th class="tableHi">Faltas T.</th>
+                        <th class="tableHi">Incidencias T.</th>
 
                     </tr>
                 </thead>
@@ -296,9 +296,9 @@
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
-                        <th >Tardanza</th>
-                        <th>Faltas</th>
-                        <th>Incidencias</th>
+                        <th >Tardanza T.</th>
+                        <th>Faltas T.</th>
+                        <th>Incidencias T.</th>
 
 
                     </tr>
