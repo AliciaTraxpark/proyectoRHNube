@@ -3592,7 +3592,18 @@ use App\proyecto_empleado;
                                                 style="font-size: 13px!important;">
                                                 <thead style="background: #fafafa;">
                                                     <tr>
-                                                        <th>Fecha</th>
+                                                        <th>
+                                                            Fecha de alta
+                                                            &nbsp;
+                                                            <img src="{{asset('landing/images/arriba.svg')}}"
+                                                                height="17">
+                                                        </th>
+                                                        <th>
+                                                            Fecha de baja
+                                                            &nbsp;
+                                                            <img src="{{asset('landing/images/abajo.svg')}}"
+                                                                height="17">
+                                                        </th>
                                                         <th>Contrato</th>
                                                         <th>Documento</th>
                                                         <th></th>
@@ -5803,7 +5814,16 @@ use App\proyecto_empleado;
                                             style="font-size: 13px!important;">
                                             <thead style="background: #fafafa;">
                                                 <tr>
-                                                    <th>Fecha</th>
+                                                    <th>
+                                                        Fecha de alta
+                                                        &nbsp;
+                                                        <img src="{{asset('landing/images/arriba.svg')}}" height="17">
+                                                    </th>
+                                                    <th>
+                                                        Fecha de baja
+                                                        &nbsp;
+                                                        <img src="{{asset('landing/images/abajo.svg')}}" height="17">
+                                                    </th>
                                                     <th>Contrato</th>
                                                     <th>Documento</th>
                                                     <th></th>
