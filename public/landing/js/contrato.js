@@ -155,15 +155,20 @@ function historialEmp() {
                 altaEmpleado = true;
                 for (var i = 0; i < data.length; i++) {
                     var trVer = `<tr id="idHistorialE${data[i].id}">`;
-                    trVer += `<td style="vertical-align:middle;">
-                                        <img src="landing/images/arriba.svg" height="17"> &nbsp;${moment(data[i].fecha_alta).format('DD/MM/YYYY')}
-                                        &nbsp;&nbsp;`;
+                    trVer += `<td style="vertical-align:middle;color: #5369f8">
+                                <i class="uil uil-calender"></i>&nbsp;
+                                ${moment(data[i].fecha_alta).format('ddd DD/MM/YYYY')}
+                            </td>`;
                     if (data[i].fecha_baja != null) {
-                        trVer += `<img src="landing/images/abajo.svg" height="17"> &nbsp;${moment(data[i].fecha_baja).format('DD/MM/YYYY')}`;
+                        trVer += `<td style="vertical-align:middle;color: red;">
+                                    <i class="uil uil-calender"></i>&nbsp;
+                                    ${moment(data[i].fecha_baja).format('ddd DD/MM/YYYY')}
+                                </td>`;
                     } else {
-                        trVer += `<img src="landing/images/abajo.svg" height="17"> &nbsp;------`;
+                        trVer += `<td style="vertical-align:middle;color: red;">
+                                    <i class="uil uil-calender"></i>&nbsp;&nbsp;------&nbsp;
+                                </td>`;
                     }
-                    trVer += `</td>`;
                     if (data[i].contrato == null) {
                         trVer += `<td>--</td> `;
                     } else {
@@ -178,7 +183,7 @@ function historialEmp() {
                             <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                 style="cursor: pointer">
                                 <span class="badge badge-soft-primary text-primary">
-                                    <i class="uil-file-alt font-size-17"></i>
+                                    <i class="uil-file-alt font-size-15"></i>
                                 </span>
                                 &nbsp;
                                 Documentos
@@ -202,7 +207,10 @@ function historialEmp() {
                         });
                         trVer += `</ul></div></td> `;
                     } else {
-                        trVer += `<td> --</td> `;
+                        trVer += `<td>
+                                    <img src="landing/images/doc.svg" height="17"> &nbsp;
+                                    No hay documentos
+                                </td> `;
                     }
                     if (data[i].idContrato != null) {
                         trVer += `<td>
