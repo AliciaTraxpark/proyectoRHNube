@@ -4,18 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class punto_control_geo extends Model
+class punto_control_detalle extends Model
 {
     //
-    protected $table = 'punto_control_geo';
+    protected $table = 'punto_control_detalle';
     protected $primaryKey = 'id';
     protected $fillable = [
         'id',
         'idPuntoControl',
-        'latitud',
-        'longitud',
-        'radio',
-        'color'
+        'descripcion'
     ];
     public $timestamps = false;
 }

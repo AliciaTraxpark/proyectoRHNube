@@ -121,7 +121,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span>Actividades</span>
         </a>
     </li>
-    <li style="display: none">
+    <li>
         <a href="/puntoControl">
             <img src="{{asset('landing/images/vectorpaint.svg')}}" height="18" style="margin: 0 10px 0 3px;">
             <span>Puntos de Control</span>
@@ -327,8 +327,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 @endif
                 @if ($invitadod->reporteAsisten==1)
 
-               <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-               <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
+                <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
                 @endif
 
 
