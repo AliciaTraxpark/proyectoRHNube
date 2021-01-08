@@ -2184,7 +2184,7 @@ function r_changeRadio(id) {
 function r_changeColor(id) {
     $('#r_cambiaC' + id).show();
 }
-// * CAMBIAR POSICIONES EN MAPA
+// ? CAMBIAR POSICIONES EN MAPA
 function r_blurLatitud(id) {
     if ($('#r_latitud' + id).val() != "" && $('#r_longitud' + id).val() != "") {
         r_layerGroup.eachLayer(function (layer) {
@@ -2278,6 +2278,334 @@ function r_blurColor(id) {
         }
     });
     $('#r_cambiaC' + id).hide();
+}
+// ? OBTENER DIVS DE GEO
+function r_contenido() {
+    var resultado = [];
+    $('.r_rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#r_latitud' + idG).val();
+        var longitudG = $('#r_longitud' + idG).val();
+        var radioG = $('#r_radio' + idG).val();
+        var colorG = $('#r_color' + idG).val();
+        var objGeo = { "idGeo": $(this).val(), "latitud": latitudG, "longitud": longitudG, "radio": radioG, "color": colorG };
+        resultado.push(objGeo);
+    });
+    return resultado;
+}
+// ? CONTENIDO DE NUEVAS DESCRIPCIONES
+function r_contenidoDes() {
+    var resultado = [];
+    $('.r_colD').each(function () {
+        var idI = $(this).val();
+        var descripcionI = $('#r_nuevaD' + idI).val();
+        var objInput = { "id": $(this).val(), "descripcion": descripcionI };
+        resultado.push(objInput);
+    });
+
+    return resultado;
+}
+// ? REGISTRAR NUEVO PUNTO
+function registrarPunto() {
+    var descripcion = $("#r_descripcionPunto").val();
+    var codigo = $("#r_codigoPunto").val();
+    var empleados = $('#r_empleadosPunto').val();
+    var areas = $('#r_areasPunto').val();
+    var porEmpleados;
+    var porAreas;
+    var controlRuta;
+    var asistenciaPuerta;
+    var verificacion;
+    var puntosGeo = r_contenido();
+    var descripciones = r_contenidoDes();
+    // * CONTROL EN RUTA
+    if ($('#r_puntoCRT').is(":checked")) {
+        controlRuta = 1;
+    } else {
+        controlRuta = 0;
+    }
+    //* ASISTENCIA EN PUERTA
+    if ($('#r_puntoAP').is(":checked")) {
+        asistenciaPuerta = 1;
+    } else {
+        asistenciaPuerta = 0;
+    }
+    //* POR EMPLEADOS
+    if ($('#r_puntosPorE').is(":checked")) {
+        porEmpleados = 1;
+    } else {
+        porEmpleados = 0;
+    }
+    //* POR AREAS
+    if ($('#r_puntosPorA').is(":checked")) {
+        porAreas = 1;
+    } else {
+        porAreas = 0;
+    }
+    // * VERIFICACION
+    if ($('#r_verificacion').is(":checked")) {
+        verificacion = 1;
+    } else {
+        verificacion = 0;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/registrarPuntoC",
+        data: {
+            descripcion: descripcion,
+            ap: asistenciaPuerta,
+            cr: controlRuta,
+            codigo: codigo,
+            empleados: empleados,
+            porEmpleados: porEmpleados,
+            areas: areas,
+            porAreas: porAreas,
+            verificacion: verificacion,
+            puntosGeo: puntosGeo,
+            descripciones: descripciones
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.estado === 1) {
+                if (data.punto.estado == 0) {
+                    alertify
+                        .confirm("Ya existe un punto de control inactivo con este nombre. ¿Desea recuperarla si o no?", function (
+                            e
+                        ) {
+                            if (e) {
+                                recuperarPunto(data.punto.id);
+                            }
+                        })
+                        .setting({
+                            title: "Modificar Punto Control",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {
+                            },
+                        });
+                } else {
+                    $("#r_descripcionPunto").addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nYa existe una actividad con este nombre.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#modalRegistrarPunto'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            } else {
+                if (data.estado === 0) {
+                    if (data.punto.estado == 0) {
+                        alertify
+                            .confirm("Ya existe un punto control inactivo con este código. ¿Desea recuperarla si o no?", function (
+                                e
+                            ) {
+                                if (e) {
+                                    recuperarPunto(data.punto.id);
+                                }
+                            })
+                            .setting({
+                                title: "Modificar Punto Control",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {
+                                },
+                            });
+                    } else {
+                        $("#r_codigoPunto").addClass("borderColor");
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nYa existe una actividad con este código.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                element: $('#modalRegistrarPunto'),
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    }
+                } else {
+                    limpiarPunto();
+                    puntosControlOrganizacion();
+                    $('#modalRegistrarPunto').modal('toggle');
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nPunto control registrado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
+        },
+        error: function () { },
+    });
+}
+// ? RECUPERAR PUNTO
+function recuperarPunto(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarPunto",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            limpiarPunto();
+            puntosControlOrganizacion();
+            $('#modalRegistrarPunto').modal('toggle');
+            editarPunto(data.id);
+        },
+        error: function () { },
+    });
+
+}
+//* VALIDACIONES EN EDITAR
+$('#FormPuntoControl').attr('novalidate', true);
+$('#FormPuntoControl').submit(function (e) {
+    e.preventDefault();
+    if ($('#r_puntosPorE').is(":checked")) {
+        if ($('#r_empleadosPunto').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar empleados.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#modalRegistrarPunto"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if ($('#r_puntosPorA').is(":checked")) {
+        if ($('#r_areasPunto').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar áreas.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#modalRegistrarPunto"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    this.submit();
+});
+function limpiarPunto() {
+    $('#r_descripcionPunto').val("");
+    $('#r_codigoPunto').val("");
+    $('#r_colDescripciones').empty();
+    $('#r_rowGeo').empty();
+    r_limpiarxEmpleado();
+    r_limpiarxArea();
+    $('#r_puntoCRT').prop("checked", false);
+    $('#r_puntoAP').prop("checked", false);
+    $('#r_verificacion').prop("checked", false);
+    $('#r_cardEA').hide();
 }
 // ! ****************** FINALIZACION *****************************
 $(function () {

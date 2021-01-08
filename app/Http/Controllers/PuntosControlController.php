@@ -638,4 +638,108 @@ class PuntosControlController extends Controller
 
         return response()->json($areas, 200);
     }
+
+    // * REGISTRAR PUNTO DE CONTROL
+    public function registrarPunto(Request $request)
+    {
+        $puntoBuscar = punto_control::where('descripcion', '=', $request->get('descripcion'))
+            ->where('organi_id', '=', session('sesionidorg'))->get()->first();
+        if ($puntoBuscar) {
+            return response()->json(array("estado" => 1, "punto" => $puntoBuscar), 200);
+        }
+        $puntoB = punto_control::where('codigoControl', '=', $request->get('codigo'))
+            ->where('organi_id', '=', session('sesionidorg'))->whereNotNull('codigoControl')->get()->first();
+        if ($puntoB) {
+            return response()->json(array("estado" => 0, "punto" => $puntoB), 200);
+        }
+        $puntoControl = new punto_control();
+        $puntoControl->descripcion = $request->get('descripcion');
+        $puntoControl->controlRuta = $request->get('cr');
+        $puntoControl->asistenciaPuerta = $request->get('ap');
+        $puntoControl->organi_id = session('sesionidorg');
+        $puntoControl->codigoControl = $request->get('codigo');
+        $puntoControl->porEmpleados = $request->get('porEmpleados');
+        $puntoControl->porAreas = $request->get('porAreas');
+        $puntoControl->verificacion = $request->get('verificacion');
+        $puntoControl->save();
+
+        $idPunto = $puntoControl->id;
+        $listaE = $request->get('empleados');
+        $listaA = $request->get('areas');
+
+        if ($puntoControl->porEmpleados == 1) {
+            // * ASIGNAR EMPLEADOS A NUEVO PUNTO CONTROL
+            if (!is_null($listaE)) {
+                foreach ($listaE as $le) {
+                    $punto_empleado = new punto_control_empleado();
+                    $punto_empleado->idPuntoControl = $idPunto;
+                    $punto_empleado->idEmpleado = $le;
+                    $punto_empleado->estado = 1;
+                    $punto_empleado->save();
+                }
+            }
+        } else {
+            if ($puntoControl->porAreas == 1) {
+                if (!is_null($listaA)) {
+                    foreach ($listaA as $la) {
+                        $empleadosArea = DB::table('empleado as e')
+                            ->select('e.emple_id')
+                            ->where('e.emple_area', '=', $la)
+                            ->where('e.emple_estado', '=', 1)
+                            ->get();
+                        foreach ($empleadosArea as $ea) {
+                            $punto_empleado = new punto_control_empleado();
+                            $punto_empleado->idPuntoControl = $idPunto;
+                            $punto_empleado->idEmpleado = $ea->emple_id;
+                            $punto_empleado->estado = 1;
+                            $punto_empleado->save();
+                        }
+                        // * REGISTRAR PUNTO AREAS
+                        $punto_area = new punto_control_area();
+                        $punto_area->idPuntoControl = $idPunto;
+                        $punto_area->idArea = $la;
+                        $punto_area->estado = 1;
+                        $punto_area->save();
+                    }
+                }
+            }
+        }
+        if (!empty($request->get('puntosGeo'))) {
+            foreach ($request->get('puntosGeo') as $punto) {
+                if (!is_null($punto["latitud"]) && !is_null($punto["longitud"]) && !is_null($punto["radio"])) {
+                    $nuevoPuntoGeo = new punto_control_geo();
+                    $nuevoPuntoGeo->latitud = $punto["latitud"];
+                    $nuevoPuntoGeo->longitud = $punto["longitud"];
+                    $nuevoPuntoGeo->radio = $punto["radio"];
+                    $nuevoPuntoGeo->color = $punto["color"];
+                    $nuevoPuntoGeo->idPuntoControl = $idPunto;
+                    $nuevoPuntoGeo->save();
+                }
+            }
+        }
+        if (!empty($request->get('descripciones'))) {
+            foreach ($request->get('descripciones') as $desc) {
+                if (!is_null($desc["descripcion"])) {
+                    $nuevoPuntoDet = new punto_control_detalle();
+                    $nuevoPuntoDet->descripcion = $desc["descripcion"];
+                    $nuevoPuntoDet->idPuntoControl = $idPunto;
+                    $nuevoPuntoDet->save();
+                }
+            }
+        }
+        return response()->json($puntoControl, 200);
+    }
+
+    // * RECUPERAR PUNTO
+    public function recuperarPunto(Request $request)
+    {
+        $idPunto = $request->get('id');
+        $punto = punto_control::findOrFail($idPunto);
+        if ($punto) {
+            $punto->estado = 1;
+            $punto->save();
+        }
+
+        return response()->json($punto, 200);
+    }
 }

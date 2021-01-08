@@ -523,14 +523,15 @@
                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
                     Registrar Punto de Control
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:limpiarPunto()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:editarPuntoControl()" id="FormEditarPuntoControl">
+                        <form action="javascript:registrarPunto()" id="FormPuntoControl">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -679,7 +680,7 @@
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                onclick="javascript:limpiarPuntoEnEditar()">
+                                onclick="javascript:limpiarPunto()">
                                 Cancelar
                             </button>
                             <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">
