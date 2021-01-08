@@ -2036,6 +2036,114 @@ function r_eliminarGeo(id) {
 function r_toggleBody(id) {
     $('#r_bodyGPS' + id).toggle();
 }
+// ? BOTON DE ACEPTAR CAMBIOS
+function r_changeLatitud(id) {
+    $('#r_cambiaLat' + id).show();
+}
+function r_changeLongitud(id) {
+    $('#r_cambiaLng' + id).show();
+}
+function r_changeRadio(id) {
+    $('#r_cambiaR' + id).show();
+}
+function r_changeColor(id) {
+    $('#r_cambiaC' + id).show();
+}
+// * CAMBIAR POSICIONES EN MAPA
+function r_blurLatitud(id) {
+    if ($('#r_latitud' + id).val() != "" && $('#r_longitud' + id).val() != "") {
+        r_layerGroup.eachLayer(function (layer) {
+            if (layer.options.idCircle == id) {
+                var latlngActualizado = new L.latLng($('#r_latitud' + id).val(), $('#r_longitud' + id).val());
+                layer.setLatLng(latlngActualizado);
+            }
+        });
+        $('#r_cambiaLat' + id).hide();
+        $('#r_validGeo' + id).empty();
+        $('#r_validGeo' + id).hide();
+    } else {
+        if ($('#r_longitud' + id).val() == "" && $('#r_latitud' + id).val() == "") {
+            $('#r_validGeo' + id).empty();
+            var spanValid = `* Latitud y Longitud son obligatorios`;
+            $('#r_validGeo' + id).append(spanValid);
+            $('#r_validGeo' + id).show();
+        } else {
+            if ($('#r_longitud' + id).val() == "") {
+                $('#r_validGeo' + id).empty();
+                var spanValid = `* Longitud es obligatorio`;
+                $('#r_validGeo' + id).append(spanValid);
+                $('#r_validGeo' + id).show();
+            } else {
+                $('#r_validGeo' + id).empty();
+                var spanValid = `* Latitud es obligatorio`;
+                $('#r_validGeo' + id).append(spanValid);
+                $('#r_validGeo' + id).show();
+            }
+        }
+    }
+}
+function r_blurLongitud(id) {
+    if ($('#r_latitud' + id).val() != "" && $('#r_longitud' + id).val() != "") {
+        r_layerGroup.eachLayer(function (layer) {
+            if (layer.options.idCircle == id) {
+                var latlngActualizado = new L.latLng($('#r_latitud' + id).val(), $('#r_longitud' + id).val());
+                layer.setLatLng(latlngActualizado);
+            }
+        });
+        $('#r_cambiaLng' + id).hide();
+        $('#r_validGeo' + id).empty();
+        $('#r_validGeo' + id).hide();
+    } else {
+        if ($('#r_longitud' + id).val() == "" && $('#r_latitud' + id).val() == "") {
+            $('#r_validGeo' + id).empty();
+            var spanValid = `* Latitud y Longitud son obligatorios`;
+            $('#r_validGeo' + id).append(spanValid);
+            $('#r_validGeo' + id).show();
+        } else {
+            if ($('#r_longitud' + id).val() == "") {
+                $('#r_validGeo' + id).empty();
+                var spanValid = `* Longitud es obligatorio`;
+                $('#r_validGeo' + id).append(spanValid);
+                $('#r_validGeo' + id).show();
+            } else {
+                $('#r_validGeo' + id).empty();
+                var spanValid = `* Latitud es obligatorio`;
+                $('#r_validGeo' + id).append(spanValid);
+                $('#r_validGeo' + id).show();
+            }
+        }
+    }
+}
+function r_blurRadio(id) {
+    if ($('#r_radio' + id).val() > 5) {
+        r_layerGroup.eachLayer(function (layer) {
+            if (layer.options.idCircle == id) {
+                var radioActualizado = parseInt($('#r_radio' + id).val());
+                layer.setRadius(radioActualizado);
+            }
+        });
+        $('#r_cambiaR' + id).hide();
+        $('#r_validGeo' + id).empty();
+        $('#r_validGeo' + id).hide();
+    } else {
+        $('#r_validGeo' + id).empty();
+        var spanValid = `* Radio debe ser mayor  5 metros`;
+        $('#r_validGeo' + id).append(spanValid);
+        $('#r_validGeo' + id).show();
+    }
+}
+function r_blurColor(id) {
+    r_layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            var colorActualizado = $('#r_color' + id).val();
+            layer.setCircleStyle({
+                color: colorActualizado,
+                fillColor: colorActualizado
+            });
+        }
+    });
+    $('#r_cambiaC' + id).hide();
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
