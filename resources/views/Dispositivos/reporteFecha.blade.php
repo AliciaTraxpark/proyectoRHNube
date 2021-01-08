@@ -269,10 +269,13 @@
                         <th class="tableHi" >DNI</th>
                         <th class="tableHi" >Nombre</th>
                         <th  class="tableHi">Cargo</th>
-                        <th class="tableHi">Actividad</th>
+                        <th class="tableHi">Horario</th>
                         <th  class="tableHi" id="hEntradaI">Hora de entrada</th>
                         <th  class="tableHi"  id="hSalidaI">Hora de salida</th>
                         <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
+                        <th class="tableHi">Tardanza</th>
+                        <th class="tableHi">Faltas</th>
+                        <th class="tableHi">Incidencias</th>
 
                     </tr>
                 </thead>
@@ -289,11 +292,14 @@
                         <th>DNI</th>
                         <th>Nombre</th>
                         <th>Cargo</th>
-                        <th >Actividad</th>
+                        <th >Horario</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
-                       
+                        <th>Tardanza</th>
+                        <th >Faltas</th>
+                        <th >Incidencias</th>
+
                     </tr>
                 </thead>
                 <tbody id="tbodyD">
