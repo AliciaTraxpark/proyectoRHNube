@@ -339,7 +339,7 @@
 </div>
 {{-- FINALIZACION --}}
 {{-- MODAL DE  AGREGAR DE GPS EN EDITAR --}}
-<div id="modalGpsEditar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modaleditarPuntoControl"
+<div id="modalGpsEditar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalGpsEditar"
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  d-flex justify-content-center">
         <div class="modal-content">
@@ -680,6 +680,77 @@
                         <div class="col-md-12 text-right">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 onclick="javascript:limpiarPuntoEnEditar()">
+                                Cancelar
+                            </button>
+                            <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">
+                                Guardar
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE  AGREGAR DE GPS --}}
+<div id="modalGps" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalGps" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog  d-flex justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                    Agregar GPS
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:r_limpiarGPS()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:reg_agregarGPS()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Latitud:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm"
+                                            id="r_gpsLatitud" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Longitud:</label>
+                                        <input type="number" step="any" class="form-control form-control-sm"
+                                            id="r_gpsLongitud" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Radio (m):</label>
+                                        <input type="number" class="form-control form-control-sm" id="r_gpsRadio"
+                                            min="10" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Color:</label>
+                                        <input type="color" class="form-control form-control-sm" id="r_gpsColor"
+                                            value="#0000ff" required>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                onclick="javascript:r_limpiarGPS()">
                                 Cancelar
                             </button>
                             <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">

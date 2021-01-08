@@ -1855,6 +1855,183 @@ function r_eliminarI(id) {
         $('#r_agregarD').hide();
     }
 }
+// ? MODAL AGREGAR GPS
+function r_agregarGPS() {
+    $('#modalRegistrarPunto').modal('hide');
+    $('#modalGps').modal();
+}
+// ? AGREGAR GPS
+var reg_variableU = 1;
+function reg_agregarGPS() {
+    var container = $('#r_rowGeo');
+    var latitud = parseFloat($('#r_gpsLatitud').val()).toFixed(5);
+    var longitud = parseFloat($('#r_gpsLongitud').val()).toFixed(5);
+    var radio = $('#r_gpsRadio').val();
+    var color = $('#r_gpsColor').val();
+    colGeo = `<div class="col-lg-12" id="r_colGeoNuevo${reg_variableU}">
+                <div class="row">
+                    <input type="hidden" class="r_rowIdGeo" value="Nuevo${reg_variableU}">
+                    <div class="col-md-12">
+                        <span id="r_validGeoNuevo${reg_variableU}" style="color: red;display:none"></span>
+                        <div class="card border" 
+                            style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                            <div class="card-header" style="padding: 0.25rem 1.25rem;">
+                                <span style="font-weight: bold;">Datos GPS</span>
+                                &nbsp;`;
+    colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip" 
+                    data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
+                    <img src="/admin/images/delete.svg" height="13">
+                </a>`;
+    colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="r_toggleBody('Nuevo${reg_variableU}')"
+                    style="cursor: pointer;">
+                </div>
+                <div class="card-body" style="padding:0.3rem" id="r_bodyGPSNuevo${reg_variableU}">
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Latitud:</label>
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_latitudNuevo${reg_variableU}" 
+                                value="${latitud}" onkeyup="javascript:r_changeLatitud('Nuevo${reg_variableU}')">
+                            <a onclick="javascript:r_blurLatitud('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaLatNuevo${reg_variableU}"
+                                data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
+                                <img src="admin/images/checkH.svg" height="15">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Longitud:</label>
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_longitudNuevo${reg_variableU}" 
+                                value="${longitud}" onkeyup="javascript:r_changeLongitud('Nuevo${reg_variableU}')">
+                                <a onclick="javascript:r_blurLongitud('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaLngNuevo${reg_variableU}"
+                                    data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
+                                    <img src="admin/images/checkH.svg" height="15">
+                                </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Radio (m):</label>
+                            <input type="number" class="form-control form-control-sm col-6" id="r_radioNuevo${reg_variableU}" 
+                                value="${radio}" onkeyup="javascript:r_changeRadio('Nuevo${reg_variableU}')">
+                                <a onclick="javascript:r_blurRadio('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaRNuevo${reg_variableU}"
+                                    data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
+                                    <img src="admin/images/checkH.svg" height="15">
+                                </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" style="margin-bottom: 0.4rem;">
+                            <label class="col-lg-4 col-form-label">Color:</label>
+                            <input type="color" class="form-control form-control-sm col-6" id="r_colorNuevo${reg_variableU}" 
+                                value="${color}" onchange="javascript:r_changeColor('Nuevo${reg_variableU}')">
+                            <a onclick="javascript:r_blurColor('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaCNuevo${reg_variableU}"
+                                data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
+                                <img src="admin/images/checkH.svg" height="15">
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>`;
+    container.append(colGeo);
+    $('#modalGps').modal('toggle');
+    r_limpiarGPS();
+    var contarDisponibles = 0;
+    $('.r_rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#r_latitud' + idG).val();
+        if (latitudG != "") {
+            contarDisponibles = contarDisponibles + 1
+        }
+    });
+    $('#modalRegistrarPunto').modal('show');
+    $('[data-toggle="tooltip"]').tooltip();
+    if (contarDisponibles < 4) {
+        $('#r_buttonAgregarGPS').show();
+    } else {
+        $('#r_buttonAgregarGPS').hide();
+    }
+    var arrayMarkerBounds = [];
+    var nuevoLat = parseFloat($('#r_latitudNuevo' + reg_variableU).val()).toFixed(5);
+    var nuevoLng = parseFloat($('#r_longitudNuevo' + reg_variableU).val()).toFixed(5);
+    var nuevoRadio = parseInt($('#r_radioNuevo' + reg_variableU).val());
+    var nuevoColor = $('#r_colorNuevo' + reg_variableU).val()
+    var latlng = new L.latLng(nuevoLat, nuevoLng);
+    var idNuevo = 'Nuevo' + reg_variableU;
+    // * POSICION DE POPUP
+    var r_nuevo = new L.editableCircleMarker(latlng, nuevoRadio, {
+        color: nuevoColor,
+        fillColor: nuevoColor,
+        fillOpacity: 0.5,
+        idCircle: idNuevo,
+        metric: false,
+        draggable: true
+    })
+        .on('move', function (e) {
+            $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
+            $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+        });
+    r_layerGroup.addLayer(r_nuevo);
+    r_layerGroup.addTo(map);
+    r_layerGroup.eachLayer(function (layer) {
+        var nuevoLatLng = layer.getLatLng()
+        var markerBounds = new L.latLngBounds([nuevoLatLng]);
+        arrayMarkerBounds.push(markerBounds);
+    });
+    map.fitBounds(arrayMarkerBounds);
+    map.setZoom(1); //: -> ZOOM COMPLETO
+    var contarDisponibles = 0;
+    $('.r_rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#r_latitud' + idG).val();
+        if (latitudG != "") {
+            contarDisponibles = contarDisponibles + 1
+        }
+    });
+    if (contarDisponibles < 4) {
+        $('#r_buttonAgregarGPS').show();
+    } else {
+        $('#r_buttonAgregarGPS').hide();
+    }
+    reg_variableU++;
+}
+// ? ELIMINAR DATOS  GPS DE MODAL
+function r_limpiarGPS() {
+    $('#r_gpsLatitud').val("");
+    $('#r_gpsLongitud').val("");
+    $('#r_gpsRadio').val("");
+    $('#modalRegistrarPunto').modal('show');
+}
+// ? ELIMINAR GPS
+function r_eliminarGeo(id) {
+    $('#r_colGeo' + id).hide();
+    r_layerGroup.eachLayer(function (layer) {
+        if (layer.options.idCircle == id) {
+            r_layerGroup.removeLayer(layer);
+        }
+    });
+    $('#r_latitud' + id).val("");
+    $('#r_radio' + id).val("");
+    $('#r_longitud' + id).val("");
+    $('#r_color' + id).val("");
+    $('#r_colEliminar' + id).hide();
+    var contarDisponibles = 0;
+    $('.r_rowIdGeo').each(function () {
+        var idG = $(this).val();
+        var latitudG = $('#r_latitud' + idG).val();
+        if (latitudG != "") {
+            contarDisponibles = contarDisponibles + 1
+        }
+    });
+    if (contarDisponibles < 4) {
+        $('#r_buttonAgregarGPS').show();
+    } else {
+        $('#r_buttonAgregarGPS').hide();
+    }
+}
 // ! ****************** FINALIZACION *****************************
 $(function () {
     $(window).on('resize', function () {
