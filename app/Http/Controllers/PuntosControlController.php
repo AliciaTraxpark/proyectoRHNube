@@ -101,7 +101,7 @@ class PuntosControlController extends Controller
                 'pcg.latitud',
                 'pcg.longitud',
                 'pcg.radio',
-                'pcg.color',
+                'pcg.color'
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
             ->where('pc.id', '=', $idPunto)
