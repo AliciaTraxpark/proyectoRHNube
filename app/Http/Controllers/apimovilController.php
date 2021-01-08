@@ -428,4 +428,28 @@ class apimovilController extends Controller
 
         return response()->json("Controlador no se encuentra registrado.", 400);
     }
+
+
+     //CENTRO COSTO
+     public function centroCostos(Request $request){
+        $organi_id=$request->organi_id;
+        $centroCosto = DB::table('centro_costo as cc')
+            ->select(
+                'cc.centroC_id',
+                'cc.centroC_descripcion',
+                'cc.organi_id'
+            )
+            ->where('cc.organi_id', '=', $organi_id)
+            ->get();
+
+        if(!$centroCosto->isEmpty()){
+             return response()->json(array('status'=>200,"centroCosto"=>$centroCosto));
+        }
+        else{
+            return response()->json(array('status'=>400,'title' => 'Centros de costos no encontrados',
+            'detail' => 'No se encontro centro de costos en esta organizacion'),400);
+        }
+
+
+    }
 }
