@@ -1,3 +1,4 @@
+$.fn.select2.defaults.set('language', 'es');
 var table;
 function tablaCentroCosto() {
     table = $("#centroC").DataTable({
@@ -93,6 +94,41 @@ function centroCostoOrganizacion() {
     });
 }
 centroCostoOrganizacion();
+// ? ************************************* FORMULARIO EDITAR **************************************
+$('#e_empleadosCentro').select2({
+    tags: "true"
+});
+function editarCentro(id) {
+    $('#e_idCentro').val(id);
+    $('#e_centrocmodal').modal();
+    datosCentro(id);
+}
+function datosCentro(id) {
+    $('#e_empleadosCentro').empty();
+    $.ajax({
+        async: false,
+        url: "/idCentroCosto",
+        method: "POST",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#e_descripcion').val(data[0].centro.descripcion);
+        },
+        error: function () { }
+    });
+}
 $(function () {
     $(window).on('resize', function () {
         $("#centroC").css('width', '100%');

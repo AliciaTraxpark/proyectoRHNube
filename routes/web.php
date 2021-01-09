@@ -500,3 +500,4 @@ Route::post('/cambiarEstadoControlesP', 'PuntosControlController@cambiarEstadoAc
 // * MANTENEDOR DE CENTRO COSTOS
 Route::get('/centroCosto', 'centrocostoController@index');
 Route::get('/centroCOrga', 'centrocostoController@listaCentroCosto');
+Route::post('/idCentroCosto', 'centrocostoController@centroCosto');

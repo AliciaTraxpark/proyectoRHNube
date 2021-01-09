@@ -43,6 +43,41 @@
   </div>
 </div>
 {{-- FINALIZACION --}}
+{{-- EDITAR CENTRO COSTO --}}
+<div id="e_centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="e_centrocmodal"
+  aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#163552;">
+        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+          Editar Centro Costo
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="e_idCentro">
+        <form action="javascript:agregarcentroA()">
+          {{ csrf_field() }}
+          <div class="col-md-12">
+            <label for="">Centro Costo</label>
+            <input type="text" class="form-control" id="e_descripcion" required>
+          </div>
+          <div class="col-md-12">
+            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple">
+            </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{-- FINALIZACION --}}
 @if (Auth::user())
 <script>
   $(function() {

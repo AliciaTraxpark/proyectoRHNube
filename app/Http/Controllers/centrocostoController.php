@@ -59,4 +59,46 @@ class centrocostoController extends Controller
 
         return response()->json($centroC, 200);
     }
+
+    public function centroCosto(Request $request)
+    {
+        $id = $request->get('id');
+        $empleadoSinCentro = [];
+        $respuesta = [];
+        $centro = centro_costo::select('centroC_descripcion as descripcion', 'centroC_id as id')
+            ->where('centroC_id', '=', $id)->get()->first();
+        // TODO LOS EMPLEADOS
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        // * EMPLEADOS EN CENTRO DE COSTO
+        $empleadoCentro = DB::table('centro_costo as c')
+            ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('c.centroC_id', '=', $centro->id)
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        for ($index = 0; $index < sizeof($empleados); $index++) {
+            $estado = true;
+            foreach ($empleadoCentro as $ec) {
+                if ($empleados[$index]->emple_id == $ec->emple_id) {
+                    $estado = false;
+                }
+            }
+            if ($estado) {
+                array_push($empleadoSinCentro, $empleados[$index]);
+            }
+        }
+        // * DATOS PARA RESULTADO
+        array_push($respuesta, array("select" => $empleadoCentro, "noSelect" => $empleadoSinCentro, "centro" => $centro));
+
+        return response()->json($respuesta, 200);
+    }
 }
