@@ -657,227 +657,277 @@ class apiVersionDosController extends Controller
                 if ($vinculacion) {
                     $empleadoHash = empleado::select('emple_nDoc')->where('emple_id', '=', $vinculacion->idEmpleado)->get()->first();
                     if ($empleadoHash->emple_nDoc == $nroD) {
-                        $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
-                        if ($licencia) {
-                            if ($vinculacion->hash == $request->get('codigo')) {
-                                //* OBTENER HORAS
-                                $fecha = Carbon::now();
-                                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                                // * FUNCION PARA UNIR DATOS POR HORAS Y MINUTOS
-                                $horasRHbox = DB::table('empleado as e')
-                                    ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
-                                    ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
-                                    ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
-                                    ->select(
-                                        DB::raw('TIME(cp.hora_ini) as hora_ini'),
-                                        DB::raw('TIME(cp.hora_fin) as hora_fin'),
-                                        DB::raw('DATE(cp.hora_ini) as fecha'),
-                                        DB::raw('TIME(cp.hora_ini) as hora'),
-                                        'promedio.tiempo_rango as rango'
-                                    )
-                                    ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
-                                    ->where('e.emple_id', '=', $empleado->emple_id)
-                                    ->orderBy('cp.hora_ini', 'asc')
-                                    ->get();
-                                $horasRHbox = horasRemotoRutaJson($horasRHbox);
-                                //* OBTENER HORAS DEL EMPLEADO EN RUTA
-                                $horasRuta = DB::table('empleado as e')
-                                    ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
-                                    ->leftJoin('horario_dias as h', 'h.id', '=', 'u.idHorario_dias')
-                                    ->select(
-                                        DB::raw('TIME(u.hora_ini) as hora_ini'),
-                                        DB::raw('TIME(u.hora_fin) as hora_fin'),
-                                        DB::raw('DATE(u.hora_ini) as fecha'),
-                                        DB::raw('TIME(u.hora_ini) as hora'),
-                                        'u.rango as rango'
-                                    )
-                                    ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '=', $fechaHoy)
-                                    ->where('e.emple_id', '=', $empleado->emple_id)
-                                    ->orderBy('u.hora_ini', 'asc')
-                                    ->get();
-                                $horasRuta = horasRemotoRutaJson($horasRuta);
-                                if (sizeof($horasRHbox) != 0 && sizeof($horasRuta) != 0) {
-                                    $rango = 0;
-                                    for ($hora = 0; $hora < 24; $hora++) {
-                                        $busquedaHora = true;
-                                        for ($i = 0; $i < sizeof($horasRHbox); $i++) {
-                                            for ($j = 0; $j < sizeof($horasRuta); $j++) {
-                                                //* RECORREMOS EN FORMATO HORAS
-                                                if ($horasRHbox[$i]["hora"] == $hora && $horasRuta[$j]["hora"] == $hora) {
-                                                    $busquedaHora = false;
-                                                    //* RECORREMOS EN FORMATO MINUTOS
-                                                    for ($m = 0; $m < 6; $m++) {
-                                                        if (isset($horasRHbox[$i]["minuto"][$m]) && isset($horasRuta[$j]["minuto"][$m])) {
-                                                            $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
-                                                            $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
-                                                            //: DATOS DE RH BOX
-                                                            $horaInicioRHbox = "23:00:00";
-                                                            $horaFinRHbox = "00:00:00";
-                                                            $rangoRHbox = 0;
-                                                            //: DATOS DE RUTA
-                                                            $horaInicioRuta = "23:00:00";
-                                                            $horaFinRuta = "00:00:00";
+                        //! ********************************** OBTENER HORAS ************************************
+                        $fecha = Carbon::now();
+                        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                        // * FUNCION PARA UNIR DATOS POR HORAS Y MINUTOS
+                        $horasRHbox = DB::table('empleado as e')
+                            ->join('captura as cp', 'cp.idEmpleado', '=', 'e.emple_id')
+                            ->join('promedio_captura as promedio', 'promedio.idCaptura', '=', 'cp.idCaptura')
+                            ->leftJoin('horario_dias as h', 'h.id', '=', 'promedio.idHorario')
+                            ->select(
+                                'cp.actividad',
+                                DB::raw('TIME(cp.hora_ini) as hora_ini'),
+                                DB::raw('TIME(cp.hora_fin) as hora_fin'),
+                                DB::raw('DATE(cp.hora_ini) as fecha'),
+                                DB::raw('TIME(cp.hora_ini) as hora'),
+                                'promedio.tiempo_rango as rango'
+                            )
+                            ->where(DB::raw('IF(h.id is null, DATE(cp.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                            ->where('e.emple_id', '=', $empleado->emple_id)
+                            ->orderBy('cp.hora_ini', 'asc')
+                            ->get();
+                        $horasRHbox = horasRemotoRutaJson($horasRHbox);
+                        //* OBTENER HORAS DEL EMPLEADO EN RUTA
+                        $horasRuta = DB::table('empleado as e')
+                            ->join('ubicacion as u', 'u.idEmpleado', '=', 'e.emple_id')
+                            ->leftJoin('horario_dias as h', 'h.id', '=', 'u.idHorario_dias')
+                            ->select(
+                                'u.actividad_ubicacion as actividad',
+                                DB::raw('TIME(u.hora_ini) as hora_ini'),
+                                DB::raw('TIME(u.hora_fin) as hora_fin'),
+                                DB::raw('DATE(u.hora_ini) as fecha'),
+                                DB::raw('TIME(u.hora_ini) as hora'),
+                                'u.rango as rango'
+                            )
+                            ->where(DB::raw('IF(h.id is null, DATE(u.hora_ini), DATE(h.start))'), '=', $fechaHoy)
+                            ->where('e.emple_id', '=', $empleado->emple_id)
+                            ->orderBy('u.hora_ini', 'asc')
+                            ->get();
+                        $horasRuta = horasRemotoRutaJson($horasRuta);
+                        if (sizeof($horasRHbox) != 0 && sizeof($horasRuta) != 0) {
+                            $rango = 0;
+                            $actividad = 0;
+                            for ($hora = 0; $hora < 24; $hora++) {
+                                $busquedaHora = true;
+                                for ($i = 0; $i < sizeof($horasRHbox); $i++) {
+                                    for ($j = 0; $j < sizeof($horasRuta); $j++) {
+                                        //* RECORREMOS EN FORMATO HORAS
+                                        if ($horasRHbox[$i]["hora"] == $hora && $horasRuta[$j]["hora"] == $hora) {
+                                            $busquedaHora = false;
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horasRHbox[$i]["minuto"][$m]) && isset($horasRuta[$j]["minuto"][$m])) {
+                                                    $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                    $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                    //: DATOS DE RH BOX
+                                                    $horaInicioRHbox = "23:00:00";
+                                                    $horaFinRHbox = "00:00:00";
+                                                    $rangoRHbox = 0;
+                                                    $actividadRHbox = 0;
+                                                    //: DATOS DE RUTA
+                                                    $horaInicioRuta = "23:00:00";
+                                                    $horaFinRuta = "00:00:00";
+                                                    $rangoRuta = 0;
+                                                    $actividadRuta = 0;
+                                                    //* RECORREMOS MINUTOS RH BOX
+                                                    for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                        if (Carbon::parse($horaInicioRHbox) > Carbon::parse($arrayMinutoRHbox[$index]->hora_ini)) {
+                                                            $horaInicioRHbox = $arrayMinutoRHbox[$index]->hora_ini;
+                                                        }
+                                                        if (Carbon::parse($horaFinRHbox) < Carbon::parse($arrayMinutoRHbox[$index]->hora_fin)) {
+                                                            $horaFinRHbox = $arrayMinutoRHbox[$index]->hora_fin;
+                                                        }
+                                                        $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                        $actividadRHbox = $actividadRHbox + $arrayMinutoRHbox[$index]->actividad;
+                                                    }
+                                                    //* RECORREMOS MINUTOS RUTA
+                                                    for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                        if (Carbon::parse($horaInicioRuta) > Carbon::parse($arrayMinutoRuta[$element]->hora_ini)) {
+                                                            $horaInicioRuta = $arrayMinutoRuta[$element]->hora_ini;
+                                                        }
+                                                        if (Carbon::parse($horaFinRuta) < Carbon::parse($arrayMinutoRuta[$element]->hora_fin)) {
+                                                            $horaFinRuta = $arrayMinutoRuta[$element]->hora_fin;
+                                                        }
+                                                        $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                        $actividadRuta = $actividadRuta + $arrayMinutoRuta[$element]->actividad;
+                                                    }
+                                                    //* COMPARAMOS TIEMPOS
+                                                    if (Carbon::parse($horaInicioRHbox) < Carbon::parse($horaInicioRuta)) {
+                                                        //* PARAMETROS PARA ENVIAR A FUNCION
+                                                        $horaInicioRango = $horaInicioRHbox;
+                                                        $horaFinRango = $horaFinRHbox;
+                                                        $horaNowRango = $horaInicioRuta;
+                                                        //* *********************************
+                                                        $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                        if ($check) {
+                                                            // ! RANGOS
+                                                            $nuevoRango = ($rangoRHbox + $rangoRuta) / 2;
+                                                            $rango = $rango + $nuevoRango;
+                                                            // ! ACTIVIDAD
+                                                            $nuevaActividad = ($actividadRHbox + $actividadRuta) / 2;
+                                                            $actividad = $actividad + $nuevaActividad;
+                                                        } else {
+                                                            // ! RANGOS
+                                                            $nuevoRango = $rangoRHbox + $rangoRuta;
+                                                            $rango = $rango + $nuevoRango;
+                                                            // ! ACTIVIDAD
+                                                            $nuevaActividad = $actividadRHbox + $actividadRuta;
+                                                            $actividad = $actividad + $nuevaActividad;
+                                                        }
+                                                    } else {
+                                                        //* PARAMETROS PARA ENVIAR A FUNCION
+                                                        $horaInicioRango = $horaInicioRuta;
+                                                        $horaFinRango = $horaFinRuta;
+                                                        $horaNowRango = $horaInicioRHbox;
+                                                        //* *********************************
+                                                        $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
+                                                        if ($check) {
+                                                            // ! RANGOS
+                                                            $nuevoRango = ($rangoRHbox + $rangoRuta) / 2;
+                                                            $rango = $rango + $nuevoRango;
+                                                            // ! ACTIVIDAD
+                                                            $nuevaActividad = ($actividadRHbox + $actividadRuta) / 2;
+                                                            $actividad = $actividad + $nuevaActividad;
+                                                        } else {
+                                                            // ! RANGOS
+                                                            $nuevoRango = $rangoRHbox + $rangoRuta;
+                                                            $rango = $rango + $nuevoRango;
+                                                            // ! ACTIVIDAD
+                                                            $nuevaActividad = $actividadRHbox + $actividadRuta;
+                                                            $actividad = $actividad + $nuevaActividad;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (isset($horasRHbox[$i]["minuto"][$m])) {
+                                                        $rangoRHbox = 0;
+                                                        $actividadRHbox = 0;
+                                                        $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                        //* RECORREMOS MINUTOS RH BOX
+                                                        for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                            $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                            $actividadRHbox = $actividadRHbox + $arrayMinutoRHbox[$index]->actividad;
+                                                        }
+                                                        $rango = $rango + $rangoRHbox;               //: -> RANGO
+                                                        $actividad = $actividad + $actividadRHbox;   //: -> ACTIVIDAD
+                                                    } else {
+                                                        if (isset($horasRuta[$j]["minuto"][$m])) {
                                                             $rangoRuta = 0;
-                                                            //* RECORREMOS MINUTOS RH BOX
-                                                            for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
-                                                                if (Carbon::parse($horaInicioRHbox) > Carbon::parse($arrayMinutoRHbox[$index]->hora_ini)) {
-                                                                    $horaInicioRHbox = $arrayMinutoRHbox[$index]->hora_ini;
-                                                                }
-                                                                if (Carbon::parse($horaFinRHbox) < Carbon::parse($arrayMinutoRHbox[$index]->hora_fin)) {
-                                                                    $horaFinRHbox = $arrayMinutoRHbox[$index]->hora_fin;
-                                                                }
-                                                                $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
-                                                            }
+                                                            $actividadRuta = 0;
+                                                            $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
                                                             //* RECORREMOS MINUTOS RUTA
                                                             for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
-                                                                if (Carbon::parse($horaInicioRuta) > Carbon::parse($arrayMinutoRuta[$element]->hora_ini)) {
-                                                                    $horaInicioRuta = $arrayMinutoRuta[$element]->hora_ini;
-                                                                }
-                                                                if (Carbon::parse($horaFinRuta) < Carbon::parse($arrayMinutoRuta[$element]->hora_fin)) {
-                                                                    $horaFinRuta = $arrayMinutoRuta[$element]->hora_fin;
-                                                                }
                                                                 $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                                $actividadRuta = $actividadRuta + $arrayMinutoRuta[$element]->actividad;
                                                             }
-                                                            //* COMPARAMOS TIEMPOS
-                                                            if (Carbon::parse($horaInicioRHbox) < Carbon::parse($horaInicioRuta)) {
-                                                                //* PARAMETROS PARA ENVIAR A FUNCION
-                                                                $horaInicioRango = $horaInicioRHbox;
-                                                                $horaFinRango = $horaFinRHbox;
-                                                                $horaNowRango = $horaInicioRuta;
-                                                                //* *********************************
-                                                                $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                if ($check) {
-                                                                    $nuevoRango = ($rangoRHbox + $rangoRuta) / 2;
-                                                                    $rango = $rango + $nuevoRango;
-                                                                } else {
-                                                                    $nuevoRango = $rangoRHbox + $rangoRuta;
-                                                                    $rango = $rango + $nuevoRango;
-                                                                }
-                                                            } else {
-                                                                //* PARAMETROS PARA ENVIAR A FUNCION
-                                                                $horaInicioRango = $horaInicioRuta;
-                                                                $horaFinRango = $horaFinRuta;
-                                                                $horaNowRango = $horaInicioRHbox;
-                                                                //* *********************************
-                                                                $check = checkHora($horaInicioRango, $horaFinRango, $horaNowRango);
-                                                                if ($check) {
-                                                                    $nuevoRango = ($rangoRHbox + $rangoRuta) / 2;
-                                                                    $rango = $rango + $nuevoRango;
-                                                                } else {
-                                                                    $nuevoRango = $rangoRHbox + $rangoRuta;
-                                                                    $rango = $rango + $nuevoRango;
-                                                                }
-                                                            }
-                                                        } else {
-                                                            if (isset($horasRHbox[$i]["minuto"][$m])) {
-                                                                $rangoRHbox = 0;
-                                                                $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
-                                                                //* RECORREMOS MINUTOS RH BOX
-                                                                for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
-                                                                    $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
-                                                                }
-                                                                $rango = $rango + $rangoRHbox;
-                                                            } else {
-                                                                if (isset($horasRuta[$j]["minuto"][$m])) {
-                                                                    $rangoRuta = 0;
-                                                                    $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
-                                                                    //* RECORREMOS MINUTOS RUTA
-                                                                    for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
-                                                                        $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
-                                                                    }
-                                                                    $rango = $rango + $rangoRuta;
-                                                                }
-                                                            }
+                                                            $rango = $rango + $rangoRuta;                //: -> RANGO
+                                                            $actividad = $actividad + $actividadRuta;    //: -> ACTIVIDAD
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        if ($busquedaHora) {
-                                            for ($i = 0; $i < sizeof($horasRHbox); $i++) {
-                                                if ($horasRHbox[$i]["hora"] == $hora) {
-                                                    //* RECORREMOS EN FORMATO MINUTOS
-                                                    for ($m = 0; $m < 6; $m++) {
-                                                        if (isset($horasRHbox[$i]["minuto"][$m])) {
-                                                            $rangoRHbox = 0;
-                                                            $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
-                                                            //* RECORREMOS MINUTOS RH BOX
-                                                            for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
-                                                                $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
-                                                            }
-                                                            $rango = $rango + $rangoRHbox;
-                                                        }
+                                    }
+                                }
+                                if ($busquedaHora) {
+                                    for ($i = 0; $i < sizeof($horasRHbox); $i++) {
+                                        if ($horasRHbox[$i]["hora"] == $hora) {
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horasRHbox[$i]["minuto"][$m])) {
+                                                    $rangoRHbox = 0;
+                                                    $actividadRHbox = 0;
+                                                    $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                    //* RECORREMOS MINUTOS RH BOX
+                                                    for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                        $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                        $actividadRHbox = $actividadRHbox + $arrayMinutoRHbox[$index]->actividad;
                                                     }
+                                                    $rango = $rango + $rangoRHbox;                //: -> RANGO
+                                                    $actividad = $actividad + $actividadRHbox;   //: -> ACTIVIDAD
                                                 }
                                             }
-                                            for ($j = 0; $j < sizeof($horasRuta); $j++) {
-                                                if ($horasRuta[$j]["hora"] == $hora) {
-                                                    //* RECORREMOS EN FORMATO MINUTOS
-                                                    for ($m = 0; $m < 6; $m++) {
-                                                        if (isset($horasRuta[$j]["minuto"][$m])) {
-                                                            $rangoRuta = 0;
-                                                            $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
-                                                            //* RECORREMOS MINUTOS RUTA
-                                                            for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
-                                                                $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
-                                                            }
-                                                            $rango = $rango + $rangoRuta;
+                                        }
+                                    }
+                                    for ($j = 0; $j < sizeof($horasRuta); $j++) {
+                                        if ($horasRuta[$j]["hora"] == $hora) {
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horasRuta[$j]["minuto"][$m])) {
+                                                    $rangoRuta = 0;
+                                                    $actividadRuta = 0;
+                                                    $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                    //* RECORREMOS MINUTOS RUTA
+                                                    for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                        $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                        $actividadRuta = $actividadRuta + $arrayMinutoRuta[$element]->actividad;
+                                                    }
+                                                    $rango = $rango + $rangoRuta;               //: -> RANGO
+                                                    $actividad = $actividad + $actividadRuta;   //: -> ACTIVIDAD
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (sizeof($horasRHbox) != 0) {
+                                $rango = 0;
+                                $actividad = 0;
+                                for ($i = 0; $i < sizeof($horasRHbox); $i++) {
+                                    //* RECORREMOS EN FORMATO HORAS
+                                    for ($hora = 0; $hora < 24; $hora++) {
+                                        if ($horasRHbox[$i]["hora"] == $hora) {
+                                            //* RECORREMOS EN FORMATO MINUTOS
+                                            for ($m = 0; $m < 6; $m++) {
+                                                if (isset($horasRHbox[$i]["minuto"][$m])) {
+                                                    $rangoRHbox = 0;
+                                                    $actividadRHbox = 0;
+                                                    $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
+                                                    //* RECORREMOS MINUTOS RH BOX
+                                                    for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
+                                                        $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
+                                                        $actividadRHbox = $actividadRHbox + $arrayMinutoRHbox[$index]->actividad;
+                                                    }
+                                                    $rango = $rango + $rangoRHbox;               //: -> RANGO
+                                                    $actividad = $actividad + $actividadRHbox;   //: -> ACTIVIDAD
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (sizeof($horasRuta) != 0) {
+                                    $rango = 0;
+                                    $actividad = 0;
+                                    for ($j = 0; $j < sizeof($horasRuta); $j++) {
+                                        //* RECORREMOS EN FORMATO HORAS
+                                        for ($hora = 0; $hora < 24; $hora++) {
+                                            if ($horasRuta[$j]["hora"] == $hora) {
+                                                //* RECORREMOS EN FORMATO MINUTOS
+                                                for ($m = 0; $m < 6; $m++) {
+                                                    if (isset($horasRuta[$j]["minuto"][$m])) {
+                                                        $rangoRuta = 0;
+                                                        $actividadRuta = 0;
+                                                        $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
+                                                        //* RECORREMOS MINUTOS RUTA
+                                                        for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
+                                                            $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
+                                                            $actividadRuta = $actividadRuta + $arrayMinutoRuta[$element]->actividad;
                                                         }
+                                                        $rango = $rango + $rangoRuta;
+                                                        $actividad = $actividad + $actividadRuta;
                                                     }
                                                 }
                                             }
                                         }
                                     }
                                 } else {
-                                    if (sizeof($horasRHbox) != 0) {
-                                        $rango = 0;
-                                        for ($i = 0; $i < sizeof($horasRHbox); $i++) {
-                                            //* RECORREMOS EN FORMATO HORAS
-                                            for ($hora = 0; $hora < 24; $hora++) {
-                                                if ($horasRHbox[$i]["hora"] == $hora) {
-                                                    //* RECORREMOS EN FORMATO MINUTOS
-                                                    for ($m = 0; $m < 6; $m++) {
-                                                        if (isset($horasRHbox[$i]["minuto"][$m])) {
-                                                            $rangoRHbox = 0;
-                                                            $arrayMinutoRHbox = $horasRHbox[$i]["minuto"][$m];
-                                                            //* RECORREMOS MINUTOS RH BOX
-                                                            for ($index = 0; $index < sizeof($arrayMinutoRHbox); $index++) {
-                                                                $rangoRHbox = $rangoRHbox + $arrayMinutoRHbox[$index]->rango;
-                                                            }
-                                                            $rango = $rango + $rangoRHbox;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        if (sizeof($horasRuta) != 0) {
-                                            $rango = 0;
-                                            for ($j = 0; $j < sizeof($horasRuta); $j++) {
-                                                //* RECORREMOS EN FORMATO HORAS
-                                                for ($hora = 0; $hora < 24; $hora++) {
-                                                    if ($horasRuta[$j]["hora"] == $hora) {
-                                                        //* RECORREMOS EN FORMATO MINUTOS
-                                                        for ($m = 0; $m < 6; $m++) {
-                                                            if (isset($horasRuta[$j]["minuto"][$m])) {
-                                                                $rangoRuta = 0;
-                                                                $arrayMinutoRuta = $horasRuta[$j]["minuto"][$m];
-                                                                //* RECORREMOS MINUTOS RUTA
-                                                                for ($element = 0; $element < sizeof($arrayMinutoRuta); $element++) {
-                                                                    $rangoRuta = $rangoRuta + $arrayMinutoRuta[$element]->rango;
-                                                                }
-                                                                $rango = $rango + $rangoRuta;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            $rango = 0;
-                                        }
-                                    }
+                                    $rango = 0;
+                                    $actividad = 0;
                                 }
-                                // VERSION GLOBAL
+                            }
+                        }
+                        $productividad = 0;
+                        if ($rango != 0) {
+                            $productividad = ($actividad / $rango) * 100;
+                            $productividad = (float) number_format($productividad, 2);
+                        }
+                        // ! ********************************* FINALIZACION *******************************************
+                        $licencia = licencia_empleado::where('id', '=', $vinculacion->idLicencia)->where('disponible', '!=', 'i')->get()->first();
+                        if ($licencia) {
+                            if ($vinculacion->hash == $request->get('codigo')) {
+                                //* VERSION GLOBAL
                                 $versionGlobal = DB::table('versionrhbox as vr')
                                     ->select('vr.descripcion', 'vr.obligatorio')
                                     ->get()
@@ -926,6 +976,7 @@ class apiVersionDosController extends Controller
                                         "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                         'idUser' => $idOrganizacion,
                                         'tiempo' => gmdate('H:i:s', $rango),
+                                        "productividad" => $productividad,
                                         'version' => $software_vinculacion->version,
                                         'versionGlobal' => $versionGlobal->descripcion,
                                         'versionObligatorio' => $versionGlobal->obligatorio,
@@ -973,6 +1024,7 @@ class apiVersionDosController extends Controller
                                             "idEmpleado" => $empleado->emple_id, "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                             'idUser' => $idOrganizacion,
                                             'tiempo' => gmdate('H:i:s', $rango),
+                                            "productividad" => $productividad,
                                             'version' => $software_vinculacion->version,
                                             'versionGlobal' => $versionGlobal->descripcion,
                                             'versionObligatorio' => $versionGlobal->obligatorio,
@@ -1023,6 +1075,7 @@ class apiVersionDosController extends Controller
                                                 "empleado" => $empleado->perso_nombre . " " . $empleado->perso_apPaterno . " " . $empleado->perso_apMaterno,
                                                 'idUser' => $idOrganizacion,
                                                 'tiempo' => gmdate('H:i:s', $rango),
+                                                "productividad" => $productividad,
                                                 'version' => $software_vinculacion->version,
                                                 'versionGlobal' => $versionGlobal->descripcion,
                                                 'versionObligatorio' => $versionGlobal->obligatorio,
