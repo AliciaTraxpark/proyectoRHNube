@@ -637,12 +637,15 @@ function cargartabla(fecha1,fecha2) {
                                     <th>Fecha&nbsp;</th>
                                    `;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
-                    theadTabla += `<th>Actividad</th>
+                    theadTabla += `<th>Horario</th>
                                      <th>Hora de entrada</th>
                                     <th>Hora de salida</th>
-                                    <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
+                                    <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
+                                    <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
                 }
-                theadTabla += `<th>Tiempo total</th> </tr>`;
+                theadTabla += `<th>Tiempo total</th><th >Tardanza T.</th>
+                <th >Faltas T.</th>
+                <th >Incidencias T.</th>  </tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
                 // ! *********** BODY DE TABLA**********
@@ -673,8 +676,8 @@ function cargartabla(fecha1,fecha2) {
                             if (marcacionData.entrada != 0) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
-                                    if (marcacionData.actividad != 0) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.actividad}</td>`;
+                                    if (data[index].horario != 0) {
+                                        tbodyEntradaySalida += `<td>${data[index].horario}</td>`;
                                     } else {
                                         tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>>`;
                                     }
@@ -739,7 +742,7 @@ function cargartabla(fecha1,fecha2) {
                                                                     <a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
-                                                                </td>`;
+                                                                </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                                             sumaTiempos = moment(sumaTiempos).add(segundosTiempo, 'seconds');
                                             sumaTiempos = moment(sumaTiempos).add(minutosTiempo, 'minutes');
                                             sumaTiempos = moment(sumaTiempos).add(horasTiempo, 'hours');
@@ -773,15 +776,15 @@ function cargartabla(fecha1,fecha2) {
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                 --:--:--
                                                             </span>
-                                                        </td>`;
+                                                        </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                                     }
                                 }
                             } else {
                                 if (marcacionData.salida != 0) {
                                     if (h == moment(marcacionData.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
-                                        if (marcacionData.actividad != 0) {
-                                            tbodyEntradaySalida += `<td>${marcacionData.actividad}</td>`;
+                                        if (data[index].horario != 0) {
+                                            tbodyEntradaySalida += `<td>${data[index].horario}</td>`;
                                         } else {
                                             tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>`;
                                         }
@@ -839,14 +842,14 @@ function cargartabla(fecha1,fecha2) {
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                 --:--:--
                                                             </span>
-                                                        </td>`;
+                                                        </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                                     }
                                 }
                             }
                         }
                     }
                     for (let m = data[index].marcaciones.length; m < cantidadColumnasHoras; m++) {
-                        tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
+                        tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                     }
                     tbody += tbodyEntradaySalida;
                     tbody += `<td id="TiempoTotal${data[index].emple_id}">
@@ -854,7 +857,9 @@ function cargartabla(fecha1,fecha2) {
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
-                            </td> </tr>`;
+                            </td> <td >--</td>
+                            <td >--</td>
+                            <td >--</td> </tr>`;
                 }
                 $('#tbodyD').html(tbody);
 
@@ -939,12 +944,15 @@ function cargartabla(fecha1,fecha2) {
                                     <th class="">Fecha&nbsp;</th>
                                    `;
                 for (let j = 0; j < cantidadColumnasHorasI; j++) {
-                    theadTablaI += `<th class="" >Actividad</th>
+                    theadTablaI += `<th class="" >horario</th>
                                      <th class="">Hora de entrada</th>
                                     <th class="" >Hora de salida</th>
-                                    <th  class="" id="" name="tiempoSitHi">Tiempo en sitio</th>`;
+                                    <th  class="" id="" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
+                                    <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
                 }
-                theadTablaI += `<th class="">Tiempo total</th></tr>`;
+                theadTablaI += `<th class="">Tiempo total</th><th >Tardanza T.</th>
+                <th >Faltas T.</th>
+                <th >Incidencias T.</th> </tr>`;
 
 
                  var inicioR=moment($('#ID_START').val()).format('DD/MM/YYYY');
@@ -989,8 +997,8 @@ function cargartabla(fecha1,fecha2) {
                             if (marcacionDataI.entrada != 0) {
                                 if (h == moment(marcacionDataI.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
-                                    if (marcacionDataI.actividad != 0) {
-                                        tbodyIEntradaySalida += `<td  >${marcacionDataI.actividad}</td>`;
+                                    if (marcacionDataI.horario != 0) {
+                                        tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
                                     } else {
                                         tbodyIEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
@@ -1034,7 +1042,7 @@ function cargartabla(fecha1,fecha2) {
 
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
 
-                                                                </td>`;
+                                                                </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                                             sumaTiemposI = moment(sumaTiemposI).add(segundosTiempo, 'seconds');
                                             sumaTiemposI = moment(sumaTiemposI).add(minutosTiempo, 'minutes');
                                             sumaTiemposI = moment(sumaTiemposI).add(horasTiempo, 'hours');
@@ -1054,15 +1062,15 @@ function cargartabla(fecha1,fecha2) {
 
                                                                 --:--:--
 
-                                                        </td>`;
+                                                        </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                                     }
                                 }
                             } else {
                                 if (marcacionDataI.salida != 0) {
                                     if (h == moment(marcacionDataI.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
-                                        if (marcacionDataI.actividad != 0) {
-                                            tbodyIEntradaySalida += `<td  >${marcacionDataI.actividad}</td>`;
+                                        if (marcacionDataI.horario != 0) {
+                                            tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
                                         } else {
                                             tbodyIEntradaySalida += `<td  >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
@@ -1095,21 +1103,23 @@ function cargartabla(fecha1,fecha2) {
 
                                                                 --:--:--
 
-                                                        </td>`;
+                                                        </td ><td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
                                     }
                                 }
                             }
                         }
                     }
                     for (let m = data[index].marcaciones.length; m < cantidadColumnasHorasI; m++) {
-                        tbodyIEntradaySalida += `<td  >---</td><td  >---</td><td  >---</td><td   name="tiempoSitHi">---</td>`;
+                        tbodyIEntradaySalida += `<td  >---</td><td  >---</td><td  >---</td><td   name="tiempoSitHi">---</td> <td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
                     }
                     tbodyI += tbodyIEntradaySalida;
                     tbodyI += `<td id="TiempoTotal${data[index].emple_id}">
 
                                     ${sumaTiemposI.format("HH:mm:ss")}
 
-                            </td></tr>`;
+                            </td> <td >--</td>
+                            <td >--</td>
+                            <td >--</td></tr>`;
                 }
                 $('#tbodyIDI').html(tbodyI);
 
