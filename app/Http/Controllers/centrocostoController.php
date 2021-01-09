@@ -16,14 +16,26 @@ class centrocostoController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
 
-    public function store(Request $request){
-        $centro_costo=new centro_costo();
-        $centro_costo->centroC_descripcion=$request->get('centroC_descripcion');
-        $centro_costo->organi_id=session('sesionidorg');
+    public function store(Request $request)
+    {
+        $centro_costo = new centro_costo();
+        $centro_costo->centroC_descripcion = $request->get('centroC_descripcion');
+        $centro_costo->organi_id = session('sesionidorg');
         $centro_costo->save();
         return $centro_costo;
+    }
+
+    // * ************************ MANTENEDOR DE CENTRO COSTO ******************
+
+    public function index()
+    {
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
+            return redirect('/elegirorganizacion');
+        } else {
+            return view("CentroCosto.centrocosto");
+        }
     }
 }

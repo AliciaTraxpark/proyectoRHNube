@@ -496,3 +496,6 @@ Route::post('/registrarPuntoC', 'PuntosControlController@registrarPunto');
 Route::post('/recuperarPunto', 'PuntosControlController@recuperarPunto');
 Route::post('/cambiarEstadoP', 'PuntosControlController@cambiarEstadoPunto');
 Route::post('/cambiarEstadoControlesP', 'PuntosControlController@cambiarEstadoActividadControl');
+
+// * MANTENEDOR DE CENTRO COSTOS
+Route::get('/centroCosto', 'centrocostoController@index');
