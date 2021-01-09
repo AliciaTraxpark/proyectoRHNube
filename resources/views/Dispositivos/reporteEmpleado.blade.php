@@ -311,11 +311,14 @@
                     {{-- <th>Horario</th>
 
                     <th>Cargo</th> --}}
-                    <th colspan="2">Actividad</th>
-                   
+                    <th colspan="2">Horario</th>
+
                     <th colspan="2" id="hEntradaI">Hora de entrada</th>
                     <th colspan="2" id="hSalidaI">Hora de salida</th>
                     <th colspan="2" id="tSitioI">Tiempo en sitio</th>
+                    <th colspan="2" >Tardanza T.</th>
+                    <th colspan="2">Faltas T.</th>
+                    <th colspan="2">Incidencias T.</th>
 
                 </tr>
             </thead>
@@ -334,11 +337,14 @@
                         {{-- <th>Horario</th>
 
                         <th>Cargo</th> --}}
-                        <th>Actividad</th>
+                        <th>Horario</th>
 
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
+                        <th >Tardanza T.</th>
+                        <th>Faltas T.</th>
+                        <th>Incidencias T.</th>
 
                     </tr>
                 </thead>

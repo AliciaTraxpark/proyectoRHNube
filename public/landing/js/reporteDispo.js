@@ -609,7 +609,8 @@ function cargartabla(fecha) {
                                     <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
-                    theadTabla += `<th>Horario</th><th>Hora de entrada</th>
+                    theadTabla += `<th style="border-left-color: #c8d4de!important;
+                    border-left: 2px solid;">Horario</th><th>Hora de entrada</th>
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
                                     <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
@@ -644,10 +645,12 @@ function cargartabla(fecha) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
                                     var permisoModificarCS=$('#modifReporte').val();
                                     if (marcacionData.horario != 0) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
+                                        border-left: 2px solid;">${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
 
                                     } else {
-                                        tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
+                                        border-left: 2px solid;">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
                                     if(permisoModificarCS==1){
                                         tbodyEntradaySalida += `<td><div class="dropdown" id="">
@@ -752,9 +755,11 @@ function cargartabla(fecha) {
                                     if (h == moment(marcacionData.salida).format("HH")) {
                                         //* COLUMNA DE ENTRADA
                                         if (marcacionData.horario != 0) {
-                                            tbodyEntradaySalida += `<td>${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
+                                            tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
+                                            border-left: 2px solid;">${marcacionData.horarioIni} -${marcacionData.horarioFin} </td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                            tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
+                                            border-left: 2px solid;">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
                                         var permisoModificarE=$('#modifReporte').val();
                                         if(permisoModificarE==1){
@@ -817,7 +822,8 @@ function cargartabla(fecha) {
                         }
                     }
                     for (let m = data[index].marcaciones.length; m < cantidadColumnasHoras; m++) {
-                        tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
+                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
+                        border-left: 2px solid;">---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
                     }
                     tbody += tbodyEntradaySalida;
 
