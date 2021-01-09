@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\centro_costo;
+use Illuminate\Support\Facades\DB;
 
 class centrocostoController extends Controller
 {
@@ -37,5 +38,25 @@ class centrocostoController extends Controller
         } else {
             return view("CentroCosto.centrocosto");
         }
+    }
+
+    public function listaCentroCosto()
+    {
+        $centroC = DB::table('centro_costo as c')
+            ->leftJoin('empleado as e', function ($left) {
+                $left->on('e.emple_centCosto', '=', 'c.centroC_id')
+                    ->where('e.emple_estado', '=', 1);
+            })
+            ->select(
+                'c.centroC_id as id',
+                'c.centroC_descripcion as descripcion',
+                DB::raw("CASE WHEN(e.emple_id) IS NULL THEN 'No' ELSE 'Si' END AS respuesta"),
+                DB::raw("COUNT(e.emple_id) as contar")
+            )
+            ->where('c.organi_id', '=', session('sesionidorg'))
+            ->groupBy('c.centroC_id')
+            ->get();
+
+        return response()->json($centroC, 200);
     }
 }

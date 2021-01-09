@@ -128,8 +128,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li>
     <li>
-        <a href="/centroCosto" style="display: none">
-            <img src="{{asset('landing/images/cost-per-acquisition.svg')}}" height="20" style="margin: 0 10px 0 3px;">
+        <a href="/centroCosto">
+            <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
             <span>Centro Costo</span>
         </a>
     </li>
