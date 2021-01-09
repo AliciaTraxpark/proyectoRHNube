@@ -1281,7 +1281,7 @@ function listaPuntos() {
         success: function (data) {
             var option = `<option value="" disabled selected>Seleccionar</option>`;
             data.forEach(element => {
-                option += `<option value="${element.idPunto}"> Actividad : ${element.descripcion} </option>`;
+                option += `<option value="${element.idPunto}"> Punto Control : ${element.descripcion} </option>`;
             });
             container.append(option);
         },
