@@ -242,7 +242,7 @@ function calendario_edit() {
                 if (info.event.textColor == "111111") {
                     bootbox.alert({
                         title: "Info",
-                        message: "Puede eliminar horarios en la pestaña Horarios",
+                        message: "Los  horarios se modifican en la pestaña horarios",
 
                     })
                     /*  bootbox.confirm({
@@ -1254,7 +1254,7 @@ function calendario2() {
             $('#fueraHSwitch_re').prop('disabled', false);
             $('#horAdicSwitch_re').prop('checked', false);
             $('#horCompSwitch_re').prop('checked', true);
-           
+
             $("#horarioAsignar").modal("show");
         },
         eventClick: function (info) {
