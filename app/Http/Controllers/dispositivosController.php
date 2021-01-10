@@ -616,7 +616,7 @@ class dispositivosController extends Controller
                     )
                     ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                     ->where('e.emple_id', $idemp)
-                   
+
                     ->where('mp.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                     ->get();
@@ -1311,6 +1311,42 @@ class dispositivosController extends Controller
         $tardanza->tiempoTardanza = $hora;
         $tardanza->save();
         return 1;
+
+    }
+
+    public function editarRowEntrada(Request $request)
+    {
+        $idmarcacion = $request->idmarcacion;
+        $hora = $request->hora;
+        $fecha = $request->fecha;
+        $fecha1 = Carbon::create($fecha);
+
+        $marcacion_puerta = marcacion_puerta::findOrFail($idmarcacion);
+        $fechaSalida = $marcacion_puerta->marcaMov_salida;
+
+        /* MARCACION ANTERIOR  */
+        $fecha111 = Carbon::create($marcacion_puerta->marcaMov_fecha)->toDateString();
+        $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
+                ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
+                ->where('mv.marcaMov_id', '!=', $idmarcacion )
+                ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=',$fecha111 )
+                ->orderBy(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)', 'ASC'))
+                ->get()->last();
+        /*  */
+        if($fechaSalida!=null){
+          /*   dd('no soy null'); */
+            if ($fecha1->gte($fechaSalida)) {
+                return 0;
+            } else {
+                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                $marcacion_puerta->save();
+                return 1;
+            }
+        }
+        else{
+
+          /*   dd('soy null'); */
+        }
 
     }
 }
