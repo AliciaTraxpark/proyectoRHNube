@@ -68,3 +68,6 @@ Route::post("SoporteRuta", "apiSeguimientoRutaContoller@ticketSoporte")->middlew
 // * APIS DE PUNTO DE CONTROL
 Route::post("centroCostos", "apimovilController@centroCostos")->middleware('token')->middleware('apilogger');
 Route::post("puntoControl", "apimovilController@puntoControl")->middleware('token')->middleware('apilogger');
+
+// * APIS DE BIOMETRICOS
+Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico");
