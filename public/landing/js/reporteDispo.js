@@ -124,7 +124,7 @@ function cargartabla(fecha) {
                                                                 <form class="dropdown-menu dropdown p-3"  aria-labelledby="dropdownMenuButton" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
 
                                                                     <div class="form-group"  >
-                                                                    <a id="rowEntradaA1${marcacionData.idMarcacion}" onclick="editarrowEntrada(${marcacionData.idMarcacion})" style="cursor: pointer;margin-bottom: 3px;"><img src="/admin/images/edit.svg" height="12"></a>
+                                                                  
                                                                     <a id="rowEntradaA2${marcacionData.idMarcacion}" style="cursor:pointer; font-size:12px;padding-top: 2px;"  onclick="cambiarEntrada(${marcacionData.idMarcacion})"> <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                     Cambiar a salida</a>
                                                                     <input type="text" id="inputEntrada${marcacionData.idMarcacion}" style="display:none" class="form-control form-control-sm horasSalida" >
