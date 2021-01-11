@@ -179,6 +179,14 @@ function actualizarCentroC() {
     });
 }
 // ? *********************************** FINALIZACION **********************************************
+// ? *********************************** ASIGNAR CENTRO COSTO **************************************
+$('#a_centro').select2({
+    matcher: matchStart
+});
+function asignarCentroC() {
+    $('#a_centrocmodal').modal();
+}
+// ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {
         $("#centroC").css('width', '100%');
