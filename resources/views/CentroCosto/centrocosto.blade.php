@@ -21,6 +21,40 @@
 </div>
 @endsection
 @section('content')
+<style>
+  .table {
+    width: 100% !important;
+  }
+
+  .select2-container--default .select2-results__option[aria-selected=true] {
+    background: #ced0d3;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #52565b;
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    overflow-y: scroll;
+  }
+</style>
+{{-- BOTONOS DE PANEL --}}
+<div class="row pr-3 pl-3 pt-3">
+  <div class="col-md-6 text-left">
+    <button type="button" class="btn btn-sm mt-1" style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
+      onclick="javascript:asignarCentroC()">
+      <img src="{{asset('landing/images/calculator.svg')}}" class="mr-1" height="18">
+      Asignar Centro Costo
+    </button>
+  </div>
+  <div class="col-md-6 text-right">
+    <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+      onclick="javascript:modalRegistrar()">
+      + Nuevo Centro Costo
+    </button>
+  </div>
+</div>
+{{-- FINALIZACION --}}
 {{-- TABLA DE CENTRO DE COSTOS --}}
 <div class="row justify-content-center">
   <div class="col-md-12">
@@ -46,7 +80,7 @@
 {{-- EDITAR CENTRO COSTO --}}
 <div id="e_centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="e_centrocmodal"
   aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg d-flex justify-content-center">
     <div class="modal-content">
       <div class="modal-header" style="background-color:#163552;">
         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -56,17 +90,22 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="font-size:12px!important">
         <input type="hidden" id="e_idCentro">
-        <form action="javascript:agregarcentroA()">
+        <form action="javascript:actualizarCentroC()">
           {{ csrf_field() }}
           <div class="col-md-12">
             <label for="">Centro Costo</label>
             <input type="text" class="form-control" id="e_descripcion" required>
           </div>
-          <div class="col-md-12">
-            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple">
-            </select>
+          <div class="col-md-12 pt-2">
+            <div class="float-right mb-0">
+              <span style="font-size: 11px;">
+                *Se visualizara empleados sin centro costo
+              </span>
+            </div>
+            <label class="mb-0">Empleados</label>
+            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"></select>
           </div>
       </div>
       <div class="modal-footer">
@@ -76,6 +115,68 @@
       </form>
     </div>
   </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- ASIGNACION DE CENTRO --}}
+<div id="a_centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="a_centrocmodal"
+  aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg d-flex justify-content-center">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#163552;">
+        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+          Asignar Centro Costo
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          onclick="javascript:limpiarAsignacion()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size:12px!important">
+        <form action="javascript:guardarAsignacionCentro()">
+          {{ csrf_field() }}
+          <div class="col-md-12">
+            <label for="">Centro Costo</label>
+            <select id="a_centro" data-plugin="customselect" class="form-control" required>
+              <option value="" disabled selected>Seleccionar</option>
+            </select>
+          </div>
+          <div class="col-md-12 pt-2">
+            <div class="float-right mb-0">
+              <span style="font-size: 11px;">
+                *Se visualizara empleados sin centro costo
+              </span>
+            </div>
+            <label class="mb-0">Empleados</label>
+            <select id="a_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+              disabled></select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
+          onclick="javascript:limpiarAsignacion()">Cerrar</button>
+        <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE SESSION --}}
+<div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-errorLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <img src="{{asset('landing/images/notification.svg')}}" height="100">
+        <h4 class="text-danger mt-4">Su sesión expiró</h4>
+        <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
+        <div class="mt-4">
+          <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
+              class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 </div>
 {{-- FINALIZACION --}}
 @if (Auth::user())
@@ -109,6 +210,7 @@
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+<script src="{{asset('js/select2search.js')}}"></script>
 <script src="{{asset('landing/js/centroCosto.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

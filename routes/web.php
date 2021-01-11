@@ -502,3 +502,7 @@ Route::post('/cambiarEstadoControlesP', 'PuntosControlController@cambiarEstadoAc
 Route::get('/centroCosto', 'centrocostoController@index');
 Route::get('/centroCOrga', 'centrocostoController@listaCentroCosto');
 Route::post('/idCentroCosto', 'centrocostoController@centroCosto');
+Route::post('/actualizarCentroC', 'centrocostoController@actualizarCentro');
+Route::get('/listaCentro', 'centrocostoController@listaCentroC');
+Route::post('/empleadoCentro', 'centrocostoController@empleadosCentros');
+Route::post('/asignacionCentro', 'centrocostoController@asignarCentros');

@@ -1568,7 +1568,7 @@ function agregarCelularE(id) {
     $.notify(
         {
             message:
-                "\nPara registrar un dispositivo de Control Ruta necesitamos celular del empleado.",
+                "\nPara activar el Modo Ruta, tienes que agregar un número de teléfono al empleado.",
             icon: "admin/images/warning.svg",
         },
         {
@@ -1593,7 +1593,6 @@ function agregarCelularE(id) {
         }
     );
 }
-
 function guardarCelularE() {
     idEmpleado = $("#idEmpleCelular").val();
     celular = $("#textCelular").val();
@@ -1609,6 +1608,7 @@ function guardarCelularE() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
+            $('#textCelular').val("")
             RefreshTablaEmpleado();
             $("#modalCelular").modal("toggle");
             $("#modalControlRT").modal();

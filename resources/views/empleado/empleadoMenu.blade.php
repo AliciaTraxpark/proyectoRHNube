@@ -190,7 +190,7 @@ use App\proyecto_empleado;
                     Registrar celular empleado
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="javascript:RefreshTablaEmpleado();javascript:limpiarCorreoE()">
+                    onclick="javascript:RefreshTablaEmpleado();$('#textCelular').val('')">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -213,8 +213,10 @@ use App\proyecto_empleado;
                                                 +51
                                             </span>
                                         </div>
-                                        <input type="number" class="form-control" id="textCelular" name="celular"
-                                            required autofocus>
+                                        <input type="number"
+                                            oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            class="form-control" id="textCelular" name="celular" required autofocus
+                                            maxlength="9" minlength="9">
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +225,7 @@ use App\proyecto_empleado;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
-                    onclick="javascript:RefreshTablaEmpleado()">Cerrar</button>
+                    onclick="javascript:RefreshTablaEmpleado();$('#textCelular').val('')">Cerrar</button>
                 <button type="submit" style="background-color:#163552; border-color: #163552;"
                     class="btn btn-sm btn-primary">Registrar</button>
             </div>

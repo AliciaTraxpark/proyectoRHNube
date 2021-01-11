@@ -1075,7 +1075,7 @@
         <p style="color:#797a7e;text-align: justify">
             <strong style="color: #000839;">(*e)</strong>&nbsp;La eliminación de capturas está permitido a través de una
             transacción auditada en donde se indica el motivo de la eliminación del registro. La eliminación de un
-            registro se sustentado en la protección de los derechos de la intimidad de los empleados, ya que la
+            registro es sustentado en la protección de los derechos de la intimidad de los empleados, ya que la
             plataforma pudo haber captado de manera fortuita una actividad de índole personal dentro del horario
             laboral.
         </p>

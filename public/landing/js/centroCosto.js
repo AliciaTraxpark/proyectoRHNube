@@ -11,7 +11,8 @@ function tablaCentroCosto() {
         "bAutoWidth": true,
         columnDefs: [
             { targets: 2, sortable: false },
-            { targets: 3, sortable: false }
+            { targets: 3, sortable: false },
+            { targets: 4, sortable: false }
         ],
         language: {
             "sProcessing": "Procesando...",
@@ -64,7 +65,6 @@ function centroCostoOrganizacion() {
             }*/
         },
         success: function (data) {
-            console.log(data);
             var tr = "";
             for (let index = 0; index < data.length; index++) {
                 tr += `<tr>
@@ -98,11 +98,13 @@ centroCostoOrganizacion();
 $('#e_empleadosCentro').select2({
     tags: "true"
 });
+// * MODAL DE EDITAR
 function editarCentro(id) {
     $('#e_idCentro').val(id);
     $('#e_centrocmodal').modal();
     datosCentro(id);
 }
+// * OBTENER DATOS DE CENTRO COSTO
 function datosCentro(id) {
     $('#e_empleadosCentro').empty();
     $.ajax({
@@ -125,10 +127,175 @@ function datosCentro(id) {
         },
         success: function (data) {
             $('#e_descripcion').val(data[0].centro.descripcion);
+            if (data[0].select.length != 0) {
+                var option = "";
+                data[0].select.forEach(element => {
+                    option += `<option value="${element.emple_id}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+                });
+                $('#e_empleadosCentro').append(option);
+            }
+            if (data[0].noSelect.length != 0) {
+                var optionN = "";
+                data[0].noSelect.forEach(element => {
+                    optionN += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+                });
+                $('#e_empleadosCentro').append(optionN);
+            }
         },
         error: function () { }
     });
 }
+// * ACTUALIZAR DATOS CENTRO COSTO
+function actualizarCentroC() {
+    var id = $('#e_idCentro').val();
+    var descripcion = $('#e_descripcion').val();
+    var empleados = $('#e_empleadosCentro').val();
+    $.ajax({
+        async: false,
+        url: "/actualizarCentroC",
+        method: "POST",
+        data: {
+            id: id,
+            descripcion: descripcion,
+            empleados: empleados
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            centroCostoOrganizacion();
+            $('#e_centrocmodal').modal('toggle');
+        },
+        error: function () { }
+    });
+}
+// ? *********************************** FINALIZACION **********************************************
+// ? *********************************** ASIGNAR CENTRO COSTO **************************************
+$('#a_centro').select2({
+    matcher: matchStart
+});
+$('#a_empleadosCentro').select2({
+    tags: "true"
+});
+function asignarCentroC() {
+    $('#a_centrocmodal').modal();
+    $('#a_empleadosCentro').prop("disabled", true);
+    listasDeCentro();
+}
+function listasDeCentro() {
+    $('#a_centro').empty();
+    var container = $('#a_centro');
+    $.ajax({
+        async: false,
+        url: "/listaCentro",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar</option>`;
+            data.forEach(element => {
+                option += `<option value="${element.id}"> CC : ${element.descripcion} </option>`;
+            });
+            container.append(option);
+        },
+        error: function () { }
+    });
+}
+$('#a_centro').on("change", function () {
+    $('#a_empleadosCentro').empty();
+    $('#a_empleadosCentro').prop("disabled", false);
+    var id = $(this).val();
+    $.ajax({
+        async: false,
+        url: "/empleadoCentro",
+        method: "POST",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            console.log(data);
+            if (data[0].select.length != 0) {
+                var option = "";
+                data[0].select.forEach(element => {
+                    option += `<option value="${element.emple_id}" selected="selected">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+                });
+                $('#a_empleadosCentro').append(option);
+            }
+            if (data[0].noSelect.length != 0) {
+                var optionN = "";
+                data[0].noSelect.forEach(element => {
+                    optionN += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+                });
+                $('#a_empleadosCentro').append(optionN);
+            }
+        },
+        error: function () { }
+    });
+
+});
+function limpiarAsignacion() {
+    $('#a_centro').empty();
+    $('#a_empleadosCentro').empty();
+}
+function guardarAsignacionCentro() {
+    var id = $('#a_centro').val();
+    var empleados = $('#a_empleadosCentro').val();
+    $.ajax({
+        async: false,
+        url: "/asignacionCentro",
+        method: "POST",
+        data: {
+            id: id,
+            empleados: empleados
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            limpiarAsignacion();
+            centroCostoOrganizacion();
+            $('#a_centrocmodal').modal('toggle');
+        },
+        error: function () { }
+    });
+}
+// ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {
         $("#centroC").css('width', '100%');
