@@ -78,6 +78,14 @@ function eliminarActividad(id) {
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
+                    statusCode: {
+                        401: function () {
+                            location.reload();
+                        },
+                        /*419: function () {
+                            location.reload();
+                        }*/
+                    },
                     success: function (data) {
                         if (data == 1) {
                             $.notifyClose();
@@ -150,6 +158,14 @@ function actividadesOrganizacion() {
         method: "GET",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             var tr = "";
@@ -299,6 +315,14 @@ function cambiarEstadoParaControles(id, valor, control) {
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             actividadesOrganizacion();
@@ -597,6 +621,14 @@ function editarActividad(id) {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             $('#idActiv').val(data.Activi_id);
             $('#e_nombreTarea').val(data.Activi_Nombre);
@@ -722,6 +754,14 @@ function editarActividadTarea() {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             if (data != 0) {
                 limpiarModo();
@@ -823,6 +863,14 @@ $("#areaAsignarEditar").on("change", function () {
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         statusCode: {
             401: function () {
@@ -1334,6 +1382,14 @@ function registrarActividadTarea() {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             if (data.estado === 1) {
                 if (data.actividad.estado == 0) {
@@ -1489,6 +1545,14 @@ function recuperarActividad(id) {
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             limpiarModo();

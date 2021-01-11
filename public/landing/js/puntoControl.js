@@ -61,6 +61,14 @@ function puntosControlOrganizacion() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             $('#puntoOrganizacion').empty();
             if (data.length != 0) {
@@ -152,6 +160,14 @@ function editarPunto(id) {
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             console.log(data);
@@ -349,6 +365,14 @@ function empleadosPuntos(id) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             var itemsSelect = "";
             //* EMPLEADOS SELECCIONADOS
@@ -381,6 +405,14 @@ function areasPuntos(id) {
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             var itemsSelect = "";
@@ -464,6 +496,14 @@ function editarPuntoControl() {
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             if (data != 0) {
@@ -1357,6 +1397,14 @@ function a_empleadosPuntos(id) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             var itemsSelect = "";
             //* EMPLEADOS SELECCIONADOS
@@ -1389,6 +1437,14 @@ function a_areasPuntos(id) {
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             var itemsSelect = "";
@@ -1755,6 +1811,14 @@ function r_empleadosPuntos() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             var itemsSelect = "";
             for (let index = 0; index < data.length; index++) {
@@ -1774,6 +1838,14 @@ function r_areasPuntos() {
         method: "GET",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             var itemsSelect = "";
@@ -2401,6 +2473,14 @@ function registrarPunto() {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             if (data.estado === 1) {
                 if (data.punto.estado == 0) {
@@ -2557,6 +2637,14 @@ function recuperarPunto(id) {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
         success: function (data) {
             limpiarPunto();
             puntosControlOrganizacion();
@@ -2658,6 +2746,14 @@ function eliminarPunto(id) {
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
+                    statusCode: {
+                        401: function () {
+                            location.reload();
+                        },
+                        /*419: function () {
+                            location.reload();
+                        }*/
+                    },
                     success: function (data) {
                         puntosControlOrganizacion();
                         $.notifyClose();
@@ -2710,6 +2806,14 @@ function cambiarEstadoDeControles(id, valor, control) {
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
         },
         success: function (data) {
             puntosControlOrganizacion();
