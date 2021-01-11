@@ -120,8 +120,8 @@
                 <input type="hidden" id="empleadoControlR">
                 <form class="form-horizontal text-center">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1">Activar
-                        el computador de <span id="nombreECR"></span> y enviar un correo con sus credenciales</h5>
+                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1">¿Activar
+                        el computador de <span id="nombreECR"></span> y enviar un correo con sus credenciales?</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -152,7 +152,7 @@
                     Modo Control Ruta
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="javascript:RefreshTablaEmpleado()">
+                    onclick="javascript:RefreshTablaEmpleado();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -160,8 +160,8 @@
                 <input type="hidden" id="empleadoControlRT">
                 <form class="form-horizontal text-center">
                     <h5 class="modal-title" id="myModalLabel" style="font-size:
-                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1">Activar
-                        el celular de <span id="nombreECRT"></span> y enviar un sms con sus credenciales</h5>
+                        15px"><img src="{{asset('admin/images/tick.svg')}}" height="25" class="mr-1"> ¿Activar
+                        el celular de <span id="nombreECRT"></span> y enviar un sms con sus credenciales?</h5>
                 </form>
             </div>
             <div class="modal-footer">
@@ -169,11 +169,11 @@
                     <div class="row">
                         <div class="col-md-10 text-right" style="padding-left: 50px">
                             <button type="button" class="btn btn-light btn-sm cancelar" data-dismiss="modal"
-                                onclick="javascript:RefreshTablaEmpleado()">Cancelar</button>
+                                onclick="javascript:RefreshTablaEmpleado();">Cancelar</button>
                         </div>
                         <div class="col-md-2 text-right">
                             <button type="button" style="background-color: #163552;" class="btn btn-sm"
-                                onclick="javascript:agregarControlRT($('#empleadoControlRT').val());">Enviar</button>
+                                onclick="javascript:agregarControlRT($('#empleadoControlRT').val());">Aceptar</button>
                         </div>
                     </div>
                 </div>
