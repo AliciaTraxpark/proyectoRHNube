@@ -810,16 +810,18 @@ class dispositivosController extends Controller
             if($marcacion_puerta00){
 
                 $fechaEPosterir=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                if( $fechaEPosterir->gte($fecha1) ){
+            /*     dd($fechaEPosterir,$fecha1); */
+                if( $fecha1->gte($fechaEPosterir) ){
 
                     return [0,'Tienes registrado otra entrada, la hora de salida debe ser menor a esta.'];
                 }
                 else{
-                   
+
                     $marcacion_puerta->marcaMov_salida = $fecha1;
                     $marcacion_puerta->save();
                     return 1;
                 }
+
             }
             else{
                 $marcacion_puerta->marcaMov_salida = $fecha1;
