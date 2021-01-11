@@ -209,11 +209,14 @@ $('#a_centro').select2({
 $('#a_empleadosCentro').select2({
     tags: "true"
 });
+// ! ABRIR MODAL DE ASIGNACION
 function asignarCentroC() {
     $('#a_centrocmodal').modal();
     $('#a_empleadosCentro').prop("disabled", true);
+    $('#a_todosEmpleados').prop("disabled", true);
     listasDeCentro();
 }
+// ! LISTA DE CENTRO DE COSTOS
 function listasDeCentro() {
     $('#a_centro').empty();
     var container = $('#a_centro');
@@ -242,9 +245,11 @@ function listasDeCentro() {
         error: function () { }
     });
 }
+var a_empleadosS;
 $('#a_centro').on("change", function () {
     $('#a_empleadosCentro').empty();
     $('#a_empleadosCentro').prop("disabled", false);
+    $('#a_todosEmpleados').prop("disabled", false);
     var id = $(this).val();
     $.ajax({
         async: false,
@@ -280,15 +285,24 @@ $('#a_centro').on("change", function () {
                 });
                 $('#a_empleadosCentro').append(optionN);
             }
+            a_empleadosS = $('#a_empleadosCentro').val();
+            if (data[0].noSelect.length == 0 && data[0].select.length != 0) {
+                $('#a_todosEmpleados').prop("checked", true);
+            } else {
+                $('#a_todosEmpleados').prop("checked", false);
+            }
         },
         error: function () { }
     });
 
 });
+// ! LIMPIAR INPUTS DE ASIGNACION
 function limpiarAsignacion() {
     $('#a_centro').empty();
     $('#a_empleadosCentro').empty();
+    $('#a_todosEmpleados').prop("checked", false);
 }
+// ! GUARDAR ASIGNACION
 function guardarAsignacionCentro() {
     var id = $('#a_centro').val();
     var empleados = $('#a_empleadosCentro').val();
@@ -319,6 +333,23 @@ function guardarAsignacionCentro() {
         error: function () { }
     });
 }
+//! TODOS LOS EMPLEADOS EN EDITAR
+$('#a_todosEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#a_empleadosCentro > option").prop("selected", "selected");
+        $('#a_empleadosCentro').trigger("change");
+    } else {
+        $('#a_empleadosCentro').val(a_empleadosS).trigger('change');
+    }
+});
+//! SELECT DE EMPLEADOS
+$("#a_empleadosCentro").on("change", function (e) {
+    if ($("#a_empleadosCentro").select2('data').length === $("#a_empleadosCentro >option").length) {
+        $('#a_todosEmpleados').prop("checked", true);
+    } else {
+        $('#a_todosEmpleados').prop("checked", false);
+    }
+});
 // ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {

@@ -110,7 +110,6 @@
             </div>
           </div>
           <div class="col-md-12">
-            {{-- <label class="mb-0">Empleados</label> --}}
             <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
               data-placeholder="Empleados"></select>
           </div>
@@ -147,12 +146,18 @@
               <option value="" disabled selected>Seleccionar</option>
             </select>
           </div>
-          <div class="col-md-12 pt-2">
-            <div class="float-right mb-0">
-              <span style="font-size: 11px;">
-                *Se visualizara empleados sin centro costo
-              </span>
+          <div class="col-md-12 text-right">
+            <div class="form-group mb-0 mt-3">
+              <input type="checkbox" id="a_todosEmpleados">
+              <label for="" class="mb-0">Seleccionar todos</label>
+              <div class="float-left mb-0">
+                <span style="font-size: 11px;">
+                  *Se visualizara empleados sin centro costo
+                </span>
+              </div>
             </div>
+          </div>
+          <div class="col-md-12 pt-2">
             <select id="a_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
               data-placeholder="Empleados" disabled></select>
           </div>
