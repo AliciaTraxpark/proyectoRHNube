@@ -808,11 +808,14 @@ class dispositivosController extends Controller
                 ->get()->last();
 
             if($marcacion_puerta00){
+
                 $fechaEPosterir=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                if( $fechaEPosterir->lte($fecha1) ){
+                if( $fechaEPosterir->gte($fecha1) ){
+
                     return [0,'Tienes registrado otra entrada, la hora de salida debe ser menor a esta.'];
                 }
                 else{
+                   
                     $marcacion_puerta->marcaMov_salida = $fecha1;
                     $marcacion_puerta->save();
                     return 1;
@@ -1361,9 +1364,56 @@ class dispositivosController extends Controller
 
                         /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
                         if($fecha1->gt($fechaEAnte) && $fecha1->gt($fechaSAnte) ){
-                            $marcacion_puerta->marcaMov_fecha = $fecha1;
-                            $marcacion_puerta->save();
+                            if($marcacion_puerta00){
+                                $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                 /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                                /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                    /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                    return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                                }
+                            }
+                            else{  /* IF MARCACION ENTRADA es dif de null */
+                              /*  dd($marcacion_puerta001); */
+                                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                                    if($fecha1->gt($fechaEAnte1)){
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else{
+                                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                         return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                    }
+
+                                }
+                                else{
+                                    if($fecha1->gt($fechaSAnte1)){
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else{
+                                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                         return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                    }
+                                }
+
+                            }
+
+                            } else{
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
                             return 1;
+                            }
+
                         } else{
                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
                             return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
@@ -1374,9 +1424,56 @@ class dispositivosController extends Controller
                       /*  dd($marcacion_puerta001); */
                         if($marcacion_puerta001->marcaMov_fecha!=null && $marcacion_puerta001->marcaMov_salida==null ){
                             if($fecha1->gt($fechaEAnte)){
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                if($marcacion_puerta00){
+                                    $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                    $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                     /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                    if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else{
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                                    }
+                                }
+                                else{  /* IF MARCACION ENTRADA es dif de null */
+                                  /*  dd($marcacion_puerta001); */
+                                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                                        if($fecha1->gt($fechaEAnte1)){
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else{
+                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                             return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                        }
+
+                                    }
+                                    else{
+                                        if($fecha1->gt($fechaSAnte1)){
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else{
+                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                             return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                        }
+                                    }
+
+                                }
+
+                                } else{
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
                                 $marcacion_puerta->save();
                                 return 1;
+                                }
+
                             } else{
                                  /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
                                  return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
@@ -1385,9 +1482,56 @@ class dispositivosController extends Controller
                         }
                         else{
                             if($fecha1->gt($fechaSAnte)){
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                if($marcacion_puerta00){
+                                    $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                    $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                     /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                    if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else{
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                                    }
+                                }
+                                else{  /* IF MARCACION ENTRADA es dif de null */
+                                  /*  dd($marcacion_puerta001); */
+                                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                                        if($fecha1->gt($fechaEAnte1)){
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else{
+                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                             return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                        }
+
+                                    }
+                                    else{
+                                        if($fecha1->gt($fechaSAnte1)){
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else{
+                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                             return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                        }
+                                    }
+
+                                }
+
+                                } else{
+                                   $marcacion_puerta->marcaMov_fecha = $fecha1;
                                 $marcacion_puerta->save();
                                 return 1;
+                                }
+
                             } else{
                                  /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
                                  return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
@@ -1398,10 +1542,104 @@ class dispositivosController extends Controller
 
                 }
                 else{
-                    /* SI NO EXISTE MARCACION ANTERIOR  */
+                    if($marcacion_puerta00){
+                        $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                        $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                         /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                        if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                            $marcacion_puerta->save();
+                            return 1;
+                        } else{
+                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                            return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                        }
+                    }
+                    else{  /* IF MARCACION ENTRADA es dif de null */
+                      /*  dd($marcacion_puerta001); */
+                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                            if($fecha1->gt($fechaEAnte1)){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                 return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                            }
+
+                        }
+                        else{
+                            if($fecha1->gt($fechaSAnte1)){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                 return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                            }
+                        }
+
+                    }
+
+                    } else{
+                        if($marcacion_puerta00){
+                            $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                            $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                            if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                            }
+                        }
+                        else{  /* IF MARCACION ENTRADA es dif de null */
+                          /*  dd($marcacion_puerta001); */
+                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                                if($fecha1->gt($fechaEAnte1)){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                     return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                }
+
+                            }
+                            else{
+                                if($fecha1->gt($fechaSAnte1)){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                     return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                }
+                            }
+
+                        }
+
+                        } else{
+                             /* SI NO EXISTE MARCACION ANTERIOR  */
                     $marcacion_puerta->marcaMov_fecha = $fecha1;
                     $marcacion_puerta->save();
                     return 1;
+                        }
+
+                    }
+
 
                 }
 
@@ -1419,9 +1657,56 @@ class dispositivosController extends Controller
 
                 /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
                 if($fecha1->gt($fechaEAnte) && $fecha1->gt($fechaSAnte) ){
-                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                    $marcacion_puerta->save();
-                    return 1;
+                    if($marcacion_puerta00){
+                        $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                        $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                         /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                        if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                            $marcacion_puerta->save();
+                            return 1;
+                        } else{
+                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                            return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                        }
+                    }
+                    else{  /* IF MARCACION ENTRADA es dif de null */
+                      /*  dd($marcacion_puerta001); */
+                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                            if($fecha1->gt($fechaEAnte1)){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                 return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                            }
+
+                        }
+                        else{
+                            if($fecha1->gt($fechaSAnte1)){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                 return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                            }
+                        }
+
+                    }
+
+                    } else{
+                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                        $marcacion_puerta->save();
+                        return 1;
+                    }
+
                 } else{
                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
                     return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
@@ -1432,9 +1717,56 @@ class dispositivosController extends Controller
               /*  dd($marcacion_puerta001); */
                 if($marcacion_puerta001->marcaMov_fecha!=null && $marcacion_puerta001->marcaMov_salida==null ){
                     if($fecha1->gt($fechaEAnte)){
-                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                        if($marcacion_puerta00){
+                            $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                            $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                            if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                            }
+                        }
+                        else{  /* IF MARCACION ENTRADA es dif de null */
+                          /*  dd($marcacion_puerta001); */
+                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                                if($fecha1->gt($fechaEAnte1)){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                     return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                }
+
+                            }
+                            else{
+                                if($fecha1->gt($fechaSAnte1)){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                     return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                }
+                            }
+
+                        }
+
+                        } else{
+                             $marcacion_puerta->marcaMov_fecha = $fecha1;
                         $marcacion_puerta->save();
                         return 1;
+                        }
+
                     } else{
                          /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
                          return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
@@ -1443,9 +1775,56 @@ class dispositivosController extends Controller
                 }
                 else{
                     if($fecha1->gt($fechaSAnte)){
-                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                        if($marcacion_puerta00){
+                            $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                            $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+
+                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                            if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else{
+                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+
+                            }
+                        }
+                        else{  /* IF MARCACION ENTRADA es dif de null */
+                          /*  dd($marcacion_puerta001); */
+                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
+                                if($fecha1->gt($fechaEAnte1)){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                     return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                }
+
+                            }
+                            else{
+                                if($fecha1->gt($fechaSAnte1)){
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else{
+                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                     return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                }
+                            }
+
+                        }
+
+                        } else{
+                            $marcacion_puerta->marcaMov_fecha = $fecha1;
                         $marcacion_puerta->save();
                         return 1;
+                        }
+
                     } else{
                          /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
                          return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
@@ -1506,7 +1885,7 @@ class dispositivosController extends Controller
                 $marcacion_puerta->marcaMov_fecha = $fecha1;
                 $marcacion_puerta->save();
                 return 1;
-            }
+               }
 
 
         }
