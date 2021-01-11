@@ -126,12 +126,13 @@
         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
           Asignar Centro Costo
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          onclick="javascript:limpiarAsignacion()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" style="font-size:12px!important">
-        <form action="javascript:actualizarCentroC()">
+        <form action="javascript:guardarAsignacionCentro()">
           {{ csrf_field() }}
           <div class="col-md-12">
             <label for="">Centro Costo</label>
@@ -146,11 +147,13 @@
               </span>
             </div>
             <label class="mb-0">Empleados</label>
-            <select id="a_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"></select>
+            <select id="a_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+              disabled></select>
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
+          onclick="javascript:limpiarAsignacion()">Cerrar</button>
         <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
       </div>
       </form>
