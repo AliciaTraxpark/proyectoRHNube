@@ -98,14 +98,21 @@
             <label for="">Centro Costo</label>
             <input type="text" class="form-control" id="e_descripcion" required>
           </div>
-          <div class="col-md-12 pt-2">
-            <div class="float-right mb-0">
-              <span style="font-size: 11px;">
-                *Se visualizara empleados sin centro costo
-              </span>
+          <div class="col-md-12 text-right">
+            <div class="form-group mb-0 mt-3">
+              <input type="checkbox" id="e_todosEmpleados">
+              <label for="" class="mb-0">Seleccionar todos</label>
+              <div class="float-left mb-0">
+                <span style="font-size: 11px;">
+                  *Se visualizara empleados sin centro costo
+                </span>
+              </div>
             </div>
-            <label class="mb-0">Empleados</label>
-            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"></select>
+          </div>
+          <div class="col-md-12">
+            {{-- <label class="mb-0">Empleados</label> --}}
+            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+              data-placeholder="Empleados"></select>
           </div>
       </div>
       <div class="modal-footer">
@@ -146,9 +153,8 @@
                 *Se visualizara empleados sin centro costo
               </span>
             </div>
-            <label class="mb-0">Empleados</label>
             <select id="a_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
-              disabled></select>
+              data-placeholder="Empleados" disabled></select>
           </div>
       </div>
       <div class="modal-footer">

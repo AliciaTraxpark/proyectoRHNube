@@ -105,6 +105,7 @@ function editarCentro(id) {
     datosCentro(id);
 }
 // * OBTENER DATOS DE CENTRO COSTO
+var e_empleadosS;
 function datosCentro(id) {
     $('#e_empleadosCentro').empty();
     $.ajax({
@@ -141,10 +142,33 @@ function datosCentro(id) {
                 });
                 $('#e_empleadosCentro').append(optionN);
             }
+            if (data[0].noSelect.length == 0 && data[0].select.length != 0) {
+                $('#e_todosEmpleados').prop("checked", true);
+            } else {
+                $('#e_todosEmpleados').prop("checked", false);
+            }
+            e_empleadosS = $('#e_empleadosCentro').val();
         },
         error: function () { }
     });
 }
+//* TODOS LOS EMPLEADOS EN EDITAR
+$('#e_todosEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#e_empleadosCentro > option").prop("selected", "selected");
+        $('#e_empleadosCentro').trigger("change");
+    } else {
+        $('#e_empleadosCentro').val(e_empleadosS).trigger('change');
+    }
+});
+//* SELECT DE EMPLEADOS
+$("#e_empleadosCentro").on("change", function (e) {
+    if ($("#e_empleadosCentro").select2('data').length === $("#e_empleadosCentro >option").length) {
+        $('#e_todosEmpleados').prop("checked", true);
+    } else {
+        $('#e_todosEmpleados').prop("checked", false);
+    }
+});
 // * ACTUALIZAR DATOS CENTRO COSTO
 function actualizarCentroC() {
     var id = $('#e_idCentro').val();

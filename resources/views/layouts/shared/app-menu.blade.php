@@ -127,7 +127,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <span>Puntos de Control</span>
         </a>
     </li>
-    <li style="display: none">
+    <li>
         <a href="/centroCosto">
             <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
             <span>Centro Costo</span>
