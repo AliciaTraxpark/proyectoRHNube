@@ -21,6 +21,23 @@
 </div>
 @endsection
 @section('content')
+<style>
+  .table {
+    width: 100% !important;
+  }
+
+  .select2-container--default .select2-results__option[aria-selected=true] {
+    background: #ced0d3;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #52565b;
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    overflow-y: scroll;
+  }
+</style>
 {{-- TABLA DE CENTRO DE COSTOS --}}
 <div class="row justify-content-center">
   <div class="col-md-12">
@@ -46,7 +63,7 @@
 {{-- EDITAR CENTRO COSTO --}}
 <div id="e_centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="e_centrocmodal"
   aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg d-flex justify-content-center">
     <div class="modal-content">
       <div class="modal-header" style="background-color:#163552;">
         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -56,17 +73,22 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="font-size:12px!important">
         <input type="hidden" id="e_idCentro">
-        <form action="javascript:agregarcentroA()">
+        <form action="javascript:actualizarCentroC()">
           {{ csrf_field() }}
           <div class="col-md-12">
             <label for="">Centro Costo</label>
             <input type="text" class="form-control" id="e_descripcion" required>
           </div>
-          <div class="col-md-12">
-            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple">
-            </select>
+          <div class="col-md-12 pt-2">
+            <div class="float-right mb-0">
+              <span style="font-size: 11px;">
+                *Se visualizara empleados sin centro costo
+              </span>
+            </div>
+            <label class="mb-0">Empleados</label>
+            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"></select>
           </div>
       </div>
       <div class="modal-footer">

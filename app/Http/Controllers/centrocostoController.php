@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\centro_costo;
+use App\empleado;
 use Illuminate\Support\Facades\DB;
 
 class centrocostoController extends Controller
@@ -73,6 +74,7 @@ class centrocostoController extends Controller
             ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
+            ->whereNull('e.emple_centCosto')
             ->get();
 
         // * EMPLEADOS EN CENTRO DE COSTO
@@ -100,5 +102,65 @@ class centrocostoController extends Controller
         array_push($respuesta, array("select" => $empleadoCentro, "noSelect" => $empleadoSinCentro, "centro" => $centro));
 
         return response()->json($respuesta, 200);
+    }
+
+    public function actualizarCentro(Request $request)
+    {
+        $id = $request->get('id');
+        $empleados = $request->get('empleados');
+
+        $centro = centro_costo::findOrFail($id);
+
+        $centro->centroC_descripcion = $request->get('descripcion');
+        $centro->save();
+
+        // * EMPLEADOS EN CENTRO DE COSTO
+        $empleadoCentro = DB::table('centro_costo as c')
+            ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
+            ->select('e.emple_id')
+            ->where('c.centroC_id', '=', $centro->centroC_id)
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->get();
+        // * SI ARRAY EMPLEADOS ESTA VACIO
+        if (is_null($empleados)) {
+            foreach ($empleadoCentro as $ec) {
+                $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
+                $emp->emple_centCosto = NULL;
+                $emp->save();
+            }
+        } else {
+            // * BUSCAR EMPLEADOS CON CENTRO COSTO
+            foreach ($empleados as $e) {
+                $estado = true;
+                for ($index = 0; $index < sizeof($empleadoCentro); $index++) {
+                    if ($empleadoCentro[$index]->emple_id == $e) {
+                        $estado = false;
+                    }
+                }
+                if ($estado) {
+                    $emp = empleado::where('emple_id', '=', $e)->get()->first();
+                    $emp->emple_centCosto = $centro->centroC_id;
+                    $emp->save();
+                }
+            }
+
+            // * COMPARAR EMPLEADOS CENTRO CON LISTA DE EMPLEADOS
+            foreach ($empleadoCentro as $ec) {
+                $estadoB = true;
+                foreach ($empleados as $em) {
+                    if ($ec->emple_id == $em) {
+                        $estadoB = false;
+                    }
+                }
+                if ($estadoB) {
+                    $emp = empleado::where('emple_id', '=', $ec->emple_id)->get()->first();
+                    $emp->emple_centCosto = NULL;
+                    $emp->save();
+                }
+            }
+        }
+
+        return response()->json($id, 200);
     }
 }

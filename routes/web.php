@@ -501,3 +501,4 @@ Route::post('/cambiarEstadoControlesP', 'PuntosControlController@cambiarEstadoAc
 Route::get('/centroCosto', 'centrocostoController@index');
 Route::get('/centroCOrga', 'centrocostoController@listaCentroCosto');
 Route::post('/idCentroCosto', 'centrocostoController@centroCosto');
+Route::post('/actualizarCentroC', 'centrocostoController@actualizarCentro');
