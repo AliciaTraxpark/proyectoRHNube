@@ -928,7 +928,7 @@ function editarEntrada(idmarcacion){
 
                 $.notifyClose();
                 $.notify({
-                    message: '\nHora de entrada debe ser menor que hora de salida.',
+                    message: data[1],
                     icon: '/landing/images/alert1.svg',
                 }, {
                     icon_type: 'image',

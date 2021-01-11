@@ -252,6 +252,15 @@ class apimovilController extends Controller
             else{
                 $marcacion_puerta->marca_longitud=$req['longitud'];
             }
+
+            if(empty($req['puntoC_id'])) {}
+            else{
+                $marcacion_puerta->puntoC_id=$req['puntoC_id'];
+            }
+            if(empty($req['centC_id'])) {}
+            else{
+                $marcacion_puerta->centC_id=$req['centC_id'];
+            }
             $marcacion_puerta->save();
             } else{
 
@@ -342,6 +351,14 @@ class apimovilController extends Controller
             if(empty($req['longitud'])) {}
             else{
                 $marcacion_puerta->marca_longitud=$req['longitud'];
+            }
+            if(empty($req['puntoC_id'])) {}
+            else{
+               
+            }
+            if(empty($req['centC_id'])) {}
+            else{
+
             }
             $marcacion_puerta->save();
             } else{
