@@ -802,10 +802,11 @@ class dispositivosController extends Controller
                 ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
                 ->where('mv.marcaMov_fecha', '!=',null )
                 ->where('mv.marcaMov_fecha', '!=',$fechaEntrada )
+                ->where('mv.marcaMov_fecha', '>',$marcacion_puerta->marcaMov_fecha )
                 ->whereDate('mv.marcaMov_fecha', '=',$fecha111 )
             /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
                 ->orderby('marcaMov_fecha','ASC')
-                ->get()->last();
+                ->get()->first();
 
             if($marcacion_puerta00){
 
