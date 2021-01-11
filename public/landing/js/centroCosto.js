@@ -172,7 +172,6 @@ $("#e_empleadosCentro").on("change", function (e) {
 // * ACTUALIZAR DATOS CENTRO COSTO
 function actualizarCentroC() {
     var id = $('#e_idCentro').val();
-    var descripcion = $('#e_descripcion').val();
     var empleados = $('#e_empleadosCentro').val();
     $.ajax({
         async: false,
@@ -180,7 +179,6 @@ function actualizarCentroC() {
         method: "POST",
         data: {
             id: id,
-            descripcion: descripcion,
             empleados: empleados
         },
         headers: {
@@ -350,6 +348,189 @@ $("#a_empleadosCentro").on("change", function (e) {
         $('#a_todosEmpleados').prop("checked", false);
     }
 });
+// ? *********************************** FINALIZACION **********************************************
+// ? *********************************** FORMULARIO REGISTRAR **************************************
+function modalRegistrar() {
+    $('#r_centrocmodal').modal();
+    empleadosCC();
+}
+$('#r_empleadosCentro').select2({
+    tags: "true"
+});
+// : LISTA DE EMPLEADOS
+function empleadosCC() {
+    $('#r_empleadosCentro').empty();
+    $.ajax({
+        async: false,
+        url: "/listaEmpleadoCC",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = "";
+            data.forEach(element => {
+                option += `<option value="${element.emple_id}">${element.nombre} ${element.apPaterno} ${element.apMaterno} </option>`;
+
+            });
+            $('#r_empleadosCentro').append(option)
+        },
+        error: function () { }
+    });
+}
+// : GUARDAR UN CENTRO
+function registrarCentroC() {
+    var descripcion = $('#r_descripcion').val();
+    var empleados = $('#r_empleadosCentro').val();
+    $.ajax({
+        async: false,
+        url: "/registrarCentro",
+        method: "POST",
+        data: {
+            descripcion: descripcion,
+            empleados: empleados
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            if (data.estado == 1) {
+                $("#r_descripcion").addClass("borderColor");
+                $.notifyClose();
+                $.notify(
+                    {
+                        message:
+                            "\nYa existe un centro costo con este nombre.",
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $('#r_centrocmodal'),
+                        position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 2000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                if (data.estado == 0) {
+                    alertify
+                        .confirm("Ya existe un centro costo inactivo con este nombre. ¿Desea recuperarla si o no?", function (
+                            e
+                        ) {
+                            if (e) {
+                                recuperarCentro(data.centro.centroC_id);
+                            }
+                        })
+                        .setting({
+                            title: "Modificar Centro Costo",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {
+                            },
+                        });
+                } else {
+                    centroCostoOrganizacion();
+                    $('#r_centrocmodal').modal('toggle');
+                    limpiarCentro();
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nCentro Costo registrado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
+        },
+        error: function () { }
+    });
+}
+// : FUNCTION DE RECUPERAR CENTRO
+function recuperarCentro(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarCentro",
+        data: {
+            id: id
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            limpiarCentro();
+            actividadesOrganizacion();
+            $('#r_centrocmodal').modal('toggle');
+            editarCentro(data.centroC_id);
+        },
+        error: function () { },
+    });
+}
+$("#r_descripcion").keyup(function () {
+    $(this).removeClass("borderColor");
+});
+function limpiarCentro() {
+    $('#r_descripcion').val("");
+    $('#r_empleadosCentro').empty();
+}
 // ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {

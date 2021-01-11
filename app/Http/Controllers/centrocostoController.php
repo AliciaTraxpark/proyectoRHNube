@@ -112,9 +112,6 @@ class centrocostoController extends Controller
 
         $centro = centro_costo::findOrFail($id);
 
-        $centro->centroC_descripcion = $request->get('descripcion');
-        $centro->save();
-
         // * EMPLEADOS EN CENTRO DE COSTO
         $empleadoCentro = DB::table('centro_costo as c')
             ->join('empleado as e', 'e.emple_centCosto', '=', 'c.centroC_id')
@@ -272,5 +269,68 @@ class centrocostoController extends Controller
         }
 
         return response()->json($id, 200);
+    }
+
+    public function listaEmpleados()
+    {
+        // TODO LOS EMPLEADOS
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->whereNull('e.emple_centCosto')
+            ->get();
+
+        return response()->json($empleados, 200);
+    }
+
+    public function agregarCentroC(Request $request)
+    {
+        $buscarCentroA = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
+            ->where('estado', '=', 1)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($buscarCentroA) {
+            return response()->json(array("estado" => 1), 200);
+        }
+        $buscarCentroS = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
+            ->where('estado', '=', 0)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+        if ($buscarCentroS) {
+            return response()->json(array("estado" => 1, "centro" => $buscarCentroS), 200);
+        }
+
+        $centro = new centro_costo();
+        $centro->centroC_descripcion = $request->get('descripcion');
+        $centro->organi_id = session('sesionidorg');
+        $centro->save();
+
+        $idCentro = $centro->centroC_id;
+
+        $empleados = $request->get('empleados');
+
+        if (!is_null($empleados)) {
+            foreach ($empleados as $e) {
+                $emp = empleado::findOrFail($e);
+                $emp->emple_centCosto = $idCentro;
+                $emp->save();
+            }
+        }
+
+        return response()->json($idCentro, 200);
+    }
+
+    public function recuperarCentro(Request $request)
+    {
+        $id = $request->get('id');
+        $centro = centro_costo::findOrFail($id);
+        $centro->estado = 1;
+        $centro->save();
+
+        return response()->json($centro->centroC_id, 200);
     }
 }
