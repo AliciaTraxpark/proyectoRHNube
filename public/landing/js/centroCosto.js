@@ -524,13 +524,32 @@ function recuperarCentro(id) {
         error: function () { },
     });
 }
+// : REMOVER CLASE
 $("#r_descripcion").keyup(function () {
     $(this).removeClass("borderColor");
 });
+// : FUNCION LIMPIAR
 function limpiarCentro() {
     $('#r_descripcion').val("");
     $('#r_empleadosCentro').empty();
 }
+//: TODOS LOS EMPLEADOS EN EDITAR
+$('#r_todosEmpleados').click(function () {
+    if ($(this).is(':checked')) {
+        $("#r_empleadosCentro > option").prop("selected", "selected");
+        $('#r_empleadosCentro').trigger("change");
+    } else {
+        $('#r_empleadosCentro').val("").trigger('change');
+    }
+});
+//: SELECT DE EMPLEADOS
+$("#r_empleadosCentro").on("change", function (e) {
+    if ($("#r_empleadosCentro").select2('data').length === $("#r_empleadosCentro >option").length) {
+        $('#r_todosEmpleados').prop("checked", true);
+    } else {
+        $('#r_todosEmpleados').prop("checked", false);
+    }
+});
 // ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {
