@@ -11,17 +11,18 @@ use App\nivel;
 use App\tipo_contrato;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class editarAtributosController extends Controller
 {
     public function area()
     {
-        $area = area::where('organi_id','=',session('sesionidorg'))->get();
+        $area = area::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($area, 200);
     }
     public function buscarArea(Request $request)
     {
-        $area = area::where('area_id', '=', $request->get('id'))->where('organi_id','=',session('sesionidorg'))->get()->first();
+        $area = area::where('area_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($area) {
             return response()->json($area->area_descripcion, 200);
         }
@@ -30,7 +31,7 @@ class editarAtributosController extends Controller
 
     public function editarArea(Request $request)
     {
-        $area = area::where('area_id', '=', $request->get('id'))->where('organi_id','=',session('sesionidorg'))->get()->first();
+        $area = area::where('area_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($area) {
             $area->area_descripcion = $request->get('objArea')['area_descripcion'];
             $area->save();
@@ -40,14 +41,14 @@ class editarAtributosController extends Controller
 
     public function cargo()
     {
-        $cargo = cargo::where('organi_id','=',session('sesionidorg'))->get();
+        $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($cargo, 200);
     }
 
     public function buscarCargo(Request $request)
     {
         $cargo = cargo::where('cargo_id', '=', $request->get('id'))
-        ->where('organi_id','=',session('sesionidorg'))->get()->first();
+            ->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($cargo) {
             return response()->json($cargo->cargo_descripcion, 200);
         }
@@ -56,7 +57,7 @@ class editarAtributosController extends Controller
 
     public function editarCargo(Request $request)
     {
-        $cargo = cargo::where('cargo_id', '=', $request->get('id'))->where('organi_id','=',session('sesionidorg'))->get()->first();
+        $cargo = cargo::where('cargo_id', '=', $request->get('id'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
         if ($cargo) {
             $cargo->cargo_descripcion = $request->get('objCargo')['cargo_descripcion'];
             $cargo->save();
@@ -66,8 +67,27 @@ class editarAtributosController extends Controller
 
     public function centro()
     {
-        $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
-        return response()->json($centro, 200);
+        $respuesta = [];
+        $centro = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
+        $centroE = DB::table('empleado as e')
+            ->join('centro_costo as c', 'c.centroC_id', '=', 'e.emple_centCosto')
+            ->select('c.centroC_id')
+            ->where('e.organi_id', '=', session('sesionidorg'))
+            ->where('e.emple_estado', '=', 1)
+            ->get();
+        for ($index = 0; $index < sizeof($centro); $index++) {
+            $estado = true;
+            foreach ($centroE as $c) {
+                if ($centro[$index]->centroC_id == $c->centroC_id) {
+                    $estado = false;
+                }
+            }
+            if ($estado) {
+                array_push($respuesta, $centro[$index]);
+            }
+        }
+
+        return response()->json($respuesta, 200);
     }
 
     public function buscarCentro(Request $request)
@@ -141,7 +161,7 @@ class editarAtributosController extends Controller
 
     public function contrato()
     {
-        $contrato = tipo_contrato::where('organi_id','=',session('sesionidorg'))->get();
+        $contrato = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
         return response()->json($contrato, 200);
     }
 

@@ -306,7 +306,6 @@ Route::get('/areasCR', 'dashboardController@selctAreas');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
-Route::get('/empleadosPR', 'EmpleadoController@indexMenuPR');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');

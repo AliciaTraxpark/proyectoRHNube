@@ -337,7 +337,7 @@ class centrocostoController extends Controller
     public function eliminarCentro(Request $request)
     {
         $id = $request->get('id');
-        $empleado = empleado::where('emple_centCosto', '=', $id)->get()->first();
+        $empleado = empleado::where('emple_centCosto', '=', $id)->where('emple_estado', '=', 1)->get()->first();
 
         if ($empleado) {
             return 0;

@@ -101,7 +101,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $tipoContrato = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
                 $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
                 $area = area::where('organi_id', '=', session('sesionidorg'))->get();
-                $centroC = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
+                $centroC = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
                 $local = local::where('organi_id', '=', session('sesionidorg'))->get();
                 $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
                 $condicion_pago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
