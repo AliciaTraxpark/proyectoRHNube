@@ -72,7 +72,6 @@ function puntosControlOrganizacion() {
         success: function (data) {
             $('#puntoOrganizacion').empty();
             if (data.length != 0) {
-                console.log(data);
                 var bodyTabla = $('#puntoOrganizacion');
                 var tbody = "";
                 for (let index = 0; index < data.length; index++) {
@@ -170,7 +169,6 @@ function editarPunto(id) {
             }*/
         },
         success: function (data) {
-            console.log(data);
             $('#e_idPuntoC').val(data[0].id);
             $('#e_descripcionPunto').val(data[0].descripcion);
             if (data[0].codigoControl == null) {
@@ -740,8 +738,8 @@ function inicialiarMap(geo) {
             draggable: true
         })
             .on('move', function (e) {
-                $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
-                $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+                $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+                $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
             });
         layerGroup.addLayer(ecm);
         layerGroup.addTo(mapId);
@@ -931,8 +929,8 @@ var variableU = 1;
 // * AGREGAR GPS
 function edit_agregarGPS() {
     var container = $('#e_rowGeo');
-    var latitud = parseFloat($('#e_gpsLatitud').val()).toFixed(5);
-    var longitud = parseFloat($('#e_gpsLongitud').val()).toFixed(5);
+    var latitud = parseFloat($('#e_gpsLatitud').val()).toFixed(8);
+    var longitud = parseFloat($('#e_gpsLongitud').val()).toFixed(8);
     var radio = $('#e_gpsRadio').val();
     var color = $('#e_gpsColor').val();
     colGeo = `<div class="col-lg-12" id="colGeoNuevo${variableU}">
@@ -1022,8 +1020,8 @@ function edit_agregarGPS() {
         $('#e_buttonAgregarGPS').hide();
     }
     var arrayMarkerBounds = [];
-    var nuevoLat = parseFloat($('#e_latitudNuevo' + variableU).val()).toFixed(5);
-    var nuevoLng = parseFloat($('#e_longitudNuevo' + variableU).val()).toFixed(5);
+    var nuevoLat = parseFloat($('#e_latitudNuevo' + variableU).val()).toFixed(8);
+    var nuevoLng = parseFloat($('#e_longitudNuevo' + variableU).val()).toFixed(8);
     var nuevoRadio = parseInt($('#e_radioNuevo' + variableU).val());
     var nuevoColor = $('#e_colorNuevo' + variableU).val()
     var latlng = new L.latLng(nuevoLat, nuevoLng);
@@ -1038,8 +1036,8 @@ function edit_agregarGPS() {
         draggable: true
     })
         .on('move', function (e) {
-            $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
-            $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+            $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+            $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
         });
     layerGroup.addLayer(nuevo);
     layerGroup.addTo(mapId);
@@ -1093,11 +1091,11 @@ function addMarker(e) {
                         draggable: true
                     })
                         .on('move', function (e) {
-                            $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
-                            $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+                            $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+                            $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
                         });
-                    nuevoLatitud = parseFloat(e.latlng.lat).toFixed(5);
-                    nuevoLongitud = parseFloat(e.latlng.lng).toFixed(5);
+                    nuevoLatitud = parseFloat(e.latlng.lat).toFixed(8);
+                    nuevoLongitud = parseFloat(e.latlng.lng).toFixed(8);
                     layerGroup.addLayer(nuevoxMapa);
                     layerGroup.addTo(mapId);
                     var arrayMarkerBounds = [];
@@ -1221,7 +1219,6 @@ function e_nuevaDesc() {
     var estadoInput = true;
     $('.e_colD').each(function () {
         var idI = $(this).val();
-        console.log($(this).val());
         if ($('#e_nuevaD' + idI).val() == "" && $('#e_nuevaD' + idI).is(":visible")) {
             estadoInput = false;
             $('#e_nuevaD' + idI).addClass("borderColor");
@@ -1244,12 +1241,10 @@ function e_nuevaDesc() {
     var contarEstado = 0;
     $('.e_colD').each(function () {
         var idI = $(this).val();
-        console.log($(this).val());
         if ($('#e_nuevaD' + idI).is(":visible")) {
             contarEstado = contarEstado + 1;
         }
     });
-    console.log(contarEstado);
     if (contarEstado < 3) {
         $('#e_agregarD').show();
     } else {
@@ -1277,7 +1272,6 @@ function e_eliminarI(id) {
     var contarEstado = 0;
     $('.e_colD').each(function () {
         var idI = $(this).val();
-        console.log($(this).val());
         if ($('#e_nuevaD' + idI).val() == "" && $('#e_nuevaD' + idI).is(":visible")) {
             contarEstado = contarEstado + 1;
         }
@@ -1876,7 +1870,6 @@ function r_nuevaDesc() {
     var estadoInput = true;
     $('.r_colD').each(function () {
         var idI = $(this).val();
-        console.log($(this).val());
         if ($('#r_nuevaD' + idI).val() == "" && $('#r_nuevaD' + idI).is(":visible")) {
             estadoInput = false;
             $('#r_nuevaD' + idI).addClass("borderColor");
@@ -1899,7 +1892,6 @@ function r_nuevaDesc() {
     var contarEstado = 0;
     $('.r_colD').each(function () {
         var idI = $(this).val();
-        console.log($(this).val());
         if ($('#r_nuevaD' + idI).is(":visible")) {
             contarEstado = contarEstado + 1;
         }
@@ -1919,7 +1911,6 @@ function r_eliminarI(id) {
     var contarEstado = 0;
     $('.r_colD').each(function () {
         var idI = $(this).val();
-        console.log($(this).val());
         if ($('#r_nuevaD' + idI).val() == "" && $('#r_nuevaD' + idI).is(":visible")) {
             contarEstado = contarEstado + 1;
         }
@@ -1939,8 +1930,8 @@ function r_agregarGPS() {
 var reg_variableU = 1;
 function reg_agregarGPS() {
     var container = $('#r_rowGeo');
-    var latitud = parseFloat($('#r_gpsLatitud').val()).toFixed(5);
-    var longitud = parseFloat($('#r_gpsLongitud').val()).toFixed(5);
+    var latitud = parseFloat($('#r_gpsLatitud').val()).toFixed(8);
+    var longitud = parseFloat($('#r_gpsLongitud').val()).toFixed(8);
     var radio = $('#r_gpsRadio').val();
     var color = $('#r_gpsColor').val();
     colGeo = `<div class="col-lg-12" id="r_colGeoNuevo${reg_variableU}">
@@ -2017,8 +2008,8 @@ function reg_agregarGPS() {
     $('#modalRegistrarPunto').modal('show');
     $('[data-toggle="tooltip"]').tooltip();
     var arrayMarkerBounds = [];
-    var nuevoLat = parseFloat($('#r_latitudNuevo' + reg_variableU).val()).toFixed(5);
-    var nuevoLng = parseFloat($('#r_longitudNuevo' + reg_variableU).val()).toFixed(5);
+    var nuevoLat = parseFloat($('#r_latitudNuevo' + reg_variableU).val()).toFixed(8);
+    var nuevoLng = parseFloat($('#r_longitudNuevo' + reg_variableU).val()).toFixed(8);
     var nuevoRadio = parseInt($('#r_radioNuevo' + reg_variableU).val());
     var nuevoColor = $('#r_colorNuevo' + reg_variableU).val()
     var latlng = new L.latLng(nuevoLat, nuevoLng);
@@ -2033,8 +2024,8 @@ function reg_agregarGPS() {
         draggable: true
     })
         .on('move', function (e) {
-            $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
-            $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+            $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+            $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
         });
     r_layerGroup.addLayer(r_nuevo);
     r_layerGroup.addTo(map);
@@ -2088,11 +2079,11 @@ function r_addMarker(e) {
                         draggable: true
                     })
                         .on('move', function (e) {
-                            $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(5));
-                            $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(5));
+                            $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+                            $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
                         });
-                    nuevoLatitud = parseFloat(e.latlng.lat).toFixed(5);
-                    nuevoLongitud = parseFloat(e.latlng.lng).toFixed(5);
+                    nuevoLatitud = parseFloat(e.latlng.lat).toFixed(8);
+                    nuevoLongitud = parseFloat(e.latlng.lng).toFixed(8);
                     r_layerGroup.addLayer(r_nuevoxMapa);
                     r_layerGroup.addTo(map);
                     var arrayMarkerBounds = [];
