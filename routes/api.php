@@ -70,4 +70,6 @@ Route::post("centroCostos", "apimovilController@centroCostos")->middleware('toke
 Route::post("puntoControl", "apimovilController@puntoControl")->middleware('token')->middleware('apilogger');
 
 // * APIS DE BIOMETRICOS
+Route::post("logueoBiometrico", "apiBiometricoController@logueoBiometrico")->middleware('apilogger');
+Route::post("elegirOrganizacionBio", "apiBiometricoController@elegirOrganizacionBio")->middleware('token')->middleware('apilogger');
 Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico");
