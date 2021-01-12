@@ -544,6 +544,57 @@ class apiBiometricoController extends Controller
 
 
     }
+
+
+    public function empleadosBiometrico(Request $request){
+
+        $idUsuarioOrgani=$request->idusuario_organizacion;
+        $usuario_organizacion=DB::table('usuario_organizacion as uso')
+        ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial','O.organi_estado')
+        ->where('uso.usua_orga_id','=',$idUsuarioOrgani)
+        ->join('users as u','uso.user_id','=','u.id')
+        ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+        ->get()->first();
+
+        /* PRIMERO VER SI ES INVITADO O NO */
+        if($usuario_organizacion->rol_id==3){
+
+           /* SI ES INVITADO VER PERMISOS */
+           $invitadod = DB::table('invitado')
+            ->where('user_Invitado', '=', Auth::user()->id)
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->where('rol_id', '=', 3)
+            ->get()->first();
+
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
+             'e.emple_id as idempleado')
+            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.asistencia_puerta', '=', 1)
+            ->paginate();
+        }
+        else
+        {
+            $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
+             'e.emple_id as idempleado')
+            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.asistencia_puerta', '=', 1)
+            ->paginate();
+        }
+
+        if($empleado!=null){
+            return response()->json(array("empleados"=>$empleado));
+       }
+       else{
+           return response()->json(array('status'=>400,'title' => 'Empleados no encontrados',
+           'detail' => 'No se encontro empleados relacionados con este dispositivo'),400);
+       }
+    }
     public function marcacionBiometrico(Request $request)
     {
         $fechaHoy = Carbon::now('America/Lima');
