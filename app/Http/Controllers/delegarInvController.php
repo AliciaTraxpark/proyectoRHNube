@@ -831,6 +831,6 @@ public function reenviarEmail(Request $request){
 
     $invitado = invitado::find($idInvitado);
     $organi = organizacion::find(session('sesionidorg'));
-    Mail::to($invitado[0]->email_inv)->queue(new CorreoInvitado($organi,$invitado));
+    Mail::to($invitado->email_inv)->queue(new CorreoInvitado($organi,$invitado));
 }
 }
