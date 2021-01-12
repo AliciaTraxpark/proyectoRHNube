@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\dispositivos;
 use App\marcacion_biometrico;
 use App\User;
 use App\organizacion;
@@ -496,6 +497,53 @@ class apiBiometricoController extends Controller
 
     }
 
+
+    public function editarDispositivo(Request $request){
+
+        $idDispositivos=$request->idDispositivos;
+        $descripcion=$request->descripcion;
+        $ipPuerto=$request->ipPuerto;
+        $serie=$request->serie;
+        $version_firmware=$request->version_firmware;
+
+        $dispositivo = dispositivos::findOrFail($idDispositivos);
+        if(empty($request->descripcion)) {}
+            else{
+                $dispositivo->dispo_descripUbicacion=$descripcion;
+            }
+
+            if(empty($request->ipPuerto)) {}
+            else{
+                $dispositivo->dispo_movil=$ipPuerto;
+            }
+
+            if(empty($request->serie)) {}
+            else{
+                if($dispositivo->dispo_codigo==null){
+                    $dispositivo->dispo_codigo=$serie;
+                } else{
+
+                }
+
+            }
+
+            if(empty($request->version_firmware)) {}
+            else{
+                $dispositivo->version_firmware=$version_firmware;
+            }
+        $dispositivo->save();
+
+        if($dispositivo){
+            return response()->json(array('status'=>200,'title' => 'Dispositivo editado correctamente',
+            'detail' => 'Dispositivo editado correctamente en la base de datos'),200);
+        }
+        else{
+            return response()->json(array('status'=>400,'title' => 'No se pudo editar dispositivo',
+            'detail' => 'No se pudo editar dispositivo, compruebe que los datos sean validos'),400);
+        }
+
+
+    }
     public function marcacionBiometrico(Request $request)
     {
         $fechaHoy = Carbon::now('America/Lima');
