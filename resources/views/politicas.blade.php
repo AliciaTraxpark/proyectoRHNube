@@ -12,9 +12,7 @@ use App\invitado;
     <link rel="stylesheet" href="{{asset('landing/vendors/aos/css/aos.css')}}">
     <link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
-
+    
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
@@ -37,6 +35,7 @@ use App\invitado;
 
         body{
             font-family: Poppins, sans-serif;
+            padding-bottom: 0px !important;
         }
 
         .card .card-body {
@@ -154,6 +153,7 @@ use App\invitado;
               display: block;
               width: 100%;
               bottom: 0;
+              margin-top: 0px;
             }
         }
     </style>
@@ -161,7 +161,7 @@ use App\invitado;
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
                 <div class="col-md-5 col-xl-4 logo_rh">
                     <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69">
+                        <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
                     </div>
                 </div>
                 <div class="col-md-5 col-xl-6 text-left textResp title_rh">
@@ -179,23 +179,23 @@ use App\invitado;
     </header>
 
     <div class="container">
-        <div class="content-page" style="margin-top: 40px; margin-left: 100px; margin-right: 55px;padding-left: 0px;">
+        <div class="content-page" style="margin-top: 10px; margin-left: 100px; margin-right: 55px;padding-left: 0px;">
         <div class="content">
             <div class="row" style="color: black !important">
                 <div class=" col-12 col-md-4" id="navPo">
                   <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#introduccion" role="tab" aria-controls="introduccion" aria-selected="true">Introducción</a>
                     <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#tipo-informacion" role="tab" aria-controls="tipo-informacion" aria-selected="false">¿Qué tipo de información recopilamos?</a>
-                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#tratamiento-datos" role="tab" aria-controls="tratamiento-datos" aria-selected="false">Legitimación del tratamiento de datos</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#transferencia-datos" role="tab" aria-controls="transferencia-datos" aria-selected="false">Transferencias y cesiones de datos</a>
-                    <a class="nav-link" id="v-pills-messages-tab1" data-toggle="pill" href="#informacion-personal" role="tab" aria-controls="informacion-personal" aria-selected="false">Control de su información personal</a>
-                    <a class="nav-link" id="v-pills-settings-tab1" data-toggle="pill" href="#cambios-politica" role="tab" aria-controls="cambios-politica" aria-selected="false">Cambios en la política de privacidad</a>
+                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#tratamiento-datos" role="tab" aria-controls="tratamiento-datos" aria-selected="false">Legitimación de tratamiento de datos</a>
+                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#transferencia-datos" role="tab" aria-controls="transferencia-datos" aria-selected="false">Transferencias y cesión datos</a>
+                    <a class="nav-link" id="v-pills-messages-tab1" data-toggle="pill" href="#informacion-personal" role="tab" aria-controls="informacion-personal" aria-selected="false">Control de información personal</a>
+                    <a class="nav-link" id="v-pills-settings-tab1" data-toggle="pill" href="#cambios-politica" role="tab" aria-controls="cambios-politica" aria-selected="false">Cambios de política de privacidad</a>
                   </div>
                 </div>
 
-                <div class="col-12 col-md-8" id="cuerpoPo" style=" padding-left: 50px;   ">
+                <div class="col-12 col-md-8" id="cuerpoPo" style=" padding-left: 50px; ">
                   <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="v-pills-home-tab" style="padding-bottom: 70px;">
                         <label for="" style="text-align: justify;">  
                             La presente Política de Privacidad establece los términos en que RH NUBE usa y protege la información que proporcionan los usuarios al momento de manipular nuestra plataforma. <br><br>
 
@@ -206,7 +206,7 @@ use App\invitado;
 
 
                     </div>
-                    <div class="tab-pane fade" id="tipo-informacion" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="tab-pane fade" id="tipo-informacion" role="tabpanel" aria-labelledby="v-pills-profile-tab" style="padding-bottom: 50px;">
                         <label for="" style="text-align: justify">
                             En nuestros sitios web, existen unos apartados específicos donde anotas tus datos en el proceso de registro y a la hora de realizar pagos y/o pedidos. Nosotros te aseguramos que la información que nos facilites será gestionada de forma totalmente confidencial. <br><br>
                             En nuestra plataforma recogemos información para proporcionar las funcionalidades necesarias. <br><br>
@@ -217,12 +217,12 @@ use App\invitado;
 
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="tratamiento-datos" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="tab-pane fade" id="tratamiento-datos" role="tabpanel" aria-labelledby="v-pills-messages-tab" style="padding-bottom: 80px;">
                         <label for="" style="text-align: justify">
                             El uso de tus datos se realiza porque nos das tu consentimiento para usar los que nos proporcionas en los formularios para un uso específico que se indica en cada uno de ellos. Tus datos solo son necesarios para los usos concretos por los que se te solicitan.
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="transferencia-datos" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <div class="tab-pane fade" id="transferencia-datos" role="tabpanel" aria-labelledby="v-pills-settings-tab" style="padding-bottom: 80px;">
                         <label for="" style="text-align: justify">
                             Existe un compromiso firme por nuestra parte de que los datos que proporcione a RH NUBE CORP, no serán vendidos ni cedidos a terceras personas sin el previo consentimiento del interesado bajo ningún concepto o circunstancia, salvo consentimiento expreso u obligación legal.  <br><br>
 
@@ -230,12 +230,12 @@ use App\invitado;
 
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="informacion-personal" role="tabpanel" aria-labelledby="v-pills-messages-tab1">
+                    <div class="tab-pane fade" id="informacion-personal" role="tabpanel" aria-labelledby="v-pills-messages-tab1" style="padding-bottom: 80px;">
                         <label for="" style="text-align: justify">
                             Tienes el derecho de acceder a tu información almacenada en nuestras bases de datos, rectificarla si existiera alguna errata, suprimirla, limitarla, oponerte a su tratamiento y retirar tu consentimiento si ese es tu deseo. Para ello simplemente debes escribir un e-mail a la dirección de correo electrónico info@rhnube.com.pe donde te atenderemos gustosamente cualquier consulta, comentario o aclaración requerida al respecto. 
                         </label>
                     </div>
-                    <div class="tab-pane fade" id="cambios-politica" role="tabpanel" aria-labelledby="v-pills-settings-tab1">
+                    <div class="tab-pane fade" id="cambios-politica" role="tabpanel" aria-labelledby="v-pills-settings-tab1" style="padding-bottom: 50px;">
                         <label for="" style="text-align: justify">
                             RH NUBE CORP se reserva el derecho de cambiar los términos de la presente Política de Privacidad en el momento que se amerite. Modificamos esta Política de Privacidad de forma periódica.  <br><br>
 
@@ -253,7 +253,7 @@ use App\invitado;
 
     
 
-    <footer class="border-top" style="background:#163552; margin-top: 15px;">
+    <footer class="border-top" style="background:#163552;">
         <div class="col-md-12 text-center"
             style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
             <span style="color: #faf3f3;font-size: 12px!important">

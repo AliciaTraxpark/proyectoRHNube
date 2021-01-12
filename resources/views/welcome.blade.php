@@ -31,6 +31,7 @@
     <style>
         body {
             background-color: #ffffff !important;
+
         }
 
         .pResp {
@@ -41,6 +42,265 @@
         .tooltip-arrow,
         .red-tooltip+.tooltip>.tooltip-inner {
             background-color: rgb(0, 0, 0);
+        }
+
+
+        .tooltip-arrow,
+        .red-tooltip+.tooltip>.tooltip-inner {
+            background-color: rgb(0, 0, 0);
+        }
+
+        .inputResp {
+            padding: 2px 15px !important;
+        }
+
+        .btn-group-sm>.btn,
+        .btn-sm {
+            padding: .25rem .5rem !important;
+            font-size: 14px !important;
+        }
+
+        @media (min-width: 992px) {
+            footer {
+              font-size: 15px;
+              color: #555;
+              background: #eee;
+              text-align: center;
+              position: fixed;
+              display: block;
+              width: 100%;
+              bottom: 0;
+              margin-top: 20px;
+            }
+            body {
+                padding-bottom: 50px;
+            } 
+            .txt_home{
+                padding-left: 65px !important;
+            }
+            
+        }
+        .modal{
+                top: 100px !important;
+            }
+
+        @media (max-width: 576px) {
+            /*.col-*/
+            .iframe_rh{
+                height: 85%;
+            } 
+
+            .iframe_rh_div{
+                padding:60% 0 0 0;
+            }
+            .img_rh{
+                padding: 5px 20px !important;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767px) {
+            /*.col-sm-*/
+            .iframe_rh{
+                height: 85%;
+            } 
+
+            .iframe_rh_div{
+                padding:55% 0 0 0;
+            }
+
+            .img_rh{
+                padding: 10px 40px !important;
+            }
+        }
+
+        @media (min-width: 767px) and (max-width: 921px) {
+            /*.col-sm-*/
+            .iframe_rh{
+                height: 85%;
+            } 
+
+            .iframe_rh_div{
+                padding:50% 40% 0 0;
+            }
+
+            .video_rsp{
+                 width: 500px;
+            }
+        }
+
+        @media (min-width: 921px) and (max-width: 992px) {
+            /*.col-sm-*/
+            .iframe_rh{
+                height: 85%;
+            } 
+
+            .iframe_rh_div{
+                padding:50% 0 0 0;
+            }
+
+            .video_rsp{
+                 width: 500px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1050px) {
+            /*.col-xl-*/
+           .iframe_rh{
+                height: 85%;
+                padding-right: 11% !important;
+            } 
+
+            .iframe_rh_div{
+                padding:70% 0 0 0;
+            }
+            .container_img{
+                padding-left: 35px !important;
+                padding-right: 35px !important;
+            }
+            .video_rsp{
+                 width: 800px;
+            }
+        }
+
+        @media (min-width: 1050px) and (max-width: 1200px) {
+            /*.col-xl-*/
+           .iframe_rh{
+                height: 85%;
+                padding-right: 8% !important;
+            } 
+
+            .iframe_rh_div{
+                padding:64% 0 0 0;
+            }
+            .container_img{
+                padding-left: 50px !important;
+                padding-right: 50px !important;
+            }
+            .video_rsp{
+                 width: 800px;
+            }
+        }
+
+        @media (min-width: 1200px) and (max-width: 1300px) {
+            /*.col-*/
+            .iframe_rh{
+                height: 85%;
+
+            }
+            .iframe_rh_div{
+                padding:58% 0 0 0;
+            }
+            .container_img{
+                padding-left: 60px !important;
+                padding-right: 60px !important;
+            }
+            .video_rsp{
+                 width: 800px;
+            }
+            .credential_rh{
+                margin-left: 70px !important;
+            }
+            .user_rh{
+                max-width: 200px !important;
+            }
+            .pass_rh{
+                max-width: 200px !important;
+            }
+            .span_rh{
+                padding-left: 30px !important;
+            }
+        }
+
+        @media (min-width: 1300px) and (max-width: 1400px) {
+            /*.col-*/
+            .iframe_rh{
+                height: 85%;
+                padding-left: 9% !important;
+            }
+            .iframe_rh_div{
+                padding:50% 0 0 0;
+            }
+            .container_img{
+                padding-left: 75px !important;
+                padding-right: 75px !important;
+            }
+            .video_rsp{
+                 width: 800px;
+            }
+            .credential_rh{
+                margin-left: 115px !important;
+            }
+            .user_rh{
+                max-width: 200px !important;
+            }
+            .pass_rh{
+                max-width: 200px !important;
+            }
+            .span_rh{
+                padding-left: 50px !important;
+            }
+        }
+
+        @media (min-width: 1400px) and (max-width: 1500px) {
+            /*.col-*/
+            .iframe_rh{
+                height: 87%;
+                padding-left: 135px !important;
+            }
+            .iframe_rh_div{
+                padding:40% 0 0 0;
+            }
+            .container_img{
+                padding-left: 70px !important;
+                padding-right: 70px !important;
+            }
+            .video_rsp{
+                 width: 800px;
+            }
+            .credential_rh{
+                margin-left: 180px !important;
+            }
+            .user_rh{
+                max-width: 200px !important;
+            }
+            .pass_rh{
+                max-width: 200px !important;
+            }
+            .span_rh{
+                padding-left: 100px !important;
+            }
+            
+        }
+
+        @media (min-width: 1500px){
+            /*.col-xl-*/
+            .iframe_rh{
+                height: 87%;
+                padding-left: 135px !important;
+            }
+            .iframe_rh_div{
+                padding:40% 0 0 0;
+            }
+
+            .container_img{
+                padding-left: 80px !important;
+                padding-right: 80px !important;
+            }
+            .video_rsp{
+                 width: 800px;
+            }
+            .credential_rh{
+                margin-left: 220px !important;
+            }
+            .user_rh{
+                max-width: 200px !important;
+            }
+            .pass_rh{
+                max-width: 200px !important;
+            }
+            .span_rh{
+                padding-left: 110px !important;
+            }
         }
 
         @media (min-width: 1564px) and (max-width: 1579px) {
@@ -149,54 +409,56 @@
             .btnVideoR {
                 padding-top: 1rem !important;
             }
+            .video_rsp{
+                 width: 400px;
+            }
         }
     </style>
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
-                <div class="col-md-5 colResp" style="margin-bottom: 10px;padding-left: 60px">
-                    <div class="navbar-brand-wrapper d-flex colResp">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="26%" height="26%">
+                <div class="col-md-5 col-sm-4 col-12 colResp" style="margin-bottom: 0px;padding-left: 60px; height: 80px !important;">
+                    <div class="navbar-brand-wrapper d-flex colResp" >
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="135" height="85">
                     </div>
                 </div>
                 {{-- FORMULARIO LOGIN --}}
-                <div class="col-md-7">
+                <div class="col-md-7 col-sm-8 col-12">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-2 form-group mb-0"></div>
-                            <div class="col-md-4 form-group mb-0">
-                                <label class="blanco">Correo electrónico o teléfono </label>
+                        <div class="row" style="margin-top: 18px;">
+                            <div class="col-md-0 col-lg-2  credential_rh"></div>
+                            <div class="col-md-5 col-lg-4  col-12 form-group mb-0 pb-2 user_rh" style="padding:0px 4px;">
+                                <!--<label class="blanco">Correo electrónico o teléfono </label>-->
                                 <input id="email"
                                     class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="E-mail">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-3 form-group mb-0">
-                                <label class="blanco">Contraseña</label>
+                            <div class="col-md-5 col-lg-4 col-12 form-group mb-0 pb-2 pass_rh" style="padding:0px 4px;" >
+                                <!--<label class="blanco">Contraseña</label>-->
                                 <input tid="password" type="password"
                                     class="form-control form-control-sm @error('password') is-invalid @enderror"
-                                    name="password" required autocomplete="current-password">
+                                    name="password" required autocomplete="current-password" placeholder="Contraseña">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-3 form-group mb-0 colBtn"
-                                style="display:flex; align-items: center; top: 15px;   padding-left: 28px;">
-                                <button type="submit" style="font-size: 12px;padding-bottom: 5px;padding-top: 6px;"
-                                    class="botonIs">Iniciar sesión</button>
+                            <div class="col-md-2 col-lg-1 col-12 form-group mb-0 colBtn start_rh" style="display:flex; align-items: center; top: -4px; padding-left: 4px; padding-right: 4px">
+                                <button type="submit" style="font-size: 11px;padding-bottom: 2px;padding-top: 6px;"
+                                    class="botonIs"><img src="{{asset('landing/images/log-in.png')}}" style="color: white;" width="20px"></button>
                             </div>
                             <div class="col-md-12 form-group row p-0 m-0 text-left">
-                                <div class="col-md-6 offset-md-6 p-0 colResetResp">
+                                <div class="col-md-7 col-lg-6 offset-md-5 offset-lg-6 p-0 colResetResp span_rh">
                                     @if (Route::has('password.request'))
                                     <a class="btn btn-link btnLinkResp" href="{{ route('password.request') }}"
-                                        style="font-size:11.5px;color: #ffffff;padding-bottom: 0px;padding-top: 4px;padding-left: 14px;margin-left: 0px;">
+                                        style="font-size:11.5px;color: #ffffff;padding-top: 0px;padding-bottom: 5px;padding-left: 14px;margin-left: 0px;">
                                         ¿Olvidaste tu contraseña?
                                     </a>
                                     @endif
@@ -238,8 +500,39 @@
     </div><!-- /.modal -->
     {{-- FINAL DE MODAL --}}
     {{-- MODAL DE VIDEO --}}
-    <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-lg ">
+        <div class="modal-content video_rsp">
+            <div class="modal-header" style="background-color:#163552;padding:0.5rem">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="javascript:stopVideo()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{-- VIDEO --}}
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-lg-12  p-0 img-digital grid-margin grid-margin-lg-0"
+                        data-aos="fade-left">
+                        <div style="padding:50.46% 0 0 0;">
+                            <iframe src="https://player.vimeo.com/video/471441178?title=0&byline=0&portrait=0"
+                                width="640" height="564"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+                        </div>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+                {{-- FINALIZAR VIDEO --}}
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modal-video1" tabindex="-1" role="dialog" aria-labelledby="modal-video1"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false" >
         <div class="modal-dialog  modal-lg d-flex justify-content-center">
             <div class="modal-content" style="width: 800px">
                 <div class="modal-header" style="background-color:#163552;padding:0.5rem">
@@ -269,32 +562,80 @@
         </div><!-- /.modal -->
     </div>
     {{-- FINAL DE MODAL --}}
-    <div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
+    <div class="container" style="margin-top: 5%; margin-bottom: 5%;">
+        <div class="row">
+            <div class="col-lg-6 txt_home" data-aos="fade-right">
+                <h3 class="text-center" style="font-size: 23px; font-weight: 500 !important;">¿Por qué registrar tu organización en RH nube?</h3>
+                <div class="col-lg-12 col-xl-12 text-center p-0">
+                    <p class="py-4 m-0 text-muted " style="font-size: 16px">
+                        Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil,
+                        gratuito y el costo de administración
+                        tiene un retorno de inversión (ROI) de sólo 3 días. <br><br>
+                    </p>
+                    <div class="row justify-content-center">
+                       <div class="col-md-12 text-center btnResp btnVideoR p-2">
+                            <a data-toggle="tooltip" data-placement="bottom" title='ver video "crear mi cuenta"'
+                                data-original-title='ver video "crear mi cuenta"'
+                                onclick="$('#modal-video').modal()" style="cursor: pointer">
+                                <img src="{{asset('landing/images/play.svg')}}" height="45">
+                            </a>
+                        </div>
+                        <div class="col-md-12 text-center btnResp p-2">
+                            <a href="{{route('registroPersona')}} " >
+                                <button {{-- onclick=" $('#modal-error').modal('show')"  --}}
+                                    class="btn btn-opacity-comienza mr-1">Crear mi cuenta
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-md-12 text-center btnResp p-2">
+                            <a href="#" style="text-decoration: underline;  " data-toggle="modal" data-target="#modal_saveMeet">
+                              Agenda reunión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+              <div class="iframe_rh_div">
+                    <iframe src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;" class="iframe_rh" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>  
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div class="content-wrapper" style="padding-bottom: 0px;padding-top: 0px;background-color: #ffffff">
         <div class="container">
             <section class="digital-marketing-service" id="digital-marketing-section">
                 <div class="row align-items-center marginRow" style="margin-top: 55px;">
                     <div class="col-12 col-lg-1 p-0 img-digital grid-margin"></div>
                     <div class="col-12 col-lg-5 text-center grid-margin grid-margin-lg-0" data-aos="fade-right">
-                        <h3 class=" m-0">¿Por qué usar RH Nube?</h3>
+                        <h3 class=" m-0" style="font-size: 23px; font-weight: 500 !important;">¿Por qué registrar tu organización en RH nube?</h3>
                         <div class="col-lg-12 col-xl-12 text-center p-0">
                             <p class="py-4 m-0 text-muted " style="font-size: 16px">
                                 Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil,
                                 gratuito y el costo de administración
-                                tiene un retorno de inversión (ROI) de sólo 2 días.
+                                tiene un retorno de inversión (ROI) de sólo 3 días.
                             </p>
                             <div class="row justify-content-center">
-                                <div class="col-md-8 text-right btnResp">
+                               <div class="col-md-12 text-center btnResp btnVideoR p-2">
+                                    <a data-toggle="tooltip" data-placement="bottom" title='ver video "crear mi cuenta"'
+                                        data-original-title='ver video "crear mi cuenta"'
+                                        onclick="$('#modal-video').modal()" style="cursor: pointer">
+                                        <img src="{{asset('landing/images/play.svg')}}" height="45">
+                                    </a>
+                                </div>
+                                <div class="col-md-12 text-center btnResp p-2">
                                     <a href="{{route('registroPersona')}} " >
                                         <button {{-- onclick=" $('#modal-error').modal('show')"  --}}
                                             class="btn btn-opacity-comienza mr-1">Crear mi cuenta
                                         </button>
                                     </a>
                                 </div>
-                                <div class="col-md-4 text-left btnResp btnVideoR">
-                                    <a data-toggle="tooltip" data-placement="bottom" title='ver video "crear mi cuenta"'
-                                        data-original-title='ver video "crear mi cuenta"'
-                                        onclick="$('#modal-video').modal()" style="cursor: pointer">
-                                        <img src="{{asset('landing/images/play.svg')}}" height="45">
+                                <div class="col-md-12 text-center btnResp p-2">
+                                    <a href="#" style="text-decoration: underline;  " data-toggle="modal" data-target="#modal_saveMeet">
+                                      Agenda reunión
                                     </a>
                                 </div>
                             </div>
@@ -302,10 +643,10 @@
                     </div>
                     {{-- VIDEO --}}
                     <div class="col-12 col-lg-6 p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
-                        <div style="padding:50.46% 0 0 0;">
-                            <iframe width="590" height="360"
+                        <div class="iframe_rh_div">
+                            <iframe
                                 src="https://player.vimeo.com/video/460820175?color=ffffff&title=0&portrait=0"
-                                style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                                style="position:absolute;top:0;left:0;width:100%;" class="iframe_rh" frameborder="0"
                                 allow="autoplay; fullscreen" allowfullscreen></iframe>
                         </div>
                         <script src="https://player.vimeo.com/api/player.js"></script>
@@ -314,77 +655,39 @@
                 </div>
             </section>
             {{-- INICIO DE CARRUSEL --}}
-            <section class="customer-feedback" id="feedback-section" style="margin-left: 50px;margin-right: 71px;">
-                <div class="row" style="padding-top: 30px">
-                    <div class="owl-carousel owl-theme grid-margin" style="margin-bottom: 10px;">
-                        <div class="card customer-cards" style="background: #38afff">
-                            <div class="card-body" style="padding-top: 0px;padding-bottom: 0px;">
-                                <div class="row">
-                                    <div class="col-md-2" style="padding-left: 0px"><br><br>
-                                        <img src="{{asset('landing/images/grafica.svg')}}" width="59" height="49"
-                                            alt="">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 13.8px!important;color:#ffffff">
-                                            Controla la manada o el grupo, Modo asistencia en puerta
-                                        </h6>
-                                        <p class="m-0 py-3 text-muted celesteResp"
-                                            style="font-size: 11.5px!important;color:#ffffff!important;padding-top: 16px">
-                                            La herramienta de esta modalidad puede supervisar y controlar la asistencia
-                                            y actividad de un grupo de trabajadores en un punto determinado, ya sea en
-                                            oficina o en el campo.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards" style="background:  #013c64">
-                            <div class="card-body" style="padding-top: 0px;padding-bottom: 0px;">
-                                <div class="row">
-                                    <div class="col-md-2" style="padding-left: 0px"><br><br>
-                                        <img src="{{asset('landing/images/la-seguridad.svg')}}" width="59" height="49"
-                                            alt="">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h6 class="card-title pt-3" style="font-size: 14px!important;color:#ffffff">
-                                            Controla el personal de campo, Modo en ruta
-                                        </h6>
-                                        <p class="m-0 py-3 text-muted pResp"
-                                            style="font-size: 12.4px!important;color:#ffffff!important;padding-bottom: 30px">
-                                            Herramienta móvil que permite el control de las rutas de personal, así como
-                                            el detalle de las actividades que se realizan durante el día laboral.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card customer-cards" style="background: #003253">
-                            <div class="card-body" style="padding-top: 3px;padding-bottom: 5px;">
-                                <div class="row">
-                                    <div class="col-md-2" style="padding-left: 0px"><br><br>
-                                        <img src="{{asset('landing/images/api.svg')}}" width="59" height="49" alt="">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h6 class="card-title pt-2" style="font-size: 13.4px!important;color:#ffffff">
-                                            Control del tiempo efectivo de trabajo, Modo Remoto
-                                        </h6>
-                                        <p class="m-0 py-3 text-muted"
-                                            style="font-size: 11.7px!important;color:#ffffff!important">
-                                            Es una herramienta fácil y práctica de manejar, controla el trabajo en
-                                            oficina o en
-                                            casa. Reporta tiempo efectivo de trabajo y no sólo una marcación o fichaje
-                                            de asistencia.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
             {{-- FINALIZACION DE CARRUSEL --}}
         </div>
+    </div>  -->
+    <div class="container mb-4" style="padding: 0 80px !important;">
+        <div class="row d-flex justify-content-around">
+            <div class="col-md-4 img_rh" style="max-width: 400px;">
+                <img  class="card-img-top " src="{{ URL::asset('admin/images/remoto1.jpg') }}" style="border: black 3px solid;">
+            </div>
+            <div class="col-md-4 img_rh" style="max-width: 400px;">
+                <img  class="card-img-top " src="{{ URL::asset('admin/images/puerta1.jpg') }}" style="border: black 3px solid;">
+            </div>
+            <div class="col-md-4 img_rh" style="max-width: 400px;">
+                <img  class="card-img-top " src="{{ URL::asset('admin/images/rutas1.jpg') }}" style="border: black 3px solid;">
+            </div>
+        </div>
     </div>
+<!--
+    <div class="container container_img">
+        <div class="row align-items-center marginRow" >
+          <div class="col-md-4 col-12 col-xs-12 p-4 img_rh">
+            <img  class="card-img-top " src="{{ URL::asset('admin/images/remoto1.jpg') }}" style="border: black 3px solid;">
+          </div>
+          <div class="col-md-4 col-12 col-xs-12 p-4 img_rh">
+            <img  class="card-img-top " src="{{ URL::asset('admin/images/puerta1.jpg') }}"  style="border: black 3px solid;">
+          </div>
+          <div class="col-md-4 col-12 col-xs-12 p-4 img_rh">
+            <img  class="card-img-top " src="{{ URL::asset('admin/images/rutas1.jpg') }}"  style="border: black 3px solid;">
+          </div>  
+        </div>
+    </div> -->
+
+
     {{-- MODAL DE ERRORES --}}
     @if (session('error'))
     <div class="modal" id="modal1" role="dialog" style="display:block;">
@@ -409,26 +712,88 @@
     </div>
     @endif
     {{-- FINALIZAR MODAL --}}
-    <footer class="border-top" style="background:#163552">
-        <div class="col-md-12 text-center" style="margin-top: 20px">
-            <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="10%" height="10%">
+    {{-- MODAL CONFIRMACIÓN DE AGENDA REUNIÓN --}}
+    <div class="modal" tabindex="-1" id="confirmacion_correo">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="padding-bottom:3px;padding-top:10px;background: #163552;color: #f8f9fa">
+            <h5 class="modal-title" style="font-size:14px">¡Correo enviado con éxito!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Gracias por tu tiempo, hoy me pondré en contacto contigo.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-sm" style="background: #163552; color: #ecebeb">Ok</button>
+          </div>
         </div>
-        <div class="col-md-12 text-center" style="margin-top: 10px;margin-bottom: 20px">
-            <img src="{{asset('landing/images/peru.svg')}}" height="17">
-            <span style="color:#faf3f3;font-size: 12px!important"> 017482415| &nbsp;&nbsp;
-                <span class="mdi mdi-whatsapp" style="color: #ffffff;">+51 914 480 786 |&nbsp;&nbsp;</span>
-                <span class="mdi mdi-email-outline" style="color: #ffffff;"></span>
-                info@rhnube.com.pe
-            </span>
+      </div>
+    </div>
+    {{-- FINALIZAR MODAL --}}
+
+    {{-- MODAL AGENDA REUNIÓN --}}
+    <div class="modal fade" id="modal_saveMeet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header"  style="padding-bottom:3px;padding-top:10px;background: #163552;color: #f8f9fa">
+            <h5 class="modal-title" id="" style="font-size:14px">Agendar reunión</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" >&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form_agendarReunion" action="javascript:enviarAgenda()">
+                @csrf
+              <div class="form-row">
+                <div class="form-group col-md-12 inputResp" style="">
+                  <input type="text" class="form-control" id="modal_saveMeet_name" name="modal_saveMeet_name" required="" onkeypress='return validaTexto(event)' placeholder="Nombres y apellidos">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12 inputResp">
+                  <input type="text" class="form-control" id="modal_saveMeet_movil" name="modal_saveMeet_movil" onkeypress='return validaNumericos(event)' required="" maxlength="9" minlength="6" placeholder="Teléfono">
+                </div>
+                <div class="form-group col-md-12 inputResp">
+                  <input type="email" class="form-control" id="modal_saveMeet_email" name="modal_saveMeet_email" required="" placeholder="Correo Electrónico">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12 inputResp" >
+                    <input type="text" class="form-control" id="modal_saveMeet_company" name="modal_saveMeet_company" required="" placeholder="¿En qué empresa trabajas?"> 
+                </div>  
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12 inputResp">
+                  <input type="text" class="form-control" id="modal_saveMeet_job" name="modal_saveMeet_job"  required="" placeholder="Cargo">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6 inputResp" >
+                  <input type="text" class="form-control" id="modal_saveMeet_nWorkers" name="modal_saveMeet_nWorkers" onkeypress='return validaNumericos(event)' required="" placeholder="Cantidad de trabajadores">
+                </div>
+              </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm" style="background: #163552; color: #ecebeb">Enviar</button>
+                </div>
+            </form>
+          </div>
         </div>
+      </div>
+    </div>
+    {{-- FINALIZAR MODAL --}}
+
+    <footer class="border-top" style="background:#163552; bottom: 0 !important; z-index: 100 !important;">
         <div class="col-md-12 text-center"
             style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
             <span style="color: #faf3f3;font-size: 12px!important">
                 © <?php echo date("
                     Y" ); ?> - RH nube Corp - USA | Todos los derechos
-                reservados. &nbsp;&nbsp; |
+                reservados &nbsp; |
             </span>
-            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Políticas de privacidad</a>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
         </div>
     </footer>
     {{-- SCRIPT --}}
@@ -438,6 +803,47 @@
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
     <script src="{{asset('landing/js/landingpage.js')}}"></script>
     {{-- FINALIZACION DE SCRIPT --}}
+    {{-- SCRIPT MODAL AGENDAR REUNION --}}
+    <script type="text/javascript">
+        function enviarAgenda(){
+            var data = $('#form_agendarReunion').serialize();
+             $.ajax({
+                method: "POST",
+                url: '/agendaReunion',
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(e){
+                    console.log(e);
+                    $('#modal_saveMeet_name').val('');
+                    $('#modal_saveMeet_lastname').val('');
+                    $('#modal_saveMeet_movil').val('');
+                    $('#modal_saveMeet_email').val('');
+                    $('#modal_saveMeet_company').val('');
+                    $('#modal_saveMeet_job').val('');
+                    $('#modal_saveMeet_nWorkers').val('');
+                    $('#modal_saveMeet').modal('hide');
+                    $('#confirmacion_correo').modal('show');
+                }
+            });
+        }
+
+        function validaNumericos(event) {
+            if(event.charCode >= 48 && event.charCode <= 57){
+              return true;
+             }
+            return false;        
+        }
+        function validaTexto(event) {
+            if(event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32 || event.charCode == 46){
+              return true;
+             }
+            return false;        
+        }
+    </script>
+    {{-- FIN SCRIPT --}}
+
     {{-- MODAL DE CONFIRMACION --}}
     @if (session('mensaje'))
     <div class="modal" id="modal" role="dialog" style="display: block;">
