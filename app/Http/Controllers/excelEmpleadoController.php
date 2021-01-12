@@ -180,6 +180,7 @@ class excelEmpleadoController extends Controller
                         $centrorow = new centro_costo();
                         $centrorow->centroC_descripcion = $emp[21];
                         $centrorow->organi_id = session('sesionidorg');
+                        $centrorow->estado = 1;
                         $centrorow->save();
                         $row['idcentro_costo'] = $centrorow->centroC_id;
                     }

@@ -306,7 +306,6 @@ Route::get('/areasCR', 'dashboardController@selctAreas');
 
 //MENU
 Route::get('/empleados', 'EmpleadoController@indexMenu');
-Route::get('/empleadosPR', 'EmpleadoController@indexMenuPR');
 Route::get('/calendarios', 'calendarioController@indexMenu');
 Route::get('/horarios', 'horarioController@indexMenu');
 Route::get('/dias/laborales', 'diasLaborablesController@indexMenu');
@@ -508,3 +507,7 @@ Route::post('/actualizarCentroC', 'centrocostoController@actualizarCentro');
 Route::get('/listaCentro', 'centrocostoController@listaCentroC');
 Route::post('/empleadoCentro', 'centrocostoController@empleadosCentros');
 Route::post('/asignacionCentro', 'centrocostoController@asignarCentros');
+Route::get('/listaEmpleadoCC', 'centrocostoController@listaEmpleados');
+Route::post('/registrarCentro', 'centrocostoController@agregarCentroC');
+Route::post('/recuperarCentro', 'centrocostoController@recuperarCentro');
+Route::post('/eliminarCentro', 'centrocostoController@eliminarCentro');

@@ -210,8 +210,12 @@ class PuntosControlController extends Controller
         $empleados = $request->get('empleados');
         $areas = $request->get('areas');
 
-        $buscarCodigo = punto_control::where('codigoControl', '=', $request->get('codigo'))->where('id', '!=', $request->get('id'))
-            ->whereNotNull('codigoControl')->get()->first();
+        $buscarCodigo = punto_control::where('codigoControl', '=', $request->get('codigo'))
+            ->where('id', '!=', $request->get('id'))
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->whereNotNull('codigoControl')
+            ->get()
+            ->first();
 
         if (!$buscarCodigo) {
             $puntoControl = punto_control::findOrFail($request->get('id'));
@@ -644,12 +648,17 @@ class PuntosControlController extends Controller
     public function registrarPunto(Request $request)
     {
         $puntoBuscar = punto_control::where('descripcion', '=', $request->get('descripcion'))
-            ->where('organi_id', '=', session('sesionidorg'))->get()->first();
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
         if ($puntoBuscar) {
             return response()->json(array("estado" => 1, "punto" => $puntoBuscar), 200);
         }
         $puntoB = punto_control::where('codigoControl', '=', $request->get('codigo'))
-            ->where('organi_id', '=', session('sesionidorg'))->whereNotNull('codigoControl')->get()->first();
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->whereNotNull('codigoControl')
+            ->get()
+            ->first();
         if ($puntoB) {
             return response()->json(array("estado" => 0, "punto" => $puntoB), 200);
         }

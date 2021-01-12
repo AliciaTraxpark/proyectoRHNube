@@ -23,15 +23,8 @@ use App\tipo_documento;
 use App\tipo_contrato;
 use App\nivel;
 use App\local;
-use App\modo;
 use App\persona;
-use App\proyecto;
-use App\proyecto_empleado;
-use App\tarea;
 use App\tipo_dispositivo;
-use App\User;
-use App\vinculacion;
-use App\envio;
 use App\horario_empleado;
 use App\incidencias;
 use App\licencia_empleado;
@@ -44,9 +37,6 @@ use App\incidencia_dias;
 use App\horario_dias;
 use App\pausas_horario;
 use Illuminate\Support\Facades\DB;
-use Tymon\JWTAuth\Facades\JWTFactory;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Illiminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use App\invitado_empleado;
@@ -87,7 +77,7 @@ class EmpleadoController extends Controller
             $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
             $area = area::where('organi_id', '=', session('sesionidorg'))->get();
             $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
-            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
+            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
             $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
             $local = local::where('organi_id', '=', session('sesionidorg'))->get();
             $empleado = empleado::where('emple_estado', '=', 1)->where('organi_id', '=', session('sesionidorg'))->get();
@@ -1337,7 +1327,7 @@ class EmpleadoController extends Controller
             $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
             $area = area::where('organi_id', '=', session('sesionidorg'))->get();
             $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
-            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
+            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->where('estado', '=', 1)->get();
             $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
             $local = local::where('organi_id', '=', session('sesionidorg'))->get();
             $empleado = empleado::all();
@@ -1408,78 +1398,9 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function indexMenuPR()
-    {
-        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
-            return redirect('/elegirorganizacion');
-        } else {
-            $departamento = ubigeo_peru_departments::all();
-            $provincia = ubigeo_peru_provinces::all();
-            $distrito = ubigeo_peru_districts::all();
-            $tipo_doc = tipo_documento::all();
-            $tipo_cont = tipo_contrato::where('organi_id', '=', session('sesionidorg'))->get();
-            $area = area::where('organi_id', '=', session('sesionidorg'))->get();
-            $cargo = cargo::where('organi_id', '=', session('sesionidorg'))->get();
-            $centro_costo = centro_costo::where('organi_id', '=', session('sesionidorg'))->get();
-            $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
-            $local = local::where('organi_id', '=', session('sesionidorg'))->get();
-            $empleado = empleado::all();
-            $dispositivo = tipo_dispositivo::all();
-            $tabla_empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->join('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                ->join('area as a', 'e.emple_area', '=', 'a.area_id')
-                ->join('centro_costo as cc', 'e.emple_centCosto', '=', 'cc.centroC_id')
-                ->select(
-                    'p.perso_nombre',
-                    'p.perso_apPaterno',
-                    'p.perso_apMaterno',
-                    'c.cargo_descripcion',
-                    'a.area_descripcion',
-                    'cc.centroC_descripcion',
-                    'e.emple_id'
-                )
-                ->where('e.organi_id', '=', session('sesionidorg'))
-                ->where('e.emple_estado', '=', 1)
-                ->get();
-            $calendario = DB::table('calendario as ca')
-                ->where('ca.organi_id', '=', session('sesionidorg'))
-                ->get();
-            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
-            $condicionPago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
-            //dd($tabla_empleado);
-
-            $invitadod = DB::table('invitado')
-                ->where('user_Invitado', '=', Auth::user()->id)
-                ->where('organi_id', '=', session('sesionidorg'))
-                ->get()->first();
-
-            if ($invitadod) {
-                if ($invitadod->rol_id != 1) {
-                    return redirect('/dashboard');
-                } else {
-                    return view('empleado.empleadoMenuPMR', [
-                        'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-                        'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-                        'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                        'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-                    ]);
-                }
-            } else {
-                return view('empleado.empleadoMenuPMR', [
-                    'departamento' => $departamento, 'provincia' => $provincia, 'distrito' => $distrito,
-                    'tipo_doc' => $tipo_doc, 'tipo_cont' => $tipo_cont, 'area' => $area, 'cargo' => $cargo, 'centro_costo' => $centro_costo,
-                    'nivel' => $nivel, 'local' => $local, 'empleado' => $empleado, 'tabla_empleado' => $tabla_empleado, 'dispositivo' => $dispositivo,
-                    'calendario' => $calendario, 'horario' => $horario, 'condicionP' => $condicionPago
-                ]);
-            }
-        }
-    }
-
     public function comprobarNumD(Request $request)
     {
         $numeroD = $request->get('numeroD');
-        //$empleado = empleado::where('emple_nDoc', '=', $numeroD)->first();
         $empleado = DB::table('empleado as e')
             ->where('e.emple_nDoc', '=', $numeroD)
             ->where('e.organi_id', '=', session('sesionidorg'))

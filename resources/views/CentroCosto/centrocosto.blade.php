@@ -22,6 +22,10 @@
 @endsection
 @section('content')
 <style>
+  .borderColor {
+    border-color: red;
+  }
+
   .table {
     width: 100% !important;
   }
@@ -37,6 +41,54 @@
   .select2-container--default .select2-selection--multiple {
     overflow-y: scroll;
   }
+
+  .form-control:disabled {
+    background-color: #fcfcfc;
+  }
+
+  /* MODIFICAR ESTILOS DE ALERTIFY */
+  .alertify .ajs-header {
+    font-weight: normal;
+  }
+
+  .ajs-body {
+    padding: 0px !important;
+  }
+
+  .alertify .ajs-footer {
+    background: #ffffff;
+  }
+
+  .alertify .ajs-footer .ajs-buttons .ajs-button {
+    min-height: 28px;
+    min-width: 75px;
+  }
+
+  .ajs-cancel {
+    font-size: 12px !important;
+  }
+
+  .ajs-ok {
+    font-size: 12px !important;
+  }
+
+  .alertify .ajs-dialog {
+    max-width: 450px;
+  }
+
+  .ajs-footer {
+    padding: 12px !important;
+  }
+
+  .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+    text-transform: none;
+  }
+
+  .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+    text-transform: none;
+  }
+
+  /* FINALIZACION */
 </style>
 {{-- BOTONOS DE PANEL --}}
 <div class="row pr-3 pl-3 pt-3">
@@ -96,16 +148,22 @@
           {{ csrf_field() }}
           <div class="col-md-12">
             <label for="">Centro Costo</label>
-            <input type="text" class="form-control" id="e_descripcion" required>
+            <input type="text" class="form-control" id="e_descripcion" required disabled>
           </div>
-          <div class="col-md-12 pt-2">
-            <div class="float-right mb-0">
-              <span style="font-size: 11px;">
-                *Se visualizara empleados sin centro costo
-              </span>
+          <div class="col-md-12 text-right">
+            <div class="form-group mb-0 mt-3">
+              <input type="checkbox" id="e_todosEmpleados">
+              <label for="" class="mb-0">Seleccionar todos</label>
+              <div class="float-left mb-0">
+                <span style="font-size: 11px;">
+                  *Se visualizara empleados sin centro costo
+                </span>
+              </div>
             </div>
-            <label class="mb-0">Empleados</label>
-            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"></select>
+          </div>
+          <div class="col-md-12">
+            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+              data-placeholder="Empleados"></select>
           </div>
       </div>
       <div class="modal-footer">
@@ -140,20 +198,72 @@
               <option value="" disabled selected>Seleccionar</option>
             </select>
           </div>
-          <div class="col-md-12 pt-2">
-            <div class="float-right mb-0">
-              <span style="font-size: 11px;">
-                *Se visualizara empleados sin centro costo
-              </span>
+          <div class="col-md-12 text-right">
+            <div class="form-group mb-0 mt-3">
+              <input type="checkbox" id="a_todosEmpleados">
+              <label for="" class="mb-0">Seleccionar todos</label>
+              <div class="float-left mb-0">
+                <span style="font-size: 11px;">
+                  *Se visualizara empleados sin centro costo
+                </span>
+              </div>
             </div>
-            <label class="mb-0">Empleados</label>
+          </div>
+          <div class="col-md-12 pt-2">
             <select id="a_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
-              disabled></select>
+              data-placeholder="Empleados" disabled></select>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
           onclick="javascript:limpiarAsignacion()">Cerrar</button>
+        <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- REGISTRAR ASIGNACION --}}
+<div id="r_centrocmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="r_centrocmodal"
+  aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg d-flex justify-content-center">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#163552;">
+        <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+          Registrar Centro Costo
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          onclick="javascript:limpiarCentro()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size:12px!important">
+        <form action="javascript:registrarCentroC()">
+          {{ csrf_field() }}
+          <div class="col-md-12">
+            <label for="">Centro Costo</label>
+            <input type="text" class="form-control" id="r_descripcion" maxlength="100" required>
+          </div>
+          <div class="col-md-12 text-right">
+            <div class="form-group mb-0 mt-3">
+              <input type="checkbox" id="r_todosEmpleados">
+              <label for="" class="mb-0">Seleccionar todos</label>
+              <div class="float-left mb-0">
+                <span style="font-size: 11px;">
+                  *Se visualizara empleados sin centro costo
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 pt-2">
+            <select id="r_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+              data-placeholder="Empleados"></select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"
+          onclick="javascript:limpiarCentro()">Cerrar</button>
         <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
       </div>
       </form>
