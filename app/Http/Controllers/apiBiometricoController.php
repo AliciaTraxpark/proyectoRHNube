@@ -250,6 +250,179 @@ class apiBiometricoController extends Controller
         }
     }
 
+    public function elegirOrganizacionBio(Request $request){
+
+        $idUsuarioOrgani=$request->idusuario_organizacion;
+        $usuario_organizacion=DB::table('usuario_organizacion as uso')
+        ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial','O.organi_estado')
+        ->where('uso.usua_orga_id','=',$idUsuarioOrgani)
+        ->join('users as u','uso.user_id','=','u.id')
+        ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+        ->get()->first();
+
+        /* PRIMERO VERIFICAMOS QUE LA ORGANIZACION ESTE ACTIVA */
+        if($usuario_organizacion->organi_estado==1){
+            /*  */
+            $invitado=invitado::where('user_Invitado','=', $usuario_organizacion->idusuario)
+            ->where('organi_id','=', $usuario_organizacion->organi_id)
+           ->get()->first();
+            if($invitado){
+                /* verificar si esta activo */
+                if($invitado->estado_condic==1 && $invitado->estado==1){
+                    /* VERIFICAR SI ES ADMIN */
+                    if($invitado->rol_id==1){
+                        $factory = JWTFactory::customClaims([
+                            'sub' => env('API_id'),
+                        ]);
+                        $payload = $factory->make();
+                        $token = JWTAuth::encode($payload);
+
+
+                        $usuario=DB::table('users as u')
+                        ->select('u.id','u.email',
+                        'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                        ->where('u.id','=',$usuario_organizacion->idusuario)
+                        ->join('persona as p','u.perso_id','=','p.perso_id')
+                        ->get();
+
+                        $organizacion=DB::table('usuario_organizacion as uso')
+                        ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                        ->where('user_id','=',$usuario_organizacion->idusuario)
+                        ->join('users as u','uso.user_id','=','u.id')
+                        ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+                        ->where('uso.organi_id','=', $usuario_organizacion->organi_id)
+                        ->get();
+
+                        foreach ($organizacion as $tab) {
+                            $biometricos=DB::table('dispositivos')
+                            ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                            'dispo_codigo as serie','version_firmware')
+                            ->where('tipoDispositivo','=',3)
+                            ->where('organi_id','=',$tab->organi_id)
+                            ->get();
+
+                            $tab->biometricos = $biometricos;
+                        }
+
+
+                        return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
+                        "token" =>$token->get()));
+                    }
+                    else{
+                        /* VERIFICAR SI TIENE PERMISO PARA EXTRACTOR */
+                        if($invitado->extractorRH==1){
+                          /*   dd('soy admin con reestricciones'); */
+                          $factory = JWTFactory::customClaims([
+                            'sub' => env('API_id'),
+                        ]);
+                        $payload = $factory->make();
+                        $token = JWTAuth::encode($payload);
+
+
+                        $usuario=DB::table('users as u')
+                        ->select('u.id','u.email',
+                        'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                        ->where('u.id','=',$usuario_organizacion->idusuario)
+                        ->join('persona as p','u.perso_id','=','p.perso_id')
+                        ->get();
+
+                        $organizacion=DB::table('usuario_organizacion as uso')
+                        ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                        ->where('user_id','=',$usuario_organizacion->idusuario)
+                        ->join('users as u','uso.user_id','=','u.id')
+                        ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+                        ->where('uso.organi_id','=', $usuario_organizacion->organi_id)
+                        ->get();
+
+                        foreach ($organizacion as $tab) {
+                            $biometricos=DB::table('dispositivos')
+                            ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                            'dispo_codigo as serie','version_firmware')
+                            ->where('tipoDispositivo','=',3)
+                            ->where('organi_id','=',$tab->organi_id)
+                            ->get();
+
+                            $tab->biometricos = $biometricos;
+                        }
+
+
+                        return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
+                        "token" =>$token->get()));
+                        }
+                        else{
+                            Auth::logout();
+                            session()->forget('sesionidorg');
+                            session()->flush();
+                            return response()->json(array('status' => 400, 'title' => 'Usuario no tiene permiso',
+                            'detail' => 'Usuario no tiene permiso para extractor RHnube'), 400);
+                        }
+
+                    }
+                }
+                else{
+                    /* INVITADO NO ACTIVO */
+                    Auth::logout();
+                    session()->forget('sesionidorg');
+                    session()->flush();
+                    return response()->json(array('status' => 400, 'title' => 'Usuario no activo',
+                    'detail' => 'El usuario invitado esta desactivado'), 400);
+                }
+            } else{
+                /* dd('soy admin'); */
+
+                $factory = JWTFactory::customClaims([
+                    'sub' => env('API_id'),
+                ]);
+                $payload = $factory->make();
+                $token = JWTAuth::encode($payload);
+
+
+                $usuario=DB::table('users as u')
+                ->select('u.id','u.email',
+                'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                ->where('u.id','=',$usuario_organizacion->idusuario)
+                ->join('persona as p','u.perso_id','=','p.perso_id')
+                ->get();
+
+                $organizacion=DB::table('usuario_organizacion as uso')
+                ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                ->where('user_id','=',$usuario_organizacion->idusuario)
+                ->join('users as u','uso.user_id','=','u.id')
+                ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+                ->where('uso.organi_id','=', $usuario_organizacion->organi_id)
+                ->get();
+
+                foreach ($organizacion as $tab) {
+                    $biometricos=DB::table('dispositivos')
+                    ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                    'dispo_codigo as serie','version_firmware')
+                    ->where('tipoDispositivo','=',3)
+                    ->where('organi_id','=',$tab->organi_id)
+                    ->get();
+
+                    $tab->biometricos = $biometricos;
+                }
+
+
+                return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
+                "token" =>$token->get()));
+            }
+            /*  */
+        }
+        else{
+            return response()->json(array('status' => 400, 'title' => 'Organizacion desactivada',
+            'detail' => 'La organizacion se encuentra desactivada'), 400);
+        }
+
+       /*  if($usuario_organizacion->rol_id==3) {
+           dd('soy inv');
+        }
+        else{
+            dd('soy admin');
+        } */
+
+    }
+
     public function marcacionBiometrico(Request $request)
     {
         $fechaHoy = Carbon::now('America/Lima');
