@@ -1640,7 +1640,7 @@ function verificarSIEdito(){
         },
     });
 }
-function reenviarEmail(){
+function reenviarEmail(idinvitado){
     $.ajax({
         type: "post",
         url: "/reenviarEmail",
