@@ -420,6 +420,7 @@ Route::get('/datosCapturas', 'ControlController@capturasTrazabilidad');
 Route::get('/dispositivos', 'dispositivosController@index');
 Route::post('/enviarMensajePru', 'dispositivosController@enviarmensaje');
 Route::post('/dispoStore', 'dispositivosController@store');
+Route::post('/dispoStoreBiometrico', 'biometricoController@dispoStoreBiometrico');
 Route::post('/tablaDisposito', 'dispositivosController@tablaDisposit');
 Route::post('/reenviarmensajeDis', 'dispositivosController@reenviarmensaje');
 Route::post('/comprobarMovil', 'dispositivosController@comprobarMovil');

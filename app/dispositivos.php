@@ -10,7 +10,7 @@ class dispositivos extends Model
     protected $table = 'dispositivos';
     protected $primaryKey = 'idDispositivos';
     protected $fillable = [
-        'idDispositivos',
+        'idDispositivos', 'tipoDispositivo',
         'dispo_descripUbicacion',
         'dispo_movil',
         'dispo_tSincro',

@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    var ipv4_address = $('#ipv4');
+    ipv4_address.inputmask({
+        alias: "ip",
+        greedy: false //The initial mask shown will be "" instead of "-____".
+    });
+
     var table =  $("#tablaDips").DataTable({
         "searching": true,
       /* "lengthChange": false,
@@ -70,17 +76,42 @@ $(document).ready(function () {
      } },
 
      { data: null },
-     { data: "dispo_descripUbicacion" },
+     { data: "dispo_descripUbicacion" ,
+     "render": function (data, type, row) {
+        if (row.tipoDispositivo ==2) {
+            return '<span class="badge badge-soft-secondary">ANDROID</span>';
+        }
+         else{
+            return '<span class="badge badge-soft-secondary">BIOMETRICO</span>';
+         }
+
+
+     } },
+     { data: "dispo_descripUbicacion" ,
+     "render": function (data, type, row) {
+        if (row.tipoDispositivo ==2) {
+            return row.dispo_descripUbicacion;
+        }
+         else{
+            return '---';
+         }
+
+
+     } },
      { data: "dispo_movil"},
      { data: "dispo_estado",
      "render": function (data, type, row) {
+        if (row.tipoDispositivo ==2) {
         if (row.dispo_estado ==0) {
             return '&nbsp; <button class="btn btn-sm  botonsms" onclick="enviarSMS('+row.idDispositivos+')" >Enviar <img src="landing/images/note.svg" height="20"  ></button>';
         }
          else{
             return '&nbsp; <button class="btn btn-sm botonsms" onclick="reenviarSMS('+row.idDispositivos+')">Reenviar <img src="landing/images/note.svg" height="20"  ></button>';
          }
-
+        }
+        else {
+            return '---';
+        }
 
      } },
      { data: "dispo_codigoNombre",
@@ -108,15 +139,22 @@ $(document).ready(function () {
      } },
     { data: "dispo_tMarca",
     "render": function (data, type, row) {
-
+        if (row.tipoDispositivo ==2) {
         return row.dispo_tMarca+'&nbsp; minutos';
+        }
+        else{
+            return '---';
+        }
 
       }},
      { data: "dispo_tSincro",
      "render": function (data, type, row) {
-
+         if (row.tipoDispositivo ==2) {
         return row.dispo_tSincro+'&nbsp; minutos';
-
+         }
+         else{
+             return '---';
+         }
       }},
       { data: "dispo_tSincro",
      "render": function (data, type, row) {
@@ -452,7 +490,11 @@ function editarDispo(id){
                 $("#selectControlador_ed > option[value='"+value.idControladores+"']").prop("selected","selected");
                $("#selectControlador_ed").trigger("change");
                });
-            $('#editarDispositivo').modal('show');
+             
+               if (data[0].tipoDispositivo==2){
+                $('#editarDispositivo').modal('show');
+               }
+
         },
     });
 
@@ -577,4 +619,40 @@ function activarDispo(idDisAct){
     });
 
 
+}
+function NuevoBiome(){
+    $('#nuevoBiometrico').modal('show');
+}
+
+function RegistraBiome(){
+
+    var serieBio=$('#descripcionBiome').val();
+    var ip=$('#ipv4').val();
+    ppp=':';
+    var puerto=$('#nPuerto').val();
+    var ippuerto=ip.concat(ppp, puerto);
+ console.log(ippuerto);
+
+    $.ajax({
+        type: "post",
+        url: "/dispoStoreBiometrico",
+        data: {
+            serieBio,ippuerto
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#tablaDips').DataTable().ajax.reload();
+            $('#nuevoBiometrico').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
 }

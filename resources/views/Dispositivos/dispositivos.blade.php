@@ -143,8 +143,13 @@
                         @if (isset($agregarPuerta))
                          @if ($agregarPuerta==1)
                          <div id="btnNDis" class=" col-md-6 col-12 text-left">
-                            <button class="btn btn-sm btn-primary" onclick="NuevoDispo()"
-                                style="background-color: #183b5d;border-color:#62778c">+ Nuevo Dispositivo</button>
+                            <button class="btn btn-sm btn-primary dropdown-toggle" {{-- onclick="NuevoDispo()" --}}
+                                style="background-color: #183b5d;border-color:#62778c" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">+ Nuevo Dispositivo</button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a  style="cursor: pointer" class="dropdown-item" id="" onclick="NuevoDispo()">ANDROID</a>
+                                    <a  style="cursor: pointer" class="dropdown-item" id="" onclick="NuevoBiome()">BIOMETRICO</a>
+                                </div>
 
                         </div>
                          @else
@@ -152,8 +157,13 @@
                          @endif
                         @else
                         <div id="btnNDis" class=" col-md-6 col-12 text-left">
-                            <button class="btn btn-sm btn-primary" onclick="NuevoDispo()"
-                                style="background-color: #183b5d;border-color:#62778c">+ Nuevo Dispositivo</button>
+                            <button class="btn btn-sm btn-primary dropdown-toggle"{{--  onclick="NuevoDispo()" --}}
+                                style="background-color: #183b5d;border-color:#62778c" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">+ Nuevo Dispositivo</button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a style="cursor: pointer" class="dropdown-item" id="" onclick="NuevoDispo()">ANDROID</a>
+                                    <a  style="cursor: pointer" class="dropdown-item" id="" onclick="NuevoBiome()">BIOMETRICO</a>
+                                </div>
 
                         </div>
                         @endif
@@ -167,9 +177,10 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
+                                    <th>Tipo</th>
                                     <th>Descrip. de ubicación</th>
-                                    <th>Móvil vinculado</th>
-                                    <th>Enviar SMS</th>
+                                    <th>Móvil/IP Puerto</th>
+                                    <th>SMS</th>
                                     <th>Código Disp.</th>
                                     <th>Estado</th>
                                     <th>Sig. marcación</th>
@@ -414,7 +425,81 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
 
+             {{-- Modal nuevoBiometrico --}}
+ <div id="nuevoBiometrico" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+ aria-hidden="true" data-backdrop="static">
+ <div id="" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
 
+     <div class="modal-content">
+         <div class="modal-header" style="background-color:#163552;">
+             <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Nuevo biometrico
+             </h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body" style="font-size:12px!important">
+             <div class="row">
+
+                 <div class="col-md-12 col-12">
+                     <form id="frmHorNuevoBi" action="javascript:RegistraBiome()">
+                         <div class="row">
+                             <div class="col-md-12 col-12">
+                                 <div class="form-group">
+                                     <label for="">Numero de serie:</label>
+                                     <input type="text" class="form-control form-control-sm"
+                                         id="descripcionBiome" maxlength="40" >
+                                 </div>
+                             </div>
+
+
+                             <div class="col-md-4 col-12">
+                                 <div class="form-group">
+                                     <label for="">IP:</label>
+                                     <input type="text" class="form-control form-control-sm" required class="form-input" id="ipv4" name="ipv4" placeholder="xxx.xxx.xxx.xxx"/>
+                                 </div>
+                             </div>
+
+                             <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="">Puerto:</label>
+                                    <input id="nPuerto" type="number" onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" class="form-control form-control-sm" required class="form-input" maxlength="5" />
+                                </div>
+                            </div>
+
+
+
+                            {{--  <div class="col-md-6 col-12">
+                                 <div class="form-group">
+                                     <label for="">Seleccione controlador(es):</label>
+                                     <select data-plugin="customselect" multiple="multiple" id="selectControlador" data-placeholder="Seleccione controlador"
+                                     class="form-control"  >
+                                     @foreach ($controladores as $cont)
+                                 <option class="" value="{{$cont->idControladores}}">{{$cont->cont_nombres}} {{$cont->cont_ApPaterno}} {{$cont->cont_ApMaterno}}</option>
+                                     @endforeach
+                                 </select>
+                                 </div>
+                             </div> --}}
+                         </div>
+                 </div>
+             </div>
+         </div>
+         <div class="modal-footer">
+             <div class="col-md-12 col-12">
+                 <div class="row">
+                     <div class="col-md-12 text-right">
+                         <button type="button" class="btn btn-light btn-sm "
+                             data-dismiss="modal">Cancelar</button>
+                         <button type="submit" name="" style="background-color: #163552;"
+                             class="btn btn-sm ">Guardar</button>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div><!-- /.modal-content -->
+ </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
         </div>
     </div>
@@ -444,7 +529,7 @@
 
     <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
     <script> $("#tablaDips").css("width","100%");     </script>
-
+   <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 
 @endsection
 

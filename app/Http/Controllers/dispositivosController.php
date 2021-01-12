@@ -62,6 +62,7 @@ class dispositivosController extends Controller
         $codigo = STR::random(4);
 
         $dispositivos = new dispositivos();
+        $dispositivos->tipoDispositivo = 2;
         $dispositivos->dispo_descripUbicacion = $request->descripccionUb;
         $dispositivos->dispo_movil = $request->numeroM;
         $dispositivos->dispo_tSincro = $request->tSincron;
@@ -633,7 +634,7 @@ class dispositivosController extends Controller
             ->leftJoin('dispositivo_controlador as dc', 'dispositivos.idDispositivos', '=', 'dc.idDispositivos')
             ->where('dispositivos.idDispositivos', $idDispo)
             ->select(
-                'dispositivos.idDispositivos',
+                'dispositivos.idDispositivos', 'tipoDispositivo',
                 'dispo_descripUbicacion',
                 'dispo_movil',
                 'dispo_tSincro',
@@ -1895,4 +1896,6 @@ class dispositivosController extends Controller
         }
 
     }
+
+
 }
