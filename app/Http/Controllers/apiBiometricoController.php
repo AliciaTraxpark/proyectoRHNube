@@ -56,24 +56,34 @@ class apiBiometricoController extends Controller
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
 
-                            $usuario=DB::table('usuario_organizacion as uso')
-                            ->select('uso.user_id','uso.organi_id','uso.rol_id','u.email',
+
+                            $usuario=DB::table('users as u')
+                            ->select('u.id','u.email',
                             'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                            ->where('user_id','=',Auth::user()->id)
-                            ->where('organi_id','=',session('sesionidorg'))
-                            ->join('users as u','uso.user_id','=','u.id')
+                            ->where('u.id','=',Auth::user()->id)
                             ->join('persona as p','u.perso_id','=','p.perso_id')
                             ->get();
 
-
-                            $biometricos=DB::table('dispositivos')
-                            ->select('dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                            'dispo_codigo as serie','version_firmware')
-                            ->where('tipoDispositivo','=',3)
-                            ->where('organi_id','=',session('sesionidorg'))
+                            $organizacion=DB::table('usuario_organizacion as uso')
+                            ->select('uso.user_id as id','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                            ->where('user_id','=',Auth::user()->id)
+                            ->join('users as u','uso.user_id','=','u.id')
+                            ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                             ->get();
 
-                            return response()->json(array('status'=>200,"usuario" =>$usuario, "dispositivos" =>$biometricos,
+                            foreach ($organizacion as $tab) {
+                                $biometricos=DB::table('dispositivos')
+                                ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                                'dispo_codigo as serie','version_firmware')
+                                ->where('tipoDispositivo','=',3)
+                                ->where('organi_id','=',$tab->organi_id)
+                                ->get();
+
+                                $tab->biometricos = $biometricos;
+                            }
+
+
+                            return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
                             "token" =>$token->get()));
                         }
                         else{
@@ -86,26 +96,37 @@ class apiBiometricoController extends Controller
                             $payload = $factory->make();
                             $token = JWTAuth::encode($payload);
 
-                            $usuario=DB::table('usuario_organizacion as uso')
-                            ->select('uso.user_id','uso.organi_id','uso.rol_id','u.email',
+
+                            $usuario=DB::table('users as u')
+                            ->select('u.id','u.email',
                             'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                            ->where('user_id','=',Auth::user()->id)
-                            ->where('organi_id','=',session('sesionidorg'))
-                            ->join('users as u','uso.user_id','=','u.id')
+                            ->where('u.id','=',Auth::user()->id)
                             ->join('persona as p','u.perso_id','=','p.perso_id')
                             ->get();
 
-
-                            $biometricos=DB::table('dispositivos')
-                            ->select('dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                            'dispo_codigo as serie','version_firmware')
-                            ->where('tipoDispositivo','=',3)
-                            ->where('organi_id','=',session('sesionidorg'))
+                            $organizacion=DB::table('usuario_organizacion as uso')
+                            ->select('uso.user_id as id','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                            ->where('user_id','=',Auth::user()->id)
+                            ->join('users as u','uso.user_id','=','u.id')
+                            ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                             ->get();
 
-                            return response()->json(array('status'=>200,"usuario" =>$usuario, "dispositivos" =>$biometricos,
+                            foreach ($organizacion as $tab) {
+                                $biometricos=DB::table('dispositivos')
+                                ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                                'dispo_codigo as serie','version_firmware')
+                                ->where('tipoDispositivo','=',3)
+                                ->where('organi_id','=',$tab->organi_id)
+                                ->get();
+
+                                $tab->biometricos = $biometricos;
+                            }
+
+
+                            return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
                             "token" =>$token->get()));
-                            } else{
+                            }
+                            else{
                                 Auth::logout();
                                 session()->forget('sesionidorg');
                                 session()->flush();
@@ -132,24 +153,34 @@ class apiBiometricoController extends Controller
                     $payload = $factory->make();
                     $token = JWTAuth::encode($payload);
 
-                    $usuario=DB::table('usuario_organizacion as uso')
-                    ->select('uso.user_id','uso.organi_id','uso.rol_id','u.email',
+
+                    $usuario=DB::table('users as u')
+                    ->select('u.id','u.email',
                     'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                    ->where('user_id','=',Auth::user()->id)
-                    ->where('organi_id','=',session('sesionidorg'))
-                    ->join('users as u','uso.user_id','=','u.id')
+                    ->where('u.id','=',Auth::user()->id)
                     ->join('persona as p','u.perso_id','=','p.perso_id')
                     ->get();
 
-
-                    $biometricos=DB::table('dispositivos')
-                    ->select('dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                    'dispo_codigo as serie','version_firmware')
-                    ->where('tipoDispositivo','=',3)
-                    ->where('organi_id','=',session('sesionidorg'))
+                    $organizacion=DB::table('usuario_organizacion as uso')
+                    ->select('uso.user_id as id','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->join('users as u','uso.user_id','=','u.id')
+                    ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                     ->get();
 
-                    return response()->json(array('status'=>200,"usuario" =>$usuario, "dispositivos" =>$biometricos,
+                    foreach ($organizacion as $tab) {
+                        $biometricos=DB::table('dispositivos')
+                        ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                        'dispo_codigo as serie','version_firmware')
+                        ->where('tipoDispositivo','=',3)
+                        ->where('organi_id','=',$tab->organi_id)
+                        ->get();
+
+                        $tab->biometricos = $biometricos;
+                    }
+
+
+                    return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
                     "token" =>$token->get()));
                 }
 
