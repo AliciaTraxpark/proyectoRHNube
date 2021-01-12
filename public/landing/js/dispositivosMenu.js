@@ -87,7 +87,7 @@ $(document).ready(function () {
 
 
      } },
-     { data: "dispo_descripUbicacion" ,
+     { data: "dispo_descripUbicacion" /* ,
      "render": function (data, type, row) {
         if (row.tipoDispositivo ==2) {
             return row.dispo_descripUbicacion;
@@ -97,7 +97,7 @@ $(document).ready(function () {
          }
 
 
-     } },
+     } */ },
      { data: "dispo_movil"},
      { data: "dispo_estado",
      "render": function (data, type, row) {
@@ -490,7 +490,7 @@ function editarDispo(id){
                 $("#selectControlador_ed > option[value='"+value.idControladores+"']").prop("selected","selected");
                $("#selectControlador_ed").trigger("change");
                });
-             
+
                if (data[0].tipoDispositivo==2){
                 $('#editarDispositivo').modal('show');
                }
@@ -631,13 +631,15 @@ function RegistraBiome(){
     ppp=':';
     var puerto=$('#nPuerto').val();
     var ippuerto=ip.concat(ppp, puerto);
+
+    var descripcionBio=$('#descripcionDisBio').val();
  console.log(ippuerto);
 
     $.ajax({
         type: "post",
         url: "/dispoStoreBiometrico",
         data: {
-            serieBio,ippuerto
+            serieBio,ippuerto,descripcionBio
         },
         statusCode: {
             419: function () {

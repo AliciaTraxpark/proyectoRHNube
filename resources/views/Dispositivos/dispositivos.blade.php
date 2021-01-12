@@ -444,7 +444,14 @@
                  <div class="col-md-12 col-12">
                      <form id="frmHorNuevoBi" action="javascript:RegistraBiome()">
                          <div class="row">
-                             <div class="col-md-12 col-12">
+                            <div class="col-md-6 col-6">
+                                <div class="form-group">
+                                    <label for="">Descripción de ubicación:</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        id="descripcionDisBio" maxlength="80" required>
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-6">
                                  <div class="form-group">
                                      <label for="">Numero de serie:</label>
                                      <input type="text" class="form-control form-control-sm"

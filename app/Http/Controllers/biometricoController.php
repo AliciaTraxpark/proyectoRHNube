@@ -38,8 +38,9 @@ class biometricoController extends Controller
     public function dispoStoreBiometrico( Request $request){
         $dispositivos = new dispositivos();
         $dispositivos->tipoDispositivo = 3;
+        $dispositivos->dispo_descripUbicacion = $request->descripcionBio;
         $dispositivos->dispo_codigo = $request->serieBio;
-        $dispositivos->dispo_movil = $request->ippuerto;
+        $dispositivos->dispo_movil = $request->ippuerto; 
 
         $dispositivos->dispo_estadoActivo = 1;
         $dispositivos->dispo_estado = 0;
