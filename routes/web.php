@@ -509,3 +509,4 @@ Route::post('/asignacionCentro', 'centrocostoController@asignarCentros');
 Route::get('/listaEmpleadoCC', 'centrocostoController@listaEmpleados');
 Route::post('/registrarCentro', 'centrocostoController@agregarCentroC');
 Route::post('/recuperarCentro', 'centrocostoController@recuperarCentro');
+Route::post('/eliminarCentro', 'centrocostoController@eliminarCentro');

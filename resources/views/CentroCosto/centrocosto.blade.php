@@ -45,6 +45,50 @@
   .form-control:disabled {
     background-color: #fcfcfc;
   }
+
+  /* MODIFICAR ESTILOS DE ALERTIFY */
+  .alertify .ajs-header {
+    font-weight: normal;
+  }
+
+  .ajs-body {
+    padding: 0px !important;
+  }
+
+  .alertify .ajs-footer {
+    background: #ffffff;
+  }
+
+  .alertify .ajs-footer .ajs-buttons .ajs-button {
+    min-height: 28px;
+    min-width: 75px;
+  }
+
+  .ajs-cancel {
+    font-size: 12px !important;
+  }
+
+  .ajs-ok {
+    font-size: 12px !important;
+  }
+
+  .alertify .ajs-dialog {
+    max-width: 450px;
+  }
+
+  .ajs-footer {
+    padding: 12px !important;
+  }
+
+  .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+    text-transform: none;
+  }
+
+  .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+    text-transform: none;
+  }
+
+  /* FINALIZACION */
 </style>
 {{-- BOTONOS DE PANEL --}}
 <div class="row pr-3 pl-3 pt-3">

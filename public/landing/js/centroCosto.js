@@ -81,7 +81,7 @@ function centroCostoOrganizacion() {
                             <img src="/admin/images/edit.svg" height="15">
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                        <a onclick="javascript:eliminarCentro(${data[index]})" style="cursor: pointer">
+                        <a onclick="javascript:eliminarCentro(${data[index].id})" style="cursor: pointer">
                             <img src="/admin/images/delete.svg" height="15">
                         </a>
                     </td>
@@ -550,6 +550,92 @@ $("#r_empleadosCentro").on("change", function (e) {
         $('#r_todosEmpleados').prop("checked", false);
     }
 });
+// ? *********************************** FINALIZACION **********************************************
+// ? *********************************** FORMULARIO DE ELIMINAR ************************************
+function eliminarCentro(id) {
+    alertify
+        .confirm("¿Desea eliminar centro costo?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "/eliminarCentro",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    statusCode: {
+                        401: function () {
+                            location.reload();
+                        },
+                        /*419: function () {
+                            location.reload();
+                        }*/
+                    },
+                    success: function (data) {
+                        if (data == 0) {
+                            $.notifyClose();
+                            $.notify({
+                                message: '\nCentro Costo en uso, no se puede eliminar.',
+                                icon: '/landing/images/alert1.svg',
+                            }, {
+                                icon_type: 'image',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        } else {
+                            centroCostoOrganizacion();
+                            $.notifyClose();
+                            $.notify({
+                                message: '\nCentro Costo eliminado',
+                                icon: 'landing/images/bell.svg',
+                            }, {
+                                icon_type: 'image',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                    },
+                    error: function () { },
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar Centro Costo",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                centroCostoOrganizacion();
+            },
+        });
+}
 // ? *********************************** FINALIZACION **********************************************
 $(function () {
     $(window).on('resize', function () {

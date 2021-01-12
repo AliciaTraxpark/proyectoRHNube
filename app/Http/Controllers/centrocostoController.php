@@ -333,4 +333,20 @@ class centrocostoController extends Controller
 
         return response()->json($centro->centroC_id, 200);
     }
+
+    public function eliminarCentro(Request $request)
+    {
+        $id = $request->get('id');
+        $empleado = empleado::where('emple_centCosto', '=', $id)->get()->first();
+
+        if ($empleado) {
+            return 0;
+        } else {
+            $centro = centro_costo::findOrFail($id);
+            $centro->estado = 0;
+            $centro->save();
+
+            return response()->json($id, 200);
+        }
+    }
 }
