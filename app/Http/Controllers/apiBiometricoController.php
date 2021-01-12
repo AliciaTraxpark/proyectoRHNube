@@ -3,12 +3,181 @@
 namespace App\Http\Controllers;
 
 use App\marcacion_biometrico;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\User;
+use App\organizacion;
+use App\invitado;
+use App\usuario_organizacion;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTFactory;
+use Tymon\JWTAuth\Facades\JWTAuth;
 class apiBiometricoController extends Controller
 {
     //
+
+    public function logueoBiometrico()
+    {
+        $credentials = $this->validate(request(), [
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+
+
+            /* OBTENEMOS EL ESTADO DE LA ORGANIZACION */
+            $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
+            $organiEstado=organizacion::where('organi_id',$usuario_organizacion->organi_id)->get()->first();
+            $estadoOrg=$organiEstado->organi_estado;
+
+            /* SETEAMOS ID DE LA ORGANIZACION */
+            $vars=$usuario_organizacion->organi_id;
+            session(['sesionidorg' => $vars]);
+
+            /* SI ESTA ACTIVA LA ORGANIZACION */
+            if($estadoOrg==1){
+
+                /* VERIFICAMOS SI ES USUARIO INVITADO */
+                $invitado=invitado::where('user_Invitado','=', Auth::user()->id)
+                        ->where('organi_id','=', session('sesionidorg'))
+                       ->get()->first();
+
+                /* SI ES USUARIO INVITADO  O ADMIN */
+                if($invitado){
+                    /* verificar si esta activo */
+                    if($invitado->estado_condic==1){
+                        /* VERIFICAR SI ES ADMIN */
+                        if($invitado->rol_id==1){
+                            $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+
+                            $usuario=DB::table('usuario_organizacion as uso')
+                            ->select('uso.user_id','uso.organi_id','uso.rol_id','u.email',
+                            'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                            ->where('user_id','=',Auth::user()->id)
+                            ->where('organi_id','=',session('sesionidorg'))
+                            ->join('users as u','uso.user_id','=','u.id')
+                            ->join('persona as p','u.perso_id','=','p.perso_id')
+                            ->get();
+
+
+                            $biometricos=DB::table('dispositivos')
+                            ->select('dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                            'dispo_codigo as serie','version_firmware')
+                            ->where('tipoDispositivo','=',3)
+                            ->where('organi_id','=',session('sesionidorg'))
+                            ->get();
+
+                            return response()->json(array('status'=>200,"usuario" =>$usuario, "dispositivos" =>$biometricos,
+                            "token" =>$token->get()));
+                        }
+                        else{
+                            /* VERIFICAR SI TIENE PERMISO PARA EXTRACTOR */
+                            if($invitado->extractorRH==1){
+                              /*   dd('soy admin con reestricciones'); */
+                              $factory = JWTFactory::customClaims([
+                                'sub' => env('API_id'),
+                            ]);
+                            $payload = $factory->make();
+                            $token = JWTAuth::encode($payload);
+
+                            $usuario=DB::table('usuario_organizacion as uso')
+                            ->select('uso.user_id','uso.organi_id','uso.rol_id','u.email',
+                            'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                            ->where('user_id','=',Auth::user()->id)
+                            ->where('organi_id','=',session('sesionidorg'))
+                            ->join('users as u','uso.user_id','=','u.id')
+                            ->join('persona as p','u.perso_id','=','p.perso_id')
+                            ->get();
+
+
+                            $biometricos=DB::table('dispositivos')
+                            ->select('dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                            'dispo_codigo as serie','version_firmware')
+                            ->where('tipoDispositivo','=',3)
+                            ->where('organi_id','=',session('sesionidorg'))
+                            ->get();
+
+                            return response()->json(array('status'=>200,"usuario" =>$usuario, "dispositivos" =>$biometricos,
+                            "token" =>$token->get()));
+                            } else{
+                                Auth::logout();
+                                session()->forget('sesionidorg');
+                                session()->flush();
+                                return response()->json(array('status' => 400, 'title' => 'Usuario no tiene permiso',
+                                'detail' => 'Usuario no tiene permiso para extractor RHnube'), 400);
+                            }
+
+                        }
+                    }
+                    else{
+                        /* INVITADO NO ACTIVO */
+                        Auth::logout();
+                        session()->forget('sesionidorg');
+                        session()->flush();
+                        return response()->json(array('status' => 400, 'title' => 'Usuario no activo',
+                        'detail' => 'El usuario invitado esta desactivado'), 400);
+                    }
+                } else{
+                    /* dd('soy admin'); */
+
+                    $factory = JWTFactory::customClaims([
+                        'sub' => env('API_id'),
+                    ]);
+                    $payload = $factory->make();
+                    $token = JWTAuth::encode($payload);
+
+                    $usuario=DB::table('usuario_organizacion as uso')
+                    ->select('uso.user_id','uso.organi_id','uso.rol_id','u.email',
+                    'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->where('organi_id','=',session('sesionidorg'))
+                    ->join('users as u','uso.user_id','=','u.id')
+                    ->join('persona as p','u.perso_id','=','p.perso_id')
+                    ->get();
+
+
+                    $biometricos=DB::table('dispositivos')
+                    ->select('dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                    'dispo_codigo as serie','version_firmware')
+                    ->where('tipoDispositivo','=',3)
+                    ->where('organi_id','=',session('sesionidorg'))
+                    ->get();
+
+                    return response()->json(array('status'=>200,"usuario" =>$usuario, "dispositivos" =>$biometricos,
+                    "token" =>$token->get()));
+                }
+
+            } else{
+                /* SI ORGANIZACION ESTA DESACTIVADA */
+                Auth::logout();
+                session()->forget('sesionidorg');
+                session()->flush();
+                return response()->json(array('status' => 400, 'title' => 'Organizacion desactivada',
+                'detail' => 'La organizacion se encuentra desactivada'), 400);
+            }
+
+
+        } else {
+            /* CUANDO DATOS SON INVALIDOS */
+            $user = User::where('email', '=', request()->get('email'))->get()->first();
+            if ($user) {
+
+                return response()->json(array('status' => 400, 'title' => 'Correo electronico o contraseña incorrecta',
+                    'detail' => 'Datos incorrectos,correo electronico o contraseña incorrecta'), 400);
+            } else {
+
+                return response()->json(array('status' => 400, 'title' => 'Usuario no registrado',
+                    'detail' => 'No se encontro usuario registrado con este Email'), 400);
+            }
+        }
+    }
+
     public function marcacionBiometrico(Request $request)
     {
         $fechaHoy = Carbon::now('America/Lima');
@@ -19,10 +188,10 @@ class apiBiometricoController extends Controller
             $marcacion_biometrico = new marcacion_biometrico();
             $marcacion_biometrico->tipoMarcacion = $req['tipoMarcacion'];
             /* VALIDANDO FECHA  */
-            if(Carbon::create($req['fechaMarcacion'])->gt(Carbon::create($horaActual))){
+            if (Carbon::create($req['fechaMarcacion'])->gt(Carbon::create($horaActual))) {
                 return response()->json(array('status' => 500, 'title' => 'No se pudo validar fecha',
-                'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-            } else{
+                    'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
+            } else {
                 $marcacion_biometrico->fechaMarcacion = $req['fechaMarcacion'];
             }
 
