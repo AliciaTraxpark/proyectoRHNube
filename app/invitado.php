@@ -25,7 +25,8 @@ class invitado extends Model
         'asistePuerta',
         'reporteAsisten',
         'ControlRuta',
-        'ModificarReportePuerta'
+        'ModificarReportePuerta',
+        'extractorRH'
     ];
 
 }

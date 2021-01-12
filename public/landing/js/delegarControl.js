@@ -31,6 +31,7 @@ function abrirRegist() {
     $("#divAsisPu").show();
     $("#divControlRe").show();
     $("#divControlRuta").show();
+    $("#divExtractor").show();
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
     $("#verCheckPuerta").prop("disabled", false);
@@ -139,7 +140,7 @@ function registrarInvit() {
 
     ///////////////////////////////////////////////
 
-    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#ControlRutaCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
+    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#ControlRutaCheck").is(":checked") && !$("#ExtractorCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
 
         $('#divParaSelec').show();
         return false;
@@ -243,6 +244,12 @@ function registrarInvit() {
                         switchCRuta = 1;
                     } else {
                         switchCRuta = 0;
+                    }
+                    var switchExtractor;
+                    if ($("#ExtractorCheck").is(":checked")) {
+                        switchExtractor = 1;
+                    } else {
+                        switchExtractor = 0;
                     }
 
                     var swReporteAsis;
@@ -360,6 +367,7 @@ function registrarInvit() {
                                 switchasisPuerta,
                                 switchCRemo,
                                 switchCRuta,
+                                switchExtractor,
                                 checkTodoEmp,
                                 swReporteAsis,
                                 swMoReporteAsis
@@ -416,6 +424,7 @@ function registrarInvit() {
                                 switchasisPuerta,
                                 switchCRemo,
                                 switchCRuta,
+                                switchExtractor,
                                 checkTodoEmp,
                                 swReporteAsis,
                                 swMoReporteAsis
@@ -470,6 +479,7 @@ $("#adminCheck").click(function () {
         $("#divAsisPu").hide();
         $("#divControlRe").hide();
         $("#divControlRuta").hide();
+        $("#divExtractor").hide();
         $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
         $("#verCheckPuerta").prop("required", false);
@@ -487,6 +497,7 @@ $("#adminCheck").click(function () {
         $("#divAsisPu").show();
         $("#divControlRe").show();
         $("#divControlRuta").show();
+        $("#divExtractor").show();
         $("#divReporteAsis").show();
         $("#divGestActivi").show();
 
@@ -532,6 +543,7 @@ function editarInv(idi) {
                 $("#opcionesAPuerta_edit").hide();
                 $("#divControlRe_edit").hide();
                 $("#divControlRuta_edit").hide();
+                $("#divExtractor_edit").hide();
                 $("#divReporteAsis_edit").hide();
                  $("#opcionesGE_edit").hide();
                  $("#opcionesAPuerta_edit").hide();
@@ -543,6 +555,7 @@ function editarInv(idi) {
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
                 $("#divControlRuta_edit").show();
+                $("#divExtractor_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
 
@@ -725,6 +738,12 @@ function editarInv(idi) {
                 $("#ControlRutaCheck_edit").prop("checked", false);
             }
 
+            if (data[0].extractorRH == 1) {
+                $("#ExtractorCheck_edit").prop("checked", true);
+            } else {
+                $("#ExtractorCheck_edit").prop("checked", false);
+            }
+
             $("#spanBooCk_edit").hide();
             $("#spanChEmple_edit").hide();
             $("#agregarInvitado_edit").modal("show");
@@ -753,6 +772,7 @@ $("#adminCheck_edit").click(function () {
         $("#opcionesAPuerta_edit").hide();
         $("#divControlRe_edit").hide();
         $("#divControlRuta_edit").hide();
+        $("#divExtractor_edit").hide();
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
         $("#divParaSelec_edit").hide();
@@ -807,6 +827,7 @@ $("#adminCheck_edit").click(function () {
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
                 $("#divControlRuta_edit").show();
+                $("#divExtractor_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
 
@@ -919,7 +940,7 @@ function registrarInvit_edit() {
     }
      ///////////////////////////////////////////////
 
-     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#ControlRutaCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
+     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#ControlRutaCheck_edit").is(":checked")  && !$("#ExtractorCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
 
         $('#divParaSelec_edit').show();
         return false;
@@ -1000,6 +1021,12 @@ function registrarInvit_edit() {
             switchCRuta_ed = 1;
         } else {
             switchCRuta_ed = 0;
+        }
+        var extractor_ed;
+        if ($("#ExtractorCheck_edit").is(":checked")) {
+            extractor_ed = 1;
+        } else {
+            extractor_ed = 0;
         }
 
         var swReporteAsis_ed;
@@ -1108,6 +1135,7 @@ function registrarInvit_edit() {
                     switchasisPuerta_ed,
                     switchCRemo_ed,
                     switchCRuta_ed,
+                    extractor_ed,
                     swReporteAsis_ed,
                     swMoReporteAsis_ed,
                     checkTodoEmp_ed,
@@ -1162,6 +1190,7 @@ function registrarInvit_edit() {
                         switchasisPuerta_ed,
                         switchCRemo_ed,
                         switchCRuta_ed,
+                        extractor_ed,
                         swReporteAsis_ed,
                         swMoReporteAsis_ed,
                         checkTodoEmp_ed,

@@ -360,7 +360,13 @@
 
                                     </div>
                                 </div>
-
+                                <div class="col-md-8 " id="divExtractor"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="ExtractorCheck">
+                                        <label class="custom-control-label" for="ExtractorCheck"
+                                            style="margin-top: 2px;"><i data-feather="server" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Extractor RHnube</label><br>
+                                    </div>
+                                </div>
 
 
                                 <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px;padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
@@ -678,7 +684,13 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-8 " id="divExtractor_edit"  style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="ExtractorCheck_edit">
+                                        <label class="custom-control-label" for="ExtractorCheck_edit"
+                                            style="margin-top: 2px;"><i data-feather="server" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Extractor RHnube</label><br>
+                                    </div>
+                                </div>
 
 
                                 <div id="divInvitado_edit" class="col-md-12"
