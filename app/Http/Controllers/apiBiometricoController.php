@@ -26,7 +26,6 @@ class apiBiometricoController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-
             /* OBTENEMOS EL ESTADO DE LA ORGANIZACION */
             $usuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->get()->first();
             $organiEstado=organizacion::where('organi_id',$usuario_organizacion->organi_id)->get()->first();
@@ -36,18 +35,57 @@ class apiBiometricoController extends Controller
             $vars=$usuario_organizacion->organi_id;
             session(['sesionidorg' => $vars]);
 
-            /* SI ESTA ACTIVA LA ORGANIZACION */
-            if($estadoOrg==1){
+            /* VERIFICACOM CUANTAS ORGANIZACIONES TIENE */
+            $comusuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->count();
+
+
+
+            if($comusuario_organizacion>1) {
+
+                /* SI TIENE MAS DE 2 ORGANIZACIONES */
+                $factory = JWTFactory::customClaims([
+                    'sub' => env('API_id'),
+                ]);
+                $payload = $factory->make();
+                $token = JWTAuth::encode($payload);
+
+
+                $usuario=DB::table('users as u')
+                ->select('u.id','u.email',
+                'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
+                ->where('u.id','=',Auth::user()->id)
+                ->join('persona as p','u.perso_id','=','p.perso_id')
+                ->get();
+
+                $organizacion=DB::table('usuario_organizacion as uso')
+                ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                ->where('user_id','=',Auth::user()->id)
+                ->join('users as u','uso.user_id','=','u.id')
+                ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+                ->get();
+
+
+
+                return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
+                "token" =>$token->get()));
+
+            }
+
+            /* CUADNO SOLO TIENE UNA ORGANIZACION */
+
+            else{
 
                 /* VERIFICAMOS SI ES USUARIO INVITADO */
-                $invitado=invitado::where('user_Invitado','=', Auth::user()->id)
-                        ->where('organi_id','=', session('sesionidorg'))
-                       ->get()->first();
+             $invitado=invitado::where('user_Invitado','=', Auth::user()->id)
+             ->where('organi_id','=', session('sesionidorg'))
+            ->get()->first();
+             /* SI ESTA ACTIVA LA ORGANIZACION */
+            if($estadoOrg==1){
 
                 /* SI ES USUARIO INVITADO  O ADMIN */
                 if($invitado){
                     /* verificar si esta activo */
-                    if($invitado->estado_condic==1){
+                    if($invitado->estado_condic==1 && $invitado->estado==1){
                         /* VERIFICAR SI ES ADMIN */
                         if($invitado->rol_id==1){
                             $factory = JWTFactory::customClaims([
@@ -65,7 +103,7 @@ class apiBiometricoController extends Controller
                             ->get();
 
                             $organizacion=DB::table('usuario_organizacion as uso')
-                            ->select('uso.user_id as id','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                            ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
                             ->where('user_id','=',Auth::user()->id)
                             ->join('users as u','uso.user_id','=','u.id')
                             ->join('organizacion as o','uso.organi_id','=','o.organi_id')
@@ -105,7 +143,7 @@ class apiBiometricoController extends Controller
                             ->get();
 
                             $organizacion=DB::table('usuario_organizacion as uso')
-                            ->select('uso.user_id as id','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                            ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
                             ->where('user_id','=',Auth::user()->id)
                             ->join('users as u','uso.user_id','=','u.id')
                             ->join('organizacion as o','uso.organi_id','=','o.organi_id')
@@ -162,7 +200,7 @@ class apiBiometricoController extends Controller
                     ->get();
 
                     $organizacion=DB::table('usuario_organizacion as uso')
-                    ->select('uso.user_id as id','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                    ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
                     ->where('user_id','=',Auth::user()->id)
                     ->join('users as u','uso.user_id','=','u.id')
                     ->join('organizacion as o','uso.organi_id','=','o.organi_id')
@@ -192,6 +230,9 @@ class apiBiometricoController extends Controller
                 return response()->json(array('status' => 400, 'title' => 'Organizacion desactivada',
                 'detail' => 'La organizacion se encuentra desactivada'), 400);
             }
+
+            }
+
 
 
         } else {
