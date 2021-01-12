@@ -4,6 +4,11 @@ $(document).ready(function () {
         alias: "ip",
         greedy: false //The initial mask shown will be "" instead of "-____".
     });
+    var ipv4_address_ed = $('#ipv4_ed');
+    ipv4_address_ed.inputmask({
+        alias: "ip",
+        greedy: false //The initial mask shown will be "" instead of "-____".
+    });
 
     var table =  $("#tablaDips").DataTable({
         "searching": true,
@@ -493,6 +498,15 @@ function editarDispo(id){
 
                if (data[0].tipoDispositivo==2){
                 $('#editarDispositivo').modal('show');
+               } else{
+                $('#idDisposiBio').val(data[0].idDispositivos)
+                $('#descripcionDisBio_ed').val(data[0].dispo_descripUbicacion);
+                $('#descripcionBiome_ed').val(data[0].dispo_codigo);
+                splitE =data[0].dispo_movil.split(":");
+                $('#ipv4_ed').val(splitE[0]);
+                $('#nPuerto_ed').val(splitE[1]);
+                $('#versionFi_ed').val(data[0].version_firmware);
+                $('#editarBiometrico').modal('show');
                }
 
         },
@@ -621,6 +635,7 @@ function activarDispo(idDisAct){
 
 }
 function NuevoBiome(){
+    $("#frmHorNuevoBi")[0].reset();
     $('#nuevoBiometrico').modal('show');
 }
 
@@ -658,4 +673,38 @@ function RegistraBiome(){
             alert("Ocurrio un error");
         },
     });
+}
+function EditaBiome(){
+    var descripccionUb_ed=$('#descripcionDisBio_ed').val();
+    var nserie_ed=$('#descripcionBiome_ed').val();
+    var IP_ed=$('#ipv4_ed').val();
+    var puerto_ed=$('#nPuerto_ed').val();
+    ppp_ed=':';
+    var ippuerto_ed=IP_ed.concat(ppp_ed, puerto_ed);
+    var version_ed=$('#versionFi_ed').val();
+    var idDisposEd_ed= $('#idDisposiBio').val();
+    $.ajax({
+        type: "post",
+        url: "/actualizarBiometrico",
+        data: {
+            descripccionUb_ed, nserie_ed, ippuerto_ed,version_ed,
+            idDisposEd_ed
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#tablaDips').DataTable().ajax.reload();
+            $('#editarBiometrico').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+
 }

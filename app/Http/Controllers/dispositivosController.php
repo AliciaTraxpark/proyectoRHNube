@@ -643,7 +643,8 @@ class dispositivosController extends Controller
                 'dispo_Manu',
                 'dispo_Scan',
                 'dispo_Cam',
-                'idControladores'
+                'idControladores',
+                'version_firmware','dispo_codigo'
             )->get();
         return $dispositivo;
     }

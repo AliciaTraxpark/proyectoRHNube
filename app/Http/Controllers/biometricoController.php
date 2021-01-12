@@ -49,4 +49,14 @@ class biometricoController extends Controller
         $dispositivos->save();
 
     }
+
+    public function actualizarBiometrico(Request $request){
+        $dispositivos = dispositivos::findOrFail($request->idDisposEd_ed);
+        $dispositivos->dispo_descripUbicacion = $request->descripccionUb_ed;
+        $dispositivos->dispo_movil = $request->ippuerto_ed;
+        $dispositivos->dispo_codigo = $request->nserie_ed;
+        $dispositivos->version_firmware = $request->version_ed;
+
+        $dispositivos->save();
+    }
 }

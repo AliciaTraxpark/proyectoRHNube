@@ -514,6 +514,95 @@
  </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+             {{-- Modal editBiometrico --}}
+             <div id="editarBiometrico" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" data-backdrop="static">
+             <div id="" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
+
+                 <div class="modal-content">
+                     <div class="modal-header" style="background-color:#163552;">
+                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar biometrico
+                         </h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body" style="font-size:12px!important">
+                         <div class="row">
+                            <input type="hidden" id="idDisposiBio">
+                             <div class="col-md-12 col-12">
+                                 <form id="frmHorNuevoBi_edit" action="javascript:EditaBiome()">
+                                     <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label for="">Descripción de ubicación:</label>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    id="descripcionDisBio_ed" maxlength="80" required>
+                                            </div>
+                                        </div>
+                                         <div class="col-md-6 col-6">
+                                             <div class="form-group">
+                                                 <label for="">Numero de serie:</label>
+                                                 <input type="text" class="form-control form-control-sm"
+                                                     id="descripcionBiome_ed" maxlength="40" >
+                                             </div>
+                                         </div>
+
+
+                                         <div class="col-md-4 col-12">
+                                             <div class="form-group">
+                                                 <label for="">IP:</label>
+                                                 <input type="text" class="form-control form-control-sm" required class="form-input" id="ipv4_ed" name="ipv4_ed" placeholder="xxx.xxx.xxx.xxx"/>
+                                             </div>
+                                         </div>
+
+                                         <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label for="">Puerto:</label>
+                                                <input id="nPuerto_ed" type="number" onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" class="form-control form-control-sm" required class="form-input" maxlength="5" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label for="">version firmware:</label>
+                                                <input type="text" id="versionFi_ed" class="form-control form-control-sm" />
+                                            </div>
+                                        </div>
+
+
+
+                                        {{--  <div class="col-md-6 col-12">
+                                             <div class="form-group">
+                                                 <label for="">Seleccione controlador(es):</label>
+                                                 <select data-plugin="customselect" multiple="multiple" id="selectControlador" data-placeholder="Seleccione controlador"
+                                                 class="form-control"  >
+                                                 @foreach ($controladores as $cont)
+                                             <option class="" value="{{$cont->idControladores}}">{{$cont->cont_nombres}} {{$cont->cont_ApPaterno}} {{$cont->cont_ApMaterno}}</option>
+                                                 @endforeach
+                                             </select>
+                                             </div>
+                                         </div> --}}
+                                     </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="modal-footer">
+                         <div class="col-md-12 col-12">
+                             <div class="row">
+                                 <div class="col-md-12 text-right">
+                                     <button type="button" class="btn btn-light btn-sm "
+                                         data-dismiss="modal">Cancelar</button>
+                                     <button type="submit" name="" style="background-color: #163552;"
+                                         class="btn btn-sm ">Guardar</button>
+                                     </form>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div><!-- /.modal-content -->
+             </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>
     </div>
 
