@@ -57,17 +57,27 @@ class apiBiometricoController extends Controller
                 ->join('persona as p','u.perso_id','=','p.perso_id')
                 ->get();
 
-                $organizacion=DB::table('usuario_organizacion as uso')
-                ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
-                ->where('user_id','=',Auth::user()->id)
-                ->join('users as u','uso.user_id','=','u.id')
-                ->join('organizacion as o','uso.organi_id','=','o.organi_id')
-                ->get();
+
+                foreach ($usuario as $tab) {
+                    $organizacion=DB::table('usuario_organizacion as uso')
+                    ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
+                    ->where('user_id','=',$tab->id)
+                    ->join('users as u','uso.user_id','=','u.id')
+                    ->join('organizacion as o','uso.organi_id','=','o.organi_id')
+                    ->get();
+                    $tab->organizacion =  $organizacion;
+                }
 
 
-
-                return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                "token" =>$token->get()));
+                return response()->json(array(
+                    "id" => $usuario[0]->id,
+                    "email" => $usuario[0]->email,
+                    "perso_nombre" => $usuario[0]->perso_nombre,
+                    "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                    "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                    "organizacion" => $usuario[0]->organizacion,
+                    'token' => $token->get()
+                ), 200);
 
             }
 
@@ -120,9 +130,20 @@ class apiBiometricoController extends Controller
                                 $tab->biometricos = $biometricos;
                             }
 
+                            foreach ($usuario as $tab) {
 
-                            return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                            "token" =>$token->get()));
+                                $tab->organizacion =  $organizacion;
+                            }
+
+                            return response()->json(array(
+                                "id" => $usuario[0]->id,
+                                "email" => $usuario[0]->email,
+                                "perso_nombre" => $usuario[0]->perso_nombre,
+                                "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                                "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                                "organizacion" => $usuario[0]->organizacion,
+                                'token' => $token->get()
+                            ), 200);
                         }
                         else{
                             /* VERIFICAR SI TIENE PERMISO PARA EXTRACTOR */
@@ -160,9 +181,19 @@ class apiBiometricoController extends Controller
                                 $tab->biometricos = $biometricos;
                             }
 
+                            foreach ($usuario as $tab) {
 
-                            return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                            "token" =>$token->get()));
+                                $tab->organizacion =  $organizacion;
+                            }
+                            return response()->json(array(
+                                "id" => $usuario[0]->id,
+                                "email" => $usuario[0]->email,
+                                "perso_nombre" => $usuario[0]->perso_nombre,
+                                "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                                "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                                "organizacion" => $usuario[0]->organizacion,
+                                'token' => $token->get()
+                            ), 200);
                             }
                             else{
                                 Auth::logout();
@@ -217,9 +248,19 @@ class apiBiometricoController extends Controller
                         $tab->biometricos = $biometricos;
                     }
 
+                    foreach ($usuario as $tab) {
 
-                    return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                    "token" =>$token->get()));
+                        $tab->organizacion =  $organizacion;
+                    }
+                    return response()->json(array(
+                        "id" => $usuario[0]->id,
+                        "email" => $usuario[0]->email,
+                        "perso_nombre" => $usuario[0]->perso_nombre,
+                        "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                        "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                        "organizacion" => $usuario[0]->organizacion,
+                        'token' => $token->get()
+                    ), 200);
                 }
 
             } else{
@@ -304,9 +345,19 @@ class apiBiometricoController extends Controller
                             $tab->biometricos = $biometricos;
                         }
 
+                        foreach ($usuario as $tab) {
 
-                        return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                        "token" =>$token->get()));
+                            $tab->organizacion =  $organizacion;
+                        }
+                        return response()->json(array(
+                            "id" => $usuario[0]->id,
+                            "email" => $usuario[0]->email,
+                            "perso_nombre" => $usuario[0]->perso_nombre,
+                            "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                            "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                            "organizacion" => $usuario[0]->organizacion,
+                            'token' => $token->get()
+                        ), 200);
                     }
                     else{
                         /* VERIFICAR SI TIENE PERMISO PARA EXTRACTOR */
@@ -345,9 +396,19 @@ class apiBiometricoController extends Controller
                             $tab->biometricos = $biometricos;
                         }
 
+                        foreach ($usuario as $tab) {
 
-                        return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                        "token" =>$token->get()));
+                            $tab->organizacion =  $organizacion;
+                        }
+                        return response()->json(array(
+                            "id" => $usuario[0]->id,
+                            "email" => $usuario[0]->email,
+                            "perso_nombre" => $usuario[0]->perso_nombre,
+                            "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                            "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                            "organizacion" => $usuario[0]->organizacion,
+                            'token' => $token->get()
+                        ), 200);
                         }
                         else{
                             Auth::logout();
@@ -403,9 +464,21 @@ class apiBiometricoController extends Controller
                     $tab->biometricos = $biometricos;
                 }
 
+                foreach ($usuario as $tab) {
 
-                return response()->json(array('status'=>200,"usuario" =>$usuario, "organizacion" => $organizacion,
-                "token" =>$token->get()));
+                    $tab->organizacion =  $organizacion;
+                }
+               /*  return response()->json(array($usuario,
+                "token" =>$token->get())); */
+                return response()->json(array(
+                    "id" => $usuario[0]->id,
+                    "email" => $usuario[0]->email,
+                    "perso_nombre" => $usuario[0]->perso_nombre,
+                    "perso_apPaterno" => $usuario[0]->perso_apPaterno,
+                    "perso_apMaterno" => $usuario[0]->perso_apMaterno,
+                    "organizacion" => $usuario[0]->organizacion,
+                    'token' => $token->get()
+                ), 200);
             }
             /*  */
         }
