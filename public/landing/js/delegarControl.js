@@ -1640,3 +1640,33 @@ function verificarSIEdito(){
         },
     });
 }
+function reenviarEmail(){
+    $.ajax({
+        type: "post",
+        url: "/reenviarEmail",
+        data: {
+            idinvitado,
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            var dialog = bootbox.dialog({
+                message: "Correo enviado",
+                closeButton: false,
+            });
+            setTimeout(function () {
+                dialog.modal("hide");
+            }, 1800);
+            console.log(data);
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+}

@@ -825,4 +825,12 @@ public function verificarEmaDSiEdi(Request $request){
         return 0;
     }
 }
+
+public function reenviarEmail(Request $request){
+    $idInvitado=$request->idinvitado;
+
+    $invitado = invitado::find($idInvitado);
+    $organi = organizacion::find(session('sesionidorg'));
+    Mail::to($invitado[0]->email_inv)->queue(new CorreoInvitado($organi,$invitado));
+}
 }

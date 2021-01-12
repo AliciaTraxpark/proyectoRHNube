@@ -97,6 +97,7 @@
                                     <th>#</th>
                                     <th>Correo</th>
                                     <th>Rol</th>
+                                    <th>Invitacion</th>
                                     <th>Estado</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -108,6 +109,7 @@
                                     <th>{{ $loop->index + 1 }}</th>
                                     <td>{{ $invitados->email_inv }}</td>
                                     <td>{{ $invitados->rol_nombre }}</td>
+                                    <td><button class="btn btn-sm botonsms" style="color: #6c757d" onclick="reenviarEmail({{ $invitados->idinvitado }})">Reenviar <img src="landing/images/note.svg" height="20"  ></button></td>
                                     <td>
                                         @if ($invitados->estado==0)
                                         <img src="{{ asset('admin/images/advertencia.svg') }}" height="15"> No

@@ -398,7 +398,7 @@ Route::post('/editarInviI', 'delegarInvController@editarInviI');
 Route::post('/editarInviArea', 'delegarInvController@editarInviArea');
 Route::post('/cambInvitadoswit', 'delegarInvController@cambInvitadoswit');
 Route::post('/notificarInv', 'delegarInvController@notificarInv');
-
+Route::post('/reenviarEmail', 'delegarInvController@reenviarEmail');
 //SOPORTE POR CORREOS
 Route::get('/soporte', 'soportesPorCorreoController@soporte');
 Route::post('/envioTicketCorreo', 'soportesPorCorreoController@envioTicketSoporte');
