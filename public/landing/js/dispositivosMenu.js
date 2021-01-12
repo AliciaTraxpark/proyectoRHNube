@@ -630,6 +630,7 @@ function RegistraBiome(){
     var ip=$('#ipv4').val();
     ppp=':';
     var puerto=$('#nPuerto').val();
+    var versFirmware=$('#versionFi').val();
     var ippuerto=ip.concat(ppp, puerto);
 
     var descripcionBio=$('#descripcionDisBio').val();
@@ -639,7 +640,7 @@ function RegistraBiome(){
         type: "post",
         url: "/dispoStoreBiometrico",
         data: {
-            serieBio,ippuerto,descripcionBio
+            serieBio,ippuerto,descripcionBio,versFirmware
         },
         statusCode: {
             419: function () {

@@ -473,6 +473,12 @@
                                     <input id="nPuerto" type="number" onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" class="form-control form-control-sm" required class="form-input" maxlength="5" />
                                 </div>
                             </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="">version firmware:</label>
+                                    <input type="text" id="versionFi" class="form-control form-control-sm" />
+                                </div>
+                            </div>
 
 
 

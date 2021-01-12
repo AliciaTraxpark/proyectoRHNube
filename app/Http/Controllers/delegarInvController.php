@@ -115,6 +115,7 @@ class delegarInvController extends Controller
         $switchasisPuerta=$request->switchasisPuerta;
         $switchCRemo=$request->switchCRemo;
         $switchCRuta=$request->switchCRuta;
+        $switchExtractor=$request->switchExtractor;
         $checkTodoEmp=$request->checkTodoEmp;
         $swReporteAsis=$request->swReporteAsis;
         $swMoReporteAsis=$request->swMoReporteAsis;
@@ -142,6 +143,7 @@ class delegarInvController extends Controller
         $invitado->permiso_Emp=$permisoEmp;
         $invitado->modoCR=$switchCRemo;
         $invitado->ControlRuta=$switchCRuta;
+        $invitado->extractorRH=$switchExtractor;
         $invitado->gestionActiv=$switchActividades;
         $invitado->asistePuerta=$switchasisPuerta;
         $invitado->verTodosEmps=$checkTodoEmp;
