@@ -43,15 +43,11 @@ use App\invitado;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <style>
-        /*  body > div.bootbox.modal.fade.show > div > div > div{
-        background: #131313;
-    color: #fbfbfb;
-    }
-    body > div.bootbox.modal.fade.show > div{
-        top: 100px;
-    left: 75px;
-    } */
-
+        body{
+            font-family: Poppins, sans-serif;
+            padding-bottom: 0px !important;
+        }
+        
         .card .card-body {
             padding: 20px 20px;
         }
@@ -59,12 +55,50 @@ use App\invitado;
         .body {
             background-color: #fbfbfb;
         }
-    .nav-link:hover svg,
-    .nav-link:focus svg,
-    .topnav-menu .nav-link:active svg {
-        color: #fff;
-    }
+        .nav-link:hover svg,
+        .nav-link:focus svg,
+        .topnav-menu .nav-link:active svg {
+            color: #fff;
+        }
 
+        .container{
+            max-width: 90% !important;
+        }
+
+        .dropdown{
+            display: block !important;
+        }
+        .pro-user-name.ml-1{
+            display: block !important;
+        }
+
+        @media (min-width: 772px){
+            footer{
+              font-size: 15px;
+              color: #555;
+              background: #eee;
+              text-align: center;
+              position: fixed;
+              display: block;
+              width: 100%;
+              bottom: 0;
+            }
+            body{
+                padding-bottom: 25px !important;
+            }
+        }
+
+        @media (min-width: 767px) and (max-width: 1028px){
+             .container {
+                padding-bottom: 0px !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                margin-bottom: 0px !important;;
+            }
+            body{
+                padding: 0px !important;
+            }
+        }
 
         @media (max-width: 767px) {
             .navbar {
@@ -72,7 +106,7 @@ use App\invitado;
             }
 
             .container {
-                padding-bottom: 3% !important;
+                padding-bottom: 20px !important;
                 padding-left: 10px !important;
                 padding-right: 10px !important;
             }
@@ -90,27 +124,47 @@ use App\invitado;
                 margin-right: 10px !important;
                 margin-left: 10px !important;
                 margin-top: 10px !important;
+                margin-bottom: 0px !important;
             }
 
             .align-items-center {
                 text-align: center !important;
             }
         }
+
+        @media (min-width: 1200px) {
+            .logo_rh{
+                padding-left: 100px;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .logo_rh{
+                padding-left: 100px;
+            }
+        }
+        @media (min-width: 832px){
+            .dropdown{
+                display: block !important;
+            }
+            .pro-user-name.ml-1{
+                left: 70px !important;
+            }
+        }
+        
     </style>
-    <header id="header-section" style="    background: #163552;">
-        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+    <header id="header-section" style="background: #163552;">
+        <nav class="navbar navbar-expand-lg " id="navbar">
             <div class="container">
-                <div class="col-md-2">
+                <div class="col-md-4 col-xl-3 col-12 logo_rh">
                     <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
+                        <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
                     </div>
                 </div>
-                <div class="col-md-6 text-left textResp">
+                <div class="col-md-7 col-xl-7 col-10 text-left textResp title_rh">
                     <h5 style="color: #ffffff">Elige una de tus organizaciones para gestionar.</h5>
                 </div>
-                <div class="col-md-4 text-right" style="padding-right: 0px;
 
-                left: 70px;">
+                <div class="col-md-1 col-xl-2 col-2 text-right" style="padding-right: 0px;left: 0px;">
                 <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="">
                     <a  style="color: #fff!important" class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
                         aria-haspopup="false" aria-expanded="false">
@@ -174,11 +228,12 @@ use App\invitado;
             </li> --}}
 
                 </div>
+            </div>  
         </nav>
     </header>
 
-    <div class="content-page" style="margin-top: 40px; margin-left: 120px; margin-right: 55px;">
-        <div class="content">
+    <div class="content-page" style="margin-top: 40px; margin-left: 120px; margin-right: 55px; margin-bottom: 0px;">
+        <div class="container">
             <div class="row">
                 @foreach ($organizacion as $organizaciones)
                 <div class="col-xl-3 col-lg-4">
@@ -206,7 +261,6 @@ use App\invitado;
                              background-color: #c1cee0;" onclick="ingresarOrganiza({{$organizaciones->organi_id}})"><i
                                     class="uil uil-arrow-right mr-1"></i>Ingresar a organizacion</button>
                             @endif
-
                         </div>
                         <div class="card-body border-top" style="padding: 10px 20px;">
                             <div class="row align-items-center">
@@ -234,19 +288,19 @@ use App\invitado;
                     <!-- end card -->
                 </div>
                 @endforeach
-
             </div>
-
-
-            <div class="col-md-12 text-center">
-                <footer class=" border-top">
-                    <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los
-                        derechos reservados..</p>
-                </footer>
-            </div>
-
         </div>
     </div>
+    <footer class="border-top" style="background:#163552; bottom: 0 !important; z-index: 100 !important;">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+        </div>
+    </footer>
    {{--  <script src="{{asset('landing/vendors/jquery/jquery.min.js')}}"></script> --}}
 {{--     <script src="{{asset('landing/vendors/bootstrap/bootstrap.min.js')}}"></script> --}}
 {{--     <script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
@@ -265,47 +319,46 @@ use App\invitado;
 
     <script>
         function ingresarOrganiza(idorganiza){
-    $.ajax({
-        type: "post",
-        url: "/enviarIDorg",
-        data: {
-            idorganiza
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            }
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            window.location.replace(
-                    location.origin + "/dashboard"
-                );
-            },
-    });
-
-}
+            $.ajax({
+                type: "post",
+                url: "/enviarIDorg",
+                data: {
+                    idorganiza
+                },
+                statusCode: {
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    window.location.replace(
+                            location.origin + "/dashboard"
+                        );
+                    },
+            });
+        }
 
     </script>
     @if (Auth::user())
-    <script>
-        $(function() {
-      setInterval(function checkSession() {
-        $.get('/check-session', function(data) {
+        <script>
+            $(function() {
+          setInterval(function checkSession() {
+            $.get('/check-session', function(data) {
 
-          // if session was expired
-          if (data.guest==false) {
-               $('.modal').modal('hide');
-             $('#modal-error').modal('show');
+              // if session was expired
+              if (data.guest==false) {
+                   $('.modal').modal('hide');
+                 $('#modal-error').modal('show');
 
 
-          }
+              }
+            });
+          },7202000); // every minute
         });
-      },7202000); // every minute
-    });
-    </script>
+        </script>
     @endif
 </body>
 

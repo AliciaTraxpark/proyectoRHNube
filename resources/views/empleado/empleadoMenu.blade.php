@@ -932,7 +932,7 @@ use App\proyecto_empleado;
     </div>
     @if (isset($agregarEmp))
     @if ($agregarEmp==1)
-    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
+    <div class="col-sm-12 col-md-12 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
             <button class="btn btn-outline-secondary btn-sm">
                 <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
@@ -940,7 +940,7 @@ use App\proyecto_empleado;
             </button>
         </a>
         &nbsp;&nbsp;
-        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF">
+        <button class="btn btn-outline-secondary btn-sm m-1" id="cargaMasivaF">
             <img src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">
             Carga masiva fotos
         </button>
@@ -949,7 +949,7 @@ use App\proyecto_empleado;
 
     @endif
     @else
-    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
+    <div class="col-sm-12 col-md-12 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
             <button class="btn btn-outline-secondary btn-sm">
                 <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
@@ -957,7 +957,7 @@ use App\proyecto_empleado;
             </button>
         </a>
         &nbsp;&nbsp;
-        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF">
+        <button class="btn btn-outline-secondary btn-sm m-1" id="cargaMasivaF">
             <img src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">
             Carga masiva fotos
         </button>
