@@ -320,9 +320,9 @@ class apiBiometricoController extends Controller
                             ->where('tipoDispositivo','=',3)
                             ->where('organi_id','=', $usuario_organizacion->organi_id)
                             ->get();
-                        return response()->json(array(
-                            "biometricos" => $biometricos
-                        ), 200);
+                            return response()->json(
+                                $biometricos
+                            , 200);
                     }
                     else{
                         /* VERIFICAR SI TIENE PERMISO PARA EXTRACTOR */
@@ -334,9 +334,9 @@ class apiBiometricoController extends Controller
                           ->where('tipoDispositivo','=',3)
                           ->where('organi_id','=', $usuario_organizacion->organi_id)
                           ->get();
-                      return response()->json(array(
-                          "biometricos" => $biometricos
-                      ), 200);
+                          return response()->json(
+                            $biometricos
+                        , 200);
                         }
                         else{
                             Auth::logout();
@@ -365,9 +365,9 @@ class apiBiometricoController extends Controller
                             ->where('tipoDispositivo','=',3)
                             ->where('organi_id','=', $usuario_organizacion->organi_id)
                             ->get();
-                        return response()->json(array(
-                            "biometricos" => $biometricos
-                        ), 200);
+                        return response()->json(
+                            $biometricos
+                        , 200);
             }
             /*  */
         }
