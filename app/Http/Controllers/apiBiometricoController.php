@@ -313,103 +313,30 @@ class apiBiometricoController extends Controller
                 if($invitado->estado_condic==1 && $invitado->estado==1){
                     /* VERIFICAR SI ES ADMIN */
                     if($invitado->rol_id==1){
-                        $factory = JWTFactory::customClaims([
-                            'sub' => env('API_id'),
-                        ]);
-                        $payload = $factory->make();
-                        $token = JWTAuth::encode($payload);
 
-
-                        $usuario=DB::table('users as u')
-                        ->select('u.id','u.email',
-                        'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                        ->where('u.id','=',$usuario_organizacion->idusuario)
-                        ->join('persona as p','u.perso_id','=','p.perso_id')
-                        ->get();
-
-                        $organizacion=DB::table('usuario_organizacion as uso')
-                        ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
-                        ->where('user_id','=',$usuario_organizacion->idusuario)
-                        ->join('users as u','uso.user_id','=','u.id')
-                        ->join('organizacion as o','uso.organi_id','=','o.organi_id')
-                        ->where('uso.organi_id','=', $usuario_organizacion->organi_id)
-                        ->get();
-
-                        foreach ($organizacion as $tab) {
                             $biometricos=DB::table('dispositivos')
                             ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
                             'dispo_codigo as serie','version_firmware')
                             ->where('tipoDispositivo','=',3)
-                            ->where('organi_id','=',$tab->organi_id)
+                            ->where('organi_id','=', $usuario_organizacion->organi_id)
                             ->get();
-
-                            $tab->biometricos = $biometricos;
-                        }
-
-                        foreach ($usuario as $tab) {
-
-                            $tab->organizacion =  $organizacion;
-                        }
                         return response()->json(array(
-                            "id" => $usuario[0]->id,
-                            "email" => $usuario[0]->email,
-                            "perso_nombre" => $usuario[0]->perso_nombre,
-                            "perso_apPaterno" => $usuario[0]->perso_apPaterno,
-                            "perso_apMaterno" => $usuario[0]->perso_apMaterno,
-                            "organizacion" => $usuario[0]->organizacion,
-                            'token' => $token->get()
+                            "biometricos" => $biometricos
                         ), 200);
                     }
                     else{
                         /* VERIFICAR SI TIENE PERMISO PARA EXTRACTOR */
                         if($invitado->extractorRH==1){
                           /*   dd('soy admin con reestricciones'); */
-                          $factory = JWTFactory::customClaims([
-                            'sub' => env('API_id'),
-                        ]);
-                        $payload = $factory->make();
-                        $token = JWTAuth::encode($payload);
-
-
-                        $usuario=DB::table('users as u')
-                        ->select('u.id','u.email',
-                        'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                        ->where('u.id','=',$usuario_organizacion->idusuario)
-                        ->join('persona as p','u.perso_id','=','p.perso_id')
-                        ->get();
-
-                        $organizacion=DB::table('usuario_organizacion as uso')
-                        ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
-                        ->where('user_id','=',$usuario_organizacion->idusuario)
-                        ->join('users as u','uso.user_id','=','u.id')
-                        ->join('organizacion as o','uso.organi_id','=','o.organi_id')
-                        ->where('uso.organi_id','=', $usuario_organizacion->organi_id)
-                        ->get();
-
-                        foreach ($organizacion as $tab) {
-                            $biometricos=DB::table('dispositivos')
-                            ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                            'dispo_codigo as serie','version_firmware')
-                            ->where('tipoDispositivo','=',3)
-                            ->where('organi_id','=',$tab->organi_id)
-                            ->get();
-
-                            $tab->biometricos = $biometricos;
-                        }
-
-                        foreach ($usuario as $tab) {
-
-                            $tab->organizacion =  $organizacion;
-                        }
-                        return response()->json(array(
-                            "id" => $usuario[0]->id,
-                            "email" => $usuario[0]->email,
-                            "perso_nombre" => $usuario[0]->perso_nombre,
-                            "perso_apPaterno" => $usuario[0]->perso_apPaterno,
-                            "perso_apMaterno" => $usuario[0]->perso_apMaterno,
-                            "organizacion" => $usuario[0]->organizacion,
-                            'token' => $token->get()
-                        ), 200);
+                          $biometricos=DB::table('dispositivos')
+                          ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                          'dispo_codigo as serie','version_firmware')
+                          ->where('tipoDispositivo','=',3)
+                          ->where('organi_id','=', $usuario_organizacion->organi_id)
+                          ->get();
+                      return response()->json(array(
+                          "biometricos" => $biometricos
+                      ), 200);
                         }
                         else{
                             Auth::logout();
@@ -432,54 +359,15 @@ class apiBiometricoController extends Controller
             } else{
                 /* dd('soy admin'); */
 
-                $factory = JWTFactory::customClaims([
-                    'sub' => env('API_id'),
-                ]);
-                $payload = $factory->make();
-                $token = JWTAuth::encode($payload);
-
-
-                $usuario=DB::table('users as u')
-                ->select('u.id','u.email',
-                'p.perso_nombre','p.perso_apPaterno','p.perso_apMaterno')
-                ->where('u.id','=',$usuario_organizacion->idusuario)
-                ->join('persona as p','u.perso_id','=','p.perso_id')
-                ->get();
-
-                $organizacion=DB::table('usuario_organizacion as uso')
-                ->select('uso.usua_orga_id as idusuario_organizacion','uso.user_id as idusuario','uso.rol_id','o.organi_id','o.organi_razonSocial')
-                ->where('user_id','=',$usuario_organizacion->idusuario)
-                ->join('users as u','uso.user_id','=','u.id')
-                ->join('organizacion as o','uso.organi_id','=','o.organi_id')
-                ->where('uso.organi_id','=', $usuario_organizacion->organi_id)
-                ->get();
-
-                foreach ($organizacion as $tab) {
-                    $biometricos=DB::table('dispositivos')
-                    ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                    'dispo_codigo as serie','version_firmware')
-                    ->where('tipoDispositivo','=',3)
-                    ->where('organi_id','=',$tab->organi_id)
-                    ->get();
-
-                    $tab->biometricos = $biometricos;
-                }
-
-                foreach ($usuario as $tab) {
-
-                    $tab->organizacion =  $organizacion;
-                }
-               /*  return response()->json(array($usuario,
-                "token" =>$token->get())); */
-                return response()->json(array(
-                    "id" => $usuario[0]->id,
-                    "email" => $usuario[0]->email,
-                    "perso_nombre" => $usuario[0]->perso_nombre,
-                    "perso_apPaterno" => $usuario[0]->perso_apPaterno,
-                    "perso_apMaterno" => $usuario[0]->perso_apMaterno,
-                    "organizacion" => $usuario[0]->organizacion,
-                    'token' => $token->get()
-                ), 200);
+                $biometricos=DB::table('dispositivos')
+                            ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
+                            'dispo_codigo as serie','version_firmware')
+                            ->where('tipoDispositivo','=',3)
+                            ->where('organi_id','=', $usuario_organizacion->organi_id)
+                            ->get();
+                        return response()->json(array(
+                            "biometricos" => $biometricos
+                        ), 200);
             }
             /*  */
         }
