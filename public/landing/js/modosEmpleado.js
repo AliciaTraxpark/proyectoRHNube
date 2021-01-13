@@ -32,18 +32,18 @@ function actividad_empleado() {
                     }
                     if (data[i].estadoActividadEmpleado == 1) {
                         if (data[i].eliminacionActividadEmpleado == 0) {
-                            td += `<td><div class="custom-control custom-switch">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}" disabled>
                                 <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
                             </div></td></tr>`;
                         } else {
-                            td += `<td><div class="custom-control custom-switch">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}">
                                 <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
                             </div></td></tr>`;
                         }
                     } else {
-                        td += `<td><div class="custom-control custom-switch">
+                        td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                         <input type="checkbox" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
                       </div></td></tr>`;
@@ -89,19 +89,19 @@ function actividadEmp() {
                     }
                     if (data[i].estadoActividadEmpleado == 1) {
                         if (data[i].eliminacionActividadEmpleado == 0) {
-                            td += `<td><div class="custom-control custom-switch">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}" disabled>
                                 <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
                             </div></td></tr>`;
                         } else {
                             if (valorIn == 1) {
-                                td += `<td><div class="custom-control custom-switch">
+                                td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}">
                                 <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
                             </div></td></tr>`;
                             }
                             else {
-                                td += `<td><div class="custom-control custom-switch">
+                                td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}" disabled>
                                 <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
                             </div></td></tr>`;
@@ -110,13 +110,13 @@ function actividadEmp() {
                         }
                     } else {
                         if (valorIn == 1) {
-                            td += `<td><div class="custom-control custom-switch">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                         <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
                       </div></td></tr>`;
                         }
                         else {
-                            td += `<td><div class="custom-control custom-switch">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                             <input type="checkbox" class="custom-control-input" id="customSwitchAct${data[i].Activi_id}" disabled>
                             <label class="custom-control-label" for="customSwitchAct${data[i].Activi_id}"></label>
                           </div></td></tr>`;
@@ -159,12 +159,12 @@ function actividadEmpVer() {
                         td += `<td class="text-center"><img src="/admin/images/borrarH.svg" height="13" class="mr-2">&nbsp;No</td>`;
                     }
                     if (data[i].estadoActividadEmpleado == 1) {
-                        td += `<td><div class="custom-control custom-switch">
+                        td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                         <input type="checkbox" checked="" class="custom-control-input" disabled id="customSwitchActV${data[i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchActV${data[i].Activi_id}"></label>
                       </div></td></tr>`;
                     } else {
-                        td += `<td><div class="custom-control custom-switch">
+                        td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
                         <input type="checkbox" class="custom-control-input" disabled id="customSwitchActV${data[i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchActV${data[i].Activi_id}"></label>
                       </div></td></tr>`;

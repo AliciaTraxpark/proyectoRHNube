@@ -105,11 +105,11 @@ function calendario() {
                 buttons: {
                     confirm: {
                         label: "Aceptar",
-                        className: "btn-success",
+                        className: "btn-success btn-sm",
                     },
                     cancel: {
                         label: "Cancelar",
-                        className: "btn-light",
+                        className: "btn-light btn-sm",
                     },
                 },
                 callback: function (result) {
@@ -299,11 +299,11 @@ function calendario_edit() {
                         buttons: {
                             confirm: {
                                 label: "Aceptar",
-                                className: "btn-success",
+                                className: "btn-success btn-sm",
                             },
                             cancel: {
                                 label: "Cancelar",
-                                className: "btn-light",
+                                className: "btn-light btn-sm",
                             },
                         },
                         callback: function (result) {
@@ -356,11 +356,11 @@ function calendario_edit() {
                     buttons: {
                         confirm: {
                             label: "Aceptar",
-                            className: "btn-success",
+                            className: "btn-success btn-sm",
                         },
                         cancel: {
                             label: "Cancelar",
-                            className: "btn-light",
+                            className: "btn-light btn-sm",
                         },
                     },
                     callback: function (result) {
@@ -1184,11 +1184,11 @@ function eliminarhorariosTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -1269,11 +1269,11 @@ function calendario2() {
                 buttons: {
                     confirm: {
                         label: "Aceptar",
-                        className: "btn-success",
+                        className: "btn-success btn-sm",
                     },
                     cancel: {
                         label: "Cancelar",
-                        className: "btn-light",
+                        className: "btn-light btn-sm",
                     },
                 },
                 callback: function (result) {
@@ -1881,11 +1881,11 @@ function calendario2_ed() {
                         buttons: {
                             confirm: {
                                 label: "Aceptar",
-                                className: "btn-success",
+                                className: "btn-success btn-sm",
                             },
                             cancel: {
                                 label: "Cancelar",
-                                className: "btn-light",
+                                className: "btn-light btn-sm",
                             },
                         },
                         callback: function (result) {
@@ -1927,11 +1927,11 @@ function calendario2_ed() {
                         buttons: {
                             confirm: {
                                 label: "Aceptar",
-                                className: "btn-success",
+                                className: "btn-success btn-sm",
                             },
                             cancel: {
                                 label: "Cancelar",
-                                className: "btn-light",
+                                className: "btn-light btn-sm",
                             },
                         },
                         callback: function (result) {
@@ -1984,11 +1984,11 @@ function calendario2_ed() {
                     buttons: {
                         confirm: {
                             label: "Aceptar",
-                            className: "btn-success",
+                            className: "btn-success btn-sm",
                         },
                         cancel: {
                             label: "Cancelar",
-                            className: "btn-light",
+                            className: "btn-light btn-sm",
                         },
                     },
                     callback: function (result) {
@@ -4610,11 +4610,11 @@ function vaciardFeria() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4660,11 +4660,11 @@ function vaciarddescanso() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4707,11 +4707,11 @@ function vaciardlabTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4736,11 +4736,11 @@ function vaciardNlabTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4786,11 +4786,11 @@ function vaciardIncidTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4881,11 +4881,11 @@ function vaciardFeriaBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4933,11 +4933,11 @@ function vaciarddescansoBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -4995,11 +4995,11 @@ function vaciarNlabBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -5046,11 +5046,11 @@ function vaciardIncidBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -5097,11 +5097,11 @@ function eliminarhorariosBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
@@ -5146,11 +5146,11 @@ $("#selectCalendario_edit3").change(function () {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success",
+                className: "btn-success btn-sm",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light",
+                className: "btn-light btn-sm",
             },
         },
         callback: function (result) {
