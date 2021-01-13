@@ -954,6 +954,12 @@ use App\proyecto_empleado;
         padding: 10px 0px 0px 0px;
     }
 
+    @media(min-width: 386px) and (max-width: 487px){
+        .th_rh{
+            padding: 0 35px !important;
+        }
+    }
+
     /* FINALIZACION DE RESPONSIVE */
 </style>
 {{-- BOTONES DE CARGAS MASIVAS --}}
@@ -5315,13 +5321,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
