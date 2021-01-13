@@ -104,22 +104,35 @@
         text-transform: none;
     }
 
+    @media (max-width: 767.98px){
+        .btnPResponsive {
+            text-align: center !important;
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+    }
+    #puntosC_previous{
+        font-size: 15px;
+    }
+    #puntosC_next{
+        font-size: 15px;
+    }
+
     /* FINALIZACION */
 </style>
 {{-- FINALIZACION --}}
 {{-- BOTONOS DE PANEL --}}
-<div class="row pr-3 pl-3 pt-3">
-    <div class="col-md-6 text-left colResponsive">
-        <button type="button" class="btn btn-sm mt-1"
-            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b" onclick="javascript:asignacionPunto()">
-            <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
+<div class="row pt-3">
+    <div class="col-sm-12 col-md-12 col-xl-12 text-right btnPResponsive">
+        <button type="button" class="btn btn-sm m-1 "
+            style="background-color: #e3eaef; border-color:#e3eaef; color:#37394b" onclick="javascript:asignacionPunto()">
+            <img src="{{asset('landing/images/placeholder.svg')}}" height="18"> <br>
             Asignar Punto de control
         </button>
-    </div>
-    <div class="col-md-6 text-right colResponsive">
-        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+
+        <button type="button" class="btn btn-sm m-1" style="background-color: #163552;"
             onclick="javascript:modalRegistrar()">
-            + Nuevo Punto de control
+            + <br>Nuevo Punto de control
         </button>
     </div>
 </div>

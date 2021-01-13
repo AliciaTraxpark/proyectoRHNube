@@ -48,7 +48,8 @@ use App\User;
     <style>
         body{
             font-family: Poppins, sans-serif;
-            padding-bottom: 0px !important;
+            padding: 0px !important;
+            margin: 0px !important;
         }
         .fc-time {
             display: none;
@@ -74,14 +75,25 @@ use App\User;
             }
         }
 
-        @media(max-width: 768px) and (max-width: 1025px){
-
-        }
-
         #navbar{
             padding: 0 40px !important;
             padding-bottom: 8px !important;
         }
+
+        @media (min-width: 0px) {
+            footer {
+              font-size: 15px;
+              color: #555;
+              background: #eee;
+              text-align: center;
+              position: fixed;
+              display: block;
+              width: 100%;
+              bottom: 0;
+              margin-top: 0px;
+            }
+        }
+
     </style>
 
     <header id="header-section">
@@ -104,7 +116,7 @@ use App\User;
         </nav>
     </header>
 
-    <div class="content-page" style="margin-top: 20px;margin-left: 0px">
+    <div class="content-page" style="margin-top: 20px;margin-left: 0px !important;">
         <div class="content">
             <div id="modalInformacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -152,17 +164,16 @@ use App\User;
             </div><!-- /.modal -->
 
 
-            <div class="row ">
-                <div class="col-xl-12">
-                    <div class="card" style="background:#ffffff;">
+            <div class="col-xl-12">
+                <div class="col-xl-12 ">
+                    <div class="card " style="background:#ffffff;">
                         @if ( $errors->any() )
-
                         <div class="alert alert-danger">
                             @foreach( $errors->all() as $error )<li>{{ $error }}</li>@endforeach
                         </div>
                         @endif
 
-                        <div class="card-body" style="padding-top: 10px;padding-bottom: 0px;">
+                        <div class="card-body " style="padding-top: 10px;padding-bottom: 10px;">
                             <form action="{{ route('importEmpleado') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-12" style="padding-left: 0px;">
@@ -191,10 +202,11 @@ use App\User;
                                                 </div>
                                             @endif
                                         </div>
-                                        <div class="col-md-6">
+
+                                        <div class="col-12 col-sm-7 col-md-6 mb-2">
                                             <input type="file" name="file" class="form-control">
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-12 col-sm-5 col-md-4">
                                             <button class="btn btn-sm" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados
                                             </button>
                                         </div>
@@ -203,16 +215,15 @@ use App\User;
                             </form>
                             <div class="col-md-3 text-right">
                                 @if (session('empleados'))
-                                    <button type="button" style="font-size: 12.25px; padding-top: 5.5px; padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar
-                                </button>
+                                    <button type="button" style="font-size: 12.25px; padding-top: 5.5px; padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
                                 @endif
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body" style="padding: 20px;color: #1b1b1b;">
+                <div class="col-xl-12" style="padding: 10px !important; margin: 2px !important; color: #1b1b1b;">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                    <table id="basic-datatable1" class="table  nowrap" style="font-size: 13px!important; padding-right: 10px !important:">
+                        <table id="basic-datatable1" class="table" style="font-size: 13px!important;">
                         <thead style="background: #4C5D73;color: white;">
                             <tr>
                                 <th>Tipo de Doc.</th>
@@ -304,26 +315,26 @@ use App\User;
                                                     &nbsp;</button></a>
                                             <br><br>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
             </div> <!-- end card -->
         </div>
-
-
     </div>
-    <footer class="border-top bg-info">
-        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos
-            reservados.</p>
+    <footer class="border-top" style="background:#163552;">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date("
+                    Y" ); ?> - RH nube Corp - USA | Todos los derechos
+                reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+        </div>
     </footer>
-    </div>
-    </div>
-
 
     <!--<script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>-->
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
@@ -347,35 +358,36 @@ use App\User;
         $(document).ready(function() {
 
     $('#basic-datatable1').DataTable( {
-        "scrollX": true,
+        scrollX: true,
+        responsive: false,
         language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ ",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": ">",
-                    "sPrevious": "<"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ ",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": ">",
+                "sPrevious": "<"
             },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        },
     } );
 } );
 $('#export').click('change',function(){
@@ -402,22 +414,19 @@ function agregar(){
                     }
     // empleados =JSON.parse(JSON.stringify());
     $.ajax({
-            type:"post",
-            url:"/importBDExcel",
-            data:{emplead:emplead},
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            success: function (data) {
-                $('#contenido').hide();
-                $('#cargaCompleta').show();
-                $('#btnRegistraBD').prop('disabled', true);
-
-
-            },
-            error: function (data) {
-                alert('Ocurrio un error');
-            }
-        });
-
+        type:"post",
+        url:"/importBDExcel",
+        data:{emplead:emplead},
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            $('#contenido').hide();
+            $('#cargaCompleta').show();
+            $('#btnRegistraBD').prop('disabled', true);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
 @endif
 }
 
