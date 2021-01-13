@@ -965,7 +965,7 @@ use App\proyecto_empleado;
     @if ($agregarEmp==1)
     <div class="col-sm-12 col-md-12 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
-            <button class="btn btn-outline-secondary btn-sm">
+            <button class="btn btn-outline-secondary btn-sm m-1">
                 <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
                 Carga masiva emp.
             </button>
@@ -982,7 +982,7 @@ use App\proyecto_empleado;
     @else
     <div class="col-sm-12 col-md-12 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
-            <button class="btn btn-outline-secondary btn-sm">
+            <button class="btn btn-outline-secondary btn-sm m-1">
                 <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
                 Carga masiva emp.
             </button>
@@ -5580,6 +5580,7 @@ use App\proyecto_empleado;
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
                             <div class="row">
+                                <input style="display: none;" name="v_idV" id="v_idV">
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Tipo Documento</label>
                                     <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV" style="background-color: #fcfcfc;" disabled>

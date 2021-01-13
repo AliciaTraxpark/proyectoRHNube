@@ -31,7 +31,6 @@
     <style>
         body {
             background-color: #ffffff !important;
-
         }
 
         .pResp {
