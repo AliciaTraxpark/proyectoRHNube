@@ -5788,6 +5788,16 @@ function eliminarContenido(id) {
         $('#errorenPausas').hide();
         $('#errorenPausasCruzadas').hide();
     }
+    var resp = true;
+    $('.rowInputs').each(function () {
+        var id = $(this).val();
+        if ($('#rowP' + id).is(":visible")) {
+            resp = false;
+        }
+    });
+    if (resp) {
+        contenidoInput(r_cont);
+    }
 }
 // * OBTENER PAUSAS
 function obtenerPausas() {
