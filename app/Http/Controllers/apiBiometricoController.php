@@ -120,7 +120,7 @@ class apiBiometricoController extends Controller
                             ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                             ->get();
 
-                            foreach ($organizacion as $tab) {
+                            /* foreach ($organizacion as $tab) {
                                 $biometricos=DB::table('dispositivos')
                                 ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
                                 'dispo_codigo as serie','version_firmware')
@@ -129,7 +129,7 @@ class apiBiometricoController extends Controller
                                 ->get();
 
                                 $tab->biometricos = $biometricos;
-                            }
+                            } */
 
                             foreach ($usuario as $tab) {
 
@@ -171,7 +171,7 @@ class apiBiometricoController extends Controller
                             ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                             ->get();
 
-                            foreach ($organizacion as $tab) {
+                          /*   foreach ($organizacion as $tab) {
                                 $biometricos=DB::table('dispositivos')
                                 ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
                                 'dispo_codigo as serie','version_firmware')
@@ -180,7 +180,7 @@ class apiBiometricoController extends Controller
                                 ->get();
 
                                 $tab->biometricos = $biometricos;
-                            }
+                            } */
 
                             foreach ($usuario as $tab) {
 
@@ -238,7 +238,7 @@ class apiBiometricoController extends Controller
                     ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                     ->get();
 
-                    foreach ($organizacion as $tab) {
+                    /* foreach ($organizacion as $tab) {
                         $biometricos=DB::table('dispositivos')
                         ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
                         'dispo_codigo as serie','version_firmware')
@@ -247,7 +247,7 @@ class apiBiometricoController extends Controller
                         ->get();
 
                         $tab->biometricos = $biometricos;
-                    }
+                    } */
 
                     foreach ($usuario as $tab) {
 

@@ -39,9 +39,7 @@ class biometricoController extends Controller
         $dispositivos = new dispositivos();
         $dispositivos->tipoDispositivo = 3;
         $dispositivos->dispo_descripUbicacion = $request->descripcionBio;
-        $dispositivos->dispo_codigo = $request->serieBio;
         $dispositivos->dispo_movil = $request->ippuerto;
-        $dispositivos->version_firmware = $request->versFirmware;
         $dispositivos->dispo_estadoActivo = 1;
         $dispositivos->dispo_estado = 0;
         $dispositivos->organi_id = session('sesionidorg');
