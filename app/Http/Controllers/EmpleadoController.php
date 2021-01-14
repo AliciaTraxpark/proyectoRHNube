@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use App\invitado_empleado;
+use App\Notifications\NuevaNotification;
 
 class EmpleadoController extends Controller
 {
@@ -665,6 +666,11 @@ class EmpleadoController extends Controller
         $persona->save();
         $emple_persona = $persona->perso_id;
 
+        $user = Auth::user();
+            $mensaje = [
+                'mensaje' => 'Hola'
+            ]; 
+        $user->notify(new NuevaNotification($mensaje));
 
         $empleado = new empleado();
         $empleado->emple_tipoDoc = $objEmpleado['documento'];
@@ -784,6 +790,7 @@ class EmpleadoController extends Controller
             $actividad->organi_id = session('sesionidorg');
             $actividad->save();
         }
+
         return response()->json($idempleado, 200);
     }
 
