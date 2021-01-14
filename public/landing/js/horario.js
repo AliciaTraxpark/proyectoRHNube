@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $(".bt_plus").each(function (el) {
-        $(this).bind("click", addField);
-    });
+    // $(".bt_plus").each(function (el) {
+    //     $(this).bind("click", addField);
+    // });
     var table = $("#tablaEmpleado").DataTable({
         "searching": true,
         /* "lengthChange": false,
@@ -68,16 +68,18 @@ $(document).ready(function () {
 
                 }
             },
-            { data: "horaI",
-            "render": function (data, type, row) {
-                return "&nbsp;&nbsp;&nbsp"+ row.horaI;
-            }
-             },
-            { data: "horaF",
-            "render": function (data, type, row) {
-                return "&nbsp;&nbsp;"+ row.horaF;
-            }
-             },
+            {
+                data: "horaI",
+                "render": function (data, type, row) {
+                    return "&nbsp;&nbsp;&nbsp" + row.horaI;
+                }
+            },
+            {
+                data: "horaF",
+                "render": function (data, type, row) {
+                    return "&nbsp;&nbsp;" + row.horaF;
+                }
+            },
             {
                 data: "horario_horario_id",
                 "render": function (data, type, row) {
@@ -93,7 +95,7 @@ $(document).ready(function () {
                 data: "horario_id",
                 "render": function (data, type, row) {
 
-                    return '<a onclick=" editarHorarioLista(' + row.horario_id + ')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">' +
+                    return '<a onclick="modalEditar(' + row.horario_id + ')" style="cursor: pointer"><img src="/admin/images/edit.svg" height="15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="" style="cursor: pointer">' +
                         '<img src="/admin/images/delete.svg" onclick="eliminarHorario(' + row.horario_id + ')" height="15"></a>';
 
                 }
@@ -177,9 +179,6 @@ function verhorarioEmpleado(idempleado) {
                     $('#departamentoHorario').val('Ninguno');
                 } else {
                     $('#departamentoHorario').val(depart);
-                }
-                if (data[0][0].horario_sobretiempo == 1) {
-                    $('#exampleCheck2').prop('checked', true);
                 }
                 $('#tipHorarioEmpleado').val(data[0][0].horario_tipo);
                 $('#descripcionCaHorario').val(data[0][0].horario_descripcion);
@@ -349,19 +348,8 @@ function verhorarioEmpleado(idempleado) {
 
 }
 document.addEventListener('DOMContentLoaded', calendarioHorario); */
-$('#horaI').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
+
 $('#horaIen').flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
-});
-$('#horaF').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
@@ -497,7 +485,7 @@ function calendario() {
             var event = calendar.getEventById(id);
             if (info.event.textColor == '111111') {
                 bootbox.confirm({
-                    title:"Eliminar horario",
+                    title: "Eliminar horario",
                     message: "¿Desea eliminar: " + info.event.title + " del horario?",
                     buttons: {
                         confirm: {
@@ -556,10 +544,10 @@ function calendario() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    if(info.event.extendedProps.horaAdic==1){
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'+'     Marca horas adicionales'});
-                    } else{
-                        $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.extendedProps.horaF+'  Trabaja fuera de horario'});
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                    } else {
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
@@ -646,10 +634,10 @@ function agregarHorarioSe() {
         var horarioA;
         if ($('#horAdicSwitch').prop('checked')) {
             horarioA = 1;
-            var nHoraAdic=$('#nHorasAdic').val();
+            var nHoraAdic = $('#nHorasAdic').val();
         } else {
             horarioA = 0;
-            var nHoraAdic=null;
+            var nHoraAdic = null;
         }
         var diasEntreFechas = function (desde, hasta) {
             var dia_actual = desde;
@@ -693,7 +681,7 @@ function agregarHorarioSe() {
                 hora: textSelec,
                 idhorar: idhorar, fueraHora,
                 horaC: horarioC,
-                horaA:horarioA,nHoraAdic
+                horaA: horarioA, nHoraAdic
 
             },
             statusCode: {
@@ -787,7 +775,7 @@ $('#guardarTodoHorario').click(function () {
     if (idemps == '') {
 
         bootbox.alert({
-            title:"Seleccionar empleado",
+            title: "Seleccionar empleado",
             message: "Seleccione empleado",
 
         });
@@ -797,7 +785,7 @@ $('#guardarTodoHorario').click(function () {
     $.ajax({
         type: "post",
         url: "/guardarHorarioC",
-        async:false,
+        async: false,
         data: {
             idemps,
 
@@ -820,77 +808,77 @@ $('#guardarTodoHorario').click(function () {
 
             $('#asignarHorario').modal('toggle');
             calendar.refetchEvents();
-            if(data.length>0){
+            if (data.length > 0) {
 
-                var tbodyTabla=[];
+                var tbodyTabla = [];
                 for (var i = 0; i < data.length; i++) {
-                    tbody='<tr>'+
-        '<td>' + (i + 1) +'</td>'+
-        '<td>'+data[i].emple_nDoc+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>'+
-        '<td>'+data[i].nombre+' '+data[i].apPaterno+' '+data[i].apMaterno+'&nbsp;&nbsp;</td></tr>';
-        tbodyTabla.push(tbody);
+                    tbody = '<tr>' +
+                        '<td>' + (i + 1) + '</td>' +
+                        '<td>' + data[i].emple_nDoc + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>' +
+                        '<td>' + data[i].nombre + ' ' + data[i].apPaterno + ' ' + data[i].apMaterno + '&nbsp;&nbsp;</td></tr>';
+                    tbodyTabla.push(tbody);
                 }
                 $('#tbodyExcel').html(tbodyTabla);
                 $('#modalEmpleadosHo').modal('show');
 
                 table =
-    $("#tablaEmpleadoExcel").DataTable({
+                    $("#tablaEmpleadoExcel").DataTable({
 
-        "searching": false,
-        "scrollX": true,
+                        "searching": false,
+                        "scrollX": true,
 
-        "ordering": false,
-        "autoWidth": true,
+                        "ordering": false,
+                        "autoWidth": true,
 
-        language: {
-            sProcessing: "Procesando...",
-            sLengthMenu: "Mostrar _MENU_ registros",
-            sZeroRecords: "No se encontraron resultados",
-            sEmptyTable: "Ningún dato disponible en esta tabla",
-            sInfo: "Mostrando registros del _START_ al _END_ ",
-            sInfoEmpty:
-                "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "",
-            sSearch: "Buscar:",
-            sUrl: "",
-            sInfoThousands: ",",
-            sLoadingRecords: "Cargando...",
-            oPaginate: {
-                sFirst: "Primero",
-                sLast: "Último",
-                sNext: ">",
-                sPrevious: "<",
-            },
-            oAria: {
-                sSortAscending:
-                    ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending:
-                    ": Activar para ordenar la columna de manera descendente",
-            },
-            buttons: {
-                copy: "Copiar",
-                colvis: "Visibilidad",
-            },
-        },
-
-        dom: 'Bfrtip',
-                    buttons: [{
-                        extend: 'excel',
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                        customize: function (xlsx) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        language: {
+                            sProcessing: "Procesando...",
+                            sLengthMenu: "Mostrar _MENU_ registros",
+                            sZeroRecords: "No se encontraron resultados",
+                            sEmptyTable: "Ningún dato disponible en esta tabla",
+                            sInfo: "Mostrando registros del _START_ al _END_ ",
+                            sInfoEmpty:
+                                "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                            sInfoPostFix: "",
+                            sSearch: "Buscar:",
+                            sUrl: "",
+                            sInfoThousands: ",",
+                            sLoadingRecords: "Cargando...",
+                            oPaginate: {
+                                sFirst: "Primero",
+                                sLast: "Último",
+                                sNext: ">",
+                                sPrevious: "<",
+                            },
+                            oAria: {
+                                sSortAscending:
+                                    ": Activar para ordenar la columna de manera ascendente",
+                                sSortDescending:
+                                    ": Activar para ordenar la columna de manera descendente",
+                            },
+                            buttons: {
+                                copy: "Copiar",
+                                colvis: "Visibilidad",
+                            },
                         },
-                        sheetName: 'Exported data',
-                        autoFilter: false
-                    }],
-                    paging: true
 
-   });
+                        dom: 'Bfrtip',
+                        buttons: [{
+                            extend: 'excel',
+                            className: 'btn btn-sm mt-1',
+                            text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                            customize: function (xlsx) {
+                                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                            },
+                            sheetName: 'Exported data',
+                            autoFilter: false
+                        }],
+                        paging: true
+
+                    });
 
             }
-            else{
+            else {
 
             }
 
@@ -954,7 +942,7 @@ function registrarIncidencia() {
     $.ajax({
         type: "post",
         url: "/registrarInci",
-        data: { idempleadoI, descripcionI, descuentoI, fechaI, fechaF  },
+        data: { idempleadoI, descripcionI, descuentoI, fechaI, fechaF },
         statusCode: {
             /*401: function () {
                 location.reload();
@@ -988,10 +976,10 @@ $('#cerrarHorario').click(function () {
 function abrirHorario() {
     $('#btnGuardaHorario').prop('disabled', false);
     $('#errorenPausas').hide();
-      $('#fueraRango').hide();
+    $('#fueraRango').hide();
     $('#divOtrodia').hide();
     $('#divPausa').hide();
-    $('#horaOblig').prop("disabled","disabled");
+    $('#horaOblig').prop("disabled", "disabled");
     $('#inputPausa').empty();
     $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
@@ -1000,8 +988,8 @@ function abrirHorario() {
         '&nbsp; <a style="cursor: pointer" id="btnPb_100" ><img src="/admin/images/delete.svg" height="15"></a><button class="btn btn-sm bt_plus" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
         '</div>');
-        $("#btnPb_100").bind("click", delRow);
-        $("#idPausaMayor").val(100);
+    $("#btnPb_100").bind("click", delRow);
+    $("#idPausaMayor").val(100);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
@@ -1014,7 +1002,7 @@ function abrirHorario() {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
 
     $('input[name="descPausa[]"]').prop('required', false);
@@ -1032,7 +1020,7 @@ function abrirHorarioen() {
         $('#horarioAgregaren').modal('show');
     } else {
         bootbox.alert({
-            title:"Seleccionar dias",
+            title: "Seleccionar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1040,8 +1028,8 @@ function abrirHorarioen() {
 
 }
 function registrarHorario() {
-    var variablesiPau=1;
-    var esperandoP=0;
+    var variablesiPau = 1;
+    var esperandoP = 0;
 
 
     /////////////////////////////////////////
@@ -1052,201 +1040,198 @@ function registrarHorario() {
         //PAUSAS PRIMERA   VALIDADAS
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if($('#horaI').val() > $('#horaF').val()){
-            if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
+            if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
                 $('#FinPausa').val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-                if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#errorenPausas').show();
                     $('#FinPausa').val('');
                 }
-                else{
+                else {
                     $('#errorenPausas').hide();
                 }
 
-             }
+            }
 
-             if (horaI > horaF) {
-               /*  $('#FinPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation(); */
+            if (horaI > horaF) {
+                /*  $('#FinPausa').val('');
+                 $('#errorenPausas').show();
+                 event.stopPropagation(); */
             } else {
                 $('#errorenPausas').hide();
             }
         }
-        else{
-           if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
-            $('#FinPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
-         if (horaF <= horaI) {
-            $('#FinPausa').val('');
-            $('#errorenPausas').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
+        else {
+            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+                $('#FinPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
+            if (horaF <= horaI) {
+                $('#FinPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
         }
-        }
 
 
 
-        let horaF2= $('#FinPausa').val();
+        let horaF2 = $('#FinPausa').val();
         let horaI2 = $('#InicioPausa').val();
-        $('#FinPausa').prop( "disabled",false);
+        $('#FinPausa').prop("disabled", false);
 
 
-        if($('#horaI').val() > $('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
 
-            if( horaI2<$('#horaI').val() && horaI2>$('#horaF').val()){
+            if (horaI2 < $('#horaI').val() && horaI2 > $('#horaF').val()) {
 
                 $('#InicioPausa').val('');
                 $('#fueraRango').show();
 
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-             }
+            }
 
-        } else
-        {
-            if(horaI2<$('#horaI').val() || horaI2>$('#horaF').val() ){
+        } else {
+            if (horaI2 < $('#horaI').val() || horaI2 > $('#horaF').val()) {
 
-            $('#InicioPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
+                $('#InicioPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
         }
 
 
-         if(horaF2==null || horaF2==''){
-            var horafinal1=$('#horaF').val();
-            splih1=horafinal1.split(":");
+        if (horaF2 == null || horaF2 == '') {
+            var horafinal1 = $('#horaF').val();
+            splih1 = horafinal1.split(":");
 
             $('#FinPausa').val('').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
 
-            if($('#horaI').val() < $('#horaF').val()){
-            if (horaF2 <= horaI2) {
-                $('#InicioPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
+            if ($('#horaI').val() < $('#horaF').val()) {
+                if (horaF2 <= horaI2) {
+                    $('#InicioPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
             } else {
                 $('#errorenPausas').hide();
             }
-        } else
-        {
-            $('#errorenPausas').hide();
         }
-         }
 
-         $('#FinPausa').on('focus', function () {
+        $('#FinPausa').on('focus', function () {
             $(this).blur();
         })
         $('#FinPausa').removeAttr("readonly");
 
-    /////////////////////////////////////
+        /////////////////////////////////////
 
 
-    //////////PAUSAS2 VALIDADAS//
-    for(newID=100;newID<130; newID++){
-       /*  console.log('soyNuw'+ newID); */
-        let horaF3 = $('#FinPausa'+ newID).val();
-        let horaI3 = $('#InicioPausa'+ newID).val();
-        $('#FinPausa'+ newID).prop( "disabled",false);
-        if($('#horaI').val() > $('#horaF').val()){
+        //////////PAUSAS2 VALIDADAS//
+        for (newID = 100; newID < 130; newID++) {
+            /*  console.log('soyNuw'+ newID); */
+            let horaF3 = $('#FinPausa' + newID).val();
+            let horaI3 = $('#InicioPausa' + newID).val();
+            $('#FinPausa' + newID).prop("disabled", false);
+            if ($('#horaI').val() > $('#horaF').val()) {
 
-            if( horaI3<$('#horaI').val() && horaI3>$('#horaF').val()){
+                if (horaI3 < $('#horaI').val() && horaI3 > $('#horaF').val()) {
 
-            $('#InicioPausa'+ newID).val('');
-                $('#fueraRango').show();
+                    $('#InicioPausa' + newID).val('');
+                    $('#fueraRango').show();
 
-                event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                }
 
-        } else{
-            if(horaI3<$('#horaI').val() ||horaI3>$('#horaF').val() ){
+            } else {
+                if (horaI3 < $('#horaI').val() || horaI3 > $('#horaF').val()) {
 
-                $('#InicioPausa'+ newID).val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
-        }
-
-
-        if(horaF3==null || horaF3==''){
-
-        } else{
-            if($('#horaI').val() < $('#horaF').val()){
-        if (horaF3 <= horaI3) {
-            $('#InicioPausa'+ newID).val('');
-            $('#errorenPausas').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
-        }
-    } else
-    {
-        $('#errorenPausas').hide();
-    }
-    }
-
-    ///////////
-
-
-            if($('#horaI').val() > $('#horaF').val()){
-                if( horaF3<$('#horaI').val() && horaF3>$('#horaF').val()){
-                    $('#FinPausa' + newID).val('');
+                    $('#InicioPausa' + newID).val('');
                     $('#fueraRango').show();
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango').hide();
-                    if (horaI3 >= horaF3 && horaF3<=$('#horaI').val() && horaF3> $('#horaF').val() ) {
+                }
+            }
+
+
+            if (horaF3 == null || horaF3 == '') {
+
+            } else {
+                if ($('#horaI').val() < $('#horaF').val()) {
+                    if (horaF3 <= horaI3) {
+                        $('#InicioPausa' + newID).val('');
                         $('#errorenPausas').show();
-                        $('#FinPausa' + newID).val('');
-                    }
-                    else{
+                        event.stopPropagation();
+                    } else {
                         $('#errorenPausas').hide();
                     }
-                 }
-
-                 if (horaI3 > horaF3) {
-                   /*  $('#FinPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation(); */
                 } else {
                     $('#errorenPausas').hide();
                 }
-            } else{
-                if(horaF3<$('#horaI').val() ||horaF3>$('#horaF').val() ){
-                $('#FinPausa' + newID).val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
+            }
+
+            ///////////
+
+
+            if ($('#horaI').val() > $('#horaF').val()) {
+                if (horaF3 < $('#horaI').val() && horaF3 > $('#horaF').val()) {
+                    $('#FinPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                    if (horaI3 >= horaF3 && horaF3 <= $('#horaI').val() && horaF3 > $('#horaF').val()) {
+                        $('#errorenPausas').show();
+                        $('#FinPausa' + newID).val('');
+                    }
+                    else {
+                        $('#errorenPausas').hide();
+                    }
+                }
+
+                if (horaI3 > horaF3) {
+                    /*  $('#FinPausa').val('');
+                     $('#errorenPausas').show();
+                     event.stopPropagation(); */
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            } else {
+                if (horaF3 < $('#horaI').val() || horaF3 > $('#horaF').val()) {
+                    $('#FinPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                }
 
                 if (horaF3 <= horaI3) {
-                    $('#FinPausa'+ newID).val('');
+                    $('#FinPausa' + newID).val('');
                     $('#errorenPausas').show();
                     event.stopPropagation();
                 } else {
@@ -1257,8 +1242,8 @@ function registrarHorario() {
 
 
 
+        }
     }
-}
     //////////////////////////////
 
 
@@ -1271,9 +1256,9 @@ function registrarHorario() {
     fin = $('#horaF').val();
     var tardanza;
     if ($('#SwitchTardanza').is(":checked")) {
-        tardanza=1;
-    } else{
-        tardanza=0;
+        tardanza = 1;
+    } else {
+        tardanza = 0;
     }
 
     if ($('#SwitchPausa').is(":checked")) {
@@ -1291,339 +1276,339 @@ function registrarHorario() {
         });
     }
     if ($("#SwitchPausa").is(":checked")) {
-    $.each(pausaInicio, function (ind, elem) {
-        if(ind>0){
-            if(pausaInicio.length>0){
-                if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
-                    variablesiPau=1;
-                    $('#errorenPausasCruzadas').hide();
-                }
-                else{
-                    if(pausaInicio[ind]<pausaInicio[ind-1] && pausaInicio[ind]<finPausa[ind-1] ){
-                        variablesiPau=1;
+        $.each(pausaInicio, function (ind, elem) {
+            if (ind > 0) {
+                if (pausaInicio.length > 0) {
+                    if (pausaInicio[ind] > pausaInicio[ind - 1] && pausaInicio[ind] > finPausa[ind - 1]) {
+                        variablesiPau = 1;
                         $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-                        console.log('error400')
+                    }
+                    else {
+                        if (pausaInicio[ind] < pausaInicio[ind - 1] && pausaInicio[ind] < finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+                            console.log('error400')
+
+                        }
 
                     }
+                    if (finPausa[ind] > pausaInicio[ind - 1] && finPausa[ind] > finPausa[ind - 1]) {
+                        if (pausaInicio[ind] > pausaInicio[ind - 1] && pausaInicio[ind] > finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+                            console.log('error200')
 
-                }
-                if(finPausa[ind]>pausaInicio[ind-1] && finPausa[ind]>finPausa[ind-1] ){
-                    if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-                        console.log('error200')
+                        }
 
                     }
-
-                }
-                else{
-                    if(finPausa[ind]<pausaInicio[ind-1] && finPausa[ind]<finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-                        console.log('error300')
+                    else {
+                        if (finPausa[ind] < pausaInicio[ind - 1] && finPausa[ind] < finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+                            console.log('error300')
+                        }
                     }
                 }
+                if (pausaInicio.length > 2) {
+                    if (pausaInicio[ind] > pausaInicio[ind - 1] && pausaInicio[ind] > finPausa[ind - 1]) {
+                        variablesiPau = 1;
+                        $('#errorenPausasCruzadas').hide();
+                    }
+                    else {
+                        if (pausaInicio[ind] < pausaInicio[ind - 1] && pausaInicio[ind] < finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show(); console.log('error300'); console.log(pausaInicio[ind] + '<' + pausaInicio[ind - 1] + '<' + pausaInicio[ind] + '<' + finPausa[ind - 1])
+
+                        }
+
+                    }
+                    if (finPausa[ind] > pausaInicio[ind - 1] && finPausa[ind] > finPausa[ind - 1]) {
+                        if (pausaInicio[ind] > pausaInicio[ind - 1] && pausaInicio[ind] > finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    else {
+                        if (finPausa[ind] < pausaInicio[ind - 1] && finPausa[ind] < finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+                    }
+                    ///////////////////////////////
+                    if (pausaInicio[ind] > pausaInicio[ind - 2] && pausaInicio[ind] > finPausa[ind - 2]) {
+                        variablesiPau = 1;
+                        $('#errorenPausasCruzadas').hide();
+                    }
+                    else {
+                        if (pausaInicio[ind] < pausaInicio[ind - 2] && pausaInicio[ind] < finPausa[ind - 2]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    if (finPausa[ind] > pausaInicio[ind - 2] && finPausa[ind] > finPausa[ind - 2]) {
+                        if (pausaInicio[ind] > pausaInicio[ind - 2] && pausaInicio[ind] > finPausa[ind - 2]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    else {
+                        if (finPausa[ind] < pausaInicio[ind - 2] && finPausa[ind] < finPausa[ind - 2]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+                    }
+                }
+
+                if (pausaInicio.length > 3) {
+                    if (pausaInicio[ind] > pausaInicio[ind - 1] && pausaInicio[ind] > finPausa[ind - 1]) {
+                        variablesiPau = 1;
+                        $('#errorenPausasCruzadas').hide();
+                    }
+                    else {
+                        if (pausaInicio[ind] < pausaInicio[ind - 1] && pausaInicio[ind] < finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    if (finPausa[ind] > pausaInicio[ind - 1] && finPausa[ind] > finPausa[ind - 1]) {
+                        if (pausaInicio[ind] > pausaInicio[ind - 1] && pausaInicio[ind] > finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    else {
+                        if (finPausa[ind] < pausaInicio[ind - 1] && finPausa[ind] < finPausa[ind - 1]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+                    }
+                    ///////////////////////////////
+                    if (pausaInicio[ind] > pausaInicio[ind - 2] && pausaInicio[ind] > finPausa[ind - 2]) {
+                        variablesiPau = 1;
+                        $('#errorenPausasCruzadas').hide();
+                    }
+                    else {
+                        if (pausaInicio[ind] < pausaInicio[ind - 2] && pausaInicio[ind] < finPausa[ind - 2]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    if (finPausa[ind] > pausaInicio[ind - 2] && finPausa[ind] > finPausa[ind - 2]) {
+                        if (pausaInicio[ind] > pausaInicio[ind - 2] && pausaInicio[ind] > finPausa[ind - 2]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    else {
+                        if (finPausa[ind] < pausaInicio[ind - 2] && finPausa[ind] < finPausa[ind - 2]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+                    }
+
+                    if (pausaInicio[ind] > pausaInicio[ind - 3] && pausaInicio[ind] > finPausa[ind - 3]) {
+                        variablesiPau = 1;
+                        $('#errorenPausasCruzadas').hide();
+                    }
+                    else {
+                        if (pausaInicio[ind] < pausaInicio[ind - 3] && pausaInicio[ind] < finPausa[ind - 3]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    if (finPausa[ind] > pausaInicio[ind - 3] && finPausa[ind] > finPausa[ind - 3]) {
+                        if (pausaInicio[ind] > pausaInicio[ind - 3] && pausaInicio[ind] > finPausa[ind - 3]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+
+                    }
+                    else {
+                        if (finPausa[ind] < pausaInicio[ind - 3] && finPausa[ind] < finPausa[ind - 3]) {
+                            variablesiPau = 1;
+                            $('#errorenPausasCruzadas').hide();
+                        } else {
+                            variablesiPau = 0;
+                            $('#errorenPausasCruzadas').show();
+
+                        }
+                    }
+                }
+
+
+
             }
-            if(pausaInicio.length>2){
-                if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
-                    variablesiPau=1;
-                    $('#errorenPausasCruzadas').hide();
-                }
-                else{
-                    if(pausaInicio[ind]<pausaInicio[ind-1] && pausaInicio[ind]<finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();  console.log('error300'); console.log(pausaInicio[ind]+'<'+pausaInicio[ind-1] +'<'+ pausaInicio[ind]+'<'+finPausa[ind-1])
-
-                    }
-
-                }
-                if(finPausa[ind]>pausaInicio[ind-1] && finPausa[ind]>finPausa[ind-1] ){
-                    if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                else{
-                    if(finPausa[ind]<pausaInicio[ind-1] && finPausa[ind]<finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-                }
-                ///////////////////////////////
-                if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
-                    variablesiPau=1;
-                    $('#errorenPausasCruzadas').hide();
-                }
-                else{
-                    if(pausaInicio[ind]<pausaInicio[ind-2] && pausaInicio[ind]<finPausa[ind-2] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                if(finPausa[ind]>pausaInicio[ind-2] && finPausa[ind]>finPausa[ind-2] ){
-                    if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                else{
-                    if(finPausa[ind]<pausaInicio[ind-2] && finPausa[ind]<finPausa[ind-2] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-                }
-            }
-
-            if(pausaInicio.length>3){
-                if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
-                    variablesiPau=1;
-                    $('#errorenPausasCruzadas').hide();
-                }
-                else{
-                    if(pausaInicio[ind]<pausaInicio[ind-1] && pausaInicio[ind]<finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                if(finPausa[ind]>pausaInicio[ind-1] && finPausa[ind]>finPausa[ind-1] ){
-                    if(pausaInicio[ind]>pausaInicio[ind-1] && pausaInicio[ind]>finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                else{
-                    if(finPausa[ind]<pausaInicio[ind-1] && finPausa[ind]<finPausa[ind-1] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-                }
-                ///////////////////////////////
-                if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
-                    variablesiPau=1;
-                    $('#errorenPausasCruzadas').hide();
-                }
-                else{
-                    if(pausaInicio[ind]<pausaInicio[ind-2] && pausaInicio[ind]<finPausa[ind-2] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                if(finPausa[ind]>pausaInicio[ind-2] && finPausa[ind]>finPausa[ind-2] ){
-                    if(pausaInicio[ind]>pausaInicio[ind-2] && pausaInicio[ind]>finPausa[ind-2] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                else{
-                    if(finPausa[ind]<pausaInicio[ind-2] && finPausa[ind]<finPausa[ind-2] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-                }
-
-                if(pausaInicio[ind]>pausaInicio[ind-3] && pausaInicio[ind]>finPausa[ind-3] ){
-                    variablesiPau=1;
-                    $('#errorenPausasCruzadas').hide();
-                }
-                else{
-                    if(pausaInicio[ind]<pausaInicio[ind-3] && pausaInicio[ind]<finPausa[ind-3] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                if(finPausa[ind]>pausaInicio[ind-3] && finPausa[ind]>finPausa[ind-3] ){
-                    if(pausaInicio[ind]>pausaInicio[ind-3] && pausaInicio[ind]>finPausa[ind-3] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-
-                }
-                else{
-                    if(finPausa[ind]<pausaInicio[ind-3] && finPausa[ind]<finPausa[ind-3] ){
-                        variablesiPau=1;
-                        $('#errorenPausasCruzadas').hide();
-                    } else{
-                        variablesiPau=0;
-                        $('#errorenPausasCruzadas').show();
-
-                    }
-                }
-            }
-
-
-
-        }
-        esperandoP=1;
-      });
-      if(variablesiPau==1 && esperandoP==1){
-        $('#btnGuardaHorario').prop('disabled', true);
-        $.ajax({
-           type: "post",
-           url: "/guardarHorario",
-           data: {
-
-               descripcion,
-               toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
-           },
-           statusCode: {
-               401: function () {
-                   location.reload();
-               },
-               419: function () {
-                   location.reload();
-               }
-           },
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (data) {
-
-               $('#horarioAgregar').modal('hide');
-               $('#tablaEmpleado').DataTable().ajax.reload();
-
-               if ($('#asignarHorario').is(':visible')) {
-                   $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                       value: data.horario_id,
-                       text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
-                       selected: true
-
-                   }));
-               } else {
-                   $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                       value: data.horario_id,
-                       text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
-
-                   }));
-               }
-
-
-           },
-           error: function () {
-               alert("Hay un error");
-           }
-       });
-   }
-    }
-    else{
-
+            esperandoP = 1;
+        });
+        if (variablesiPau == 1 && esperandoP == 1) {
             $('#btnGuardaHorario').prop('disabled', true);
             $.ajax({
-               type: "post",
-               url: "/guardarHorario",
-               data: {
+                type: "post",
+                url: "/guardarHorario",
+                data: {
 
-                   descripcion,
-                   toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
-               },
-               statusCode: {
-                   401: function () {
-                       location.reload();
-                   },
-                   419: function () {
-                       location.reload();
-                   }
-               },
-               headers: {
-                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-               },
-               success: function (data) {
+                    descripcion,
+                    toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
+                },
+                statusCode: {
+                    401: function () {
+                        location.reload();
+                    },
+                    419: function () {
+                        location.reload();
+                    }
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
 
-                   $('#horarioAgregar').modal('hide');
-                   $('#tablaEmpleado').DataTable().ajax.reload();
+                    $('#horarioAgregar').modal('hide');
+                    $('#tablaEmpleado').DataTable().ajax.reload();
 
-                   if ($('#asignarHorario').is(':visible')) {
-                       $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                           value: data.horario_id,
-                           text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
-                           selected: true
+                    if ($('#asignarHorario').is(':visible')) {
+                        $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                            value: data.horario_id,
+                            text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
+                            selected: true
 
-                       }));
-                   } else {
-                       $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                           value: data.horario_id,
-                           text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
+                        }));
+                    } else {
+                        $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                            value: data.horario_id,
+                            text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
 
-                       }));
-                   }
+                        }));
+                    }
 
 
-               },
-               error: function () {
-                   alert("Hay un error");
-               }
-           });
+                },
+                error: function () {
+                    alert("Hay un error");
+                }
+            });
+        }
+    }
+    else {
+
+        $('#btnGuardaHorario').prop('disabled', true);
+        $.ajax({
+            type: "post",
+            url: "/guardarHorario",
+            data: {
+
+                descripcion,
+                toleranciaH, inicio, fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                419: function () {
+                    location.reload();
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+
+                $('#horarioAgregar').modal('hide');
+                $('#tablaEmpleado').DataTable().ajax.reload();
+
+                if ($('#asignarHorario').is(':visible')) {
+                    $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                        value: data.horario_id,
+                        text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
+                        selected: true
+
+                    }));
+                } else {
+                    $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                        value: data.horario_id,
+                        text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')'
+
+                    }));
+                }
+
+
+            },
+            error: function () {
+                alert("Hay un error");
+            }
+        });
 
     }
 
@@ -1863,7 +1848,7 @@ function asignarlabo() {
     var H2 = $('#horario2').val();
     if ($("*").hasClass("fc-highlight")) {
         bootbox.confirm({
-            title:"Agregar dias",
+            title: "Agregar dias",
             message: "¿Desea agregar dias laborables?",
             buttons: {
                 confirm: {
@@ -1921,7 +1906,7 @@ function asignarlabo() {
         });
     } else {
         bootbox.alert({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -1989,7 +1974,7 @@ function asignarlaboen() {
         });
     } else {
         bootbox.alert({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2002,7 +1987,7 @@ function asignarNolabo() {
     H2 = $('#horario2').val();
     if ($("*").hasClass("fc-highlight")) {
         bootbox.confirm({
-            title:"Agregar dias",
+            title: "Agregar dias",
             message: "¿Desea agregar dias no laborables?",
             buttons: {
                 confirm: {
@@ -2060,7 +2045,7 @@ function asignarNolabo() {
     }
     else {
         bootbox.alert({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2073,7 +2058,7 @@ function asignarNolaboen() {
     var idempl = $('#idobtenidoE').val();
     if ($("*").hasClass("fc-highlight")) {
         bootbox.confirm({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "¿Desea agregar dias no laborables?",
             buttons: {
                 confirm: {
@@ -2128,7 +2113,7 @@ function asignarNolaboen() {
         });
     } else {
         bootbox.alert({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2146,7 +2131,7 @@ function asignarInci() {
     }
     else {
         bootbox.alert({
-            title:"Asginar dias",
+            title: "Asginar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2163,7 +2148,7 @@ function asignarInciEmp() {
     }
     else {
         bootbox.alert({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2260,7 +2245,7 @@ function registrarIncidenciaHo() {
 }
 function vaciarcalendario() {
     bootbox.confirm({
-        title:"Vacear calendario",
+        title: "Vacear calendario",
         message: "¿Esta seguro que desea vaciar calendario?",
         buttons: {
             confirm: {
@@ -2288,7 +2273,7 @@ function vaciarcalendario() {
 }
 function vaciarhor() {
     bootbox.confirm({
-        title:"Elminar horario",
+        title: "Elminar horario",
         message: "¿Esta seguro que desea eliminar horario(s) del calendario?",
         buttons: {
             confirm: {
@@ -2316,7 +2301,7 @@ function vaciarhor() {
 }
 function vaciardl() {
     bootbox.confirm({
-        title:"Eliminar dias",
+        title: "Eliminar dias",
         message: "¿Esta seguro que desea eliminar dias laborables del calendario?",
         buttons: {
             confirm: {
@@ -2344,7 +2329,7 @@ function vaciardl() {
 }
 function vaciarndl() {
     bootbox.confirm({
-        title:"Eliminar dias no laborales",
+        title: "Eliminar dias no laborales",
         message: "¿Esta seguro que desea eliminar dias no laborables del calendario?",
         buttons: {
             confirm: {
@@ -2572,7 +2557,7 @@ $('#selectHorarioen').change(function (e) {
         $("#selectHorarioen").val("Asignar horario");
         $("#selectHorarioen").trigger("change");
         bootbox.alert({
-            title:"Asignar dias",
+            title: "Asignar dias",
             message: "Primero debe asignar dia(s) de calendario.",
 
         })
@@ -2596,7 +2581,7 @@ function editarHorarioLista(idsedit) {
     $("#PausasHorar_ed").empty();
     $('#divOtrodia_ed').hide();
     $('#errorenPausas_ed').hide();
-      $('#fueraRango_ed').hide();
+    $('#fueraRango_ed').hide();
     $("#frmHorEditar")[0].reset();
     $.ajax({
         type: "post",
@@ -2615,25 +2600,25 @@ function editarHorarioLista(idsedit) {
         },
         success: function (data) {
             //HORAS OBLIGADAS
-           var valorObli= data[0].horasObliga;
+            var valorObli = data[0].horasObliga;
 
-            if(valorObli!=null ||valorObli!=' '){
+            if (valorObli != null || valorObli != ' ') {
                 $('#horaOblig_ed').flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    defaultDate:data[0].horasObliga.substr(-20,5)
+                    defaultDate: data[0].horasObliga.substr(-20, 5)
                 });
-                $('#horaOblig_ed').val( data[0].horasObliga.substr(-20,5));
-            } else{
+                $('#horaOblig_ed').val(data[0].horasObliga.substr(-20, 5));
+            } else {
 
                 $('#horaOblig_ed').flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    defaultDate:"08:00"
+                    defaultDate: "08:00"
                 });
             }
 
@@ -2644,28 +2629,28 @@ function editarHorarioLista(idsedit) {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultDate:data[0].horaI.substr(-20,5)
+                defaultDate: data[0].horaI.substr(-20, 5)
             });
-            $('#horaI_ed').val(data[0].horaI.substr(-20,5));
+            $('#horaI_ed').val(data[0].horaI.substr(-20, 5));
             //HORA FIN
             $('#horaF_ed').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultDate:data[0].horaF.substr(-20,5)
+                defaultDate: data[0].horaF.substr(-20, 5)
             });
-            $('#horaF_ed').val(data[0].horaF.substr(-20,5));
+            $('#horaF_ed').val(data[0].horaF.substr(-20, 5));
             $('#idhorario_ed').val(data[0].horario_id);
             $('#descripcionCa_ed').val(data[0].horario_descripcion);
             $('#toleranciaH_ed').val(data[0].horario_tolerancia);
             $('#toleranciaSalida_ed').val(data[0].horario_toleranciaF);
-           /*  $('#horaOblig_ed').val(data[0].horasObliga); */
+            /*  $('#horaOblig_ed').val(data[0].horasObliga); */
 
 
-            if(data[0].hora_contTardanza==1){
+            if (data[0].hora_contTardanza == 1) {
                 $('#SwitchTardanza_ed').prop('checked', true);
-            } else{
+            } else {
                 $('#SwitchTardanza_ed').prop('checked', false);
             }
             $('#horarioEditar').modal('show');
@@ -2678,17 +2663,17 @@ function editarHorarioLista(idsedit) {
 
             }
             else {/*  */
-                 var arrayidPau=[];
-                 $.each(data[1], function (key, item) {
+                var arrayidPau = [];
+                $.each(data[1], function (key, item) {
                     arrayidPau.push(item.idpausas_horario);
 
-                 }
-                 );
-               var maxCadenaId= Math.max(...arrayidPau);
-               var maxInput=Math.max(...arrayidPau);
-               $('#maxIn').val(maxInput);
-               var minInput=Math.min(...arrayidPau);
-               $('#minIn').val(minInput);
+                }
+                );
+                var maxCadenaId = Math.max(...arrayidPau);
+                var maxInput = Math.max(...arrayidPau);
+                $('#maxIn').val(maxInput);
+                var minInput = Math.min(...arrayidPau);
+                $('#minIn').val(minInput);
 
 
                 $('#pausas_edit').show();
@@ -2698,54 +2683,54 @@ function editarHorarioLista(idsedit) {
 
 
 
-                    if(item.idpausas_horario==maxCadenaId){
-                        $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
-                        '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
-                        '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg'+ item.idpausas_horario +'" required  >' +
-                        '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg'+ item.idpausas_horario +'" required >' +
-                        '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  > &nbsp;  <a id="btnEli_edReg'+ item.idpausas_horario +'" onclick="" style="cursor: pointer;     margin-top: 5px;">' +
-                        '<img src="/admin/images/delete.svg" onclick="eliminarPH(' + item.idpausas_horario + ')" height="15"></a>  <button class="btn btn-sm" id="agregarMP" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-                        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 10px">+</button>' +
+                    if (item.idpausas_horario == maxCadenaId) {
+                        $("#PausasHorar_ed").append('<div  id="divEdReg_' + item.idpausas_horario + '" class="row col-md-12" style=" margin-bottom: 8px;">' +
+                            '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
+                            '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg' + item.idpausas_horario + '" required  >' +
+                            '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg' + item.idpausas_horario + '" required >' +
+                            '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  > &nbsp;  <a id="btnEli_edReg' + item.idpausas_horario + '" onclick="" style="cursor: pointer;     margin-top: 5px;">' +
+                            '<img src="/admin/images/delete.svg" onclick="eliminarPH(' + item.idpausas_horario + ')" height="15"></a>  <button class="btn btn-sm" id="agregarMP" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                            ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 10px">+</button>' +
 
-                        '</div>'+
-                        '<div id="divEdRN_100" class="row col-md-12" style=" margin-bottom: 8px;  display:none">' +
-                        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_edRN[]" id="descPausa_edRN" >' +
-                        '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edRN[]"  id="InicioPausa_edRN" >' +
-                        '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_edRN[]"  id="FinPausa_edRN" >' +
-                        '&nbsp; <a style="cursor: pointer" id="btnPbedA_100" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_edAgr" id="edA_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-                        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
-                        '</div>');
+                            '</div>' +
+                            '<div id="divEdRN_100" class="row col-md-12" style=" margin-bottom: 8px;  display:none">' +
+                            '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_edRN[]" id="descPausa_edRN" >' +
+                            '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edRN[]"  id="InicioPausa_edRN" >' +
+                            '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_edRN[]"  id="FinPausa_edRN" >' +
+                            '&nbsp; <a style="cursor: pointer" id="btnPbedA_100" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_edAgr" id="edA_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                            ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+                            '</div>');
 
-                    } else{
-                        $("#PausasHorar_ed").append('<div  id="divEdReg_'+ item.idpausas_horario +'" class="row col-md-12" style=" margin-bottom: 8px;">' +
-                        '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
-                        '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg'+ item.idpausas_horario +'" required  >' +
-                        '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg'+ item.idpausas_horario +'" required >' +
-                        '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  > &nbsp;  <a id="btnEli_edReg'+ item.idpausas_horario +'" onclick="" style="cursor: pointer;     margin-top: 5px;">' +
-                        '<img src="/admin/images/delete.svg" onclick="eliminarPH(' + item.idpausas_horario + ')" height="15"></a>' +
+                    } else {
+                        $("#PausasHorar_ed").append('<div  id="divEdReg_' + item.idpausas_horario + '" class="row col-md-12" style=" margin-bottom: 8px;">' +
+                            '<input type="text"  value="' + item.pausH_descripcion + '"  class="form-control form-control-sm col-sm-5" name="descPausa_edRegist[]" required >' +
+                            '<input type="text"  value="' + item.pausH_Inicio + '"   class="form-control form-control-sm col-sm-3" name="InicioPausa_edReg[]" id="InicioPausa_edReg' + item.idpausas_horario + '" required  >' +
+                            '<input type="text" value="' + item.pausH_Fin + '"   class="form-control form-control-sm col-sm-3" name="FinPausa_edReg[]" id="FinPausa_edReg' + item.idpausas_horario + '" required >' +
+                            '<input type="hidden" value="' + item.idpausas_horario + '"   class="form-control form-control-sm col-sm-3" name="idPausasRegistradas_ed[]" required  > &nbsp;  <a id="btnEli_edReg' + item.idpausas_horario + '" onclick="" style="cursor: pointer;     margin-top: 5px;">' +
+                            '<img src="/admin/images/delete.svg" onclick="eliminarPH(' + item.idpausas_horario + ')" height="15"></a>' +
 
-                        '</div>');
+                            '</div>');
                     }
 
                     $("#btnPbedA_100").bind("click", delRow_edRN);
-                      /*  */
-                      $(document).on('change', '#FinPausa_edRN', function (event) {
+                    /*  */
+                    $(document).on('change', '#FinPausa_edRN', function (event) {
                         let horaF = $('#FinPausa_edRN').val();
                         let horaI = $('#InicioPausa_edRN').val();
-                        if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+                        if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
                             $('#FinPausa_edRN').val('');
                             $('#fueraRango_ed').show();
                             event.stopPropagation();
-                         } else{
+                        } else {
                             $('#fueraRango_ed').hide();
-                            if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                            if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                                 $('#errorenPausas_ed').show();
                                 $('#FinPausa_edRN').val('');
                             }
-                            else{
+                            else {
                                 $('#errorenPausas_ed').hide();
                             }
-                         }
+                        }
                         if (horaF <= horaI) {
                             $('#FinPausa_edRN').val('');
                             $('#errorenPausas_ed').show();
@@ -2758,57 +2743,57 @@ function editarHorarioLista(idsedit) {
                     });
 
                     $(function () {
-                        $(document).on('change', '#InicioPausa_edReg'+ item.idpausas_horario +'', function (event) {
-                            let horaF = $('#FinPausa_edReg'+ item.idpausas_horario +'').val();
-                            let horaI = $('#InicioPausa_edReg'+ item.idpausas_horario +'').val();
-                            $('#FinPausa_edReg'+ item.idpausas_horario +'').prop( "disabled",false);
+                        $(document).on('change', '#InicioPausa_edReg' + item.idpausas_horario + '', function (event) {
+                            let horaF = $('#FinPausa_edReg' + item.idpausas_horario + '').val();
+                            let horaI = $('#InicioPausa_edReg' + item.idpausas_horario + '').val();
+                            $('#FinPausa_edReg' + item.idpausas_horario + '').prop("disabled", false);
 
-                             if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+                            if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
-                                $('#InicioPausa_edReg'+ item.idpausas_horario +'').val('');
+                                $('#InicioPausa_edReg' + item.idpausas_horario + '').val('');
                                 $('#fueraRango_ed').show();
                                 event.stopPropagation();
-                             } else{
+                            } else {
                                 $('#fueraRango_ed').hide();
-                             }
+                            }
 
-                             if(horaF==null || horaF==''){
+                            if (horaF == null || horaF == '') {
 
-                             }
-                             else{
+                            }
+                            else {
 
                                 if (horaF <= horaI) {
-                                    $('#InicioPausa_edReg'+ item.idpausas_horario +'').val('');
+                                    $('#InicioPausa_edReg' + item.idpausas_horario + '').val('');
                                     $('#errorenPausas_ed').show();
                                     event.stopPropagation();
                                 } else {
                                     $('#errorenPausas_ed').hide();
                                 }
-                             }
+                            }
 
 
                         });
                     });
                     $(function () {
-                        $(document).on('change', '#FinPausa_edReg'+ item.idpausas_horario +'', function (event) {
-                            let horaF = $('#FinPausa_edReg'+ item.idpausas_horario +'').val();
-                            let horaI = $('#InicioPausa_edReg'+ item.idpausas_horario +'').val();
-                            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
-                                $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
+                        $(document).on('change', '#FinPausa_edReg' + item.idpausas_horario + '', function (event) {
+                            let horaF = $('#FinPausa_edReg' + item.idpausas_horario + '').val();
+                            let horaI = $('#InicioPausa_edReg' + item.idpausas_horario + '').val();
+                            if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
+                                $('#FinPausa_edReg' + item.idpausas_horario + '').val('');
                                 $('#fueraRango_ed').show();
                                 event.stopPropagation();
-                             } else{
+                            } else {
                                 $('#fueraRango_ed').hide();
-                                if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                                if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                                     $('#errorenPausas_ed').show();
-                                    $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
+                                    $('#FinPausa_edReg' + item.idpausas_horario + '').val('');
                                 }
-                                else{
+                                else {
                                     $('#errorenPausas_ed').hide();
                                 }
-                             }
+                            }
                             if (horaF <= horaI) {
-                                $('#FinPausa_edReg'+ item.idpausas_horario +'').val('');
+                                $('#FinPausa_edReg' + item.idpausas_horario + '').val('');
                                 $('#errorenPausas_ed').show();
                                 event.stopPropagation();
                             } else {
@@ -2823,21 +2808,21 @@ function editarHorarioLista(idsedit) {
                     $(document).on('change', '#InicioPausa_edRN', function (event) {
                         let horaF = $('#FinPausa_edRN').val();
                         let horaI = $('#InicioPausa_edRN').val();
-                        $('#FinPausa_edRN').prop( "disabled",false);
+                        $('#FinPausa_edRN').prop("disabled", false);
 
-                         if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+                        if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
                             $('#InicioPausa_edRN').val('');
                             $('#fueraRango_ed').show();
                             event.stopPropagation();
-                         } else{
+                        } else {
                             $('#fueraRango_ed').hide();
-                         }
+                        }
 
-                         if(horaF==null || horaF==''){
+                        if (horaF == null || horaF == '') {
 
-                         }
-                         else{
+                        }
+                        else {
 
                             if (horaF < horaI) {
                                 $('#InicioPausa_edRN').val('');
@@ -2846,35 +2831,35 @@ function editarHorarioLista(idsedit) {
                             } else {
                                 $('#errorenPausas_ed').hide();
                             }
-                         }
+                        }
 
 
                     });
                 });
-                      $('#InicioPausa_edRN').flatpickr({
-                        enableTime: true,
-                        noCalendar: true,
-                        dateFormat: "H:i",
-                        time_24hr: true
-                    });
-                    let horafinal=$('#horaF_ed').val();
-                    splih=horafinal.split(":");
+                $('#InicioPausa_edRN').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true
+                });
+                let horafinal = $('#horaF_ed').val();
+                splih = horafinal.split(":");
 
-                    $('#FinPausa_edRN').flatpickr({
-                        enableTime: true,
-                        noCalendar: true,
-                        dateFormat: "H:i",
-                        time_24hr: true,
-                        defaultHour:splih[0]
-                    });
-                      ///ACCION BOTON
-                      $("#agregarMP").click(function() {
-                        $('#agregarMP').hide();
-                        $('#divEdRN_100').show();
-                    });
-                      $(".bt_plus_edAgr").each(function (el) {
-                        $(this).bind("click", addField_edNR);
-                    });
+                $('#FinPausa_edRN').flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    defaultHour: splih[0]
+                });
+                ///ACCION BOTON
+                $("#agregarMP").click(function () {
+                    $('#agregarMP').hide();
+                    $('#divEdRN_100').show();
+                });
+                $(".bt_plus_edAgr").each(function (el) {
+                    $(this).bind("click", addField_edNR);
+                });
 
 
 
@@ -2903,218 +2888,215 @@ function editarHorarioLista(idsedit) {
 
 }
 function editarHorario() {
-    var variablesiPau_ed=1;
-    var esperandoP_ed=0;
-  /*   console.log('varia'+variablesiPau+'-'+esperandoP); */
+    var variablesiPau_ed = 1;
+    var esperandoP_ed = 0;
+    /*   console.log('varia'+variablesiPau+'-'+esperandoP); */
     ///////////////////////////////////
     if ($('#SwitchPausa_ed').is(":checked")) {
         //PAUSAS PRIMERA   VALIDADAS
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
-        if($('#horaI_ed').val() > $('#horaF_ed').val()){
-            if( horaF<$('#horaI_ed').val() && horaF>$('#horaF_ed').val()){
+        if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
+            if (horaF < $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                 $('#FinPausa_ed').val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango_ed').hide();
-                if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                     $('#errorenPausas_ed').show();
                     $('#FinPausa_ed').val('');
                 }
-                else{
+                else {
                     $('#errorenPausas_ed').hide();
                 }
 
-             }
+            }
 
-             if (horaI > horaF) {
-               /*  $('#FinPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation(); */
+            if (horaI > horaF) {
+                /*  $('#FinPausa').val('');
+                 $('#errorenPausas').show();
+                 event.stopPropagation(); */
             } else {
                 $('#errorenPausas_ed').hide();
             }
         }
-        else{
-           if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
-            $('#FinPausa_ed').val('');
-            $('#fueraRango_ed').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango_ed').hide();
-         }
-         if (horaF <= horaI) {
-            $('#FinPausa_ed').val('');
-            $('#errorenPausas_ed').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas_ed').hide();
+        else {
+            if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
+                $('#FinPausa_ed').val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango_ed').hide();
+            }
+            if (horaF <= horaI) {
+                $('#FinPausa_ed').val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
         }
-        }
 
 
 
-        let horaF2= $('#FinPausa_ed').val();
+        let horaF2 = $('#FinPausa_ed').val();
         let horaI2 = $('#InicioPausa_ed').val();
-        $('#FinPausa_ed').prop( "disabled",false);
+        $('#FinPausa_ed').prop("disabled", false);
 
 
-        if($('#horaI_ed').val() > $('#horaF_ed').val()){
+        if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
 
-            if( horaI2<$('#horaI_ed').val() && horaI2>$('#horaF_ed').val()){
+            if (horaI2 < $('#horaI_ed').val() && horaI2 > $('#horaF_ed').val()) {
 
                 $('#InicioPausa_ed').val('');
                 $('#fueraRango_ed').show();
 
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango_ed').hide();
-             }
+            }
 
-        } else
-        {
-            if(horaI2<$('#horaI_ed').val() || horaI2>$('#horaF_ed').val() ){
+        } else {
+            if (horaI2 < $('#horaI_ed').val() || horaI2 > $('#horaF_ed').val()) {
 
-            $('#InicioPausa_ed').val('');
-            $('#fueraRango_ed').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango_ed').hide();
-         }
+                $('#InicioPausa_ed').val('');
+                $('#fueraRango_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango_ed').hide();
+            }
         }
 
 
-         if(horaF2==null || horaF2==''){
-            var horafinal1=$('#horaF_ed').val();
-            splih1=horafinal1.split(":");
+        if (horaF2 == null || horaF2 == '') {
+            var horafinal1 = $('#horaF_ed').val();
+            splih1 = horafinal1.split(":");
 
             $('#FinPausa_ed').val('').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
 
-            if($('#horaI_ed').val() < $('#horaF_ed').val()){
-            if (horaF2 <= horaI2) {
-                $('#InicioPausa_ed').val('');
-                $('#errorenPausas_ed').show();
-                event.stopPropagation();
+            if ($('#horaI_ed').val() < $('#horaF_ed').val()) {
+                if (horaF2 <= horaI2) {
+                    $('#InicioPausa_ed').val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
             } else {
                 $('#errorenPausas_ed').hide();
             }
-        } else
-        {
-            $('#errorenPausas_ed').hide();
         }
-         }
 
-         $('#FinPausa_ed').on('focus', function () {
+        $('#FinPausa_ed').on('focus', function () {
             $(this).blur();
         })
         $('#FinPausa_ed').removeAttr("readonly");
 
-    /////////////////////////////////////
-    //////////PAUSAS2 VALIDADAS//
-    for(newID=100;newID<130; newID++){
-        /*  console.log('soyNuw'+ newID); */
-         let horaF3 = $('#FinPausa_ed'+ newID).val();
-         let horaI3 = $('#InicioPausa_ed'+ newID).val();
-         $('#FinPausa_ed'+ newID).prop( "disabled",false);
-         if($('#horaI_ed').val() > $('#horaF_ed').val()){
+        /////////////////////////////////////
+        //////////PAUSAS2 VALIDADAS//
+        for (newID = 100; newID < 130; newID++) {
+            /*  console.log('soyNuw'+ newID); */
+            let horaF3 = $('#FinPausa_ed' + newID).val();
+            let horaI3 = $('#InicioPausa_ed' + newID).val();
+            $('#FinPausa_ed' + newID).prop("disabled", false);
+            if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
 
-             if( horaI3<$('#horaI_ed').val() && horaI3>$('#horaF_ed').val()){
+                if (horaI3 < $('#horaI_ed').val() && horaI3 > $('#horaF_ed').val()) {
 
-             $('#InicioPausa_ed'+ newID).val('');
-                 $('#fueraRango_ed').show();
+                    $('#InicioPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
 
-                 event.stopPropagation();
-              } else{
-                 $('#fueraRango_ed').hide();
-              }
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango_ed').hide();
+                }
 
-         } else{
-             if(horaI3<$('#horaI_ed').val() ||horaI3>$('#horaF_ed').val() ){
+            } else {
+                if (horaI3 < $('#horaI_ed').val() || horaI3 > $('#horaF_ed').val()) {
 
-                 $('#InicioPausa_ed'+ newID).val('');
-                 $('#fueraRango_ed').show();
-                 event.stopPropagation();
-              } else{
-                 $('#fueraRango_ed').hide();
-              }
-         }
-
-
-         if(horaF3==null || horaF3==''){
-
-         } else{
-             if($('#horaI_ed').val() < $('#horaF_ed').val()){
-         if (horaF3 <= horaI3) {
-             $('#InicioPausa_ed'+ newID).val('');
-             $('#errorenPausas_ed').show();
-             event.stopPropagation();
-         } else {
-             $('#errorenPausas_ed').hide();
-         }
-     } else
-     {
-         $('#errorenPausas_ed').hide();
-     }
-     }
-
-     ///////////
+                    $('#InicioPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango_ed').hide();
+                }
+            }
 
 
-             if($('#horaI_ed').val() > $('#horaF_ed').val()){
-                 if( horaF3<$('#horaI_ed').val() && horaF3>$('#horaF_ed').val()){
-                     $('#FinPausa_ed' + newID).val('');
-                     $('#fueraRango_ed').show();
-                     event.stopPropagation();
-                  } else{
-                     $('#fueraRango_ed').hide();
-                     if (horaI3 >= horaF3 && horaF3<=$('#horaI_ed').val() && horaF3> $('#horaF_ed').val() ) {
-                         $('#errorenPausas_ed').show();
-                         $('#FinPausa_ed' + newID).val('');
-                     }
-                     else{
-                         $('#errorenPausas_ed').hide();
-                     }
-                  }
+            if (horaF3 == null || horaF3 == '') {
 
-                  if (horaI3 > horaF3) {
+            } else {
+                if ($('#horaI_ed').val() < $('#horaF_ed').val()) {
+                    if (horaF3 <= horaI3) {
+                        $('#InicioPausa_ed' + newID).val('');
+                        $('#errorenPausas_ed').show();
+                        event.stopPropagation();
+                    } else {
+                        $('#errorenPausas_ed').hide();
+                    }
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+            }
+
+            ///////////
+
+
+            if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
+                if (horaF3 < $('#horaI_ed').val() && horaF3 > $('#horaF_ed').val()) {
+                    $('#FinPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango_ed').hide();
+                    if (horaI3 >= horaF3 && horaF3 <= $('#horaI_ed').val() && horaF3 > $('#horaF_ed').val()) {
+                        $('#errorenPausas_ed').show();
+                        $('#FinPausa_ed' + newID).val('');
+                    }
+                    else {
+                        $('#errorenPausas_ed').hide();
+                    }
+                }
+
+                if (horaI3 > horaF3) {
                     /*  $('#FinPausa').val('');
                      $('#errorenPausas').show();
                      event.stopPropagation(); */
-                 } else {
-                     $('#errorenPausas_ed').hide();
-                 }
-             } else{
-                 if(horaF3<$('#horaI_ed').val() ||horaF3>$('#horaF_ed').val() ){
-                 $('#FinPausa_ed' + newID).val('');
-                 $('#fueraRango_ed').show();
-                 event.stopPropagation();
-              } else{
-                 $('#fueraRango_ed').hide();
-              }
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+            } else {
+                if (horaF3 < $('#horaI_ed').val() || horaF3 > $('#horaF_ed').val()) {
+                    $('#FinPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango_ed').hide();
+                }
 
-                 if (horaF3 <= horaI3) {
-                     $('#FinPausa_ed'+ newID).val('');
-                     $('#errorenPausas_ed').show();
-                     event.stopPropagation();
-                 } else {
-                     $('#errorenPausas_ed').hide();
-                 }
-             }
-
-
+                if (horaF3 <= horaI3) {
+                    $('#FinPausa_ed' + newID).val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+            }
 
 
-     }
+
+
+        }
     }
     //////////////////////////VALIDACIONES EN EDITAR
     if ($("#SwitchPausa_ed").is(":checked")) {
@@ -3122,46 +3104,46 @@ function editarHorario() {
         let horaF4 = $("#FinPausa_edReg").val();
         let horaI4 = $("#InicioPausa_edReg").val();
         if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-          if (horaF4 < $("#horaI_ed").val() && horaF4 > $("#horaF_ed").val()) {
-            $("#FinPausa_edReg").val("");
-            $("#fueraRango_ed").show();
-            event.stopPropagation();
-          } else {
-            $("#fueraRango_ed").hide();
-            if (
-              horaI4 >= horaF4 &&
-              horaF4 <= $("#horaI_ed").val() &&
-              horaF4 > $("#horaF_ed").val()
-            ) {
-              $("#errorenPausas_ed").show();
-              $("#FinPausa_edReg").val("");
+            if (horaF4 < $("#horaI_ed").val() && horaF4 > $("#horaF_ed").val()) {
+                $("#FinPausa_edReg").val("");
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#fueraRango_ed").hide();
+                if (
+                    horaI4 >= horaF4 &&
+                    horaF4 <= $("#horaI_ed").val() &&
+                    horaF4 > $("#horaF_ed").val()
+                ) {
+                    $("#errorenPausas_ed").show();
+                    $("#FinPausa_edReg").val("");
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
-          }
 
-          if (horaI4 > horaF4) {
-            /*  $('#FinPausa').val('');
-                  $('#errorenPausas').show();
-                  event.stopPropagation(); */
-          } else {
-            $("#errorenPausas_ed").hide();
-          }
+            if (horaI4 > horaF4) {
+                /*  $('#FinPausa').val('');
+                      $('#errorenPausas').show();
+                      event.stopPropagation(); */
+            } else {
+                $("#errorenPausas_ed").hide();
+            }
         } else {
-          if (horaF4 < $("#horaI_ed").val() || horaF4 > $("#horaF_ed").val()) {
-            $("#FinPausa_edReg").val("");
-            $("#fueraRango_ed").show();
-            event.stopPropagation();
-          } else {
-            $("#fueraRango_ed").hide();
-          }
-          if (horaF4 <= horaI4) {
-            $("#FinPausa_edReg").val("");
-            $("#errorenPausas_ed").show();
-            event.stopPropagation();
-          } else {
-            $("#errorenPausas_ed").hide();
-          }
+            if (horaF4 < $("#horaI_ed").val() || horaF4 > $("#horaF_ed").val()) {
+                $("#FinPausa_edReg").val("");
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
+            } else {
+                $("#fueraRango_ed").hide();
+            }
+            if (horaF4 <= horaI4) {
+                $("#FinPausa_edReg").val("");
+                $("#errorenPausas_ed").show();
+                event.stopPropagation();
+            } else {
+                $("#errorenPausas_ed").hide();
+            }
         }
 
         let horaF5 = $("#FinPausa_edReg").val();
@@ -3169,148 +3151,148 @@ function editarHorario() {
         $("#FinPausa_edReg").prop("disabled", false);
 
         if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-          if (horaI5 < $("#horaI_ed").val() && horaI5 > $("#horaF_ed").val()) {
+            if (horaI5 < $("#horaI_ed").val() && horaI5 > $("#horaF_ed").val()) {
 
-            $("#InicioPausa_edReg").val("");
-            $("#fueraRango_ed").show();
+                $("#InicioPausa_edReg").val("");
+                $("#fueraRango_ed").show();
 
-            event.stopPropagation();
-          } else {
-            $("#fueraRango_ed").hide();
-          }
+                event.stopPropagation();
+            } else {
+                $("#fueraRango_ed").hide();
+            }
         } else {
-          if (horaI5 < $("#horaI_ed").val() || horaI5 > $("#horaF_ed").val()) {
-            $("#InicioPausa_edReg").val("");
-            $("#fueraRango_ed").show();
-            event.stopPropagation();
-          } else {
-            $("#fueraRango_ed").hide();
-          }
+            if (horaI5 < $("#horaI_ed").val() || horaI5 > $("#horaF_ed").val()) {
+                $("#InicioPausa_edReg").val("");
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
+            } else {
+                $("#fueraRango_ed").hide();
+            }
         }
 
 
         if (horaF5 == null || horaF5 == "") {
-          var horafinal1 = $("#horaF_ed").val();
-          splih1 = horafinal1.split(":");
+            var horafinal1 = $("#horaF_ed").val();
+            splih1 = horafinal1.split(":");
 
-          $("#FinPausa_edReg").val("").flatpickr({
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-            time_24hr: true,
-            defaultHour: splih1[0],
-          });
+            $("#FinPausa_edReg").val("").flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour: splih1[0],
+            });
         } else {
 
-          if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
-            if (horaF5 <= horaI5) {
-              $("#InicioPausa_edReg").val("");
-              $("#errorenPausas_ed").show();
-              event.stopPropagation();
+            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+                if (horaF5 <= horaI5) {
+                    $("#InicioPausa_edReg").val("");
+                    $("#errorenPausas_ed").show();
+                    event.stopPropagation();
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#errorenPausas_ed").hide();
             }
-          } else {
-            $("#errorenPausas_ed").hide();
-          }
         }
 
         $("#FinPausa_edReg").on("focus", function () {
-          $(this).blur();
+            $(this).blur();
         });
         $("#FinPausa_edReg").removeAttr("readonly");
 
         /////////////////////////////////////
         //////////PAUSAS2 VALIDADAS//
-       var maximoL= $('#maxIn').val()+1;
-       var minimoL= $('#minIn').val();
+        var maximoL = $('#maxIn').val() + 1;
+        var minimoL = $('#minIn').val();
         for (newID2 = minimoL; newID2 < maximoL; newID2++) {
 
-          let horaF6 = $("#FinPausa_edReg" + newID2).val();
-          let horaI6 = $("#InicioPausa_edReg" + newID2).val();
-          $("#FinPausa_edReg" + newID2).prop("disabled", false);
-          if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-            if (horaI6 < $("#horaI_ed").val() && horaI6 > $("#horaF_ed").val()) {
+            let horaF6 = $("#FinPausa_edReg" + newID2).val();
+            let horaI6 = $("#InicioPausa_edReg" + newID2).val();
+            $("#FinPausa_edReg" + newID2).prop("disabled", false);
+            if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+                if (horaI6 < $("#horaI_ed").val() && horaI6 > $("#horaF_ed").val()) {
 
-              $("#InicioPausa_edReg" + newID2).val("");
-              $("#fueraRango_ed").show();
+                    $("#InicioPausa_edReg" + newID2).val("");
+                    $("#fueraRango_ed").show();
 
-              event.stopPropagation();
+                    event.stopPropagation();
+                } else {
+                    $("#fueraRango_ed").hide();
+                }
             } else {
-              $("#fueraRango_ed").hide();
-            }
-          } else {
-            if (horaI6 < $("#horaI_ed").val() || horaI6 > $("#horaF_ed").val()) {
-              $("#InicioPausa_edReg" + newID2).val("");
-              $("#fueraRango_ed").show();
-              event.stopPropagation();
-            } else {
-              $("#fueraRango_ed").hide();
-            }
-          }
-
-          if (horaF6 == null || horaF6 == "") {
-          } else {
-            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
-              if (horaF6 <= horaI6) {
-                $("#InicioPausa_edReg" + newID2).val("");
-                $("#errorenPausas_ed").show();
-                event.stopPropagation();
-              } else {
-                $("#errorenPausas_ed").hide();
-              }
-            } else {
-              $("#errorenPausas_ed").hide();
-            }
-          }
-
-          ///////////
-
-          if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-            if (horaF6 < $("#horaI_ed").val() && horaF6 > $("#horaF_ed").val()) {
-              $("#FinPausa_edReg" + newID2).val("");
-              $("#fueraRango_ed").show();
-              event.stopPropagation();
-            } else {
-              $("#fueraRango_ed").hide();
-              if (
-                horaI6 >= horaF6 &&
-                horaF6 <= $("#horaI_ed").val() &&
-                horaF6 > $("#horaF_ed").val()
-              ) {
-                $("#errorenPausas_ed").show();
-                $("#FinPausa_edReg" + newID2).val("");
-              } else {
-                $("#errorenPausas_ed").hide();
-              }
+                if (horaI6 < $("#horaI_ed").val() || horaI6 > $("#horaF_ed").val()) {
+                    $("#InicioPausa_edReg" + newID2).val("");
+                    $("#fueraRango_ed").show();
+                    event.stopPropagation();
+                } else {
+                    $("#fueraRango_ed").hide();
+                }
             }
 
-            if (horaI6 > horaF6) {
-              /*  $('#FinPausa').val('');
-                       $('#errorenPausas').show();
-                       event.stopPropagation(); */
+            if (horaF6 == null || horaF6 == "") {
             } else {
-              $("#errorenPausas_ed").hide();
-            }
-          } else {
-            if (horaF6 < $("#horaI_ed").val() || horaF6 > $("#horaF_ed").val()) {
-              $("#FinPausa_edReg" + newID2).val("");
-              $("#fueraRango_ed").show();
-              event.stopPropagation();
-            } else {
-              $("#fueraRango_ed").hide();
+                if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+                    if (horaF6 <= horaI6) {
+                        $("#InicioPausa_edReg" + newID2).val("");
+                        $("#errorenPausas_ed").show();
+                        event.stopPropagation();
+                    } else {
+                        $("#errorenPausas_ed").hide();
+                    }
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
 
-            if (horaF6 <= horaI6) {
-              $("#FinPausa_edReg" + newID2).val("");
-              $("#errorenPausas_ed").show();
-              event.stopPropagation();
+            ///////////
+
+            if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+                if (horaF6 < $("#horaI_ed").val() && horaF6 > $("#horaF_ed").val()) {
+                    $("#FinPausa_edReg" + newID2).val("");
+                    $("#fueraRango_ed").show();
+                    event.stopPropagation();
+                } else {
+                    $("#fueraRango_ed").hide();
+                    if (
+                        horaI6 >= horaF6 &&
+                        horaF6 <= $("#horaI_ed").val() &&
+                        horaF6 > $("#horaF_ed").val()
+                    ) {
+                        $("#errorenPausas_ed").show();
+                        $("#FinPausa_edReg" + newID2).val("");
+                    } else {
+                        $("#errorenPausas_ed").hide();
+                    }
+                }
+
+                if (horaI6 > horaF6) {
+                    /*  $('#FinPausa').val('');
+                             $('#errorenPausas').show();
+                             event.stopPropagation(); */
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             } else {
-              $("#errorenPausas_ed").hide();
+                if (horaF6 < $("#horaI_ed").val() || horaF6 > $("#horaF_ed").val()) {
+                    $("#FinPausa_edReg" + newID2).val("");
+                    $("#fueraRango_ed").show();
+                    event.stopPropagation();
+                } else {
+                    $("#fueraRango_ed").hide();
+                }
+
+                if (horaF6 <= horaI6) {
+                    $("#FinPausa_edReg" + newID2).val("");
+                    $("#errorenPausas_ed").show();
+                    event.stopPropagation();
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
-          }
         }
-      }
+    }
 
     //////////////////////////////////3ro
     if ($("#SwitchPausa_ed").is(":checked")) {
@@ -3318,46 +3300,46 @@ function editarHorario() {
         let horaF8 = $("#FinPausa_edRN").val();
         let horaI8 = $("#InicioPausa_edRN").val();
         if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-          if (horaF8 < $("#horaI_ed").val() && horaF8 > $("#horaF_ed").val()) {
-            $("#FinPausa_edRN").val("");
-            $("#fueraRango_ed").show();
-            event.stopPropagation();
-          } else {
-            $("#fueraRango_ed").hide();
-            if (
-              horaI8 >= horaF8 &&
-              horaF8 <= $("#horaI_ed").val() &&
-              horaF8 > $("#horaF_ed").val()
-            ) {
-              $("#errorenPausas_ed").show();
-              $("#FinPausa_edRN").val("");
+            if (horaF8 < $("#horaI_ed").val() && horaF8 > $("#horaF_ed").val()) {
+                $("#FinPausa_edRN").val("");
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#fueraRango_ed").hide();
+                if (
+                    horaI8 >= horaF8 &&
+                    horaF8 <= $("#horaI_ed").val() &&
+                    horaF8 > $("#horaF_ed").val()
+                ) {
+                    $("#errorenPausas_ed").show();
+                    $("#FinPausa_edRN").val("");
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
-          }
 
-          if (horaI8 > horaF8) {
-            /*  $('#FinPausa').val('');
-                  $('#errorenPausas').show();
-                  event.stopPropagation(); */
-          } else {
-            $("#errorenPausas_ed").hide();
-          }
+            if (horaI8 > horaF8) {
+                /*  $('#FinPausa').val('');
+                      $('#errorenPausas').show();
+                      event.stopPropagation(); */
+            } else {
+                $("#errorenPausas_ed").hide();
+            }
         } else {
-          if (horaF8 < $("#horaI_ed").val() || horaF8 > $("#horaF_ed").val()) {
-            $("#FinPausa_edRN").val("");
-            $("#fueraRango_ed").show();
-           /*  event.stopPropagation(); */
-          } else {
-            $("#fueraRango_ed").hide();
-          }
-          if (horaF8 <= horaI8) {
-            $("#FinPausa_edRN").val("");
-            $("#errorenPausas_ed").show();
-            /* event.stopPropagation(); */
-          } else {
-            $("#errorenPausas_ed").hide();
-          }
+            if (horaF8 < $("#horaI_ed").val() || horaF8 > $("#horaF_ed").val()) {
+                $("#FinPausa_edRN").val("");
+                $("#fueraRango_ed").show();
+                /*  event.stopPropagation(); */
+            } else {
+                $("#fueraRango_ed").hide();
+            }
+            if (horaF8 <= horaI8) {
+                $("#FinPausa_edRN").val("");
+                $("#errorenPausas_ed").show();
+                /* event.stopPropagation(); */
+            } else {
+                $("#errorenPausas_ed").hide();
+            }
         }
 
         let horaF9 = $("#FinPausa_edRN").val();
@@ -3365,147 +3347,147 @@ function editarHorario() {
         $("#FinPausa_edRN").prop("disabled", false);
 
         if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-          if (horaI9 < $("#horaI_ed").val() && horaI9 > $("#horaF_ed").val()) {
+            if (horaI9 < $("#horaI_ed").val() && horaI9 > $("#horaF_ed").val()) {
 
-            $("#InicioPausa_edRN").val("");
-            $("#fueraRango_ed").show();
+                $("#InicioPausa_edRN").val("");
+                $("#fueraRango_ed").show();
 
-            /* event.stopPropagation(); */
-          } else {
-            $("#fueraRango_ed").hide();
-          }
+                /* event.stopPropagation(); */
+            } else {
+                $("#fueraRango_ed").hide();
+            }
         } else {
-          if (horaI9 < $("#horaI_ed").val() || horaI9 > $("#horaF_ed").val()) {
-            $("#InicioPausa_edRN").val("");
-            $("#fueraRango_ed").show();
-           /*  event.stopPropagation(); */
-          } else {
-            $("#fueraRango_ed").hide();
-          }
+            if (horaI9 < $("#horaI_ed").val() || horaI9 > $("#horaF_ed").val()) {
+                $("#InicioPausa_edRN").val("");
+                $("#fueraRango_ed").show();
+                /*  event.stopPropagation(); */
+            } else {
+                $("#fueraRango_ed").hide();
+            }
         }
 
 
         if (horaF9 == null || horaF9 == "") {
-          var horafinal1 = $("#horaF_ed").val();
-          splih1 = horafinal1.split(":");
+            var horafinal1 = $("#horaF_ed").val();
+            splih1 = horafinal1.split(":");
 
-          $("#FinPausa_edRN").val("").flatpickr({
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-            time_24hr: true,
-            defaultHour: splih1[0],
-          });
+            $("#FinPausa_edRN").val("").flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour: splih1[0],
+            });
         } else {
 
-          if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
-            if (horaF9 <= horaI9) {
-              $("#InicioPausa_edRN").val("");
-              $("#errorenPausas_ed").show();
-              /* event.stopPropagation(); */
+            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+                if (horaF9 <= horaI9) {
+                    $("#InicioPausa_edRN").val("");
+                    $("#errorenPausas_ed").show();
+                    /* event.stopPropagation(); */
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#errorenPausas_ed").hide();
             }
-          } else {
-            $("#errorenPausas_ed").hide();
-          }
         }
 
         $("#FinPausa_edRN").on("focus", function () {
-          $(this).blur();
+            $(this).blur();
         });
         $("#FinPausa_edRN").removeAttr("readonly");
 
         /////////////////////////////////////
         //////////PAUSAS2 VALIDADAS//
 
-        for (newID3 =100; newID3 <130; newID3++) {
+        for (newID3 = 100; newID3 < 130; newID3++) {
 
-          let horaF10 = $("#FinPausa_edRN" + newID3).val();
-          let horaI10 = $("#InicioPausa_edRN" + newID3).val();
-          $("#FinPausa_edRN" + newID3).prop("disabled", false);
-          if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-            if (horaI10 < $("#horaI_ed").val() && horaI10 > $("#horaF_ed").val()) {
+            let horaF10 = $("#FinPausa_edRN" + newID3).val();
+            let horaI10 = $("#InicioPausa_edRN" + newID3).val();
+            $("#FinPausa_edRN" + newID3).prop("disabled", false);
+            if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+                if (horaI10 < $("#horaI_ed").val() && horaI10 > $("#horaF_ed").val()) {
 
-              $("#InicioPausa_edRN" + newID3).val("");
-              $("#fueraRango_ed").show();
+                    $("#InicioPausa_edRN" + newID3).val("");
+                    $("#fueraRango_ed").show();
 
-             /*  event.stopPropagation(); */
+                    /*  event.stopPropagation(); */
+                } else {
+                    $("#fueraRango_ed").hide();
+                }
             } else {
-              $("#fueraRango_ed").hide();
-            }
-          } else {
-            if (horaI10 < $("#horaI_ed").val() || horaI10 > $("#horaF_ed").val()) {
-              $("#InicioPausa_edRN" + newID3).val("");
-              $("#fueraRango_ed").show();
-            /*   event.stopPropagation(); */
-            } else {
-              $("#fueraRango_ed").hide();
-            }
-          }
-
-          if (horaF10 == null || horaF10 == "") {
-          } else {
-            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
-              if (horaF10 <= horaI10) {
-                $("#InicioPausa_edRN" + newID3).val("");
-                $("#errorenPausas_ed").show();
-               /*  event.stopPropagation(); */
-              } else {
-                $("#errorenPausas_ed").hide();
-              }
-            } else {
-              $("#errorenPausas_ed").hide();
-            }
-          }
-
-          ///////////
-
-          if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-            if (horaF10 < $("#horaI_ed").val() && horaF10 > $("#horaF_ed").val()) {
-              $("#FinPausa_edRN" + newID3).val("");
-              $("#fueraRango_ed").show();
-              /* event.stopPropagation(); */
-            } else {
-              $("#fueraRango_ed").hide();
-              if (
-                horaI10 >= horaF10 &&
-                horaF10 <= $("#horaI_ed").val() &&
-                horaF10 > $("#horaF_ed").val()
-              ) {
-                $("#errorenPausas_ed").show();
-                $("#FinPausa_edRN" + newID3).val("");
-              } else {
-                $("#errorenPausas_ed").hide();
-              }
+                if (horaI10 < $("#horaI_ed").val() || horaI10 > $("#horaF_ed").val()) {
+                    $("#InicioPausa_edRN" + newID3).val("");
+                    $("#fueraRango_ed").show();
+                    /*   event.stopPropagation(); */
+                } else {
+                    $("#fueraRango_ed").hide();
+                }
             }
 
-            if (horaI10 > horaF10) {
-              /*  $('#FinPausa').val('');
-                       $('#errorenPausas').show();
-                       event.stopPropagation(); */
+            if (horaF10 == null || horaF10 == "") {
             } else {
-              $("#errorenPausas_ed").hide();
-            }
-          } else {
-            if (horaF10 < $("#horaI_ed").val() || horaF10 > $("#horaF_ed").val()) {
-              $("#FinPausa_edRN" + newID3).val("");
-              $("#fueraRango_ed").show();
-              /* event.stopPropagation(); */
-            } else {
-              $("#fueraRango_ed").hide();
+                if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
+                    if (horaF10 <= horaI10) {
+                        $("#InicioPausa_edRN" + newID3).val("");
+                        $("#errorenPausas_ed").show();
+                        /*  event.stopPropagation(); */
+                    } else {
+                        $("#errorenPausas_ed").hide();
+                    }
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
 
-            if (horaF10 <= horaI10) {
-              $("#FinPausa_edRN" + newID3).val("");
-              $("#errorenPausas_ed").show();
-              /* event.stopPropagation(); */
+            ///////////
+
+            if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
+                if (horaF10 < $("#horaI_ed").val() && horaF10 > $("#horaF_ed").val()) {
+                    $("#FinPausa_edRN" + newID3).val("");
+                    $("#fueraRango_ed").show();
+                    /* event.stopPropagation(); */
+                } else {
+                    $("#fueraRango_ed").hide();
+                    if (
+                        horaI10 >= horaF10 &&
+                        horaF10 <= $("#horaI_ed").val() &&
+                        horaF10 > $("#horaF_ed").val()
+                    ) {
+                        $("#errorenPausas_ed").show();
+                        $("#FinPausa_edRN" + newID3).val("");
+                    } else {
+                        $("#errorenPausas_ed").hide();
+                    }
+                }
+
+                if (horaI10 > horaF10) {
+                    /*  $('#FinPausa').val('');
+                             $('#errorenPausas').show();
+                             event.stopPropagation(); */
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             } else {
-              $("#errorenPausas_ed").hide();
+                if (horaF10 < $("#horaI_ed").val() || horaF10 > $("#horaF_ed").val()) {
+                    $("#FinPausa_edRN" + newID3).val("");
+                    $("#fueraRango_ed").show();
+                    /* event.stopPropagation(); */
+                } else {
+                    $("#fueraRango_ed").hide();
+                }
+
+                if (horaF10 <= horaI10) {
+                    $("#FinPausa_edRN" + newID3).val("");
+                    $("#errorenPausas_ed").show();
+                    /* event.stopPropagation(); */
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
-          }
         }
-      }
+    }
 
     ///////////////////////////////////
     var idhorario = $('#idhorario_ed').val();
@@ -3519,9 +3501,9 @@ function editarHorario() {
     var horaObed = $('#horaOblig_ed').val();
     var tardanza_ed;
     if ($('#SwitchTardanza_ed').is(":checked")) {
-        tardanza_ed=1;
-    } else{
-        tardanza_ed=0;
+        tardanza_ed = 1;
+    } else {
+        tardanza_ed = 0;
     }
     if ($('#SwitchPausa_ed').is(":checked")) {
         var descPausa_ed = [];
@@ -3541,14 +3523,14 @@ function editarHorario() {
             descPausa_ed.push($(this).val());
         });
         $('input[name="InicioPausa_ed[]"]').each(function () {
-            if($(this).val()!=' ' || $(this).val()!=null ){
+            if ($(this).val() != ' ' || $(this).val() != null) {
                 pausaInicio_ed.push($(this).val());
             }
 
         });
         $('input[name="FinPausa_ed[]"]').each(function () {
-            if($(this).val()!=' ' || $(this).val()!=null ){
-            finPausa_ed.push($(this).val());
+            if ($(this).val() != ' ' || $(this).val() != null) {
+                finPausa_ed.push($(this).val());
             }
         });
         //ANTIGUOS EDITADO
@@ -3559,13 +3541,13 @@ function editarHorario() {
             descPausa_edReg.push($(this).val());
         });
         $('input[name="InicioPausa_edReg[]"]').each(function () {
-            if($(this).val()!=' ' || $(this).val()!=null ){
-            pausaInicio_edReg.push($(this).val());
+            if ($(this).val() != ' ' || $(this).val() != null) {
+                pausaInicio_edReg.push($(this).val());
             }
         });
         $('input[name="FinPausa_edReg[]"]').each(function () {
-            if($(this).val()!=' ' || $(this).val()!=null ){
-            finPausa_edReg.push($(this).val());
+            if ($(this).val() != ' ' || $(this).val() != null) {
+                finPausa_edReg.push($(this).val());
             }
         });
         //NUEVO AGREGADAS EN EDICION
@@ -3574,281 +3556,338 @@ function editarHorario() {
             descPausa_edRN.push($(this).val());
         });
         $('input[name="InicioPausa_edRN[]"]').each(function () {
-            var valorRNI=$(this).val().length;
-            if(valorRNI!=0 ){
-            pausaInicio_edRN.push($(this).val());
+            var valorRNI = $(this).val().length;
+            if (valorRNI != 0) {
+                pausaInicio_edRN.push($(this).val());
             }
         });
         $('input[name="FinPausa_edRN[]"]').each(function () {
-            var valorRNF=$(this).val().length;
-            if(valorRNF!=0  ){
+            var valorRNF = $(this).val().length;
+            if (valorRNF != 0) {
 
-            finPausa_edRN.push($(this).val());
+                finPausa_edRN.push($(this).val());
             }
         });
 
     }
 
 
-   /*  COMPARANDO RANGO DE PAUSAS SI ESTA ACTIVADO PAUSAS */
+    /*  COMPARANDO RANGO DE PAUSAS SI ESTA ACTIVADO PAUSAS */
     if ($("#SwitchPausa_ed").is(":checked")) {
         console.log('ENTRANDO');
-    /*  UNIENDO ARRAYS DE INICIO DE PAUSAS */
-        var unionP1= pausaInicio_ed.concat(pausaInicio_edReg);
-        var unionP2=unionP1.concat(pausaInicio_edRN);
-        console.log('union'+unionP2);
+        /*  UNIENDO ARRAYS DE INICIO DE PAUSAS */
+        var unionP1 = pausaInicio_ed.concat(pausaInicio_edReg);
+        var unionP2 = unionP1.concat(pausaInicio_edRN);
+        console.log('union' + unionP2);
 
-    /*  UNIENDO ARRAYS DE INICIO DE PAUSAS */
-        var unionF1= finPausa_ed.concat(finPausa_edReg);
-        var unionF2=unionF1.concat(finPausa_edRN);
-        console.log('union'+unionF2);
+        /*  UNIENDO ARRAYS DE INICIO DE PAUSAS */
+        var unionF1 = finPausa_ed.concat(finPausa_edReg);
+        var unionF2 = unionF1.concat(finPausa_edRN);
+        console.log('union' + unionF2);
 
-       /*  COMPARANDO PAUSAS*/
-       $.each(unionP2, function (ind, elem) {
-        if(ind>0){
-            if(unionP2.length>0){
-                console.log('1'+unionP2[ind] +'2'+unionP2[ind-1]+'3'+unionF2[ind-1]);
-                if(unionP2[ind]>unionP2[ind-1] && unionP2[ind]>unionF2[ind-1] ){
-                    variablesiPau_ed=1;
-                    $('#errorenPausasCruzadas_ed').hide();
-                }
-                else{
-                    if(unionP2[ind]<unionP2[ind-1] && unionP2[ind]<unionF2[ind-1] ){
-                        variablesiPau_ed=1;
+        /*  COMPARANDO PAUSAS*/
+        $.each(unionP2, function (ind, elem) {
+            if (ind > 0) {
+                if (unionP2.length > 0) {
+                    console.log('1' + unionP2[ind] + '2' + unionP2[ind - 1] + '3' + unionF2[ind - 1]);
+                    if (unionP2[ind] > unionP2[ind - 1] && unionP2[ind] > unionF2[ind - 1]) {
+                        variablesiPau_ed = 1;
                         $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
+                    }
+                    else {
+                        if (unionP2[ind] < unionP2[ind - 1] && unionP2[ind] < unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
 
                     }
+                    if (unionF2[ind] > unionP2[ind - 1] && unionF2[ind] > unionF2[ind - 1]) {
+                        if (unionP2[ind] > unionP2[ind - 1] && unionP2[ind] > unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
 
-                }
-                if(unionF2[ind]>unionP2[ind-1] && unionF2[ind]>unionF2[ind-1] ){
-                    if(unionP2[ind]>unionP2[ind-1] && unionP2[ind]>unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                else{
-                    if(unionF2[ind]<unionP2[ind-1] && unionF2[ind]<unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
+                        }
 
                     }
+                    else {
+                        if (unionF2[ind] < unionP2[ind - 1] && unionF2[ind] < unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+                    }
                 }
+                if (unionP2.length > 2) {
+                    if (unionP2[ind] > unionP2[ind - 1] && unionP2[ind] > unionF2[ind - 1]) {
+                        variablesiPau_ed = 1;
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
+                    else {
+                        if (unionP2[ind] < unionP2[ind - 1] && unionP2[ind] < unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    if (unionF2[ind] > unionP2[ind - 1] && unionF2[ind] > unionF2[ind - 1]) {
+                        if (unionP2[ind] > unionP2[ind - 1] && unionP2[ind] > unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    else {
+                        if (unionF2[ind] < unionP2[ind - 1] && unionF2[ind] < unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+                    }
+                    ///////////////////////////////
+                    if (unionP2[ind] > unionP2[ind - 2] && unionP2[ind] > unionF2[ind - 2]) {
+                        variablesiPau_ed = 1;
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
+                    else {
+                        if (unionP2[ind] < unionP2[ind - 2] && unionP2[ind] < unionF2[ind - 2]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    if (unionF2[ind] > unionP2[ind - 2] && unionF2[ind] > unionF2[ind - 2]) {
+                        if (unionP2[ind] > unionP2[ind - 2] && unionP2[ind] > unionF2[ind - 2]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    else {
+                        if (unionF2[ind] < unionP2[ind - 2] && unionF2[ind] < unionF2[ind - 2]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+                    }
+                }
+
+                if (unionP2.length > 3) {
+                    if (unionP2[ind] > unionP2[ind - 1] && unionP2[ind] > unionF2[ind - 1]) {
+                        variablesiPau_ed = 1;
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
+                    else {
+                        if (unionP2[ind] < unionP2[ind - 1] && unionP2[ind] < unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    if (unionF2[ind] > unionP2[ind - 1] && unionF2[ind] > unionF2[ind - 1]) {
+                        if (unionP2[ind] > unionP2[ind - 1] && unionP2[ind] > unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    else {
+                        if (unionF2[ind] < unionP2[ind - 1] && unionF2[ind] < unionF2[ind - 1]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+                    }
+                    ///////////////////////////////
+                    if (unionP2[ind] > unionP2[ind - 2] && unionP2[ind] > unionF2[ind - 2]) {
+                        variablesiPau_ed = 1;
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
+                    else {
+                        if (unionP2[ind] < unionP2[ind - 2] && unionP2[ind] < unionF2[ind - 2]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    if (unionF2[ind] > unionP2[ind - 2] && unionF2[ind] > unionF2[ind - 2]) {
+                        if (unionP2[ind] > unionP2[ind - 2] && unionP2[ind] > unionF2[ind - 2]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    else {
+                        if (unionF2[ind] < unionP2[ind - 2] && unionF2[ind] < unionF2[ind - 2]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+                    }
+
+                    if (unionP2[ind] > unionP2[ind - 3] && unionP2[ind] > unionF2[ind - 3]) {
+                        variablesiPau_ed = 1;
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
+                    else {
+                        if (unionP2[ind] < unionP2[ind - 3] && unionP2[ind] < unionF2[ind - 3]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    if (unionF2[ind] > unionP2[ind - 3] && unionF2[ind] > unionF2[ind - 3]) {
+                        if (unionP2[ind] > unionP2[ind - 3] && unionP2[ind] > unionF2[ind - 3]) {
+                            variablesiPau_ed = 1;
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+
+                    }
+                    else {
+                        if (unionF2[ind] < unionP2[ind - 3] && unionF2[ind] < unionF2[ind - 3]) {
+                            console.log(unionF2[ind] + '-' + unionP2[ind - 3] + '-' + unionF2[ind] + '-' + unionF2[ind - 3])
+                            variablesiPau_ed = 1;
+                            console.log('leng' + unionF2.length)
+                            $('#errorenPausasCruzadas_ed').hide();
+                        } else {
+                            variablesiPau_ed = 0;
+                            $('#errorenPausasCruzadas_ed').show();
+
+                        }
+                    }
+                }
+
+
+
             }
-            if(unionP2.length>2){
-                if(unionP2[ind]>unionP2[ind-1] && unionP2[ind]>unionF2[ind-1] ){
-                    variablesiPau_ed=1;
-                    $('#errorenPausasCruzadas_ed').hide();
-                }
-                else{
-                    if(unionP2[ind]<unionP2[ind-1] && unionP2[ind]<unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
+            esperandoP_ed = 1;
+        });
+        console.log('sila' + variablesiPau_ed);
+        if (variablesiPau_ed == 1 && esperandoP_ed == 1) {
+            $.ajax({
+                type: "post",
+                url: "/horario/actualizarhorario",
+                data: {
+                    idhorario, descried, toleed, horaIed, horaFed, tardanza_ed,
+                    toleranciaFed, horaObed, descPausa_ed, pausaInicio_ed, finPausa_ed, ID_edReg, descPausa_edReg,
+                    pausaInicio_edReg, finPausa_edReg, descPausa_edRN, pausaInicio_edRN, finPausa_edRN
+                },
+                statusCode: {
+                    /*401: function () {
+                        location.reload();
+                    },*/
+                    419: function () {
+                        location.reload();
                     }
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $('#tablaEmpleado').DataTable().ajax.reload();
+                    $('#selectHorario').empty();
 
-                }
-                if(unionF2[ind]>unionP2[ind-1] && unionF2[ind]>unionF2[ind-1] ){
-                    if(unionP2[ind]>unionP2[ind-1] && unionP2[ind]>unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
+                    $.each(data, function (key, item) {
+                        $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
+                            value: item.horario_id,
+                            text: item.horario_descripcion + "(" + item.horaI + "-" + item.horaF + ")"
 
-                    }
+                        }));
 
-                }
-                else{
-                    if(unionF2[ind]<unionP2[ind-1] && unionF2[ind]<unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
 
-                    }
-                }
-                ///////////////////////////////
-                if(unionP2[ind]>unionP2[ind-2] && unionP2[ind]>unionF2[ind-2] ){
-                    variablesiPau_ed=1;
-                    $('#errorenPausasCruzadas_ed').hide();
-                }
-                else{
-                    if(unionP2[ind]<unionP2[ind-2] && unionP2[ind]<unionF2[ind-2] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
+                    });
 
-                    }
+                    $("#selectHorario").append($('<option >', { //agrego los valores que obtengo de una base de dato
+                        text: "Asignar horario",
+                        disabled: true
 
-                }
-                if(unionF2[ind]>unionP2[ind-2] && unionF2[ind]>unionF2[ind-2] ){
-                    if(unionP2[ind]>unionP2[ind-2] && unionP2[ind]>unionF2[ind-2] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
+                    }));
+                    $("#selectHorario").val("Asignar horario");
+                    $("#selectHorario").trigger("change");
 
-                    }
-
-                }
-                else{
-                    if(unionF2[ind]<unionP2[ind-2] && unionF2[ind]<unionF2[ind-2] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-                }
-            }
-
-            if(unionP2.length>3){
-                if(unionP2[ind]>unionP2[ind-1] && unionP2[ind]>unionF2[ind-1] ){
-                    variablesiPau_ed=1;
-                    $('#errorenPausasCruzadas_ed').hide();
-                }
-                else{
-                    if(unionP2[ind]<unionP2[ind-1] && unionP2[ind]<unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                if(unionF2[ind]>unionP2[ind-1] && unionF2[ind]>unionF2[ind-1] ){
-                    if(unionP2[ind]>unionP2[ind-1] && unionP2[ind]>unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                else{
-                    if(unionF2[ind]<unionP2[ind-1] && unionF2[ind]<unionF2[ind-1] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-                }
-                ///////////////////////////////
-                if(unionP2[ind]>unionP2[ind-2] && unionP2[ind]>unionF2[ind-2] ){
-                    variablesiPau_ed=1;
-                    $('#errorenPausasCruzadas_ed').hide();
-                }
-                else{
-                    if(unionP2[ind]<unionP2[ind-2] && unionP2[ind]<unionF2[ind-2] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                if(unionF2[ind]>unionP2[ind-2] && unionF2[ind]>unionF2[ind-2] ){
-                    if(unionP2[ind]>unionP2[ind-2] && unionP2[ind]>unionF2[ind-2] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                else{
-                    if(unionF2[ind]<unionP2[ind-2] && unionF2[ind]<unionF2[ind-2] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
+                    var mesAg = $('#fechaDa').val();
+                    var d = mesAg;
+                    var fechasM = new Date(d);
+                    calendar.refetchEvents();
+                    $('#horarioEditar').modal('hide');
+                },
+                error: function (data) {
+                    alert('Ocurrio un error');
                 }
 
-                if(unionP2[ind]>unionP2[ind-3] && unionP2[ind]>unionF2[ind-3] ){
-                    variablesiPau_ed=1;
-                    $('#errorenPausasCruzadas_ed').hide();
-                }
-                else{
-                    if(unionP2[ind]<unionP2[ind-3] && unionP2[ind]<unionF2[ind-3] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                if(unionF2[ind]>unionP2[ind-3] && unionF2[ind]>unionF2[ind-3] ){
-                    if(unionP2[ind]>unionP2[ind-3] && unionP2[ind]>unionF2[ind-3] ){
-                        variablesiPau_ed=1;
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-
-                }
-                else{
-                    if(unionF2[ind]<unionP2[ind-3] && unionF2[ind]<unionF2[ind-3] ){
-                        console.log(unionF2[ind]+'-'+unionP2[ind-3] +'-'+ unionF2[ind]+'-'+unionF2[ind-3])
-                        variablesiPau_ed=1;
-                        console.log('leng'+unionF2.length)
-                        $('#errorenPausasCruzadas_ed').hide();
-                    } else{
-                        variablesiPau_ed=0;
-                        $('#errorenPausasCruzadas_ed').show();
-
-                    }
-                }
-            }
-
-
-
+            });
         }
-        esperandoP_ed=1;
-      });
-      console.log('sila'+variablesiPau_ed);
-      if(variablesiPau_ed==1 && esperandoP_ed==1){
+    }
+    else {
         $.ajax({
             type: "post",
             url: "/horario/actualizarhorario",
-            data: { idhorario, descried, toleed, horaIed, horaFed,tardanza_ed,
-                 toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed,ID_edReg,descPausa_edReg,
-                 pausaInicio_edReg,finPausa_edReg,descPausa_edRN,pausaInicio_edRN,finPausa_edRN },
+            data: {
+                idhorario, descried, toleed, horaIed, horaFed, tardanza_ed,
+                toleranciaFed, horaObed, descPausa_ed, pausaInicio_ed, finPausa_ed, ID_edReg, descPausa_edReg,
+                pausaInicio_edReg, finPausa_edReg, descPausa_edRN, pausaInicio_edRN, finPausa_edRN
+            },
             statusCode: {
                 /*401: function () {
                     location.reload();
@@ -3893,59 +3932,6 @@ function editarHorario() {
             }
 
         });
-      }
-    }
-    else{
-        $.ajax({
-        type: "post",
-        url: "/horario/actualizarhorario",
-        data: { idhorario, descried, toleed, horaIed, horaFed,tardanza_ed,
-             toleranciaFed, horaObed,descPausa_ed,pausaInicio_ed, finPausa_ed,ID_edReg,descPausa_edReg,
-             pausaInicio_edReg,finPausa_edReg,descPausa_edRN,pausaInicio_edRN,finPausa_edRN },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            }
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-            $('#tablaEmpleado').DataTable().ajax.reload();
-            $('#selectHorario').empty();
-
-            $.each(data, function (key, item) {
-                $('#selectHorario').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                    value: item.horario_id,
-                    text: item.horario_descripcion + "(" + item.horaI + "-" + item.horaF + ")"
-
-                }));
-
-
-            });
-
-            $("#selectHorario").append($('<option >', { //agrego los valores que obtengo de una base de dato
-                text: "Asignar horario",
-                disabled: true
-
-            }));
-            $("#selectHorario").val("Asignar horario");
-            $("#selectHorario").trigger("change");
-
-            var mesAg = $('#fechaDa').val();
-            var d = mesAg;
-            var fechasM = new Date(d);
-            calendar.refetchEvents();
-            $('#horarioEditar').modal('hide');
-        },
-        error: function (data) {
-            alert('Ocurrio un error');
-        }
-
-    });
     }
 
 
@@ -3972,7 +3958,7 @@ function eliminarHorario(idhorario) {
         success: function (data) {
             if (data == 1) {
                 bootbox.alert({
-                    title:"Eliminar horario",
+                    title: "Eliminar horario",
                     message: "No se puede eliminar un horario en uso.",
 
                 });
@@ -3981,7 +3967,7 @@ function eliminarHorario(idhorario) {
             }
             else {
                 bootbox.confirm({
-                    title:"Eliminar horario",
+                    title: "Eliminar horario",
                     message: "¿Desea eliminar el horario?",
                     buttons: {
                         confirm: {
@@ -4199,49 +4185,49 @@ $("#FeriadosCheck").click(function () {
 
     }
 });
-$(function () {
-    $(document).on('change', '#horaF', function (event) {
-        let horaF = $('#horaF').val();
-        let horaI = $('#horaI').val();
+// $(function () {
+//     $(document).on('change', '#horaF', function (event) {
+//         let horaF = $('#horaF').val();
+//         let horaI = $('#horaI').val();
 
-        if (horaF < horaI) {
-            $('#divOtrodia').show();
-            $('#horaOblig').prop("disabled",false);
-            $('#horaOblig').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true
-            });
-            $('#horaOblig').val('');
-            event.stopPropagation();
-        } else {
-            var dateDesde = newDate(horaI.split(":"));
-            var dateHasta = newDate(horaF.split(":"));
+//         if (horaF < horaI) {
+//             $('#divOtrodia').show();
+//             $('#horaOblig').prop("disabled", false);
+//             $('#horaOblig').flatpickr({
+//                 enableTime: true,
+//                 noCalendar: true,
+//                 dateFormat: "H:i",
+//                 time_24hr: true
+//             });
+//             $('#horaOblig').val('');
+//             event.stopPropagation();
+//         } else {
+//             var dateDesde = newDate(horaI.split(":"));
+//             var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde)/1000/60;
-            var horas = Math.floor(minutos/60);
-            minutos = minutos % 60;
+//             var minutos = (dateHasta - dateDesde) / 1000 / 60;
+//             var horas = Math.floor(minutos / 60);
+//             minutos = minutos % 60;
 
-            $('#horaOblig').prop("disabled",false);
+//             $('#horaOblig').prop("disabled", false);
 
-            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
-                $('#horaOblig').flatpickr({
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    defaultHour:"8"
-                });
-                $('#horaOblig').val("08:00");
+//             if ($('#horaOblig').val() == null || $('#horaOblig').val() == '') {
+//                 $('#horaOblig').flatpickr({
+//                     enableTime: true,
+//                     noCalendar: true,
+//                     dateFormat: "H:i",
+//                     time_24hr: true,
+//                     defaultHour: "8"
+//                 });
+//                 $('#horaOblig').val("08:00");
 
-            }
+//             }
 
-            $('#divOtrodia').hide();
-        }
+//             $('#divOtrodia').hide();
+//         }
 
-    });
-});
+//     });
+// });
 function newDate(partes) {
     var date = new Date(0);
     date.setHours(partes[0]);
@@ -4252,104 +4238,104 @@ function newDate(partes) {
 function prefijo(num) {
     return num < 10 ? ("0" + num) : num;
 }
-$(function () {
-    $(document).on('change', '#horaI', function (event) {
-        let horaF = $('#horaF').val();
-        let horaI = $('#horaI').val();
+// $(function () {
+//     $(document).on('change', '#horaI', function (event) {
+//         let horaF = $('#horaF').val();
+//         let horaI = $('#horaI').val();
 
-        if (horaF < horaI) {
-            $('#divOtrodia').show();
-            $('#horaOblig').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true
-            });
-            $('#horaOblig').prop("disabled",false);
-            $('#horaOblig').val('');
-            event.stopPropagation();
-        } else {
-            var dateDesde = newDate(horaI.split(":"));
-            var dateHasta = newDate(horaF.split(":"));
+//         if (horaF < horaI) {
+//             $('#divOtrodia').show();
+//             $('#horaOblig').flatpickr({
+//                 enableTime: true,
+//                 noCalendar: true,
+//                 dateFormat: "H:i",
+//                 time_24hr: true
+//             });
+//             $('#horaOblig').prop("disabled", false);
+//             $('#horaOblig').val('');
+//             event.stopPropagation();
+//         } else {
+//             var dateDesde = newDate(horaI.split(":"));
+//             var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde)/1000/60;
-            var horas = Math.floor(minutos/60);
-            minutos = minutos % 60;
+//             var minutos = (dateHasta - dateDesde) / 1000 / 60;
+//             var horas = Math.floor(minutos / 60);
+//             minutos = minutos % 60;
 
-            $('#horaOblig').prop("disabled",false);
-            /* $('#horaOblig').val(prefijo(horas)); */
-            if($('#horaOblig').val()==null || $('#horaOblig').val()==''){
-                $('#horaOblig').flatpickr({
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    defaultHour:"8"
-                });
-                $('#horaOblig').val("08:00");
+//             $('#horaOblig').prop("disabled", false);
+//             /* $('#horaOblig').val(prefijo(horas)); */
+//             if ($('#horaOblig').val() == null || $('#horaOblig').val() == '') {
+//                 $('#horaOblig').flatpickr({
+//                     enableTime: true,
+//                     noCalendar: true,
+//                     dateFormat: "H:i",
+//                     time_24hr: true,
+//                     defaultHour: "8"
+//                 });
+//                 $('#horaOblig').val("08:00");
 
-            }
-            $('#divOtrodia').hide();
-        }
+//             }
+//             $('#divOtrodia').hide();
+//         }
 
-    });
-});
+//     });
+// });
 
-$(function () {
-    $(document).on('change', '#horaF_ed', function (event) {
-        let horaF = $('#horaF_ed').val();
-        let horaI = $('#horaI_ed').val();
+// $(function () {
+//     $(document).on('change', '#horaF_ed', function (event) {
+//         let horaF = $('#horaF_ed').val();
+//         let horaI = $('#horaI_ed').val();
 
-        if (horaF < horaI) {
-            $('#divOtrodia_ed').show();
-            event.stopPropagation();
-        } else {
-            $('#divOtrodia_ed').hide();
-        }
+//         if (horaF < horaI) {
+//             $('#divOtrodia_ed').show();
+//             event.stopPropagation();
+//         } else {
+//             $('#divOtrodia_ed').hide();
+//         }
 
-    });
-});
-$(function () {
-    $(document).on('change', '#horaI_ed', function (event) {
-        let horaF = $('#horaF_ed').val();
-        let horaI = $('#horaI_ed').val();
+//     });
+// });
+// $(function () {
+//     $(document).on('change', '#horaI_ed', function (event) {
+//         let horaF = $('#horaF_ed').val();
+//         let horaI = $('#horaI_ed').val();
 
-        if (horaF < horaI) {
-            $('#divOtrodia_ed').show();
-            event.stopPropagation();
-        } else {
-            $('#divOtrodia_ed').hide();
-        }
+//         if (horaF < horaI) {
+//             $('#divOtrodia_ed').show();
+//             event.stopPropagation();
+//         } else {
+//             $('#divOtrodia_ed').hide();
+//         }
 
-    });
-});
-$('#SwitchPausa').change(function (event) {
-    if ($('#SwitchPausa').prop('checked')) {
-        $('input[name="descPausa[]"]').prop('required', true);
-        $('#InicioPausa').prop('required', true);
-        $('#FinPausa').prop('required', true);
-        $('input[name="descPausa[]"]').prop('required', true);
-        $('input[name="InicioPausa[]"]').prop('required', true);
-        $('input[name="FinPausa[]"]').prop('required', true);
-        $('#divPausa').show();
-        $('.flatpickr-input[readonly]').on('focus', function () {
-            $(this).blur()
-        })
-        $('.flatpickr-input[readonly]').prop('readonly', false);
+//     });
+// });
+// $('#SwitchPausa').change(function (event) {
+//     if ($('#SwitchPausa').prop('checked')) {
+//         $('input[name="descPausa[]"]').prop('required', true);
+//         $('#InicioPausa').prop('required', true);
+//         $('#FinPausa').prop('required', true);
+//         $('input[name="descPausa[]"]').prop('required', true);
+//         $('input[name="InicioPausa[]"]').prop('required', true);
+//         $('input[name="FinPausa[]"]').prop('required', true);
+//         $('#divPausa').show();
+//         $('.flatpickr-input[readonly]').on('focus', function () {
+//             $(this).blur()
+//         })
+//         $('.flatpickr-input[readonly]').prop('readonly', false);
 
-    }
-    else {
+//     }
+//     else {
 
-        $('input[name="descPausa[]"]').val('');
-        $('input[name="InicioPausa[]"]').val('');
-        $('input[name="FinPausa[]"]').val('');
-        $('#divPausa').hide();
-        $('input[name="descPausa[]"]').prop('required', false);
-        $('input[name="InicioPausa[]"]').prop('required', false);
-        $('input[name="FinPausa[]"]').prop('required', false);
-    }
-    event.preventDefault();
-});
+//         $('input[name="descPausa[]"]').val('');
+//         $('input[name="InicioPausa[]"]').val('');
+//         $('input[name="FinPausa[]"]').val('');
+//         $('#divPausa').hide();
+//         $('input[name="descPausa[]"]').prop('required', false);
+//         $('input[name="InicioPausa[]"]').prop('required', false);
+//         $('input[name="FinPausa[]"]').prop('required', false);
+//     }
+//     event.preventDefault();
+// });
 
 function addField() {
 
@@ -4363,10 +4349,10 @@ function addField() {
     var newIDelete = (clickID + 1);
     // Creo un clon del elemento div que contiene los campos de texto
     $newClone = $('#div_' + clickID).clone(true);
-   /*  $newCloneDelete = $('#btnPb_' + clickID).clone(true); */
+    /*  $newCloneDelete = $('#btnPb_' + clickID).clone(true); */
     //Le asigno el nuevo numero id
     $newClone.attr("id", 'div_' + newID);
-   /*  $newCloneDelete.attr("id", 'btnPb_' + newIDelete); */
+    /*  $newCloneDelete.attr("id", 'btnPb_' + newIDelete); */
     //Asigno nuevo id al primer campo input dentro del div y le borro cualquier valor
     // que tenga asi no copia lo ultimo que hayas escrito.(igual que antes no es necesario tener un id)
     $newClone.children("input").eq(0).attr("id", 'descPausa' + newID).val('');
@@ -4376,57 +4362,57 @@ function addField() {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
-    var horafinal=$('#horaF').val();
-    splih=horafinal.split(":");
+    var horafinal = $('#horaF').val();
+    splih = horafinal.split(":");
 
-    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop( "disabled",true ).flatpickr({
+    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop("disabled", true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:splih[0]
+        defaultHour: splih[0]
     });;
     $(function () {
-        $(document).on('change', '#FinPausa'+ newID, function (event) {
-            let horaF = $('#FinPausa'+ newID).val();
-            let horaI = $('#InicioPausa'+ newID).val();
+        $(document).on('change', '#FinPausa' + newID, function (event) {
+            let horaF = $('#FinPausa' + newID).val();
+            let horaI = $('#InicioPausa' + newID).val();
 
-            if($('#horaI').val() > $('#horaF').val()){
-                if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+            if ($('#horaI').val() > $('#horaF').val()) {
+                if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#FinPausa' + newID).val('');
                     $('#fueraRango').show();
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango').hide();
-                    if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                    if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                         $('#errorenPausas').show();
                         $('#FinPausa' + newID).val('');
                     }
-                    else{
+                    else {
                         $('#errorenPausas').hide();
                     }
-                 }
+                }
 
-                 if (horaI > horaF) {
-                   /*  $('#FinPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation(); */
+                if (horaI > horaF) {
+                    /*  $('#FinPausa').val('');
+                     $('#errorenPausas').show();
+                     event.stopPropagation(); */
                 } else {
                     $('#errorenPausas').hide();
                 }
-            } else{
-                if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
-                $('#FinPausa' + newID).val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
+            } else {
+                if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+                    $('#FinPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                }
 
                 if (horaF <= horaI) {
-                    $('#FinPausa'+ newID).val('');
+                    $('#FinPausa' + newID).val('');
                     $('#errorenPausas').show();
                     event.stopPropagation();
                 } else {
@@ -4441,50 +4427,49 @@ function addField() {
         });
     });
     $(function () {
-        $(document).on('change', '#InicioPausa'+ newID, function (event) {
-            let horaF = $('#FinPausa'+ newID).val();
-            let horaI = $('#InicioPausa'+ newID).val();
-            $('#FinPausa'+ newID).prop( "disabled",false);
-            if($('#horaI').val() > $('#horaF').val()){
+        $(document).on('change', '#InicioPausa' + newID, function (event) {
+            let horaF = $('#FinPausa' + newID).val();
+            let horaI = $('#InicioPausa' + newID).val();
+            $('#FinPausa' + newID).prop("disabled", false);
+            if ($('#horaI').val() > $('#horaF').val()) {
 
-                if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
+                if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
 
-                $('#InicioPausa'+ newID).val('');
+                    $('#InicioPausa' + newID).val('');
                     $('#fueraRango').show();
 
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango').hide();
-                 }
+                }
 
-            } else{
-                if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
-
-                    $('#InicioPausa'+ newID).val('');
-                    $('#fueraRango').show();
-                    event.stopPropagation();
-                 } else{
-                    $('#fueraRango').hide();
-                 }
-            }
-
-
-            if(horaF==null || horaF==''){
-
-            } else{
-                if($('#horaI').val() < $('#horaF').val()){
-            if (horaF <= horaI) {
-                $('#InicioPausa'+ newID).val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas').hide();
+                if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
+
+                    $('#InicioPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                }
             }
-        } else
-        {
-            $('#errorenPausas').hide();
-        }
-        }
+
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if ($('#horaI').val() < $('#horaF').val()) {
+                    if (horaF <= horaI) {
+                        $('#InicioPausa' + newID).val('');
+                        $('#errorenPausas').show();
+                        event.stopPropagation();
+                    } else {
+                        $('#errorenPausas').hide();
+                    }
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            }
 
         });
     });
@@ -4492,70 +4477,70 @@ function addField() {
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
     $newClone.children("button").attr("id", newID)
-    $newClone.children("a").attr("id",'btnPb_'+ newID)
+    $newClone.children("a").attr("id", 'btnPb_' + newID)
     //Inserto el div clonado y modificado despues del div original
     $newClone.insertAfter($('#div_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-   /*  $("#" + clickID).css("backgroundColor", "#f6cfcf");
-    $("#" + clickID).css("border-Color", "#f6cfcf");
-    $("#" + clickID).css("color", "#d11010");
-    $("#" + clickID).css("height", "22px");
-    $("#" + clickID).css("font-weight", "600");
-    $("#" + clickID).css("margin-top", "5px");
-    $("#" + clickID).css("font-size", "12px");*/
+    /*  $("#" + clickID).css("backgroundColor", "#f6cfcf");
+     $("#" + clickID).css("border-Color", "#f6cfcf");
+     $("#" + clickID).css("color", "#d11010");
+     $("#" + clickID).css("height", "22px");
+     $("#" + clickID).css("font-weight", "600");
+     $("#" + clickID).css("margin-top", "5px");
+     $("#" + clickID).css("font-size", "12px");*/
     //////////////
 
-    $("#btnPb_"+clickID-1).remove();
-    var clicmas=clickID;
-    $("#"+clicmas+".bt_plus").remove();
+    $("#btnPb_" + clickID - 1).remove();
+    var clicmas = clickID;
+    $("#" + clicmas + ".bt_plus").remove();
     $("#" + clickID).css("width", "19px");
     $("#" + clickID).css("margin-left", "20-px");
     $('input[name="descPausa[]"]').prop('required', true);
     $('input[name="InicioPausa[]"]').prop('required', true);
     $('input[name="FinPausa[]"]').prop('required', true);
-   /*  $("#" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField); */
+    /*  $("#" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField); */
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
     $('.flatpickr-input[readonly]').prop('readonly', false)
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
     $("#btnPb_" + clickID).bind("click", delRow);
-    $("#idPausaMayor").val(clickID+1);
+    $("#idPausaMayor").val(clickID + 1);
 }
 function delRow() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
-    var elementoborradoID=$(this).parent('button').attr("id");
-    var elementoborradoIDInput=$("#idPausaMayor").val();
-    var eleMasuno=elementoborradoIDInput+1;
+    var elementoborradoID = $(this).parent('button').attr("id");
+    var elementoborradoIDInput = $("#idPausaMayor").val();
+    var eleMasuno = elementoborradoIDInput + 1;
 
-    if(elementoborradoIDInput=elementoborradoID){
+    if (elementoborradoIDInput = elementoborradoID) {
 
-        $('#inputPausa').append('<button class="btn btn-sm" id="btnnuevoDivPausas" onclick="nuevoDivPausas('+eleMasuno+')" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+        $('#inputPausa').append('<button class="btn btn-sm" id="btnnuevoDivPausas" onclick="nuevoDivPausas(' + eleMasuno + ')" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+            ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
 
     }
 
 
-    if($('#inputPausa').is(':empty')){
+    if ($('#inputPausa').is(':empty')) {
         $('#inputPausa').append('<button class="btn btn-sm" id="btnnuevoDivPausas" onclick="nuevoDivPausas(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+            ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
     }
     $(".bt_plus").each(function (el) {
         $(this).bind("click", addField);
     });
 }
-function nuevoDivPausas(npa){
+function nuevoDivPausas(npa) {
     $('#btnnuevoDivPausas').hide();
-    $('#inputPausa').append('<div id="div_'+npa+'" class="row col-md-12" style=" margin-bottom: 8px;">' +
+    $('#inputPausa').append('<div id="div_' + npa + '" class="row col-md-12" style=" margin-bottom: 8px;">' +
         '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
         '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" disabled >' +
-        '&nbsp; <a style="cursor: pointer" id="btnPb_'+npa+'" ><img src="/admin/images/delete.svg" height="15"></a><button class="btn btn-sm bt_plus" id="'+npa+'" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        '&nbsp; <a style="cursor: pointer" id="btnPb_' + npa + '" ><img src="/admin/images/delete.svg" height="15"></a><button class="btn btn-sm bt_plus" id="' + npa + '" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
         '</div>');
-        $("#btnPb_"+npa).bind("click", delRow);
+    $("#btnPb_" + npa).bind("click", delRow);
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
     })
@@ -4568,7 +4553,7 @@ function nuevoDivPausas(npa){
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:null
+        defaultHour: null
     });
 
     $('input[name="descPausa[]"]').prop('required', false);
@@ -4576,10 +4561,10 @@ function nuevoDivPausas(npa){
     $('input[name="FinPausa[]"]').prop('required', false);
 }
 $('#SwitchPausa_ed').change(function (event) {
-    if ( $('input[name="descPausa_edRegist[]"]').length) {
+    if ($('input[name="descPausa_edRegist[]"]').length) {
         $('#SwitchPausa_ed').prop('checked', true);
         bootbox.confirm({
-            title:"Eliminar pausas de horario",
+            title: "Eliminar pausas de horario",
             message: "Se eliminaran todas las pausas de este horario",
             buttons: {
                 confirm: {
@@ -4593,8 +4578,8 @@ $('#SwitchPausa_ed').change(function (event) {
             },
             callback: function (result) {
                 if (result == true) {
-                    var valorHorario=$('#idhorario_ed').val();
-                     $.ajax({
+                    var valorHorario = $('#idhorario_ed').val();
+                    $.ajax({
                         type: "post",
                         url: "/eliminarPausasEnEditar",
                         data: {
@@ -4626,45 +4611,45 @@ $('#SwitchPausa_ed').change(function (event) {
         });
     }
     if ($('#SwitchPausa_ed').prop('checked')) {
-        if ( $('input[name="descPausa_edRegist[]"]').length) {}
-        else{
+        if ($('input[name="descPausa_edRegist[]"]').length) { }
+        else {
             $("#PausasHorar_ed").append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
-                        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
-                        '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
-                        '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
-                        '&nbsp; <a style="cursor: pointer" id="btnPbed_100" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_ed" id="ed_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-                         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
-                        '</div>'
-                        );
-                        $("#btnPbed_100").bind("click", delRow_ed);
-                        $('.flatpickr-input[readonly]').on('focus', function () {
-                            $(this).blur()
-                        })
-                        $('.flatpickr-input[readonly]').prop('readonly', false)
-                        $(".bt_plus_ed").each(function (el) {
-                            $(this).bind("click", addField_ed);
-                        });
-                        $('#InicioPausa_ed').flatpickr({
-                            enableTime: true,
-                            noCalendar: true,
-                            dateFormat: "H:i",
-                            time_24hr: true
-                        });
-                        let horafinal=$('#horaF_ed').val();
-                        splih=horafinal.split(":");
+                '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
+                '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
+                '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
+                '&nbsp; <a style="cursor: pointer" id="btnPbed_100" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_ed" id="ed_100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+                '</div>'
+            );
+            $("#btnPbed_100").bind("click", delRow_ed);
+            $('.flatpickr-input[readonly]').on('focus', function () {
+                $(this).blur()
+            })
+            $('.flatpickr-input[readonly]').prop('readonly', false)
+            $(".bt_plus_ed").each(function (el) {
+                $(this).bind("click", addField_ed);
+            });
+            $('#InicioPausa_ed').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            let horafinal = $('#horaF_ed').val();
+            splih = horafinal.split(":");
 
-                        $('#FinPausa_ed').flatpickr({
-                            enableTime: true,
-                            noCalendar: true,
-                            dateFormat: "H:i",
-                            time_24hr: true,
-                            defaultHour:splih[0]
-                        });
+            $('#FinPausa_ed').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour: splih[0]
+            });
 
-        $('input[name="descPausa_ed[]"]').prop('required', true);
-        $('#InicioPausa_ed').prop('required', true);
-        $('#FinPausa_ed').prop('required', true);
-        $('#pausas_edit').show();
+            $('input[name="descPausa_ed[]"]').prop('required', true);
+            $('#InicioPausa_ed').prop('required', true);
+            $('#FinPausa_ed').prop('required', true);
+            $('#pausas_edit').show();
         }
 
     }
@@ -4704,100 +4689,100 @@ function addField_ed() {
         dateFormat: "H:i",
         time_24hr: true
     });
-    var horafinalED=$('#horaF_ed').val();
-    splihED=horafinalED.split(":");
+    var horafinalED = $('#horaF_ed').val();
+    splihED = horafinalED.split(":");
 
     $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:splihED[0]
+        defaultHour: splihED[0]
     });;
     $(function () {
-        $(document).on('change', '#FinPausa_ed'+ newID, function (event) {
-            let horaF = $('#FinPausa_ed'+ newID).val();
-            let horaI = $('#InicioPausa_ed'+ newID).val();
+        $(document).on('change', '#FinPausa_ed' + newID, function (event) {
+            let horaF = $('#FinPausa_ed' + newID).val();
+            let horaI = $('#InicioPausa_ed' + newID).val();
 
-            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+            if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
                 $('#FinPausa_ed' + newID).val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango_ed').hide();
-                if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                     $('#errorenPausas_ed').show();
                     $('#FinPausa_ed' + newID).val('');
                 }
-                else{
+                else {
                     $('#errorenPausas_ed').hide();
                 }
-             }
+            }
 
-                if (horaF <= horaI) {
-                    $('#FinPausa_ed'+ newID).val('');
-                    $('#errorenPausas_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas_ed').hide();
-                }
+            if (horaF <= horaI) {
+                $('#FinPausa_ed' + newID).val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
 
 
 
         });
     });
     $(function () {
-        $(document).on('change', '#InicioPausa_ed'+ newID, function (event) {
-            let horaF = $('#FinPausa_ed'+ newID).val();
-            let horaI = $('#InicioPausa_ed'+ newID).val();
-            $('#FinPausa_ed'+ newID).prop( "disabled",false);
-            if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+        $(document).on('change', '#InicioPausa_ed' + newID, function (event) {
+            let horaF = $('#FinPausa_ed' + newID).val();
+            let horaI = $('#InicioPausa_ed' + newID).val();
+            $('#FinPausa_ed' + newID).prop("disabled", false);
+            if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
-                $('#InicioPausa_ed'+ newID).val('');
+                $('#InicioPausa_ed' + newID).val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-             } else{
-                $('#fueraRango_ed').hide();
-             }
-
-            if(horaF==null || horaF==''){
-
-            } else{
-            if (horaF <= horaI) {
-                $('#InicioPausa_ed'+ newID).val('');
-                $('#errorenPausas_ed').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas_ed').hide();
+                $('#fueraRango_ed').hide();
             }
-        }
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if (horaF <= horaI) {
+                    $('#InicioPausa_ed' + newID).val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+            }
 
         });
     });
 
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
-    $newClone.children("button").attr("id",'ed_'+newID)
-    $newClone.children("a").attr("id",'btnPbed_'+ newID)
+    $newClone.children("button").attr("id", 'ed_' + newID)
+    $newClone.children("a").attr("id", 'btnPbed_' + newID)
     //Inserto el div clonado y modificado despues del div original
     $newClone.insertAfter($('#divEd_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-   /*  $("#ed_" + clickID).css("backgroundColor", "#f6cfcf");
-    $("#ed_" + clickID).css("border-Color", "#f6cfcf");
-    $("#ed_" + clickID).css("color", "#d11010");
-    $("#ed_" + clickID).css("height", "22px");
-    $("#ed_" + clickID).css("font-weight", "600");
-    $("#ed_" + clickID).css("margin-top", "5px");
-    $("#ed_" + clickID).css("font-size", "12px"); */
+    /*  $("#ed_" + clickID).css("backgroundColor", "#f6cfcf");
+     $("#ed_" + clickID).css("border-Color", "#f6cfcf");
+     $("#ed_" + clickID).css("color", "#d11010");
+     $("#ed_" + clickID).css("height", "22px");
+     $("#ed_" + clickID).css("font-weight", "600");
+     $("#ed_" + clickID).css("margin-top", "5px");
+     $("#ed_" + clickID).css("font-size", "12px"); */
     $("#ed_" + clickID).css("width", "19px");
     $("#ed_" + clickID).css("margin-left", "20-px");
     $('input[name="descPausa_ed[]"]').prop('required', true);
     $('input[name="InicioPausa_ed[]"]').prop('required', true);
     $('input[name="FinPausa_ed[]"]').prop('required', true);
-    $("#btnPbed_"+clickID-1).remove();
-    var clicmased=clickID;
-    $("#ed_"+clicmased+".bt_plus_ed").remove();
+    $("#btnPbed_" + clickID - 1).remove();
+    var clicmased = clickID;
+    $("#ed_" + clicmased + ".bt_plus_ed").remove();
     /* $("#ed_" + clickID).html('<img src="admin/images/delete.svg" height="15">').unbind("click", addField_ed); */
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
@@ -4806,25 +4791,25 @@ function addField_ed() {
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
     $("#ed_" + clickID).bind("click", delRow_ed);
     $("#btnPbed_" + clickID).bind("click", delRow_ed);
-   $("#idPausaMayor_ed").val(clickID+1);
+    $("#idPausaMayor_ed").val(clickID + 1);
 }
 function delRow_ed() {
 
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
-    var idDiv_ed='idDiv'+$(this).parent('div').attr("id");
-   var nuevoId_edit= idDiv_ed.slice(-3);
-  var idpausa_editM= $("#idPausaMayor_ed").val();
+    var idDiv_ed = 'idDiv' + $(this).parent('div').attr("id");
+    var nuevoId_edit = idDiv_ed.slice(-3);
+    var idpausa_editM = $("#idPausaMayor_ed").val();
 
 
-    if($('#PausasHorar_ed').is(':empty')){
+    if ($('#PausasHorar_ed').is(':empty')) {
         $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+            ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
     }
-    else{
-        if(idpausa_editM==nuevoId_edit){
-            $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed('+nuevoId_edit+')" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+    else {
+        if (idpausa_editM == nuevoId_edit) {
+            $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed(' + nuevoId_edit + ')" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+                ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
         }
     }
 
@@ -4832,44 +4817,44 @@ function delRow_ed() {
         $(this).bind("click", addField);
     });
 }
-function  nuevoDivPausas_ed(npa){
+function nuevoDivPausas_ed(npa) {
     $('#btnnuevoDivPausas_ed').hide();
-    $("#PausasHorar_ed").append('<div id="divEd_'+npa+'" class="row col-md-12" style=" margin-bottom: 8px;">' +
-                        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
-                        '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
-                        '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
-                        '&nbsp; <a style="cursor: pointer" id="btnPbed_'+npa+'" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_ed" id="ed_'+npa+'" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-                         ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
-                        '</div>'
-                        );
-                        $("#btnPbed_"+npa).bind("click", delRow_ed);
-                        $('.flatpickr-input[readonly]').on('focus', function () {
-                            $(this).blur()
-                        })
-                        $('.flatpickr-input[readonly]').prop('readonly', false)
-                        $(".bt_plus_ed").each(function (el) {
-                            $(this).bind("click", addField_ed);
-                        });
-                        $('#InicioPausa_ed').flatpickr({
-                            enableTime: true,
-                            noCalendar: true,
-                            dateFormat: "H:i",
-                            time_24hr: true
-                        });
-                        let horafinal=$('#horaF_ed').val();
-                        splih=horafinal.split(":");
+    $("#PausasHorar_ed").append('<div id="divEd_' + npa + '" class="row col-md-12" style=" margin-bottom: 8px;">' +
+        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
+        '<input type="text"   class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
+        '<input type="text" class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" >' +
+        '&nbsp; <a style="cursor: pointer" id="btnPbed_' + npa + '" ><img src="/admin/images/delete.svg" height="15"></a> <button class="btn btn-sm bt_plus_ed" id="ed_' + npa + '" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
+        '</div>'
+    );
+    $("#btnPbed_" + npa).bind("click", delRow_ed);
+    $('.flatpickr-input[readonly]').on('focus', function () {
+        $(this).blur()
+    })
+    $('.flatpickr-input[readonly]').prop('readonly', false)
+    $(".bt_plus_ed").each(function (el) {
+        $(this).bind("click", addField_ed);
+    });
+    $('#InicioPausa_ed').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+    let horafinal = $('#horaF_ed').val();
+    splih = horafinal.split(":");
 
-                        $('#FinPausa_ed').flatpickr({
-                            enableTime: true,
-                            noCalendar: true,
-                            dateFormat: "H:i",
-                            time_24hr: true,
-                            defaultHour:splih[0]
-                        });
+    $('#FinPausa_ed').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        defaultHour: splih[0]
+    });
 
-        $('input[name="descPausa_ed[]"]').prop('required', true);
-        $('#InicioPausa_ed').prop('required', true);
-        $('#FinPausa_ed').prop('required', true);
+    $('input[name="descPausa_ed[]"]').prop('required', true);
+    $('#InicioPausa_ed').prop('required', true);
+    $('#FinPausa_ed').prop('required', true);
 }
 /////////////////////////
 function addField_edNR() {
@@ -4896,100 +4881,100 @@ function addField_edNR() {
         dateFormat: "H:i",
         time_24hr: true
     });
-    var horafinalEDRN=$('#horaF_ed').val();
-    splihEDRN=horafinalEDRN.split(":");
+    var horafinalEDRN = $('#horaF_ed').val();
+    splihEDRN = horafinalEDRN.split(":");
 
     $newClone.children("input").eq(2).attr("id", 'FinPausa_edRN' + newID).val('').prop('required', true).flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultHour:splihEDRN[0]
+        defaultHour: splihEDRN[0]
     });;
     $(function () {
-        $(document).on('change', '#FinPausa_edRN'+ newID, function (event) {
-            let horaF = $('#FinPausa_edRN'+ newID).val();
-            let horaI = $('#InicioPausa_edRN'+ newID).val();
+        $(document).on('change', '#FinPausa_edRN' + newID, function (event) {
+            let horaF = $('#FinPausa_edRN' + newID).val();
+            let horaI = $('#InicioPausa_edRN' + newID).val();
 
-            if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+            if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
                 $('#FinPausa_edRN' + newID).val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango_ed').hide();
-                if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                     $('#errorenPausas_ed').show();
                     $('#FinPausa_edRN' + newID).val('');
                 }
-                else{
+                else {
                     $('#errorenPausas_ed').hide();
                 }
-             }
+            }
 
-                if (horaF <= horaI) {
-                    $('#FinPausa_edRN'+ newID).val('');
-                    $('#errorenPausas_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas_ed').hide();
-                }
+            if (horaF <= horaI) {
+                $('#FinPausa_edRN' + newID).val('');
+                $('#errorenPausas_ed').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas_ed').hide();
+            }
 
 
 
         });
     });
     $(function () {
-        $(document).on('change', '#InicioPausa_edRN'+ newID, function (event) {
-            let horaF = $('#FinPausa_edRN'+ newID).val();
-            let horaI = $('#InicioPausa_edRN'+ newID).val();
-            $('#FinPausa_edRN'+ newID).prop( "disabled",false);
-            if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+        $(document).on('change', '#InicioPausa_edRN' + newID, function (event) {
+            let horaF = $('#FinPausa_edRN' + newID).val();
+            let horaI = $('#InicioPausa_edRN' + newID).val();
+            $('#FinPausa_edRN' + newID).prop("disabled", false);
+            if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
-                $('#InicioPausa_edRN'+ newID).val('');
+                $('#InicioPausa_edRN' + newID).val('');
                 $('#fueraRango_ed').show();
                 event.stopPropagation();
-             } else{
-                $('#fueraRango_ed').hide();
-             }
-
-            if(horaF==null || horaF==''){
-
-            } else{
-            if (horaF <= horaI) {
-                $('#InicioPausa_edRN'+ newID).val('');
-                $('#errorenPausas_ed').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas_ed').hide();
+                $('#fueraRango_ed').hide();
             }
-        }
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if (horaF <= horaI) {
+                    $('#InicioPausa_edRN' + newID).val('');
+                    $('#errorenPausas_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
+            }
 
         });
     });
 
     /*  $newClone.children("input").eq(3).attr("id",'PROVECONT_email'+newID).val(''); */
     //Asigno nuevo id al boton
-    $newClone.children("button").attr("id",'edA_'+newID)
-    $newClone.children("a").attr("id",'btnPbedA_'+ newID)
+    $newClone.children("button").attr("id", 'edA_' + newID)
+    $newClone.children("a").attr("id", 'btnPbedA_' + newID)
     //Inserto el div clonado y modificado despues del div original
     $newClone.insertAfter($('#divEdRN_' + clickID));
     //Cambio el signo "+" por el signo "-" y le quito el evento addfield
     //$("#"+clickID-1).remove();
-   /*  $("#edA_" + clickID).css("backgroundColor", "#f6cfcf");
-    $("#edA_" + clickID).css("border-Color", "#f6cfcf");
-    $("#edA_" + clickID).css("color", "#d11010");
-    $("#edA_" + clickID).css("height", "22px");
-    $("#edA_" + clickID).css("font-weight", "600");
-    $("#edA_" + clickID).css("margin-top", "5px");
-    $("#edA_" + clickID).css("font-size", "12px"); */
+    /*  $("#edA_" + clickID).css("backgroundColor", "#f6cfcf");
+     $("#edA_" + clickID).css("border-Color", "#f6cfcf");
+     $("#edA_" + clickID).css("color", "#d11010");
+     $("#edA_" + clickID).css("height", "22px");
+     $("#edA_" + clickID).css("font-weight", "600");
+     $("#edA_" + clickID).css("margin-top", "5px");
+     $("#edA_" + clickID).css("font-size", "12px"); */
     $("#edA_" + clickID).css("width", "19px");
     $("#edA_" + clickID).css("margin-left", "20-px");
     $('input[name="descPausa_edRN[]"]').prop('required', true);
     $('input[name="InicioPausa_edRN[]"]').prop('required', true);
     $('input[name="FinPausa_edRN[]"]').prop('required', true);
-    $("#btnPbedA_"+clickID-1).remove();
-    var clicmased=clickID;
-    $("#edA_"+clicmased+".bt_plus_edAgr").remove();
+    $("#btnPbedA_" + clickID - 1).remove();
+    var clicmased = clickID;
+    $("#edA_" + clicmased + ".bt_plus_edAgr").remove();
 
     $('.flatpickr-input[readonly]').on('focus', function () {
         $(this).blur()
@@ -4998,66 +4983,66 @@ function addField_edNR() {
     //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
     $("#edA_" + clickID).bind("click", delRow_edRN);
     $("#btnPbedA_" + clickID).bind("click", delRow_edRN);
-    $("#idPausaMayor_edA").val(clickID+1);
+    $("#idPausaMayor_edA").val(clickID + 1);
 }
 function delRow_edRN() {
     // Funcion que destruye el elemento actual una vez echo el click
     $(this).parent('div').remove();
-    var idDiv_ed='idDiv'+$(this).parent('div').attr("id");
-   var nuevoId_edit= idDiv_ed.slice(-3);
-  var idpausa_editM= $("#idPausaMayor_edA").val();
+    var idDiv_ed = 'idDiv' + $(this).parent('div').attr("id");
+    var nuevoId_edit = idDiv_ed.slice(-3);
+    var idpausa_editM = $("#idPausaMayor_edA").val();
 
 
- /*   if($('#PausasHorar_ed').is(':empty')){
-    $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-    ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
-} */
+    /*   if($('#PausasHorar_ed').is(':empty')){
+       $('#PausasHorar_ed').append('<button class="btn btn-sm" id="btnnuevoDivPausas_ed" onclick="nuevoDivPausas_ed(100)" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
+       ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>');
+   } */
 }
 ////////////////////////
 $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if($('#horaI').val() > $('#horaF').val()){
-            if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
+            if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
                 $('#FinPausa').val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-                if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#errorenPausas').show();
                     $('#FinPausa').val('');
                 }
-                else{
+                else {
                     $('#errorenPausas').hide();
                 }
 
-             }
+            }
 
-             if (horaI > horaF) {
-               /*  $('#FinPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation(); */
+            if (horaI > horaF) {
+                /*  $('#FinPausa').val('');
+                 $('#errorenPausas').show();
+                 event.stopPropagation(); */
             } else {
                 $('#errorenPausas').hide();
             }
         }
-        else{
-           if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
-            $('#FinPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
-         if (horaF <= horaI) {
-            $('#FinPausa').val('');
-            $('#errorenPausas').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
-        }
+        else {
+            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+                $('#FinPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
+            if (horaF <= horaI) {
+                $('#FinPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
         }
 
 
@@ -5069,64 +5054,62 @@ $(function () {
     $(document).on('change', '#InicioPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        $('#FinPausa').prop( "disabled",false);
+        $('#FinPausa').prop("disabled", false);
 
 
-        if($('#horaI').val() > $('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
 
-            if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
+            if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
 
                 $('#InicioPausa').val('');
                 $('#fueraRango').show();
 
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-             }
+            }
 
-        } else
-        {
-            if(horaI<$('#horaI').val() || horaI>$('#horaF').val() ){
+        } else {
+            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
 
-            $('#InicioPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
+                $('#InicioPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
         }
 
 
-         if(horaF==null || horaF==''){
-            var horafinal1=$('#horaF').val();
-            splih1=horafinal1.split(":");
+        if (horaF == null || horaF == '') {
+            var horafinal1 = $('#horaF').val();
+            splih1 = horafinal1.split(":");
 
             $('#FinPausa').val('').flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
 
-            if($('#horaI').val() < $('#horaF').val()){
-            if (horaF <= horaI) {
-                $('#InicioPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
+            if ($('#horaI').val() < $('#horaF').val()) {
+                if (horaF <= horaI) {
+                    $('#InicioPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
             } else {
                 $('#errorenPausas').hide();
             }
-        } else
-        {
-            $('#errorenPausas').hide();
         }
-         }
 
-         $('#FinPausa').on('focus', function () {
+        $('#FinPausa').on('focus', function () {
             $(this).blur();
         })
         $('#FinPausa').removeAttr("readonly");
@@ -5138,20 +5121,20 @@ $(function () {
     $(document).on('change', '#FinPausa_ed', function (event) {
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
-        if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
+        if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
             $('#FinPausa_ed').val('');
             $('#fueraRango_ed').show();
             event.stopPropagation();
-         } else{
+        } else {
             $('#fueraRango_ed').hide();
-            if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+            if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                 $('#errorenPausas_ed').show();
                 $('#FinPausa_ed').val('');
             }
-            else{
+            else {
                 $('#errorenPausas_ed').hide();
             }
-         }
+        }
         if (horaF <= horaI) {
             $('#FinPausa_ed').val('');
             $('#errorenPausas_ed').show();
@@ -5167,21 +5150,21 @@ $(function () {
     $(document).on('change', '#InicioPausa_ed', function (event) {
         let horaF = $('#FinPausa_ed').val();
         let horaI = $('#InicioPausa_ed').val();
-        $('#FinPausa_ed').prop( "disabled",false);
+        $('#FinPausa_ed').prop("disabled", false);
 
-         if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
+        if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
 
             $('#InicioPausa_ed').val('');
             $('#fueraRango_ed').show();
             event.stopPropagation();
-         } else{
+        } else {
             $('#fueraRango_ed').hide();
-         }
+        }
 
-         if(horaF==null || horaF==''){
+        if (horaF == null || horaF == '') {
 
-         }
-         else{
+        }
+        else {
 
             if (horaF <= horaI) {
                 $('#InicioPausa_ed').val('');
@@ -5190,7 +5173,7 @@ $(function () {
             } else {
                 $('#errorenPausas_ed').hide();
             }
-         }
+        }
 
 
     });
@@ -5200,26 +5183,26 @@ $(function () {
     $(document).on('change', '#horAdicSwitch', function (event) {
         if ($('#horAdicSwitch').prop('checked')) {
             $('#nHorasAdic').show();
-           /*  $('#nHorasAdic').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                defaultDate:"02:00"
-            });
-            $('#nHorasAdic').val( "02:00"); */
+            /*  $('#nHorasAdic').flatpickr({
+                 enableTime: true,
+                 noCalendar: true,
+                 dateFormat: "H:i",
+                 time_24hr: true,
+                 defaultDate:"02:00"
+             });
+             $('#nHorasAdic').val( "02:00"); */
 
 
-        } else{
+        } else {
             $('#nHorasAdic').hide();
-           
+
         }
 
     });
 });
-function eliminarPH(idpausa){
+function eliminarPH(idpausa) {
     bootbox.confirm({
-        title:"Eliminar pausa",
+        title: "Eliminar pausa",
         message: "¿Desea eliminar la pausa del horario?",
         buttons: {
             confirm: {
@@ -5249,8 +5232,8 @@ function eliminarPH(idpausa){
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
-                        $("#divEdReg_"+idpausa+ "> input.form-control").remove();
-                        $("#btnEli_edReg"+idpausa).remove();
+                        $("#divEdReg_" + idpausa + "> input.form-control").remove();
+                        $("#btnEli_edReg" + idpausa).remove();
                         ///cambiar id de pausa o eliminar para q no registree
                     },
                     error: function (data) {
@@ -5264,4 +5247,1292 @@ function eliminarPH(idpausa){
     });
 
 
+}
+
+
+// ********************************** NUEVAS FUNCIONALIDAD ********************************
+// ! ******************************** FORMULARIO REGISTRAR ********************************
+// : FUNCION DE ABRIR MODAL
+var horasO = $('#horaOblig').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+$('#horaI').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true,
+    onClose: function (selectedDates, dateStr, instance) {
+        if ($('#horaF').val() != "") {
+            var horaI = moment($('#horaI').val(), ["HH:mm"]);
+            var horaF = moment($('#horaF').val(), ["HH:mm"]);
+
+            if (horaF.isSameOrBefore(horaI)) {
+                $('#divOtrodia').show();
+                var fechaF = moment().add(1, 'days').format("YYYY-MM-DD");
+                var HoraFF = horaF.format("HH:mm");
+                var tiempoNuevo = moment(fechaF + " " + HoraFF, ["YYYY-MM-DD HH:mm"]);
+                var tiempoSinM = horaI.format("HH:mm");
+                var horaS = parseInt(tiempoSinM.split(":")[0]);
+                var minuteS = parseInt(tiempoSinM.split(":")[1]);
+                var substraccion = tiempoNuevo.subtract({ "hours": horaS, "minutes": minuteS });
+                var respuesta = moment(substraccion.toString()).format("HH:mm");
+                horasO.setDate(respuesta);
+
+            } else {
+                $('#divOtrodia').hide();
+                var tiempoSinM = horaI.format("HH:mm");
+                var horaS = parseInt(tiempoSinM.split(":")[0]);
+                var minuteS = parseInt(tiempoSinM.split(":")[1]);
+                var substraccion = horaF.subtract({ "hours": horaS, "minutes": minuteS });
+                var respuesta = moment(substraccion.toString()).format("HH:mm");
+                horasO.setDate(respuesta);
+            }
+        }
+    },
+    onChange: function (selectedDates, dateStr, instance) {
+        if ($('#horaF').val() != "") {
+            var validacionPH = validarHorasPausaHorario();
+            if (!validacionPH) {
+                $('#btnGuardaHorario').prop("disabled", true);
+                return false;
+            } else {
+                var validacionEP = validarHorasEntrePausas();
+                if (!validacionEP) {
+                    $('#btnGuardaHorario').prop("disabled", true);
+                    return false;
+                }
+                $('#btnGuardaHorario').prop("disabled", false);
+                $('#fueraRango').hide();
+                $('#errorenPausas').hide();
+                $('#errorenPausasCruzadas').hide();
+            }
+        }
+    }
+});
+$('#horaF').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true,
+    onClose: function (selectedDates, dateStr, instance) {
+        if ($('#horaI').val() != "") {
+            var horaI = moment($('#horaI').val(), ["HH:mm"]);  //: -> CONVERTIR EN MOMENT HORA INICIO
+            var horaF = moment($('#horaF').val(), ["HH:mm"]);  //: -> CONVERTIR EN MOMENT HORA FIN
+
+            if (horaF.isSameOrBefore(horaI)) {    //: -> CONDICIONAL SI HORA FINAL ES MAYOR IGUAL AL AHORA INICIAL
+                $('#divOtrodia').show();          //: -> MOSTRAR CHECH INDICADO QUE ES DEL SIGUIENTE DIA LA FECHA FINAL
+                var fechaF = moment().add(1, 'days').format("YYYY-MM-DD"); //: -> OBTENER LA FECCHA DEL DIA SIGUIENTE
+                var HoraFF = horaF.format("HH:mm");
+                var tiempoNuevo = moment(fechaF + " " + HoraFF, ["YYYY-MM-DD HH:mm"]);
+                var tiempoSinM = horaI.format("HH:mm");
+                var horaS = parseInt(tiempoSinM.split(":")[0]);
+                var minuteS = parseInt(tiempoSinM.split(":")[1]);
+                var substraccion = tiempoNuevo.subtract({ "hours": horaS, "minutes": minuteS }); //: -> SUBTRAEMOS EL TIEMPO
+                var respuesta = moment(substraccion.toString()).format("HH:mm");
+                horasO.setDate(respuesta); //: INSERTAMOS EN PLUGIN
+            } else {
+                $('#divOtrodia').hide();
+                var tiempoSinM = horaI.format("HH:mm");
+                var horaS = parseInt(tiempoSinM.split(":")[0]);
+                var minuteS = parseInt(tiempoSinM.split(":")[1]);
+                var substraccion = horaF.subtract({ "hours": horaS, "minutes": minuteS });
+                var respuesta = moment(substraccion.toString()).format("HH:mm");
+                horasO.setDate(respuesta);
+            }
+        }
+    },
+    onChange: function (selectedDates, dateStr, instance) {
+        if ($('#horaI').val() != "") {
+            var validacionPH = validarHorasPausaHorario();
+            if (!validacionPH) {
+                $('#btnGuardaHorario').prop("disabled", true);
+                return false;
+            } else {
+                var validacionEP = validarHorasEntrePausas();
+                if (!validacionEP) {
+                    $('#btnGuardaHorario').prop("disabled", true);
+                    return false;
+                }
+                $('#btnGuardaHorario').prop("disabled", false);
+                $('#fueraRango').hide();
+                $('#errorenPausas').hide();
+                $('#errorenPausasCruzadas').hide();
+            }
+        }
+    }
+});
+function modalRegistrar() {
+    $('#horarioAgregar').modal();
+}
+// * SWITCH DE PAUSAS
+var r_cont = 0;
+$('#SwitchPausa').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#horaF').val() != "" || $('#horaI').val() != "") {
+            $('#vacioHoraF').hide();
+            $('#divPausa').show();
+            $('#inputPausa').empty();
+            contenidoInput(undefined);
+        } else {
+            $('#inputPausa').empty();
+            $('#vacioHoraF').show();
+            $('#SwitchPausa').prop("checked", false);
+        }
+    } else {
+        $('#divPausa').hide();
+        $('#inputPausa').empty();
+        r_cont = 0;
+    }
+});
+// * FUNCION DE AGREGAR CONTENIDO
+function contenidoInput(id) {
+    if (id != undefined) { //* CUANDO SE REGISTRA POR PRIMERA VEZ UNA PAUSA
+        if ($('#rowP' + id).is(":visible")) {
+            // ! VALIDACION DE CAMPOS VACIOS
+            if ($('#descPausa' + id).val() == "" || $('#InicioPausa' + id).val() == "" || $('#FinPausa' + id).val() == "") {
+                $('#validP').show();
+                $('#btnGuardaHorario').prop("disabled", true);
+                if ($('#descPausa' + id).val() == "") {
+                    $('#descPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#InicioPausa' + id).val() == "") {
+                    $('#InicioPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#FinPausa' + id).val() == "") {
+                    $('#FinPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                return false;
+            }
+        }
+        $('#btnGuardaHorario').prop("disabled", false);
+        $('#fueraRango').hide();
+        $('#errorenPausas').hide();
+        $('#errorenPausasCruzadas').hide();
+        var validacionPH = validarHorasPausaHorario();
+        if (!validacionPH) {
+            $('#btnGuardaHorario').prop("disabled", true);
+            return false;
+        } else {
+            var validacionEP = validarHorasEntrePausas();
+            if (!validacionEP) {
+                $('#btnGuardaHorario').prop("disabled", true);
+                return false;
+            }
+            $('#btnGuardaHorario').prop("disabled", false);
+        }
+    }
+    $('#agregar' + id).hide();
+    $('#validP').hide();
+    var cInputs =
+        `<div class="row pb-3" id="rowP${r_cont}">
+                <input type="hidden" class="rowInputs" value="${r_cont}">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="text"  class="form-control form-control-sm descP" id="descPausa${r_cont}"
+                              onkeyup="javascript:$(this).removeClass('borderColor');">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text"  class="form-control form-control-sm inicioP" id="InicioPausa${r_cont}" name="inicioP"
+                                onchange="javascript:$(this).removeClass('borderColor');">
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                <input type="number"  class="form-control form-control-sm" id="toleranciaIP${r_cont}" value="0"
+                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                <div class="input-group-prepend  ">
+                                    <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                        min.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text"  class="form-control form-control-sm finP" id="FinPausa${r_cont}" name="finP" 
+                                onchange="javascript:$(this).removeClass('borderColor');">
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                <input type="number"  class="form-control form-control-sm" id="ToleranciaFP${r_cont}" value="0"
+                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                <div class="input-group-prepend  ">
+                                    <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                        min.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" id="inactivarPausa${r_cont}" class="mt-2 ml-2">
+                        </div>
+                        <div class="col-md-1">
+                            <a style="cursor: pointer" onclick="javascript:eliminarContenido(${r_cont})">
+                                <img src="/admin/images/delete.svg" height="15">
+                            </a>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                            margin-top: 5px;margin-left: 20px" onclick="javascript:contenidoInput(${r_cont})" id="agregar${r_cont}">
+                        +
+                    </button>
+                </div>
+            </div>`;
+    $('#inputPausa').append(cInputs);
+    inicializarHorasPausas(r_cont);
+    r_cont++;
+}
+// * FUNCION DE INICIALIZAR INPUT DE HORAS Y MINUTOS
+function inicializarHorasPausas(id) {
+    $('#InicioPausa' + id).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        onClose: function (selectedDates, dateStr, instance) {
+            $('#fueraRango').hide();
+            $('#errorenPausas').hide();
+            $('#errorenPausasCruzadas').hide();
+            if ($('#horaF').val() != "" || $('#FinPausa' + id).val()) {
+                var validacionPH = validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnGuardaHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnGuardaHorario').prop("disabled", true);
+                        return false;
+                    }
+                    $('#btnGuardaHorario').prop("disabled", false);
+                    $('#fueraRango').hide();
+                    $('#errorenPausas').hide();
+                    $('#errorenPausasCruzadas').hide();
+                }
+            }
+        }
+    });
+    $('#FinPausa' + id).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        onClose: function (selectedDates, dateStr, instance) {
+            $('#fueraRango').hide();
+            $('#errorenPausas').hide();
+            $('#errorenPausasCruzadas').hide();
+            if ($('#horaF').val() != "" || $('#InicioPausa' + id).val()) {
+                var validacionPH = validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnGuardaHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnGuardaHorario').prop("disabled", true);
+                        return false;
+                    }
+                    $('#btnGuardaHorario').prop("disabled", false);
+                    $('#fueraRango').hide();
+                    $('#errorenPausas').hide();
+                    $('#errorenPausasCruzadas').hide();
+                }
+            }
+        }
+    });
+}
+// * FUNCION DE VALIDAR HORAS DE PAUSAS CON HORAS DEL HORARIO
+function validarHorasPausaHorario() {
+    var estado = true;
+    $('.rowInputs').each(function () {
+        var idI = $(this).val();
+        if ($('#descPausa' + idI).val() != "" && $('#InicioPausa' + idI).val() != "" && $('#FinPausa' + idI).val() != "") {
+            // ? -> TIEMPOS DE INPUTS
+            var horaI = moment($('#InicioPausa' + idI).val(), ["HH:mm"]);
+            var horaF = moment($('#FinPausa' + idI).val(), ["HH:mm"]);
+            // ? -> TIEMPOS DE HORARIO
+            var momentInicio = moment($('#horaI').val(), ["HH:mm"]);
+            var momentFin = moment($('#horaF').val(), ["HH:mm"]);
+            // * VALIDACION CON TIEMPOS DE HORARIO
+            if (momentFin.isSameOrBefore(momentInicio)) {    //: -> <=
+                // ! NUEVA FECHA DE HORA INICIO DE PAUSA
+                var nuevoInicio;
+                if (horaI.isBefore(momentInicio)) {        //: -> <
+                    nuevoInicio = horaI.add(1, 'day');    //: -> NUEVA FECHA
+                } else {
+                    nuevoInicio = horaI;
+                }
+                // ! NUEVA FECHA DE HORA FIN
+                var nuevoFin;
+                if (horaF.isBefore(momentInicio)) {
+                    nuevoFin = horaF.add(1, 'day');    //: -> NUEVA FECHA
+                } else {
+                    nuevoFin = horaF;
+                }
+                // ! VALIDACION DE HORA INICIO DE PAUSA
+                var nuevoF = momentFin.add(1, 'day');    //: -> NUEVA FECHA
+                if (!nuevoInicio.isAfter(momentInicio) || !nuevoInicio.isBefore(momentFin) || !nuevoFin.isBefore(nuevoF)) {
+                    $('#fueraRango').show();
+                    estado = false;
+                }
+            } else {
+                if (!horaI.isAfter(momentInicio) || !horaI.isBefore(momentFin) || !horaF.isBefore(momentFin)) {
+                    $('#fueraRango').show();
+                    estado = false;
+                } else {
+                    if (horaF.isBefore(horaI)) {
+                        $('#errorenPausas').show();
+                        estado = false;
+                    }
+                }
+            }
+        }
+    });
+    return estado;
+}
+// * FUNCION DE VALIDAR HORAS ENTRE PAUSAS
+function validarHorasEntrePausas() {
+    var estado = true;
+    $('.rowInputs').each(function () {
+        var idI = $(this).val();
+        if ($('#descPausa' + idI).val() != "" && $('#InicioPausa' + idI).val() != "" && $('#FinPausa' + idI).val() != "") {
+            // ? -> TIEMPOS DE INPUTS
+            var horaI = moment($('#InicioPausa' + idI).val(), ["HH:mm"]);
+            var horaF = moment($('#FinPausa' + idI).val(), ["HH:mm"]);
+            // ? -> TIEMPOS DE HORARIO
+            var momentInicio = moment($('#horaI').val(), ["HH:mm"]);
+            var momentFin = moment($('#horaF').val(), ["HH:mm"]);
+            // * VALIDACION CON TIEMPOS DE HORARIO
+            // * VALIDACION ENTRE PAUSAS
+            $('.rowInputs').each(function () {
+                var idC = $(this).val();
+                if (idI != idC) {
+                    if ($('#descPausa' + idC).val() != "" && $('#InicioPausa' + idC).val() != "" && $('#FinPausa' + idC).val() != "") {
+                        var horaCompararI = moment($('#InicioPausa' + idC).val(), ["HH:mm"]);
+                        var horaCompararF = moment($('#FinPausa' + idC).val(), ["HH:mm"]);
+                        if (momentFin.isSameOrBefore(momentInicio)) {   //: -> <=
+                            var nuevoF = momentFin.add(1, 'day');    //: -> NUEVA FECHA
+                            // ! NUEVA FECHA DE HORA INICIO DE PAUSA
+                            var nuevoInicioC;
+                            if (horaCompararI.isBefore(momentInicio)) {        //: -> <
+                                nuevoInicioC = horaCompararI.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoInicioC = horaCompararI;
+                            }
+                            // ! NUEVA FECHA DE HORA FIN
+                            var nuevoFinC;
+                            if (horaCompararF.isBefore(momentInicio)) {
+                                nuevoFinC = horaCompararF.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoFinC = horaCompararF;
+                            }
+                            // ! NUEVA FECHA DE HORA INICIO DE PAUSA
+                            var nuevoInicio;
+                            if (horaI.isBefore(momentInicio)) {        //: -> <
+                                nuevoInicio = horaI.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoInicio = horaI;
+                            }
+                            // ! NUEVA FECHA DE HORA FIN
+                            var nuevoFin;
+                            if (horaF.isBefore(momentInicio)) {
+                                nuevoFin = horaF.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoFin = horaF;
+                            }
+                            if (nuevoInicioC.isAfter(nuevoInicio) && nuevoInicioC.isBefore(nuevoFin)) {
+                                $('#errorenPausasCruzadas').show();
+                                estado = false;
+                            } else {
+                                if (horaF.isBefore(horaI)) {
+                                    $('#errorenPausas').show();
+                                    estado = false;
+                                }
+                            }
+                        } else {
+                            if (horaCompararI.isAfter(horaI) && horaCompararI.isBefore(horaF)) {
+                                $('#errorenPausasCruzadas').show();
+                                estado = false;
+                            } else {
+                                if (horaF.isBefore(horaI)) {
+                                    $('#errorenPausas').show();
+                                    estado = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+    return estado;
+}
+// * FUNCION DE ELIMINAR CONTENIDO
+function eliminarContenido(id) {
+    $('#descPausa' + id).val("");
+    $('#InicioPausa' + id).val("");
+    $('#FinPausa' + id).val("");
+    $('#toleranciaIP' + id).val("");
+    $('#ToleranciaFP' + id).val("");
+    $('#inactivarPausa' + id).prop("checked", false);
+    $('#rowP' + id).hide();
+    $('#fueraRango').hide();
+    $('#errorenPausas').hide();
+    $('#errorenPausasCruzadas').hide();
+    var validacionPH = validarHorasPausaHorario();
+    if (!validacionPH) {
+        $('#btnGuardaHorario').prop("disabled", true);
+        return false;
+    } else {
+        var validacionEP = validarHorasEntrePausas();
+        if (!validacionEP) {
+            $('#btnGuardaHorario').prop("disabled", true);
+            return false;
+        }
+        $('#btnGuardaHorario').prop("disabled", false);
+        $('#fueraRango').hide();
+        $('#errorenPausas').hide();
+        $('#errorenPausasCruzadas').hide();
+    }
+}
+// * OBTENER PAUSAS
+function obtenerPausas() {
+    var resultado = [];
+    $('.rowInputs').each(function () {
+        var id = $(this).val();
+        var descripcion = $('#descPausa' + id).val();
+        var inicioPausa = $('#InicioPausa' + id).val();
+        var toleranciaPI = $('#toleranciaIP' + id).val();
+        var finPausa = $('#FinPausa' + id).val();
+        var toleranciaPF = $('#ToleranciaFP' + id).val();
+        var inactivarP;
+        if ($('#inactivarPausa' + id).is(":checked")) {
+            inactivarP = 1;
+        } else {
+            inactivarP = 0;
+        }
+        var objPausa = {
+            "id": $(this).val(),
+            "descripcion": descripcion,
+            "inicioPausa": inicioPausa,
+            "toleranciaI": toleranciaPI,
+            "finPausa": finPausa,
+            "toleranciaF": toleranciaPF,
+            "inactivar": inactivarP
+        };
+        resultado.push(objPausa);
+    });
+
+    return resultado;
+}
+function registrarNuevoHorario() {
+    var descripcion = $('#descripcionCa').val();
+    var horaInicio = $('#horaI').val();
+    var horaFin = $('#horaF').val();
+    var toleranciaI = $('#toleranciaH').val();
+    var toleranciaF = $('#toleranciaSalida').val();
+    var horasO = $('#horaOblig').val();
+    var tardanza;
+    var pausas = obtenerPausas();
+    if ($('#SwitchTardanza').is(":checked")) {
+        tardanza = 1;
+    } else {
+        tardanza = 0;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/nuevoHorario",
+        data: {
+            descripcion: descripcion,
+            toleranciaI: toleranciaI,
+            toleranciaF: toleranciaF,
+            horaInicio: horaInicio,
+            horaFin: horaFin,
+            horasO: horasO,
+            tardanza: tardanza,
+            pausas: pausas
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if ($('#horarioAsignar_ed').is(':visible')) {
+                obtenerHorarios();
+                $('#selectHorario').val(data).trigger('change');
+            }
+            $('#horarioAgregar').modal('toggle');
+            limpiarHorario();
+            $('#tablaEmpleado').DataTable().ajax.reload();
+        },
+        error: function () { }
+    });
+}
+function limpiarHorario() {
+    $('#divPausa').hide();
+    $('#inputPausa').empty();
+    $('#descripcionCa').val("");
+    $('#horaI').val("");
+    $('#horaF').val("");
+    $('#toleranciaH').val("");
+    $('#toleranciaSalida').val("");
+    $('#horaOblig').val("");
+    $('#SwitchTardanza').prop("checked", false);
+    $('#SwitchPausa').prop("checked", false);
+}
+// ! ******************************* FINALIZACION ****************************************
+// ! ******************************* MODAL EDITAR ****************************************
+var e_horaInicio = $('#horaI_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true,
+    onChange: function (selectedDates, dateStr, instance) {
+        if ($('#horaF_ed').val() != "") {
+            var validacionPH = e_validarHorasPausaHorario();
+            if (!validacionPH) {
+                $('#btnEditarHorario').prop("disabled", true);
+                return false;
+            } else {
+                var validacionEP = e_validarHorasEntrePausas();
+                if (!validacionEP) {
+                    $('#btnEditarHorario').prop("disabled", true);
+                    return false;
+                }
+                $('#btnEditarHorario').prop("disabled", false);
+                $('#fueraRango_ed').hide();
+                $('#errorenPausas_ed').hide();
+                $('#errorenPausasCruzadas_ed').hide();
+            }
+        }
+    }
+});
+var e_horaFin = $('#horaF_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true,
+    onChange: function (selectedDates, dateStr, instance) {
+        if ($('#horaI_ed').val() != "") {
+            var validacionPH = e_validarHorasPausaHorario();
+            if (!validacionPH) {
+                $('#btnEditarHorario').prop("disabled", true);
+                return false;
+            } else {
+                var validacionEP = e_validarHorasEntrePausas();
+                if (!validacionEP) {
+                    $('#btnEditarHorario').prop("disabled", true);
+                    return false;
+                }
+                $('#btnEditarHorario').prop("disabled", false);
+                $('#fueraRango_ed').hide();
+                $('#errorenPausas_ed').hide();
+                $('#errorenPausasCruzadas_ed').hide();
+            }
+        }
+    }
+});
+var e_horaOb = $('#horaOblig_ed').flatpickr({
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+
+var e_cont = 0;
+function modalEditar(id) {
+    e_cont = 0;
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/verDatahorario",
+        data: { id: id },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            console.log(data);
+            $('#idhorario_ed').val(data.horario[0].horario_id);
+            $('#descripcionCa_ed').val(data.horario[0].horario_descripcion);
+            e_horaInicio.setDate(data.horario[0].horaI);
+            e_horaFin.setDate(data.horario[0].horaF);
+            e_horaOb.setDate(data.horario[0].horasObliga);
+            $('#toleranciaH_ed').val(data.horario[0].horario_tolerancia);
+            $('#toleranciaSalida_ed').val(data.horario[0].horario_toleranciaF);
+            // * TARDANZA
+            if (data.horario[0].hora_contTardanza == 1) {
+                $('#SwitchTardanza_ed').prop("checked", true);
+            } else {
+                $('#SwitchTardanza_ed').prop("checked", false);
+            }
+            // * PAUSAS
+            if (data.pausas.length != 0) {
+                $('#SwitchPausa_ed').prop("checked", true);
+                $('#PausasHorar_ed').empty();
+                var contenido = "";
+                for (let index = 0; index < data.pausas.length; index++) {
+                    var pausa = data.pausas[index];
+                    contenido +=
+                        `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}">
+                            <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="text"  class="form-control form-control-sm descP" id="e_descPausa${pausa.idpausas_horario}"
+                                          value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausa${pausa.idpausas_horario}" name="inicioP"
+                                          value="${pausa.pausH_Inicio}"  onchange="javascript:$(this).removeClass('borderColor');">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
+                                               value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                            <div class="input-group-prepend  ">
+                                                <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                    min.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP" 
+                                           value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
+                                               value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                            <div class="input-group-prepend  ">
+                                                <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                    min.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                    if (pausa.inactivar == 0) {
+                        contenido += `
+                                    <div class="col-md-1">
+                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2">
+                                    </div>`;
+                    } else {
+                        contenido += `
+                                    <div class="col-md-1">
+                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2" checked>
+                                    </div>`;
+                    }
+                    contenido += `
+                                    <div class="col-md-1">
+                                        <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})">
+                                            <img src="/admin/images/delete.svg" height="15">
+                                        </a>
+                                    </div>
+                                </div>`;
+                    if (index != (data.pausas.length - 1)) {
+                        contenido += `
+                                <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                                    padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                                        margin-top: 5px;margin-left: 20px; display:none" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
+                                    +
+                                </button>`;
+                    } else {
+                        contenido += `
+                                <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                                    padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                                        margin-top: 5px;margin-left: 20px;" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
+                                    +
+                                </button>`;
+                    }
+                    contenido += `            
+                            </div>
+                        </div>`;
+                }
+                $('#PausasHorar_ed').append(contenido);
+                $('#pausas_edit').show();
+                data.pausas.forEach(element => {
+                    e_inicializarHorasPausas(element.idpausas_horario);
+                });
+            } else {
+                $('#SwitchPausa_ed').prop("checked", false);
+                $('#pausas_edit').hide();
+            }
+            // * COMPARAR TIEMPOS
+            var horaI = moment(data.horario[0].horaI, ["HH:mm"]);
+            var horaF = moment(data.horario[0].horaF, ["HH:mm"]);
+            if (horaF.isBefore(horaI)) {
+                $('#divOtrodia_ed').show();
+            } else {
+                $('#divOtrodia_ed').hide();
+            }
+            $('#horarioEditar').modal();
+        },
+        error: function () { }
+    });
+}
+// : FUNCION DE INICIALIZAR TIEMPO EN EDITAR
+function e_inicializarHorasPausas(id) {
+    $('#e_InicioPausa' + id).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        onClose: function (selectedDates, dateStr, instance) {
+            $('#fueraRango_ed').hide();
+            $('#errorenPausas_ed').hide();
+            $('#errorenPausasCruzadas_ed').hide();
+            if ($('#horaF_ed').val() != "" || $('#e_FinPausa' + id).val()) {
+                var validacionPH = e_validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnEditarHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnEditarHorario').prop("disabled", true);
+                        return false;
+                    }
+                    $('#btnEditarHorario').prop("disabled", false);
+                    $('#fueraRango_ed').hide();
+                    $('#errorenPausas_ed').hide();
+                    $('#errorenPausasCruzadas_ed').hide();
+                }
+            }
+        }
+    });
+    $('#e_FinPausa' + id).flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        onClose: function (selectedDates, dateStr, instance) {
+            $('#fueraRango_ed').hide();
+            $('#errorenPausas_ed').hide();
+            $('#errorenPausasCruzadas_ed').hide();
+            if ($('#horaF_ed').val() != "" || $('#e_InicioPausa' + id).val()) {
+                var validacionPH = e_validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnEditarHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = e_validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnEditarHorario').prop("disabled", true);
+                        return false;
+                    }
+                    $('#btnEditarHorario').prop("disabled", false);
+                    $('#fueraRango_ed').hide();
+                    $('#errorenPausas_ed').hide();
+                    $('#errorenPausasCruzadas_ed').hide();
+                }
+            }
+        }
+    });
+}
+// : FUNCION DE AGREGAR CONTENIDO
+function e_contenidoInput(id) {
+    if (id != undefined) { //* CUANDO SE REGISTRA POR PRIMERA VEZ UNA PAUSA
+        // ! VALIDACION DE CAMPOS VACIOS
+        if ($('#e_rowP' + id).is(":visible")) {
+            if ($('#e_descPausa' + id).val() == "" || $('#e_InicioPausa' + id).val() == "" || $('#e_FinPausa' + id).val() == "") {
+                $('#validP_ed').show();
+                $('#btnEditarHorario').prop("disabled", true);
+                if ($('#e_descPausa' + id).val() == "") {
+                    $('#e_descPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#e_InicioPausa' + id).val() == "") {
+                    $('#e_InicioPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#e_FinPausa' + id).val() == "") {
+                    $('#e_FinPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                return false;
+            }
+        }
+        $('#btnEditarHorario').prop("disabled", false);
+        $('#fueraRango_ed').hide();
+        $('#errorenPausas_ed').hide();
+        $('#errorenPausasCruzadas_ed').hide();
+        var validacionPH = e_validarHorasPausaHorario();
+        if (!validacionPH) {
+            $('#btnEditarHorario').prop("disabled", true);
+            return false;
+        } else {
+            var validacionEP = e_validarHorasEntrePausas();
+            if (!validacionEP) {
+                $('#btnEditarHorario').prop("disabled", true);
+                return false;
+            }
+            $('#btnEditarHorario').prop("disabled", false);
+        }
+    }
+    $('#e_agregar' + id).hide();
+    $('#validP_ed').hide();
+    var cInputs =
+        `<div class="row pb-3" id="e_rowPNew${e_cont}">
+                <input type="hidden" class="e_rowInputs" value="New${e_cont}">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="text"  class="form-control form-control-sm descP" id="e_descPausaNew${e_cont}"
+                              onkeyup="javascript:$(this).removeClass('borderColor');">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausaNew${e_cont}" name="inicioP"
+                                onchange="javascript:$(this).removeClass('borderColor');">
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
+                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                <div class="input-group-prepend  ">
+                                    <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                        min.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text"  class="form-control form-control-sm finP" id="e_FinPausaNew${e_cont}" name="finP" 
+                                onchange="javascript:$(this).removeClass('borderColor');">
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
+                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                <div class="input-group-prepend  ">
+                                    <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                        min.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" id="e_inactivarPausaNew${e_cont}" class="mt-2 ml-2">
+                        </div>
+                        <div class="col-md-1">
+                            <a style="cursor: pointer" onclick="javascript:e_eliminarContenido('New${e_cont}')">
+                                <img src="/admin/images/delete.svg" height="15">
+                            </a>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                            margin-top: 5px;margin-left: 20px" onclick="javascript:e_contenidoInput('New${e_cont}')" id="e_agregarNew${e_cont}">
+                        +
+                    </button>
+                </div>
+            </div>`;
+    $('#PausasHorar_ed').append(cInputs);
+    e_inicializarHorasPausas('New' + e_cont);
+    e_cont++;
+}
+// : FUNCION DE VALIDAR HORAS DE PAUSAS CON HORAS DEL HORARIO
+function e_validarHorasPausaHorario() {
+    var estado = true;
+    $('.e_rowInputs').each(function () {
+        var idI = $(this).val();
+        if ($('#e_descPausa' + idI).val() != "" && $('#e_InicioPausa' + idI).val() != "" && $('#e_FinPausa' + idI).val() != "") {
+            // ? -> TIEMPOS DE INPUTS
+            var horaI = moment($('#e_InicioPausa' + idI).val(), ["HH:mm"]);
+            var horaF = moment($('#e_FinPausa' + idI).val(), ["HH:mm"]);
+            // ? -> TIEMPOS DE HORARIO
+            var momentInicio = moment($('#horaI_ed').val(), ["HH:mm"]);
+            var momentFin = moment($('#horaF_ed').val(), ["HH:mm"]);
+            // * VALIDACION CON TIEMPOS DE HORARIO
+            if (momentFin.isSameOrBefore(momentInicio)) {    //: -> <=
+                // ! NUEVA FECHA DE HORA INICIO DE PAUSA
+                var nuevoInicio;
+                if (horaI.isBefore(momentInicio)) {        //: -> <
+                    nuevoInicio = horaI.add(1, 'day');    //: -> NUEVA FECHA
+                } else {
+                    nuevoInicio = horaI;
+                }
+                // ! NUEVA FECHA DE HORA FIN
+                var nuevoFin;
+                if (horaF.isBefore(momentInicio)) {
+                    nuevoFin = horaF.add(1, 'day');    //: -> NUEVA FECHA
+                } else {
+                    nuevoFin = horaF;
+                }
+                // ! VALIDACION DE HORA INICIO DE PAUSA
+                var nuevoF = momentFin.add(1, 'day');    //: -> NUEVA FECHA
+                if (!nuevoInicio.isAfter(momentInicio) || !nuevoInicio.isBefore(momentFin) || !nuevoFin.isBefore(nuevoF)) {
+                    $('#fueraRango_ed').show();
+                    estado = false;
+                }
+            } else {
+                if (!horaI.isAfter(momentInicio) || !horaI.isBefore(momentFin) || !horaF.isBefore(momentFin)) {
+                    $('#fueraRango_ed').show();
+                    estado = false;
+                } else {
+                    if (horaF.isBefore(horaI)) {
+                        $('#errorenPausas_ed').show();
+                        estado = false;
+                    }
+                }
+            }
+        }
+    });
+    return estado;
+}
+// : FUNCION DE VALIDAR HORAS ENTRE PAUSAS
+function e_validarHorasEntrePausas() {
+    var estado = true;
+    $('.e_rowInputs').each(function () {
+        var idI = $(this).val();
+        if ($('#e_descPausa' + idI).val() != "" && $('#e_InicioPausa' + idI).val() != "" && $('#e_FinPausa' + idI).val() != "") {
+            // ? -> TIEMPOS DE INPUTS
+            var horaI = moment($('#e_InicioPausa' + idI).val(), ["HH:mm"]);
+            var horaF = moment($('#e_FinPausa' + idI).val(), ["HH:mm"]);
+            // ? -> TIEMPOS DE HORARIO
+            var momentInicio = moment($('#horaI_ed').val(), ["HH:mm"]);
+            var momentFin = moment($('#horaF_ed').val(), ["HH:mm"]);
+            // * VALIDACION CON TIEMPOS DE HORARIO
+            // * VALIDACION ENTRE PAUSAS
+            $('.e_rowInputs').each(function () {
+                var idC = $(this).val();
+                if (idI != idC) {
+                    if ($('#e_descPausa' + idC).val() != "" && $('#e_InicioPausa' + idC).val() != "" && $('#e_FinPausa' + idC).val() != "") {
+                        var horaCompararI = moment($('#e_InicioPausa' + idC).val(), ["HH:mm"]);
+                        var horaCompararF = moment($('#e_FinPausa' + idC).val(), ["HH:mm"]);
+                        if (momentFin.isSameOrBefore(momentInicio)) {   //: -> <=
+                            var nuevoF = momentFin.add(1, 'day');    //: -> NUEVA FECHA
+                            // ! NUEVA FECHA DE HORA INICIO DE PAUSA
+                            var nuevoInicioC;
+                            if (horaCompararI.isBefore(momentInicio)) {        //: -> <
+                                nuevoInicioC = horaCompararI.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoInicioC = horaCompararI;
+                            }
+                            // ! NUEVA FECHA DE HORA FIN
+                            var nuevoFinC;
+                            if (horaCompararF.isBefore(momentInicio)) {
+                                nuevoFinC = horaCompararF.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoFinC = horaCompararF;
+                            }
+                            // ! NUEVA FECHA DE HORA INICIO DE PAUSA
+                            var nuevoInicio;
+                            if (horaI.isBefore(momentInicio)) {        //: -> <
+                                nuevoInicio = horaI.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoInicio = horaI;
+                            }
+                            // ! NUEVA FECHA DE HORA FIN
+                            var nuevoFin;
+                            if (horaF.isBefore(momentInicio)) {
+                                nuevoFin = horaF.add(1, 'day');    //: -> NUEVA FECHA
+                            } else {
+                                nuevoFin = horaF;
+                            }
+                            if (nuevoInicioC.isAfter(nuevoInicio) && nuevoInicioC.isBefore(nuevoFin)) {
+                                $('#errorenPausasCruzadas_ed').show();
+                                estado = false;
+                            } else {
+                                if (horaF.isBefore(horaI)) {
+                                    $('#errorenPausas_ed').show();
+                                    estado = false;
+                                }
+                            }
+                        } else {
+                            if (horaCompararI.isAfter(horaI) && horaCompararI.isBefore(horaF)) {
+                                $('#errorenPausasCruzadas_ed').show();
+                                estado = false;
+                            } else {
+                                if (horaF.isBefore(horaI)) {
+                                    $('#errorenPausas_ed').show();
+                                    estado = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+    return estado;
+}
+// : FUNCION DE ELIMINAR CONTENIDO
+function e_eliminarContenido(id) {
+    $('#e_descPausa' + id).val("");
+    $('#e_InicioPausa' + id).val("");
+    $('#e_FinPausa' + id).val("");
+    $('#e_toleranciaIP' + id).val("");
+    $('#e_ToleranciaFP' + id).val("");
+    $('#e_inactivarPausa' + id).prop("checked", false);
+    $('#e_rowP' + id).hide();
+    $('#fueraRango_ed').hide();
+    $('#errorenPausas_ed').hide();
+    $('#errorenPausasCruzadas_ed').hide();
+    var validacionPH = e_validarHorasPausaHorario();
+    if (!validacionPH) {
+        $('#btnEditarHorario').prop("disabled", true);
+        return false;
+    } else {
+        var validacionEP = e_validarHorasEntrePausas();
+        if (!validacionEP) {
+            $('#btnEditarHorario').prop("disabled", true);
+            return false;
+        }
+        $('#btnEditarHorario').prop("disabled", false);
+        $('#fueraRango_ed').hide();
+        $('#errorenPausas_ed').hide();
+        $('#errorenPausasCruzadas_ed').hide();
+    }
+    var resp = true;
+    $('.e_rowInputs').each(function () {
+        var id = $(this).val();
+        if ($('#e_rowP' + id).is(":visible")) {
+            resp = false;
+        }
+    });
+    if (resp) {
+        e_contenidoInput(e_cont);
+    }
+}
+// : OBTENER PAUSAS DE HORARIO
+function pausasHorario(id) {
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/pausasHorario",
+        data: { id: id },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $('#PausasHorar_ed').empty();
+            if (data.length != 0) {
+                var contenido = "";
+                for (let index = 0; index < data.length; index++) {
+                    var pausa = data[index];
+                    contenido +=
+                        `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}">
+                        <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input type="text"  class="form-control form-control-sm descP" id="e_descPausa${pausa.idpausas_horario}"
+                                      value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausa${pausa.idpausas_horario}" name="inicioP"
+                                      value="${pausa.pausH_Inicio}"  onchange="javascript:$(this).removeClass('borderColor');">
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                        <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
+                                           value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                        <div class="input-group-prepend  ">
+                                            <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                min.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP" 
+                                       value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');">
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
+                                        <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
+                                           value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                        <div class="input-group-prepend  ">
+                                            <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                min.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                    if (pausa.inactivar == 0) {
+                        contenido += `
+                                <div class="col-md-1">
+                                    <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2">
+                                </div>`;
+                    } else {
+                        contenido += `
+                                <div class="col-md-1">
+                                    <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2" checked>
+                                </div>`;
+                    }
+                    contenido += `
+                                <div class="col-md-1">
+                                    <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})">
+                                        <img src="/admin/images/delete.svg" height="15">
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                                padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                                    margin-top: 5px;margin-left: 20px" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
+                                +
+                            </button>
+                        </div>
+                    </div>`;
+                }
+                $('#PausasHorar_ed').append(contenido);
+                data.forEach(element => {
+                    e_inicializarHorasPausas(element.idpausas_horario);
+                });
+            } else {
+                e_contenidoInput(e_cont);
+            }
+            $('#pausas_edit').show();
+        },
+        error: function () { }
+    });
+}
+// : SWITCH DE PAUSA
+$('#SwitchPausa_ed').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#horaF_ed').val() != "" || $('#horaI_ed').val() != "") {
+            $('#vacioHoraF_ed').hide();
+            $('#pausas_edit').show();
+            $('#PausasHorar_ed').empty();
+            var id = $('#idhorario_ed').val();
+            pausasHorario(id);
+        } else {
+            $('#inputPausa').empty();
+            $('#vacioHoraF_ed').show();
+            $('#SwitchPausa_ed').prop("checked", false);
+        }
+    } else {
+        $('#pausas_edit').hide();
+        $('#PausasHorar_ed').empty();
+        e_cont = 0;
+    }
+});
+// * OBTENER PAUSAS
+function e_obtenerPausas() {
+    var resultado = [];
+    $('.e_rowInputs').each(function () {
+        var id = $(this).val();
+        var descripcion = $('#e_descPausa' + id).val();
+        var inicioPausa = $('#e_InicioPausa' + id).val();
+        var toleranciaPI = $('#e_toleranciaIP' + id).val();
+        var finPausa = $('#e_FinPausa' + id).val();
+        var toleranciaPF = $('#e_ToleranciaFP' + id).val();
+        var inactivarP;
+        if ($('#e_inactivarPausa' + id).is(":checked")) {
+            inactivarP = 1;
+        } else {
+            inactivarP = 0;
+        }
+        var objPausa = {
+            "id": $(this).val(),
+            "descripcion": descripcion,
+            "inicioPausa": inicioPausa,
+            "toleranciaI": toleranciaPI,
+            "finPausa": finPausa,
+            "toleranciaF": toleranciaPF,
+            "inactivar": inactivarP
+        };
+        resultado.push(objPausa);
+    });
+
+    return resultado;
+}
+function editarHorarioDatos() {
+    var id = $('#idhorario_ed').val();
+    var descripcion = $('#descripcionCa_ed').val();
+    var horaInicio = $('#horaI_ed').val();
+    var horaFin = $('#horaF_ed').val();
+    var toleranciaI = $('#toleranciaH_ed').val();
+    var toleranciaF = $('#toleranciaSalida_ed').val();
+    var horasO = $('#horaOblig_ed').val();
+    var tardanza;
+    var pausas = e_obtenerPausas();
+    if ($('#SwitchTardanza_ed').is(":checked")) {
+        tardanza = 1;
+    } else {
+        tardanza = 0;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/editarHorario",
+        data: {
+            id: id,
+            descripcion: descripcion,
+            toleranciaI: toleranciaI,
+            toleranciaF: toleranciaF,
+            horaInicio: horaInicio,
+            horaFin: horaFin,
+            horasO: horasO,
+            tardanza: tardanza,
+            pausas: pausas
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $('#horarioEditar').modal('toggle');
+            $('#tablaEmpleado').DataTable().ajax.reload();
+        },
+        error: function () { }
+    });
+}
+// ! ******************************* FINALIZACION ****************************************
+// ! ******************************* SELECT DE HORARIO ****************************************
+function obtenerHorarios() {
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/obtenerHorarios",
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $('#selectHorario').empty();
+            var option = `<option select="selected" disabled> Asignar horario</option>`;
+            for (let index = 0; index < data.length; index++) {
+                option += `<option value="${data[index].horario_id}">${data[index].horario_descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
+            }
+            $('#selectHorario').append(option);
+        },
+        error: function () { }
+    });
 }

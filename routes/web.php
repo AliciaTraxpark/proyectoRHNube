@@ -249,6 +249,7 @@ Route::post('/horarioVerTodEmp', 'horarioController@verTodEmpleado');
 Route::post('/guardarEventos', 'horarioController@guardarEventos');
 Route::get('/eventosHorario', 'horarioController@eventos');
 Route::post('/guardarHorario', 'horarioController@guardarHorarioBD');
+Route::post('/nuevoHorario', 'horarioController@guardarNuevoHorario');
 Route::get('tablahorario/ver', 'horarioController@tablaHorario');
 Route::post('/verDataEmpleado', 'horarioController@verDataEmpleado');
 Route::get('/vaciartemporal', 'horarioController@vaciartemporal');
@@ -285,6 +286,9 @@ Route::post('/horario/borrarferiados', 'horarioController@borrarferiados');
 Route::post('/horario/listar', 'horarioController@horarioListar');
 Route::post('eliminarPausasEnEditar', 'horarioController@eliminarPausasEnEditar');
 Route::post('/eliminarPausaHorario', 'horarioController@eliminarPausaHorario');
+Route::post('/pausasHorario', 'horarioController@pausasHorario');
+Route::post('/editarHorario', 'horarioController@editarHorario');
+Route::get('/obtenerHorarios', 'horarioController@obtenerHorarios');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');
