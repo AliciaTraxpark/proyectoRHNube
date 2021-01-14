@@ -222,8 +222,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-        $ruc=$organizacion->organi_ruc;
-        $direccion=$organizacion->organi_direccion;
+        $ruc = $organizacion->organi_ruc;
+        $direccion = $organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -279,30 +279,27 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
-                    'ruc' => $ruc, 'direccion' => $direccion ]);
+                    return view('Dispositivos.reporteDis', [
+                        'organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                        'ruc' => $ruc, 'direccion' => $direccion
+                    ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados,'ruc' => $ruc, 'direccion' => $direccion ]);
+                return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
             }
         } else {
-            return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion ]);
+            return view('Dispositivos.reporteDis', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'ruc' => $ruc, 'direccion' => $direccion]);
         }
     }
 
     public function reporteTabla(Request $request)
     {
         $fechaR = $request->fecha;
-        /*  dd($fechaR); */
         $idemp = $request->idemp;
         $fecha = Carbon::create($fechaR);
-        $año = $fecha->year;
-        $mes = $fecha->month;
-        $dia = $fecha->day;
-        $ndia = $dia + 1;
 
         function agruparEmpleadosMarcaciones($array)
         {
@@ -310,13 +307,24 @@ class dispositivosController extends Controller
 
             foreach ($array as $empleado) {
                 if (!isset($resultado[$empleado->emple_id])) {
-                    $resultado[$empleado->emple_id] = $empleado;
+                    $resultado[$empleado->emple_id] = (object) array(
+                        "emple_id" => $empleado->emple_id,
+                        "marcaMov_id" => $empleado->marcaMov_id,
+                        "emple_nDoc" => $empleado->emple_nDoc,
+                        "perso_nombre" => $empleado->perso_nombre,
+                        "perso_apPaterno" => $empleado->perso_apPaterno,
+                        "perso_apMaterno" => $empleado->perso_apMaterno,
+                        "cargo_descripcion" => $empleado->cargo_descripcion,
+                        "organi_id" => $empleado->organi_id
+                    );
                 }
                 if (!isset($resultado[$empleado->emple_id]->marcaciones)) {
                     $resultado[$empleado->emple_id]->marcaciones = array();
                 }
-                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
-                "horario" => $empleado->horario,"horarioIni" => $empleado->horarioIni,"horarioFin" => $empleado->horarioFin);
+                $arrayMarcacion = array(
+                    "idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
+                    "horario" => $empleado->horario, "horarioIni" => $empleado->horarioIni, "horarioFin" => $empleado->horarioFin
+                );
                 array_push($resultado[$empleado->emple_id]->marcaciones, $arrayMarcacion);
             }
             return array_values($resultado);
@@ -339,7 +347,6 @@ class dispositivosController extends Controller
 
                         ->select(
                             'e.emple_id',
-
                             'mp.marcaMov_id',
                             'e.emple_nDoc',
                             'p.perso_nombre',
@@ -347,7 +354,6 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
-
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
                             DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
@@ -523,7 +529,7 @@ class dispositivosController extends Controller
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                          ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
 
                             ->select(
                                 'e.emple_id',
@@ -634,7 +640,8 @@ class dispositivosController extends Controller
             ->leftJoin('dispositivo_controlador as dc', 'dispositivos.idDispositivos', '=', 'dc.idDispositivos')
             ->where('dispositivos.idDispositivos', $idDispo)
             ->select(
-                'dispositivos.idDispositivos', 'tipoDispositivo',
+                'dispositivos.idDispositivos',
+                'tipoDispositivo',
                 'dispo_descripUbicacion',
                 'dispo_movil',
                 'dispo_tSincro',
@@ -644,7 +651,8 @@ class dispositivosController extends Controller
                 'dispo_Scan',
                 'dispo_Cam',
                 'idControladores',
-                'version_firmware','dispo_codigo'
+                'version_firmware',
+                'dispo_codigo'
             )->get();
         return $dispositivo;
     }
@@ -797,42 +805,39 @@ class dispositivosController extends Controller
         $fechaEntrada = $marcacion_puerta->marcaMov_fecha;
 
         if ($fecha1->lte($fechaEntrada)) {
-            return [0,'Hora de salida debe ser mayor a la hora de entrada.'];
+            return [0, 'Hora de salida debe ser mayor a la hora de entrada.'];
         } else {
             $fecha111 = Carbon::create($marcacion_puerta->marcaMov_fecha)->toDateString();
-            $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
-                ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
-                ->where('mv.marcaMov_fecha', '!=',null )
-                ->where('mv.marcaMov_fecha', '!=',$fechaEntrada )
-                ->where('mv.marcaMov_fecha', '>',$marcacion_puerta->marcaMov_fecha )
-                ->whereDate('mv.marcaMov_fecha', '=',$fecha111 )
-            /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
-                ->orderby('marcaMov_fecha','ASC')
+            $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
+                ->where('mv.marcaMov_emple_id', '=', $marcacion_puerta->marcaMov_emple_id)
+                ->where('mv.marcaMov_fecha', '!=', null)
+                ->where('mv.marcaMov_fecha', '!=', $fechaEntrada)
+                ->where('mv.marcaMov_fecha', '>', $marcacion_puerta->marcaMov_fecha)
+                ->whereDate('mv.marcaMov_fecha', '=', $fecha111)
+                /*   ->where('mv.marcaMov_fecha', '>',$req['fechaMarcacion'] ) */
+                ->orderby('marcaMov_fecha', 'ASC')
                 ->get()->first();
 
-            if($marcacion_puerta00){
+            if ($marcacion_puerta00) {
 
-                $fechaEPosterir=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-            /*     dd($fechaEPosterir,$fecha1); */
-                if( $fecha1->gte($fechaEPosterir) ){
+                $fechaEPosterir = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                /*     dd($fechaEPosterir,$fecha1); */
+                if ($fecha1->gte($fechaEPosterir)) {
 
-                    return [0,'Tienes registrado otra entrada, la hora de salida debe ser menor a esta.'];
-                }
-                else{
+                    return [0, 'Tienes registrado otra entrada, la hora de salida debe ser menor a esta.'];
+                } else {
 
                     $marcacion_puerta->marcaMov_salida = $fecha1;
                     $marcacion_puerta->save();
                     return 1;
                 }
-
-            }
-            else{
+            } else {
                 $marcacion_puerta->marcaMov_salida = $fecha1;
                 $marcacion_puerta->save();
                 return 1;
             }
 
-//////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
 
         }
     }
@@ -843,8 +848,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-        $ruc=$organizacion->organi_ruc;
-        $direccion=$organizacion->organi_direccion;
+        $ruc = $organizacion->organi_ruc;
+        $direccion = $organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -900,8 +905,10 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteEmpleado', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
-                    'ruc' => $ruc, 'direccion' => $direccion ]);
+                    return view('Dispositivos.reporteEmpleado', [
+                        'organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                        'ruc' => $ruc, 'direccion' => $direccion
+                    ]);
                 } else {
                     return redirect('/dashboard');
                 }
@@ -920,8 +927,8 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()->first();
         $nombreOrga = $organizacion->organi_razonSocial;
-        $ruc=$organizacion->organi_ruc;
-        $direccion=$organizacion->organi_direccion;
+        $ruc = $organizacion->organi_ruc;
+        $direccion = $organizacion->organi_direccion;
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -977,8 +984,10 @@ class dispositivosController extends Controller
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->reporteAsisten == 1) {
 
-                    return view('Dispositivos.reporteFecha', ['organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
-                    'ruc' => $ruc, 'direccion' => $direccion ]);
+                    return view('Dispositivos.reporteFecha', [
+                        'organizacion' => $nombreOrga, 'empleado' => $empleados, 'modifReporte' => $invitadod->ModificarReportePuerta,
+                        'ruc' => $ruc, 'direccion' => $direccion
+                    ]);
                 } else {
                     return redirect('/dashboard');
                 }
@@ -997,7 +1006,7 @@ class dispositivosController extends Controller
         /*  dd($fechaR); */
         $idemp = $request->idemp;
         $fecha = Carbon::create($fechaR);
-       /*  $año = $fecha->year;
+        /*  $año = $fecha->year;
         $mes = $fecha->month;
         $dia = $fecha->day;
         $ndia = $dia + 1; */
@@ -1011,7 +1020,7 @@ class dispositivosController extends Controller
             $resultado = array();
 
             foreach ($array as $empleado) {
-                $fechando=$empleado->entradaModif;
+                $fechando = $empleado->entradaModif;
                 $fechaCarb = Carbon::create($fechando);
                 $fechando2 = $fechaCarb->isoFormat('YYYY-MM-DD');
 
@@ -1022,19 +1031,20 @@ class dispositivosController extends Controller
                 if (!isset($resultado[$fechando2]->marcaciones)) {
                     $resultado[$fechando2]->marcaciones = array();
                 }
-                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
-                "actividad" => $empleado->actividad);
+                $arrayMarcacion = array(
+                    "idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
+                    "actividad" => $empleado->actividad
+                );
                 array_push($resultado[$fechando2]->marcaciones, $arrayMarcacion);
             }
-           dd (array_values($resultado));
-
+            dd(array_values($resultado));
         }
         function agruparEmpleadosMarcaciones3($array)
         {
             $resultado2 = array();
 
             foreach ($array as $empleado) {
-                $fechando=$empleado->entradaModif;
+                $fechando = $empleado->entradaModif;
                 $fechaCarb = Carbon::create($fechando);
                 $fechando2 = $fechaCarb->isoFormat('YYYY-MM-DD');
 
@@ -1045,14 +1055,14 @@ class dispositivosController extends Controller
 
                 if (!isset($resultado2[$empleado->Activi_id]->marcaciones)) {
                     $resultado2[$empleado->Activi_id]->marcaciones = array();
-
                 }
-                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
-                "actividad" => $empleado->actividad );
+                $arrayMarcacion = array(
+                    "idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
+                    "actividad" => $empleado->actividad
+                );
                 array_push($resultado2[$empleado->Activi_id]->marcaciones, $arrayMarcacion);
             }
             return array_values($resultado2);
-
         }
 
         $invitadod = DB::table('invitado')
@@ -1064,13 +1074,203 @@ class dispositivosController extends Controller
             if ($invitadod->verTodosEmps == 1) {
 
                 $marcaciones = DB::table('empleado as e')
+                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                    ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
+                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                    ->select(
+                        'e.emple_id',
+                        DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                        DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
+
+                        'ar.area_descripcion',
+                        /* 'mp.marcaMov_id', */
+                        'e.emple_nDoc',
+                        'p.perso_nombre',
+                        'p.perso_apPaterno',
+                        'p.perso_apMaterno',
+                        'c.cargo_descripcion',
+                        'mp.organi_id',
+                        DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
+
+
+                    )
+                    ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
+                    ->where('e.emple_id', $idemp)
+                    ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                    ->where('mp.organi_id', '=', session('sesionidorg'))
+                    /* ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC')) */
+                    ->get();
+
+                foreach ($marcaciones as $tab) {
+                    $fechaEntr1 = Carbon::create($tab->entradaModif);
+                    $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
+
+                    $marcacion_puerta = DB::table('marcacion_puerta as map')
+                        ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
+                        ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
+                        ->select(
+                            'map.marcaMov_id as idMarcacion',
+                            'map.marcaMov_emple_id',
+
+                            DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+                            DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida')
+                        )
+                        ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
+                        ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'), [$fecha, $fechaF])
+                        ->where('map.marcaMov_emple_id', '=', $idemp)
+                        ->whereDate(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'), '=', $fechaEntr2)
+                        ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'), '=', $tab->idhorario)
+
+                        /*    ->distinct('map.marcaMov_id') */
+                        ->get();
+
+                    $tab->marcaciones = $marcacion_puerta;
+                }
+            } else {
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+                if ($invitado_empleadoIn != null) {
+
+                    $marcaciones = DB::table('empleado as e')
+                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
+                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->select(
+                            'e.emple_id',
+                            DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
+                            'ar.area_descripcion',
+
+                            'e.emple_nDoc',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'mp.organi_id',
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
+
+                        )
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
+                        ->where('e.emple_id', $idemp)
+
+                        ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                        ->where('mp.organi_id', '=', session('sesionidorg'))
+                        ->get();
+
+                    foreach ($marcaciones as $tab) {
+                        $fechaEntr1 = Carbon::create($tab->entradaModif);
+                        $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
+
+                        $marcacion_puerta = DB::table('marcacion_puerta as map')
+                            ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
+                            ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
+                            ->select(
+                                'map.marcaMov_id as idMarcacion',
+                                'map.marcaMov_emple_id',
+
+                                DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+                                DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida')
+                            )
+                            ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
+                            ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'), [$fecha, $fechaF])
+                            ->where('map.marcaMov_emple_id', '=', $idemp)
+                            ->whereDate(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'), '=', $fechaEntr2)
+                            ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'), '=', $tab->idhorario)
+
+                            /*    ->distinct('map.marcaMov_id') */
+                            ->get();
+
+                        $tab->marcaciones = $marcacion_puerta;
+                    }
+                } else {
+
+                    $marcaciones = DB::table('empleado as e')
+                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                        ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                        ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
+                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
+                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->select(
+                            'e.emple_id',
+                            DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
+                            'ar.area_descripcion',
+
+                            'e.emple_nDoc',
+                            'p.perso_nombre',
+                            'p.perso_apPaterno',
+                            'p.perso_apMaterno',
+                            'c.cargo_descripcion',
+                            'mp.organi_id',
+
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
+                        )
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
+                        ->where('e.emple_id', $idemp)
+
+                        ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                        ->where('mp.organi_id', '=', session('sesionidorg'))
+
+                        ->get();
+
+                    foreach ($marcaciones as $tab) {
+                        $fechaEntr1 = Carbon::create($tab->entradaModif);
+                        $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
+
+                        $marcacion_puerta = DB::table('marcacion_puerta as map')
+                            ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
+                            ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
+                            ->select(
+                                'map.marcaMov_id as idMarcacion',
+                                'map.marcaMov_emple_id',
+
+                                DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+                                DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida')
+                            )
+                            ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
+                            ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'), [$fecha, $fechaF])
+                            ->where('map.marcaMov_emple_id', '=', $idemp)
+                            ->whereDate(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'), '=', $fechaEntr2)
+                            ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'), '=', $tab->idhorario)
+
+                            /*    ->distinct('map.marcaMov_id') */
+                            ->get();
+
+                        $tab->marcaciones = $marcacion_puerta;
+                    }
+                }
+            }
+        } else {
+
+            $marcaciones = DB::table('empleado as e')
                 ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                 ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                 ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
                 ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                 ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-               ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                 ->select(
                     'e.emple_id',
                     DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
@@ -1084,227 +1284,44 @@ class dispositivosController extends Controller
                     'p.perso_apMaterno',
                     'c.cargo_descripcion',
                     'mp.organi_id',
-                     DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
+                    DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
 
 
                 )
-                 ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'),[$fecha,$fechaF])
-               ->where('e.emple_id', $idemp)
-                 ->groupBy( DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
+                ->where('e.emple_id', $idemp)
+                ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
                 ->where('mp.organi_id', '=', session('sesionidorg'))
                 /* ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC')) */
                 ->get();
 
-                foreach ($marcaciones as $tab) {
-                  $fechaEntr1= Carbon::create($tab->entradaModif);
-                  $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
-
-                  $marcacion_puerta = DB::table('marcacion_puerta as map')
-                  ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
-                  ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
-                      ->select('map.marcaMov_id as idMarcacion','map.marcaMov_emple_id',
-
-                      DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
-                      DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida'))
-                      ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
-                      ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'),[$fecha,$fechaF])
-                      ->where('map.marcaMov_emple_id','=',$idemp)
-                      ->whereDate( DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'),'=',$fechaEntr2)
-                      ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'),'=',$tab->idhorario)
-
-                    /*    ->distinct('map.marcaMov_id') */
-                      ->get();
-
-                  $tab->marcaciones = $marcacion_puerta;
-              }
-
-            } else {
-                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
-                    ->where('invem.area_id', '=', null)
-                    ->where('invem.emple_id', '!=', null)
-                    ->get()->first();
-                if ($invitado_empleadoIn != null) {
-
-                        $marcaciones = DB::table('empleado as e')
-                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-                            ->select(
-                                'e.emple_id',
-                                DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                                DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
-                                'ar.area_descripcion',
-
-                                'e.emple_nDoc',
-                                'p.perso_nombre',
-                                'p.perso_apPaterno',
-                                'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'mp.organi_id',
-                                DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
-
-                            )
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha,$fechaF])
-                            ->where('e.emple_id', $idemp)
-
-                            ->groupBy( DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
-                            ->where('mp.organi_id', '=', session('sesionidorg'))
-                            ->get();
-
-                            foreach ($marcaciones as $tab) {
-                                $fechaEntr1= Carbon::create($tab->entradaModif);
-                                $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
-
-                                $marcacion_puerta = DB::table('marcacion_puerta as map')
-                                ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
-                                ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
-                                    ->select('map.marcaMov_id as idMarcacion','map.marcaMov_emple_id',
-
-                                    DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
-                                    DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida'))
-                                    ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
-                                    ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'),[$fecha,$fechaF])
-                                    ->where('map.marcaMov_emple_id','=',$idemp)
-                                    ->whereDate( DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'),'=',$fechaEntr2)
-                                    ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'),'=',$tab->idhorario)
-
-                                  /*    ->distinct('map.marcaMov_id') */
-                                    ->get();
-
-                                $tab->marcaciones = $marcacion_puerta;
-                            }
-
-                } else {
-
-                        $marcaciones = DB::table('empleado as e')
-                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                            ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                          ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-                            ->select(
-                                'e.emple_id',
-                                DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                                DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
-                                'ar.area_descripcion',
-
-                                'e.emple_nDoc',
-                                'p.perso_nombre',
-                                'p.perso_apPaterno',
-                                'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'mp.organi_id',
-
-                                DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
-                            )
-                            ->where('invi.estado', '=', 1)
-                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha,$fechaF])
-                            ->where('e.emple_id', $idemp)
-
-                            ->groupBy( DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
-                            ->where('mp.organi_id', '=', session('sesionidorg'))
-
-                            ->get();
-
-                            foreach ($marcaciones as $tab) {
-                                $fechaEntr1= Carbon::create($tab->entradaModif);
-                                $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
-
-                                $marcacion_puerta = DB::table('marcacion_puerta as map')
-                                ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
-                                ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
-                                    ->select('map.marcaMov_id as idMarcacion','map.marcaMov_emple_id',
-
-                                    DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
-                                    DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida'))
-                                    ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
-                                    ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'),[$fecha,$fechaF])
-                                    ->where('map.marcaMov_emple_id','=',$idemp)
-                                    ->whereDate( DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'),'=',$fechaEntr2)
-                                    ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'),'=',$tab->idhorario)
-
-                                  /*    ->distinct('map.marcaMov_id') */
-                                    ->get();
-
-                                $tab->marcaciones = $marcacion_puerta;
-                            }
-
-                }
-            }
-        } else {
-
-              $marcaciones = DB::table('empleado as e')
-              ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-              ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-              ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-              ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-              ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
-              ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-              ->select(
-                  'e.emple_id',
-                  DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
-                  DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
-
-                  'ar.area_descripcion',
-                  /* 'mp.marcaMov_id', */
-                  'e.emple_nDoc',
-                  'p.perso_nombre',
-                  'p.perso_apPaterno',
-                  'p.perso_apMaterno',
-                  'c.cargo_descripcion',
-                  'mp.organi_id',
-                   DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
-
-
-              )
-               ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'),[$fecha,$fechaF])
-             ->where('e.emple_id', $idemp)
-               ->groupBy( DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'),DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
-              ->where('mp.organi_id', '=', session('sesionidorg'))
-              /* ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC')) */
-              ->get();
-
-              foreach ($marcaciones as $tab) {
-                $fechaEntr1= Carbon::create($tab->entradaModif);
+            foreach ($marcaciones as $tab) {
+                $fechaEntr1 = Carbon::create($tab->entradaModif);
                 $fechaEntr2 = $fechaEntr1->isoFormat('YYYY-MM-DD');
 
                 $marcacion_puerta = DB::table('marcacion_puerta as map')
-                ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
-                ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
-                    ->select('map.marcaMov_id as idMarcacion','map.marcaMov_emple_id',
+                    ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
+                    ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
+                    ->select(
+                        'map.marcaMov_id as idMarcacion',
+                        'map.marcaMov_emple_id',
 
-                    DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
-                    DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida'))
+                        DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+                        DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida')
+                    )
                     ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
-                    ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'),[$fecha,$fechaF])
-                    ->where('map.marcaMov_emple_id','=',$idemp)
-                    ->whereDate( DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'),'=',$fechaEntr2)
-                    ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'),'=',$tab->idhorario)
+                    ->whereBetween(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'), [$fecha, $fechaF])
+                    ->where('map.marcaMov_emple_id', '=', $idemp)
+                    ->whereDate(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida) , DATE(map.marcaMov_fecha))'), '=', $fechaEntr2)
+                    ->where(DB::raw('IF(horM.horario_id is null, 0 ,horM.horario_id)'), '=', $tab->idhorario)
 
-                  /*    ->distinct('map.marcaMov_id') */
+                    /*    ->distinct('map.marcaMov_id') */
                     ->get();
 
                 $tab->marcaciones = $marcacion_puerta;
             }
-
-
         }
-        $marcacionesX=Arr::flatten($marcaciones);
+        $marcacionesX = Arr::flatten($marcaciones);
         return response()->json($marcacionesX, 200);
     }
 
@@ -1312,14 +1329,13 @@ class dispositivosController extends Controller
     {
         $idtardanza = $request->idtardanza;
         $hora = $request->hora;
-       /*  $fecha = $request->fecha;
+        /*  $fecha = $request->fecha;
         $fecha1 = Carbon::create($fecha); */
 
         $tardanza = tardanza::findOrFail($idtardanza);
         $tardanza->tiempoTardanza = $hora;
         $tardanza->save();
         return 1;
-
     }
 
     public function editarRowEntrada(Request $request)
@@ -1335,568 +1351,482 @@ class dispositivosController extends Controller
         /* MARCACION ANTERIOR  */
         $fecha111 = Carbon::create($marcacion_puerta->marcaMov_fecha)->toDateString();
 
-        $marcacion_puerta001 =DB::table('marcacion_puerta as mv')
-        ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
-        ->where('mv.marcaMov_id', '!=', $idmarcacion )
-        ->where(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '<',$marcacion_puerta->marcaMov_fecha )
-        ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=',$fecha111 )
-        ->orderBy(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)', 'ASC'))
-        ->get()->last();
-        $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
-                ->where('mv.marcaMov_emple_id', '=',$marcacion_puerta->marcaMov_emple_id )
-                ->where('mv.marcaMov_id', '!=', $idmarcacion )
-                ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=',$fecha111 )
-                ->orderBy(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)', 'ASC'))
-                ->get()->last();
+        $marcacion_puerta001 = DB::table('marcacion_puerta as mv')
+            ->where('mv.marcaMov_emple_id', '=', $marcacion_puerta->marcaMov_emple_id)
+            ->where('mv.marcaMov_id', '!=', $idmarcacion)
+            ->where(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '<', $marcacion_puerta->marcaMov_fecha)
+            ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha111)
+            ->orderBy(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)', 'ASC'))
+            ->get()->last();
+        $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
+            ->where('mv.marcaMov_emple_id', '=', $marcacion_puerta->marcaMov_emple_id)
+            ->where('mv.marcaMov_id', '!=', $idmarcacion)
+            ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha111)
+            ->orderBy(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)', 'ASC'))
+            ->get()->last();
         /*  */
-        if($fechaSalida!=null){
+        if ($fechaSalida != null) {
 
-          /*   IF HORA DE ENTRADA ES MAYOR O IGUAL QUE HORA DE SALIDA */
+            /*   IF HORA DE ENTRADA ES MAYOR O IGUAL QUE HORA DE SALIDA */
             if ($fecha1->gte($fechaSalida)) {
-                return [0,'Hora de entrada debe ser menor a la hora de salida.'];
-
+                return [0, 'Hora de entrada debe ser menor a la hora de salida.'];
             }
-            /* AQUI VALIDAMOS PPUES */
-            else {
+            /* AQUI VALIDAMOS PPUES */ else {
 
                 /* IF EXISTE MARCACION ANTERIOR */
-                if($marcacion_puerta001){
-                    $fechaEAnte=Carbon::create($marcacion_puerta001->marcaMov_fecha);
-                    $fechaSAnte=Carbon::create($marcacion_puerta001->marcaMov_salida);
+                if ($marcacion_puerta001) {
+                    $fechaEAnte = Carbon::create($marcacion_puerta001->marcaMov_fecha);
+                    $fechaSAnte = Carbon::create($marcacion_puerta001->marcaMov_salida);
 
-                     /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                    if($marcacion_puerta001->marcaMov_fecha!=null && $marcacion_puerta001->marcaMov_salida!=null){
+                    /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                    if ($marcacion_puerta001->marcaMov_fecha != null && $marcacion_puerta001->marcaMov_salida != null) {
 
                         /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                        if($fecha1->gt($fechaEAnte) && $fecha1->gt($fechaSAnte) ){
-                            if($marcacion_puerta00){
-                                $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                                $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+                        if ($fecha1->gt($fechaEAnte) && $fecha1->gt($fechaSAnte)) {
+                            if ($marcacion_puerta00) {
+                                $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
 
-                                 /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+                                /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                    if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else {
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                                    }
+                                } else {  /* IF MARCACION ENTRADA es dif de null */
+                                    /*  dd($marcacion_puerta001); */
+                                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                        if ($fecha1->gt($fechaEAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                        }
+                                    } else {
+                                        if ($fecha1->gt($fechaSAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                        }
+                                    }
+                                }
+                            } else {
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            }
+                        } else {
+                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                            return [0, 'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                        }
+                    } else {  /* IF MARCACION ENTRADA es dif de null */
+                        /*  dd($marcacion_puerta001); */
+                        if ($marcacion_puerta001->marcaMov_fecha != null && $marcacion_puerta001->marcaMov_salida == null) {
+                            if ($fecha1->gt($fechaEAnte)) {
+                                if ($marcacion_puerta00) {
+                                    $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                    $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                    /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                        if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                                        }
+                                    } else {  /* IF MARCACION ENTRADA es dif de null */
+                                        /*  dd($marcacion_puerta001); */
+                                        if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                            if ($fecha1->gt($fechaEAnte1)) {
+                                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                                $marcacion_puerta->save();
+                                                return 1;
+                                            } else {
+                                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                                return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                            }
+                                        } else {
+                                            if ($fecha1->gt($fechaSAnte1)) {
+                                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                                $marcacion_puerta->save();
+                                                return 1;
+                                            } else {
+                                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                                return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                }
+                            } else {
+                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                return [0, 'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                            }
+                        } else {
+                            if ($fecha1->gt($fechaSAnte)) {
+                                if ($marcacion_puerta00) {
+                                    $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                    $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                    /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                        if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                                        }
+                                    } else {  /* IF MARCACION ENTRADA es dif de null */
+                                        /*  dd($marcacion_puerta001); */
+                                        if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                            if ($fecha1->gt($fechaEAnte1)) {
+                                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                                $marcacion_puerta->save();
+                                                return 1;
+                                            } else {
+                                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                                return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                            }
+                                        } else {
+                                            if ($fecha1->gt($fechaSAnte1)) {
+                                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                                $marcacion_puerta->save();
+                                                return 1;
+                                            } else {
+                                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                                return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                }
+                            } else {
+                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                return [0, 'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                            }
+                        }
+                    }
+                } else {
+                    if ($marcacion_puerta00) {
+                        $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                        $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                        /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                        if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                            if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            } else {
+                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                            }
+                        } else {  /* IF MARCACION ENTRADA es dif de null */
+                            /*  dd($marcacion_puerta001); */
+                            if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                if ($fecha1->gt($fechaEAnte1)) {
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else {
+                                    /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                    return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                }
+                            } else {
+                                if ($fecha1->gt($fechaSAnte1)) {
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else {
+                                    /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                    return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                }
+                            }
+                        }
+                    } else {
+                        if ($marcacion_puerta00) {
+                            $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                            $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                            /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                            if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
 
                                 /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                                if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
                                     $marcacion_puerta->marcaMov_fecha = $fecha1;
                                     $marcacion_puerta->save();
                                     return 1;
-                                } else{
+                                } else {
                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                    return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
+                                    return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
                                 }
-                            }
-                            else{  /* IF MARCACION ENTRADA es dif de null */
-                              /*  dd($marcacion_puerta001); */
-                                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                                    if($fecha1->gt($fechaEAnte1)){
+                            } else {  /* IF MARCACION ENTRADA es dif de null */
+                                /*  dd($marcacion_puerta001); */
+                                if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                    if ($fecha1->gt($fechaEAnte1)) {
                                         $marcacion_puerta->marcaMov_fecha = $fecha1;
                                         $marcacion_puerta->save();
                                         return 1;
-                                    } else{
-                                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                         return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                                    }
-
-                                }
-                                else{
-                                    if($fecha1->gt($fechaSAnte1)){
-                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                        $marcacion_puerta->save();
-                                        return 1;
-                                    } else{
-                                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                         return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                                    }
-                                }
-
-                            }
-
-                            } else{
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                            return 1;
-                            }
-
-                        } else{
-                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                            return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
-                        }
-                    }
-                    else{  /* IF MARCACION ENTRADA es dif de null */
-                      /*  dd($marcacion_puerta001); */
-                        if($marcacion_puerta001->marcaMov_fecha!=null && $marcacion_puerta001->marcaMov_salida==null ){
-                            if($fecha1->gt($fechaEAnte)){
-                                if($marcacion_puerta00){
-                                    $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                                    $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                                     /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                                    if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
-                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                        $marcacion_puerta->save();
-                                        return 1;
-                                    } else{
+                                    } else {
                                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                        return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
+                                        return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
                                     }
-                                }
-                                else{  /* IF MARCACION ENTRADA es dif de null */
-                                  /*  dd($marcacion_puerta001); */
-                                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                                        if($fecha1->gt($fechaEAnte1)){
-                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                            $marcacion_puerta->save();
-                                            return 1;
-                                        } else{
-                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                             return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                                        }
-
-                                    }
-                                    else{
-                                        if($fecha1->gt($fechaSAnte1)){
-                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                            $marcacion_puerta->save();
-                                            return 1;
-                                        } else{
-                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                             return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                                        }
-                                    }
-
-                                }
-
-                                } else{
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                                return 1;
-                                }
-
-                            } else{
-                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                 return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                            }
-
-                        }
-                        else{
-                            if($fecha1->gt($fechaSAnte)){
-                                if($marcacion_puerta00){
-                                    $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                                    $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                                     /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                                    if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                } else {
+                                    if ($fecha1->gt($fechaSAnte1)) {
                                         $marcacion_puerta->marcaMov_fecha = $fecha1;
                                         $marcacion_puerta->save();
                                         return 1;
-                                    } else{
+                                    } else {
                                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                        return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
+                                        return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
                                     }
                                 }
-                                else{  /* IF MARCACION ENTRADA es dif de null */
-                                  /*  dd($marcacion_puerta001); */
-                                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                                        if($fecha1->gt($fechaEAnte1)){
-                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                            $marcacion_puerta->save();
-                                            return 1;
-                                        } else{
-                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                             return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                                        }
-
-                                    }
-                                    else{
-                                        if($fecha1->gt($fechaSAnte1)){
-                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                            $marcacion_puerta->save();
-                                            return 1;
-                                        } else{
-                                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                             return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                                        }
-                                    }
-
-                                }
-
-                                } else{
-                                   $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                                return 1;
-                                }
-
-                            } else{
-                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                 return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
                             }
-                        }
-
-                    }
-
-                }
-                else{
-                    if($marcacion_puerta00){
-                        $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                        $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                         /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                        if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                        } else {
+                            /* SI NO EXISTE MARCACION ANTERIOR  */
                             $marcacion_puerta->marcaMov_fecha = $fecha1;
                             $marcacion_puerta->save();
                             return 1;
-                        } else{
-                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                            return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
                         }
                     }
-                    else{  /* IF MARCACION ENTRADA es dif de null */
-                      /*  dd($marcacion_puerta001); */
-                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                            if($fecha1->gt($fechaEAnte1)){
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                                return 1;
-                            } else{
-                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                 return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                            }
-
-                        }
-                        else{
-                            if($fecha1->gt($fechaSAnte1)){
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                                return 1;
-                            } else{
-                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                 return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                            }
-                        }
-
-                    }
-
-                    } else{
-                        if($marcacion_puerta00){
-                            $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                            $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                            if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                                return 1;
-                            } else{
-                                /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
-                            }
-                        }
-                        else{  /* IF MARCACION ENTRADA es dif de null */
-                          /*  dd($marcacion_puerta001); */
-                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                                if($fecha1->gt($fechaEAnte1)){
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                    $marcacion_puerta->save();
-                                    return 1;
-                                } else{
-                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                     return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                                }
-
-                            }
-                            else{
-                                if($fecha1->gt($fechaSAnte1)){
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                    $marcacion_puerta->save();
-                                    return 1;
-                                } else{
-                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                     return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                                }
-                            }
-
-                        }
-
-                        } else{
-                             /* SI NO EXISTE MARCACION ANTERIOR  */
-                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                    $marcacion_puerta->save();
-                    return 1;
-                        }
-
-                    }
-
-
                 }
-
             }
-        }
-        else{
+        } else {
 
-          /* IF EXISTE MARCACION ANTERIOR */
-          if($marcacion_puerta001){
-            $fechaEAnte=Carbon::create($marcacion_puerta001->marcaMov_fecha);
-            $fechaSAnte=Carbon::create($marcacion_puerta001->marcaMov_salida);
+            /* IF EXISTE MARCACION ANTERIOR */
+            if ($marcacion_puerta001) {
+                $fechaEAnte = Carbon::create($marcacion_puerta001->marcaMov_fecha);
+                $fechaSAnte = Carbon::create($marcacion_puerta001->marcaMov_salida);
 
-             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-            if($marcacion_puerta001->marcaMov_fecha!=null && $marcacion_puerta001->marcaMov_salida!=null){
+                /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                if ($marcacion_puerta001->marcaMov_fecha != null && $marcacion_puerta001->marcaMov_salida != null) {
 
-                /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                if($fecha1->gt($fechaEAnte) && $fecha1->gt($fechaSAnte) ){
-                    if($marcacion_puerta00){
-                        $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                        $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
+                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                    if ($fecha1->gt($fechaEAnte) && $fecha1->gt($fechaSAnte)) {
+                        if ($marcacion_puerta00) {
+                            $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                            $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
 
-                         /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                    if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
+                            /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                            if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
 
-                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                        if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                                /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                    $marcacion_puerta->save();
+                                    return 1;
+                                } else {
+                                    /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                    return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                                }
+                            } else {  /* IF MARCACION ENTRADA es dif de null */
+                                /*  dd($marcacion_puerta001); */
+                                if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                    if ($fecha1->gt($fechaEAnte1)) {
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else {
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                    }
+                                } else {
+                                    if ($fecha1->gt($fechaSAnte1)) {
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else {
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                    }
+                                }
+                            }
+                        } else {
                             $marcacion_puerta->marcaMov_fecha = $fecha1;
                             $marcacion_puerta->save();
                             return 1;
-                        } else{
+                        }
+                    } else {
+                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                        return [0, 'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                    }
+                } else {  /* IF MARCACION ENTRADA es dif de null */
+                    /*  dd($marcacion_puerta001); */
+                    if ($marcacion_puerta001->marcaMov_fecha != null && $marcacion_puerta001->marcaMov_salida == null) {
+                        if ($fecha1->gt($fechaEAnte)) {
+                            if ($marcacion_puerta00) {
+                                $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                    if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else {
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                                    }
+                                } else {  /* IF MARCACION ENTRADA es dif de null */
+                                    /*  dd($marcacion_puerta001); */
+                                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                        if ($fecha1->gt($fechaEAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                        }
+                                    } else {
+                                        if ($fecha1->gt($fechaSAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                        }
+                                    }
+                                }
+                            } else {
+                                $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                $marcacion_puerta->save();
+                                return 1;
+                            }
+                        } else {
                             /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                            return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
+                            return [0, 'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
                         }
-                    }
-                    else{  /* IF MARCACION ENTRADA es dif de null */
-                      /*  dd($marcacion_puerta001); */
-                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                            if($fecha1->gt($fechaEAnte1)){
+                    } else {
+                        if ($fecha1->gt($fechaSAnte)) {
+                            if ($marcacion_puerta00) {
+                                $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                                $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
+
+                                /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                                if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                                    /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                                    if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
+                                        $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                        $marcacion_puerta->save();
+                                        return 1;
+                                    } else {
+                                        /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                        return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                                    }
+                                } else {  /* IF MARCACION ENTRADA es dif de null */
+                                    /*  dd($marcacion_puerta001); */
+                                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                                        if ($fecha1->gt($fechaEAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
+                                        }
+                                    } else {
+                                        if ($fecha1->gt($fechaSAnte1)) {
+                                            $marcacion_puerta->marcaMov_fecha = $fecha1;
+                                            $marcacion_puerta->save();
+                                            return 1;
+                                        } else {
+                                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                                            return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
+                                        }
+                                    }
+                                }
+                            } else {
                                 $marcacion_puerta->marcaMov_fecha = $fecha1;
                                 $marcacion_puerta->save();
                                 return 1;
-                            } else{
-                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                 return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
                             }
-
+                        } else {
+                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                            return [0, 'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
                         }
-                        else{
-                            if($fecha1->gt($fechaSAnte1)){
-                                $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                $marcacion_puerta->save();
-                                return 1;
-                            } else{
-                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                 return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                            }
-                        }
-
                     }
+                }
+            } else {
+                /* SI NO EXISTE MARCACION ANTERIOR  */
+                /* SI EXISTE OTRA MARCACION */
+                if ($marcacion_puerta00) {
+                    $fechaEAnte1 = Carbon::create($marcacion_puerta00->marcaMov_fecha);
+                    $fechaSAnte1 = Carbon::create($marcacion_puerta00->marcaMov_salida);
 
-                    } else{
+                    /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
+                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+
+                        /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
+                        if ($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1)) {
                             $marcacion_puerta->marcaMov_fecha = $fecha1;
-                        $marcacion_puerta->save();
-                        return 1;
-                    }
-
-                } else{
-                    /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                    return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
-                }
-            }
-            else{  /* IF MARCACION ENTRADA es dif de null */
-              /*  dd($marcacion_puerta001); */
-                if($marcacion_puerta001->marcaMov_fecha!=null && $marcacion_puerta001->marcaMov_salida==null ){
-                    if($fecha1->gt($fechaEAnte)){
-                        if($marcacion_puerta00){
-                            $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                            $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                            if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                            $marcacion_puerta->save();
+                            return 1;
+                        } else {
+                            /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
+                            return [0, 'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
+                        }
+                    } else {  /* IF MARCACION ENTRADA es dif de null */
+                        /*  dd($marcacion_puerta001); */
+                        if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida == null) {
+                            if ($fecha1->gt($fechaEAnte1)) {
                                 $marcacion_puerta->marcaMov_fecha = $fecha1;
                                 $marcacion_puerta->save();
                                 return 1;
-                            } else{
+                            } else {
                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
+                                return [0, 'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
                             }
-                        }
-                        else{  /* IF MARCACION ENTRADA es dif de null */
-                          /*  dd($marcacion_puerta001); */
-                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                                if($fecha1->gt($fechaEAnte1)){
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                    $marcacion_puerta->save();
-                                    return 1;
-                                } else{
-                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                     return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                                }
-
-                            }
-                            else{
-                                if($fecha1->gt($fechaSAnte1)){
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                    $marcacion_puerta->save();
-                                    return 1;
-                                } else{
-                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                     return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                                }
-                            }
-
-                        }
-
-                        } else{
-                             $marcacion_puerta->marcaMov_fecha = $fecha1;
-                        $marcacion_puerta->save();
-                        return 1;
-                        }
-
-                    } else{
-                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                         return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                    }
-
-                }
-                else{
-                    if($fecha1->gt($fechaSAnte)){
-                        if($marcacion_puerta00){
-                            $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                            $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                             /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-                        if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                            /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                            if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                        } else {
+                            if ($fecha1->gt($fechaSAnte1)) {
                                 $marcacion_puerta->marcaMov_fecha = $fecha1;
                                 $marcacion_puerta->save();
                                 return 1;
-                            } else{
+                            } else {
                                 /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
+                                return [0, 'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
                             }
                         }
-                        else{  /* IF MARCACION ENTRADA es dif de null */
-                          /*  dd($marcacion_puerta001); */
-                            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                                if($fecha1->gt($fechaEAnte1)){
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                    $marcacion_puerta->save();
-                                    return 1;
-                                } else{
-                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                     return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                                }
-
-                            }
-                            else{
-                                if($fecha1->gt($fechaSAnte1)){
-                                    $marcacion_puerta->marcaMov_fecha = $fecha1;
-                                    $marcacion_puerta->save();
-                                    return 1;
-                                } else{
-                                     /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                                     return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                                }
-                            }
-
-                        }
-
-                        } else{
-                            $marcacion_puerta->marcaMov_fecha = $fecha1;
-                        $marcacion_puerta->save();
-                        return 1;
-                        }
-
-                    } else{
-                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                         return [0,'Tienes registrado otra marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
                     }
-                }
-
-            }
-
-        }
-        else{
-            /* SI NO EXISTE MARCACION ANTERIOR  */
-            /* SI EXISTE OTRA MARCACION */
-            if($marcacion_puerta00){
-                $fechaEAnte1=Carbon::create($marcacion_puerta00->marcaMov_fecha);
-                $fechaSAnte1=Carbon::create($marcacion_puerta00->marcaMov_salida);
-
-                 /* IF LAS MACACIONES SON DIF DE NULL O SI NO  */
-            if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida!=null){
-
-                /* IF TENGO LAS 2 MARCACIONES MAYORES A LA HORA ACTUAL O SI NO TENGO  */
-                if($fecha1->gt($fechaEAnte1) && $fecha1->gt($fechaSAnte1) ){
+                } else {
                     $marcacion_puerta->marcaMov_fecha = $fecha1;
                     $marcacion_puerta->save();
                     return 1;
-                } else{
-                    /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                    return [0,'Tienes registrado la ultima  marcacion marcacion, la hora de entrada debe ser mayor a las de la anterior marcacion'];
-
                 }
             }
-            else{  /* IF MARCACION ENTRADA es dif de null */
-              /*  dd($marcacion_puerta001); */
-                if($marcacion_puerta00->marcaMov_fecha!=null && $marcacion_puerta00->marcaMov_salida==null ){
-                    if($fecha1->gt($fechaEAnte1)){
-                        $marcacion_puerta->marcaMov_fecha = $fecha1;
-                        $marcacion_puerta->save();
-                        return 1;
-                    } else{
-                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                         return [0,'Tienes registrado la ultima  marcacion, la hora de entrada debe ser mayor a la entrada de la ant marcacion'];
-                    }
-
-                }
-                else{
-                    if($fecha1->gt($fechaSAnte1)){
-                        $marcacion_puerta->marcaMov_fecha = $fecha1;
-                        $marcacion_puerta->save();
-                        return 1;
-                    } else{
-                         /* MENSAJE DEBE SER MAYOR QUE ANTERIOR MARCACION */
-                         return [0,'Tienes registrado la ultima marcacion, la hora de entrada debe ser mayor a la salida de la ant marcacion'];
-                    }
-                }
-
-            }
-
-            } else{
-                $marcacion_puerta->marcaMov_fecha = $fecha1;
-                $marcacion_puerta->save();
-                return 1;
-               }
-
-
         }
-        }
-
     }
-
-
 }
