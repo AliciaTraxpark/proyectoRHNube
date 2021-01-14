@@ -1428,7 +1428,7 @@ class apiVersionDosController extends Controller
     public function logoutNewToken(Request $request)
     {
         $token = $request->header('Authorization');
-        if (is_null($token)) {
+        if ($token == "") {
             $factory = JWTFactory::customClaims([
                 'sub' => env('API_id'),
             ]);
