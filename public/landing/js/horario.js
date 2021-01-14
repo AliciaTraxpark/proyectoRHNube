@@ -5264,7 +5264,11 @@ $('#horaI').flatpickr({
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true,
+    onOpen: function (selectedDates, dateStr, instance) {
+        $('#btnGuardaHorario').prop("disabled", true);
+    },
     onClose: function (selectedDates, dateStr, instance) {
+        $('#btnGuardaHorario').prop("disabled", false);
         if ($('#horaF').val() != "") {
             var horaI = moment($('#horaI').val(), ["HH:mm"]);
             var horaF = moment($('#horaF').val(), ["HH:mm"]);
@@ -5303,11 +5307,12 @@ $('#horaI').flatpickr({
                 if (!validacionEP) {
                     $('#btnGuardaHorario').prop("disabled", true);
                     return false;
+                } else {
+                    $('#btnGuardaHorario').prop("disabled", false);
+                    $('#fueraRango').hide();
+                    $('#errorenPausas').hide();
+                    $('#errorenPausasCruzadas').hide();
                 }
-                $('#btnGuardaHorario').prop("disabled", false);
-                $('#fueraRango').hide();
-                $('#errorenPausas').hide();
-                $('#errorenPausasCruzadas').hide();
             }
         }
     }
@@ -5317,7 +5322,11 @@ $('#horaF').flatpickr({
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true,
+    onOpen: function (selectedDates, dateStr, instance) {
+        $('#btnGuardaHorario').prop("disabled", true);
+    },
     onClose: function (selectedDates, dateStr, instance) {
+        $('#btnGuardaHorario').prop("disabled", false);
         if ($('#horaI').val() != "") {
             var horaI = moment($('#horaI').val(), ["HH:mm"]);  //: -> CONVERTIR EN MOMENT HORA INICIO
             var horaF = moment($('#horaF').val(), ["HH:mm"]);  //: -> CONVERTIR EN MOMENT HORA FIN
@@ -5355,11 +5364,12 @@ $('#horaF').flatpickr({
                 if (!validacionEP) {
                     $('#btnGuardaHorario').prop("disabled", true);
                     return false;
+                } else {
+                    $('#btnGuardaHorario').prop("disabled", false);
+                    $('#fueraRango').hide();
+                    $('#errorenPausas').hide();
+                    $('#errorenPausasCruzadas').hide();
                 }
-                $('#btnGuardaHorario').prop("disabled", false);
-                $('#fueraRango').hide();
-                $('#errorenPausas').hide();
-                $('#errorenPausasCruzadas').hide();
             }
         }
     }
@@ -5433,11 +5443,11 @@ function contenidoInput(id) {
                     <div class="row">
                         <div class="col-md-2">
                             <input type="text"  class="form-control form-control-sm descP" id="descPausa${r_cont}"
-                              onkeyup="javascript:$(this).removeClass('borderColor');">
+                              onkeyup="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
                             <input type="text"  class="form-control form-control-sm inicioP" id="InicioPausa${r_cont}" name="inicioP"
-                                onchange="javascript:$(this).removeClass('borderColor');">
+                                onchange="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
@@ -5452,7 +5462,7 @@ function contenidoInput(id) {
                         </div>
                         <div class="col-md-2">
                             <input type="text"  class="form-control form-control-sm finP" id="FinPausa${r_cont}" name="finP" 
-                                onchange="javascript:$(this).removeClass('borderColor');">
+                                onchange="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
@@ -5492,7 +5502,11 @@ function inicializarHorasPausas(id) {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
+        onOpen: function (selectedDates, dateStr, instance) {
+            $('#btnGuardaHorario').prop("disabled", true);
+        },
         onClose: function (selectedDates, dateStr, instance) {
+            $('#btnGuardaHorario').prop("disabled", false);
             $('#fueraRango').hide();
             $('#errorenPausas').hide();
             $('#errorenPausasCruzadas').hide();
@@ -5506,11 +5520,35 @@ function inicializarHorasPausas(id) {
                     if (!validacionEP) {
                         $('#btnGuardaHorario').prop("disabled", true);
                         return false;
+                    } else {
+                        $('#btnGuardaHorario').prop("disabled", false);
+                        $('#fueraRango').hide();
+                        $('#errorenPausas').hide();
+                        $('#errorenPausasCruzadas').hide();
                     }
-                    $('#btnGuardaHorario').prop("disabled", false);
-                    $('#fueraRango').hide();
-                    $('#errorenPausas').hide();
-                    $('#errorenPausasCruzadas').hide();
+                }
+            }
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            $('#fueraRango').hide();
+            $('#errorenPausas').hide();
+            $('#errorenPausasCruzadas').hide();
+            if ($('#horaF').val() != "" || $('#FinPausa' + id).val()) {
+                var validacionPH = validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnGuardaHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnGuardaHorario').prop("disabled", true);
+                        return false;
+                    } else {
+                        $('#btnGuardaHorario').prop("disabled", false);
+                        $('#fueraRango').hide();
+                        $('#errorenPausas').hide();
+                        $('#errorenPausasCruzadas').hide();
+                    }
                 }
             }
         }
@@ -5520,7 +5558,11 @@ function inicializarHorasPausas(id) {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
+        onOpen: function (selectedDates, dateStr, instance) {
+            $('#btnGuardaHorario').prop("disabled", true);
+        },
         onClose: function (selectedDates, dateStr, instance) {
+            $('#btnGuardaHorario').prop("disabled", false);
             $('#fueraRango').hide();
             $('#errorenPausas').hide();
             $('#errorenPausasCruzadas').hide();
@@ -5534,11 +5576,35 @@ function inicializarHorasPausas(id) {
                     if (!validacionEP) {
                         $('#btnGuardaHorario').prop("disabled", true);
                         return false;
+                    } else {
+                        $('#btnGuardaHorario').prop("disabled", false);
+                        $('#fueraRango').hide();
+                        $('#errorenPausas').hide();
+                        $('#errorenPausasCruzadas').hide();
                     }
-                    $('#btnGuardaHorario').prop("disabled", false);
-                    $('#fueraRango').hide();
-                    $('#errorenPausas').hide();
-                    $('#errorenPausasCruzadas').hide();
+                }
+            }
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            $('#fueraRango').hide();
+            $('#errorenPausas').hide();
+            $('#errorenPausasCruzadas').hide();
+            if ($('#horaF').val() != "" || $('#InicioPausa' + id).val()) {
+                var validacionPH = validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnGuardaHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnGuardaHorario').prop("disabled", true);
+                        return false;
+                    } else {
+                        $('#btnGuardaHorario').prop("disabled", false);
+                        $('#fueraRango').hide();
+                        $('#errorenPausas').hide();
+                        $('#errorenPausasCruzadas').hide();
+                    }
                 }
             }
         }
@@ -5670,6 +5736,31 @@ function validarHorasEntrePausas() {
     });
     return estado;
 }
+// * VALIDAR INPUTS
+function validarInputs() {
+    var estado = true;
+    $('.rowInputs').each(function () {
+        var id = $(this).val();
+        if ($('#rowP' + id).is(":visible")) {
+            // ! VALIDACION DE CAMPOS VACIOS
+            if ($('#descPausa' + id).val() == "" || $('#InicioPausa' + id).val() == "" || $('#FinPausa' + id).val() == "") {
+                $('#validP').show();
+                $('#btnGuardaHorario').prop("disabled", true);
+                if ($('#descPausa' + id).val() == "") {
+                    $('#descPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#InicioPausa' + id).val() == "") {
+                    $('#InicioPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#FinPausa' + id).val() == "") {
+                    $('#FinPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                estado = false;
+            }
+        }
+    });
+    return estado;
+}
 // * FUNCION DE ELIMINAR CONTENIDO
 function eliminarContenido(id) {
     $('#descPausa' + id).val("");
@@ -5742,7 +5833,23 @@ function registrarNuevoHorario() {
     } else {
         tardanza = 0;
     }
+    var validarInput = validarInputs();
+    if (!validarInput) {
+        return false;
+    } else {
+        $('#validP').hide();
+    }
+    var validacionPH = validarHorasPausaHorario();
+    var validacionEP = validarHorasEntrePausas();
+    if (!validacionPH) {
+        return false;
+    } else {
+        if (!validacionEP) {
+            return false;
+        }
+    }
     $.ajax({
+        async: false,
         type: "POST",
         url: "/nuevoHorario",
         data: {
@@ -5797,6 +5904,12 @@ var e_horaInicio = $('#horaI_ed').flatpickr({
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true,
+    onOpen: function (selectedDates, dateStr, instance) {
+        $('#btnEditarHorario').prop("disabled", true);
+    },
+    onClose: function (selectedDates, dateStr, instance) {
+        $('#btnEditarHorario').prop("disabled", false);
+    },
     onChange: function (selectedDates, dateStr, instance) {
         if ($('#horaF_ed').val() != "") {
             var validacionPH = e_validarHorasPausaHorario();
@@ -5808,11 +5921,12 @@ var e_horaInicio = $('#horaI_ed').flatpickr({
                 if (!validacionEP) {
                     $('#btnEditarHorario').prop("disabled", true);
                     return false;
+                } else {
+                    $('#btnEditarHorario').prop("disabled", false);
+                    $('#fueraRango_ed').hide();
+                    $('#errorenPausas_ed').hide();
+                    $('#errorenPausasCruzadas_ed').hide();
                 }
-                $('#btnEditarHorario').prop("disabled", false);
-                $('#fueraRango_ed').hide();
-                $('#errorenPausas_ed').hide();
-                $('#errorenPausasCruzadas_ed').hide();
             }
         }
     }
@@ -5822,6 +5936,12 @@ var e_horaFin = $('#horaF_ed').flatpickr({
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true,
+    onOpen: function (selectedDates, dateStr, instance) {
+        $('#btnEditarHorario').prop("disabled", true);
+    },
+    onClose: function (selectedDates, dateStr, instance) {
+        $('#btnEditarHorario').prop("disabled", false);
+    },
     onChange: function (selectedDates, dateStr, instance) {
         if ($('#horaI_ed').val() != "") {
             var validacionPH = e_validarHorasPausaHorario();
@@ -5833,11 +5953,12 @@ var e_horaFin = $('#horaF_ed').flatpickr({
                 if (!validacionEP) {
                     $('#btnEditarHorario').prop("disabled", true);
                     return false;
+                } else {
+                    $('#btnEditarHorario').prop("disabled", false);
+                    $('#fueraRango_ed').hide();
+                    $('#errorenPausas_ed').hide();
+                    $('#errorenPausasCruzadas_ed').hide();
                 }
-                $('#btnEditarHorario').prop("disabled", false);
-                $('#fueraRango_ed').hide();
-                $('#errorenPausas_ed').hide();
-                $('#errorenPausasCruzadas_ed').hide();
             }
         }
     }
@@ -5897,11 +6018,11 @@ function modalEditar(id) {
                                 <div class="row">
                                     <div class="col-md-2">
                                         <input type="text"  class="form-control form-control-sm descP" id="e_descPausa${pausa.idpausas_horario}"
-                                          value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');">
+                                          value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausa${pausa.idpausas_horario}" name="inicioP"
-                                          value="${pausa.pausH_Inicio}"  onchange="javascript:$(this).removeClass('borderColor');">
+                                          value="${pausa.pausH_Inicio}"  onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
@@ -5916,7 +6037,7 @@ function modalEditar(id) {
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP" 
-                                           value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');">
+                                           value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
@@ -5995,7 +6116,11 @@ function e_inicializarHorasPausas(id) {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
+        onOpen: function (selectedDates, dateStr, instance) {
+            $('#btnEditarHorario').prop("disabled", true);
+        },
         onClose: function (selectedDates, dateStr, instance) {
+            $('#btnEditarHorario').prop("disabled", false);
             $('#fueraRango_ed').hide();
             $('#errorenPausas_ed').hide();
             $('#errorenPausasCruzadas_ed').hide();
@@ -6009,11 +6134,36 @@ function e_inicializarHorasPausas(id) {
                     if (!validacionEP) {
                         $('#btnEditarHorario').prop("disabled", true);
                         return false;
+                    } else {
+                        $('#btnEditarHorario').prop("disabled", false);
+                        $('#fueraRango_ed').hide();
+                        $('#errorenPausas_ed').hide();
+                        $('#errorenPausasCruzadas_ed').hide();
                     }
-                    $('#btnEditarHorario').prop("disabled", false);
-                    $('#fueraRango_ed').hide();
-                    $('#errorenPausas_ed').hide();
-                    $('#errorenPausasCruzadas_ed').hide();
+                }
+            }
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            $('#btnEditarHorario').prop("disabled", true);
+            $('#fueraRango_ed').hide();
+            $('#errorenPausas_ed').hide();
+            $('#errorenPausasCruzadas_ed').hide();
+            if ($('#horaF_ed').val() != "" || $('#e_FinPausa' + id).val()) {
+                var validacionPH = e_validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnEditarHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnEditarHorario').prop("disabled", true);
+                        return false;
+                    } else {
+                        $('#btnEditarHorario').prop("disabled", false);
+                        $('#fueraRango_ed').hide();
+                        $('#errorenPausas_ed').hide();
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
                 }
             }
         }
@@ -6023,7 +6173,11 @@ function e_inicializarHorasPausas(id) {
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
+        onOpen: function (selectedDates, dateStr, instance) {
+            $('#btnEditarHorario').prop("disabled", true);
+        },
         onClose: function (selectedDates, dateStr, instance) {
+            $('#btnEditarHorario').prop("disabled", false);
             $('#fueraRango_ed').hide();
             $('#errorenPausas_ed').hide();
             $('#errorenPausasCruzadas_ed').hide();
@@ -6037,11 +6191,36 @@ function e_inicializarHorasPausas(id) {
                     if (!validacionEP) {
                         $('#btnEditarHorario').prop("disabled", true);
                         return false;
+                    } else {
+                        $('#btnEditarHorario').prop("disabled", false);
+                        $('#fueraRango_ed').hide();
+                        $('#errorenPausas_ed').hide();
+                        $('#errorenPausasCruzadas_ed').hide();
                     }
-                    $('#btnEditarHorario').prop("disabled", false);
-                    $('#fueraRango_ed').hide();
-                    $('#errorenPausas_ed').hide();
-                    $('#errorenPausasCruzadas_ed').hide();
+                }
+            }
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            $('#btnEditarHorario').prop("disabled", true);
+            $('#fueraRango_ed').hide();
+            $('#errorenPausas_ed').hide();
+            $('#errorenPausasCruzadas_ed').hide();
+            if ($('#horaF_ed').val() != "" || $('#e_InicioPausa' + id).val()) {
+                var validacionPH = e_validarHorasPausaHorario();
+                if (!validacionPH) {
+                    $('#btnEditarHorario').prop("disabled", true);
+                    return false;
+                } else {
+                    var validacionEP = e_validarHorasEntrePausas();
+                    if (!validacionEP) {
+                        $('#btnEditarHorario').prop("disabled", true);
+                        return false;
+                    } else {
+                        $('#btnEditarHorario').prop("disabled", false);
+                        $('#fueraRango_ed').hide();
+                        $('#errorenPausas_ed').hide();
+                        $('#errorenPausasCruzadas_ed').hide();
+                    }
                 }
             }
         }
@@ -6093,11 +6272,11 @@ function e_contenidoInput(id) {
                     <div class="row">
                         <div class="col-md-2">
                             <input type="text"  class="form-control form-control-sm descP" id="e_descPausaNew${e_cont}"
-                              onkeyup="javascript:$(this).removeClass('borderColor');">
+                              onkeyup="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
                             <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausaNew${e_cont}" name="inicioP"
-                                onchange="javascript:$(this).removeClass('borderColor');">
+                                onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
@@ -6112,7 +6291,7 @@ function e_contenidoInput(id) {
                         </div>
                         <div class="col-md-2">
                             <input type="text"  class="form-control form-control-sm finP" id="e_FinPausaNew${e_cont}" name="finP" 
-                                onchange="javascript:$(this).removeClass('borderColor');">
+                                onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
@@ -6267,6 +6446,30 @@ function e_validarHorasEntrePausas() {
                     }
                 }
             });
+        }
+    });
+    return estado;
+}
+// : VALIDAR INPUTS
+async function e_validarInputs() {
+    var estado = true;
+    $('.e_rowInputs').each(function () {
+        var id = $(this).val();
+        if ($('#e_rowP' + id).is(":visible")) {
+            if ($('#e_descPausa' + id).val() == "" || $('#e_InicioPausa' + id).val() == "" || $('#e_FinPausa' + id).val() == "") {
+                $('#validP_ed').show();
+                $('#btnEditarHorario').prop("disabled", true);
+                if ($('#e_descPausa' + id).val() == "") {
+                    $('#e_descPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#e_InicioPausa' + id).val() == "") {
+                    $('#e_InicioPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                if ($('#e_FinPausa' + id).val() == "") {
+                    $('#e_FinPausa' + id).addClass("borderColor");   //: -> AGREGAR CLASE DE REFERENCIA
+                }
+                estado = false;
+            }
         }
     });
     return estado;
@@ -6460,7 +6663,7 @@ function e_obtenerPausas() {
 
     return resultado;
 }
-function editarHorarioDatos() {
+async function editarHorarioDatos() {
     var id = $('#idhorario_ed').val();
     var descripcion = $('#descripcionCa_ed').val();
     var horaInicio = $('#horaI_ed').val();
@@ -6475,7 +6678,23 @@ function editarHorarioDatos() {
     } else {
         tardanza = 0;
     }
+    var validarInput = await e_validarInputs();
+    if (!validarInput) {
+        return false;
+    } else {
+        $('#validP').hide();
+    }
+    var validacionPH = e_validarHorasPausaHorario();
+    var validacionEP = e_validarHorasEntrePausas();
+    if (!validacionPH) {
+        return false;
+    } else {
+        if (!validacionEP) {
+            return false;
+        }
+    }
     $.ajax({
+        async: false,
         type: "POST",
         url: "/editarHorario",
         data: {
