@@ -43,8 +43,8 @@ function showNotificaciones() {
                                     <div class="notify-icon" style="background: #163552;">
                                         <img src="/landing/images/campana.svg" height="20">
                                     </div>
-                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> 1${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
-                                        <span style="font-weight:200;color:#28292f">2${data[i].data[0].mensaje}</span>
+                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                        <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
                                     </p>
                                 </a>`;
                         } else{
@@ -58,8 +58,8 @@ function showNotificaciones() {
                                     <div class="notify-icon" style="background: #163552;">
                                         <img src="/landing/images/campana.svg" height="20">
                                     </div>
-                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">3${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
-                                        <span style="font-weight:200;color:#28292f">4${data[i].data[0].mensaje}</span>
+                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                        <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
                                     </p>
                                 </a>`;
                         }
@@ -69,8 +69,8 @@ function showNotificaciones() {
                                 <div class="notify-icon" style="background: #163552;">
                                     <img src="/landing/images/campana.svg" height="20">
                                 </div>
-                                <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">5${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
-                                    <span style="font-weight:200;color:#28292f">6${data[i].data[0].mensaje}</span>
+                                <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                    <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
                                 </p>
                             </a>`;
                     }

@@ -666,12 +666,6 @@ class EmpleadoController extends Controller
         $persona->save();
         $emple_persona = $persona->perso_id;
 
-        $user = Auth::user();
-            $mensaje = [
-                'mensaje' => 'Hola'
-            ]; 
-        $user->notify(new NuevaNotification($mensaje));
-
         $empleado = new empleado();
         $empleado->emple_tipoDoc = $objEmpleado['documento'];
         $empleado->emple_nDoc = $objEmpleado['numDocumento'];
