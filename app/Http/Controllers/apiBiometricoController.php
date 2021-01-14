@@ -40,7 +40,6 @@ class apiBiometricoController extends Controller
             $comusuario_organizacion=usuario_organizacion::where('user_id','=', Auth::user()->id)->count();
 
 
-
             if($comusuario_organizacion>1) {
 
                 /* SI TIENE MAS DE 2 ORGANIZACIONES */
@@ -120,16 +119,6 @@ class apiBiometricoController extends Controller
                             ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                             ->get();
 
-                            /* foreach ($organizacion as $tab) {
-                                $biometricos=DB::table('dispositivos')
-                                ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                                'dispo_codigo as serie','version_firmware')
-                                ->where('tipoDispositivo','=',3)
-                                ->where('organi_id','=',$tab->organi_id)
-                                ->get();
-
-                                $tab->biometricos = $biometricos;
-                            } */
 
                             foreach ($usuario as $tab) {
 
@@ -171,16 +160,6 @@ class apiBiometricoController extends Controller
                             ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                             ->get();
 
-                          /*   foreach ($organizacion as $tab) {
-                                $biometricos=DB::table('dispositivos')
-                                ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                                'dispo_codigo as serie','version_firmware')
-                                ->where('tipoDispositivo','=',3)
-                                ->where('organi_id','=',$tab->organi_id)
-                                ->get();
-
-                                $tab->biometricos = $biometricos;
-                            } */
 
                             foreach ($usuario as $tab) {
 
@@ -237,17 +216,6 @@ class apiBiometricoController extends Controller
                     ->join('users as u','uso.user_id','=','u.id')
                     ->join('organizacion as o','uso.organi_id','=','o.organi_id')
                     ->get();
-
-                    /* foreach ($organizacion as $tab) {
-                        $biometricos=DB::table('dispositivos')
-                        ->select('idDispositivos','dispo_descripUbicacion as descripcion','dispo_movil as ipPuerto',
-                        'dispo_codigo as serie','version_firmware')
-                        ->where('tipoDispositivo','=',3)
-                        ->where('organi_id','=',$tab->organi_id)
-                        ->get();
-
-                        $tab->biometricos = $biometricos;
-                    } */
 
                     foreach ($usuario as $tab) {
 
