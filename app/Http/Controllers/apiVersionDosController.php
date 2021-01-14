@@ -621,7 +621,7 @@ class apiVersionDosController extends Controller
         return response()->json("Empleado no encontrado", 400);
     }
 
-    // INVALIDAR TOKEN
+    //* INVALIDAR TOKEN
     public function logoutToken(Request $request)
     {
         $token = $request->header('Authorization');
@@ -1424,5 +1424,33 @@ class apiVersionDosController extends Controller
         }
         $tiempo = array("tiempo" => gmdate('H:i:s', $rango), "productividad" => $productividad);
         return response()->json($tiempo, 200);
+    }
+
+    //* INVALIDAR TOKEN GENERAR NUEVO
+    public function logoutNewToken(Request $request)
+    {
+        $token = $request->header('Authorization');
+        if (is_null($token)) {
+            $factory = JWTFactory::customClaims([
+                'sub' => env('API_id'),
+            ]);
+            $payload = $factory->make();
+            $tokenNew = JWTAuth::encode($payload);
+            return response()->json(array('message' => 'token_new', 'token' => $tokenNew->get()), 200);
+        } else {
+            try {
+                JWTAuth::setToken($token)->invalidate(); // setToken and check
+                $factory = JWTFactory::customClaims([
+                    'sub' => env('API_id'),
+                ]);
+                $payload = $factory->make();
+                $tokenNew = JWTAuth::encode($payload);
+                return response()->json(array('message' => 'token_logout', 'token' => $tokenNew->get()), 200);
+            } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+                return response()->json(array('message' => 'token_expired'), 404);
+            } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+                return response()->json(array('message' => 'token_invalid'), 404);
+            }
+        }
     }
 }
