@@ -121,7 +121,7 @@ use App\invitado;
 
         @media (min-width: 1200px) and (max-width: 1800px) {
             .logo_rh{
-                padding-left: 180px;
+                padding-left: 195px;
             }
             .title_rh{
                 padding-left: 120px;

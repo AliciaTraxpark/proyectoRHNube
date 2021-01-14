@@ -418,7 +418,7 @@
             <div class="container pb-0 pt-2">
                 <div class="col-md-5 col-sm-4 col-12 colResp" style="margin-bottom: 0px;padding-left: 60px; height: 80px !important;">
                     <div class="navbar-brand-wrapper d-flex colResp" >
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" width="135" height="85">
+                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="85">
                     </div>
                 </div>
                 {{-- FORMULARIO LOGIN --}}
