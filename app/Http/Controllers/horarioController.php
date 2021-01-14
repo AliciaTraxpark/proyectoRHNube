@@ -94,6 +94,7 @@ class horarioController extends Controller
             ->leftJoin('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
             // ->whereNull('he.empleado_emple_id')
             ->distinct('e.emple_id')
+            ->where('he.estado', '=', 1)
             ->where('e.emple_estado', '=', 1)
             ->where('e.organi_id', '=', session('sesionidorg'))
             ->get();
@@ -216,6 +217,7 @@ class horarioController extends Controller
     {
         $horario = horario::where('horario.organi_id', '=', session('sesionidorg'))
             ->leftJoin('horario_empleado as he', 'horario.horario_id', '=', 'he.horario_horario_id')
+            ->where('he.estado', '=', 1)
             ->groupBy('horario.horario_id')
             ->get();
 
@@ -256,6 +258,7 @@ class horarioController extends Controller
             ->leftJoin('local as lo', 'e.emple_local', '=', 'lo.local_id')
             ->where('e.emple_estado', '=', 1)
             ->distinct('e.emple_id')
+            ->where('he.estado', '=', 1)
             ->where('emple_id', '=', $idsEm)->get();
         if (count($empleado) >= 1) {
 
@@ -269,6 +272,7 @@ class horarioController extends Controller
                 /*  ->where('users_id', '=', Auth::user()->id) */
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.empleado_emple_id', '=', $idsEm)
+                ->where('he.estado', '=', 1)
                 ->union($eventos_empleado);
 
 
@@ -287,6 +291,7 @@ class horarioController extends Controller
                 ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
                 ->where('he.empleado_emple_id', '=', $idsEm)
+                ->where('he.estado', '=', 1)
                 ->groupBy('h.horario_id')
                 ->get();
             if ($horarioEmpleado) {
@@ -320,6 +325,7 @@ class horarioController extends Controller
             ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id', 'he.empleado_emple_id')
             ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
             ->distinct('e.emple_id')
+            ->where('he.estado', '=', 1)
             ->where('e.emple_estado', '=', 1)
             ->get();
         return $empleados;
@@ -363,6 +369,7 @@ class horarioController extends Controller
             $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
             $horarion = DB::table('horario as h')
                 ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->where('he.estado', '=', 1)
                 ->where('h.organi_id', '=', session('sesionidorg'))
                 ->whereNull('he.horario_horario_id')
                 ->get();
@@ -535,6 +542,7 @@ class horarioController extends Controller
                         /* ->where('h.horaI', '=', $idhorar)
                     ->where('h.horaF', '=', $idhorar) */
                         ->where('horario_empleado.empleado_emple_id', '=', $idempsva)
+                        ->where('horario_empleado.estado', '=', 1)
                         ->get();
                     if ($horarioDentro) {
                         foreach ($horarioDentro as $horarioDentros) {
@@ -569,6 +577,7 @@ class horarioController extends Controller
                     $horario_empleado->horarioComp = $temporal_eventosH->horarioComp;
                     $horario_empleado->horaAdic = $temporal_eventosH->horaAdic;
                     $horario_empleado->nHoraAdic = $temporal_eventosH->nHoraAdic;
+                    $horario_empleado->estado=1;
                     if ($temporal_eventosH->fuera_horario == 1) {
                         $horario_empleado->borderColor = $temporal_eventosH->borderColor;
                     }
@@ -721,11 +730,13 @@ class horarioController extends Controller
         $idHora = $request->idHora;
         $textcolor = $request->textcolor;
         if ($textcolor == '111111') {
-            $horario_empleado = horario_empleado::where('horario_dias_id', '=', $idHora)->get();
+            $horario_empleado = horario_empleado::where('horario_dias_id', '=', $idHora)
+            ->where('horario_empleado.estado', '=', 1)->get();
             $nhor = count($horario_empleado);
 
             if ($nhor == 1) {
-                $horario_empleado0 = horario_empleado::where('horario_dias_id', '=', $idHora)->where('empleado_emple_id', '=', $ide)->delete();
+                $horario_empleado0 = horario_empleado::where('horario_dias_id', '=', $idHora)
+                ->where('empleado_emple_id', '=', $ide)->delete();
                 $horario_dias = horario_dias::where('id', '=', $idHora)->delete();
             } else if ($nhor > 1) {
                 $horario_empleado1 = horario_empleado::where('horario_dias_id', '=', $idHora)->where('empleado_emple_id', '=', $ide)->delete();
@@ -773,6 +784,7 @@ class horarioController extends Controller
             ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
+            ->where('he.estado', '=', 1)
             ->union($eventos_empleado);
 
 
@@ -817,6 +829,7 @@ class horarioController extends Controller
             ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
+            ->where('he.estado', '=', 1)
             ->union($eventos_empleado);
 
 
@@ -856,6 +869,7 @@ class horarioController extends Controller
             ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
+            ->where('he.estado', '=', 1)
             ->union($eventos_empleado1);
 
 
@@ -895,6 +909,7 @@ class horarioController extends Controller
             ->where('he.organi_id', '=', session('sesionidorg'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempl)
+            ->where('he.estado', '=', 1)
             ->union($eventos_empleado1);
 
 
@@ -1034,6 +1049,7 @@ class horarioController extends Controller
             ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
             ->where('h.organi_id', '=', session('sesionidorg'))
             ->where('h.horario_id', '=', $idhorario)
+           /*  ->where('he.estado', '=', 1) */
             ->get();
         if ($horarion[0]->horario_horario_id != null) {
             return 1;
