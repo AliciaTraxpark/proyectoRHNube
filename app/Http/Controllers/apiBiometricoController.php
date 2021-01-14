@@ -179,8 +179,8 @@ class apiBiometricoController extends Controller
                                 Auth::logout();
                                 session()->forget('sesionidorg');
                                 session()->flush();
-                                return response()->json(array('status' => 400, 'title' => 'Usuario no tiene permiso',
-                                'detail' => 'Usuario no tiene permiso para extractor RHnube'), 400);
+                                return response()->json(array('status' => 400, 'title' => 'Usuario no tiene permiso para extractor RH nube',
+                                'detail' => 'Usuario no tiene permiso para extractor RH nube'), 400);
                             }
 
                         }
@@ -250,12 +250,12 @@ class apiBiometricoController extends Controller
             $user = User::where('email', '=', request()->get('email'))->get()->first();
             if ($user) {
 
-                return response()->json(array('status' => 400, 'title' => 'Correo electronico o contraseña incorrecta',
-                    'detail' => 'Datos incorrectos,correo electronico o contraseña incorrecta'), 400);
+                return response()->json(array('status' => 400, 'title' => 'Verifique sus credenciales.',
+                    'detail' => 'Verifique sus credenciales.'), 400);
             } else {
 
                 return response()->json(array('status' => 400, 'title' => 'Usuario no registrado',
-                    'detail' => 'No se encontro usuario registrado con este Email'), 400);
+                    'detail' => 'No se encontró usuario registrado con este correo'), 400);
             }
         }
     }
@@ -310,8 +310,8 @@ class apiBiometricoController extends Controller
                             Auth::logout();
                             session()->forget('sesionidorg');
                             session()->flush();
-                            return response()->json(array('status' => 400, 'title' => 'Usuario no tiene permiso',
-                            'detail' => 'Usuario no tiene permiso para extractor RHnube'), 400);
+                            return response()->json(array('status' => 400, 'title' => 'Usuario no tiene permiso para extractor RH nube',
+                            'detail' => 'Usuario no tiene permiso para extractor RH nube'), 400);
                         }
 
                     }
