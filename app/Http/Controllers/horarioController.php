@@ -32,60 +32,60 @@ class horarioController extends Controller
     //
     public function index()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $paises = paises::all();
-        $departamento = ubigeo_peru_departments::all();
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('eve.id_empleado', '!=', null)
-            ->where('e.emple_estado', '=', 1)
-            ->groupBy('e.emple_id')
-            ->get();
-        $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
-        $horarion = DB::table('horario as h')
-            ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
-            ->where('h.organi_id', '=', session('sesionidorg'))
-            ->whereNull('he.horario_horario_id')
-            ->get();
-        $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
-            ->select('area_id as idarea', 'area_descripcion as descripcion')
-            ->get();
-        $cargo = DB::table('cargo')
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
-            ->get();
-        $local = DB::table('local')
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->select('local_id as idlocal', 'local_descripcion as descripcion')
-            ->get();
+        } else {
+            $paises = paises::all();
+            $departamento = ubigeo_peru_departments::all();
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('eve.id_empleado', '!=', null)
+                ->where('e.emple_estado', '=', 1)
+                ->groupBy('e.emple_id')
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $horarion = DB::table('horario as h')
+                ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->where('h.organi_id', '=', session('sesionidorg'))
+                ->whereNull('he.horario_horario_id')
+                ->get();
+            $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
+                ->select('area_id as idarea', 'area_descripcion as descripcion')
+                ->get();
+            $cargo = DB::table('cargo')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+                ->get();
+            $local = DB::table('local')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('local_id as idlocal', 'local_descripcion as descripcion')
+                ->get();
 
-        $invitadod = DB::table('invitado')
-            ->where('user_Invitado', '=', Auth::user()->id)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()->first();
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
-        if ($invitadod) {
-            if ($invitadod->rol_id != 1) {
-                return redirect('/dashboard');
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('horarios.horarios', [
+                        'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local
+                    ]);
+                }
             } else {
                 return view('horarios.horarios', [
                     'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local
                 ]);
             }
-        } else {
-            return view('horarios.horarios', [
-                'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                'area' => $area, 'cargo' => $cargo, 'local' => $local
-            ]);
         }
     }
-}
     public function verTodEmpleado(Request $request)
     {
         $empleados = DB::table('empleado as e')
@@ -111,7 +111,7 @@ class horarioController extends Controller
         $fueraHora = $request->fueraHora;
         $horaC = $request->horaC;
         $horaA = $request->horaA;
-        $nHoraAdic= $request->nHoraAdic;
+        $nHoraAdic = $request->nHoraAdic;
         $arrayrep = collect();
         $arrayeve = collect();
 
@@ -159,7 +159,7 @@ class horarioController extends Controller
     }
     public function eventos()
     {
-        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI', 'horaF', 'borderColor','horaAdic'])
+        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI', 'horaF', 'borderColor', 'horaAdic'])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
             ->get();
@@ -169,7 +169,7 @@ class horarioController extends Controller
     public function guardarHorarioBD(Request $request)
     {
 
-        $tardanza=$request->tardanza;
+        $tardanza = $request->tardanza;
         $descripcion = $request->descripcion;
         $toleranciaH = $request->toleranciaH;
         $inicio = $request->inicio;
@@ -236,7 +236,6 @@ class horarioController extends Controller
                 'e.emple_id',
                 'hd.paises_id',
                 'hd.ubigeo_peru_departments_id',
-                'hor.horario_sobretiempo',
                 'hor.horario_tipo',
                 'hor.horario_descripcion',
                 'hor.horario_tolerancia',
@@ -347,59 +346,59 @@ class horarioController extends Controller
     }
     public function indexMenu()
     {
-        if(session('sesionidorg')==null || session('sesionidorg')=='null' ){
+        if (session('sesionidorg') == null || session('sesionidorg') == 'null') {
             return redirect('/elegirorganizacion');
-        } else{
-        $paises = paises::all();
-        $departamento = ubigeo_peru_departments::all();
-        $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->where('eve.id_empleado', '!=', null)
-            ->where('e.emple_estado', '=', 1)
-            ->groupBy('e.emple_id')
-            ->get();
-        $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
-        $horarion = DB::table('horario as h')
-            ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
-            ->where('h.organi_id', '=', session('sesionidorg'))
-            ->whereNull('he.horario_horario_id')
-            ->get();
-        $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
-            ->select('area_id as idarea', 'area_descripcion as descripcion')
-            ->get();
-        $cargo = DB::table('cargo')
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
-            ->get();
-        $local = DB::table('local')
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->select('local_id as idlocal', 'local_descripcion as descripcion')
-            ->get();
+        } else {
+            $paises = paises::all();
+            $departamento = ubigeo_peru_departments::all();
+            $empleado = DB::table('empleado as e')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->join('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+                ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'p.perso_id', 'e.emple_id')
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('eve.id_empleado', '!=', null)
+                ->where('e.emple_estado', '=', 1)
+                ->groupBy('e.emple_id')
+                ->get();
+            $horario = horario::where('organi_id', '=', session('sesionidorg'))->get();
+            $horarion = DB::table('horario as h')
+                ->leftJoin('horario_empleado as he', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->where('h.organi_id', '=', session('sesionidorg'))
+                ->whereNull('he.horario_horario_id')
+                ->get();
+            $area = DB::table('area')->where('organi_id', '=', session('sesionidorg'))
+                ->select('area_id as idarea', 'area_descripcion as descripcion')
+                ->get();
+            $cargo = DB::table('cargo')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('cargo_id as idcargo', 'cargo_descripcion as descripcion')
+                ->get();
+            $local = DB::table('local')
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->select('local_id as idlocal', 'local_descripcion as descripcion')
+                ->get();
 
-        $invitadod = DB::table('invitado')
-            ->where('user_Invitado', '=', Auth::user()->id)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()->first();
+            $invitadod = DB::table('invitado')
+                ->where('user_Invitado', '=', Auth::user()->id)
+                ->where('organi_id', '=', session('sesionidorg'))
+                ->get()->first();
 
-        if ($invitadod) {
-            if ($invitadod->rol_id != 1) {
-                return redirect('/dashboard');
+            if ($invitadod) {
+                if ($invitadod->rol_id != 1) {
+                    return redirect('/dashboard');
+                } else {
+                    return view('horarios.horarioMenu', [
+                        'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
+                        'area' => $area, 'cargo' => $cargo, 'local' => $local
+                    ]);
+                }
             } else {
                 return view('horarios.horarioMenu', [
                     'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
                     'area' => $area, 'cargo' => $cargo, 'local' => $local
                 ]);
             }
-        } else {
-            return view('horarios.horarioMenu', [
-                'pais' => $paises, 'departamento' => $departamento, 'empleado' => $empleado, 'horario' => $horario, 'horarion' => $horarion,
-                'area' => $area, 'cargo' => $cargo, 'local' => $local
-            ]);
         }
-    }
     }
 
     public function eliminarHora(Request $request)
@@ -523,47 +522,43 @@ class horarioController extends Controller
 
                 /////////////////////////////////////COMPARAR SI ESTA DENTRO DE RANGO
 
-                $horarioEmpleado=horario::where('horario_id',$temporal_eventosH->id_horario)->first();
-                $horaInicialF=Carbon::parse($horarioEmpleado->horaI);
-                $horaFinalF=Carbon::parse($horarioEmpleado->horaF);
+                $horarioEmpleado = horario::where('horario_id', $temporal_eventosH->id_horario)->first();
+                $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
+                $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
                 $arrayHDentro = collect();
                 ////////////////////////////////////
-                foreach($idemps as $idempsva){
+                foreach ($idemps as $idempsva) {
                     $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
-                    ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
-                    ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
-                    ->where('start', '=', $temporal_eventosH->start)
-                    /* ->where('h.horaI', '=', $idhorar)
+                        ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
+                        ->where('start', '=', $temporal_eventosH->start)
+                        /* ->where('h.horaI', '=', $idhorar)
                     ->where('h.horaF', '=', $idhorar) */
-                    ->where('horario_empleado.empleado_emple_id', '=', $idempsva)
-                    ->get();
-                    if($horarioDentro){
-                     foreach($horarioDentro as $horarioDentros){
-                        $horaIDentro=Carbon::parse($horarioDentros->horaI);
-                        $horaFDentro=Carbon::parse($horarioDentros->horaF);
-                        if($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF) ){
-                           $startArreD = carbon::create($horarioDentros->start);
-                           $arrayHDentro->push($idempsva);
-                        }
-                        else{
-                            if($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)){
-                               $startArreD = carbon::create($horarioDentros->start);
-                               $arrayHDentro->push($idempsva);
-                            }
-                            else{
-                                if($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)){
-                                   $startArreD = carbon::create($horarioDentros->start);
-                                   $arrayHDentro->push($idempsva);
+                        ->where('horario_empleado.empleado_emple_id', '=', $idempsva)
+                        ->get();
+                    if ($horarioDentro) {
+                        foreach ($horarioDentro as $horarioDentros) {
+                            $horaIDentro = Carbon::parse($horarioDentros->horaI);
+                            $horaFDentro = Carbon::parse($horarioDentros->horaF);
+                            if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($idempsva);
+                            } else {
+                                if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                    $startArreD = carbon::create($horarioDentros->start);
+                                    $arrayHDentro->push($idempsva);
+                                } else {
+                                    if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                        $startArreD = carbon::create($horarioDentros->start);
+                                        $arrayHDentro->push($idempsva);
+                                    }
                                 }
-
                             }
                         }
                     }
-                    }
-
-            }
-            $datosDentroN = Arr::flatten($arrayHDentro);
-             $idemps3 = array_values(array_diff($idemps, $datosDentroN));
+                }
+                $datosDentroN = Arr::flatten($arrayHDentro);
+                $idemps3 = array_values(array_diff($idemps, $datosDentroN));
                 /////////////////////////////////////
                 foreach ($idemps3 as $idempleados) {
                     $horario_empleado = new horario_empleado();
@@ -675,15 +670,15 @@ class horarioController extends Controller
             }
         }
 
-      /*   dd($datosDentroN); */
-      $empleadosMostrar = collect();
-        foreach($datosDentroN as $datosDentroNs ){
-            $empleadosTabla=DB::table('empleado as e')
-            ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
-            ->select('e.emple_id','e.emple_nDoc', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
-            ->where('e.emple_id', '=',$datosDentroNs)
-            ->where('e.organi_id', '=', session('sesionidorg'))
-            ->get();
+        /*   dd($datosDentroN); */
+        $empleadosMostrar = collect();
+        foreach ($datosDentroN as $datosDentroNs) {
+            $empleadosTabla = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'e.emple_nDoc', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                ->where('e.emple_id', '=', $datosDentroNs)
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->get();
             $empleadosMostrar->push($empleadosTabla);
         }
 
@@ -930,20 +925,18 @@ class horarioController extends Controller
 
     public function verDatahorario(Request $request)
     {
-        $idsedit = $request->idsedit;
+        $idsedit = $request->get('id');
         $horario = horario::where('organi_id', '=', session('sesionidorg'))
             ->where('horario_id', '=', $idsedit)
             ->get();
         $pausas_horario = pausas_horario::where('horario_id', '=', $idsedit)->get();
-        if ($pausas_horario) {
-            return [$horario[0], $pausas_horario];
-        } else {
-            return $horario;
-        }
+
+        return response()->json(array("horario" => $horario, "pausas" => $pausas_horario), 200);
     }
 
     public function actualizarhorarioed(Request $request)
-    {   $tardanza_ed=$request->tardanza_ed;
+    {
+        $tardanza_ed = $request->tardanza_ed;
         $idhorario = $request->idhorario;
         $descried = $request->descried;
         $toleed = $request->toleed;
@@ -957,7 +950,7 @@ class horarioController extends Controller
 
         $horario = horario::where('horario_id', '=', $idhorario)
             ->update([
-                'horario_descripcion' => $descried,'hora_contTardanza' => $tardanza_ed, 'horario_tolerancia' => $toleed, 'horaI' => $horaIed,
+                'horario_descripcion' => $descried, 'hora_contTardanza' => $tardanza_ed, 'horario_tolerancia' => $toleed, 'horaI' => $horaIed,
                 'horaF' => $horaFed, 'horario_toleranciaF' => $toleranciaFed, 'horasObliga' => $horaObed
             ]);
 
@@ -970,10 +963,10 @@ class horarioController extends Controller
 
         //comprobar si existe pausas
 
-        $pausas_horarioComprobar=DB::table('pausas_horario')
-        ->where('horario_id',$idhorario)->get();
+        $pausas_horarioComprobar = DB::table('pausas_horario')
+            ->where('horario_id', $idhorario)->get();
 
-        if($pausas_horarioComprobar->isEmpty()){
+        if ($pausas_horarioComprobar->isEmpty()) {
             if ($descPausa) {
 
                 if ($descPausa != null || $descPausa != '') {
@@ -989,8 +982,7 @@ class horarioController extends Controller
                     }
                 }
             }
-        }
-        else{
+        } else {
             //ACTUALIZAR PAUSAS YA REGISTRADAS
             $idpausasReg = $request->get('ID_edReg');
             $descPausaReg = $request->get('descPausa_edReg');
@@ -1011,27 +1003,25 @@ class horarioController extends Controller
                     }
                 }
             }
-
-
         }
         $descPausaRN = $request->get('descPausa_edRN');
-            $IniPausaRN = $request->get('pausaInicio_edRN');
-            $FinPausaRN = $request->get('finPausa_edRN');
-            if ($descPausaRN) {
+        $IniPausaRN = $request->get('pausaInicio_edRN');
+        $FinPausaRN = $request->get('finPausa_edRN');
+        if ($descPausaRN) {
 
-                if ($descPausaRN != null || $descPausaRN != '') {
-                    for ($i = 0; $i < sizeof($descPausaRN); $i++) {
-                        if ($descPausaRN[$i] != null) {
-                            $pausas_horarioRN = new pausas_horario();
-                            $pausas_horarioRN->pausH_descripcion = $descPausaRN[$i];
-                            $pausas_horarioRN->pausH_Inicio = $IniPausaRN[$i];
-                            $pausas_horarioRN->pausH_Fin = $FinPausaRN[$i];
-                            $pausas_horarioRN->horario_id = $idhorario;
-                            $pausas_horarioRN->save();
-                        }
+            if ($descPausaRN != null || $descPausaRN != '') {
+                for ($i = 0; $i < sizeof($descPausaRN); $i++) {
+                    if ($descPausaRN[$i] != null) {
+                        $pausas_horarioRN = new pausas_horario();
+                        $pausas_horarioRN->pausH_descripcion = $descPausaRN[$i];
+                        $pausas_horarioRN->pausH_Inicio = $IniPausaRN[$i];
+                        $pausas_horarioRN->pausH_Fin = $FinPausaRN[$i];
+                        $pausas_horarioRN->horario_id = $idhorario;
+                        $pausas_horarioRN->save();
                     }
                 }
             }
+        }
 
 
         return ($horarion);
@@ -1126,12 +1116,129 @@ class horarioController extends Controller
         return json_encode($horario);
     }
 
-    public function eliminarPausasEnEditar(Request $request){
+    public function eliminarPausasEnEditar(Request $request)
+    {
         $idhorario = $request->valorHorario;
-        DB::table('pausas_horario')->where('horario_id', '=',$idhorario)->delete();
+        DB::table('pausas_horario')->where('horario_id', '=', $idhorario)->delete();
     }
-   public function eliminarPausaHorario(Request $request){
-    $idpausa = $request->idpausa;
-    DB::table('pausas_horario')->where('idpausas_horario', '=',$idpausa)->delete();
-   }
+    public function eliminarPausaHorario(Request $request)
+    {
+        $idpausa = $request->idpausa;
+        DB::table('pausas_horario')->where('idpausas_horario', '=', $idpausa)->delete();
+    }
+
+    // * REGISTRAR NUEVO HORARIO
+    public function guardarNuevoHorario(Request $request)
+    {
+        $horario = new horario();
+        $horario->horario_descripcion = $request->get('descripcion');
+        $horario->horario_tolerancia = $request->get('toleranciaI');
+        $horario->horaI = $request->get('horaInicio');
+        $horario->horaF = $request->get('horaFin');
+        $horario->user_id = Auth::user()->id;
+        $horario->organi_id = session('sesionidorg');
+        $horario->horario_toleranciaF = $request->get('toleranciaF');
+        $horario->horasObliga = $request->get('horasO');
+        $horario->hora_contTardanza = $request->get('tardanza');
+        $horario->save();
+
+        $idHorario = $horario->horario_id;
+        // * PAUSAS
+        if (!is_null($request->get('pausas'))) {
+            foreach ($request->get('pausas') as $pausa) {
+                if (!is_null($pausa["descripcion"]) && !is_null($pausa["inicioPausa"]) && !is_null($pausa["finPausa"])) {
+                    $pausaH = new pausas_horario();
+                    $pausaH->pausH_descripcion = $pausa["descripcion"];
+                    $pausaH->pausH_Inicio = $pausa["inicioPausa"];
+                    $pausaH->pausH_Fin = $pausa["finPausa"];
+                    $pausaH->horario_id = $idHorario;
+                    $pausaH->tolerancia_inicio = $pausa["toleranciaI"];
+                    $pausaH->tolerancia_fin = $pausa["toleranciaF"];
+                    $pausaH->inactivar = $pausa["inactivar"];
+                    $pausaH->save();
+                }
+            }
+        }
+
+        return response()->json($idHorario, 200);
+    }
+
+    // * OBTENER PAUSAS DE HORARIO
+    public function pausasHorario(Request $request)
+    {
+        $id = $request->get('id');
+        $pausasHorario = pausas_horario::where('horario_id', '=', $id)->get();
+
+        return response()->json($pausasHorario, 200);
+    }
+
+    // * EDITAR HORARIO
+    public function editarHorario(Request $request)
+    {
+        // * HORARIO
+        $horario = horario::findOrFail($request->get('id'));
+        $horario->horario_descripcion = $request->get('descripcion');
+        $horario->horario_tolerancia = $request->get('toleranciaI');
+        $horario->horaI = $request->get('horaInicio');
+        $horario->horaF = $request->get('horaFin');
+        $horario->horario_toleranciaF = $request->get('toleranciaF');
+        $horario->horasObliga = $request->get('horasO');
+        $horario->hora_contTardanza = $request->get('tardanza');
+        $horario->save();
+
+        $idHorario = $horario->horario_id;
+
+        // * PAUSAS
+        if (!is_null($request->get('pausas'))) {
+            foreach ($request->get('pausas') as $pausa) {
+                $pausaHorario = pausas_horario::where('idpausas_horario', '=', $pausa["id"])->get()->first();
+                // * SI SE ENCUENTRA REGISTRADO LA PAUSA
+                if ($pausaHorario) {
+                    // * COMPARAR DATOS SI ESTA VACIO
+                    if (!is_null($pausa["descripcion"]) && !is_null($pausa["inicioPausa"]) && !is_null($pausa["finPausa"])) {
+                        $pausaHorario->pausH_descripcion = $pausa["descripcion"];
+                        $pausaHorario->pausH_Inicio = $pausa["inicioPausa"];
+                        $pausaHorario->pausH_Fin = $pausa["finPausa"];
+                        $pausaHorario->tolerancia_inicio = $pausa["toleranciaI"];
+                        $pausaHorario->tolerancia_fin = $pausa["toleranciaF"];
+                        $pausaHorario->inactivar = $pausa["inactivar"];
+                        $pausaHorario->save();
+                    } else {
+                        // * ELIMINAR PAUSA HORARIO
+                        $pausaHorario->delete();
+                    }
+                } else {
+                    // * COMPARAR DATOS SI ESTA VACIO
+                    if (!is_null($pausa["descripcion"]) && !is_null($pausa["inicioPausa"]) && !is_null($pausa["finPausa"])) {
+                        $nuevoPausa = new pausas_horario();
+                        $nuevoPausa->pausH_descripcion = $pausa["descripcion"];
+                        $nuevoPausa->pausH_Inicio = $pausa["inicioPausa"];
+                        $nuevoPausa->pausH_Fin = $pausa["finPausa"];
+                        $nuevoPausa->tolerancia_inicio = $pausa["toleranciaI"];
+                        $nuevoPausa->tolerancia_fin = $pausa["toleranciaF"];
+                        $nuevoPausa->inactivar = $pausa["inactivar"];
+                        $nuevoPausa->horario_id = $idHorario;
+                        $nuevoPausa->save();
+                    }
+                }
+            }
+        } else {
+            $pausasHorario = pausas_horario::where('horario_id', '=', $idHorario)->get();
+            // * ELIMINAR PAUSAS DEL HORARIO
+            foreach ($pausasHorario as $pausa) {
+                $pausa->delete();
+            }
+        }
+
+        return response()->json($idHorario, 200);
+    }
+
+    public function obtenerHorarios()
+    {
+        $horario = horario::select('horario_id', 'horario_descripcion', 'horaI', 'horaF')
+            ->where('organi_id', '=', session('sesionidorg'))
+            ->get();
+
+        return response()->json($horario, 200);
+    }
 }

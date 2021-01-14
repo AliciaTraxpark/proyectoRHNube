@@ -9,7 +9,14 @@ class pausas_horario extends Model
     //
     protected $table = 'pausas_horario';
     protected $primaryKey = 'idpausas_horario';
-    protected $fillable = ['idpausas_horario', 'pausH_descripcion', 'pausH_Inicio',
-     'pausH_Fin','horario_id'];
+    protected $fillable = [
+        'idpausas_horario',
+        'pausH_descripcion',
+        'pausH_Inicio',
+        'pausH_Fin', 'horario_id',
+        'tolerancia_inicio',
+        'tolerancia_fin',
+        'inactivar'
+    ];
     public $timestamps = false;
 }
