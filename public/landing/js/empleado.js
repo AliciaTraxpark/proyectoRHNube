@@ -156,7 +156,7 @@ function calendario() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' });
                     } else {
                         $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
@@ -245,50 +245,7 @@ function calendario_edit() {
                         message: "Los  horarios se modifican en la pestaña horarios",
 
                     })
-                    /*  bootbox.confirm({
-                         message:
-                             "¿Desea eliminar: " +
-                             info.event.title +
-                             " del calendario?",
-                         buttons: {
-                             confirm: {
-                                 label: "Aceptar",
-                                 className: "btn-success",
-                             },
-                             cancel: {
-                                 label: "Cancelar",
-                                 className: "btn-light",
-                             },
-                         },
-                         callback: function (result) {
-                             if (result == true) {
-                                 $.ajax({
-                                     type: "post",
-                                     url: "/empleado/eliminarHorariosEdit",
-                                     data: {
-                                         ideve: info.event.id,
-                                     },
-                                     statusCode: {
-                                         419: function () {
-                                             location.reload();
-                                         },
-                                     },
-                                     headers: {
-                                         "X-CSRF-TOKEN": $(
-                                             'meta[name="csrf-token"]'
-                                         ).attr("content"),
-                                     },
-                                     success: function (data) {
-                                         info.event.remove();
-                                         calendar2_ed.refetchEvents();
-                                     },
-                                     error: function (data) {
-                                         alert("Ocurrio un error");
-                                     },
-                                 });
-                             }
-                         },
-                     }); */
+
                 } else {
                     bootbox.confirm({
                         title: "Eliminar incidencia",
@@ -426,7 +383,7 @@ function calendario_edit() {
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales <br>'+'******Pausas:******    '+cadenaPausas});
+                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas <br>'+'******Pausas:******    '+cadenaPausas});
                         } else {
                             $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario <br>'+'    ******Pausas:******     '+cadenaPausas});
                         }
@@ -438,7 +395,7 @@ function calendario_edit() {
                 else{
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' });
                         } else {
                             $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                         }
@@ -1320,7 +1277,7 @@ function calendario2() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas'  });
                     } else {
                         $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
@@ -1624,7 +1581,7 @@ function calendario3() {
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales <br>'+'******Pausas:******    '+cadenaPausas});
+                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas <br>'+'******Pausas:******    '+cadenaPausas});
                         } else {
                             $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario <br>'+'    ******Pausas:******     '+cadenaPausas});
                         }
@@ -1636,7 +1593,7 @@ function calendario3() {
                 else{
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' });
                         } else {
                             $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                         }
@@ -1729,7 +1686,7 @@ function calendario4() {
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales <br>'+'******Pausas:******    '+cadenaPausas });
+                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas <br>'+'******Pausas:******    '+cadenaPausas });
                         } else {
                             $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario <br>'+'    ******Pausas:******     '+cadenaPausas});
                         }
@@ -1741,7 +1698,7 @@ function calendario4() {
                 else{
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' });
                         } else {
                             $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                         }
@@ -2054,7 +2011,7 @@ function calendario2_ed() {
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales <br>'+'******Pausas:******    '+cadenaPausas });
+                            $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas <br>'+'******Pausas:******    '+cadenaPausas });
                         } else {
                             $(info.el).tooltip({  html: true, title:info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario <br>'+'    ******Pausas:******     '+cadenaPausas});
                         }
@@ -2066,7 +2023,7 @@ function calendario2_ed() {
                 else{
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                            $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' });
                         } else {
                             $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                         }
