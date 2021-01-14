@@ -502,13 +502,10 @@ function editarDispo(id){
                 $('#idDisposiBio').val(data[0].idDispositivos)
                 $('#descripcionDisBio_ed').val(data[0].dispo_descripUbicacion);
                 $('#descripcionBiome_ed').val(data[0].dispo_codigo);
-                if(data[0].dispo_codigo!=null){
-                    console.log('di');
-                    $('#descripcionBiome_ed').prop("disabled",true);
-                } else{
-                    console.log('no di');
-                    $('#descripcionBiome_ed').prop("disabled",false);
-                }
+
+                $('#descripcionBiome_ed').prop("disabled",true);
+                $('#versionFi_ed').prop("disabled",true);
+
                 splitE =data[0].dispo_movil.split(":");
                 $('#ipv4_ed').val(splitE[0]);
                 $('#nPuerto_ed').val(splitE[1]);
@@ -648,11 +645,11 @@ function NuevoBiome(){
 
 function RegistraBiome(){
 
-    var serieBio=$('#descripcionBiome').val();
+
     var ip=$('#ipv4').val();
     ppp=':';
     var puerto=$('#nPuerto').val();
-    var versFirmware=$('#versionFi').val();
+
     var ippuerto=ip.concat(ppp, puerto);
 
     var descripcionBio=$('#descripcionDisBio').val();
@@ -662,7 +659,7 @@ function RegistraBiome(){
         type: "post",
         url: "/dispoStoreBiometrico",
         data: {
-            serieBio,ippuerto,descripcionBio,versFirmware
+           ippuerto,descripcionBio
         },
         statusCode: {
             419: function () {

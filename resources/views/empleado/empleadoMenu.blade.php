@@ -954,6 +954,12 @@ use App\proyecto_empleado;
         padding: 10px 0px 0px 0px;
     }
 
+    @media(min-width: 386px) and (max-width: 487px){
+        .th_rh{
+            padding: 0 35px !important;
+        }
+    }
+
     /* FINALIZACION DE RESPONSIVE */
 </style>
 {{-- BOTONES DE CARGAS MASIVAS --}}
@@ -1028,13 +1034,13 @@ use App\proyecto_empleado;
                     <div class="col-md-12">
                         <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                     </div>
-                    <div class="col-md-4 inputResponsive" id="filter_global">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive" id="filter_global">
                         <td align="center">
                             <input type="text" class="global_filter form-control" id="global_filter"
                                 style="height: 35px;" placeholder="Buscar por...">
                         </td>
                     </div>
-                    <div class="col-md-2 inputResponsive">
+                    <div class="col-12 col-sm-2 col-md-2 col-lg-2 inputResponsive">
                         <td align="center">
                             <select class="form-control" name="select" id="select" style="height: 35.5px;">
                                 <option value="2">Documento</option>
@@ -1045,10 +1051,10 @@ use App\proyecto_empleado;
                             </select>
                         </td>
                     </div>
-                    <div class="col-xl-6 inputResponsive">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 inputResponsive">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10">
+                            <label class="col-lg-2 col-md-3 col-sm-3 col-form-label">Área:</label>
+                            <div class="col-lg-10 col-md-9 col-sm-9 text-left">
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
                                     multiple="multiple" data-placeholder="Seleccionar áreas">
                                     @foreach ($area as $areas)
@@ -4147,13 +4153,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
@@ -5315,13 +5321,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
@@ -5848,13 +5854,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;

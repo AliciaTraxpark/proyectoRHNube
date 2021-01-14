@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use App\invitado_empleado;
+use App\Notifications\NuevaNotification;
 
 class EmpleadoController extends Controller
 {
@@ -665,7 +666,6 @@ class EmpleadoController extends Controller
         $persona->save();
         $emple_persona = $persona->perso_id;
 
-
         $empleado = new empleado();
         $empleado->emple_tipoDoc = $objEmpleado['documento'];
         $empleado->emple_nDoc = $objEmpleado['numDocumento'];
@@ -784,6 +784,7 @@ class EmpleadoController extends Controller
             $actividad->organi_id = session('sesionidorg');
             $actividad->save();
         }
+
         return response()->json($idempleado, 200);
     }
 
@@ -1509,7 +1510,7 @@ class EmpleadoController extends Controller
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI', 'horaF', 'borderColor', 'horaAdic'])
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic'])
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
@@ -1697,33 +1698,28 @@ class EmpleadoController extends Controller
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario'
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario','i.inciden_descripcion as horasObliga','i.inciden_descripcion as nHoraAdic'
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
-        /*   ->union($horario_empleado); */
-
 
         $eventos_empleado = DB::table('eventos_empleado')
             ->select([
                 'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario'
+                'title as horaAdic', 'start as idhorario','start as horasObliga','start as nHoraAdic'
             ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias);
 
-        /*   $horario_empleado ->union($eventos_empleado); */
-
-
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario'
+            ,'horasObliga','nHoraAdic'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado)
             ->union($eventos_empleado)
             ->get();
 
-        $pausasArray = [];
 
         foreach ($horario_empleado as $tab) {
             $pausas_horario = DB::table('pausas_horario as pauh')
@@ -1732,20 +1728,10 @@ class EmpleadoController extends Controller
                 ->distinct('pauh.idpausas_horario')
                 ->get();
 
-            /*  foreach ($pausas_horario as $pau) {
-              if($tab->idhorario=$pau->idpausas_horario){
-                   array_push($pausasArray, array("idpausas_horario" => $pau->idpausas_horario, "pausH_descripcion" => $pau->pausH_descripcion, "pausH_Inicio" => $pau->pausH_Inicio, "pausH_Fin" => $pau->pausH_Fin));
-              }
-
-          } */
-
-
             $tab->pausas = $pausas_horario;
-            /*  unset($vinculacionD); */
+
         }
         return $horario_empleado;
-
-        return $eventos_empleado;
     }
 
     public function calendarioEditar(Request $request)
@@ -1821,7 +1807,7 @@ class EmpleadoController extends Controller
             ->select([
                 'idi.inciden_dias_id as id', 'i.inciden_descripcion as title', 'i.inciden_descuento as color', 'i.inciden_descuento as textColor',
                 'idi.inciden_dias_fechaI as start', 'idi.inciden_dias_fechaF as end', 'i.inciden_descripcion as horaI', 'i.inciden_descripcion as horaF', 'i.inciden_descripcion as borderColor', 'laborable',
-                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario'
+                'i.inciden_descripcion as horaAdic', 'i.inciden_descripcion as idhorario','i.inciden_descripcion as horasObliga','i.inciden_descripcion as nHoraAdic'
             ])
             ->join('incidencia_dias as idi', 'i.inciden_id', '=', 'idi.id_incidencia')
             ->where('idi.id_empleado', '=', $idempleado);
@@ -1831,7 +1817,7 @@ class EmpleadoController extends Controller
         $eventos_empleado = DB::table('eventos_empleado')
             ->select([
                 'evEmpleado_id as id', 'title', 'color', 'textColor', 'start', 'end', 'title as horaI', 'title as horaF', 'title as borderColor', 'laborable',
-                'title as horaAdic', 'start as idhorario'
+                'title as horaAdic', 'start as idhorario','start as horasObliga','start as nHoraAdic'
             ])
             ->where('id_empleado', '=', $idempleado)
             ->union($incidencias);
@@ -1840,14 +1826,14 @@ class EmpleadoController extends Controller
 
 
         $horario_empleado = DB::table('horario_empleado as he')
-            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario'])
+            ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario','horasObliga','nHoraAdic'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado)
             ->union($eventos_empleado)
             ->get();
 
-        $pausasArray = [];
+
 
         foreach ($horario_empleado as $tab) {
             $pausas_horario = DB::table('pausas_horario as pauh')
@@ -1856,16 +1842,9 @@ class EmpleadoController extends Controller
                 ->distinct('pauh.idpausas_horario')
                 ->get();
 
-            /*  foreach ($pausas_horario as $pau) {
-                  if($tab->idhorario=$pau->idpausas_horario){
-                       array_push($pausasArray, array("idpausas_horario" => $pau->idpausas_horario, "pausH_descripcion" => $pau->pausH_descripcion, "pausH_Inicio" => $pau->pausH_Inicio, "pausH_Fin" => $pau->pausH_Fin));
-                  }
-
-              } */
-
 
             $tab->pausas = $pausas_horario;
-            /*  unset($vinculacionD); */
+
         }
         return $horario_empleado;
     }

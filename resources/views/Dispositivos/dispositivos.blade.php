@@ -42,6 +42,9 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+    .form-control:disabled {
+        background-color: #fcfcfc !important;
+    }
 </style>
     <style>
         body {
@@ -451,13 +454,13 @@
                                         id="descripcionDisBio" maxlength="80" required>
                                 </div>
                             </div>
-                             <div class="col-md-6 col-6">
+                            {{--  <div class="col-md-6 col-6">
                                  <div class="form-group">
                                      <label for="">Numero de serie:</label>
                                      <input type="text" class="form-control form-control-sm"
                                          id="descripcionBiome" maxlength="40" >
                                  </div>
-                             </div>
+                             </div> --}}
 
 
                              <div class="col-md-4 col-12">
@@ -473,13 +476,13 @@
                                     <input id="nPuerto" type="number" onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" class="form-control form-control-sm" required class="form-input" maxlength="5" />
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
+                           {{--  <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="">version firmware:</label>
                                     <input type="text" id="versionFi" class="form-control form-control-sm" />
                                 </div>
                             </div>
-
+ --}}
 
 
                             {{--  <div class="col-md-6 col-12">
