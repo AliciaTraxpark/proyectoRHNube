@@ -954,8 +954,10 @@ class EmpleadoController extends Controller
         $idempleado = $empleado->emple_id;
         $objEmpleado = json_decode($request->get('objEmpleado'), true);
         //HORARIO
-        $horario_empleadoBor = horario_empleado::where('empleado_emple_id', '=', $idempleado)
-            ->delete();
+
+        $horario_empleadoBor = DB::table('horario_empleado')
+        ->where('empleado_emple_id', $idempleado)
+        ->update(['estado' => 0]);
         $eventos_empleado_tempHor = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
             ->where('organi_id', '=', session('sesionidorg'))->where('id_horario', '!=', null)->where('color', '=', '#ffffff')->where('textColor', '=', '111111')
             ->where('calendario_calen_id', '=', $objEmpleado['idca'])->get();
@@ -980,6 +982,7 @@ class EmpleadoController extends Controller
             $horario_empleados->horarioComp =  $eventos_empleado_tempHors->horarioComp;
             $horario_empleados->horaAdic =  $eventos_empleado_tempHors->horaAdic;
             $horario_empleados->nHoraAdic =  $eventos_empleado_tempHors->nHoraAdic;
+            $horario_empleados->estado =  1;
             if ($eventos_empleado_tempHors->fuera_horario == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }
@@ -1718,6 +1721,7 @@ class EmpleadoController extends Controller
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->where('he.empleado_emple_id', '=', $idempleado)
+            ->where('he.estado', '=', 1)
             ->union($eventos_empleado)
             ->get();
 
@@ -1742,6 +1746,7 @@ class EmpleadoController extends Controller
             ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end'])
             /*  ->where('users_id', '=', Auth::user()->id) */
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.estado', '=', 1)
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'));
 
         $incidencias = DB::table('incidencias as i')
@@ -1830,6 +1835,7 @@ class EmpleadoController extends Controller
             ->select(['he.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor', 'laborable', 'horaAdic', 'h.horario_id as idhorario','horasObliga','nHoraAdic'])
             ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('he.estado', '=', 1)
             ->where('he.empleado_emple_id', '=', $idempleado)
             ->union($eventos_empleado)
             ->get();
@@ -1913,6 +1919,7 @@ class EmpleadoController extends Controller
                 ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
                 ->where('start', '=', $datafechas)
                 ->where('h.horario_id', '=', $idhorar)
+                ->where('horario_empleado.estado', '=', 1)
                 ->where('horario_empleado.empleado_emple_id', '=', $idempleado)
                 ->get()->first();
             if ($tempre) {
@@ -1933,6 +1940,7 @@ class EmpleadoController extends Controller
             $horarioDentro = horario_empleado::select(['horario_empleado.horarioEmp_id as id', 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
                 ->join('horario as h', 'horario_empleado.horario_horario_id', '=', 'h.horario_id')
                 ->join('horario_dias as hd', 'horario_empleado.horario_dias_id', '=', 'hd.id')
+                ->where('horario_empleado.estado', '=', 1)
                 ->where('start', '=', $datafechas)
                 /* ->where('h.horaI', '=', $idhorar)
                      ->where('h.horaF', '=', $idhorar) */
@@ -1981,6 +1989,7 @@ class EmpleadoController extends Controller
             $horario_empleados->horarioComp = $horaC;
             $horario_empleados->horaAdic = $horaA;
             $horario_empleados->nHoraAdic = $nHoraAdic;
+            $horario_empleados->estado = 1;
             if ($fueraHora == 1) {
                 $horario_empleados->borderColor = '#5369f8';
             }
@@ -2047,8 +2056,11 @@ class EmpleadoController extends Controller
     public function eliminarHorariosEdit(Request $request)
     {
         $ideve = $request->ideve;
-        $horario_empleado1 = horario_empleado::where('horarioEmp_id', '=', $ideve)->delete();
+        $horario_empleado1 = DB::table('horario_empleado')
+        ->where('horarioEmp_id', '=', $ideve)
+        ->update(['estado' => 0]);
         return response()->json($horario_empleado1);
+
     }
     public function eliminarInciEdit(Request $request)
     {
@@ -2131,7 +2143,7 @@ class EmpleadoController extends Controller
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
             ->whereYear('hd.start', $request->get('aniocalen'))
             ->whereMonth('hd.start', $request->get('mescale'))
-            ->delete();
+            ->update(['he.estado' => 0]);
     }
     public function vaciarbdempleado(Request $request)
     {
@@ -2146,8 +2158,7 @@ class EmpleadoController extends Controller
         DB::table('horario_empleado as he')
             ->where('he.empleado_emple_id', '=', $request->get('idempleado'))
             ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
-
-            ->delete();
+            ->update(['he.estado' => 0]);
     }
 
     public function cambiarEstadoEmp(Request $request)

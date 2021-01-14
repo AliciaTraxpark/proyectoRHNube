@@ -415,7 +415,7 @@ class apiVersionDosController extends Controller
                 $activ = $capturaRegistrada->actividad;
                 //* VALIDACION DE CERO
                 if ($fecha1->gt($fecha)) {
-                    //* PROMEDIO 
+                    //* PROMEDIO
                     $totalP = $fecha1->diffInSeconds($fecha);
                     $promedio = floatval($activ / $totalP);
                     $promedioFinal = $promedio * 100;
@@ -489,6 +489,7 @@ class apiVersionDosController extends Controller
             $horario = DB::table('horario_empleado as he')
                 ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->where('he.estado', '=', 1)
                 ->get();
 
             foreach ($horario as $resp) {
@@ -533,6 +534,7 @@ class apiVersionDosController extends Controller
             $horario = DB::table('horario_empleado as he')
                 ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic', 'he.nHoraAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->where('he.estado', '=', 1)
                 ->get();
             foreach ($horario as $resp) {
                 $horario_dias = DB::table('horario_dias  as hd')

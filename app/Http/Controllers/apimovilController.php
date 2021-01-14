@@ -354,7 +354,7 @@ class apimovilController extends Controller
             }
             if(empty($req['puntoC_id'])) {}
             else{
-               
+
             }
             if(empty($req['centC_id'])) {}
             else{
@@ -407,6 +407,7 @@ class apimovilController extends Controller
         ->where('e.emple_estado', '=', 1)
         ->where('e.asistencia_puerta', '=', 1)
         ->where('hd.start', '=',  $fechaHoy)
+        ->where('he.estado', '=', 1)
         ->paginate();
         if($empleado!=null){
              return response()->json(array('status'=>200,"empleados"=>$empleado));
