@@ -562,6 +562,7 @@ class apiSeguimientoRutaContoller extends Controller
                 ->select('he.horario_dias_id', 'he.horario_horario_id', 'he.horarioComp', 'he.fuera_horario', 'he.horaAdic', 'he.nHoraAdic')
                 ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
                 ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
+                ->where('he.estado', '=', 1)
                 ->get();
             foreach ($horarioG as $resp) {
                 $horario_dias = DB::table('horario_dias  as hd')
