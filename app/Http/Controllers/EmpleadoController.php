@@ -1510,7 +1510,8 @@ class EmpleadoController extends Controller
 
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id', 'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic'])
+            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id',
+             'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic','h.horasObliga'])
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
