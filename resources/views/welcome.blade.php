@@ -31,7 +31,6 @@
     <style>
         body {
             background-color: #ffffff !important;
-
         }
 
         .pResp {
@@ -81,7 +80,7 @@
             
         }
         .modal{
-                top: 100px !important;
+                top: 5% !important;
             }
 
         @media (max-width: 576px) {
@@ -432,7 +431,7 @@
                                 <!--<label class="blanco">Correo electrónico o teléfono </label>-->
                                 <input id="email"
                                     class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="E-mail">
+                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

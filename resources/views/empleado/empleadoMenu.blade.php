@@ -269,7 +269,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-6 text-left ml-4">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="customCRGE">
                                         <label class="custom-control-label" for="customCRGE" style="font-weight: bold">
@@ -279,7 +279,7 @@ use App\proyecto_empleado;
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-6 text-left ml-4">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="customCRTGE">
                                         <label class="custom-control-label" for="customCRTGE" style="font-weight: bold">
@@ -346,7 +346,7 @@ use App\proyecto_empleado;
                             </div>
                             <div class="row">
                                 <div class="col-md-6 text-left">
-                                    <div class="custom-control custom-switch mb-2">
+                                    <div class="custom-control custom-switch ml-4">
                                         <input type="checkbox" class="custom-control-input" id="customCRFR">
                                         <label class="custom-control-label" for="customCRFR" style="font-weight: bold">
                                             <i data-feather="activity"
@@ -356,7 +356,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-left">
-                                    <div class="custom-control custom-switch mb-2">
+                                    <div class="custom-control custom-switch ml-4">
                                         <input type="checkbox" class="custom-control-input" id="customCRTFR">
                                         <label class="custom-control-label" for="customCRTFR" style="font-weight: bold">
                                             <i data-feather="map-pin"
@@ -923,6 +923,43 @@ use App\proyecto_empleado;
         }
     }
 
+    @media (max-width: 447px) {
+        .radio_rsp{
+            padding: 0 0 !important;
+        }
+    }
+
+    @media (max-width: 799px) and (min-width: 447px){
+        .radio_rsp{
+            padding: 0 5% !important;
+        }
+    }
+
+    @media (max-width: 578px) {
+        .label_select{
+        padding: 0px 0px 0px 0px !important;
+    }
+    }
+
+    .radio_rsp{
+        padding: 0 10%;
+    }
+
+    .label_txt{
+        padding: 10px 0px 0px 0px !important;
+        font-weight: 200 !important;
+    }
+
+    .label_select{
+        padding: 10px 0px 0px 0px;
+    }
+
+    @media(min-width: 386px) and (max-width: 487px){
+        .th_rh{
+            padding: 0 35px !important;
+        }
+    }
+
     /* FINALIZACION DE RESPONSIVE */
 </style>
 {{-- BOTONES DE CARGAS MASIVAS --}}
@@ -932,15 +969,15 @@ use App\proyecto_empleado;
     </div>
     @if (isset($agregarEmp))
     @if ($agregarEmp==1)
-    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
+    <div class="col-sm-12 col-md-12 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
-            <button class="btn btn-outline-secondary btn-sm">
+            <button class="btn btn-outline-secondary btn-sm m-1">
                 <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
                 Carga masiva emp.
             </button>
         </a>
         &nbsp;&nbsp;
-        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF">
+        <button class="btn btn-outline-secondary btn-sm m-1" id="cargaMasivaF">
             <img src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">
             Carga masiva fotos
         </button>
@@ -949,15 +986,15 @@ use App\proyecto_empleado;
 
     @endif
     @else
-    <div class=" col-md-5 col-xl-5 text-right btnPResponsive">
+    <div class="col-sm-12 col-md-12 col-xl-5 text-right btnPResponsive">
         <a href="{{ '/empleado/cargar' }}">
-            <button class="btn btn-outline-secondary btn-sm">
+            <button class="btn btn-outline-secondary btn-sm m-1">
                 <img src="{{ asset('admin/images/subir.ico') }}" height="20" class="mr-1">
                 Carga masiva emp.
             </button>
         </a>
         &nbsp;&nbsp;
-        <button class="btn btn-outline-secondary btn-sm" id="cargaMasivaF">
+        <button class="btn btn-outline-secondary btn-sm m-1" id="cargaMasivaF">
             <img src="{{ asset('admin/images/image.ico') }}" height="20" class="mr-1">
             Carga masiva fotos
         </button>
@@ -997,13 +1034,13 @@ use App\proyecto_empleado;
                     <div class="col-md-12">
                         <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                     </div>
-                    <div class="col-md-4 inputResponsive" id="filter_global">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 inputResponsive" id="filter_global">
                         <td align="center">
                             <input type="text" class="global_filter form-control" id="global_filter"
                                 style="height: 35px;" placeholder="Buscar por...">
                         </td>
                     </div>
-                    <div class="col-md-2 inputResponsive">
+                    <div class="col-12 col-sm-2 col-md-2 col-lg-2 inputResponsive">
                         <td align="center">
                             <select class="form-control" name="select" id="select" style="height: 35.5px;">
                                 <option value="2">Documento</option>
@@ -1014,10 +1051,10 @@ use App\proyecto_empleado;
                             </select>
                         </td>
                     </div>
-                    <div class="col-xl-6 inputResponsive">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 inputResponsive">
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10">
+                            <label class="col-lg-2 col-md-3 col-sm-3 col-form-label">Área:</label>
+                            <div class="col-lg-10 col-md-9 col-sm-9 text-left">
                                 <select id="selectarea" data-plugin="customselect" class="form-control form-control-sm"
                                     multiple="multiple" data-placeholder="Seleccionar áreas">
                                     @foreach ($area as $areas)
@@ -1762,7 +1799,7 @@ use App\proyecto_empleado;
                                 <div class="alert alert-danger" role="alert" style="display: none;"
                                     id="alertErrorFechaReg"></div>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <select class="form-control" name="m_dia_fecha" id="m_dia_fecha" required="">
                                             <option value="0">Día</option>
                                             @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
@@ -1770,7 +1807,7 @@ use App\proyecto_empleado;
                                                 @endfor
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <select class="form-control" name="m_mes_fecha" id="m_mes_fecha" required>
                                             <option value="0">Mes</option>
                                             <option class="" value="1">Enero</option>
@@ -1787,7 +1824,7 @@ use App\proyecto_empleado;
                                             <option class="" value="12">Diciembre</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                             name="m_ano_fecha" id="m_ano_fecha" required>
                                             <option value="0">Año</option>
@@ -1832,7 +1869,7 @@ use App\proyecto_empleado;
                                         *Fecha incorrecta.
                                     </span>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" name="mf_dia_fecha" id="mf_dia_fecha"
                                                 required="">
                                                 <option value="0">Día</option>
@@ -1841,7 +1878,7 @@ use App\proyecto_empleado;
                                                     @endfor
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" name="mf_mes_fecha" id="mf_mes_fecha" required>
                                                 <option value="0">Mes</option>
                                                 <option class="" value="1">Enero</option>
@@ -1858,7 +1895,7 @@ use App\proyecto_empleado;
                                                 <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                                 name="mf_ano_fecha" id="mf_ano_fecha" required>
                                                 <option value="0">Año</option>
@@ -1972,7 +2009,7 @@ use App\proyecto_empleado;
                                 <div class="alert alert-danger" role="alert" style="display: none;"
                                     id="alertErrorFechaDetalleReg"></div>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD" required>
                                             <option value="0">Día</option>
                                             @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
@@ -1980,7 +2017,7 @@ use App\proyecto_empleado;
                                                 @endfor
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <select class="form-control" name="m_mes_fechaD" id="m_mes_fechaD" required>
                                             <option value="0">Mes</option>
                                             <option class="" value="1">Enero</option>
@@ -1997,7 +2034,7 @@ use App\proyecto_empleado;
                                             <option class="" value="12">Diciembre</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                             name="m_ano_fechaD" id="m_ano_fechaD" required>
                                             <option value="0">Año</option>
@@ -2043,7 +2080,7 @@ use App\proyecto_empleado;
                                         *Fecha incorrecta.
                                     </span>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" name="mf_dia_fechaD" id="mf_dia_fechaD"
                                                 required>
                                                 <option value="0">Día</option>
@@ -2052,7 +2089,7 @@ use App\proyecto_empleado;
                                                     @endfor
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" name="mf_mes_fechaD" id="mf_mes_fechaD"
                                                 required>
                                                 <option value="0">Mes</option>
@@ -2070,7 +2107,7 @@ use App\proyecto_empleado;
                                                 <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                                 name="mf_ano_fechaD" id="mf_ano_fechaD" required>
                                                 <option value="0">Año</option>
@@ -2477,7 +2514,7 @@ use App\proyecto_empleado;
                                         <div class="alert alert-danger" role="alert" style="display: none;"
                                             id="alertErrorFecha"></div>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_dia_fechaIE" id="m_dia_fechaIE"
                                                     required="">
                                                     <option value="0">Día</option>
@@ -2487,7 +2524,7 @@ use App\proyecto_empleado;
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_mes_fechaIE" id="m_mes_fechaIE"
                                                     required>
                                                     <option value="0">Mes</option>
@@ -2505,7 +2542,7 @@ use App\proyecto_empleado;
                                                     <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" style="padding-left: 5px;
                                                         padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
                                                     required="">
@@ -2554,7 +2591,7 @@ use App\proyecto_empleado;
                                             <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
                                                 incorrecta.</span>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-sm-4">
                                                     <select class="form-control" name="m_dia_fechaFE"
                                                         id="m_dia_fechaFE">
                                                         <option value="0">Día</option>
@@ -2563,7 +2600,7 @@ use App\proyecto_empleado;
                                                             @endfor
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-sm-4">
                                                     <select class="form-control" name="m_mes_fechaFE"
                                                         id="m_mes_fechaFE">
                                                         <option value="0">Mes</option>
@@ -2581,7 +2618,7 @@ use App\proyecto_empleado;
                                                         <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-sm-4">
                                                     <select class="form-control" style="padding-left: 5px;
                                                             padding-right: 5px;" name="m_ano_fechaFE"
                                                         id="m_ano_fechaFE">
@@ -2683,7 +2720,7 @@ use App\proyecto_empleado;
                                         <div class="alert alert-danger" role="alert" style="display: none;"
                                             id="alertErrorFechaAlta"></div>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_dia_fechaIEN" id="m_dia_fechaIEN"
                                                     required="">
                                                     <option value="0">Día</option>
@@ -2693,7 +2730,7 @@ use App\proyecto_empleado;
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_mes_fechaIEN" id="m_mes_fechaIEN"
                                                     required>
                                                     <option value="0">Mes</option>
@@ -2711,7 +2748,7 @@ use App\proyecto_empleado;
                                                     <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" style="padding-left: 5px;
                                                         padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
                                                     required="">
@@ -2759,7 +2796,7 @@ use App\proyecto_empleado;
                                             <span id="m_validFechaCFEN" style="color: red;display: none;">*Fecha
                                                 incorrecta.</span>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_dia_fechaFEN"
                                                         id="m_dia_fechaFEN">
                                                         <option value="0">Día</option>
@@ -2768,7 +2805,7 @@ use App\proyecto_empleado;
                                                             @endfor
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_mes_fechaFEN"
                                                         id="m_mes_fechaFEN">
                                                         <option value="0">Mes</option>
@@ -2786,7 +2823,7 @@ use App\proyecto_empleado;
                                                         <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" style="padding-left: 5px;
                                                             padding-right: 5px;" name="m_ano_fechaFEN"
                                                         id="m_ano_fechaFEN">
@@ -2890,7 +2927,7 @@ use App\proyecto_empleado;
                                         <span id="m_validFechaCIEND" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_dia_fechaIEND" id="m_dia_fechaIEND"
                                                     required>
                                                     <option value="0">Día</option>
@@ -2900,7 +2937,7 @@ use App\proyecto_empleado;
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_mes_fechaIEND" id="m_mes_fechaIEND"
                                                     required>
                                                     <option value="0">Mes</option>
@@ -2918,7 +2955,7 @@ use App\proyecto_empleado;
                                                     <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" style="padding-left: 5px;
                                                         padding-right: 5px;" name="m_ano_fechaIEND"
                                                     id="m_ano_fechaIEND" required="">
@@ -2966,7 +3003,7 @@ use App\proyecto_empleado;
                                             <span id="m_validFechaCFEND" style="color: red;display: none;">*Fecha
                                                 incorrecta.</span>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_dia_fechaFEND"
                                                         id="m_dia_fechaFEND">
                                                         <option value="0">Día</option>
@@ -2975,7 +3012,7 @@ use App\proyecto_empleado;
                                                             @endfor
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_mes_fechaFEND"
                                                         id="m_mes_fechaFEND">
                                                         <option value="0">Mes</option>
@@ -2993,7 +3030,7 @@ use App\proyecto_empleado;
                                                         <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" style="padding-left: 5px;
                                                             padding-right: 5px;" name="m_ano_fechaFEND"
                                                         id="m_ano_fechaFEND">
@@ -3219,256 +3256,238 @@ use App\proyecto_empleado;
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-sm-4">
                                         <input type="hidden" name="idEmpleado" id="idEmpleado">
-                                        <div class="form-group">
-                                            <label for="sw-default">Tipo Documento</label>
-                                            <span id="validDocumento" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <select class="form-control" placeholder="Tipo Documento " name="documento"
-                                                id="documento" tabindex="1" required>
-                                                <option value="">Seleccionar</option>
-                                                @foreach ($tipo_doc as $tipo_docs)
-                                                <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
-                                                    {{ $tipo_docs->tipoDoc_descripcion }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Apellido Paterno</label>
-                                            <span id="validApPaterno" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <input type="text" class="form-control" name="apPaterno" id="apPaterno"
-                                                tabindex="4" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Correo Electrónico</label>
-                                            <span id="validCorreo" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <span id="emailR" style="color: red;">*Correo registrado</span>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                tabindex="7">
-                                        </div>
-                                    </div> <!-- end col -->
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default">Num. Documento</label>
-                                            <span id="validNumDocumento" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <span id="numR" style="color: red;">*Num. registrado</span>
-                                            <input type="text" class="form-control" name="numDocumento"
-                                                id="numDocumento" onkeypress="return isNumeric(event)"
-                                                oninput="maxLengthCheck(this)" tabindex="2" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Apellido Materno</label>
-                                            <span id="validApMaterno" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <input type="text" class="form-control" name="apMaterno" id="apMaterno"
-                                                tabindex="5" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Celular</label>
-                                            <span id="validCel" style="color: red;">*Número
-                                                incorrecto.</span>
-                                            <div class="row">
-                                                <div class="col-4 pselect">
-                                                    <select class="form-control" id="codigoCelular">
-                                                        <option value="+51" selected>+51</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-8">
-                                                    <input type="number" class="form-control" name="celular"
-                                                        id="celular" tabindex="8" maxlength="9"
-                                                        onkeypress="return isNumeric(event)"
-                                                        oninput="maxLengthCheck(this)" pattern="/^9{1}|[0-9]{8,8}+">
-                                                </div>
+                                        <label for="sw-default" class="label_txt" >Tipo Documento</label>
+                                        <span id="validDocumento" style="color: red;">*Campo
+                                            Obligatorio</span>
+                                        <select class="form-control" placeholder="Tipo Documento " name="documento"
+                                            id="documento" tabindex="1" required>
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($tipo_doc as $tipo_docs)
+                                            <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
+                                                {{ $tipo_docs->tipoDoc_descripcion }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Num. Documento</label>
+                                        <span id="validNumDocumento" style="color: red;">*Campo
+                                            Obligatorio</span>
+                                        <span id="numR" style="color: red;">*Num. registrado</span>
+                                        <input type="text" class="form-control" name="numDocumento"
+                                            id="numDocumento" onkeypress="return isNumeric(event)"
+                                            oninput="maxLengthCheck(this)" tabindex="2" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Fecha Nacimiento</label>
+                                        <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                        <div class="row fechasResponsive">
+                                            <div class="col-md-4 prigth">
+                                                <select class="form-control" name="dia_fecha" id="dia_fecha"
+                                                    required="">
+                                                    <option value="0">Día</option>
+                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
+                                                        {{$i}}</option>
+                                                        @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 prigth pleft">
+                                                <select class="form-control" name="mes_fecha" id="mes_fecha"
+                                                    required="">
+                                                    <option value="0">Mes</option>
+                                                    <option class="" value="1">Ene.</option>
+                                                    <option class="" value="2">Feb.</option>
+                                                    <option class="" value="3">Mar.</option>
+                                                    <option class="" value="4">Abr.</option>
+                                                    <option class="" value="5">May.</option>
+                                                    <option class="" value="6">Jun.</option>
+                                                    <option class="" value="7">Jul.</option>
+                                                    <option class="" value="8">Ago.</option>
+                                                    <option class="" value="9">Set.</option>
+                                                    <option class="" value="10">Oct.</option>
+                                                    <option class="" value="11">Nov.</option>
+                                                    <option class="" value="12">Dic.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 pAnio pleft">
+                                                <select class="form-control" style="padding-left: 5px;
+                                                padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
+                                                    <option value="0">Año</option>
+                                                    @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                        value="{{$i}}">
+                                                        {{$i}}
+                                                        </option>
+                                                        @endfor
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default">Fecha Nacimiento</label>
-                                            <span id="validFechaC" style="color: red;display: none;">*Fecha
-                                                incorrecta.</span>
-                                            <div class="row fechasResponsive">
-                                                <div class="col-md-4 prigth">
-                                                    <select class="form-control" name="dia_fecha" id="dia_fecha"
-                                                        required="">
-                                                        <option value="0">Día</option>
-                                                        @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
-                                                            {{$i}}</option>
-                                                            @endfor
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 prigth pleft">
-                                                    <select class="form-control" name="mes_fecha" id="mes_fecha"
-                                                        required="">
-                                                        <option value="0">Mes</option>
-                                                        <option class="" value="1">Ene.</option>
-                                                        <option class="" value="2">Feb.</option>
-                                                        <option class="" value="3">Mar.</option>
-                                                        <option class="" value="4">Abr.</option>
-                                                        <option class="" value="5">May.</option>
-                                                        <option class="" value="6">Jun.</option>
-                                                        <option class="" value="7">Jul.</option>
-                                                        <option class="" value="8">Ago.</option>
-                                                        <option class="" value="9">Set.</option>
-                                                        <option class="" value="10">Oct.</option>
-                                                        <option class="" value="11">Nov.</option>
-                                                        <option class="" value="12">Dic.</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 pAnio pleft">
-                                                    <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
-                                                        <option value="0">Año</option>
-                                                        @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                            value="{{$i}}">
-                                                            {{$i}}
-                                                            </option>
-                                                            @endfor
-                                                    </select>
-                                                </div>
 
+                                    <!-- SEGUNDA FILA-->
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Apellido Paterno</label>
+                                        <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
+                                        <input type="text" class="form-control" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Apellido Materno</label>
+                                        <span id="validApMaterno" style="color: red;">*Campo
+                                            Obligatorio</span>
+                                        <input type="text" class="form-control" name="apMaterno" id="apMaterno"
+                                            tabindex="5" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Nombres</label>
+                                        <span id="validNombres" style="color: red;">*Campo
+                                            Obligatorio</span>
+                                        <input type="text" class="form-control" name="nombres" id="nombres"
+                                            tabindex="6" required>
+                                    </div>
+
+                                    <!-- TERCERA FILA -->
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Correo Electrónico</label>
+                                        <span id="validCorreo" style="color: red;">*Campo
+                                            Obligatorio</span>
+                                        <span id="emailR" style="color: red;">*Correo registrado</span>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            tabindex="7">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Celular</label>
+                                        <span id="validCel" style="color: red;">*Número
+                                            incorrecto.</span>
+                                        <div class="row">
+                                            <div class="col-4 pselect">
+                                                <select class="form-control" id="codigoCelular">
+                                                    <option value="+51" selected>+51</option>
+                                                </select>
                                             </div>
-                                            {{--  <input type="text" data-custom-class="form-control" id="fechaN" tabindex="3"
-                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"> --}}
+                                            <div class="col-8">
+                                                <input type="number" class="form-control" name="celular"
+                                                    id="celular" tabindex="8" maxlength="9"
+                                                    onkeypress="return isNumeric(event)"
+                                                    oninput="maxLengthCheck(this)" pattern="/^9{1}|[0-9]{8,8}+">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Nombres</label>
-                                            <span id="validNombres" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <input type="text" class="form-control" name="nombres" id="nombres"
-                                                tabindex="6" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Teléfono</label>
-                                            <div class="row">
-                                                <div class="col-4 pselect">
-                                                    <select class="form-control" id="codigoTelefono">
-                                                        <option value="01" selected>01</option>
-                                                        <option value="41">41</option>
-                                                        <option value="43">43</option>
-                                                        <option value="83">83</option>
-                                                        <option value="54">54</option>
-                                                        <option value="66">66</option>
-                                                        <option value="76">76</option>
-                                                        <option value="84">84</option>
-                                                        <option value="67">67</option>
-                                                        <option value="62">62</option>
-                                                        <option value="56">56</option>
-                                                        <option value="64">64</option>
-                                                        <option value="44">44</option>
-                                                        <option value="74">74</option>
-                                                        <option value="65">65</option>
-                                                        <option value="82">82</option>
-                                                        <option value="53">53</option>
-                                                        <option value="63">63</option>
-                                                        <option value="73">73</option>
-                                                        <option value="51">51</option>
-                                                        <option value="42">42</option>
-                                                        <option value="52">52</option>
-                                                        <option value="72">72</option>
-                                                        <option value="61">61</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-8">
-                                                    <input type="number" class="form-control" name="telefono"
-                                                        id="telefono" tabindex="9" maxlength="9"
-                                                        onkeypress="return isNumeric(event)"
-                                                        oninput="maxLengthCheck(this)">
-                                                </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Teléfono</label>
+                                        <div class="row">
+                                            <div class="col-4 pselect">
+                                                <select class="form-control" id="codigoTelefono">
+                                                    <option value="01" selected>01</option>
+                                                    <option value="41">41</option>
+                                                    <option value="43">43</option>
+                                                    <option value="83">83</option>
+                                                    <option value="54">54</option>
+                                                    <option value="66">66</option>
+                                                    <option value="76">76</option>
+                                                    <option value="84">84</option>
+                                                    <option value="67">67</option>
+                                                    <option value="62">62</option>
+                                                    <option value="56">56</option>
+                                                    <option value="64">64</option>
+                                                    <option value="44">44</option>
+                                                    <option value="74">74</option>
+                                                    <option value="65">65</option>
+                                                    <option value="82">82</option>
+                                                    <option value="53">53</option>
+                                                    <option value="63">63</option>
+                                                    <option value="73">73</option>
+                                                    <option value="51">51</option>
+                                                    <option value="42">42</option>
+                                                    <option value="52">52</option>
+                                                    <option value="72">72</option>
+                                                    <option value="61">61</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="number" class="form-control" name="telefono"
+                                                    id="telefono" tabindex="9" maxlength="9"
+                                                    onkeypress="return isNumeric(event)"
+                                                    oninput="maxLengthCheck(this)">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="sw-default">Dirección</label>
+                                            <label for="sw-default" class="label_txt">Dirección</label>
                                             <input type="text" class="form-control" name="direccion" id="direccion"
                                                 tabindex="10" required>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default">Dirección Domiciliara</label>
-                                            <select class="form-control" placeholder="Departamento" name="departamento"
-                                                id="dep" tabindex="11" required>
-                                                <option value="">Departamento</option>
-                                                @foreach ($departamento as $departamentos)
-                                                <option class="" value="{{ $departamentos->id }}">
-                                                    {{ $departamentos->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default">Lugar Nacimiento</label>
-                                            <select class="form-control" placeholder="Departamento" name="departamento"
-                                                id="departamento" tabindex="14" required>
-                                                <option value="">Departamento</option>
-                                                @foreach ($departamento as $departamentos)
-                                                <option class="" value="{{ $departamentos->id }}">
-                                                    {{ $departamentos->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="normal" for="">Género</label>
-                                            <span id="validGenero" style="color: red;">*Campo
-                                                Obligatorio</span>
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" name="tipo" id="tipo" value="Femenino" required>
-                                                Femenino
-                                            </label>
-                                        </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Dirección Domiciliara</label>
+                                        <select class="form-control" placeholder="Departamento" name="departamento"
+                                            id="dep" tabindex="11" required>
+                                            <option value="">Departamento</option>
+                                            @foreach ($departamento as $departamentos)
+                                            <option class="" value="{{ $departamentos->id }}">
+                                                {{ $departamentos->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>  
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_select"><br></label>
+                                        <select class="form-control " placeholder="Provincia " name="provincia"
+                                            id="prov" tabindex="12" required>
+                                            <option value="">Provincia</option>
+                                        </select>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default"><br></label>
-                                            <select class="form-control " placeholder="Provincia " name="provincia"
-                                                id="prov" tabindex="12" required>
-                                                <option value="">Provincia</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default"><br></label>
-                                            <select class="form-control " placeholder="Provincia " name="provincia"
-                                                id="provincia" tabindex="15" required>
-                                                <option value="">Provincia</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="normal" for=""><br></label>
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" name="tipo" id="tipo" value="Masculino" required>
-                                                Masculino
-                                            </label>
-                                        </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_select"><br></label>
+                                        <select class="form-control " placeholder="Distrito " name="distrito"
+                                            id="dist" tabindex="13" required>
+                                            <option value="">Distrito</option>
+                                        </select>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="sw-default"><br></label>
-                                            <select class="form-control " placeholder="Distrito " name="distrito"
-                                                id="dist" tabindex="13" required>
-                                                <option value="">Distrito</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sw-default"><br></label>
-                                            <select class="form-control " placeholder="Distrito " name="distrito"
-                                                id="distrito" tabindex="16" required>
-                                                <option value="">Distrito</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="normal" for=""><br></label>
-                                            <label class="custom-control custom-radio" data-toggle="tooltip"
-                                                data-placement="right" title=""
-                                                data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
-                                                <input type="radio" name="tipo" id="tipo" value="Personalizado"
-                                                    required>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_txt">Lugar Nacimiento</label>
+                                        <select class="form-control" placeholder="Departamento" name="departamento"
+                                            id="departamento" tabindex="14" required>
+                                            <option value="">Departamento</option>
+                                            @foreach ($departamento as $departamentos)
+                                            <option class="" value="{{ $departamentos->id }}">
+                                                {{ $departamentos->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                       <label for="sw-default" class="label_select"><br></label>
+                                        <select class="form-control " placeholder="Provincia " name="provincia"
+                                            id="provincia" tabindex="15" required>
+                                            <option value="">Provincia</option>
+                                        </select> 
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="sw-default" class="label_select"><br></label>
+                                        <select class="form-control " placeholder="Distrito " name="distrito"
+                                            id="distrito" tabindex="16" required>
+                                            <option value="">Distrito</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label for="" class="label_txt">Género</label>
+                                        <div class="row">
+                                            <div class="radio_rsp">
+                                                <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
+                                                <label class="custom-control custom-radio">
+                                                    <input type="radio" name="tipo" id="tipo" value="Femenino" required> Femenino
+                                                </label>
+                                            </div>
+                                            <div class="radio_rsp">
+                                                <label class="custom-control custom-radio">
+                                                    <input type="radio" name="tipo" id="tipo" value="Masculino" required> Masculino
+                                                </label>
+                                            </div>
+                                            <div class="radio_rsp">
+                                               <label class="custom-control custom-radio" data-toggle="tooltip" data-placement="right" title="" data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
+                                                <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                 Personalizado
-                                            </label>
+                                            </label> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div> <!-- end row -->
@@ -3485,7 +3504,7 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="sw-default">Cargo <a
                                                     onclick="$('#form-registrar').modal('hide');" href="#cargomodal"
@@ -3509,7 +3528,7 @@ use App\proyecto_empleado;
                                                 data-original-title="Número de documento por defecto o Ingrese un código interno">
                                         </div>
                                     </div> <!-- end col -->
-                                    <div class="col-4">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="sw-default">Área <a
                                                     onclick="$('#form-registrar').modal('hide');" href="#areamodal"
@@ -3537,7 +3556,7 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                     </div> <!-- end col -->
-                                    <div class="col-4">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="sw-default">Centro Costo <a
                                                     onclick="$('#form-registrar').modal('hide');" href="#centrocmodal"
@@ -3718,36 +3737,36 @@ use App\proyecto_empleado;
                                 <div id="calendarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                     <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                        style="width:670px;  margin-top: 150px; left:0px;">
+                                        style="max-width:670px;  margin-top: 150px; left:0px;">
 
                                         <div class="modal-content">
 
                                             <div class="modal-body"
                                                 style="font-size:12px!important;background: #f3f3f3;">
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                    <div class="row" style="padding: 0 5px">
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
+                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="laborableTem()"><img
                                                                     src="{{ asset('admin/images/dormir.svg') }}"
                                                                     height="20"> Descanso</button>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
+                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="nolaborableTem()"><img
                                                                     src="{{ asset('admin/images/evento.svg') }}"
                                                                     height="20"> Día no laborable</button>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
+                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
                                                                     src="{{ asset('admin/images/calendario.svg') }}"
                                                                     height="20"> Día feriado</button>
                                                         </div>
-                                                        <div class="col-md-3 text-right">
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
                                                             {{-- <button type="button"
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm "
@@ -3755,7 +3774,7 @@ use App\proyecto_empleado;
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                             height="20"> Incidencia</button>
                                                             --}}
-                                                            <button style=" max-width: 18em!important;"
+                                                            <button style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="agregarinciden()"><img
                                                                     src="{{ asset('admin/images/calendarioInc.svg') }}"
@@ -3809,20 +3828,9 @@ use App\proyecto_empleado;
 
                                             </div>
                                             <div class="modal-footer">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-7 text-right">
-                                                            <button type="button" class="btn btn-light"
-                                                                data-dismiss="modal">Cancelar</button>
-                                                        </div>
-                                                        <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                                                            <button type="submit"
-                                                                class="btn btn-secondary">Aceptar</button>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <button type="button" class="btn btn-light btn-sm" onclick="$('#myModalFeriado').modal('hide')">Cancelar</button>
+                                                <button type="submit" class="btn btn-secondary btn-sm">Aceptar</button>
+                                                </form>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -3849,7 +3857,7 @@ use App\proyecto_empleado;
                             <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width:400px;  margin-top: 150px; left: 30px;">
+                                    style="max-width: 400px;margin-top: 150px;">
                                     <div class="modal-content">
                                         <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                                             <div class="col-md-12">
@@ -4145,13 +4153,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
@@ -4174,7 +4182,7 @@ use App\proyecto_empleado;
                             <div id="regactividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="regactividadTarea" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width: 550px;">
+                                    style="max-width: 550px;">
                                     <div class="modal-content">
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
@@ -4231,7 +4239,7 @@ use App\proyecto_empleado;
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-3">
                                 <div class="col-xl-12 col-sm-12">
-                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
+                                    <button class="btn btn-sm dropdown-toggle mb-2" style="background-color:#383e56;"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+
                                         Agregar
                                     </button>
@@ -4397,245 +4405,226 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                               <div class="col-sm-4">
                                     <input style="display: none;" name="v_id" id="v_id">
-                                    <div class="form-group">
-                                        <label for="sw-default">Tipo Documento</label>
-                                        <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled
-                                            style="background-color: #fcfcfc;" tabindex="1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Paterno</label>
-                                        <span id="v_validApPaterno" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno"
-                                            tabindex="4" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Correo Electrónico</label>
-                                        <span id="v_validCorreo" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <span id="v_emailR" style="color: red;">*Correo
-                                            registrado</span>
-                                        <input type="email" class="form-control" id="v_email" name="email" tabindex="7">
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Num. Documento</label>
-                                        <span id="v_validNumDocumento" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_numDocumento"
-                                            id="v_numDocumento" required disabled style="background-color: #fcfcfc;"
-                                            tabindex="2">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Materno</label>
-                                        <span id="v_validApMaterno" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno"
-                                            tabindex="5" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Celular</label>
-                                        <span id="v_validCel" style="color: red;">*Número
-                                            incorrecto.</span>
-                                        <div class="row">
-                                            <div class="col-4 pselect">
-                                                <select class="form-control selectResp" id="v_codigoCelular">
-                                                    <option value="+51" selected>+51</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" name="v_celular" id="v_celular"
-                                                    tabindex="8" maxlength="9" onkeypress="return isNumeric(event)"
-                                                    oninput="maxLengthCheck(this)">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="sw-default" class="label_txt">Tipo Documento</label>
+                                    <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled
+                                        style="background-color: #fcfcfc;" tabindex="1">
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Fecha Nacimiento</label>
-                                        <span id="v_validFechaC" style="color: red;display: none;">
-                                            *Fecha incorrecta.
-                                        </span>
-                                        <div class="row fechasResponsive">
-                                            <div class="col-md-4 prigth">
-                                                <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
-                                                    required="">
-                                                    <option value="0">Día</option>
-                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 prigth pleft">
-                                                <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
-                                                    required="">
-                                                    <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 pAnio pleft">
-                                                <select class="form-control" style="padding-left: 5px;
-                                                padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
-                                                    <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
-                                                        {{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Num. Documento</label>
+                                    <span id="v_validNumDocumento" style="color: red;">*Campo Obligatorio</span>
+                                    <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;" tabindex="2">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Fecha Nacimiento</label>
+                                    <span id="v_validFechaC" style="color: red;display: none;">
+                                        *Fecha incorrecta.
+                                    </span>
+                                    <div class="row fechasResponsive">
+                                        <div class="col-md-4 prigth">
+                                            <select class="form-control" name="v_dia_fecha" id="v_dia_fecha"
+                                                required="">
+                                                <option value="0">Día</option>
+                                                @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 prigth pleft">
+                                            <select class="form-control" name="v_mes_fecha" id="v_mes_fecha"
+                                                required="">
+                                                <option value="0">Mes</option>
+                                                <option class="" value="1">Ene.</option>
+                                                <option class="" value="2">Feb.</option>
+                                                <option class="" value="3">Mar.</option>
+                                                <option class="" value="4">Abr.</option>
+                                                <option class="" value="5">May.</option>
+                                                <option class="" value="6">Jun.</option>
+                                                <option class="" value="7">Jul.</option>
+                                                <option class="" value="8">Ago.</option>
+                                                <option class="" value="9">Set.</option>
+                                                <option class="" value="10">Oct.</option>
+                                                <option class="" value="11">Nov.</option>
+                                                <option class="" value="12">Dic.</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 pAnio pleft">
+                                            <select class="form-control" style="padding-left: 5px; padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
+                                                <option value="0">Año</option>
+                                                @for ($i = 1950; $i <2011; $i++) 
+                                                    <option class="" value="{{$i}}">{{$i}} </option>
+                                                @endfor
+                                            </select>
+                                        </div>
 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Apellido Paterno</label>
+                                    <span id="v_validApPaterno" style="color: red;">*Campo Obligatorio</span>
+                                    <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno" tabindex="4" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Apellido Materno</label>
+                                    <span id="v_validApMaterno" style="color: red;">*Campo Obligatorio</span>
+                                    <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno" tabindex="5" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Nombres</label>
+                                    <span id="v_validNombres" style="color: red;">*Campo Obligatorio</span>
+                                    <input type="text" class="form-control" name="v_nombres" id="v_nombres" tabindex="6" required>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Correo Electrónico</label>
+                                    <span id="v_validCorreo" style="color: red;">*Campo Obligatorio</span>
+                                    <span id="v_emailR" style="color: red;">*Correo registrado</span>
+                                    <input type="email" class="form-control" id="v_email" name="email" tabindex="7">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Celular</label>
+                                    <span id="v_validCel" style="color: red;">*Número
+                                        incorrecto.</span>
+                                    <div class="row">
+                                        <div class="col-4 pselect">
+                                            <select class="form-control selectResp" id="v_codigoCelular">
+                                                <option value="+51" selected>+51</option>
+                                            </select>
                                         </div>
-                                        {{--  <input type="text" data-custom-class="form-control" id="v_fechaN"
-                                            data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"
-                                            tabindex="3"> --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nombres</label>
-                                        <span id="v_validNombres" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <input type="text" class="form-control" name="v_nombres" id="v_nombres"
-                                            tabindex="6" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Teléfono</label>
-                                        <div class="row">
-                                            <div class="col-4 pselect">
-                                                <select class="form-control selectResp" id="v_codigoTelefono">
-                                                    <option value="01" selected>01</option>
-                                                    <option value="41">41</option>
-                                                    <option value="43">43</option>
-                                                    <option value="83">83</option>
-                                                    <option value="54">54</option>
-                                                    <option value="66">66</option>
-                                                    <option value="76">76</option>
-                                                    <option value="84">84</option>
-                                                    <option value="67">67</option>
-                                                    <option value="62">62</option>
-                                                    <option value="56">56</option>
-                                                    <option value="64">64</option>
-                                                    <option value="44">44</option>
-                                                    <option value="74">74</option>
-                                                    <option value="65">65</option>
-                                                    <option value="82">82</option>
-                                                    <option value="53">53</option>
-                                                    <option value="63">63</option>
-                                                    <option value="73">73</option>
-                                                    <option value="51">51</option>
-                                                    <option value="42">42</option>
-                                                    <option value="52">52</option>
-                                                    <option value="72">72</option>
-                                                    <option value="61">61</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="number" class="form-control" name="telefono"
-                                                    id="v_telefono" tabindex="9" maxlength="9"
-                                                    onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
-                                            </div>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" name="v_celular" id="v_celular"
+                                                tabindex="8" maxlength="9" onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Teléfono</label>
+                                    <div class="row">
+                                        <div class="col-4 pselect">
+                                            <select class="form-control selectResp" id="v_codigoTelefono">
+                                                <option value="01" selected>01</option>
+                                                <option value="41">41</option>
+                                                <option value="43">43</option>
+                                                <option value="83">83</option>
+                                                <option value="54">54</option>
+                                                <option value="66">66</option>
+                                                <option value="76">76</option>
+                                                <option value="84">84</option>
+                                                <option value="67">67</option>
+                                                <option value="62">62</option>
+                                                <option value="56">56</option>
+                                                <option value="64">64</option>
+                                                <option value="44">44</option>
+                                                <option value="74">74</option>
+                                                <option value="65">65</option>
+                                                <option value="82">82</option>
+                                                <option value="53">53</option>
+                                                <option value="63">63</option>
+                                                <option value="73">73</option>
+                                                <option value="51">51</option>
+                                                <option value="42">42</option>
+                                                <option value="52">52</option>
+                                                <option value="72">72</option>
+                                                <option value="61">61</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="number" class="form-control" name="telefono"
+                                                id="v_telefono" tabindex="9" maxlength="9"
+                                                onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sw-default">Dirección</label>
+                                        <label for="sw-default" class="label_txt">Dirección</label>
                                         <input type="text" class="form-control" name="v_direccion" id="v_direccion"
                                             tabindex="10" required>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección Domiciliara</label>
-                                        <select class="form-control" placeholder="Departamento" name="v_dep" id="v_dep"
-                                            tabindex="11" required>
-                                            <option value="">Departamento</option>
-                                            @foreach ($departamento as $departamentos)
-                                            <option class="" value="{{ $departamentos->id }}">
-                                                {{ $departamentos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Lugar Nacimiento</label>
-                                        <select class="form-control" placeholder="Departamento" name="v_departamento"
-                                            id="v_departamento" tabindex="14">
-                                            <option value="">Departamento</option>
-                                            @foreach ($departamento as $departamentos)
-                                            <option class="" value="{{ $departamentos->id }}">
-                                                {{ $departamentos->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for="">Género</label>
-                                        <span id="v_validGenero" style="color: red;">*Campo
-                                            Obligatorio</span>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
-                                            Femenino
-                                        </label>
-                                    </div>
+
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Dirección Domiciliara</label>
+                                    <select class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" tabindex="11" required>
+                                        <option value="">Departamento</option>
+                                        @foreach ($departamento as $departamentos)
+                                        <option class="" value="{{ $departamentos->id }}">
+                                            {{ $departamentos->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Provincia " name="v_prov" id="v_prov"
-                                            tabindex="12" required>
-                                            <option value="">Provincia</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Provincia " name="v_provincia"
-                                            id="v_provincia" tabindex="15">
-                                            <option value="">Provincia</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
-                                            Masculino
-                                        </label>
-                                    </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <select class="form-control " placeholder="Provincia " name="v_prov" id="v_prov"
+                                        tabindex="12" required>
+                                        <option value="">Provincia</option>
+                                    </select>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="v_dist" id="v_dist"
-                                            tabindex="13" required>
-                                            <option value="">Distrito</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="v_distrito"
-                                            id="v_distrito" tabindex="16">
-                                            <option value="">Distrito</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
-                                            Personalizado
-                                        </label>
-                                    </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <select class="form-control " placeholder="Distrito " name="v_dist" id="v_dist"
+                                        tabindex="13" required>
+                                        <option value="">Distrito</option>
+                                    </select>
                                 </div>
+
+                                <div class="col-sm-4">
+                                    <label for="sw-default" class="label_txt">Lugar Nacimiento</label>
+                                    <select class="form-control" placeholder="Departamento" name="v_departamento"
+                                        id="v_departamento" tabindex="14">
+                                        <option value="">Departamento</option>
+                                        @foreach ($departamento as $departamentos)
+                                        <option class="" value="{{ $departamentos->id }}">
+                                            {{ $departamentos->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <select class="form-control " placeholder="Provincia " name="v_provincia"
+                                        id="v_provincia" tabindex="15">
+                                        <option value="">Provincia</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <select class="form-control " placeholder="Distrito " name="v_distrito"
+                                        id="v_distrito" tabindex="16">
+                                        <option value="">Distrito</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-12">
+                                    <label for="" class="label_txt">Género</label>
+                                    <div class="row">
+                                        <div class="radio_rsp">
+                                            <span id="v_validGenero" style="color: red;">*Campo
+                                                Obligatorio</span>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
+                                                Femenino
+                                            </label>
+                                        </div>
+                                        <div class="radio_rsp">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Masculino">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                        <div class="radio_rsp">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipo" id="v_tipo" value="Personalizado">
+                                                Personalizado
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> 
                             </div> <!-- end row -->
                         </div>
                         <div id="swE-default-step-2" style="font-size: 12px!important">
@@ -4650,7 +4639,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">Cargo <a
                                                 onclick="$('#form-ver').modal('hide');$('#cargomodalE').modal('show')"
@@ -4673,7 +4662,7 @@ use App\proyecto_empleado;
                                         </div>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">Área <a
                                                 onclick="$('#form-ver').modal('hide');$('#areamodalE').modal('show');"
@@ -4701,7 +4690,7 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">Centro Costo <a
                                                 onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
@@ -4891,36 +4880,36 @@ use App\proyecto_empleado;
                                 <div id="calendarioAsignar_ed" class="modal fade" tabindex="-1" role="dialog"
                                     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                     <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                        style="width:670px;  margin-top: 150px; left: 0px;">
+                                        style="margin-top: 150px;">
 
                                         <div class="modal-content">
 
                                             <div class="modal-body"
                                                 style="font-size:12px!important;background: #f3f3f3;">
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3 text-center">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                    <div class="row" style="padding: 0 5px">
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
+                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="laborable_ed()"><img
                                                                     src="{{ asset('admin/images/dormir.svg') }}"
                                                                     height="20"> Descanso</button>
                                                         </div>
-                                                        <div class="col-md-3 text-center">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
+                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="nolaborable_ed()"><img
                                                                     src="{{ asset('admin/images/evento.svg') }}"
                                                                     height="20"> Día no laborable</button>
                                                         </div>
-                                                        <div class="col-md-3 text-center">
-                                                            <button type="button" style=" max-width: 18em!important;"
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
+                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
                                                                     src="{{ asset('admin/images/calendario.svg') }}"
                                                                     height="20"> Día feriado</button>
                                                         </div>
-                                                        <div class="col-md-3 text-center">
+                                                        <div class="col-md-3 text-center mt-1 mb-1">
                                                             {{-- <button type="button"
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm "
@@ -4928,7 +4917,7 @@ use App\proyecto_empleado;
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                             height="20"> Incidencia</button>
                                                             --}}
-                                                            <button style=" max-width: 18em!important;"
+                                                            <button style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="agregarinciden_ed()"><img
                                                                     src="{{ asset('admin/images/calendarioInc.svg') }}"
@@ -4979,20 +4968,10 @@ use App\proyecto_empleado;
 
                                             </div>
                                             <div class="modal-footer">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-7 text-right">
-                                                            <button type="button" class="btn btn-light"
-                                                                data-dismiss="modal">Cancelar</button>
-                                                        </div>
-                                                        <div class="col-md-5 text-right" style="padding-right: 38px; ">
-                                                            <button type="submit"
-                                                                class="btn btn-secondary">Aceptar</button>
-                                                            </form>
+                                                <button type="button" class="btn btn-light btn-sm" onclick="$('#myModalFeriado_ed').modal('hide')">Cancelar</button>
+                                                <button type="submit" class="btn btn-secondary btn-sm">Aceptar</button>
+                                                </form>
 
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -5022,7 +5001,7 @@ use App\proyecto_empleado;
                             <div id="horarioAsignar_ed" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
                                 aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width:400px;  margin-top: 150px; left: 30px;">
+                                    style="max-width: 400px; margin-top: 150px;">
 
                                     <div class="modal-content">
 
@@ -5342,13 +5321,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
@@ -5372,7 +5351,7 @@ use App\proyecto_empleado;
                             <div id="actividadTarea" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="actividadTarea" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                    style="width: 550px;">
+                                    style="max-width: 550px;">
                                     <div class="modal-content">
                                         <div class="modal-header" style="background-color:#163552;">
                                             <h5 class="modal-title" id="myModalLabel"
@@ -5430,7 +5409,7 @@ use App\proyecto_empleado;
                         <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                             <div class="row pb-3">
                                 <div class="col-xl-12 col-sm-12">
-                                    <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
+                                    <button class="btn btn-sm dropdown-toggle mb-2" style="background-color:#383e56;"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         + Agregar
                                     </button>
@@ -5607,170 +5586,147 @@ use App\proyecto_empleado;
                     <div class="p-3" id="form-registrar">
                         <div id="persona-step-1" style="font-size: 12px!important">
                             <div class="row">
-                                <div class="col-4">
-                                    <input style="display: none;" name="v_idV" id="v_idV">
-                                    <div class="form-group">
-                                        <label for="sw-default">Tipo Documento</label>
-                                        <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV"
-                                            style="background-color: #fcfcfc;" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Paterno</label>
-                                        <input type="text" class="form-control" name="v_apPaternoV" id="v_apPaternoV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="v_emailV" name="v_emailV" disabled>
-                                    </div>
-                                </div> <!-- end col -->
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Num. Documento</label>
-                                        <input type="text" class="form-control" name="v_numDocumentoV"
-                                            id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Apellido Materno</label>
-                                        <input type="text" class="form-control" name="v_apMaternoV" id="v_apMaternoV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Celular</label>
-                                        <input type="text" class="form-control" name="v_celularV" id="v_celularV"
-                                            disabled>
-                                    </div>
+                                <input style="display: none;" name="v_idV" id="v_idV">
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Tipo Documento</label>
+                                    <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV" style="background-color: #fcfcfc;" disabled>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Fecha Nacimiento</label>
-
-                                        <div class="row fechasResponsive">
-                                            <div class="col-md-4 prigth">
-                                                <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
-                                                    required="">
-                                                    <option value="0">Día</option>
-                                                    @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 prigth">
-                                                <select class="form-control" name="v_mes_fechaV" id="v_mes_fechaV"
-                                                    required="">
-                                                    <option value="0">Mes</option>
-                                                    <option class="" value="1">Ene.</option>
-                                                    <option class="" value="2">Feb.</option>
-                                                    <option class="" value="3">Mar.</option>
-                                                    <option class="" value="4">Abr.</option>
-                                                    <option class="" value="5">May.</option>
-                                                    <option class="" value="6">Jun.</option>
-                                                    <option class="" value="7">Jul.</option>
-                                                    <option class="" value="8">Ago.</option>
-                                                    <option class="" value="9">Set.</option>
-                                                    <option class="" value="10">Oct.</option>
-                                                    <option class="" value="11">Nov.</option>
-                                                    <option class="" value="12">Dic.</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 pAnio pleft">
-                                                <select class="form-control" style="padding-left: 5px;
-                                                padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV" required="">
-                                                    <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
-                                                        {{$i}}
-                                                        </option>
-                                                        @endfor
-                                                </select>
-                                            </div>
-
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Num. Documento</label>
+                                        <input type="text" class="form-control" name="v_numDocumentoV" id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Fecha Nacimiento</label>
+                                    <div class="row fechasResponsive">
+                                        <div class="col-md-4 prigth">
+                                            <select class="form-control" name="v_dia_fechaV" id="v_dia_fechaV"
+                                                required="">
+                                                <option value="0">Día</option>
+                                                @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
                                         </div>
-                                        {{-- <input type="text" class="form-control" id="v_fechaNV"
-                                            data-custom-class="form-control" data-format="YYYY-MM-DD"
-                                            data-template="D MMM YYYY" name="date" disabled> --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Nombres</label>
-                                        <input type="text" class="form-control" name="v_nombresV" id="v_nombresV"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Teléfono</label>
-                                        <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV"
-                                            disabled>
+                                        <div class="col-md-4 prigth">
+                                            <select class="form-control" name="v_mes_fechaV" id="v_mes_fechaV"
+                                                required="">
+                                                <option value="0">Mes</option>
+                                                <option class="" value="1">Ene.</option>
+                                                <option class="" value="2">Feb.</option>
+                                                <option class="" value="3">Mar.</option>
+                                                <option class="" value="4">Abr.</option>
+                                                <option class="" value="5">May.</option>
+                                                <option class="" value="6">Jun.</option>
+                                                <option class="" value="7">Jul.</option>
+                                                <option class="" value="8">Ago.</option>
+                                                <option class="" value="9">Set.</option>
+                                                <option class="" value="10">Oct.</option>
+                                                <option class="" value="11">Nov.</option>
+                                                <option class="" value="12">Dic.</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 pAnio pleft">
+                                            <select class="form-control" style="padding-left: 5px;
+                                            padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV" required="">
+                                                <option value="0">Año</option>
+                                                @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
+                                                    {{$i}}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Apellido Paterno</label>
+                                    <input type="text" class="form-control" name="v_apPaternoV" id="v_apPaternoV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Apellido Materno</label>
+                                    <input type="text" class="form-control" name="v_apMaternoV" id="v_apMaternoV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Nombres</label>
+                                    <input type="text" class="form-control" name="v_nombresV" id="v_nombresV" disabled>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="v_emailV" name="v_emailV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Celular</label>
+                                    <input type="text" class="form-control" name="v_celularV" id="v_celularV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Teléfono</label>
+                                    <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV" disabled>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sw-default">Dirección</label>
+                                        <label class="label_txt" for="sw-default">Dirección</label>
                                         <input type="text" class="form-control" name="v_direccionV" id="v_direccionV"
                                             disabled>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default">Dirección
-                                            Domiciliara</label>
-                                        <input type="text" class="form-control" placeholder="Departamento" name="v_depV"
-                                            id="v_depV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default">Lugar Nacimiento</label>
-                                        <input type="text" class="form-control" placeholder="Departamento"
-                                            name="v_departamentoV" id="v_departamentoV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for="">Género</label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino" disabled>
-                                            Femenino
-                                        </label>
-                                    </div>
+
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Dirección Domiciliara</label>
+                                    <input type="text" class="form-control" placeholder="Departamento" name="v_depV" id="v_depV" disabled>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Provincia " name="v_provV"
-                                            id="v_provV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Provincia "
-                                            name="v_provinciaV" id="v_provinciaV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provV" id="v_provV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distV" id="v_distV" disabled>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="label_txt" for="sw-default">Lugar Nacimiento</label>
+                                    <input type="text" class="form-control" placeholder="Departamento" name="v_departamentoV" id="v_departamentoV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provinciaV" id="v_provinciaV" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="sw-default"><br></label>
+                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distritoV" id="v_distritoV" disabled>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="label_txt" for="">Género</label>
+                                    <div class="row">
+                                        <div class="radio_rsp">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino" disabled>
+                                                Femenino
+                                            </label>
+                                        </div>
+                                        <div class="radio_rsp">
+                                            <label class="custom-control custom-radio">
                                             <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino" disabled>
                                             Masculino
                                         </label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Distrito " name="v_distV"
-                                            id="v_distV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sw-default"><br></label>
-                                        <input type="text" class="form-control" placeholder="Distrito "
-                                            name="v_distritoV" id="v_distritoV" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="normal" for=""><br></label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Personalizado"
-                                                disabled>
-                                            Personalizado
-                                        </label>
+                                        </div>
+                                        <div class="radio_rsp">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Personalizado"
+                                                    disabled>
+                                                Personalizado
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div> <!-- end row -->
                         </div>
                         <div id="sw-default-step-2" style="font-size: 12px!important">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">Cargo</label>
                                         <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
@@ -5781,7 +5737,7 @@ use App\proyecto_empleado;
                                             id="v_codigoEmpleadoV" disabled>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">Área</label>
                                         <input type="text" class="form-control" name="v_areaV" id="v_areaV" tabindex="3"
@@ -5793,7 +5749,7 @@ use App\proyecto_empleado;
                                             tabindex="6" disabled>
                                     </div>
                                 </div> <!-- end col -->
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="sw-default">Centro Costo</label>
                                         <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
@@ -5898,13 +5854,13 @@ use App\proyecto_empleado;
                                                             <thead style="background: #fafafa;font-size: 14px">
                                                                 <tr>
                                                                     <th>Actividad</th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="activity"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;
                                                                         Control Remoto
                                                                     </th>
-                                                                    <th class="text-center">
+                                                                    <th class="text-center th_rh">
                                                                         <i data-feather="map-pin"
                                                                             style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                         &nbsp;

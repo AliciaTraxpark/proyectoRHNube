@@ -61,6 +61,42 @@
         .colResp {
             text-align: center !important;
         }
+        .bootbox.modal.fade.bootbox-confirm.show>div{
+            width: 80%;
+            left: 10%;
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+    }
+    table{
+        table-layout: fixed;
+        
+    }
+
+    #colTable1{
+        width: 60px;
+        word-wrap: break-word;
+    }
+
+    #colTable2, #colTable3{
+
+        width: 180px;
+        word-wrap: break-word;
+    }
+
+    #colTable4{
+        width: 150px;
+        word-wrap: break-word;
+    }
+
+    #colTable5{
+        width: 130px;
+        word-wrap: break-word;
+    }
+
+    #colTable6{
+        width: 160px;
+        word-wrap: break-word;
     }
 </style>
 <div class="row page-title">
@@ -94,23 +130,23 @@
                         <table id="tablaInvit" class="table" style="font-size: 12.5px!important">
                             <thead style="background: #fafafa">
                                 <tr>
-                                    <th>#</th>
-                                    <th>Correo</th>
-                                    <th>Rol</th>
-                                    <th>Invitacion</th>
-                                    <th>Estado</th>
-                                    <th>Opciones</th>
+                                    <th id="colTable1">#</th>
+                                    <th id="colTable2">Correo</th>
+                                    <th id="colTable3">Rol</th>
+                                    <th id="colTable4">Invitacion</th>
+                                    <th id="colTable5">Estado</th>
+                                    <th id="colTable6">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($invitado as $invitados)
 
                                 <tr>
-                                    <th>{{ $loop->index + 1 }}</th>
-                                    <td>{{ $invitados->email_inv }}</td>
-                                    <td>{{ $invitados->rol_nombre }}</td>
-                                    <td><button class="btn btn-sm botonsms" style="color: #6c757d" onclick="reenviarEmail({{ $invitados->idinvitado }})">Reenviar <img src="landing/images/note.svg" height="20"  ></button></td>
-                                    <td>
+                                    <th id="colTable1">{{ $loop->index + 1 }}</th>
+                                    <td id="colTable2">{{ $invitados->email_inv }}</td>
+                                    <td id="colTable3">{{ $invitados->rol_nombre }}</td>
+                                    <td id="colTable4"><button class="btn btn-sm botonsms" style="color: #6c757d" onclick="reenviarEmail({{ $invitados->idinvitado }})">Reenviar <img src="landing/images/note.svg" height="15"  ></button></td>
+                                    <td id="colTable5">
                                         @if ($invitados->estado==0)
                                         <img src="{{ asset('admin/images/advertencia.svg') }}" height="15"> No
                                         confirmado
@@ -118,9 +154,9 @@
                                         <img src="{{ asset('admin/images/checkH.svg') }}" height="15"> Confirmado
                                         @endif
                                     </td>
-                                    <td>
+                                    <td id="colTable6">
                                         <div class="row">
-                                            <div class="col-md-2 colResp">
+                                            <div class="col-md-2 col-2 colResp mr-1">
                                                 <a id="" onclick="editarInv({{ $invitados->idinvitado }})"
                                                     style="cursor: pointer"><img
                                                         src="{{ asset('admin/images/edit.svg') }}" height="15"></a>

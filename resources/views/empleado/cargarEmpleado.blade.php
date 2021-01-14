@@ -39,14 +39,18 @@ use App\User;
                     <h4 class="text-danger mt-4">Su sesión expiró</h4>
                     <p class="w-75 mx-auto text-muted">Por favor inicie sesión nuevamente.</p>
                     <div class="mt-4">
-                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i
-                                class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
+                        <a href="{{('/')}}" class="btn btn-outline-primary btn-rounded width-md"><i class="uil uil-arrow-right mr-1"></i> Iniciar sesión</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <style>
+        body{
+            font-family: Poppins, sans-serif;
+            padding: 0px !important;
+            margin: 0px !important;
+        }
         .fc-time {
             display: none;
         }
@@ -64,35 +68,55 @@ use App\User;
         .btn-rounded {
             border-radius: 1em;
         }
+        @media (max-width: 767px){
+            .colResp {
+                justify-content: center !important;
+                padding: 10px 0px !important;
+            }
+        }
+
+        #navbar{
+            padding: 0 40px !important;
+            padding-bottom: 8px !important;
+        }
+
+        @media (min-width: 0px) {
+            footer {
+              font-size: 15px;
+              color: #555;
+              background: #eee;
+              text-align: center;
+              position: fixed;
+              display: block;
+              width: 100%;
+              bottom: 0;
+              margin-top: 0px;
+            }
+        }
+
     </style>
+
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-            <div class="container" style="margin-left: 20px; margin-right: 40px;">
-                <div class="col-md-2">
-                    <div class="navbar-brand-wrapper d-flex w-100">
-                        <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
-                            <span class="logo-lg text-center">
-                                <img src="{{asset('landing/images/NUBE_SOLA.png')}}" alt="" height="60" />
-
-                            </span>
-
-                        </a>>
+                <div class="col-sm-3 col-md-2 col-xl-2 logo_rh">
+                    <div class="navbar-brand-wrapper d-flex w-100 colResp">
+                        <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
                     </div>
                 </div>
-                <div class="col-md-4 text-left">
-                    <h5 style="color: #ffffff">Gestión de empleados</h5>
-                    <label for="" class="blanco">Validaremos los datos antes de cargarlos :)</label>
+                <div class="col-sm-6 col-md-8 col-xl-8 text-center">
+                    <h5  style="color: #ffffff">Gestión de empleados</h5>
+                    <p for="" class="blanco">Validaremos los datos antes de cargarlos :)</p>
                 </div>
-                <div class="col-md-6 text-right" style="margin-left: 14%">
 
-                    <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B"
-                            class="btn btn-sm  btn-primary "> <img src="{{asset('admin/images/excel.svg')}}"
-                                height="25"></i> Descargar plantilla</button></a>
+                <div class="col-sm-3 col-md-2 col-xl-2 text-center">
+                    <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B" class="btn btn-sm  btn-primary "> 
+                        <img src="{{asset('admin/images/excel.svg')}}" height="25">Descargar plantilla</button>
+                    </a>
                 </div>
-            </div>
         </nav>
     </header>
-    <div class="content-page" style="margin-top: 20px;margin-left: 0px">
+
+    <div class="content-page" style="margin-top: 20px;margin-left: 0px !important;">
         <div class="content">
             <div id="modalInformacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -138,82 +162,68 @@ use App\User;
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            <div class="row ">
-                <div class="col-xl-12">
-                    <div class="card" style="background:#ffffff;">
-                        @if ( $errors->any() )
 
+
+            <div class="col-xl-12">
+                <div class="col-xl-12 ">
+                    <div class="card " style="background:#ffffff;">
+                        @if ( $errors->any() )
                         <div class="alert alert-danger">
                             @foreach( $errors->all() as $error )<li>{{ $error }}</li>@endforeach
                         </div>
                         @endif
 
-
-
-                        <div class="card-body" style="padding-top: 10px;padding-bottom: 0px;">
+                        <div class="card-body " style="padding-top: 10px;padding-bottom: 10px;">
                             <form action="{{ route('importEmpleado') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-12" style="padding-left: 0px;">
                                     <div class="row">
-
                                         <div class="col-md-4">
                                             @if (session('alertE'))
-                                            <div class="alert alert-danger" style="padding-top: 4px; padding-bottom: 4px;padding-left: 0px;font-size: 16px; font-weight: 700; color: #b23232;
-                                            background-color: #f7f6f6;border-color: #f7f6f6;">
-                                                {{ session('alertE') }}
-                                            </div>
+                                                <div class="alert alert-danger" style="padding-top: 4px; padding-bottom: 4px;padding-left: 0px;font-size: 16px; font-weight: 700; color: #b23232; background-color: #f7f6f6;border-color: #f7f6f6;">
+                                                    {{ session('alertE') }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="col-md-8"></div>
                                         <div class="col-md-12">
                                             @if (session('alert'))
-                                            <div class="alert alert-danger">
-                                                {{ session('alert') }}
-                                            </div>
+                                                <div class="alert alert-danger">
+                                                    {{ session('alert') }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="col-md-12">
                                             @if (session('filas'))
-
-                                            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                                Se importaron {{ session('filas') }} empleados.
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
+                                                <div class="alert alert-info alert-dismissible fade show" role="alert">Se importaron {{ session('filas') }} empleados.
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
                                             @endif
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-12 col-sm-7 col-md-6 mb-2">
                                             <input type="file" name="file" class="form-control">
                                         </div>
-                                        <div class="col-md-3">
-                                            <button class="btn btn-sm" type="submit"
-                                                style="background-color: #e1eae5; color: #61886c;"><img
-                                                    src="{{ URL::asset('admin/assets/images/users/importar.png') }}"
-                                                    height="20" class=" mr-2" alt="" />Importar empleados</button>
+                                        <div class="col-12 col-sm-5 col-md-4">
+                                            <button class="btn btn-sm" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados
+                                            </button>
                                         </div>
+                                    </div>
+                                </div>
                             </form>
                             <div class="col-md-3 text-right">
-
                                 @if (session('empleados'))
-
-                                <button type="button" style="font-size: 12.25px;
-                                            padding-top: 5.5px;
-                                            padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm "
-                                    onclick="agregar()">Validar y registrar</button>
+                                    <button type="button" style="font-size: 12.25px; padding-top: 5.5px; padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
                                 @endif
-
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="card-body" style="padding-top: 20px;color: #1b1b1b;">
-
+                <div class="col-xl-12" style="padding: 10px !important; margin: 2px !important; color: #1b1b1b;">
                     <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
-                    <table id="basic-datatable1" class="table  nowrap" style="font-size: 13px!important">
+                        <table id="basic-datatable1" class="table" style="font-size: 13px!important;">
                         <thead style="background: #4C5D73;color: white;">
                             <tr>
                                 <th>Tipo de Doc.</th>
@@ -244,42 +254,39 @@ use App\User;
                             </tr>
                         </thead>
                         <tbody style="background:#f7f7f7;color: #2c2c2c;">
-
                             @if (session('empleados'))
-                            @foreach (session('empleados') as $item)
-                            <tr>
-                                <td>{{$item[0]}}</td>
-                                <td>{{$item[1]}}</td>
-                                <td>{{$item[2]}}</td>
-                                <td>{{$item[3]}}</td>
-                                <td>{{$item[4]}}</td>
-                                <td>{{$item[5]}}</td>
-                                <td>{{$item[6]}}</td>
-                                <td>{{$item[7]}}</td>
-                                <td>{{$item[8]}}</td>
-                                <td>{{$item[9]}}</td>
-                                <td>{{$item[10]}}</td>
-                                <td>{{$item[11]}}</td>
-                                <td>{{$item[12]}}</td>
-                                <td>{{$item[13]}}</td>
-                                <td>{{$item[14]}}</td>
-                                <td>{{$item[15]}}</td>
-                                <td>{{$item[16]}}</td>
-                                <td>{{$item[24]}}</td>
-                                <td>{{$item[17]}}</td>
-                                <td>{{$item[18]}}</td>
-                                <td>{{$item[19]}}</td>
-                                <td>{{$item[20]}}</td>
-                                <td>{{$item[21]}}</td>
-                                <td>{{$item[22]}}</td>
-                                <td>{{$item[23]}}</td>
-
-                            </tr>
-                            @endforeach
+                                @foreach (session('empleados') as $item)
+                                    <tr>
+                                        <td>{{$item[0]}}</td>
+                                        <td>{{$item[1]}}</td>
+                                        <td>{{$item[2]}}</td>
+                                        <td>{{$item[3]}}</td>
+                                        <td>{{$item[4]}}</td>
+                                        <td>{{$item[5]}}</td>
+                                        <td>{{$item[6]}}</td>
+                                        <td>{{$item[7]}}</td>
+                                        <td>{{$item[8]}}</td>
+                                        <td>{{$item[9]}}</td>
+                                        <td>{{$item[10]}}</td>
+                                        <td>{{$item[11]}}</td>
+                                        <td>{{$item[12]}}</td>
+                                        <td>{{$item[13]}}</td>
+                                        <td>{{$item[14]}}</td>
+                                        <td>{{$item[15]}}</td>
+                                        <td>{{$item[16]}}</td>
+                                        <td>{{$item[24]}}</td>
+                                        <td>{{$item[17]}}</td>
+                                        <td>{{$item[18]}}</td>
+                                        <td>{{$item[19]}}</td>
+                                        <td>{{$item[20]}}</td>
+                                        <td>{{$item[21]}}</td>
+                                        <td>{{$item[22]}}</td>
+                                        <td>{{$item[23]}}</td>
+                                    </tr>
+                                @endforeach
                             @endif
                         </tbody>
                     </table><br>
-
                 </div> <!-- end card body-->
 
                 <div id="cargar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -308,26 +315,26 @@ use App\User;
                                                     &nbsp;</button></a>
                                             <br><br>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
             </div> <!-- end card -->
         </div>
-
-
     </div>
-    <footer class="border-top">
-        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos
-            reservados.</p>
+    <footer class="border-top" style="background:#163552;">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date("
+                    Y" ); ?> - RH nube Corp - USA | Todos los derechos
+                reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+        </div>
     </footer>
-    </div>
-    </div>
-
 
     <!--<script src="{{asset('landing/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>-->
     <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script>
@@ -351,35 +358,36 @@ use App\User;
         $(document).ready(function() {
 
     $('#basic-datatable1').DataTable( {
-        "scrollX": true,
+        scrollX: true,
+        responsive: false,
         language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ ",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": ">",
-                    "sPrevious": "<"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ ",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": ">",
+                "sPrevious": "<"
             },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        },
     } );
 } );
 $('#export').click('change',function(){
@@ -406,22 +414,19 @@ function agregar(){
                     }
     // empleados =JSON.parse(JSON.stringify());
     $.ajax({
-            type:"post",
-            url:"/importBDExcel",
-            data:{emplead:emplead},
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            success: function (data) {
-                $('#contenido').hide();
-                $('#cargaCompleta').show();
-                $('#btnRegistraBD').prop('disabled', true);
-
-
-            },
-            error: function (data) {
-                alert('Ocurrio un error');
-            }
-        });
-
+        type:"post",
+        url:"/importBDExcel",
+        data:{emplead:emplead},
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            $('#contenido').hide();
+            $('#cargaCompleta').show();
+            $('#btnRegistraBD').prop('disabled', true);
+        },
+        error: function (data) {
+            alert('Ocurrio un error');
+        }
+    });
 @endif
 }
 
