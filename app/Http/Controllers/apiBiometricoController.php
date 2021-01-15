@@ -570,13 +570,13 @@ class apiBiometricoController extends Controller
             ->where('e.asistencia_puerta', '=', 1)
             ->paginate();
 
-            
+
 
 
         }
 
         if($empleado!=null){
-            return response()->json(array("empleados"=>$empleado));
+            return response()->json($empleado);
        }
        else{
            return response()->json(array('status'=>400,'title' => 'Empleados no encontrados',
