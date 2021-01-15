@@ -435,27 +435,27 @@ class apiBiometricoController extends Controller
             ->where('e.asistencia_puerta', '=', 1)
             ->paginate();
 
-            foreach ($empleado as $tab) {
+            /* foreach ($empleado as $tab) {
                 $fecha = Carbon::now('America/Lima');
                 $fechaSum=new Carbon('tomorrow');;
                 $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
-               /*  dd($fechaMañana); */
+
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-               /*  dd($fechaHoy); */
+
                 $horario = DB::table('horario_empleado as he')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                 ->join('horario as h','he.horario_horario_id','=','h.horario_id')
                 ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
                 'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
-              /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
+
                 ->where('he.empleado_emple_id', '=', $tab->idempleado)
                 ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                 ->where('he.estado', '=', 1)
                 ->get();
-
+ */
                 /* horaaas de inicio y fin horariio */
-                 foreach ($horario as $tab2) {
+               /*   foreach ($horario as $tab2) {
 
                     if (Carbon::parse($tab2->horaF)->lt(Carbon::parse($tab2->horaI))) {
                         $despues = new Carbon('tomorrow');
@@ -467,10 +467,10 @@ class apiBiometricoController extends Controller
                         $tab2->horaF = $fechaHoy . " " .  $tab2->horaF;
                     }
 
-                }
+                } */
 
                 /* INSERTO PAUSAS */
-                foreach ($horario as $tab1) {
+             /*    foreach ($horario as $tab1) {
                     $pausas_horario = DB::table('pausas_horario as pauh')
                         ->select('idpausas_horario as idpausa', 'pausH_descripcion as descripcion', 'pausH_Inicio as horaI',
                          'pausH_Fin as horaF', 'pauh.tolerancia_inicio as toleranciaI','pauh.tolerancia_fin as toleranciaF',
@@ -509,7 +509,7 @@ class apiBiometricoController extends Controller
                 }
 
                 $tab->horario = $horario;
-            }
+            } */
             }
             else{
                 /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -533,82 +533,7 @@ class apiBiometricoController extends Controller
                     ->where('invi.estado', '=', 1)
                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                     ->paginate();
-                    foreach ($empleado as $tab) {
-                        $fecha = Carbon::now('America/Lima');
-                        $fechaSum=new Carbon('tomorrow');;
-                        $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
-                       /*  dd($fechaMañana); */
-                        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                       /*  dd($fechaHoy); */
-                        $horario = DB::table('horario_empleado as he')
-                        ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                        ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                        ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
-                        'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
-                      /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                        ->where('he.empleado_emple_id', '=', $tab->idempleado)
-                        ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
-                        ->where('he.estado', '=', 1)
-                        ->get();
-
-                        /* horaaas de inicio y fin horariio */
-                         foreach ($horario as $tab2) {
-
-                            if (Carbon::parse($tab2->horaF)->lt(Carbon::parse($tab2->horaI))) {
-                                $despues = new Carbon('tomorrow');
-                                $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                                $tab2->horaI = $fechaHoy . " " .  $tab2->horaI;
-                                $tab2->horaF = $fechaMan . " " .  $tab2->horaF;
-                            } else {
-                                $tab2->horaI = $fechaHoy . " " . $tab2->horaI;
-                                $tab2->horaF = $fechaHoy . " " .  $tab2->horaF;
-                            }
-
-                        }
-
-                        /* INSERTO PAUSAS */
-                        foreach ($horario as $tab1) {
-                            $pausas_horario = DB::table('pausas_horario as pauh')
-                                ->select('idpausas_horario as idpausa', 'pausH_descripcion as descripcion', 'pausH_Inicio as horaI',
-                                 'pausH_Fin as horaF', 'pauh.tolerancia_inicio as toleranciaI','pauh.tolerancia_fin as toleranciaF',
-                                 'inactivar as inhabilitar')
-                                ->where('pauh.horario_id', '=', $tab1->horario_id)
-                                ->distinct('pauh.idpausas_horario')
-                                ->get();
-
-                                $horaIV=$tab1->horaI;
-                                $horaFV=$tab1->horaF;
-
-                                foreach ($pausas_horario as $tab3) {
-
-
-                                    if (Carbon::parse($tab3->horaF)->lt(Carbon::parse($tab3->horaI))) {
-                                        $despues = new Carbon('tomorrow');
-                                        $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                                        $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
-                                        $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
-                                    } else {
-                                        if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
-                                            $tab3->horaI = $fechaMan . " " . $tab3->horaI;
-                                        } else{
-                                            $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                        }
-
-                                        if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
-                                            $tab3->horaF = $fechaMan . " " . $tab3->horaF;
-                                        } else{
-                                            $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
-                                        }
-                                    }
-
-                                }
-                            $tab1->pausas = $pausas_horario;
-
-                        }
-
-                        $tab->horario = $horario;
-                    }
                 }
                 else{
                     /* EMPLEADOS POR AREA */
@@ -628,82 +553,7 @@ class apiBiometricoController extends Controller
 
                     ->paginate();
 
-                    foreach ($empleado as $tab) {
-                        $fecha = Carbon::now('America/Lima');
-                        $fechaSum=new Carbon('tomorrow');;
-                        $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
-                       /*  dd($fechaMañana); */
-                        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-                       /*  dd($fechaHoy); */
-                        $horario = DB::table('horario_empleado as he')
-                        ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                        ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                        ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
-                        'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
-                      /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                        ->where('he.empleado_emple_id', '=', $tab->idempleado)
-                        ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
-                        ->where('he.estado', '=', 1)
-                        ->get();
-
-                        /* horaaas de inicio y fin horariio */
-                         foreach ($horario as $tab2) {
-
-                            if (Carbon::parse($tab2->horaF)->lt(Carbon::parse($tab2->horaI))) {
-                                $despues = new Carbon('tomorrow');
-                                $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                                $tab2->horaI = $fechaHoy . " " .  $tab2->horaI;
-                                $tab2->horaF = $fechaMan . " " .  $tab2->horaF;
-                            } else {
-                                $tab2->horaI = $fechaHoy . " " . $tab2->horaI;
-                                $tab2->horaF = $fechaHoy . " " .  $tab2->horaF;
-                            }
-
-                        }
-
-                        /* INSERTO PAUSAS */
-                        foreach ($horario as $tab1) {
-                            $pausas_horario = DB::table('pausas_horario as pauh')
-                                ->select('idpausas_horario as idpausa', 'pausH_descripcion as descripcion', 'pausH_Inicio as horaI',
-                                 'pausH_Fin as horaF', 'pauh.tolerancia_inicio as toleranciaI','pauh.tolerancia_fin as toleranciaF',
-                                 'inactivar as inhabilitar')
-                                ->where('pauh.horario_id', '=', $tab1->horario_id)
-                                ->distinct('pauh.idpausas_horario')
-                                ->get();
-
-                                $horaIV=$tab1->horaI;
-                                $horaFV=$tab1->horaF;
-
-                                foreach ($pausas_horario as $tab3) {
-
-
-                                    if (Carbon::parse($tab3->horaF)->lt(Carbon::parse($tab3->horaI))) {
-                                        $despues = new Carbon('tomorrow');
-                                        $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                                        $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
-                                        $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
-                                    } else {
-                                        if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
-                                            $tab3->horaI = $fechaMan . " " . $tab3->horaI;
-                                        } else{
-                                            $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                        }
-
-                                        if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
-                                            $tab3->horaF = $fechaMan . " " . $tab3->horaF;
-                                        } else{
-                                            $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
-                                        }
-                                    }
-
-                                }
-                            $tab1->pausas = $pausas_horario;
-
-                        }
-
-                        $tab->horario = $horario;
-                    }
                 }
             }
 
@@ -720,84 +570,7 @@ class apiBiometricoController extends Controller
             ->where('e.asistencia_puerta', '=', 1)
             ->paginate();
 
-            foreach ($empleado as $tab) {
-                $fecha = Carbon::now('America/Lima');
-                $fechaSum=new Carbon('tomorrow');;
-                $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
-               /*  dd($fechaMañana); */
-                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-               /*  dd($fechaHoy); */
-                $horario = DB::table('horario_empleado as he')
-                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
-                'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
-
-              /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                ->where('he.empleado_emple_id', '=', $tab->idempleado)
-                ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
-                ->where('he.estado', '=', 1)
-                ->get();
-
-                /* horaaas de inicio y fin horariio */
-                 foreach ($horario as $tab2) {
-
-                    if (Carbon::parse($tab2->horaF)->lt(Carbon::parse($tab2->horaI))) {
-                        $despues = new Carbon('tomorrow');
-                        $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                        $tab2->horaI = $fechaHoy . " " .  $tab2->horaI;
-                        $tab2->horaF = $fechaMan . " " .  $tab2->horaF;
-                    } else {
-                        $tab2->horaI = $fechaHoy . " " . $tab2->horaI;
-                        $tab2->horaF = $fechaHoy . " " .  $tab2->horaF;
-                    }
-
-                }
-
-                /* INSERTO PAUSAS */
-                foreach ($horario as $tab1) {
-                    $pausas_horario = DB::table('pausas_horario as pauh')
-                        ->select('idpausas_horario as idpausa', 'pausH_descripcion as descripcion', 'pausH_Inicio as horaI',
-                         'pausH_Fin as horaF', 'pauh.tolerancia_inicio as toleranciaI','pauh.tolerancia_fin as toleranciaF',
-                         'inactivar as inhabilitar')
-                        ->where('pauh.horario_id', '=', $tab1->horario_id)
-                        ->distinct('pauh.idpausas_horario')
-                        ->get();
-
-                        $horaIV=$tab1->horaI;
-                         $horaFV=$tab1->horaF;
-
-                        foreach ($pausas_horario as $tab3) {
-
-
-                            if (Carbon::parse($tab3->horaF)->lt(Carbon::parse($tab3->horaI))) {
-                                $despues = new Carbon('tomorrow');
-                                $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                                $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
-                                $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
-                            } else {
-                                if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
-                                    $tab3->horaI = $fechaMan . " " . $tab3->horaI;
-                                } else{
-                                    $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                }
-
-                                if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
-                                    $tab3->horaF = $fechaMan . " " . $tab3->horaF;
-                                } else{
-                                    $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
-                                }
-
-
-                            }
-
-                        }
-                    $tab1->pausas = $pausas_horario;
-
-                }
-
-                $tab->horario = $horario;
-            }
+            
 
 
         }
