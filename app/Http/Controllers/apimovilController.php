@@ -362,13 +362,7 @@ class apimovilController extends Controller
             }
             $marcacion_puerta->save();
             } else{
-               /*  $marcacion_puerta =DB::table('marcacion_puerta as mv')
-                ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
-                ->where('mv.marcaMov_salida', '=',null )
-                ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
-                ->orderby('marcaMov_id','DESC')->take(1)
-                ->update(['mv.marcaMov_salida' => $req['fechaMarcacion']]); */
+              
                 $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
                 $marcacion_puerta->marcaMov_salida=$req['fechaMarcacion'];
                 $marcacion_puerta->save();

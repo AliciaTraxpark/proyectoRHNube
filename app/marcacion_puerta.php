@@ -11,6 +11,6 @@ class marcacion_puerta extends Model
     protected $primaryKey = 'marcaMov_id';
     protected $fillable = ['marcaMov_id','marcaMov_fecha','marcaMov_emple_id',
     'controladores_idControladores','dispositivos_idDispositivos','organi_id','horarioEmp_id','marcaMov_salida',
-    'marca_latitud','marca_longitud','marcaIdActivi'];
+    'marca_latitud','marca_longitud','marcaIdActivi','tipoMarcacionB'];
     public $timestamps = false;
 }
