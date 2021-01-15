@@ -559,8 +559,8 @@ class apiVersionDosController extends Controller
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                 $horaActual = $fecha->isoFormat('HH:mm:ss');
                 $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                $horaComparar = $horaComparar->addHours($resp->nHoraAdic);
                 if ($horario_dias->start == $fechaHoy) {
-                    $fechaC = "";
                     if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
                         $despues = new Carbon('tomorrow');
                         $fechaMan = $despues->isoFormat('YYYY-MM-DD');
@@ -571,6 +571,7 @@ class apiVersionDosController extends Controller
                         $horario->horaF = $fechaHoy . " " . $horario->horaF;
                     }
                     $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                    $horaComparar = $horaComparar->addHours($resp->nHoraAdic);
                     if (Carbon::parse($horaActual)->lte($horaComparar)) {
                         //* CALCULAR TIEMPO POR HORARIO
                         $horas = DB::table('empleado as e')
@@ -595,6 +596,7 @@ class apiVersionDosController extends Controller
                             $horario->horaI = $fechaA . " " . $horario->horaI;
                             $horario->horaF = $fechaHoy . " " . $horario->horaF;
                             $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                            $horaComparar = $horaComparar->addHours($resp->nHoraAdic);
                             //* ***********************************************
                             if (Carbon::parse($horaActual)->lte($horaComparar)) {
                                 //* CALCULAR TIEMPO DE HOARIO
