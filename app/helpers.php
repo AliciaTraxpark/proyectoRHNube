@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 
+// * FUNCION DE AGRUPAR HORAS MINUTOS
 function horasRemotoRutaJson($array)
 {
     $resultado = array();
@@ -22,6 +23,7 @@ function horasRemotoRutaJson($array)
     return array_values($resultado);
 }
 
+// * FUNCION DE COMPROBAR SI ESTA UAN HORA EN UN RANGO DE HORAS
 function checkHora($hora_ini, $hora_fin, $hora_now)
 {
     $horaI = Carbon::parse($hora_ini);
@@ -31,4 +33,13 @@ function checkHora($hora_ini, $hora_fin, $hora_now)
     if ($horaN->gte($horaI) && $horaN->lt($horaF)) {
         return true;
     } else return false;
+}
+
+// * FUNCION PARA ORDENAR UN ARRAY DE OBJECTOS
+function object_sorter($clave, $orden = null)
+{
+    return function ($a, $b) use ($clave, $orden) {
+        $result =  ($orden == "DESC") ? strnatcmp($b->$clave, $a->$clave) :  strnatcmp($a->$clave, $b->$clave);
+        return $result;
+    };
 }

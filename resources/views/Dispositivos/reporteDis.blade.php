@@ -216,28 +216,27 @@
         </div>
         <div class="col-md-12">
             <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga">
-                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="toExcel()">
+                <button class="btn btn-secondary   btn-sm mt-1" type="button" onclick="toExcel()">
                     <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
                 </button>
-                 <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
-                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
-                 </button>
+                <button class="btn btn-secondary  btn-sm mt-1" type="button" onclick="generatePDF()">
+                    <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
+                </button>
             </div>
         </div>
-
 
         <div id="tableZoomI" class="col-md-12 " style="display: none">
             <table>
                 <thead>
                     <tr>
                         <th><br><br></th>
-                        <th  colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
+                        <th colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td  colspan="3">Razon social:</td>
-                        <td  colspan="3">{{$organizacion}}</td>
+                        <td colspan="3">Razon social:</td>
+                        <td colspan="3">{{$organizacion}}</td>
                     </tr>
                     <tr>
                         <td colspan="3">Direccion:</td>
@@ -258,31 +257,30 @@
                 </tbody>
             </table>
             <style>
-                .tableHi{
-                    border: 0.2px solid rgb(182, 182, 182)!important; border-collapse: collapse!important;
+                .tableHi {
+                    border: 0.2px solid rgb(182, 182, 182) !important;
+                    border-collapse: collapse !important;
                 }
             </style>
-            <table id="tablaReportI" class="table tableHi"  style="font-size: 12.8px;">
-                <thead id="theadDI" class="tableHi" >
+            <table id="tablaReportI" class="table tableHi" style="font-size: 12.8px;">
+                <thead id="theadDI" class="tableHi">
                     <tr class="tableHi">
-                        <th class="tableHi"  >CC</th>
-                        <th class="tableHi" >DNI</th>
-                        <th class="tableHi" >Nombre</th>
-                        <th  class="tableHi">Cargo</th>
+                        <th class="tableHi">CC</th>
+                        <th class="tableHi">DNI</th>
+                        <th class="tableHi">Nombre</th>
+                        <th class="tableHi">Cargo</th>
                         <th class="tableHi">Horario</th>
-                        <th  class="tableHi" id="hEntradaI">Hora de entrada</th>
-                        <th  class="tableHi"  id="hSalidaI">Hora de salida</th>
+                        <th class="tableHi" id="hEntradaI">Hora de entrada</th>
+                        <th class="tableHi" id="hSalidaI">Hora de salida</th>
                         <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
                         <th class="tableHi">Tardanza T.</th>
                         <th class="tableHi">Faltas T.</th>
                         <th class="tableHi">Incidencias T.</th>
-
                     </tr>
                 </thead>
                 <tbody id="tbodyDI">
                 </tbody>
             </table>
-
         </div>
         <div id="tableZoom" class="col-md-12">
             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
@@ -292,19 +290,16 @@
                         <th>DNI</th>
                         <th>Nombre</th>
                         <th>Cargo</th>
-                        <th >Horario</th>
+                        <th>Horario</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
                         <th id="tSitio">Tiempo en sitio</th>
-                        <th >Tardanza T.</th>
+                        <th>Tardanza T.</th>
                         <th>Faltas T.</th>
                         <th>Incidencias T.</th>
-
-
                     </tr>
                 </thead>
-                <tbody id="tbodyD">
-                </tbody>
+                <tbody id="tbodyD"></tbody>
             </table>
 
         </div>
@@ -313,16 +308,16 @@
 </div>
 </div>
 </div>
-    {{-- modificar --}}
-    @if (isset($modifReporte))
-    @if ($modifReporte==1)
-    <input type="hidden" id="modifReporte" value="1">
-    @else
-    <input type="hidden" id="modifReporte" value="0">
-    @endif
-    @else
-    <input type="hidden" id="modifReporte" value="1">
-    @endif
+{{-- modificar --}}
+@if (isset($modifReporte))
+@if ($modifReporte==1)
+<input type="hidden" id="modifReporte" value="1">
+@else
+<input type="hidden" id="modifReporte" value="0">
+@endif
+@else
+<input type="hidden" id="modifReporte" value="1">
+@endif
 @endsection
 @section('script')
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
