@@ -5376,6 +5376,11 @@ $('#horaF').flatpickr({
 });
 function modalRegistrar() {
     $('#horarioAgregar').modal();
+    $('#vacioHoraF').hide();
+    $('#btnGuardaHorario').prop("disabled", false);
+    $('#fueraRango').hide();
+    $('#errorenPausas').hide();
+    $('#errorenPausasCruzadas').hide();
 }
 // * SWITCH DE PAUSAS
 var r_cont = 0;
@@ -6000,6 +6005,11 @@ function modalEditar(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+            $('#btnEditarHorario').prop("disabled", false);
+            $('#fueraRango_ed').hide();
+            $('#errorenPausas_ed').hide();
+            $('#errorenPausasCruzadas_ed').hide();
+            $('#vacioHoraF_ed').hide();
             console.log(data);
             $('#idhorario_ed').val(data.horario[0].horario_id);
             $('#descripcionCa_ed').val(data.horario[0].horario_descripcion);
@@ -6140,7 +6150,7 @@ function e_inicializarHorasPausas(id) {
                     $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
-                    var validacionEP = validarHorasEntrePausas();
+                    var validacionEP = e_validarHorasEntrePausas();
                     if (!validacionEP) {
                         $('#btnEditarHorario').prop("disabled", true);
                         return false;
@@ -6164,7 +6174,7 @@ function e_inicializarHorasPausas(id) {
                     $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
-                    var validacionEP = validarHorasEntrePausas();
+                    var validacionEP = e_validarHorasEntrePausas();
                     if (!validacionEP) {
                         $('#btnEditarHorario').prop("disabled", true);
                         return false;
@@ -6443,7 +6453,8 @@ function e_validarHorasEntrePausas() {
                                 }
                             }
                         } else {
-                            if (horaCompararI.isAfter(horaI) && horaCompararI.isBefore(horaF)) {
+                            console.log(horaCompararI.isAfter(horaI) && horaCompararI.isBefore(horaF));
+                            if (horaCompararI.isSameOrAfter(horaI) && horaCompararI.isSameOrBefore(horaF)) {
                                 $('#errorenPausasCruzadas_ed').show();
                                 estado = false;
                             } else {
@@ -6633,7 +6644,8 @@ $('#SwitchPausa_ed').on("change.bootstrapSwitch", function (event) {
             var id = $('#idhorario_ed').val();
             pausasHorario(id);
         } else {
-            $('#inputPausa').empty();
+            $('#pausas_edit').hide();
+            $('#PausasHorar_ed').empty();
             $('#vacioHoraF_ed').show();
             $('#SwitchPausa_ed').prop("checked", false);
         }
