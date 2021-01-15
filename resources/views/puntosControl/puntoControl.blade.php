@@ -122,7 +122,7 @@
 </style>
 {{-- FINALIZACION --}}
 {{-- BOTONOS DE PANEL --}}
-<div class="row">
+<div class="row pr-3 pl-3 pt-3">
     <div class="col-md-6 col-sm-6 col-6 text-left colResponsive">
         <button type="button" class="btn btn-sm mt-1"
             style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
