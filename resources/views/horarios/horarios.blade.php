@@ -997,7 +997,7 @@ use Carbon\Carbon;
                                                         style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                         <input type="number" value="0"
                                                             class="form-control form-control-sm"
-                                                            oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                                             id="toleranciaH" required>
                                                         <div class="input-group-prepend  ">
                                                             <div class="input-group-text form-control-sm "
@@ -1015,7 +1015,7 @@ use Carbon\Carbon;
                                                         style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                         <input type="number" value="0"
                                                             class="form-control form-control-sm"
-                                                            oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                                             id="toleranciaSalida" required>
                                                         <div class="input-group-prepend  ">
                                                             <div class="input-group-text form-control-sm "
@@ -1335,7 +1335,7 @@ use Carbon\Carbon;
                                                         style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                         <input type="number" class="form-control form-control-sm"
                                                             min="0"
-                                                            oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                                             id="toleranciaH_ed" required>
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text form-control-sm"
@@ -1353,7 +1353,7 @@ use Carbon\Carbon;
                                                         style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                         <input type="number" class="form-control form-control-sm"
                                                             min="0"
-                                                            oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                                             id="toleranciaSalida_ed" required>
                                                         <div class="input-group-prepend  ">
                                                             <div class="input-group-text form-control-sm "

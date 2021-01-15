@@ -5457,7 +5457,7 @@ function contenidoInput(id) {
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="toleranciaIP${r_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                         min.
@@ -5472,7 +5472,7 @@ function contenidoInput(id) {
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="ToleranciaFP${r_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                         min.
@@ -6047,7 +6047,7 @@ function modalEditar(id) {
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                             <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
-                                               value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                               value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                     min.
@@ -6062,7 +6062,7 @@ function modalEditar(id) {
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                             <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
-                                               value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                               value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                     min.
@@ -6301,7 +6301,7 @@ function e_contenidoInput(id) {
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                         min.
@@ -6316,7 +6316,7 @@ function e_contenidoInput(id) {
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                         min.
@@ -6573,7 +6573,7 @@ function pausasHorario(id) {
                                 <div class="col-md-2">
                                     <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                         <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
-                                           value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                           value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                         <div class="input-group-prepend  ">
                                             <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                 min.
@@ -6588,7 +6588,7 @@ function pausasHorario(id) {
                                 <div class="col-md-2">
                                     <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                         <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
-                                           value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60) this.value = 59;">
+                                           value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                         <div class="input-group-prepend  ">
                                             <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                 min.

@@ -871,7 +871,7 @@
                                                 <div class="input-group form-control-sm "
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                     <input type="number" value="0" class="form-control form-control-sm"
-                                                        oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                        oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                                         id="toleranciaH" required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
@@ -888,7 +888,7 @@
                                                 <div class="input-group form-control-sm "
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                     <input type="number" value="0" class="form-control form-control-sm"
-                                                        oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                        oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                                         id="toleranciaSalida" required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
