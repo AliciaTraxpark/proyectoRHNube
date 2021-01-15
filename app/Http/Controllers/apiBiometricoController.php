@@ -426,7 +426,7 @@ class apiBiometricoController extends Controller
                 /* CUANDO TIENE TODOS LOS EMPELADOS */
                 $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select( 'e.emple_id as id',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+            ->select( 'e.emple_id as idempleado',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
               'e.emple_nDoc as dni'
             )
             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -448,7 +448,7 @@ class apiBiometricoController extends Controller
                 'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
               /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                ->where('he.empleado_emple_id', '=', $tab->id)
+                ->where('he.empleado_emple_id', '=', $tab->idempleado)
                 ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                 ->where('he.estado', '=', 1)
                 ->get();
@@ -512,7 +512,7 @@ class apiBiometricoController extends Controller
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                    ->select( 'e.emple_id as id',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                    ->select( 'e.emple_id as idempleado',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
                     'e.emple_nDoc as dni'
                   )
                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -535,7 +535,7 @@ class apiBiometricoController extends Controller
                         'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
                       /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                        ->where('he.empleado_emple_id', '=', $tab->id)
+                        ->where('he.empleado_emple_id', '=', $tab->idempleado)
                         ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                         ->where('he.estado', '=', 1)
                         ->get();
@@ -593,7 +593,7 @@ class apiBiometricoController extends Controller
                     ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                     ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                     ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                    ->select( 'e.emple_id as id',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                    ->select( 'e.emple_id as idempleado',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
                     'e.emple_nDoc as dni'
                   )
                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -618,7 +618,7 @@ class apiBiometricoController extends Controller
                         'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
                       /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                        ->where('he.empleado_emple_id', '=', $tab->id)
+                        ->where('he.empleado_emple_id', '=', $tab->idempleado)
                         ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                         ->where('he.estado', '=', 1)
                         ->get();
@@ -676,7 +676,7 @@ class apiBiometricoController extends Controller
         {
             $empleado = DB::table('empleado as e')
             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select( 'e.emple_id as id',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+            ->select( 'e.emple_id as idempleado',DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
               'e.emple_nDoc as dni'
             )
             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -698,7 +698,7 @@ class apiBiometricoController extends Controller
                 'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
               /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                ->where('he.empleado_emple_id', '=', $tab->id)
+                ->where('he.empleado_emple_id', '=', $tab->idempleado)
                 ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                 ->where('he.estado', '=', 1)
                 ->get();
