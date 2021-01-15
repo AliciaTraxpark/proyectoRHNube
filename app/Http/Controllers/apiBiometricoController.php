@@ -848,34 +848,28 @@ class apiBiometricoController extends Controller
 
             if ($invitadod->verTodosEmps == 1) {
                 /* CUANDO TIENE TODOS LOS EMPELADOS */
-                $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select( 'e.emple_id as idempleado',
-              'e.organi_id'
-            )
-            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-            ->where('e.emple_estado', '=', 1)
-            ->where('e.asistencia_puerta', '=', 1)
-            ->paginate();
 
-            foreach ($empleado as $tab) {
+
                 $fecha = Carbon::now('America/Lima');
                 $fechaSum=new Carbon('tomorrow');;
                 $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
                /*  dd($fechaMañana); */
                 $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
                /*  dd($fechaHoy); */
-                $horario = DB::table('horario_empleado as he')
-                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
-                'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
+               $horario = DB::table('horario_empleado as he')
+               ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+               ->join('horario as h','he.horario_horario_id','=','h.horario_id')
+               ->join('empleado as e','he.empleado_emple_id','=','e.emple_id')
+               ->where('e.emple_estado', '=', 1)
+               ->where('e.asistencia_puerta', '=', 1)
+               ->select('he.empleado_emple_id as idempleado','he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
+               'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
+               ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
+               ->where('he.estado', '=', 1)
+               ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+               ->orderBy('he.empleado_emple_id')
+               ->paginate();
 
-              /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                ->where('he.empleado_emple_id', '=', $tab->idempleado)
-                ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
-                ->where('he.estado', '=', 1)
-                ->get();
 
                 /* horaaas de inicio y fin horariio */
                  foreach ($horario as $tab2) {
@@ -931,8 +925,6 @@ class apiBiometricoController extends Controller
 
                 }
 
-                $tab->horario = $horario;
-            }
             }
             else{
                 /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -943,20 +935,7 @@ class apiBiometricoController extends Controller
                 ->get()->first();
                 /* empleados x id */
                 if ($invitado_empleadoIn != null) {
-                    $empleado = DB::table('empleado as e')
-                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                    ->select( 'e.emple_id as idempleado',
-                    'e.organi_id'
-                  )
-                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-                    ->where('e.emple_estado', '=', 1)
-                    ->where('e.asistencia_puerta', '=', 1)
-                    ->where('invi.estado', '=', 1)
-                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                    ->paginate();
-                    foreach ($empleado as $tab) {
+
                         $fecha = Carbon::now('America/Lima');
                         $fechaSum=new Carbon('tomorrow');;
                         $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
@@ -966,14 +945,22 @@ class apiBiometricoController extends Controller
                         $horario = DB::table('horario_empleado as he')
                         ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                         ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                        ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
+                        ->join('empleado as e','he.empleado_emple_id','=','e.emple_id')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->select('he.empleado_emple_id as idempleado','he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
                         'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
                       /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                        ->where('he.empleado_emple_id', '=', $tab->idempleado)
+
                         ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                         ->where('he.estado', '=', 1)
-                        ->get();
+                        ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->paginate();
 
                         /* horaaas de inicio y fin horariio */
                          foreach ($horario as $tab2) {
@@ -1030,28 +1017,11 @@ class apiBiometricoController extends Controller
 
                         }
 
-                        $tab->horario = $horario;
-                    }
+
+
                 }
                 else{
                     /* EMPLEADOS POR AREA */
-                    $empleado = DB::table('empleado as e')
-                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                    ->select( 'e.emple_id as idempleado',
-                        'e.organi_id'
-                        )
-                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-                    ->where('e.emple_estado', '=', 1)
-                    ->where('e.asistencia_puerta', '=', 1)
-                    ->where('invi.estado', '=', 1)
-                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-
-                    ->paginate();
-
-                    foreach ($empleado as $tab) {
                         $fecha = Carbon::now('America/Lima');
                         $fechaSum=new Carbon('tomorrow');;
                         $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
@@ -1061,14 +1031,22 @@ class apiBiometricoController extends Controller
                         $horario = DB::table('horario_empleado as he')
                         ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                         ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                        ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
+                        ->join('empleado as e','he.empleado_emple_id','=','e.emple_id')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->select('he.empleado_emple_id as idempleado', 'he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
                         'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
 
-                      /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                        ->where('he.empleado_emple_id', '=', $tab->idempleado)
+                        ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+
                         ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                         ->where('he.estado', '=', 1)
-                        ->get();
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->paginate();
 
                         /* horaaas de inicio y fin horariio */
                          foreach ($horario as $tab2) {
@@ -1125,25 +1103,15 @@ class apiBiometricoController extends Controller
 
                         }
 
-                        $tab->horario = $horario;
-                    }
+
                 }
             }
 
         }
         else
         {
-            $empleado = DB::table('empleado as e')
-            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-            ->select( 'e.emple_id as idempleado',
-              'e.organi_id'
-            )
-            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-            ->where('e.emple_estado', '=', 1)
-            ->where('e.asistencia_puerta', '=', 1)
-            ->paginate();
 
-            foreach ($empleado as $tab) {
+
                 $fecha = Carbon::now('America/Lima');
                 $fechaSum=new Carbon('tomorrow');;
                 $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
@@ -1153,14 +1121,16 @@ class apiBiometricoController extends Controller
                 $horario = DB::table('horario_empleado as he')
                 ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
                 ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
+                ->join('empleado as e','he.empleado_emple_id','=','e.emple_id')
+                ->where('e.emple_estado', '=', 1)
+                ->where('e.asistencia_puerta', '=', 1)
+                ->select('he.empleado_emple_id as idempleado','he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
                 'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
-
-              /*   DB::raw('IF(h.horaI> hd.start,CONCAT(DATE(hd.start)," ",h.horaF) , CONCAT('.$fechaSum.'," ",h.horaF)) as horaF')) */
-                ->where('he.empleado_emple_id', '=', $tab->idempleado)
                 ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
                 ->where('he.estado', '=', 1)
-                ->get();
+                ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                ->orderBy('he.empleado_emple_id')
+                ->paginate();
 
                 /* horaaas de inicio y fin horariio */
                  foreach ($horario as $tab2) {
@@ -1219,14 +1189,13 @@ class apiBiometricoController extends Controller
 
                 }
 
-                $tab->horario = $horario;
-            }
+
 
 
         }
 
-        if($empleado!=null){
-            return response()->json($empleado);
+        if($horario!=null){
+            return response()->json($horario);
        }
        else{
            return response()->json(array('status'=>400,'title' => 'Empleados no encontrados',
