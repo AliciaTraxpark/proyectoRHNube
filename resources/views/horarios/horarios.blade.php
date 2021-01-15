@@ -260,11 +260,7 @@ use Carbon\Carbon;
                     <h5 style="color: #ffffff">Gestión de Horarios</h5>
                     <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
                 </div>
-                <div class=" col-md-5 col-xl-5">
-                    &nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-sm btn-primary" onclick="finalizar()"
-                        style="background-color: #183b5d;border-color:#62778c;margin-left: 272px;">Finalizar</button>
-                </div>
+
 
             </div>
         </nav>
@@ -312,8 +308,16 @@ use Carbon\Carbon;
                                 </table>
                             </div>
                             <br><br><br><br>
+                            <div class=" col-md-12 col-xl-12 text-right">
+                                &nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-sm btn-primary" onclick="finalizar()"
+                                    style="background-color: #183b5d;border-color:#62778c;">Finalizar</button>
+                            </div>
                         </div> <!-- end card body-->
+
                     </div> <!-- end card -->
+
+
                     <div id="asignarHorario" class="modal fade" tabindex="-1" role="dialog"
                         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"
                         style="overflow-y: auto;">
