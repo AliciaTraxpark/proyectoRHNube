@@ -122,17 +122,19 @@
 </style>
 {{-- FINALIZACION --}}
 {{-- BOTONOS DE PANEL --}}
-<div class="row pt-3">
-    <div class="col-sm-12 col-md-12 col-xl-12 text-right btnPResponsive">
-        <button type="button" class="btn btn-sm m-1 "
-            style="background-color: #e3eaef; border-color:#e3eaef; color:#37394b" onclick="javascript:asignacionPunto()">
-            <img src="{{asset('landing/images/placeholder.svg')}}" height="18"> <br>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-6 text-left colResponsive">
+        <button type="button" class="btn btn-sm mt-1"
+            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
+            onclick="javascript:asignarActividadMasiso()">
+            <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
             Asignar Punto de control
         </button>
-
-        <button type="button" class="btn btn-sm m-1" style="background-color: #163552;"
-            onclick="javascript:modalRegistrar()">
-            + <br>Nuevo Punto de control
+    </div>
+    <div class="col-md-6 col-sm-6 col-6 text-right colResponsive">
+        <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
+            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">
+            + Nuevo Punto de control
         </button>
     </div>
 </div>

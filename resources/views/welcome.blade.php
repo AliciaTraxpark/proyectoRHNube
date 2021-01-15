@@ -412,12 +412,24 @@
                  width: 400px;
             }
         }
+        @media(min-width: 508px) and (max-width: 857px){
+            .colResp{
+                padding-left: 0px !important;
+            }
+        }
+        @media(max-width: 575px){
+            .colResp{
+                display: flex !important;
+                justify-content: center !important;
+                padding: 0% !important;
+            }
+        }
     </style>
     <header id="header-section">
         <nav class="navbar  pl-3 pl-sm-0" id="navbar">
             <div class="container pb-0 pt-2">
-                <div class="col-md-5 col-sm-4 col-12 colResp" style="margin-bottom: 0px;padding-left: 60px; height: 80px !important;">
-                    <div class="navbar-brand-wrapper d-flex colResp" >
+                <div class="col-md-5 col-sm-4 col-12 colResp" style="margin-bottom: 0px;padding-left: 40px; height: 80px !important;">
+                    <div class="navbar-brand-wrapper colResp" >
                         <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="85">
                     </div>
                 </div>
@@ -451,7 +463,7 @@
                             </div>
                             <div class="col-md-2 col-lg-1 col-12 form-group mb-0 colBtn start_rh" style="display:flex; align-items: center; top: -4px; padding-left: 4px; padding-right: 4px">
                                 <button type="submit" style="font-size: 11px;padding-bottom: 2px;padding-top: 6px;"
-                                    class="botonIs"><img src="{{asset('landing/images/log-in.png')}}" style="color: white;" width="20px"></button>
+                                    class="botonIs"><img src="{{asset('landing/images/log-in.png')}}" style="color: white;" width="18px"></button>
                             </div>
                             <div class="col-md-12 form-group row p-0 m-0 text-left">
                                 <div class="col-md-7 col-lg-6 offset-md-5 offset-lg-6 p-0 colResetResp span_rh">

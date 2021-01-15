@@ -9,6 +9,9 @@ use App\historial_empleado;
 use Illuminate\Http\Request;
 use App\tipo_contrato;
 use Carbon\Carbon;
+use App\persona;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\NuevaNotification;
 use Illuminate\Support\Facades\DB;
 
 class contratoController extends Controller
@@ -157,7 +160,23 @@ class contratoController extends Controller
         $empleado = empleado::where('emple_id', '=', $request->get('idEmpleado'))->get()->first();
         $empleado->emple_estado = 1;
         $empleado->save();
+        // NOTIFICACIÓN FIN DE CONTRATO
+        //$persona = Persona::find($empleado->emple_persona);
+        //$mensaje =  [
+                        //"idOrgani" => session('sesionidorg'),
+                        //"idEmpleado" => $persona->perso_id,
+                        //"empleado" => [
+                                //$persona->perso_nombre,
+                                //$persona->perso_apPaterno,
+                                //$persona->perso_apMaterno
+                            //],
+                        //"mensaje" => "Contratado",
+                        //"asunto" => "contract"
+                    //];
 
+        //$recipient = Auth::user();
+        //$recipient->notify(new NuevaNotification($mensaje));
+        // FIN DE NOTIFICACIÓN
         return response()->json($idContrato, 200);
     }
 
