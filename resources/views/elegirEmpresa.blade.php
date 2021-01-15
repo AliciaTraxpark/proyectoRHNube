@@ -13,6 +13,7 @@ use App\invitado;
      {{--<link rel="stylesheet" href="{{asset('landing/css/style.min.css')}}">--}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+     <link rel="shortcut icon" href="{{asset('landing/images/logo_v2_ico.svg')}}">
 
 
     <!-- App css -->
