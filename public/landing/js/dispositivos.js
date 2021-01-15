@@ -209,7 +209,7 @@ function vinculacionWindowsEditar() {
                 <td id="enviadoW${data.idVinculacion}">${data.envio}</td>
                 <td id="estado${data.idVinculacion}">Creado</td>
                 <td id="correo${data.idVinculacion}">
-                    <a  onclick="javascript:modalWindowsEditar(${data.idVinculacion});$('#form-ver').hide();" data-toggle="tooltip" data-placement="right" title="Enviar
+                    <a  onclick="javascript:modalWindowsEditar(${data.idVinculacion});" data-toggle="tooltip" data-placement="right" title="Enviar
                     correo empleado" data-original-title="Enviar correo empleado" style="cursor: pointer"><img
                         src="landing/images/note.svg" height="20">
                 </a>
