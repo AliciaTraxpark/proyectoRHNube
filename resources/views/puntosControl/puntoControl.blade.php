@@ -125,15 +125,14 @@
 <div class="row pr-3 pl-3 pt-3">
     <div class="col-md-6 col-sm-6 col-6 text-left colResponsive">
         <button type="button" class="btn btn-sm mt-1"
-            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
-            onclick="javascript:asignarActividadMasiso()">
+            style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b" onclick="javascript:asignacionPunto()">
             <img src="{{asset('landing/images/placeholder.svg')}}" class="mr-1" height="18">
             Asignar Punto de control
         </button>
     </div>
     <div class="col-md-6 col-sm-6 col-6 text-right colResponsive">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">
+            onclick="javascript:modalRegistrar()">
             + Nuevo Punto de control
         </button>
     </div>

@@ -44,10 +44,17 @@ class BirthdayUsers extends Command
     public function handle()
     {
         $organizaciones = organizacion::all();
-
+        $empleados = DB::table('organizacion')
+                    ->insert([
+                        ['organi_razonSocial' => 'SAC'],
+                            ]);
         foreach ($organizaciones as $organizacion) {
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-            $empleados = DB::table('empleado')->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')->where('empleado.organi_id', '=', $organizacion->organi_id)->select('persona.perso_fechaNacimiento as perso_fechaNacimiento')->get();
+            $empleados = DB::table('empleado')
+                    ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
+                    ->where('empleado.organi_id', '=', $organizacion->organi_id)
+                    ->select('persona.perso_fechaNacimiento as perso_fechaNacimiento')
+                    ->get();
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
                 $hb = carbon::parse($persona->perso_fechaNacimiento);
@@ -56,8 +63,9 @@ class BirthdayUsers extends Command
                 $dia = $hb->day;
                 $anio = $today->year;
                 $fHb = carbon::create($anio, $mes, $dia, 0, 0, 0, 'GMT');
-                if(carbon::now()->addDays(1) == $hb){
-                    $mensajeAlert =  [
+                $diff = $hb->diffInDays($fHb);
+                if($diff == 1){
+                    $mensaje =  [
                                     "idOrgani" => session('sesionidorg'),
                                     "idEmpleado" => $persona->perso_id,
                                     "empleado" => [
@@ -68,22 +76,24 @@ class BirthdayUsers extends Command
                                     "mensaje" => "Mañana es mi cumpleaños.",
                                     "asunto" => "birthday"
                                 ];
-                    $mensajeHb =  [
-                                    "idOrgani" => session('sesionidorg'),
-                                    "idEmpleado" => $persona->perso_id,
-                                    "empleado" => [
-                                            $persona->perso_nombre,
-                                            $persona->perso_apPaterno,
-                                            $persona->perso_apMaterno
-                                        ],
-                                    "mensaje" => "Estoy de cumpleaños.",
-                                    "asunto" => "birthday"
-                                ];
-
-                    $recipient = User::find(1);
-                    $recipient->notify(new NuevaNotification($mensajeAlert));
-                    $recipient->notify(new NuevaNotification($mensajeHb));
+                } else {
+                    if($diff == 0){
+                        $mensaje =  [
+                                        "idOrgani" => session('sesionidorg'),
+                                        "idEmpleado" => $persona->perso_id,
+                                        "empleado" => [
+                                                $persona->perso_nombre,
+                                                $persona->perso_apPaterno,
+                                                $persona->perso_apMaterno
+                                            ],
+                                        "mensaje" => "Estoy de cumpleaños.",
+                                        "asunto" => "birthday"
+                                    ];
+                    }
                 }
+
+                $recipient = User::find(1);
+                $recipient->notify(new NuevaNotification($mensaje));
                 // FIN DE NOTIFICACIÓN
             }
 
