@@ -477,6 +477,8 @@ class apiBiometricoController extends Controller
                         ->where('pauh.horario_id', '=', $tab1->horario_id)
                         ->distinct('pauh.idpausas_horario')
                         ->get();
+                        $horaIV=$tab1->horaI;
+                         $horaFV=$tab1->horaF;
 
                         foreach ($pausas_horario as $tab3) {
 
@@ -487,8 +489,17 @@ class apiBiometricoController extends Controller
                                 $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
                                 $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
                             } else {
-                                $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
+                                    $tab3->horaI = $fechaMan . " " . $tab3->horaI;
+                                } else{
+                                    $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
+                                }
+
+                                if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
+                                    $tab3->horaF = $fechaMan . " " . $tab3->horaF;
+                                } else{
+                                    $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                }
                             }
 
                         }
@@ -565,6 +576,9 @@ class apiBiometricoController extends Controller
                                 ->distinct('pauh.idpausas_horario')
                                 ->get();
 
+                                $horaIV=$tab1->horaI;
+                                $horaFV=$tab1->horaF;
+
                                 foreach ($pausas_horario as $tab3) {
 
 
@@ -574,8 +588,17 @@ class apiBiometricoController extends Controller
                                         $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
                                         $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
                                     } else {
-                                        $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                        $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                        if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
+                                            $tab3->horaI = $fechaMan . " " . $tab3->horaI;
+                                        } else{
+                                            $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
+                                        }
+
+                                        if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
+                                            $tab3->horaF = $fechaMan . " " . $tab3->horaF;
+                                        } else{
+                                            $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                        }
                                     }
 
                                 }
@@ -648,6 +671,9 @@ class apiBiometricoController extends Controller
                                 ->distinct('pauh.idpausas_horario')
                                 ->get();
 
+                                $horaIV=$tab1->horaI;
+                                $horaFV=$tab1->horaF;
+
                                 foreach ($pausas_horario as $tab3) {
 
 
@@ -657,8 +683,17 @@ class apiBiometricoController extends Controller
                                         $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
                                         $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
                                     } else {
-                                        $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                        $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                        if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
+                                            $tab3->horaI = $fechaMan . " " . $tab3->horaI;
+                                        } else{
+                                            $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
+                                        }
+
+                                        if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
+                                            $tab3->horaF = $fechaMan . " " . $tab3->horaF;
+                                        } else{
+                                            $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                        }
                                     }
 
                                 }
@@ -728,6 +763,9 @@ class apiBiometricoController extends Controller
                         ->distinct('pauh.idpausas_horario')
                         ->get();
 
+                        $horaIV=$tab1->horaI;
+                         $horaFV=$tab1->horaF;
+
                         foreach ($pausas_horario as $tab3) {
 
 
@@ -737,8 +775,19 @@ class apiBiometricoController extends Controller
                                 $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
                                 $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
                             } else {
-                                $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
-                                $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
+                                    $tab3->horaI = $fechaMan . " " . $tab3->horaI;
+                                } else{
+                                    $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
+                                }
+
+                                if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
+                                    $tab3->horaF = $fechaMan . " " . $tab3->horaF;
+                                } else{
+                                    $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
+                                }
+
+
                             }
 
                         }
