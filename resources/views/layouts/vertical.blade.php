@@ -13,7 +13,7 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="shortcut icon" href="{{asset('landing/images/ICONO-LOGO-NUBE-RH.ico')}}">
+    <link rel="shortcut icon" href="{{asset('landing/images/logo_v2_ico.svg')}}">
     @php
     $fecha=Auth::user()->created_at->toDateTimeString();
          $dt=Carbon::create($fecha);

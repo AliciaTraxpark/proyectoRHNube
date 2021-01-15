@@ -161,4 +161,10 @@ class NotificacionController extends Controller
         }
         return response()->json($respuesta, 200);
     }
+
+    public function checkNotification(Request $request){
+       $affected = DB::table('notifications')
+                  ->where('id', $request->id)
+                  ->update(['read_at' => Carbon::now()]);            
+    }
 }

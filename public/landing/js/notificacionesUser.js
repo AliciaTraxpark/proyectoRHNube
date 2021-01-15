@@ -11,6 +11,7 @@ function notification() {
 }
 notification();
 function showNotificaciones() {
+    let months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     $.ajax({
         type: "GET",
         url: "/showNotificaciones",
@@ -30,6 +31,12 @@ function showNotificaciones() {
                 container.append(img);
             } else {
                 for (var i = 0; i < data.length; i++) {
+                    let month = 0;
+                    if (data[i].created_at[5] == 0) 
+                        month = data[i].created_at[6];
+                     else
+                        month = data[i].created_at[5]+data[i].created_at[6];
+                    
                     if (data[i].read_at == null) {
                         contador++;
                         if(data[i].data[0].mensaje=='Empleado no tiene registrado un correo electrónico.'){
@@ -43,38 +50,85 @@ function showNotificaciones() {
                                     <div class="notify-icon" style="background: #163552;">
                                         <img src="/landing/images/campana.svg" height="20">
                                     </div>
-                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6"> ${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
                                     </p>
                                 </a>`;
                         } else{
-                            a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                            if(data[i].data[0].asunto=='birthday'){
+                                a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                                    <div class="badge float-right mt-0 mr-1">
+                                        <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:checkBirthday('${data[i].id}')" >
+                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                            <img src="/landing/images/flecha (1).svg" height="20">
+                                        </button>
+                                    </div>
+                                    <div class="notify-icon" style="background: #163552; m-0 p-0">
+                                        <img src="/landing/images/birthday.png" height="20" class="mb-1">
+                                    </div>
+                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                        <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                    </p>
+                                </a>`;
+                            } else {
+                                a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
                                     <div class="badge float-right mt-0 mr-1">
                                         <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" >
                                             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                             <img src="/landing/images/flecha (1).svg" height="20">
                                         </button>
                                     </div>
-                                    <div class="notify-icon" style="background: #163552;">
-                                        <img src="/landing/images/campana.svg" height="20">
+                                    <div class="notify-icon" style="background: #163552; m-0 p-0">
+                                        <img src="/landing/images/campana.svg" height="20" class="mb-1">
                                     </div>
                                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
                                     </p>
                                 </a>`;
+                            }
+                            
                         }
 
+                        grupo = a + grupo;
                     } else {
-                        a = `<a class="dropdown-item notify-item border-bottom">
-                                <div class="notify-icon" style="background: #163552;">
-                                    <img src="/landing/images/campana.svg" height="20">
-                                </div>
-                                <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
-                                    <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                </p>
-                            </a>`;
+                        if(data[i].data[0].asunto=='birthday'){
+                                a = `<a class="dropdown-item notify-item border-bottom">
+                                    <div class="badge float-right mt-0 mr-1">
+                                    </div>
+                                    <div class="notify-icon" style="background: #163552; m-0 p-0">
+                                        <img src="/landing/images/birthday_visto.png" height="20" class="mb-1">
+                                    </div>
+                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                        <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                    </p>
+                                </a>`;
+                            } else {
+                                if(data[i].data[0].asunto=='contract'){
+                                    a = `<a class="dropdown-item notify-item border-bottom">
+                                        <div class="badge float-right mt-0 mr-1">
+                                        </div>
+                                        <div class="notify-icon" style="background: #163552; m-0 p-0">
+                                            <img src="/landing/images/contrato1.png" height="20" class="mb-1">
+                                        </div>
+                                        <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                            <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                        </p>
+                                    </a>`;
+                                } else {
+                                    a = `<a class="dropdown-item notify-item border-bottom">
+                                        <div class="notify-icon" style="background: #163552;">
+                                            <img src="/landing/images/campana.svg" height="20">
+                                        </div>
+                                        <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                            <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                        </p>
+                                    </a>`;
+                                }
+                            }
+                        grupo = grupo + a;
                     }
-                    grupo += a;
                 }
                 container.append(grupo);
                 $("#totalNotifNL").text(contador);
@@ -88,6 +142,29 @@ function agregarCorreoNotificacion(id) {
     $("#modalCorreoElectronicoHeader").modal();
     $("#idEmpleCorreoH").val(id);
 }
+
+function checkBirthday(id) {
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "checkNotification",
+        data: {
+            id: id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+             showNotificaciones();
+        },
+    });
+}
+
 function guardarCorreoEH() {
     idEmpleado = $("#idEmpleCorreoH").val();
     descripcion = $("#textCorreoH").val();
