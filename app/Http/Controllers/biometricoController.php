@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 class biometricoController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
     public function vistaReporte()
     {
         $organizacion = organizacion::all('organi_id', 'organi_razonSocial');
