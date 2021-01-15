@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-xl-1 text-center">
                         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-                            onclick="javascript:buscarCapturas()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
+                            onclick="javascript:buscarReporteBio()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
                                 height="18"></button>
                     </div>
                 </div>
@@ -108,13 +108,13 @@
                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
-                                <th class="text-center">Hora Inicio</th>
-                                <th class="text-center">Hora Fin</th>
+
+                                <th class="text-center">Empleado</th>
+                                <th class="text-center">Tipo de marcacion</th>
+                                <th class="text-center">Hora de inicio</th>
+                                <th class="text-center">Hora de fin</th>
                                 <th class="text-center">Horario</th>
-                                <th class="text-center">Actividad</th>
-                                <th class="text-center">Imagen</th>
-                                <th class="text-center">Miniatura</th>
-                                <th class="text-center">Cantidad Imagenes</th>
+                                <th class="text-center">Dispositivo</th>
                             </tr>
                         </thead>
                         <tbody id="datos">
@@ -157,6 +157,6 @@
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{asset('landing/js/reportePersonalizado.js')}}"></script>
+<script src="{{asset('landing/js/reporteBiometrico.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection

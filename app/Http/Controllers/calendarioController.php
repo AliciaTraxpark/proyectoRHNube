@@ -555,13 +555,67 @@ class calendarioController extends Controller
                $i += 6 * $oneDay;
            }
        }
-       //////////////////////////////////////
+       ////////////////////////////////////
        $añoCale=$añoFinc+1;
        $fechaCal=Carbon::create($añoCale.'-01-01');
        $calendario  = DB::table('calendario')
             ->where('calen_id', '=', $idcalenda)
                ->update(['fin_fecha' => $fechaCal]);
        /////////////////
+
+       $eventosA=eventos::whereYear('start','=',2020)->get();
+
+       foreach ($eventosA as $eventosA2) {
+      /*   $today = Carbon::now(); */
+        $año=$añoFinc;
+           /* PARA START */
+        $fechaMes = Carbon::parse($eventosA2->start);
+
+        $mfecha1= $fechaMes->month;
+        if( $mfecha1<10){
+            $mfecha1='0'.$fechaMes->month;
+        }
+
+        $dfechaDia = $fechaMes->day;
+        if( $dfechaDia<10){
+            $dfechaDia='0'.$fechaMes->day;
+        }
+        $dfechaHora = '00:00:00';
+
+        $finalStart=Carbon::create($año.'-'.$mfecha1.'-'.$dfechaDia.' ' .$dfechaHora);
+        /* fin */
+
+           /* PARA END */
+           $fechaMes2 = Carbon::parse($eventosA2->end);
+
+           $mfecha2= $fechaMes2->month;
+           if( $mfecha2<10){
+               $mfecha2='0'.$fechaMes2->month;
+           }
+
+           $dfechaDia2 = $fechaMes2->day;
+           if( $dfechaDia2<10){
+               $dfechaDia2='0'.$fechaMes2->day;
+           }
+           $dfechaHora2 = '00:00:00';
+
+           $finalEnd=Carbon::create($año.'-'.$mfecha2.'-'.$dfechaDia2.' ' .$dfechaHora2);
+           /* fin */
+
+        $eventos_usuario3 = new eventos_usuario();
+        $eventos_usuario3->organi_id = session('sesionidorg');
+        $eventos_usuario3->users_id = Auth::user()->id;
+        $eventos_usuario3->title =$eventosA2->title;
+        $eventos_usuario3->color =$eventosA2->color;
+        $eventos_usuario3->textColor = $eventosA2->textColor;
+        $eventos_usuario3->start =$finalStart;
+        $eventos_usuario3->tipo =0;
+        $eventos_usuario3->id_calendario =$idcalenda;
+        $eventos_usuario3->laborable =0;
+        $eventos_usuario3->end =$finalEnd;
+        $eventos_usuario3->save();
+         }
+
        foreach ($sundays as $dates2) {
           $eventos_usuario2 = new eventos_usuario();
           $eventos_usuario2->organi_id = session('sesionidorg');
@@ -575,6 +629,88 @@ class calendarioController extends Controller
           $eventos_usuario2->laborable =0;
           $eventos_usuario2->save();
            }
+
+           /* EMPLEADOS */
+
+          /*  $empleados = DB::table('empleado as e')
+           ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+           ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+           ->where('eve.id_calendario','=',$idcalenda)
+           ->select(
+               'e.emple_id',
+               'p.perso_id',
+               'p.perso_nombre',
+               'p.perso_apPaterno',
+               'p.perso_apMaterno',
+               'eve.id_calendario as idcalendar'
+           )
+           ->get(); */
+
+           /* foreach($empleados as $emp){
+           foreach ($eventosA as $eventosA2) {
+           
+              $año=$añoFinc;
+
+              $fechaMes = Carbon::parse($eventosA2->start);
+
+              $mfecha1= $fechaMes->month;
+              if( $mfecha1<10){
+                  $mfecha1='0'.$fechaMes->month;
+              }
+
+              $dfechaDia = $fechaMes->day;
+              if( $dfechaDia<10){
+                  $dfechaDia='0'.$fechaMes->day;
+              }
+              $dfechaHora = '00:00:00';
+
+              $finalStart=Carbon::create($año.'-'.$mfecha1.'-'.$dfechaDia.' ' .$dfechaHora);
+
+                 $fechaMes2 = Carbon::parse($eventosA2->end);
+
+                 $mfecha2= $fechaMes2->month;
+                 if( $mfecha2<10){
+                     $mfecha2='0'.$fechaMes2->month;
+                 }
+
+                 $dfechaDia2 = $fechaMes2->day;
+                 if( $dfechaDia2<10){
+                     $dfechaDia2='0'.$fechaMes2->day;
+                 }
+                 $dfechaHora2 = '00:00:00';
+
+                 $finalEnd=Carbon::create($año.'-'.$mfecha2.'-'.$dfechaDia2.' ' .$dfechaHora2);
+
+
+              $eventos_usuario31 = new eventos_empleado();
+              $eventos_usuario31->title =$eventosA2->title;
+              $eventos_usuario31->color =$eventosA2->color;
+              $eventos_usuario31->textColor = $eventosA2->textColor;
+              $eventos_usuario31->start =$finalStart;
+              $eventos_usuario31->tipo_ev =0;
+              $eventos_usuario31->id_calendario =$idcalenda;
+              $eventos_usuario31->laborable =0;
+              $eventos_usuario31->end =$finalEnd;
+              $eventos_usuario31->id_empleado=$emp;
+              $eventos_usuario31->save();
+               }
+
+             foreach ($sundays as $dates2) {
+                $eventos_usuario21 = new eventos_empleado();
+
+
+                $eventos_usuario21->title ='Descanso';
+                $eventos_usuario21->color ='#e6bdbd';
+                $eventos_usuario21->textColor =  '#504545';
+                $eventos_usuario21->start =$dates2;
+                $eventos_usuario21->tipo_ev =1;
+                $eventos_usuario21->id_calendario =$idcalenda;
+                $eventos_usuario21->laborable =0;
+                $eventos_usuario21->id_empleado=$emp;
+                $eventos_usuario21->save();
+                 }
+                } */
+
   }
 
   public function listaEmplCa(Request $request){
