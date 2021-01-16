@@ -76,4 +76,4 @@ Route::post("elegirOrganizacionBio", "apiBiometricoController@elegirOrganizacion
 Route::post("editarDispositivo", "apiBiometricoController@editarDispositivo")->middleware('token')->middleware('apilogger');
 Route::post("empleadosBiometrico", "apiBiometricoController@empleadosBiometrico")->middleware('token')->middleware('apilogger');
 Route::post("empleadosHorarioBi", "apiBiometricoController@empleadosHorarioBi")->middleware('token')->middleware('apilogger');
-Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico");
+Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico")->middleware('token')->middleware('apilogger');
