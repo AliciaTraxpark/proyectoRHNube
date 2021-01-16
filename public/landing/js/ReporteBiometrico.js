@@ -44,6 +44,7 @@ $('#empleado').select2({
     }
 });
 $('#empresa').on("change", function () {
+
     $('#empleado').val(null).trigger("change");
     $("#empleado").on("select2:opening", function () {
         var value = $("#empleado").val();
@@ -52,7 +53,7 @@ $('#empresa').on("change", function () {
         var $idOrganizacion = $('#empresa :selected').val();
         $.ajax({
             async: false,
-            url: '/empleadosOrg/' + $idOrganizacion,
+            url: '/empleadosOrgbio/' + $idOrganizacion,
             method: "GET",
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -76,6 +77,7 @@ $('#empresa').on("change", function () {
                 }
                 container.append(option);
                 $("#empleado").val(value);
+
             },
             error: function () { },
         });
@@ -123,8 +125,8 @@ function tablaR() {
 
 tablaR();
 
-function reporteEmpleado() {
-    console.log("ingreso");
+function buscarReporteBio() {
+
     var fecha = $('#fecha').val();
     var idEmpleado = $('#empleado').val();
     if ($.fn.DataTable.isDataTable("#Reporte")) {
@@ -133,7 +135,7 @@ function reporteEmpleado() {
     $('#datos').empty();
     $.ajax({
         async: false,
-        url: "/capturasPersonalizadas",
+        url: "/MarcacionesReporteBio",
         method: "GET",
         data: {
             idEmpleado: idEmpleado,
@@ -152,33 +154,43 @@ function reporteEmpleado() {
         },
         success: function (data) {
             console.log(data);
-            if (data.captura.length != 0) {
-                // ? BOTON DE DISPOSITIVOS
-                $('#listaD').show();
-                // ?
-                // ? DATOS DE CAPTURA PARA LA TABLA
+            if (data.length != 0) {
+
                 var html_tr = '';
-                for (var i = 0; i < data.captura.length; i++) {
-                    html_tr += '<tr>';
-                    html_tr += '<td class="text-center">' + data.captura[i].hora_ini + '</td>';
-                    html_tr += '<td class="text-center">' + data.captura[i].hora_fin + '</td>';
-                    if (data.captura[i].horario === '0') {
+                for (var i = 0; i < data.length; i++) {
+                    html_tr += '<tr><td class="text-center">'+(i+1)+'</td>';
+                     if(data[i].tipoMarcacionB=='1'){
+                        html_tr += '<td class="text-center"> <span class="badge badge-soft-warning">'+
+                        ''+
+                       'Normal </span></td>';
+                    } else{
+                        html_tr += '<td class="text-center"> <span class="badge badge-soft-warning">'+
+                        ''+
+                       ' Pausa </span></td>';
+                    }
+                  /*   html_tr += '<td class="text-center">'+data[i].tipoMarcacionB+'</td>'; */
+                    if(data[i].entrada==0){
+                        html_tr += '<td class="text-center"> <span class="badge badge-soft-secondary">'+
+                        '<img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>'+
+                       ' --:--:--  </span></td>';
+                    } else{
+                        html_tr += '<td class="text-center"> '+data[i].entrada+'</td>';
+                    }
+                    if(data[i].salida==0){
+                        html_tr += '<td class="text-center"> <span class="badge badge-soft-secondary">'+
+                        '<img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>'+
+                       ' --:--:--  </span></td>';
+                    } else{
+                        html_tr += '<td class="text-center"> '+data[i].salida+'</td>';
+                    }
+
+                    if (data[i].horario == 0) {
                         html_tr += '<td class="text-center"><a class=\"badge badge-soft-success\">Sin horario</a></td>';
                     } else {
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\"><i class="uil uil-calender"></i>&nbsp;' + data.captura[i].horario + '</a></td>';
+                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\"><i class="uil uil-calender"></i>&nbsp;' + data[i].horario + '</a></td>';
                     }
-                    html_tr += '<td class="text-center">' + data.captura[i].actividad + '</td>';
-                    if (data.captura[i].respuestaI === 'SI') {
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data.captura[i].respuestaI + '</a></td>';
-                    } else {
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data.captura[i].respuestaI + '</a></td>';
-                    }
-                    if (data.captura[i].respuestaM === 'SI') {
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-primary\">' + data.captura[i].respuestaM + '</a></td>';
-                    } else {
-                        html_tr += '<td class="text-center"><a class=\"badge badge-soft-danger\">' + data.captura[i].respuestaM + '</a></td>';
-                    }
-                    html_tr += '<td class="text-center">' + data.captura[i].cantidadI + '</td></tr>';
+
+                    html_tr += '<td class="text-center">' + data[i].dispo_descripUbicacion + '</td></tr>';
                 }
                 $('#datos').html(html_tr);
                 // ? FINALIZACION
@@ -256,29 +268,9 @@ function reporteEmpleado() {
                     }],
                     paging: true
                 });
-                // ? DATOS DE LISTA DE DISPOSITIVOS
-                $('#listaD').empty();
-                menuItem = `<div class="dropdown">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dispositivos
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" id="menuD">`;
-                for (let index = 0; index < data.dispositivo.length; index++) {
-                    if (data.dispositivo[index].nombrePC === '0') {
-                        menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
-                        title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> PC ${index}</strong> | ${data.dispositivo[index].version}</a>`;
-                    } else {
-                        menuItem += `<a class="dropdown-item" data-toggle="tooltip" data-placement="right"
-                        title="nombre PC y versión" data-original-title="nombre PC y versión"><strong> ${data.dispositivo[index].nombrePC}</strong> | ${data.dispositivo[index].version}</a>`;
-                    }
-                }
-                menuItem += `</div></div>`;
-                $('#listaD').append(menuItem);
+                ;
                 $('[data-toggle="tooltip"]').tooltip();
-                // $fecha = new Date();
-                // console.log($fecha.toLocaleTimeString("es-ES", { timeZone: 'America/Lima' }));
-                // console.log($fecha);
+
             } else {
                 tablaR();
                 $('#listaD').hide();
@@ -291,7 +283,4 @@ function reporteEmpleado() {
         error: function () { },
     });
 }
-//CAPTURAS
-function buscarCapturas() {
-    reporteEmpleado();
-}
+

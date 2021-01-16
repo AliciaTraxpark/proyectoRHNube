@@ -27,7 +27,7 @@
 @section('breadcrumb')
 <div class="row page-title">
     <div class="col-md-12">
-        <h4 class="mb-1 mt-0">Reporte personalizado</h4>
+        <h4 class="mb-1 mt-0">Reporte personalizado de marcaciones biometrico</h4>
     </div>
 </div>
 @endsection
@@ -108,8 +108,7 @@
                     <table id="Reporte" class="table nowrap" style="font-size: 13px!important;width:100%;">
                         <thead style="background: #fafafa;" id="dias" style="width:100%!important">
                             <tr>
-
-                                <th class="text-center">Empleado</th>
+                                <th class="text-center">#</th>
                                 <th class="text-center">Tipo de marcacion</th>
                                 <th class="text-center">Hora de inicio</th>
                                 <th class="text-center">Hora de fin</th>

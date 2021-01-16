@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\dispositivos;
-use Illuminate\Http\Request;
 use App\organizacion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +13,7 @@ class biometricoController extends Controller
     //
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
     public function vistaReporte()
     {
@@ -39,7 +39,8 @@ class biometricoController extends Controller
         }
     }
 
-    public function dispoStoreBiometrico( Request $request){
+    public function dispoStoreBiometrico(Request $request)
+    {
         $dispositivos = new dispositivos();
         $dispositivos->tipoDispositivo = 3;
         $dispositivos->dispo_descripUbicacion = $request->descripcionBio;
@@ -52,7 +53,8 @@ class biometricoController extends Controller
 
     }
 
-    public function actualizarBiometrico(Request $request){
+    public function actualizarBiometrico(Request $request)
+    {
         $dispositivos = dispositivos::findOrFail($request->idDisposEd_ed);
         $dispositivos->dispo_descripUbicacion = $request->descripccionUb_ed;
         $dispositivos->dispo_movil = $request->ippuerto_ed;
@@ -60,5 +62,47 @@ class biometricoController extends Controller
         $dispositivos->version_firmware = $request->version_ed;
 
         $dispositivos->save();
+    }
+
+    public function selctEmpleado($id)
+    {
+        $empleados = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno',
+             'p.perso_apMaterno as apMaterno')
+            ->where('e.organi_id', '=', $id)
+            ->groupBy('e.emple_id')
+            ->get();
+
+        return response()->json($empleados, 200);
+    }
+
+    public function DatosReporte(Request $request){
+        $idEmpleado = $request->get('idEmpleado');
+        $fecha = $request->get('fecha');
+
+        $marcaciones=DB::table('marcacion_puerta as map')
+        ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
+        ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
+        ->join('dispositivos as dis','map.dispositivos_idDispositivos','=','dis.idDispositivos')
+        ->select(
+            'map.tipoMarcacionB',
+            
+            'dis.tipoDispositivo',
+            'dis.dispo_descripUbicacion',
+            'map.marcaMov_id as idMarcacion',
+            'map.marcaMov_emple_id',
+            DB::raw('IF(map.marcaMov_fecha is null, 0 , map.marcaMov_fecha) as entrada'),
+            DB::raw('IF(map.horarioEmp_id is null, 0 , horM.horario_descripcion) as horario'),
+            DB::raw('IF(map.marcaMov_salida is null, 0 , map.marcaMov_salida) as salida')
+        )
+        ->orderBy(DB::raw('IF(map.marcaMov_fecha is null, map.marcaMov_salida , map.marcaMov_fecha)', 'ASC'))
+        ->whereDate(DB::raw('IF(map.marcaMov_fecha is null, DATE(map.marcaMov_salida), DATE(map.marcaMov_fecha))'),'=', $fecha)
+        ->where('map.marcaMov_emple_id', '=', $idEmpleado)
+        ->where('dis.tipoDispositivo', '=', 3)
+        ->get();
+
+        return $marcaciones;
+
     }
 }
