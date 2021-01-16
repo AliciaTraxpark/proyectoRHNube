@@ -565,6 +565,8 @@ class calendarioController extends Controller
 
        $eventosA=eventos::whereYear('start','=',2020)->get();
 
+
+       /* AÑADIR FERIADOS */
        foreach ($eventosA as $eventosA2) {
       /*   $today = Carbon::now(); */
         $año=$añoFinc;
@@ -616,6 +618,7 @@ class calendarioController extends Controller
         $eventos_usuario3->save();
          }
 
+         /* AÑADIR DESCANSOS DE DOMINGO */
        foreach ($sundays as $dates2) {
           $eventos_usuario2 = new eventos_usuario();
           $eventos_usuario2->organi_id = session('sesionidorg');
@@ -630,25 +633,29 @@ class calendarioController extends Controller
           $eventos_usuario2->save();
            }
 
-           /* EMPLEADOS */
 
-          /*  $empleados = DB::table('empleado as e')
-           ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-           ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
-           ->where('eve.id_calendario','=',$idcalenda)
-           ->select(
-               'e.emple_id',
-               'p.perso_id',
-               'p.perso_nombre',
-               'p.perso_apPaterno',
-               'p.perso_apMaterno',
-               'eve.id_calendario as idcalendar'
-           )
-           ->get(); */
 
-           /* foreach($empleados as $emp){
+           /* EMPLEADOS CON ESTE CALENDARIO */
+           $empleados = DB::table('empleado as e')
+            ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
+            ->where('eve.id_calendario','=',$idcalenda)
+            ->select(
+                'e.emple_id',
+                'p.perso_id',
+                'p.perso_nombre',
+                'p.perso_apPaterno',
+                'p.perso_apMaterno',
+                'eve.id_calendario as idcalendar'
+            )
+            ->groupBy('e.emple_id')
+            ->get();
+         
+
+
+           foreach($empleados as $emp){
            foreach ($eventosA as $eventosA2) {
-           
+
               $año=$añoFinc;
 
               $fechaMes = Carbon::parse($eventosA2->start);
@@ -691,7 +698,7 @@ class calendarioController extends Controller
               $eventos_usuario31->id_calendario =$idcalenda;
               $eventos_usuario31->laborable =0;
               $eventos_usuario31->end =$finalEnd;
-              $eventos_usuario31->id_empleado=$emp;
+              $eventos_usuario31->id_empleado=$emp->emple_id;
               $eventos_usuario31->save();
                }
 
@@ -706,10 +713,10 @@ class calendarioController extends Controller
                 $eventos_usuario21->tipo_ev =1;
                 $eventos_usuario21->id_calendario =$idcalenda;
                 $eventos_usuario21->laborable =0;
-                $eventos_usuario21->id_empleado=$emp;
+                $eventos_usuario21->id_empleado=$emp->emple_id;
                 $eventos_usuario21->save();
                  }
-                } */
+                }
 
   }
 
