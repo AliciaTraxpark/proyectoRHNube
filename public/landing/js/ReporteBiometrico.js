@@ -46,7 +46,8 @@ $('#empleado').select2({
 $('#empresa').on("change", function () {
 
     $('#empleado').val(null).trigger("change");
-    $("#empleado").on("select2:opening", function () {
+   /*  $("#empleado").on("select2:opening", function () { */
+        console.log('abro select de emp');
         var value = $("#empleado").val();
         $("#empleado").empty();
         var container = $("#empleado");
@@ -81,7 +82,7 @@ $('#empresa').on("change", function () {
             },
             error: function () { },
         });
-    });
+   /*  }); */
 });
 function tablaR() {
     $("#Reporte").DataTable({
