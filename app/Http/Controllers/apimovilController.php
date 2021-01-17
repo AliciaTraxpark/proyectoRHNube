@@ -135,18 +135,24 @@ class apimovilController extends Controller
         }
     }
 
-    //LOGIN MOVIL
+    //EMPLEADOS
     public function EmpleadoMovil(Request $request){
+
+        /* OBTENEMOS EL ID DE ORGANIZACION */
         $organi_id=$request->organi_id;
+        /* ----------------------------------- */
+
+        /* OBTEMOS EMPLEADOS CON ID DE ORGANIZACION RECIBIDA, QUE ESTEN ACTIVOS, Y TENGAS ASISTENCIA EN PUERTA */
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc', 'e.emple_id')
-
         ->where('e.organi_id', '=', $organi_id)
         ->where('e.emple_estado', '=', 1)
         ->where('e.asistencia_puerta', '=', 1)
-
         ->paginate();
+        /* --------------------------------------------------------------------------------------------------- */
+
+        /* SI EXISTE EMPLEADOS */
         if($empleado!=null){
              return response()->json(array('status'=>200,"empleados"=>$empleado));
         }
@@ -157,9 +163,14 @@ class apimovilController extends Controller
 
 
     }
-    //CTIVIDADES
+    //ACTIVIDADES
     public function ActivMovil(Request $request){
+
+        /* OBTENEMOS EL ID DE ORGANIZACION */
         $organi_id=$request->organi_id;
+        /* ------------------------------ */
+
+        /* obtenemos actividades de esta organizacion que esten activas */
         $actividades = DB::table('actividad as a')
             ->select(
                 'a.Activi_id',
@@ -172,6 +183,9 @@ class apimovilController extends Controller
             ->where('a.asistenciaPuerta', '=', 1)
             ->get();
 
+         /* ---------------------------------------------------------------- */
+
+         /* VERIFICAMOS QUE EXISTAN LAS ACTIVIDADES */
         if($actividades!=null){
              return response()->json(array('status'=>200,"actividades"=>$actividades));
         }
@@ -183,9 +197,13 @@ class apimovilController extends Controller
 
     }
     public function controladoresAct(Request $request){
+
+        /* OBTENEMOS PARAMENTROS */
         $organi_id=$request->organi_id;
         $idDispo=$request->idDispo;
+        /* ----------------------- */
 
+        /* OBTENEMOS DISPOSITIVOS QUE TENGAN  CONTROLADORES */
         $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
         ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
         ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
@@ -195,8 +213,9 @@ class apimovilController extends Controller
         ->where('dis.organi_id', '=',$organi_id)
         ->where('con.cont_estado', '=',1)
         ->get();
+        /* ------------------------------------------------------------------ */
 
-
+        /* VERIFIACMOS SI EXISTEN */
         if($dispositivo_Controlador!=null){
              return response()->json(array('status'=>200,"controladores"=> $dispositivo_Controlador));
         }
