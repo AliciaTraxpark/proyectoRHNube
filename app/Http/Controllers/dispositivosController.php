@@ -107,7 +107,12 @@ class dispositivosController extends Controller
             $dispositivosAc->dispo_codigo = $codigo;
             $dispositivosAc->save();
 
-            $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
+
+           $nroCel= substr($dispositivosAc->dispo_movil, 2);
+
+            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta,tu codigo
+             es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -141,7 +146,10 @@ class dispositivosController extends Controller
         $dispositivosAc->dispo_estado = 1;
         $dispositivosAc->dispo_codigo = $codigo;
         $dispositivosAc->save();
-        $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
+        $nroCel= substr($dispositivosAc->dispo_movil, 2);
+
+        $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta,tu codigo
+         es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -173,7 +181,10 @@ class dispositivosController extends Controller
 
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo = $dispositivosAc->dispo_codigo;
-        $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
+        $nroCel= substr($dispositivosAc->dispo_movil, 2);
+
+            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta,tu codigo
+             es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
