@@ -405,7 +405,9 @@ class apiBiometricoController extends Controller
                 /* CUANDO TIENE TODOS LOS EMPELADOS */
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                    ->select('e.emple_id as idempleado', DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                    ->select('e.emple_id as idempleado',
+                    'p.perso_nombre as nombre',
+                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
                         'e.emple_nDoc as dni'
                     )
                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -499,7 +501,9 @@ class apiBiometricoController extends Controller
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->select('e.emple_id as idempleado', DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                        ->select('e.emple_id as idempleado',
+                        'p.perso_nombre as nombre',
+                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
                             'e.emple_nDoc as dni'
                         )
                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -516,7 +520,9 @@ class apiBiometricoController extends Controller
                         ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                         ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                        ->select('e.emple_id as idempleado', DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                        ->select('e.emple_id as idempleado',
+                        'p.perso_nombre as nombre',
+                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
                             'e.emple_nDoc as dni'
                         )
                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -533,7 +539,9 @@ class apiBiometricoController extends Controller
         } else {
             $empleado = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->select('e.emple_id as idempleado', DB::raw('CONCAT(p.perso_nombre," ",p.perso_apPaterno," ",p.perso_apMaterno) as nombre'),
+                ->select('e.emple_id as idempleado',
+                'p.perso_nombre as nombre',
+                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
                     'e.emple_nDoc as dni'
                 )
                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
