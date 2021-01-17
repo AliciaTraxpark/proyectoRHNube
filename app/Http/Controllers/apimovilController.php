@@ -22,36 +22,45 @@ class apimovilController extends Controller
 {
     //ACTIVACION DISPOSITIVO
     public function apiActivacion(Request $request){
+
+        /* OBTENEMOS PARAMETROS */
         $nroMovil=$request->nroMovil;
         $codigo=$request->codigo;
         $nombreDisp=$request->nombreDisp;
+        /* -------------------------- */
 
+        /* VERIFICACOM SI DATOS COINCIDEN CON DISPOSTIVO REGISTRADO */
         $dispositivo=dispositivos::where('dispo_movil','=',$nroMovil)
         ->where('dispo_codigo','=',$codigo)->where('dispo_estadoActivo','=',[1,2])->get()->first();
+        /* -------------------------------------------------------- */
 
+        /* SI EL DISPOSITIVO EXISTE */
         if($dispositivo!=null){
+
+            /* SI EL DISPOSITO YA AH SIDO PREVIAMENTE CONFIRMADO */
             if($dispositivo->dispo_estado==2){
+
+                /* SI LA CLAVE ES LA CORRECTA */
                 if($dispositivo->dispo_codigo==$codigo){
+
+                    /* CREAMOS TOKEN */
                     $factory = JWTFactory::customClaims([
                         'sub' => env('API_id'),
                     ]);
                     $payload = $factory->make();
                     $token = JWTAuth::encode($payload);
+                    /* ----------------- */
 
-                  /*   $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
-                    ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
-                    ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
-                    ->select('dis.dispo_descripUbicacion','dis.dispo_movil','dis.dispo_tSincro','dis.dispo_tMarca',
-                    'con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno')
-                    ->where('dis.dispo_movil', '=',$nroMovil)
-                    ->where('dis.dispo_codigo', '=', $codigo)
-                    ->get();
- */
+                    /* VERIFICAMOS SI YA ESTA REGISTRADO EL NOMBRE/IMEI DE DISPOSITIVO */
                    $nombreDs=DB::table('dispo_nombres')
                    ->where('idDispositivos','=',$dispositivo->idDispositivos)
                    ->where('dispo_CodigoNombre','=',$nombreDisp)
                    ->get();
+
+                   /* SI NO ESTA REGISTRADO  */
                    if($nombreDs->isEmpty()){
+
+                    /* REGISTRAMOS EN LA BD */
                     $dispo_nombre=new dispo_nombres();
                     $dispo_nombre->dispo_CodigoNombre=$nombreDisp;
                     $dispo_nombre->idDispositivos=$dispositivo->idDispositivos;
@@ -67,52 +76,57 @@ class apimovilController extends Controller
 
 
                 } else{
+                    /* SI LA CLAVE ES INCORRECTA */
                     return response()->json(array('status'=>400,'title' => 'Clave incorrecta',
                     'detail' => 'Asegúrate de escribir la clave correcta'),400);
                 }
 
             } else{
+                /* SI NO ESTA CONFIRMADO Y SOLO ENVIADO SMS */
                 if($dispositivo->dispo_estado==1){
+
+                    /* ACTUALIZAMOS EL ESTADO DE DISPOSITIVO */
                     $dispositivosAc = dispositivos::findOrFail($dispositivo->idDispositivos);
                     $dispositivosAc->dispo_estado=2;
-
                     $dispositivosAc->save();
+                    /* ------------------------------------ */
 
+                    /* CREAMOS NUEVA ASOCIACION CON NOMBRE */
                     $dispo_nombre=new dispo_nombres();
                     $dispo_nombre->dispo_CodigoNombre=$nombreDisp;
                     $dispo_nombre->idDispositivos=$dispositivosAc->idDispositivos;
                     $dispo_nombre->save();
+                    /* ------------------------------------- */
+
+                    /* CREAMOS TOKEN */
                      $factory = JWTFactory::customClaims([
                         'sub' => env('API_id'),
                     ]);
                     $payload = $factory->make();
                     $token = JWTAuth::encode($payload);
+                    /* --------------------- */
 
-                   /*  $dispositivo_Controlador=DB::table('dispositivo_controlador as dc')
-                    ->join('dispositivos as dis', 'dc.idDispositivos', '=', 'dis.idDispositivos')
-                    ->join('controladores as con', 'dc.idControladores', '=', 'con.idControladores')
-                    ->select('dis.dispo_descripUbicacion','dis.dispo_movil','dis.dispo_tSincro','dis.dispo_tMarca',
-                    'con.cont_nombres','con.cont_ApPaterno','con.cont_ApMaterno')
-                    ->where('dis.dispo_movil', '=',$nroMovil)
-                    ->where('dis.dispo_codigo', '=', $codigo)
-                    ->get();
- */
 
 
                     return response()->json(array('status'=>200,"dispositivo" =>$dispositivosAc,
                     "disponombre" =>$dispo_nombre,"token" =>$token->get()));
-                    /* return response()->json($dispositivo,200);     */
+
                 }
             }
         }
         else{
+            /* VERIFICACOMO SI TENEMOS AL MENOS EL NUMERO DE DISPOSITOV REGISTRADO */
             $dispositivo1=dispositivos::where('dispo_movil','=',$nroMovil)
             ->get()->first();
+            /* ----------------------------------------------------------- */
+
+            /* SI LO TENEMOS REGISTRADO  */
             if($dispositivo1!=null){
                 return response()->json(array('status'=>400,'title' => 'Clave incorrecta o dispositivo no activo',
                 'detail' => 'Asegúrate de escribir la clave correcta'),400);
 
             } else{
+                /* SI NO LO TENEMOS REGISTRADO */
                 return response()->json(array('status'=>400,'title' => 'Dispositivo no existe',
                 'detail' => 'Asegúrate de registrar el dispositivo desde la plataforma web'),400);
 
@@ -362,7 +376,7 @@ class apimovilController extends Controller
             }
             $marcacion_puerta->save();
             } else{
-              
+
                 $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
                 $marcacion_puerta->marcaMov_salida=$req['fechaMarcacion'];
                 $marcacion_puerta->save();
