@@ -413,14 +413,23 @@ class apimovilController extends Controller
             'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'),400);
         }
 
-
-
     }
+    
     public function empleadoHorario(Request $request){
 
+        /* RECIBIMOS ID ORGANIZACION */
         $organi_id=$request->organi_id;
+        /* ------------------------- */
+
+        /* OBTENEMOS LA FECHA ACTUAL */
         $fecha = Carbon::now();
+        /* -------------------------- */
+
+        /* CAMBIAMOS FORMATO DE FECHA */
         $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+        /* ------------------------------------- */
+
+        /* BUSCAMOS EMPLEADOS CON HORARIOS DE ESTA FECHA ACTUAL */
         $empleado = DB::table('empleado as e')
         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
         ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
@@ -436,6 +445,9 @@ class apimovilController extends Controller
         ->where('hd.start', '=',  $fechaHoy)
         ->where('he.estado', '=', 1)
         ->paginate();
+        /* -------------------------------------------------------- */
+
+        /* VERIFICAMOS SI EXISTEN */
         if($empleado!=null){
              return response()->json(array('status'=>200,"empleados"=>$empleado));
         }
@@ -448,27 +460,37 @@ class apimovilController extends Controller
 
     public function ticketSoporte(Request $request)
     {
+        /* OBTENEMOS DATOS DE PARAMETROS RECIBIDOS */
         $idControlador = $request->get('idControlador');
         $tipo = $request->get('tipo');
         $contenido = $request->get('contenido');
         $asunto = $request->get('asunto');
         $celular = $request->get('celular');
+        /* ----------------------------------------- */
 
-
+        /* VERIFICAMOS QUE CONTROLADOR EXISTA */
         $controlador = controladores::findOrFail($idControlador);
+        /* ---------------------------------------- */
+
+        /* SI EXISTE EL CONTROLADOR */
         if ($controlador) {
             $controlador = controladores::findOrFail($idControlador);
             $email = "info@rhnube.com.pe";
 
+            /* ENVIAMOS EMAIL DE TIPO SOPORTE */
             if ($tipo == "soporte") {
 
                 Mail::to($email)->queue(new SoporteApiMovil($contenido, $controlador, $asunto, $celular));
                 return response()->json("Correo Enviado con éxito", 200);
             }
+            /* ---------------------------------------- */
+
+             /* ENVIAMOS EMAIL DE TIPO SUGERENCIA */
             if ($tipo == "sugerencia") {
                 Mail::to($email)->queue(new SugerenciaApiMovil($contenido, $controlador, $asunto, $celular));
                 return response()->json("Correo Enviado con éxito", 200);
             }
+             /* ---------------------------------------- */
         }
 
         return response()->json("Controlador no se encuentra registrado.", 400);
@@ -477,7 +499,12 @@ class apimovilController extends Controller
 
      //CENTRO COSTO
      public function centroCostos(Request $request){
+
+         /* OBTENEMOS EL ID DE ORGANIZACION */
         $organi_id=$request->organi_id;
+         /* ------------------------------- */
+
+          /* OBTENEMOS CENTRO DE COSTOS DE ESTA ORGANIZACION */
         $centroCosto = DB::table('centro_costo as cc')
             ->select(
                 'cc.centroC_id',
@@ -486,7 +513,9 @@ class apimovilController extends Controller
             )
             ->where('cc.organi_id', '=', $organi_id)
             ->get();
+            /* ------------------------------------------------ */
 
+         /* VERIFICAMOS SI EXISTE */
         if($centroCosto!=null){
              return response()->json(array('status'=>200,"centroCosto"=>$centroCosto));
         }
@@ -498,7 +527,12 @@ class apimovilController extends Controller
 
     //PUNTO CONTROL
     public function puntoControl(Request $request){
+
+        /* OBTENEMOS EL ID DE ORGANIZACION */
         $organi_id=$request->organi_id;
+        /* ------------------------------- */
+
+        /* OBTENEMOS PUNTOS DE CONTROL DE ESTA ORGANIZACION */
         $punto_control = DB::table('punto_control as pc')
             ->select(
                 'pc.id',
@@ -511,8 +545,9 @@ class apimovilController extends Controller
             ->where('pc.asistenciaPuerta', '=', 1)
             ->where('pc.estado', '=',1)
             ->get();
+        /* ------------------------------------------------- */
 
-
+          /* recorremos punto de de geo de cada punto de control */
             foreach ($punto_control as $tab) {
                 $punto_control_geo = DB::table('punto_control_geo as pcg')
                     ->select('pcg.id','pcg.latitud','pcg.longitud',	'pcg.radio')
@@ -520,11 +555,12 @@ class apimovilController extends Controller
                     ->distinct('pcg.id')
                     ->get();
 
+                    /* INSERTAMOS PUNTOS GEO */
                 $tab->puntosGeo = $punto_control_geo;
 
             }
 
-
+         /* VERIFICAMOS DI EXISTE */
         if($punto_control!=null){
              return response()->json(array('status'=>200,"puntosControl"=>$punto_control));
         }
