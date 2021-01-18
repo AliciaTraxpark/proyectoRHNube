@@ -335,6 +335,27 @@ function RegistraDispo(){
                 },
                 success: function (data) {
                     $('#tablaDips').DataTable().ajax.reload();
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo registrado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                     $('#nuevoDispositivo').modal('hide');
                 },
                 error: function (data) {
@@ -379,6 +400,27 @@ function enviarSMS(idDis){
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (data) {
+                        $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nMensaje enviado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                         $('#tablaDips').DataTable().ajax.reload();
 
                     },
@@ -422,6 +464,27 @@ function reenviarSMS(idDis){
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (data) {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nMensaje enviado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                         $('#tablaDips').DataTable().ajax.reload();
 
                     },
@@ -544,6 +607,27 @@ function reditarDispo(){
         success: function (data) {
             $('#tablaDips').DataTable().ajax.reload();
             $('#editarDispositivo').modal('hide');
+            $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo editado correctamente.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -639,27 +723,78 @@ function activarDispo(idDisAct){
 
 }
 function NuevoBiome(){
+
+    /* RESETERAR FORMULARIO */
     $("#frmHorNuevoBi")[0].reset();
+
+    /* ESCONDER AVISO DE SELECCIOAN */
+    $('#spanChEmple').hide();
+
+    /* ESCONDER DIV DE SELECCIION EMPLEADO */
+    $("#divEmpleado").hide();
+    $("#selectTodoCheck").prop("checked", false);
+
+    /* ESCONDER OPCION DE TODOS EMPLEADOS */
+    $("#divTodoECheck").hide();
+
+    /* ESCONDER DIV DE SELECCIION AREA */
+    $("#divArea").hide();
+    $("#selectArea > option").prop("selected", false);
+    $("#selectArea").trigger("change");
+    $("#selectAreaCheck").prop("checked", false);
     $('#nuevoBiometrico').modal('show');
 }
 
 function RegistraBiome(){
 
-
     var ip=$('#ipv4').val();
     ppp=':';
     var puerto=$('#nPuerto').val();
-
     var ippuerto=ip.concat(ppp, puerto);
-
     var descripcionBio=$('#descripcionDisBio').val();
- console.log(ippuerto);
+    var checkTodoEmp;
+    var switchEmp;
+    var switchArea;
+    var selectEmp=$("#nombreEmpleado").val();
+    var selectArea=$("#selectArea").val();
+   
+    /* ASIGNANDO VALORES A SWITCHS */
+    if ($("#TodoECheck").is(":checked")) {
+        checkTodoEmp=1;
+    }
+    else{
+        checkTodoEmp=0;
+    }
+
+    if ($("#switchEmpS").is(":checked")) {
+        switchEmp=1;
+    }
+    else{
+        switchEmp=0;
+    }
+
+    if ($("#switchAreaS").is(":checked")) {
+        switchArea=1;
+    }
+    else{
+        switchArea=0;
+    }
+    /* ----------------------------------- */
+
+    /* VALIDAR QUE DEBO SELECCIONAR UN MODO DE SELECCION DE EMPLEADO */
+    if (!$("#switchEmpS").is(":checked") && !$("#switchAreaS").is(":checked") &&  !$("#adminCheck").is(":checked") ) {
+        $('#spanChEmple').show();
+        return false;
+    } else{
+        $('#spanChEmple').hide();
+    }
+    /* -------------------------------------------------------------------------- */
 
     $.ajax({
         type: "post",
         url: "/dispoStoreBiometrico",
         data: {
-           ippuerto,descripcionBio
+           ippuerto,descripcionBio,checkTodoEmp,switchEmp,switchArea,selectEmp,selectArea
         },
         statusCode: {
             419: function () {
@@ -672,6 +807,27 @@ function RegistraBiome(){
         success: function (data) {
             $('#tablaDips').DataTable().ajax.reload();
             $('#nuevoBiometrico').modal('hide');
+            $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo biometrico registrado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -705,6 +861,27 @@ function EditaBiome(){
         success: function (data) {
             $('#tablaDips').DataTable().ajax.reload();
             $('#editarBiometrico').modal('hide');
+            $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo editado correctamente.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -712,3 +889,83 @@ function EditaBiome(){
     });
 
 }
+
+/* EVENTOS PARA SWITCHS DE EEMOLEADOS O AREAS */
+$("#switchEmpS").change(function (event) {
+    if ($("#switchEmpS").prop("checked")) {
+        $("#switchAreaS").prop("checked", false);
+        $("#selectArea").prop("disabled", true);
+        $("#nombreEmpleado").prop("disabled", false);
+        $("#selectArea > option").prop("selected", false);
+        $("#selectArea").trigger("change");
+        $("#divArea").hide();
+        $("#divEmpleado").show();
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+        $("#selectTodoCheck").prop("checked", false);
+        $("#TodoECheck").prop("checked", false);
+        $("#nombreEmpleado").prop("required", true);
+        $("#divTodoECheck").show();
+    } else {
+        $("#selectArea").prop("disabled", false);
+        $("#selectArea").prop("required", false);
+        $("#divEmpleado").hide();
+        $("#nombreEmpleado").prop("required", false);
+        $("#divTodoECheck").hide();
+    }
+});
+
+$("#switchAreaS").change(function (event) {
+    if ($("#switchAreaS").prop("checked")) {
+        $("#switchEmpS").prop("checked", false);
+        $("#nombreEmpleado").prop("disabled", true);
+        $("#selectArea").prop("disabled", false);
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+        $("#divEmpleado").hide();
+        $("#divArea").show();
+        $("#selectAreaCheck").prop("checked", false);
+        $("#nombreEmpleado").prop("required", false);
+        $("#selectArea").prop("required", true);
+        $("#divTodoECheck").hide();
+        $("#TodoECheck").prop("checked", false);
+    } else {
+        $("#nombreEmpleado").prop("disabled", false);
+        $("#selectArea").prop("required", false);
+        $("#divArea").hide();
+    }
+});
+/* ---------------------------------------------------- */
+
+/* CUADNO ACTIVO O DESACRIVO SELECCIONAR TODOS, INCLUYENDO NUEVOS */
+$("#TodoECheck").click(function () {
+    if ($("#TodoECheck").is(":checked")) {
+        $("#nombreEmpleado").prop("required", false);
+        $("#divEmpleado").hide();
+    } else {
+        $("#nombreEmpleado").prop("required", true);
+        $("#divEmpleado").show();
+    }
+});
+/* ------------------------------------------------------------------ */
+//select all empleados
+$("#selectTodoCheck").click(function () {
+    if ($("#selectTodoCheck").is(":checked")) {
+        $("#nombreEmpleado > option").prop("selected", "selected");
+        $("#nombreEmpleado").trigger("change");
+    } else {
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+    }
+});
+
+//selct all area
+$("#selectAreaCheck").click(function () {
+    if ($("#selectAreaCheck").is(":checked")) {
+        $("#selectArea > option").prop("selected", "selected");
+        $("#selectArea").trigger("change");
+    } else {
+        $("#selectArea > option").prop("selected", false);
+        $("#selectArea").trigger("change");
+    }
+});

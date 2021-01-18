@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\dispositivo_area;
+use App\dispositivo_empleado;
 use App\dispositivos;
 use App\organizacion;
 use Illuminate\Http\Request;
@@ -41,6 +43,7 @@ class biometricoController extends Controller
 
     public function dispoStoreBiometrico(Request $request)
     {
+        /* REGISTRAMOS NUEVO DISPOSITIVO */
         $dispositivos = new dispositivos();
         $dispositivos->tipoDispositivo = 3;
         $dispositivos->dispo_descripUbicacion = $request->descripcionBio;
@@ -48,9 +51,41 @@ class biometricoController extends Controller
         $dispositivos->dispo_estadoActivo = 1;
         $dispositivos->dispo_estado = 0;
         $dispositivos->organi_id = session('sesionidorg');
-
+        $dispositivos->dispo_todosEmp = $request->checkTodoEmp;
+        $dispositivos->dispo_porEmp = $request->switchEmp;
+        $dispositivos->dispo_porArea = $request->switchArea;
         $dispositivos->save();
+        /* ----------------------------------- */
+        $todosE=$request->checkTodoEmp;
+        $porEmpleado=$request->switchEmp;
+        $porArea=$request->switchArea;
 
+        /* SI ES POR EMPLEADOS */
+        if($porEmpleado == 1){
+
+            /* SI NO SON TODOS */
+            if($todosE!=1){
+                /* RECORREMOS ARRAY Y REGISTRAMOS EMPLEADOS DE DISPO */
+                foreach( $request->selectEmp as $empleados){
+                    $dispositivos_empleado=new dispositivo_empleado();
+                    $dispositivos_empleado->idDispositivos=$dispositivos->idDispositivos;
+                    $dispositivos_empleado->emple_id=$empleados;
+                    $dispositivos_empleado->save();
+                }
+                /* ----------------------------------------------- */
+            }
+
+        }
+        else
+        /* SI ES POR AREA */
+        {
+            foreach( $request->selectArea as $areas){
+                $dispositivo_area=new dispositivo_area();
+                $dispositivo_area->idDispositivos=$dispositivos->idDispositivos;
+                $dispositivo_area->area_id=$areas;
+                $dispositivo_area->save();
+            }
+        }
     }
 
     public function actualizarBiometrico(Request $request)
@@ -87,7 +122,7 @@ class biometricoController extends Controller
         ->join('dispositivos as dis','map.dispositivos_idDispositivos','=','dis.idDispositivos')
         ->select(
             'map.tipoMarcacionB',
-            
+
             'dis.tipoDispositivo',
             'dis.dispo_descripUbicacion',
             'map.marcaMov_id as idMarcacion',
