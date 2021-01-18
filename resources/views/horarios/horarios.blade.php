@@ -258,7 +258,7 @@ use Carbon\Carbon;
                 </div>
                 <div class="col-md-7 col-xl-7 text-left pl-5">
                     <h5 style="color: #ffffff">Gestión de Horarios</h5>
-                    <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
+                    <label for="" class="blanco font-italic">Ahora creamos y asignamos horarios</label>
                 </div>
 
 
