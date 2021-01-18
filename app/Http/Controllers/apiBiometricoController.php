@@ -356,11 +356,29 @@ class apiBiometricoController extends Controller
             $dispositivo->dispo_movil = $ipPuerto;
         }
 
-        if (empty($request->serie)) {} else {
+        if (empty($request->serie) || $request->serie==null ) {} else {
             if ($dispositivo->dispo_codigo == null) {
-                $dispositivo->dispo_codigo = $serie;
-            } else {
+                /* BUSCAR DISPOSITIVO CON LA MISMA SERIE */
+                $dispoSerie = DB::table('dispositivos')
+                            ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
+                                'dispo_codigo as serie', 'version_firmware')
+                            ->where('tipoDispositivo', '=', 3)
+                            ->where('dispo_codigo', '=', $serie)
+                            ->get();
 
+                  /* SI NO HAY DISPOSITIVO CON LA MISMA SERIE */
+                if($dispoSerie->isEmpty()){
+                    /* REGISTRAMOS LA SERIE  */
+                    $dispositivo->dispo_codigo = $serie;
+                } else{
+                    return response()->json(array('status' => 400, 'title' => 'No se pudo editar dispositivo',
+                    'detail' => 'No se pudo editar dispositivo, la serie ya existe en otro dispositivo'), 400);
+
+                }
+
+            } else {
+                return response()->json(array('status' => 400, 'title' => 'No se pudo editar serie de dispositivo',
+                'detail' => 'No se pudo editar serie de dispositivo, el dispositivo ya tiene una serie asignada'), 400);
             }
 
         }
