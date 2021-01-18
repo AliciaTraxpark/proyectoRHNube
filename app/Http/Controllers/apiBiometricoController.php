@@ -363,6 +363,7 @@ class apiBiometricoController extends Controller
                             ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
                                 'dispo_codigo as serie', 'version_firmware')
                             ->where('tipoDispositivo', '=', 3)
+                            ->where('organi_id', '=',$dispositivo->organi_id)
                             ->where('dispo_codigo', '=', $serie)
                             ->get();
 
