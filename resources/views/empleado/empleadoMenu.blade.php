@@ -3276,10 +3276,10 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="sw-default" class="label_txt">Num. Documento</label>
+                                        <label for="sw-default" class="label_txt">Núm. Documento</label>
                                         <span id="validNumDocumento" style="color: red;">*Campo
                                             Obligatorio</span>
-                                        <span id="numR" style="color: red;">*Num. registrado</span>
+                                        <span id="numR" style="color: red;">*Núm. registrado</span>
                                         <input type="text" class="form-control" name="numDocumento"
                                             id="numDocumento" onkeypress="return isNumeric(event)"
                                             oninput="maxLengthCheck(this)" tabindex="2" required>
@@ -4417,7 +4417,7 @@ use App\proyecto_empleado;
                                         style="background-color: #fcfcfc;" tabindex="1">
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sw-default" class="label_txt">Num. Documento</label>
+                                    <label for="sw-default" class="label_txt">Núm. Documento</label>
                                     <span id="v_validNumDocumento" style="color: red;">*Campo Obligatorio</span>
                                     <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;" tabindex="2">
                                 </div>
@@ -5597,7 +5597,7 @@ use App\proyecto_empleado;
                                     <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV" style="background-color: #fcfcfc;" disabled>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="label_txt" for="sw-default">Num. Documento</label>
+                                    <label class="label_txt" for="sw-default">Núm. Documento</label>
                                         <input type="text" class="form-control" name="v_numDocumentoV" id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
                                 </div>
                                 <div class="col-sm-4">

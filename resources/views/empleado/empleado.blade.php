@@ -3419,10 +3419,10 @@ use Carbon\Carbon;
                                                 </div> <!-- end col -->
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Num. Documento</label>
+                                                        <label for="sw-default">Núm. Documento</label>
                                                         <span id="validNumDocumento" style="color: red;">*Campo
                                                             Obligatorio</span>
-                                                        <span id="numR" style="color: red;">*Num. registrado</span>
+                                                        <span id="numR" style="color: red;">*Núm. registrado</span>
                                                         <input type="text" class="form-control" name="numDocumento"
                                                             id="numDocumento" onkeypress="return isNumeric(event)"
                                                             oninput="maxLengthCheck(this)" tabindex="2" required>
@@ -4682,7 +4682,7 @@ use Carbon\Carbon;
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Num. Documento</label>
+                                                    <label for="sw-default">Núm. Documento</label>
                                                     <span id="v_validNumDocumento" style="color: red;">*Campo
                                                         Obligatorio</span>
                                                     <input type="text" class="form-control" name="v_numDocumento"
@@ -5969,7 +5969,7 @@ use Carbon\Carbon;
                                         </div> <!-- end col -->
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Num. Documento</label>
+                                                <label for="sw-default">Núm. Documento</label>
                                                 <input type="text" class="form-control" name="v_numDocumentoV"
                                                     id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
                                             </div>
