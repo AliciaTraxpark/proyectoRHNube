@@ -59,6 +59,7 @@ class dispositivosController extends Controller
                     ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                     ->where('e.emple_estado', '=', 1)
                     ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
                     ->get();
             } else {
                 /* SI TIENE PERMISO  POR EMPLEADO PERSONALIZADO O POR AREAS */
@@ -80,6 +81,7 @@ class dispositivosController extends Controller
                         ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                         ->where('e.emple_estado', '=', 1)
                         ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 } else {
                     /* SI EL PERMISO ES POR AREA */
@@ -93,6 +95,7 @@ class dispositivosController extends Controller
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
                         ->get();
                 }
             }
@@ -120,6 +123,7 @@ class dispositivosController extends Controller
                 ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
                 ->where('e.emple_estado', '=', 1)
                 ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
                 ->get();
 
             return view('Dispositivos.dispositivos', ['controladores' => $controladores,'area'=>$area,'empleado'=>$empleados]);

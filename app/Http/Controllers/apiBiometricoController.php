@@ -356,30 +356,30 @@ class apiBiometricoController extends Controller
             $dispositivo->dispo_movil = $ipPuerto;
         }
 
-        if (empty($request->serie) || $request->serie==null ) {} else {
+        if (empty($request->serie) || $request->serie == null) {} else {
             if ($dispositivo->dispo_codigo == null) {
                 /* BUSCAR DISPOSITIVO CON LA MISMA SERIE */
                 $dispoSerie = DB::table('dispositivos')
-                            ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                                'dispo_codigo as serie', 'version_firmware')
-                            ->where('tipoDispositivo', '=', 3)
-                            ->where('organi_id', '=',$dispositivo->organi_id)
-                            ->where('dispo_codigo', '=', $serie)
-                            ->get();
+                    ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
+                        'dispo_codigo as serie', 'version_firmware')
+                    ->where('tipoDispositivo', '=', 3)
+                    ->where('organi_id', '=', $dispositivo->organi_id)
+                    ->where('dispo_codigo', '=', $serie)
+                    ->get();
 
-                  /* SI NO HAY DISPOSITIVO CON LA MISMA SERIE */
-                if($dispoSerie->isEmpty()){
+                /* SI NO HAY DISPOSITIVO CON LA MISMA SERIE */
+                if ($dispoSerie->isEmpty()) {
                     /* REGISTRAMOS LA SERIE  */
                     $dispositivo->dispo_codigo = $serie;
-                } else{
+                } else {
                     return response()->json(array('status' => 400, 'title' => 'No se pudo editar dispositivo',
-                    'detail' => 'No se pudo editar dispositivo, la serie ya existe en otro dispositivo'), 400);
+                        'detail' => 'No se pudo editar dispositivo, la serie ya existe en otro dispositivo'), 400);
 
                 }
 
             } else {
                 return response()->json(array('status' => 400, 'title' => 'No se pudo editar serie de dispositivo',
-                'detail' => 'No se pudo editar serie de dispositivo, el dispositivo ya tiene una serie asignada'), 400);
+                    'detail' => 'No se pudo editar serie de dispositivo, el dispositivo ya tiene una serie asignada'), 400);
             }
 
         }
@@ -403,6 +403,8 @@ class apiBiometricoController extends Controller
     {
 
         $idUsuarioOrgani = $request->idusuario_organizacion;
+        $idbiometrico = $request->idbiometrico;
+
         $usuario_organizacion = DB::table('usuario_organizacion as uso')
             ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial', 'O.organi_estado')
             ->where('uso.usua_orga_id', '=', $idUsuarioOrgani)
@@ -410,23 +412,86 @@ class apiBiometricoController extends Controller
             ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
             ->get()->first();
 
-        /* PRIMERO VER SI ES INVITADO O NO */
-        if ($usuario_organizacion->rol_id == 3) {
+        /* SI BIOMETRICO ES NULL DEVOLVEMOS LOS EMPLEADOS SIN FILTRAR POR BIOMETIRICO */
+        if ($idbiometrico == null) {
+            /* PRIMERO VER SI ES INVITADO O NO */
+            if ($usuario_organizacion->rol_id == 3) {
 
-            /* SI ES INVITADO VER PERMISOS */
-            $invitadod = DB::table('invitado')
-                ->where('user_Invitado', '=', $usuario_organizacion->idusuario)
-                ->where('organi_id', '=', $usuario_organizacion->organi_id)
-                ->where('rol_id', '=', 3)
-                ->get()->first();
+                /* SI ES INVITADO VER PERMISOS */
+                $invitadod = DB::table('invitado')
+                    ->where('user_Invitado', '=', $usuario_organizacion->idusuario)
+                    ->where('organi_id', '=', $usuario_organizacion->organi_id)
+                    ->where('rol_id', '=', 3)
+                    ->get()->first();
 
-            if ($invitadod->verTodosEmps == 1) {
-                /* CUANDO TIENE TODOS LOS EMPELADOS */
+                if ($invitadod->verTodosEmps == 1) {
+                    /* CUANDO TIENE TODOS LOS EMPELADOS */
+                    $empleado = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->select('e.emple_id as idempleado',
+                            'p.perso_nombre as nombre',
+                            DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                            'e.emple_nDoc as dni'
+                        )
+                        ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->paginate();
+
+                } else {
+                    /* CUADNO TIENE EMPLEADOS ASIGNADOS */
+                    $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                        ->where('invem.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('invem.area_id', '=', null)
+                        ->where('invem.emple_id', '!=', null)
+                        ->get()->first();
+                    /* empleados x id */
+                    if ($invitado_empleadoIn != null) {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->select('e.emple_id as idempleado',
+                                'p.perso_nombre as nombre',
+                                DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                'e.emple_nDoc as dni'
+                            )
+                            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                            ->paginate();
+
+                    } else {
+                        /* EMPLEADOS POR AREA */
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                            ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                            ->select('e.emple_id as idempleado',
+                                'p.perso_nombre as nombre',
+                                DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                'e.emple_nDoc as dni'
+                            )
+                            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where('invi.estado', '=', 1)
+                            ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+
+                            ->paginate();
+
+                    }
+                }
+
+            } else {
                 $empleado = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->select('e.emple_id as idempleado',
-                    'p.perso_nombre as nombre',
-                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                        'p.perso_nombre as nombre',
+                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
                         'e.emple_nDoc as dni'
                     )
                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
@@ -434,142 +499,351 @@ class apiBiometricoController extends Controller
                     ->where('e.asistencia_puerta', '=', 1)
                     ->paginate();
 
-                /* foreach ($empleado as $tab) {
-                $fecha = Carbon::now('America/Lima');
-                $fechaSum=new Carbon('tomorrow');;
-                $fechaMañana=$fechaSum->isoFormat('YYYY-MM-DD');
-
-                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
-
-                $horario = DB::table('horario_empleado as he')
-                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
-                ->join('horario as h','he.horario_horario_id','=','h.horario_id')
-                ->select('he.horarioEmp_id as idHorarioEmp','h.horario_id', 'h.horario_descripcion','h.horaI',
-                'h.horaF','h.horario_tolerancia as toleranciaI','h.horario_toleranciaF as toleranciaF','he.fuera_horario')
-
-                ->where('he.empleado_emple_id', '=', $tab->idempleado)
-                ->where(DB::raw('DATE(hd.start)'), '=', $fechaHoy)
-                ->where('he.estado', '=', 1)
-                ->get();
-                 */
-                /* horaaas de inicio y fin horariio */
-                /*   foreach ($horario as $tab2) {
-
-                if (Carbon::parse($tab2->horaF)->lt(Carbon::parse($tab2->horaI))) {
-                $despues = new Carbon('tomorrow');
-                $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-                $tab2->horaI = $fechaHoy . " " .  $tab2->horaI;
-                $tab2->horaF = $fechaMan . " " .  $tab2->horaF;
-                } else {
-                $tab2->horaI = $fechaHoy . " " . $tab2->horaI;
-                $tab2->horaF = $fechaHoy . " " .  $tab2->horaF;
-                }
-
-                } */
-
-                /* INSERTO PAUSAS */
-                /*    foreach ($horario as $tab1) {
-            $pausas_horario = DB::table('pausas_horario as pauh')
-            ->select('idpausas_horario as idpausa', 'pausH_descripcion as descripcion', 'pausH_Inicio as horaI',
-            'pausH_Fin as horaF', 'pauh.tolerancia_inicio as toleranciaI','pauh.tolerancia_fin as toleranciaF',
-            'inactivar as inhabilitar')
-            ->where('pauh.horario_id', '=', $tab1->horario_id)
-            ->distinct('pauh.idpausas_horario')
-            ->get();
-            $horaIV=$tab1->horaI;
-            $horaFV=$tab1->horaF;
-
-            foreach ($pausas_horario as $tab3) {
-
-            if (Carbon::parse($tab3->horaF)->lt(Carbon::parse($tab3->horaI))) {
-            $despues = new Carbon('tomorrow');
-            $fechaMan = $despues->isoFormat('YYYY-MM-DD');
-            $tab3->horaI = $fechaHoy . " " .  $tab3->horaI;
-            $tab3->horaF = $fechaMan . " " .  $tab3->horaF;
-            } else {
-            if(Carbon::parse($tab3->horaI)->lt(Carbon::parse($horaIV))){
-            $tab3->horaI = $fechaMan . " " . $tab3->horaI;
-            } else{
-            $tab3->horaI = $fechaHoy . " " . $tab3->horaI;
             }
-
-            if(Carbon::parse($tab3->horaF)->lt(Carbon::parse($horaIV))){
-            $tab3->horaF = $fechaMan . " " . $tab3->horaF;
-            } else{
-            $tab3->horaF = $fechaHoy . " " .  $tab3->horaF;
-            }
-            }
-
-            }
-            $tab1->pausas = $pausas_horario;
-
-            }
-
-            $tab->horario = $horario;
-            } */
-            } else {
-                /* CUADNO TIENE EMPLEADOS ASIGNADOS */
-                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
-                    ->where('invem.idinvitado', '=', $invitadod->idinvitado)
-                    ->where('invem.area_id', '=', null)
-                    ->where('invem.emple_id', '!=', null)
-                    ->get()->first();
-                /* empleados x id */
-                if ($invitado_empleadoIn != null) {
-                    $empleado = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->select('e.emple_id as idempleado',
-                        'p.perso_nombre as nombre',
-                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                            'e.emple_nDoc as dni'
-                        )
-                        ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-                        ->where('e.emple_estado', '=', 1)
-                        ->where('e.asistencia_puerta', '=', 1)
-                        ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                        ->paginate();
-
-                } else {
-                    /* EMPLEADOS POR AREA */
-                    $empleado = DB::table('empleado as e')
-                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
-                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
-                        ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
-                        ->select('e.emple_id as idempleado',
-                        'p.perso_nombre as nombre',
-                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                            'e.emple_nDoc as dni'
-                        )
-                        ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-                        ->where('e.emple_estado', '=', 1)
-                        ->where('e.asistencia_puerta', '=', 1)
-                        ->where('invi.estado', '=', 1)
-                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-
-                        ->paginate();
-
-                }
-            }
-
         } else {
-            $empleado = DB::table('empleado as e')
-                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
-                ->select('e.emple_id as idempleado',
-                'p.perso_nombre as nombre',
-                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                    'e.emple_nDoc as dni'
-                )
-                ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
-                ->where('e.emple_estado', '=', 1)
-                ->where('e.asistencia_puerta', '=', 1)
-                ->paginate();
+            /* SI EXISTE ID DE BIOMETRICO ENTONCES FILTRAMOS POR BIOMETRICOS */
+
+            /* OBTENEMOS LOS PERMISO QUE TIENE EL BIOMETRICO  */
+            $biometricoPer = DB::table('dispositivos')
+                ->where('idDispositivos', '=', $idbiometrico)
+                ->where('organi_id', '=', $usuario_organizacion->organi_id)
+                ->get()->first();
+
+            /* ------------------------------------------------------------ */
+
+            /* VERIFIAMOS SI TIENE PERMISO POR EMPLEADO O POR AREA */
+
+            /* 1. PRIMERO VERIFICAMOS SI TIENE PERMISO POR EMPLEADO */
+            if ($biometricoPer->dispo_porEmp == 1) {
+
+                /* COMO TIENE PERMISO PARA EMPLEADO VERIFICAMOS SI TIENE PERMISO PARA TODOS */
+                if ($biometricoPer->dispo_todosEmp == 1) {
+                    /* SI TIENE PERMISO PARA TODOS ENTONCES AQUI NO FILTRAMO MUCHO */
+                    /* AQUI PONDRE VALIDACIONES POR USUARIO */
+
+                    /* PRIMERO VERIFICAMOS SI ES USUARIO INVITADO */
+                    if ($usuario_organizacion->rol_id == 3) {
+
+                        /* SI ES INVITADO VER PERMISOS */
+                        $invitadod = DB::table('invitado')
+                            ->where('user_Invitado', '=', $usuario_organizacion->idusuario)
+                            ->where('organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('rol_id', '=', 3)
+                            ->get()->first();
+
+                        if ($invitadod->verTodosEmps == 1) {
+                            /* CUANDO TIENE TODOS LOS EMPELADOS */
+                            $empleado = DB::table('empleado as e')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->select('e.emple_id as idempleado',
+                                    'p.perso_nombre as nombre',
+                                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                    'e.emple_nDoc as dni'
+                                )
+                                ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->paginate();
+
+                        } else {
+                            /* CUADNO TIENE EMPLEADOS ASIGNADOS */
+                            $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                                ->where('invem.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('invem.area_id', '=', null)
+                                ->where('invem.emple_id', '!=', null)
+                                ->get()->first();
+                            /* empleados x id */
+                            if ($invitado_empleadoIn != null) {
+                                $empleado = DB::table('empleado as e')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->select('e.emple_id as idempleado',
+                                        'p.perso_nombre as nombre',
+                                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                        'e.emple_nDoc as dni'
+                                    )
+                                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('e.asistencia_puerta', '=', 1)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                    ->paginate();
+
+                            } else {
+                                /* EMPLEADOS POR AREA */
+                                $empleado = DB::table('empleado as e')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                                    ->select('e.emple_id as idempleado',
+                                        'p.perso_nombre as nombre',
+                                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                        'e.emple_nDoc as dni'
+                                    )
+                                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('e.asistencia_puerta', '=', 1)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+
+                                    ->paginate();
+
+                            }
+                        }
+
+                    } else {
+                        $empleado = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->select('e.emple_id as idempleado',
+                                'p.perso_nombre as nombre',
+                                DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                'e.emple_nDoc as dni'
+                            )
+                            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->paginate();
+
+                    }
+
+                    /* ---------------------------------------- */
+                } else {
+                    /* AQUI FILTRAMOS CON LA TABLA DISPOSITIVOS EMPLEADO */
+
+                    if ($usuario_organizacion->rol_id == 3) {
+
+                        /* SI ES INVITADO VER PERMISOS */
+                        $invitadod = DB::table('invitado')
+                            ->where('user_Invitado', '=', $usuario_organizacion->idusuario)
+                            ->where('organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('rol_id', '=', 3)
+                            ->get()->first();
+
+                        if ($invitadod->verTodosEmps == 1) {
+                            /* CUANDO TIENE TODOS LOS EMPELADOS */
+                            /* ------TODOS LO EMLEADOS POR BIOMETRICO ------------------------------*/
+                            $empleado = DB::table('dispositivo_empleado as de')
+                                ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->select('e.emple_id as idempleado',
+                                    'p.perso_nombre as nombre',
+                                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                    'e.emple_nDoc as dni'
+                                )
+                                ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('de.estado', '=', 1)
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->where('de.idDispositivos', '=', $idbiometrico)
+                                ->paginate();
+                            /* --------------------------------------------------------------------- */
+
+                        } else {
+                            /* CUADNO TIENE EMPLEADOS ASIGNADOS */
+                            $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                                ->where('invem.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('invem.area_id', '=', null)
+                                ->where('invem.emple_id', '!=', null)
+                                ->get()->first();
+                            /* empleados x id */
+                            if ($invitado_empleadoIn != null) {
+
+                                /* FILTRO DE EMPLEADOS POR BIOMETRICO FILTRADO POR INVITADO EMPLEADOS */
+                                $empleado = DB::table('dispositivo_empleado as de')
+                                    ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->select('e.emple_id as idempleado',
+                                        'p.perso_nombre as nombre',
+                                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                        'e.emple_nDoc as dni'
+                                    )
+                                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('de.estado', '=', 1)
+                                    ->where('e.asistencia_puerta', '=', 1)
+                                    ->where('de.idDispositivos', '=', $idbiometrico)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                    ->paginate();
+                                /* ----------------------------------------------------------------- */
+
+                            } else {
+                                /* EMPLEADOS POR AREA */
+
+                                /* FILTRO DE EMPLEADOS POR BIOMETRICO FILTRADO POR INVITADO AREAS */
+                                $empleado = DB::table('dispositivo_empleado as de')
+                                    ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                                    ->select('e.emple_id as idempleado',
+                                        'p.perso_nombre as nombre',
+                                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                        'e.emple_nDoc as dni'
+                                    )
+                                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('de.estado', '=', 1)
+                                    ->where('e.asistencia_puerta', '=', 1)
+                                    ->where('de.idDispositivos', '=', $idbiometrico)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                    ->paginate();
+                                /* -------------------------------------------------------------- */
+
+                            }
+                        }
+
+                    } else {
+                        /* ------TODOS LO EMLEADOS POR BIOMETRICO ------------------------------*/
+                        $empleado = DB::table('dispositivo_empleado as de')
+                            ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->select('e.emple_id as idempleado',
+                                'p.perso_nombre as nombre',
+                                DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                'e.emple_nDoc as dni'
+                            )
+                            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('de.estado', '=', 1)
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where('de.idDispositivos', '=', $idbiometrico)
+                            ->paginate();
+                        /* --------------------------------------------------------------------- */
+
+                    }
+
+                }
+
+            } else {
+                /* VERIFICAMOS POR PRECAUSIO SI TIENE PERMSO PARA AREA  */
+                if ($biometricoPer->dispo_porArea == 1) {
+
+
+                    /* PRIMERO TODO DENTRO DE VALIDACIONES POR USUARIO */
+                    if ($usuario_organizacion->rol_id == 3) {
+
+                        /* SI ES INVITADO VER PERMISOS */
+                        $invitadod = DB::table('invitado')
+                            ->where('user_Invitado', '=', $usuario_organizacion->idusuario)
+                            ->where('organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('rol_id', '=', 3)
+                            ->get()->first();
+
+                        if ($invitadod->verTodosEmps == 1) {
+                            /* CUANDO TIENE TODOS LOS EMPELADOS */
+                            /* ------TODOS LO EMLEADOS DE AREA POR BIOMETRICO ------------------------------*/
+                            $empleado = DB::table('dispositivo_area as da')
+                                ->join('empleado as e', 'da.area_id', '=', 'e.emple_area')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->select('e.emple_id as idempleado',
+                                    'p.perso_nombre as nombre',
+                                    DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                    'e.emple_nDoc as dni'
+                                )
+                                ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('da.estado', '=', 1)
+                                ->where('e.asistencia_puerta', '=', 1)
+                                ->where('da.idDispositivos', '=', $idbiometrico)
+                                ->paginate();
+                            /* --------------------------------------------------------------------- */
+
+                        } else {
+                            /* CUADNO TIENE EMPLEADOS ASIGNADOS */
+                            $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                                ->where('invem.idinvitado', '=', $invitadod->idinvitado)
+                                ->where('invem.area_id', '=', null)
+                                ->where('invem.emple_id', '!=', null)
+                                ->get()->first();
+                            /* empleados x id */
+                            if ($invitado_empleadoIn != null) {
+
+                                /* FILTRO DE AREAS POR BIOMETRICO FILTRADO POR INVITADO EMPLEADOS */
+                                $empleado = DB::table('dispositivo_area as da')
+                                    ->join('empleado as e', 'da.area_id', '=', 'e.emple_area')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->select('e.emple_id as idempleado',
+                                        'p.perso_nombre as nombre',
+                                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                        'e.emple_nDoc as dni'
+                                    )
+                                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('da.estado', '=', 1)
+                                    ->where('e.asistencia_puerta', '=', 1)
+                                    ->where('da.idDispositivos', '=', $idbiometrico)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                    ->paginate();
+                                /* ----------------------------------------------------------------- */
+
+                            } else {
+                                /* EMPLEADOS POR AREA */
+
+                                /* FILTRO DE AREA POR BIOMETRICO FILTRADO POR INVITADO AREAS */
+
+                                $empleado = DB::table('dispositivo_area as da')
+                                    ->join('empleado as e', 'da.area_id', '=', 'e.emple_area')
+                                    ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                    ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                    ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                    ->leftJoin('area as ar', 'e.emple_area', '=', 'ar.area_id')
+                                    ->select('e.emple_id as idempleado',
+                                        'p.perso_nombre as nombre',
+                                        DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                        'e.emple_nDoc as dni'
+                                    )
+                                    ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                    ->where('e.emple_estado', '=', 1)
+                                    ->where('da.estado', '=', 1)
+                                    ->where('e.asistencia_puerta', '=', 1)
+                                    ->where('da.idDispositivos', '=', $idbiometrico)
+                                    ->where('invi.estado', '=', 1)
+                                    ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                                    ->paginate();
+                                /* -------------------------------------------------------------- */
+
+                            }
+                        }
+
+                    } else {
+                       /*  dd('entre cuando soy admin'); */
+                        /* ------TODOS LO EMLEADOS POR BIOMETRICO AREA ------------------------------*/
+                        $empleado = DB::table('dispositivo_area as da')
+                            ->join('empleado as e', 'da.area_id', '=', 'e.emple_area')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->select('e.emple_id as idempleado',
+                                'p.perso_nombre as nombre',
+                                DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
+                                'e.emple_nDoc as dni'
+                            )
+                            ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                            ->where('e.emple_estado', '=', 1)
+                            ->where('da.estado', '=', 1)
+                            ->where('e.asistencia_puerta', '=', 1)
+                            ->where('da.idDispositivos', '=', $idbiometrico)
+                            ->paginate();
+                        /* --------------------------------------------------------------------- */
+
+                    }
+                    /* ------------------------------------------------- */
+
+                }
+            }
+            /* ------ */
+
+            /* --------------------------------------------------------- */
 
         }
-
         if ($empleado != null) {
             return response()->json($empleado);
         } else {
@@ -586,17 +860,16 @@ class apiBiometricoController extends Controller
         $arrayDatos = new Collection();
         foreach ($request->all() as $req) {
 
-
             if (empty($req['idHoraEmp'])) {
                 $datos = ['idDisposi' => $req['idDisposi'], 'idEmpleado' => $req['idEmpleado'],
-                'tipoMarcacion' => $req['tipoMarcacion'], 'fechaMarcacion' => $req['fechaMarcacion']
-                 ];
+                    'tipoMarcacion' => $req['tipoMarcacion'], 'fechaMarcacion' => $req['fechaMarcacion'],
+                ];
             } else {
 
                 $datos = ['idDisposi' => $req['idDisposi'], 'idEmpleado' => $req['idEmpleado'],
-                'tipoMarcacion' => $req['tipoMarcacion'], 'fechaMarcacion' => $req['fechaMarcacion'],
-                'idHoraEmp' => $req['idHoraEmp']
-                 ];
+                    'tipoMarcacion' => $req['tipoMarcacion'], 'fechaMarcacion' => $req['fechaMarcacion'],
+                    'idHoraEmp' => $req['idHoraEmp'],
+                ];
             }
             $arrayDatos->push($datos);
         }

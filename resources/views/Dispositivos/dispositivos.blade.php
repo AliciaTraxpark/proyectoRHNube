@@ -537,7 +537,7 @@
                                                 style="padding-left: 0px;padding-right: 0px;padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
 
                                                 <div class="col-md-12">
-                                                    <label for="">Seleccion de empleados: &nbsp; <span id="spanChEmple"
+                                                    <label for="">Seleccion de empleados: &nbsp; *Se muestra empleados con asistencia en puerta<span id="spanChEmple"
                                                             style="display: none;color:#911818">*Eliga un modo de seleccion
                                                             de empleados.</span></label>
                                                 </div>
@@ -716,7 +716,7 @@
                                                 style="padding-left: 0px;padding-right: 0px;padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
 
                                                 <div class="col-md-12">
-                                                    <label for="">Seleccion de empleados: &nbsp; <span id="spanChEmple_edit"
+                                                    <label for="">Seleccion de empleados: &nbsp; *Se muestra empleados con asistencia en puerta <span id="spanChEmple_edit"
                                                             style="display: none;color:#911818">*Eliga un modo de seleccion
                                                             de empleados.</span></label>
                                                 </div>
