@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\dispositivo_area;
 use App\dispositivo_controlador;
+use App\dispositivo_empleado;
 use App\dispositivos;
 use App\horario;
 use App\marcacion_puerta;
@@ -744,9 +746,22 @@ class dispositivosController extends Controller
                 'dispo_Cam',
                 'idControladores',
                 'version_firmware',
-                'dispo_codigo'
+                'dispo_codigo',
+                'dispo_todosEmp',
+                'dispo_porEmp',
+                'dispo_porArea'
             )->get();
-        return $dispositivo;
+
+            $dispositivo_empleado=dispositivo_empleado::where('idDispositivos','=',$idDispo)
+           ->where('estado','=',1) ->get();
+           /*  if($dispositivo_empleado->isNotEmpty()){
+
+            else{
+
+            } */
+            $dispositivo_area=dispositivo_area::where('idDispositivos','=',$idDispo)
+            ->where('estado','=',1) ->get();
+        return [$dispositivo[0],$dispositivo_empleado,$dispositivo_area];
     }
 
     public function actualizarDispos(Request $request)

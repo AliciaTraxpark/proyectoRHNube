@@ -10,6 +10,6 @@ class dispositivo_area extends Model
     protected $table = 'dispositivo_area';
     protected $primaryKey = 'iddispositivo_area';
     protected $fillable = ['iddispositivo_area',
-    'idDispositivos','area_id'];
+    'idDispositivos','area_id','estado'];
     public $timestamps = false;
 }
