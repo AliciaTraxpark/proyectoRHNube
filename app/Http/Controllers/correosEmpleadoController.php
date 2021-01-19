@@ -92,7 +92,7 @@ class correosEmpleadoController extends Controller
                 ->where('e.emple_id', '=', $vinculacion_ruta->idEmpleado)
                 ->get()
                 ->first();
-            $mensaje = "Hola " . $empleado->nombre . " tu codigo de Modo Ruta es: " . $vinculacion_ruta->hash;
+            $mensaje = "Hola " . $empleado->nombre . " tu codigo de RH nube,  Modo Ruta es: " . $vinculacion_ruta->hash;
             $cel = explode("+", $vinculacion_ruta->celular);
             $curl = curl_init();
             curl_setopt_array($curl, array(
