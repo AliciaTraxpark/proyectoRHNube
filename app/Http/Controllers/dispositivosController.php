@@ -182,7 +182,7 @@ class dispositivosController extends Controller
 
            $nroCel= substr($dispositivosAc->dispo_movil, 2);
 
-            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta,tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -219,7 +219,7 @@ class dispositivosController extends Controller
         $dispositivosAc->save();
         $nroCel= substr($dispositivosAc->dispo_movil, 2);
 
-        $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta,tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+        $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -253,7 +253,7 @@ class dispositivosController extends Controller
         $codigo = $dispositivosAc->dispo_codigo;
         $nroCel= substr($dispositivosAc->dispo_movil, 2);
 
-            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta,tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
