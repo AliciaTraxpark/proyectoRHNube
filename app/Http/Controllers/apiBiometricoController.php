@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
+use App\plantilla_empleadobio;
 
 class apiBiometricoController extends Controller
 {
@@ -2335,6 +2336,40 @@ class apiBiometricoController extends Controller
             return response()->json(array('status' => 400, 'title' => 'Empleados no encontrados',
                 'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
         }
+    }
+
+    public function registroHuella(Request $request){
+
+        $arrayDatos=new Collection();
+
+        foreach ($request->all() as $req) {
+
+            /*  RECIBO PARAMENTROS*/
+            $idempleado=$req['idempleado'];
+            $posicion_huella= $req['posicion_huella'];
+            $tipo_registro= $req['tipo_registro'];
+            $path=$req['path'];;
+            /* ----------------------------- */
+
+            /* -----------REGISTRO -----------------------------*/
+            $plantilla_empleadobio=new plantilla_empleadobio();
+            $plantilla_empleadobio->idempleado=$idempleado;
+            $plantilla_empleadobio->posicion_huella=$posicion_huella;
+            $plantilla_empleadobio->tipo_registro=$tipo_registro;
+            $plantilla_empleadobio->path=$path;
+            $plantilla_empleadobio->save();
+            /* ---------------------------------------- */
+
+            /* INSERTAMO A AARRAY  */
+            $arrayDatos->push($plantilla_empleadobio);
+        }
+        if ($arrayDatos != null) {
+            return response()->json($arrayDatos);
+        } else {
+            return response()->json(array('status' => 400, 'title' => 'Empleados no encontrados',
+                'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
+        }
+
     }
 
 }
