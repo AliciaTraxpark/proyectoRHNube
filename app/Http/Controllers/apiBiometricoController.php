@@ -6,6 +6,7 @@ use App\dispositivos;
 use App\invitado;
 use App\marcacion_puerta;
 use App\organizacion;
+use App\plantilla_empleadobio;
 use App\User;
 use App\usuario_organizacion;
 use Carbon\Carbon;
@@ -15,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
-use App\plantilla_empleadobio;
 
 class apiBiometricoController extends Controller
 {
@@ -1228,7 +1228,7 @@ class apiBiometricoController extends Controller
                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                         ->orderBy('he.empleado_emple_id')
                         ->paginate();
-                        $horario = insertarPausasH($horario);
+                    $horario = insertarPausasH($horario);
 
                 } else {
                     /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -1261,7 +1261,7 @@ class apiBiometricoController extends Controller
                             ->orderBy('he.empleado_emple_id')
                             ->paginate();
 
-                            $horario = insertarPausasH($horario);
+                        $horario = insertarPausasH($horario);
 
                     } else {
                         /* EMPLEADOS POR AREA */
@@ -1286,7 +1286,7 @@ class apiBiometricoController extends Controller
                             ->orderBy('he.empleado_emple_id')
                             ->paginate();
 
-                            $horario = insertarPausasH($horario);
+                        $horario = insertarPausasH($horario);
 
                     }
                 }
@@ -1307,7 +1307,7 @@ class apiBiometricoController extends Controller
                     ->orderBy('he.empleado_emple_id')
                     ->paginate();
 
-                    $horario = insertarPausasH($horario);
+                $horario = insertarPausasH($horario);
 
             }
         } else {
@@ -1353,7 +1353,7 @@ class apiBiometricoController extends Controller
                                 ->orderBy('he.empleado_emple_id')
                                 ->paginate();
 
-                                $horario = insertarPausasH($horario);
+                            $horario = insertarPausasH($horario);
 
                         } else {
                             /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -1386,7 +1386,7 @@ class apiBiometricoController extends Controller
                                     ->orderBy('he.empleado_emple_id')
                                     ->paginate();
 
-                                    $horario = insertarPausasH($horario);
+                                $horario = insertarPausasH($horario);
 
                             } else {
                                 /* EMPLEADOS POR AREA */
@@ -1411,7 +1411,7 @@ class apiBiometricoController extends Controller
                                     ->orderBy('he.empleado_emple_id')
                                     ->paginate();
 
-                                    $horario = insertarPausasH($horario);
+                                $horario = insertarPausasH($horario);
 
                             }
                         }
@@ -1432,7 +1432,7 @@ class apiBiometricoController extends Controller
                             ->orderBy('he.empleado_emple_id')
                             ->paginate();
 
-                            $horario = insertarPausasH($horario);
+                        $horario = insertarPausasH($horario);
                     }
                     /* --------------------------------------- */
                 } else {
@@ -1466,7 +1466,7 @@ class apiBiometricoController extends Controller
                                 ->orderBy('he.empleado_emple_id')
                                 ->paginate();
 
-                                $horario = insertarPausasH($horario);
+                            $horario = insertarPausasH($horario);
 
                             /* --------------------------------------------------------------------- */
 
@@ -1505,7 +1505,7 @@ class apiBiometricoController extends Controller
                                     ->orderBy('he.empleado_emple_id')
                                     ->paginate();
 
-                                    $horario = insertarPausasH($horario);
+                                $horario = insertarPausasH($horario);
 
                                 /* --------------------------------------------------------------- */
 
@@ -1535,7 +1535,7 @@ class apiBiometricoController extends Controller
                                     ->orderBy('he.empleado_emple_id')
                                     ->paginate();
 
-                                    $horario = insertarPausasH($horario);
+                                $horario = insertarPausasH($horario);
 
                             }
                         }
@@ -1559,7 +1559,7 @@ class apiBiometricoController extends Controller
                             ->orderBy('he.empleado_emple_id')
                             ->paginate();
 
-                            $horario = insertarPausasH($horario);
+                        $horario = insertarPausasH($horario);
 
                     }
 
@@ -1595,7 +1595,7 @@ class apiBiometricoController extends Controller
                                 ->orderBy('he.empleado_emple_id')
                                 ->paginate();
 
-                                $horario = insertarPausasH($horario);
+                            $horario = insertarPausasH($horario);
 
                         } else {
                             /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -1627,7 +1627,7 @@ class apiBiometricoController extends Controller
                                     ->orderBy('he.empleado_emple_id')
                                     ->paginate();
 
-                                    $horario = insertarPausasH($horario);
+                                $horario = insertarPausasH($horario);
 
                             } else {
                                 /* EMPLEADOS POR AREA */
@@ -1653,7 +1653,7 @@ class apiBiometricoController extends Controller
                                     ->orderBy('he.empleado_emple_id')
                                     ->paginate();
 
-                                    $horario = insertarPausasH($horario);
+                                $horario = insertarPausasH($horario);
 
                             }
                         }
@@ -1677,7 +1677,7 @@ class apiBiometricoController extends Controller
                             ->where('da.idDispositivos', '=', $idbiometrico)
                             ->orderBy('he.empleado_emple_id')
                             ->paginate();
-                            $horario = insertarPausasH($horario);
+                        $horario = insertarPausasH($horario);
 
                     }
 
@@ -2338,35 +2338,92 @@ class apiBiometricoController extends Controller
         }
     }
 
-    public function registroHuella(Request $request){
+    public function registroHuella(Request $request)
+    {
 
-        $arrayDatos=new Collection();
+        $arrayDatos = new Collection();
 
         foreach ($request->all() as $req) {
 
             /*  RECIBO PARAMENTROS*/
-            $idempleado=$req['idempleado'];
-            $posicion_huella= $req['posicion_huella'];
-            $tipo_registro= $req['tipo_registro'];
-            $path=$req['path'];;
+            $idempleado = $req['idempleado'];
+            $posicion_huella = $req['posicion_huella'];
+            $tipo_registro = $req['tipo_registro'];
+            $path = $req['path'];
             /* ----------------------------- */
+            /* VALIDANDO EMPLEADOIIIII */
+            $empleados = DB::table('empleado as e')
+                ->join('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
+                ->where('e.emple_id', '=', $req['idempleado'])
+                ->where('e.emple_estado', '=', 1)
+                ->get()->first();
 
             /* -----------REGISTRO -----------------------------*/
-            $plantilla_empleadobio=new plantilla_empleadobio();
-            $plantilla_empleadobio->idempleado=$idempleado;
-            $plantilla_empleadobio->posicion_huella=$posicion_huella;
-            $plantilla_empleadobio->tipo_registro=$tipo_registro;
-            $plantilla_empleadobio->path=$path;
-            $plantilla_empleadobio->save();
-            /* ---------------------------------------- */
+            $plantilla_empleadobio = new plantilla_empleadobio();
+            /* -------------------------------------------- */
+
+            /* VERIFICAMOS SI EMPLEADO EXISTE */
+            if ($empleados) {
+                $plantilla_empleadobio->idempleado = $idempleado;
+
+                /* VALIDAMOS QUE POSICION DE HUELLA SEA DE 0 A 9  */
+                if ($posicion_huella < 10 && $posicion_huella >= 0) {
+                    $plantilla_empleadobio->posicion_huella = $posicion_huella;
+
+                    /* ----------VALIDANDO TIPO_REGISTRO */
+                    $tipo_registroBD = DB::table('tipo_registrobio')
+                        ->where('idtipo_registro', '=', $tipo_registro)
+                        ->get()->first();
+
+                    /* SI EXISTE */
+                    if ($tipo_registroBD) {
+                        $plantilla_empleadobio->tipo_registro = $tipo_registro;
+                        $plantilla_empleadobio->path = $path;
+                        $plantilla_empleadobio->save();
+
+                        $plantilla_empleadobioArray = array(
+                            'idempleado' => $idempleado,
+                            'posicion_huella' => $posicion_huella,
+                            'tipo_registro' => $tipo_registro,
+                            'exitoso' => true);
+
+                    } else {
+                        $plantilla_empleadobioArray = array(
+                            'idempleado' => $idempleado,
+                            'error' => 'Tipo de registro no encontrado',
+                            'exitoso' => false);
+                    }
+
+                }
+
+                /* SI POSICION DE HUELLA ES INCORRECTA */
+                else {
+                    $plantilla_empleadobioArray = array(
+                        'idempleado' => $idempleado,
+                        'error' => 'Posicion de huella incorrecta',
+                        'exitoso' => false);
+                }
+
+            }
+
+            /* SI NO EXISTE EMPLEADO */
+            else {
+                $plantilla_empleadobioArray = array(
+                    'idempleado' => $idempleado,
+                    'error' => 'No se encontro empleados con este id',
+                    'exitoso' => false);
+
+            }
+            /* ---------------------------- */
 
             /* INSERTAMO A AARRAY  */
-            $arrayDatos->push($plantilla_empleadobio);
+            $arrayDatos->push($plantilla_empleadobioArray);
+            /* ---------------------------- */
         }
         if ($arrayDatos != null) {
             return response()->json($arrayDatos);
         } else {
-            return response()->json(array('status' => 400, 'title' => 'Empleados no encontrados',
+            return response()->json(array('status' => 400, 'title' => 'No se pudo registrar',
                 'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
         }
 
