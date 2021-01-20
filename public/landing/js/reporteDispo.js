@@ -28,6 +28,220 @@ $(function () {
     cambiarF();
 });
 
+// * INICIALIZAR TABLA
+var table;
+function inicializarTabla() {
+    table = $("#tablaReport").DataTable({
+        "searching": false,
+        "scrollX": true,
+        "ordering": false,
+        "autoWidth": false,
+        "bInfo": false,
+        "bLengthChange": false,
+        fixedHeader: true,
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ ",
+            sInfoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: ">",
+                sPrevious: "<",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+            buttons: {
+                copy: "Copiar",
+                colvis: "Visibilidad",
+            },
+
+        },
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excel',
+            className: 'btn btn-sm mt-1',
+            text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+            customize: function (xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var downrows = 5;
+                var clRow = $('row', sheet);
+                clRow[0].children[0].remove();
+                //update Row
+                clRow.each(function () {
+                    var attr = $(this).attr('r');
+                    var ind = parseInt(attr);
+                    ind = ind + downrows;
+                    $(this).attr("r", ind);
+                });
+
+                // Update  row > c
+                $('row c ', sheet).each(function () {
+                    var attr = $(this).attr('r');
+                    var pre = attr.substring(0, 1);
+                    var ind = parseInt(attr.substring(1, attr.length));
+                    ind = ind + downrows;
+                    $(this).attr("r", pre + ind);
+                });
+
+                function Addrow(index, data) {
+                    msg = '<row r="' + index + '">'
+                    for (i = 0; i < data.length; i++) {
+                        var key = data[i].k;
+                        var value = data[i].v;
+                        var bold = data[i].s;
+                        msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                        msg += '<is>';
+                        msg += '<t>' + value + '</t>';
+                        msg += '</is>';
+                        msg += '</c>';
+                    }
+                    msg += '</row>';
+                    return msg;
+                }
+                var now = new Date();
+                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                //insert
+                var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
+                var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
+            },
+            sheetName: 'Asistencia',
+            title: 'Asistencia',
+            autoFilter: false,
+            exportOptions: {
+                columns: ":visible:not(.noExport)",
+                format: {
+                    body: function (data, row, column, node) {
+                        var cont = $.trim($(node).text());
+                        var cont1 = cont.replace('Cambiar a entrada', '');
+                        var cont2 = cont1.replace('Cambiar a salida', '');
+                        var cont3 = cont2.replace('No tiene entrada', '---');
+                        var cont4 = cont3.replace('No tiene salida', '---');
+
+                        return $.trim(cont4);
+                    }
+                }
+            },
+        }, {
+            extend: "pdfHtml5",
+            className: 'btn btn-sm mt-1',
+            text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+            orientation: 'landscape',
+            pageSize: 'A1',
+            title: 'Asistencia',
+            exportOptions: {
+                columns: ":visible:not(.noExport)"
+            },
+            customize: function (doc) {
+                doc['styles'] = {
+                    table: {
+                        width: '100%'
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 11,
+                        color: '#6c757d',
+                        fillColor: '#ffffff',
+                        alignment: 'left'
+                    },
+                    defaultStyle: {
+                        fontSize: 10,
+                        alignment: 'center'
+                    }
+                };
+                doc.pageMargins = [20, 120, 20, 30];
+                doc.content[1].margin = [30, 0, 30, 0];
+                var colCount = new Array();
+                var tr = $('#tablaReport tbody tr:first-child');
+                var trWidth = $(tr).width();
+                $('#tablaReport').find('tbody tr:first-child td').each(function () {
+                    var tdWidth = $(this).width();
+                    var widthFinal = parseFloat(tdWidth * 130);
+                    widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
+                    if ($(this).attr('colspan')) {
+                        for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                            colCount.push('*');
+                        }
+                    } else {
+                        colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
+                    }
+                });
+                var bodyCompleto = [];
+                doc.content[1].table.body.forEach(function (line, i) {
+                    var bodyNuevo = [];
+                    if (i >= 1) {
+                        line.forEach(element => {
+                            var textOriginal = element.text;
+                            var cambiar = textOriginal.replace('Cambiar a entrada', '');
+                            var cambiar2 = cambiar.replace('Cambiar a salida', '');
+                            var cambiar3 = cambiar2.replace('No tiene entrada', '---');
+                            var cambiar4 = cambiar3.replace('No tiene salida', '---');
+                            var cambiar5 = cambiar4.trim();
+                            bodyNuevo.push({ text: cambiar5, style: 'defaultStyle' });
+                        });
+                        bodyCompleto.push(bodyNuevo);
+                    } else {
+                        bodyCompleto.push(line);
+                    }
+                });
+                doc.content.splice(0, 1);
+                doc.content[0].table.body = bodyCompleto;
+                var objLayout = {};
+                objLayout['hLineWidth'] = function (i) { return .2; };
+                objLayout['vLineWidth'] = function (i) { return .2; };
+                objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                doc.content[0].layout = objLayout;
+                var now = new Date();
+                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                doc["header"] = function () {
+                    return {
+                        columns: [
+                            {
+                                alignment: 'left',
+                                italics: false,
+                                text: [
+                                    { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
+                                    { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                    { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                    { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                    { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                ],
+
+                                fontSize: 10,
+                                margin: [30, 0]
+                            },
+                        ],
+                        margin: 20
+                    };
+                };
+            }
+        }],
+        paging: true,
+        initComplete: function () {
+            setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
+        },
+    });
+}
+
 var razonSocial;
 var direccion;
 var ruc;
@@ -95,7 +309,7 @@ function cargartabla(fecha) {
                 var theadTabla = `<tr>`;
                 // * CONDICIONAL DE PERMISOS
                 if (permisoModificar == 1) {
-                    theadTabla += `<th class="noExport">Opción</th>`;
+                    theadTabla += `<th class="noExport">Agregar</th>`;
                 }
                 theadTabla += `<th>CC&nbsp;</th>
                                 <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -141,7 +355,11 @@ function cargartabla(fecha) {
                     ruc = data[index].organi_ruc;                   // : -> VARIABLES PARA EXCEL Y PDF
                     tbody += `<tr>`;
                     if (permisoModificar == 1) {
-                        tbody += `<td class="noExport"></td>`;
+                        tbody += `<td class="noExport text-center">
+                                    <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')">
+                                        <img style="margin-bottom: 3px;" src="landing/images/plusM.svg"  height="17" />
+                                    </a>
+                                </td>`;
                     }
                     tbody += `<td>${(index + 1)}&nbsp;</td>
                             <td>${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -411,7 +629,7 @@ function cargartabla(fecha) {
                                             tbodyEntradaySalida += `<td>
                                                                                 <div class="dropdown noExport" id="">
                                                                                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                                                                        aria-haspopup="true" aria-expanded="false"
+                                                                                        aria-haspopup="true" aria-expanded="false" id="dropSalida${marcacionData.idMarcacion}"
                                                                                         style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                                         <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
@@ -619,220 +837,7 @@ function cargartabla(fecha) {
                     tbodyTR += '<td><br><br></td><td></td><td></td><td></td><td></td></tr>';
                     $('#tbodyD').append(tbodyTR);
                 }
-
-                table = $("#tablaReport").DataTable({
-                    "searching": false,
-                    "scrollX": true,
-                    "ordering": false,
-                    "autoWidth": false,
-                    "bInfo": false,
-                    "bLengthChange": false,
-                    fixedHeader: true,
-                    language: {
-                        sProcessing: "Procesando...",
-                        sLengthMenu: "Mostrar _MENU_ registros",
-                        sZeroRecords: "No se encontraron resultados",
-                        sEmptyTable: "Ningún dato disponible en esta tabla",
-                        sInfo: "Mostrando registros del _START_ al _END_ ",
-                        sInfoEmpty:
-                            "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-                        sInfoPostFix: "",
-                        sSearch: "Buscar:",
-                        sUrl: "",
-                        sInfoThousands: ",",
-                        sLoadingRecords: "Cargando...",
-                        oPaginate: {
-                            sFirst: "Primero",
-                            sLast: "Último",
-                            sNext: ">",
-                            sPrevious: "<",
-                        },
-                        oAria: {
-                            sSortAscending:
-                                ": Activar para ordenar la columna de manera ascendente",
-                            sSortDescending:
-                                ": Activar para ordenar la columna de manera descendente",
-                        },
-                        buttons: {
-                            copy: "Copiar",
-                            colvis: "Visibilidad",
-                        },
-
-                    },
-                    dom: 'Bfrtip',
-                    buttons: [{
-                        extend: 'excel',
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                        customize: function (xlsx) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                            var downrows = 5;
-                            var clRow = $('row', sheet);
-                            clRow[0].children[0].remove();
-                            //update Row
-                            clRow.each(function () {
-                                var attr = $(this).attr('r');
-                                var ind = parseInt(attr);
-                                ind = ind + downrows;
-                                $(this).attr("r", ind);
-                            });
-
-                            // Update  row > c
-                            $('row c ', sheet).each(function () {
-                                var attr = $(this).attr('r');
-                                var pre = attr.substring(0, 1);
-                                var ind = parseInt(attr.substring(1, attr.length));
-                                ind = ind + downrows;
-                                $(this).attr("r", pre + ind);
-                            });
-
-                            function Addrow(index, data) {
-                                msg = '<row r="' + index + '">'
-                                for (i = 0; i < data.length; i++) {
-                                    var key = data[i].k;
-                                    var value = data[i].v;
-                                    var bold = data[i].s;
-                                    msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
-                                    msg += '<is>';
-                                    msg += '<t>' + value + '</t>';
-                                    msg += '</is>';
-                                    msg += '</c>';
-                                }
-                                msg += '</row>';
-                                return msg;
-                            }
-                            var now = new Date();
-                            var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                            //insert
-                            var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
-                            var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
-                            var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
-                            var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                            var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
-                            sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
-                        },
-                        sheetName: 'Asistencia',
-                        title: 'Asistencia',
-                        autoFilter: false,
-                        exportOptions: {
-                            columns: ":not(.noExport)",
-                            format: {
-                                body: function (data, row, column, node) {
-                                    var cont = $.trim($(node).text());
-                                    var cont1 = cont.replace('Cambiar a entrada', '');
-                                    var cont2 = cont1.replace('Cambiar a salida', '');
-                                    var cont3 = cont2.replace('No tiene entrada', '---');
-                                    var cont4 = cont3.replace('No tiene salida', '---');
-
-                                    return $.trim(cont4);
-                                }
-                            }
-                        },
-                    }, {
-                        extend: "pdfHtml5",
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                        orientation: 'landscape',
-                        pageSize: 'A1',
-                        title: 'Asistencia',
-                        exportOptions: {
-                            columns: ":not(.noExport)",
-                        },
-                        customize: function (doc) {
-                            doc['styles'] = {
-                                table: {
-                                    width: '100%'
-                                },
-                                tableHeader: {
-                                    bold: true,
-                                    fontSize: 11,
-                                    color: '#6c757d',
-                                    fillColor: '#ffffff',
-                                    alignment: 'left'
-                                },
-                                defaultStyle: {
-                                    fontSize: 10,
-                                    alignment: 'center'
-                                }
-                            };
-                            doc.pageMargins = [20, 120, 20, 30];
-                            doc.content[1].margin = [30, 0, 30, 0];
-                            var colCount = new Array();
-                            var tr = $('#tablaReport tbody tr:first-child');
-                            var trWidth = $(tr).width();
-                            $('#tablaReport').find('tbody tr:first-child td').each(function () {
-                                var tdWidth = $(this).width();
-                                var widthFinal = parseFloat(tdWidth * 130);
-                                widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
-                                if ($(this).attr('colspan')) {
-                                    for (var i = 1; i <= $(this).attr('colspan'); $i++) {
-                                        colCount.push('*');
-                                    }
-                                } else {
-                                    colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
-                                }
-                            });
-                            var bodyCompleto = [];
-                            doc.content[1].table.body.forEach(function (line, i) {
-                                var bodyNuevo = [];
-                                if (i >= 1) {
-                                    line.forEach(element => {
-                                        var textOriginal = element.text;
-                                        var cambiar = textOriginal.replace('Cambiar a entrada', '');
-                                        var cambiar2 = cambiar.replace('Cambiar a salida', '');
-                                        var cambiar3 = cambiar2.replace('No tiene entrada', '---');
-                                        var cambiar4 = cambiar3.replace('No tiene salida', '---');
-                                        var cambiar5 = cambiar4.trim();
-                                        bodyNuevo.push({ text: cambiar5, style: 'defaultStyle' });
-                                    });
-                                    bodyCompleto.push(bodyNuevo);
-                                } else {
-                                    bodyCompleto.push(line);
-                                }
-                            });
-                            doc.content.splice(0, 1);
-                            doc.content[0].table.body = bodyCompleto;
-                            var objLayout = {};
-                            objLayout['hLineWidth'] = function (i) { return .2; };
-                            objLayout['vLineWidth'] = function (i) { return .2; };
-                            objLayout['hLineColor'] = function (i) { return '#aaa'; };
-                            objLayout['vLineColor'] = function (i) { return '#aaa'; };
-                            doc.content[0].layout = objLayout;
-                            var now = new Date();
-                            var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                            doc["header"] = function () {
-                                return {
-                                    columns: [
-                                        {
-                                            alignment: 'left',
-                                            italics: false,
-                                            text: [
-                                                { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
-                                                { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                                { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                                { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
-                                                { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
-                                            ],
-
-                                            fontSize: 10,
-                                            margin: [30, 0]
-                                        },
-                                    ],
-                                    margin: 20
-                                };
-                            };
-                        }
-                    }],
-                    paging: true,
-                    initComplete: function () {
-                        setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
-                    },
-
-
-
-
-                });
+                inicializarTabla();
                 $(window).on('resize', function () {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
@@ -855,7 +860,6 @@ function cargartabla(fecha) {
                     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
                 }
             } else {
-                $('#btnsDescarga').hide();
                 $('#customSwitDetalles').prop("disabled", true);
                 $('#switPausas').prop("disabled", true);
                 $('#tbodyD').empty();
@@ -1132,3 +1136,37 @@ function insertarSalida(idMarca) {
     });
 }
 
+// * FUNCION DE AGREGAR MARCACION
+function modalAgregarMarcacion(idEmpleado, fecha) {
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/busquedaMXE",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data, e) {
+            if (data != null) {
+                if ($('#dropSalida' + data) != undefined) {
+                    $('#dropSalida' + data).dropdown('toggle');
+                    $('#dropSalida' + data).trigger('click');
+                    // e.preventDefault();
+                }
+            }
+        },
+        error: function () { }
+    });
+}

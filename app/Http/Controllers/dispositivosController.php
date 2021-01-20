@@ -1695,4 +1695,27 @@ class dispositivosController extends Controller
             }
         }
     }
+
+    // * BUSCAR MARCACIONES SIN PAREJA X EMPLEADO
+    function buscarMarcacionPorEmpleado(Request $request)
+    {
+        $idEmpleado = $request->get('idEmpleado');
+        $fecha = $request->get('fecha');
+        // DB::enableQueryLog();
+        $marcacion = marcacion_puerta::select('marcaMov_id')
+            ->whereRaw("IF(marcaMov_fecha is null, DATE(marcaMov_salida), DATE(marcaMov_fecha)) = '$fecha'")
+            ->where(function ($query) {
+                $query->whereNull('marcaMov_fecha')
+                    ->orWhereNull('marcaMov_salida');
+            })
+            ->where('marcaMov_emple_id', '=', $idEmpleado)
+            ->get()
+            ->first();
+        // dd(DB::getQueryLog());
+        if ($marcacion) {
+            return response()->json($marcacion->marcaMov_id, 200);
+        } else {
+            return response()->json(null, 200);
+        }
+    }
 }
