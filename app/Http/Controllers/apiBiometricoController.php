@@ -2382,6 +2382,7 @@ class apiBiometricoController extends Controller
                         $plantilla_empleadobio->save();
 
                         $plantilla_empleadobioArray = array(
+                            'id'=> $plantilla_empleadobio->id,
                             'idempleado' => $idempleado,
                             'posicion_huella' => $posicion_huella,
                             'tipo_registro' => $tipo_registro,
