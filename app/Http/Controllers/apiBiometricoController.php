@@ -2362,60 +2362,78 @@ class apiBiometricoController extends Controller
             $plantilla_empleadobio = new plantilla_empleadobio();
             /* -------------------------------------------- */
 
-            /* VERIFICAMOS SI EMPLEADO EXISTE */
-            if ($empleados) {
-                $plantilla_empleadobio->idempleado = $idempleado;
+            /* PRIMERO VALIDEMOS QUE NO SE REPITA */
+            $plantilla_empleadobioVali = DB::table('plantilla_empleadobio')
+                ->where('idempleado', '=', $req['idempleado'])
+                ->where('posicion_huella', '=', $req['posicion_huella'])
+                ->where('tipo_registro', '=', $req['tipo_registro'])
+                ->get()->first();
 
-                /* VALIDAMOS QUE POSICION DE HUELLA SEA DE 0 A 9  */
-                if ($posicion_huella < 10 && $posicion_huella >= 0) {
-                    $plantilla_empleadobio->posicion_huella = $posicion_huella;
+            if ($plantilla_empleadobioVali) {
 
-                    /* ----------VALIDANDO TIPO_REGISTRO */
-                    $tipo_registroBD = DB::table('tipo_registrobio')
-                        ->where('idtipo_registro', '=', $tipo_registro)
-                        ->get()->first();
+                $plantilla_empleadobioArray = array(
+                    'id'=> $plantilla_empleadobioVali->id,
+                    'idempleado' => $idempleado,
+                    'error' => 'Empleado con biometria duplicada',
+                    'exitoso' => false);
 
-                    /* SI EXISTE */
-                    if ($tipo_registroBD) {
-                        $plantilla_empleadobio->tipo_registro = $tipo_registro;
-                        $plantilla_empleadobio->path = $path;
-                        $plantilla_empleadobio->save();
+                /* ---------------------------- */
+            } else {
 
+                /* VERIFICAMOS SI EMPLEADO EXISTE */
+                if ($empleados) {
+                    $plantilla_empleadobio->idempleado = $idempleado;
+
+                    /* VALIDAMOS QUE POSICION DE HUELLA SEA DE 0 A 9  */
+                    if ($posicion_huella < 10 && $posicion_huella >= 0) {
+                        $plantilla_empleadobio->posicion_huella = $posicion_huella;
+
+                        /* ----------VALIDANDO TIPO_REGISTRO */
+                        $tipo_registroBD = DB::table('tipo_registrobio')
+                            ->where('idtipo_registro', '=', $tipo_registro)
+                            ->get()->first();
+
+                        /* SI EXISTE */
+                        if ($tipo_registroBD) {
+                            $plantilla_empleadobio->tipo_registro = $tipo_registro;
+                            $plantilla_empleadobio->path = $path;
+                            $plantilla_empleadobio->save();
+
+                            $plantilla_empleadobioArray = array(
+                                'id' => $plantilla_empleadobio->id,
+                                'idempleado' => $idempleado,
+                                'posicion_huella' => $posicion_huella,
+                                'tipo_registro' => $tipo_registro,
+                                'exitoso' => true);
+
+                        } else {
+                            $plantilla_empleadobioArray = array(
+                                'idempleado' => $idempleado,
+                                'error' => 'Tipo de registro no encontrado',
+                                'exitoso' => false);
+                        }
+
+                    }
+
+                    /* SI POSICION DE HUELLA ES INCORRECTA */
+                    else {
                         $plantilla_empleadobioArray = array(
-                            'id'=> $plantilla_empleadobio->id,
                             'idempleado' => $idempleado,
-                            'posicion_huella' => $posicion_huella,
-                            'tipo_registro' => $tipo_registro,
-                            'exitoso' => true);
-
-                    } else {
-                        $plantilla_empleadobioArray = array(
-                            'idempleado' => $idempleado,
-                            'error' => 'Tipo de registro no encontrado',
+                            'error' => 'Posicion de huella incorrecta',
                             'exitoso' => false);
                     }
 
                 }
 
-                /* SI POSICION DE HUELLA ES INCORRECTA */
+                /* SI NO EXISTE EMPLEADO */
                 else {
                     $plantilla_empleadobioArray = array(
                         'idempleado' => $idempleado,
-                        'error' => 'Posicion de huella incorrecta',
+                        'error' => 'No se encontro empleados con este id',
                         'exitoso' => false);
+
                 }
-
             }
-
-            /* SI NO EXISTE EMPLEADO */
-            else {
-                $plantilla_empleadobioArray = array(
-                    'idempleado' => $idempleado,
-                    'error' => 'No se encontro empleados con este id',
-                    'exitoso' => false);
-
-            }
-            /* ---------------------------- */
 
             /* INSERTAMO A AARRAY  */
             $arrayDatos->push($plantilla_empleadobioArray);
