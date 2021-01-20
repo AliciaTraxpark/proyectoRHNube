@@ -203,7 +203,7 @@ use App\persona;
                     notify-item">
                     <i data-feather="arrow-up-left" class="icon-dual icon-xs
                         mr-2" style="color: #163552"></i>
-                    <span>cambiar organizacion</span>
+                    <span>cambiar organización</span>
                 </a>
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item

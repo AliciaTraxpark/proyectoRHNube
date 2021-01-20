@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\dispositivo_area;
 use App\dispositivo_controlador;
+use App\dispositivo_empleado;
 use App\dispositivos;
 use App\horario;
 use App\marcacion_puerta;
@@ -37,24 +39,94 @@ class dispositivosController extends Controller
             ->where('organi_id', '=', session('sesionidorg'))
             ->where('cont_estado', '=', 1)
             ->get();
+
+        $area = DB::table('area as ar')
+        ->where('ar.organi_id','=',session('sesionidorg'))
+        ->select(
+            'ar.area_id as idarea',
+            'area_descripcion as descripcion'
+        )
+        ->groupBy('ar.area_id')
+        ->get();
+
+         /* FILTRAMOS EMPLEADOS */
         if ($invitadod) {
+
+            /* SI EL INVITADO TIENE PERMISO A VER TODOS LOS EMPLEADOS */
+            if ($invitadod->verTodosEmps == 1) {
+                $empleados = DB::table('empleado as e')
+                    ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                    ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                    ->where('e.emple_estado', '=', 1)
+                    ->where('e.organi_id', '=', session('sesionidorg'))
+                    ->where('e.asistencia_puerta', '=', 1)
+                    ->get();
+            } else {
+                /* SI TIENE PERMISO  POR EMPLEADO PERSONALIZADO O POR AREAS */
+                $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                    ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
+                    ->where('invem.area_id', '=', null)
+                    ->where('invem.emple_id', '!=', null)
+                    ->get()->first();
+
+                    /* SI ES PERMISO POR EMPLEADO PERSONALIZADO */
+                if ($invitado_empleadoIn != null) {
+
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                } else {
+                    /* SI EL PERMISO ES POR AREA */
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                        ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                        ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                        ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                        ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                        ->where('e.emple_estado', '=', 1)
+                        ->where('invi.estado', '=', 1)
+                        ->where('invi.idinvitado', '=', $invitadod->idinvitado)
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.asistencia_puerta', '=', 1)
+                        ->get();
+                }
+            }
+            /*  */
             if ($invitadod->rol_id != 1) {
                 if ($invitadod->asistePuerta == 1) {
                     $permiso_invitado = DB::table('permiso_invitado')
                         ->where('idinvitado', '=', $invitadod->idinvitado)
                         ->get()->first();
                     return view('Dispositivos.dispositivos', [
-                        'verPuerta' => $permiso_invitado->verPuerta, 'agregarPuerta' => $permiso_invitado->agregarPuerta, 'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores
+                        'verPuerta' => $permiso_invitado->verPuerta, 'agregarPuerta' => $permiso_invitado->agregarPuerta,
+                         'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores,'area'=>$area,'empleado'=>$empleados
                     ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.dispositivos', ['controladores' => $controladores]);
+                return view('Dispositivos.dispositivos', ['controladores' => $controladores,'area'=>$area,'empleado'=>$empleados]);
             }
         } else {
-            return view('Dispositivos.dispositivos', ['controladores' => $controladores]);
+
+            $empleados = DB::table('empleado as e')
+                ->join('persona as p', 'p.perso_id', '=', 'e.emple_persona')
+                ->select('e.emple_id', 'p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno')
+                ->where('e.emple_estado', '=', 1)
+                ->where('e.organi_id', '=', session('sesionidorg'))
+                ->where('e.asistencia_puerta', '=', 1)
+                ->get();
+
+            return view('Dispositivos.dispositivos', ['controladores' => $controladores,'area'=>$area,'empleado'=>$empleados]);
         }
     }
     public function store(Request $request)
@@ -107,7 +179,11 @@ class dispositivosController extends Controller
             $dispositivosAc->dispo_codigo = $codigo;
             $dispositivosAc->save();
 
-            $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
+
+           $nroCel= substr($dispositivosAc->dispo_movil, 2);
+
+            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -141,7 +217,9 @@ class dispositivosController extends Controller
         $dispositivosAc->dispo_estado = 1;
         $dispositivosAc->dispo_codigo = $codigo;
         $dispositivosAc->save();
-        $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
+        $nroCel= substr($dispositivosAc->dispo_movil, 2);
+
+        $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -173,7 +251,9 @@ class dispositivosController extends Controller
 
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo = $dispositivosAc->dispo_codigo;
-        $mensaje = "RH nube - Descarga la app movil en https://play.google.com/store/apps/details?id=com.pe.rhnube, codigo de validacion " . $codigo;
+        $nroCel= substr($dispositivosAc->dispo_movil, 2);
+
+            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -670,9 +750,22 @@ class dispositivosController extends Controller
                 'dispo_Cam',
                 'idControladores',
                 'version_firmware',
-                'dispo_codigo'
+                'dispo_codigo',
+                'dispo_todosEmp',
+                'dispo_porEmp',
+                'dispo_porArea'
             )->get();
-        return $dispositivo;
+
+            $dispositivo_empleado=dispositivo_empleado::where('idDispositivos','=',$idDispo)
+           ->where('estado','=',1) ->get();
+           /*  if($dispositivo_empleado->isNotEmpty()){
+
+            else{
+
+            } */
+            $dispositivo_area=dispositivo_area::where('idDispositivos','=',$idDispo)
+            ->where('estado','=',1) ->get();
+        return [$dispositivo[0],$dispositivo_empleado,$dispositivo_area];
     }
 
     public function actualizarDispos(Request $request)

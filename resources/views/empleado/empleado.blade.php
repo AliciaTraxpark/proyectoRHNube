@@ -46,6 +46,10 @@ use Carbon\Carbon;
         .form-control:disabled {
             background-color: #f1f0f0;
         }
+        .large.tooltip-inner {
+    max-width: 185px;
+    width: 185px;
+    }
     </style>
 
 
@@ -3491,13 +3495,10 @@ use Carbon\Carbon;
                                                                     <option class="" value="{{$i}}"> {{$i}} </option>
                                                                 @endfor
                                                             </select>
+
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
-
                                                 <div class="col-sm-4">
                                                     <label for="sw-default">Apellido Paterno</label>
                                                     <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
@@ -3513,10 +3514,6 @@ use Carbon\Carbon;
                                                     <span id="validNombres" style="color: red;">*Campo Obligatorio</span>
                                                     <input type="text" class="form-control" name="nombres" id="nombres" tabindex="6" required>
                                                 </div>
-
-
-
-
                                                 <div class="col-sm-4">
                                                      <label for="sw-default">Correo Electrónico</label>
                                                     <span id="validCorreo" style="color: red;">*Campo Obligatorio</span>
@@ -4685,7 +4682,7 @@ use Carbon\Carbon;
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Num. Documento</label>
+                                                    <label for="sw-default">Núm. Documento</label>
                                                     <span id="v_validNumDocumento" style="color: red;">*Campo
                                                         Obligatorio</span>
                                                     <input type="text" class="form-control" name="v_numDocumento"
@@ -5972,7 +5969,7 @@ use Carbon\Carbon;
                                         </div> <!-- end col -->
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Num. Documento</label>
+                                                <label for="sw-default">Núm. Documento</label>
                                                 <input type="text" class="form-control" name="v_numDocumentoV"
                                                     id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
                                             </div>

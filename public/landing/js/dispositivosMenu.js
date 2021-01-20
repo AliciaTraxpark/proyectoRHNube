@@ -335,6 +335,27 @@ function RegistraDispo(){
                 },
                 success: function (data) {
                     $('#tablaDips').DataTable().ajax.reload();
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo registrado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                     $('#nuevoDispositivo').modal('hide');
                 },
                 error: function (data) {
@@ -379,6 +400,27 @@ function enviarSMS(idDis){
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (data) {
+                        $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nMensaje enviado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                         $('#tablaDips').DataTable().ajax.reload();
 
                     },
@@ -422,6 +464,27 @@ function reenviarSMS(idDis){
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function (data) {
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nMensaje enviado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                         $('#tablaDips').DataTable().ajax.reload();
 
                     },
@@ -495,10 +558,20 @@ function editarDispo(id){
                 $("#selectControlador_ed > option[value='"+value.idControladores+"']").prop("selected","selected");
                $("#selectControlador_ed").trigger("change");
                });
-
+               /* SI ES DISPOSITIVO ANDROID */
                if (data[0].tipoDispositivo==2){
                 $('#editarDispositivo').modal('show');
                } else{
+                   /* SI ES BIOMETRICO */
+                   /* LIMPIAMOS SELECTS */
+                   $("#nombreEmpleado_edit > option").prop("selected", false);
+                   $("#nombreEmpleado_edit").trigger("change");
+                   $("#selectArea_edit > option").prop("selected", false);
+                   $("#selectArea_edit").trigger("change");
+                   $("#spanChEmple_edit").hide();
+                   $("#selectAreaCheck_edit").prop("checked", false);
+                   $("#selectTodoCheck_edit").prop("checked", false);
+
                 $('#idDisposiBio').val(data[0].idDispositivos)
                 $('#descripcionDisBio_ed').val(data[0].dispo_descripUbicacion);
                 $('#descripcionBiome_ed').val(data[0].dispo_codigo);
@@ -510,6 +583,77 @@ function editarDispo(id){
                 $('#ipv4_ed').val(splitE[0]);
                 $('#nPuerto_ed').val(splitE[1]);
                 $('#versionFi_ed').val(data[0].version_firmware);
+
+
+                /* VERIFICAMOS SI ES SELECCION POR EMPLEADO O POR AREA */
+                if(data[0].dispo_porEmp==1){
+
+                    /* VALIDACIONES PARA CUANDO NO ES AREA */
+                    $("#selectArea_edit").prop("required", false);
+                    $("#switchAreaS_edit").prop("checked", false);
+                    $("#selectArea_edit").prop("disabled", true);
+                    $("#selectArea_edit > option").prop("selected", false);
+                    $("#selectArea_edit").trigger("change");
+                    $("#divArea_edit").hide();
+                    /* SI ES POR EMPLEADO CHECK EM SWITCH EMPLEADO */
+                  $("#switchEmpS_edit").prop("checked", true);
+
+                  /* SI SE SELECCIONA TODO LOS EMPLEADOS  */
+                  if(data[0].dispo_todosEmp==1){
+                    $("#TodoECheck_edit").prop("checked", true);
+                    $("#nombreEmpleado_edit").prop("required", false);
+                    $("#divEmpleado_edit").hide();
+
+                  } else{
+                      /* SI ES POR EMPLEADOS PERSONALIZADOS */
+                      $("#nombreEmpleado_edit").prop("required", true);
+                    $("#TodoECheck_edit").prop("checked", false);
+                    $("#nombreEmpleado_edit").prop("required", true);
+
+                    /* SELECCIONAMOS ID DE EMPLEADOS */
+                    $.each(data[1], function (index, value) {
+                        $(
+                            "#nombreEmpleado_edit option[value='" +
+                                value.emple_id +
+                                "']"
+                        ).prop("selected", "selected");
+                        $("#nombreEmpleado_edit").trigger("change");
+                        $("#nombreEmpleado_edit").prop("disabled", false);
+                    });
+                    /* ------------------------------ */
+                    $("#divEmpleado_edit").show();
+                  }
+                }
+                else{
+
+                    $("#divEmpleado_edit").hide();
+                    $("#nombreEmpleado_edit").prop("required", false);
+                    $("#divTodoECheck_edit").hide();
+                    $("#switchEmpS_edit").prop("checked", false);
+
+                    /* SI ES POR AREA */
+                    if(data[0].dispo_porArea==1){
+                        $("#switchAreaS_edit").prop("checked",true);
+                        $("#divArea_edit").show();
+                        $("#selectArea_edit").prop("required", true);
+
+                         /* SELECCIONAMOS ID DE AREAS */
+                        $.each(data[2], function (index, value) {
+                            $(
+                                "#selectArea_edit option[value='" +
+                                    value.area_id +
+                                    "']"
+                            ).prop("selected", "selected");
+                            $("#selectArea_edit").trigger("change");
+                            $("#selectArea_edit").prop("disabled", false);
+                        });
+                      /* ------------------------------ */
+                    } else{
+                        $("#selectArea_edit").prop("required", false);
+                        $("#divArea_edit").hide();
+                    }
+                }
+                /* --------------------------------------------------- */
                 $('#editarBiometrico').modal('show');
                }
 
@@ -526,6 +670,8 @@ function reditarDispo(){
     var lectura_ed=$('#selectLectura_ed').val();
     var idcont_id=$('#selectControlador_ed').val();
     var idDisposEd_ed= $('#idDisposi').val();
+
+
     $.ajax({
         type: "post",
         url: "/actualizarDispos",
@@ -544,6 +690,27 @@ function reditarDispo(){
         success: function (data) {
             $('#tablaDips').DataTable().ajax.reload();
             $('#editarDispositivo').modal('hide');
+            $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo editado correctamente.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -639,27 +806,78 @@ function activarDispo(idDisAct){
 
 }
 function NuevoBiome(){
+
+    /* RESETERAR FORMULARIO */
     $("#frmHorNuevoBi")[0].reset();
+
+    /* ESCONDER AVISO DE SELECCIOAN */
+    $('#spanChEmple').hide();
+
+    /* ESCONDER DIV DE SELECCIION EMPLEADO */
+    $("#divEmpleado").hide();
+    $("#selectTodoCheck").prop("checked", false);
+
+    /* ESCONDER OPCION DE TODOS EMPLEADOS */
+    $("#divTodoECheck").hide();
+
+    /* ESCONDER DIV DE SELECCIION AREA */
+    $("#divArea").hide();
+    $("#selectArea > option").prop("selected", false);
+    $("#selectArea").trigger("change");
+    $("#selectAreaCheck").prop("checked", false);
     $('#nuevoBiometrico').modal('show');
 }
 
 function RegistraBiome(){
 
-
     var ip=$('#ipv4').val();
     ppp=':';
     var puerto=$('#nPuerto').val();
-
     var ippuerto=ip.concat(ppp, puerto);
-
     var descripcionBio=$('#descripcionDisBio').val();
- console.log(ippuerto);
+    var checkTodoEmp;
+    var switchEmp;
+    var switchArea;
+    var selectEmp=$("#nombreEmpleado").val();
+    var selectArea=$("#selectArea").val();
+
+    /* ASIGNANDO VALORES A SWITCHS */
+    if ($("#TodoECheck").is(":checked")) {
+        checkTodoEmp=1;
+    }
+    else{
+        checkTodoEmp=0;
+    }
+
+    if ($("#switchEmpS").is(":checked")) {
+        switchEmp=1;
+    }
+    else{
+        switchEmp=0;
+    }
+
+    if ($("#switchAreaS").is(":checked")) {
+        switchArea=1;
+    }
+    else{
+        switchArea=0;
+    }
+    /* ----------------------------------- */
+
+    /* VALIDAR QUE DEBO SELECCIONAR UN MODO DE SELECCION DE EMPLEADO */
+    if (!$("#switchEmpS").is(":checked") && !$("#switchAreaS").is(":checked") &&  !$("#adminCheck").is(":checked") ) {
+        $('#spanChEmple').show();
+        return false;
+    } else{
+        $('#spanChEmple').hide();
+    }
+    /* -------------------------------------------------------------------------- */
 
     $.ajax({
         type: "post",
         url: "/dispoStoreBiometrico",
         data: {
-           ippuerto,descripcionBio
+           ippuerto,descripcionBio,checkTodoEmp,switchEmp,switchArea,selectEmp,selectArea
         },
         statusCode: {
             419: function () {
@@ -672,6 +890,27 @@ function RegistraBiome(){
         success: function (data) {
             $('#tablaDips').DataTable().ajax.reload();
             $('#nuevoBiometrico').modal('hide');
+            $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo biometrico registrado.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -687,12 +926,53 @@ function EditaBiome(){
     var ippuerto_ed=IP_ed.concat(ppp_ed, puerto_ed);
     var version_ed=$('#versionFi_ed').val();
     var idDisposEd_ed= $('#idDisposiBio').val();
+
+    /* DATOS DE EMPLEADOS EN EDITAR */
+    var checkTodoEmp_ed;
+    var switchEmp_ed;
+    var switchArea_ed;
+    var selectEmp_ed=$("#nombreEmpleado_edit").val();
+    var selectArea_ed=$("#selectArea_edit").val();
+    /* ---------------------------------- */
+
+    /* ASIGNANDO VALORES A SWITCHS */
+    if ($("#TodoECheck_edit").is(":checked")) {
+        checkTodoEmp_ed=1;
+    }
+    else{
+        checkTodoEmp_ed=0;
+    }
+
+    if ($("#switchEmpS_edit").is(":checked")) {
+        switchEmp_ed=1;
+    }
+    else{
+        switchEmp_ed=0;
+    }
+
+    if ($("#switchAreaS_edit").is(":checked")) {
+        switchArea_ed=1;
+    }
+    else{
+        switchArea_ed=0;
+    }
+    /* ----------------------------------- */
+
+     /* VALIDAR QUE DEBO SELECCIONAR UN MODO DE SELECCION DE EMPLEADO */
+     if (!$("#switchEmpS_edit").is(":checked") && !$("#switchAreaS_edit").is(":checked") &&
+      !$("#adminCheck_edit").is(":checked") ) {
+        $('#spanChEmple_edit').show();
+        return false;
+    } else{
+        $('#spanChEmple_edit').hide();
+    }
+    /* -------------------------------------------------------------------------- */
     $.ajax({
         type: "post",
         url: "/actualizarBiometrico",
         data: {
             descripccionUb_ed, nserie_ed, ippuerto_ed,version_ed,
-            idDisposEd_ed
+            idDisposEd_ed,checkTodoEmp_ed,switchEmp_ed, switchArea_ed,selectEmp_ed,selectArea_ed
         },
         statusCode: {
             419: function () {
@@ -705,6 +985,27 @@ function EditaBiome(){
         success: function (data) {
             $('#tablaDips').DataTable().ajax.reload();
             $('#editarBiometrico').modal('hide');
+            $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nDispositivo editado correctamente.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -712,3 +1013,165 @@ function EditaBiome(){
     });
 
 }
+
+/* EVENTOS PARA SWITCHS DE EEMOLEADOS O AREAS */
+$("#switchEmpS").change(function (event) {
+    if ($("#switchEmpS").prop("checked")) {
+        $("#switchAreaS").prop("checked", false);
+        $("#selectArea").prop("disabled", true);
+        $("#nombreEmpleado").prop("disabled", false);
+        $("#selectArea > option").prop("selected", false);
+        $("#selectArea").trigger("change");
+        $("#divArea").hide();
+        $("#divEmpleado").show();
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+        $("#selectTodoCheck").prop("checked", false);
+        $("#TodoECheck").prop("checked", false);
+        $("#nombreEmpleado").prop("required", true);
+        $("#divTodoECheck").show();
+    } else {
+        $("#selectArea").prop("disabled", false);
+        $("#selectArea").prop("required", false);
+        $("#divEmpleado").hide();
+        $("#nombreEmpleado").prop("required", false);
+        $("#divTodoECheck").hide();
+    }
+});
+
+$("#switchAreaS").change(function (event) {
+    if ($("#switchAreaS").prop("checked")) {
+        $("#switchEmpS").prop("checked", false);
+        $("#nombreEmpleado").prop("disabled", true);
+        $("#selectArea").prop("disabled", false);
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+        $("#divEmpleado").hide();
+        $("#divArea").show();
+        $("#selectAreaCheck").prop("checked", false);
+        $("#nombreEmpleado").prop("required", false);
+        $("#selectArea").prop("required", true);
+        $("#divTodoECheck").hide();
+        $("#TodoECheck").prop("checked", false);
+    } else {
+        $("#nombreEmpleado").prop("disabled", false);
+        $("#selectArea").prop("required", false);
+        $("#divArea").hide();
+    }
+});
+/* ---------------------------------------------------- */
+
+/* CUADNO ACTIVO O DESACRIVO SELECCIONAR TODOS, INCLUYENDO NUEVOS */
+$("#TodoECheck").click(function () {
+    if ($("#TodoECheck").is(":checked")) {
+        $("#nombreEmpleado").prop("required", false);
+        $("#divEmpleado").hide();
+    } else {
+        $("#nombreEmpleado").prop("required", true);
+        $("#divEmpleado").show();
+    }
+});
+/* ------------------------------------------------------------------ */
+//select all empleados
+$("#selectTodoCheck").click(function () {
+    if ($("#selectTodoCheck").is(":checked")) {
+        $("#nombreEmpleado > option").prop("selected", "selected");
+        $("#nombreEmpleado").trigger("change");
+    } else {
+        $("#nombreEmpleado > option").prop("selected", false);
+        $("#nombreEmpleado").trigger("change");
+    }
+});
+
+//selct all area
+$("#selectAreaCheck").click(function () {
+    if ($("#selectAreaCheck").is(":checked")) {
+        $("#selectArea > option").prop("selected", "selected");
+        $("#selectArea").trigger("change");
+    } else {
+        $("#selectArea > option").prop("selected", false);
+        $("#selectArea").trigger("change");
+    }
+});
+/* ------------------------------------------------------------------------- */
+/* VALIDACIONES PARA EDITAR DISPOSITIVO BIOMETRICO */
+/* -------------------------------------------------------------------------- */
+/* EVENTOS PARA SWITCHS DE EEMOLEADOS O AREAS */
+$("#switchEmpS_edit").change(function (event) {
+    if ($("#switchEmpS_edit").prop("checked")) {
+        $("#switchAreaS_edit").prop("checked", false);
+        $("#selectArea_edit").prop("disabled", true);
+        $("#nombreEmpleado_edit").prop("disabled", false);
+        $("#selectArea_edit > option").prop("selected", false);
+        $("#selectArea_edit").trigger("change");
+        $("#divArea_edit").hide();
+        $("#divEmpleado_edit").show();
+        $("#nombreEmpleado_edit > option").prop("selected", false);
+        $("#nombreEmpleado_edit").trigger("change");
+        $("#selectTodoCheck_edit").prop("checked", false);
+        $("#TodoECheck_edit").prop("checked", false);
+        $("#nombreEmpleado_edit").prop("required", true);
+        $("#divTodoECheck_edit").show();
+    } else {
+        $("#selectArea_edit").prop("disabled", false);
+        $("#selectArea_edit").prop("required", false);
+        $("#divEmpleado_edit").hide();
+        $("#nombreEmpleado_edit").prop("required", false);
+        $("#divTodoECheck_edit").hide();
+    }
+});
+
+$("#switchAreaS_edit").change(function (event) {
+    if ($("#switchAreaS_edit").prop("checked")) {
+        $("#switchEmpS_edit").prop("checked", false);
+        $("#nombreEmpleado_edit").prop("disabled", true);
+        $("#selectArea_edit").prop("disabled", false);
+        $("#nombreEmpleado_edit > option").prop("selected", false);
+        $("#nombreEmpleado_edit").trigger("change");
+        $("#divEmpleado_edit").hide();
+        $("#divArea_edit").show();
+        $("#selectAreaCheck_edit").prop("checked", false);
+        $("#nombreEmpleado_edit").prop("required", false);
+        $("#selectArea_edit").prop("required", true);
+        $("#divTodoECheck_edit").hide();
+        $("#TodoECheck_edit").prop("checked", false);
+    } else {
+        $("#nombreEmpleado_edit").prop("disabled", false);
+        $("#selectArea_edit").prop("required", false);
+        $("#divArea_edit").hide();
+    }
+});
+/* ---------------------------------------------------- */
+
+/* CUADNO ACTIVO O DESACRIVO SELECCIONAR TODOS, INCLUYENDO NUEVOS */
+$("#TodoECheck_edit").click(function () {
+    if ($("#TodoECheck_edit").is(":checked")) {
+        $("#nombreEmpleado_edit").prop("required", false);
+        $("#divEmpleado_edit").hide();
+    } else {
+        $("#nombreEmpleado_edit").prop("required", true);
+        $("#divEmpleado_edit").show();
+    }
+});
+/* ------------------------------------------------------------------ */
+//select all empleados
+$("#selectTodoCheck_edit").click(function () {
+    if ($("#selectTodoCheck_edit").is(":checked")) {
+        $("#nombreEmpleado_edit > option").prop("selected", "selected");
+        $("#nombreEmpleado_edit").trigger("change");
+    } else {
+        $("#nombreEmpleado_edit > option").prop("selected", false);
+        $("#nombreEmpleado_edit").trigger("change");
+    }
+});
+
+//selct all area
+$("#selectAreaCheck_edit").click(function () {
+    if ($("#selectAreaCheck_edit").is(":checked")) {
+        $("#selectArea_edit > option").prop("selected", "selected");
+        $("#selectArea_edit").trigger("change");
+    } else {
+        $("#selectArea_edit > option").prop("selected", false);
+        $("#selectArea_edit").trigger("change");
+    }
+});

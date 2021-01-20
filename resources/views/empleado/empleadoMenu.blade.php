@@ -99,6 +99,11 @@ use App\proyecto_empleado;
     .inputfile-1+label:hover {
         background-color: #e3eaef !important;
     }
+
+    .large.tooltip-inner {
+    max-width: 185px;
+    width: 185px;
+    }
 </style>
 
 
@@ -3296,10 +3301,10 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="sw-default" class="label_txt">Num. Documento</label>
+                                        <label for="sw-default" class="label_txt">Núm. Documento</label>
                                         <span id="validNumDocumento" style="color: red;">*Campo
                                             Obligatorio</span>
-                                        <span id="numR" style="color: red;">*Num. registrado</span>
+                                        <span id="numR" style="color: red;">*Núm. registrado</span>
                                         <input type="text" class="form-control" name="numDocumento"
                                             id="numDocumento" onkeypress="return isNumeric(event)"
                                             oninput="maxLengthCheck(this)" tabindex="2" required>
@@ -3453,7 +3458,7 @@ use App\proyecto_empleado;
                                                 {{ $departamentos->name }}</option>
                                             @endforeach
                                         </select>
-                                    </div>  
+                                    </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_select"><br></label>
                                         <select class="form-control " placeholder="Provincia " name="provincia"
@@ -3484,7 +3489,7 @@ use App\proyecto_empleado;
                                         <select class="form-control " placeholder="Provincia " name="provincia"
                                             id="provincia" tabindex="15" required>
                                             <option value="">Provincia</option>
-                                        </select> 
+                                        </select>
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_select"><br></label>
@@ -3511,7 +3516,7 @@ use App\proyecto_empleado;
                                                <label class="custom-control custom-radio" data-toggle="tooltip" data-placement="right" title="" data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
                                                 <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
                                                 Personalizado
-                                            </label> 
+                                            </label>
                                             </div>
                                         </div>
                                     </div>
@@ -4437,7 +4442,7 @@ use App\proyecto_empleado;
                                         style="background-color: #fcfcfc;" tabindex="1">
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sw-default" class="label_txt">Num. Documento</label>
+                                    <label for="sw-default" class="label_txt">Núm. Documento</label>
                                     <span id="v_validNumDocumento" style="color: red;">*Campo Obligatorio</span>
                                     <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;" tabindex="2">
                                 </div>
@@ -4477,7 +4482,7 @@ use App\proyecto_empleado;
                                         <div class="col-md-4 pAnio pleft">
                                             <select class="form-control" style="padding-left: 5px; padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
                                                 <option value="0">Año</option>
-                                                @for ($i = 1950; $i <2011; $i++) 
+                                                @for ($i = 1950; $i <2011; $i++)
                                                     <option class="" value="{{$i}}">{{$i}} </option>
                                                 @endfor
                                             </select>
@@ -4649,7 +4654,7 @@ use App\proyecto_empleado;
                                             </label>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div> <!-- end row -->
                         </div>
                         <div id="swE-default-step-2" style="font-size: 12px!important">
@@ -5617,7 +5622,7 @@ use App\proyecto_empleado;
                                     <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV" style="background-color: #fcfcfc;" disabled>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="label_txt" for="sw-default">Num. Documento</label>
+                                    <label class="label_txt" for="sw-default">Núm. Documento</label>
                                         <input type="text" class="form-control" name="v_numDocumentoV" id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
                                 </div>
                                 <div class="col-sm-4">
