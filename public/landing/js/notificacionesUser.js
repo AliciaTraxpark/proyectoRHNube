@@ -86,9 +86,7 @@ function showNotificaciones() {
                                     </p>
                                 </a>`;
                             }
-                            
                         }
-
                         grupo = a + grupo;
                     } else {
                         if(data[i].data[0].asunto=='birthday'){

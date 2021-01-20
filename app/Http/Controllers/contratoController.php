@@ -84,7 +84,7 @@ class contratoController extends Controller
             ->leftJoin('condicion_pago as cp', 'cp.id', 'c.id_condicionPago')
             ->join('historial_empleado as he', 'he.idContrato', 'c.id')
             ->leftJoin('doc_empleado as de', 'de.idhistorial_empleado', '=', 'he.idhistorial_empleado')
-            ->select('tc.contrato_id as tipoContrato', 'c.id_condicionPago as condPago', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'c.id as idC', 'he.fecha_alta as fechaAlta', 'he.fecha_baja as fechaBaja', 'c.estado')
+            ->select('tc.contrato_id as tipoContrato', 'c.id_condicionPago as condPago', 'c.fechaInicio', 'c.fechaFinal', 'c.monto', 'c.id as idC', 'he.fecha_alta as fechaAlta', 'he.fecha_baja as fechaBaja', 'c.estado', 'c.notiTiempo')
             ->selectRaw('GROUP_CONCAT(de.rutaDocumento) as rutaDocumento')
             ->where('c.id', '=', $id)
             ->get()
@@ -102,6 +102,7 @@ class contratoController extends Controller
         $contrato->fechaFinal = $request->get('fechaFinal');
         $contrato->monto = $request->get('monto');
         $contrato->id_condicionPago = $request->get('condicionPago');
+        $contrato->notiTiempo = $request->get('notiTiempo');
         $contrato->save();
 
         //* HISTORIAL DE EMPLEADO
@@ -147,6 +148,7 @@ class contratoController extends Controller
         $contrato->monto = $request->get('monto');
         $contrato->idEmpleado = $request->get('idEmpleado');
         $contrato->estado = 1;
+        $contrato->notiTiempo = $request->get('notiTiempo');
         $contrato->save();
 
         $idContrato = $contrato->id;

@@ -426,7 +426,7 @@
         }
     </style>
     <header id="header-section">
-        <nav class="navbar  pl-3 pl-sm-0" id="navbar">
+        <nav class="navbar  pl-3 pl-sm-0" style="padding-bottom: 20px;" id="navbar">
             <div class="container pb-0 pt-2">
                 <div class="col-md-5 col-sm-4 col-12 colResp" style="margin-bottom: 0px;padding-left: 40px; height: 80px !important;">
                     <div class="navbar-brand-wrapper colResp" >
@@ -576,7 +576,7 @@
     <div class="container" style="margin-top: 5%; margin-bottom: 5%;">
         <div class="row">
             <div class="col-lg-6 txt_home" data-aos="fade-right">
-                <h3 class="text-center" style="font-size: 23px; font-weight: 500 !important;">¿Por qué registrar tu organización en RH nube?</h3>
+                <h3 class="text-center" style="font-size: 23px; font-weight: 500 !important;">Una nueva forma de administrar personal</h3>
                 <div class="col-lg-12 col-xl-12 text-center p-0">
                     <p class="py-4 m-0 text-muted " style="font-size: 16px">
                         Porque ahora "Administrar personal" será más sencillo y eficaz. El registro es fácil,
@@ -847,7 +847,7 @@
             return false;        
         }
         function validaTexto(event) {
-            if(event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32 || event.charCode == 46){
+            if(event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32 || event.charCode == 46 || event.charCode == 225 || event.charCode == 233 || event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250){
               return true;
              }
             return false;        

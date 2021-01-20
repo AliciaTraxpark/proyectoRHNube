@@ -166,5 +166,6 @@ class NotificacionController extends Controller
        $affected = DB::table('notifications')
                   ->where('id', $request->id)
                   ->update(['read_at' => Carbon::now()]);            
+
     }
 }

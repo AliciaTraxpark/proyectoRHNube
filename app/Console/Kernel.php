@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\BirthdayUsers',
+        'App\Console\Commands\HappyBirthday',
     ];
 
     /**
@@ -25,7 +26,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('telescope:prune --hours=12')->hourly();
-       $schedule->command('birthday:users')->everyMinute();
+       $schedule->command('birthday:users')->dailyAt('5:01');
+       $schedule->command('happyBirth:users')->dailyAt('5:01');
+       $schedule->command('happyBirthdayMail:users')->dailyAt('5:01');
+       $schedule->command('finContrato:users')->dailyAt('5:01');
     }
 
     /**

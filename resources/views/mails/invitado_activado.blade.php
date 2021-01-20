@@ -317,7 +317,7 @@
                                                                 <td align="center"
                                                                 style="padding:0;Margin:0;padding-top:5px;padding-bottom:15px;font-size:0px">
                                                                 <img class="adapt-img"
-                                                                src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png" alt
+                                                                    src="https://i.ibb.co/1R9HMHZ/RH-CUADRADO-NUBE.png" alt
                                                                     style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                     width="175"></td>
                                                             </tr>

@@ -80,7 +80,7 @@ use App\User;
             padding-bottom: 8px !important;
         }
 
-        @media (min-width: 0px) {
+        @media (min-width: 768px) {
             footer {
               font-size: 15px;
               color: #555;
@@ -94,6 +94,18 @@ use App\User;
             }
         }
 
+        @media(min-width: 1025px){
+            body{
+                padding-bottom: 15px !important; 
+            }
+        }
+
+        @media(max-width: 575px){
+            .btn_rh{
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 
     <header id="header-section">
@@ -207,13 +219,16 @@ use App\User;
                                             <input type="file" name="file" class="form-control">
                                         </div>
                                         <div class="col-12 col-sm-5 col-md-4">
-                                            <button class="btn btn-sm" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" mr-2" alt="" />Importar empleados
+                                            <div class="form-group">
+                                                <button class="btn btn-sm btn_rh" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" " alt="" />Importar empleados
                                             </button>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-md-3 text-right">
+                            <div class="col-md-12 text-right mt-3">
                                 @if (session('empleados'))
                                     <button type="button" style="font-size: 12.25px; padding-top: 5.5px; padding-bottom: 4.5px;" id="btnRegistraBD" class="boton btn-sm " onclick="agregar()">Validar y registrar</button>
                                 @endif
@@ -311,7 +326,7 @@ use App\User;
                                             @else
                                             <a href="{{('/empleados')}}">
                                                 @endif
-                                                <button class="boton btn btn-default mr-1">&nbsp; Aceptar
+                                                <button class="boton btn btn-default mr-1 btn-sm">&nbsp; Aceptar
                                                     &nbsp;</button></a>
                                             <br><br>
                                     </div>
