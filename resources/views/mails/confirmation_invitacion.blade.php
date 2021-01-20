@@ -326,7 +326,7 @@ style="width:100%;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-
                                                                 <td align="center"
                                                                 style="padding:0;Margin:0;padding-top:5px;padding-bottom:15px;font-size:0px">
                                                                 <img class="adapt-img"
-                                                                    src="https://i.ibb.co/CnDQDp1/RH-CUADRADO-NUBE.png" alt
+                                                                    src="https://i.ibb.co/1R9HMHZ/RH-CUADRADO-NUBE.png" alt
                                                                     style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                                     width="175"></td>
                                                             </tr>

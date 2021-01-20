@@ -877,7 +877,7 @@
                                 </div> <!-- end col -->
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Num. Documento</label>
+                                        <label for="sw-default">Núm. Documento</label>
                                         <input type="text" class="form-control" name="v_numDocumentoV"
                                             id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
                                     </div>

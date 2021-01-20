@@ -32,18 +32,18 @@ function actividad_empleado() {
                     }
                     if (data[i].estadoActividadEmpleado == 1) {
                         if (data[i].eliminacionActividadEmpleado == 0) {
-                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 15px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}" disabled>
                                 <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
                             </div></td></tr>`;
                         } else {
-                            td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
+                            td += `<td><div class="custom-control custom-switch" style="margin-left: 15px !important;">
                                 <input type="checkbox" checked="" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}">
                                 <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
                             </div></td></tr>`;
                         }
                     } else {
-                        td += `<td><div class="custom-control custom-switch" style="margin-left: 35px !important;">
+                        td += `<td><div class="custom-control custom-switch" style="margin-left: 15px !important;">
                         <input type="checkbox" class="custom-control-input" id="customSwitchActReg${data[i].Activi_id}">
                         <label class="custom-control-label" for="customSwitchActReg${data[i].Activi_id}"></label>
                       </div></td></tr>`;

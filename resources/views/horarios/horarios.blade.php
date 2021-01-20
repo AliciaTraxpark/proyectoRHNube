@@ -238,6 +238,15 @@ use Carbon\Carbon;
             color: #fff;
             font-size: 15px !important;
         }
+        @media (max-width: 767px){
+            .colResp {
+                justify-content: center !important;
+                padding: 10px 0px !important;
+            }
+        }
+        .colResp{
+            padding-left: 40px;
+        }
     </style>
     <div id="preloader">
         <div id="status">
@@ -249,19 +258,15 @@ use Carbon\Carbon;
         </div>
     </div>
     <header id="header-section">
-        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
-            <div class="container pb-3">
-                <div class="col-md-2 col-xl-2">
-                    <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
-                    </div>
+        <nav class="navbar navbar-expand-lg" id="navbar">
+            <div class="col-sm-2 col-md-2 col-xl-2">
+                <div class="navbar-brand-wrapper d-flex w-100 colResp">
+                    <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
                 </div>
-                <div class="col-md-7 col-xl-7 text-left pl-5">
-                    <h5 style="color: #ffffff">Gestión de Horarios</h5>
-                    <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
-                </div>
-
-
+            </div>
+            <div class="col-sm-10 col-md-10 col-xl-8 text-center">
+                <h5 style="color: #ffffff">Gestión de Horarios</h5>
+                <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
             </div>
         </nav>
     </header>
@@ -274,14 +279,14 @@ use Carbon\Carbon;
                         color: #222222;   padding-left:60px; padding-right: 80px; ">
                             <!--<h4 class="header-title mt-0 mb-1">Basic Data Table</h4>-->
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-6 col-sm-6 col-md-6">
                                     <button class="btn btn-sm btn-primary" id="btnasignar"
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
                                         onclick="javascript:obtenerHorarios()"><img
                                             src="{{asset('admin/images/calendarioHor.svg')}}" height="15">&nbsp; Asignar
                                         horarios</button>
                                 </div>
-                                <div class=" col-md-6 col-xl-6 text-right">
+                                <div class="col-6 col-sm-6 col-md-6 text-right">
                                     <button class="btn btn-sm btn-primary" onclick="abrirHorario()" id="btnNuevoHorario"
                                         style="background-color: #183b5d;border-color:#62778c">+ Nuevo Horario</button>
 
@@ -940,7 +945,7 @@ use Carbon\Carbon;
             {{-- REGISTRAR NUEVO HORARIO --}}
             <div id="horarioAgregar" class="modal fade" role="dialog" aria-labelledby="horarioAgregar"
                 aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center" style="width: 850px;">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center" style="max-width: 850px;">
                     <input type="hidden" id="idPausaMayor">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
@@ -1083,19 +1088,16 @@ use Carbon\Carbon;
                                                             <label for="" style="font-weight:600">Descripción</label>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Inicio
-                                                                pausa(24h)</label>
+                                                            <label for="" style="font-weight:600">Inicio pausa(24h)</label>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <label for=""
-                                                                style="font-weight:600">Tolerancia(Min)</label>
+                                                            <label for="" style="font-weight:600">Tolerancia(Min)</label>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <label for="" style="font-weight:600">Fin pausa(24h)</label>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <label for=""
-                                                                style="font-weight:600">Tolerancia(Min)</label>
+                                                            <label for="" style="font-weight:600">Tolerancia(Min)</label>
                                                         </div>
                                                         <div class="col-md-1">
                                                             <label for="" style="font-weight:600">Inactivar</label>
@@ -1476,13 +1478,18 @@ use Carbon\Carbon;
             {{-- FINALIZAR --}}
         </div>
     </div>
-    <footer class="border-top">
-        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos
-            reservados.</p>
+    
+    </div>
+    </div>
+    <footer class="border-top" style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">
+        <div class="col-md-12 text-center" style="margin-top: 10px; border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+        </div>
     </footer>
-    </div>
-    </div>
-
 
     <!-- Vendor js -->
     {{-- <script src="{{asset('landing/vendors/aos/js/aos.js')}}"></script> --}}

@@ -46,6 +46,10 @@ use Carbon\Carbon;
         .form-control:disabled {
             background-color: #f1f0f0;
         }
+        .large.tooltip-inner {
+    max-width: 185px;
+    width: 185px;
+    }
     </style>
 
 
@@ -769,8 +773,7 @@ use Carbon\Carbon;
         max-width: 130px!important;
     } */
         .container {
-            margin-left: 40px;
-            margin-right: 28px;
+            
         }
 
         tr:first-child>td>.fc-day-grid-event {
@@ -990,31 +993,58 @@ use Carbon\Carbon;
         .inputfile-1+label:hover {
             background-color: #e3eaef !important;
         }
+        @media (max-width: 767px){
+            .colResp {
+                justify-content: center !important;
+                padding: 10px 0px !important;
+            }
+        }
+        .radio_rsp{
+            padding: 0 10%;
+        }
+
+        @media (max-width: 447px) {
+            .radio_rsp{
+                padding: 0 0 !important;
+            }
+        }
+
+        @media (max-width: 799px) and (min-width: 447px){
+            .radio_rsp{
+                padding: 0 5% !important;
+            }
+        }
+        @media(min-width: 386px) and (max-width: 487px){
+            .th_rh{
+                padding: 0 35px !important;
+            }
+        }
     </style>
 
     <header id="header-section">
-        <nav class="navbar navbar-expand-lg  pl-sm-0" id="navbar">
-            <div class="container pb-3">
-                <div class="col-md-2 col-xl-2 mr-4 p-0">
-                    <div class="navbar-brand-wrapper d-flex w-100">
-                        <img src="{{asset('landing/images/NUBE_SOLA.png')}}" height="69">
-                    </div>
-                </div>
-                <div class="col-md-7 col-xl-7 text-left">
-                    <h5 style="color: #ffffff">Gestión de empleados</h5>
-                    <label for="" class="blanco font-italic">Tienes 2 minutos para registrar tu primer empleado</label>
-                </div>
-                <div class=" col-md-5 col-xl-5">
-                    <a href="{{('/empleado/cargar')}}"> <button class="btn btn-sm btn-primary"
-                            style="background-color: #183b5d;border-color:#62778c"><img
-                                src="{{asset('admin/images/subir.ico')}}" height="25" class="mr-1">Carga
-                            masiva emp.</button></a> &nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"
-                        id="cargaMasivaF"><img src="{{asset('admin/images/image.ico')}}" height="25" class="mr-1">Carga
-                        masiva fotos</button>
+        <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+            <div class="col-sm-3 col-md-2 col-xl-2 logo_rh">
+                <div class="navbar-brand-wrapper d-flex w-100 colResp">
+                    <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
                 </div>
             </div>
+            <div class="col-sm-6 col-md-8 col-xl-8 text-center">
+                <h5  style="color: #ffffff">Gestión de empleados</h5>
+                <p for="" class="blanco">Tienes 2 minutos para registrar tu primer empleado</p>
+            </div>
+
+            <div class="col-sm-3 col-md-2 col-xl-2 text-center">
+                <a href="{{('/empleado/cargar')}}"> 
+                    <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c; margin-bottom: 2px;">
+                        <img src="{{asset('admin/images/subir.ico')}}" height="25" class="">Carga masiva emp.
+                    </button>
+                </a> 
+                <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c" id="cargaMasivaF">
+                    <img src="{{asset('admin/images/image.ico')}}" height="25" class="">Carga masiva fotos
+                </button>
+            </div>
         </nav>
+        
     </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
@@ -1030,7 +1060,7 @@ use Carbon\Carbon;
                                     <h5 style="font-size: 16px!important">Búsqueda personalizada</h5>
                                 </div>
                                 <div class=" col-md-6 col-xl-6 text-right">
-                                    <button class="btn btn-sm btn-primary" id="formNuevoE"
+                                    <button class="btn btn-sm btn-primary mb-2" id="formNuevoE"
                                         style="background-color: #e3eaef;border-color:#e3eaef;color:#3d3d3d">
                                         Nuevo</button>
                                 </div>
@@ -1770,7 +1800,7 @@ use Carbon\Carbon;
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="javascript:nuevaAltaReg()">
+                                <form action="javascript:nuevaAltaReg()" onsubmit="javascript:validate(event)">
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-xl-12">
@@ -1834,7 +1864,7 @@ use Carbon\Carbon;
                                             <div class="alert alert-danger" role="alert" style="display: none;"
                                                 id="alertErrorFechaReg"></div>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_dia_fecha" id="m_dia_fecha"
                                                         required="">
                                                         <option value="0">Día</option>
@@ -1843,7 +1873,7 @@ use Carbon\Carbon;
                                                             @endfor
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_mes_fecha" id="m_mes_fecha"
                                                         required>
                                                         <option value="0">Mes</option>
@@ -1861,7 +1891,7 @@ use Carbon\Carbon;
                                                         <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control"
                                                         style="padding-left: 5px;padding-right: 5px;" name="m_ano_fecha"
                                                         id="m_ano_fecha" required>
@@ -1910,7 +1940,7 @@ use Carbon\Carbon;
                                                     *Fecha incorrecta.
                                                 </span>
                                                 <div class="row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-4">
                                                         <select class="form-control" name="mf_dia_fecha"
                                                             id="mf_dia_fecha" required="">
                                                             <option value="0">Día</option>
@@ -1919,7 +1949,7 @@ use Carbon\Carbon;
                                                                 @endfor
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-4">
                                                         <select class="form-control" name="mf_mes_fecha"
                                                             id="mf_mes_fecha" required>
                                                             <option value="0">Mes</option>
@@ -1937,7 +1967,7 @@ use Carbon\Carbon;
                                                             <option class="" value="12">Diciembre</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-4">
                                                         <select class="form-control"
                                                             style="padding-left: 5px;padding-right: 5px;"
                                                             name="mf_ano_fecha" id="mf_ano_fecha" required>
@@ -1952,16 +1982,22 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 pt-3 d-flex inline">
+                                            <label class="col-md-10 pt-1">¿Cada cuánto tiempo desea que se le notifique?<span style="font-weight: 200">(Días)</span></label>
+                                            <select class="form-control col-2" name="noti_dia_fecha" id="noti_dia_fecha" required="">
+                                                <option value="0">Día</option>
+                                            @for ($i = 1; $i <32; $i++) 
+                                                <option class="" value=" {{ $i }} "> {{ $i }} </option>
+                                            @endfor
+                                            </select>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button"
-                                    onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');"
-                                    class="btn btn-sm btn-light" data-dismiss="modal">
+                                <button type="button" onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');" class="btn btn-sm btn-light" data-dismiss="modal">
                                     Cerrar
                                 </button>
-                                <button type="submit" class="btn btn-sm" style="background-color:#163552;"
-                                    id="reg_guardarAlta">Guardar</button>
+                                <button type="submit" class="btn btn-sm" style="background-color:#163552;" id="reg_guardarAlta">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -2055,7 +2091,7 @@ use Carbon\Carbon;
                                             <div class="alert alert-danger" role="alert" style="display: none;"
                                                 id="alertErrorFechaDetalleReg"></div>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD"
                                                         required>
                                                         <option value="0">Día</option>
@@ -2064,7 +2100,7 @@ use Carbon\Carbon;
                                                             @endfor
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control" name="m_mes_fechaD" id="m_mes_fechaD"
                                                         required>
                                                         <option value="0">Mes</option>
@@ -2082,7 +2118,7 @@ use Carbon\Carbon;
                                                         <option class="" value="12">Diciembre</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-4">
                                                     <select class="form-control"
                                                         style="padding-left: 5px;padding-right: 5px;"
                                                         name="m_ano_fechaD" id="m_ano_fechaD" required>
@@ -2132,7 +2168,7 @@ use Carbon\Carbon;
                                                     *Fecha incorrecta.
                                                 </span>
                                                 <div class="row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-4">
                                                         <select class="form-control" name="mf_dia_fechaD"
                                                             id="mf_dia_fechaD" required>
                                                             <option value="0">Día</option>
@@ -2141,7 +2177,7 @@ use Carbon\Carbon;
                                                                 @endfor
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-4">
                                                         <select class="form-control" name="mf_mes_fechaD"
                                                             id="mf_mes_fechaD" required>
                                                             <option value="0">Mes</option>
@@ -2159,7 +2195,7 @@ use Carbon\Carbon;
                                                             <option class="" value="12">Diciembre</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-4">
                                                         <select class="form-control"
                                                             style="padding-left: 5px;padding-right: 5px;"
                                                             name="mf_ano_fechaD" id="mf_ano_fechaD" required>
@@ -2521,7 +2557,7 @@ use Carbon\Carbon;
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" id="idContratoD">
-                                <form action="javascript:editarDetalleCE()">
+                                <form action="javascript:editarDetalleCE()" onsubmit="javascript:validate(event)">
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-xl-6">
@@ -2726,6 +2762,15 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 pt-3 d-flex inline">
+                                            <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-2" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
+                                                <option value="0">Día</option>
+                                            @for ($i = 1; $i <32; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }} </option>
+                                            @endfor
+                                            </select>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -2754,7 +2799,7 @@ use Carbon\Carbon;
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="javascript:nuevaAltaEditar()">
+                                <form action="javascript:nuevaAltaEditar()" onsubmit="javascript:validate(event)">
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-xl-12">
@@ -3184,8 +3229,7 @@ use Carbon\Carbon;
                         <div class="modal-content">
                             <div class="modal-header" style="background-color:#163552;">
                                 <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                    Detalles
-                                    de contrato
+                                    Detalles de contrato
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                     onclick="$('#verEmpleadoDetalles').modal('show');">
@@ -3329,6 +3373,15 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 pt-3 d-flex inline">
+                                            <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
+                                                <option value="0">Día</option>
+                                            @for ($i = 1; $i <32; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }} </option>
+                                            @endfor
+                                            </select>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -3381,262 +3434,222 @@ use Carbon\Carbon;
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+
+                                                <div class="col-sm-4">
                                                     <input type="hidden" name="idEmpleado" id="idEmpleado">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Tipo Documento</label>
-                                                        <span id="validDocumento" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <select class="form-control" placeholder="Tipo Documento "
-                                                            name="documento" id="documento" tabindex="1" required>
-                                                            <option value="">Seleccionar</option>
-                                                            @foreach ($tipo_doc as $tipo_docs)
-                                                            <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
-                                                                {{ $tipo_docs->tipoDoc_descripcion }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Apellido Paterno</label>
-                                                        <span id="validApPaterno" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <input type="text" class="form-control" name="apPaterno"
-                                                            id="apPaterno" tabindex="4" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Correo Electrónico</label>
-                                                        <span id="validCorreo" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <span id="emailR" style="color: red;">*Correo
-                                                            registrado</span>
-                                                        <input type="email" class="form-control" id="email" name="email"
-                                                            tabindex="7">
-                                                    </div>
-                                                </div> <!-- end col -->
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Num. Documento</label>
-                                                        <span id="validNumDocumento" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <span id="numR" style="color: red;">*Num. registrado</span>
-                                                        <input type="text" class="form-control" name="numDocumento"
-                                                            id="numDocumento" onkeypress="return isNumeric(event)"
-                                                            oninput="maxLengthCheck(this)" tabindex="2" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Apellido Materno</label>
-                                                        <span id="validApMaterno" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <input type="text" class="form-control" name="apMaterno"
-                                                            id="apMaterno" tabindex="5" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Celular</label>
-                                                        <span id="validCel" style="color: red;">*Número
-                                                            incorrecto.</span>
-                                                        <div class="row">
-                                                            <div class="col-4 pselect">
-                                                                <select class="form-control" id="codigoCelular">
-                                                                    <option value="+51" selected>+51</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <input type="number" class="form-control" name="celular"
-                                                                    id="celular" tabindex="8" maxlength="9"
-                                                                    onkeypress="return isNumeric(event)"
-                                                                    oninput="maxLengthCheck(this)"
-                                                                    pattern="/^9{1}|[0-9]{8,8}+">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <label for="sw-default">Tipo Documento</label>
+                                                    <span id="validDocumento" style="color: red;">*Campo
+                                                        Obligatorio</span>
+                                                    <select class="form-control" placeholder="Tipo Documento "
+                                                        name="documento" id="documento" tabindex="1" required>
+                                                        <option value="">Seleccionar</option>
+                                                        @foreach ($tipo_doc as $tipo_docs)
+                                                        <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
+                                                            {{ $tipo_docs->tipoDoc_descripcion }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Fecha Nacimiento</label>
-                                                        <span id="validFechaC" style="color: red;display: none;">*Fecha
-                                                            incorrecta.</span>
-                                                        <div class="row fechasResponsive">
-                                                            <div class="col-md-4 prigth">
-                                                                <select class="form-control" name="dia_fecha"
-                                                                    id="dia_fecha" required="">
-                                                                    <option value="0">Día</option>
-                                                                    @for ($i = 1; $i <32; $i++) <option class=""
-                                                                        value="{{$i}}">
-                                                                        {{$i}}</option>
-                                                                        @endfor
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 prigth pleft">
-                                                                <select class="form-control" name="mes_fecha"
-                                                                    id="mes_fecha" required="">
-                                                                    <option value="0">Mes</option>
-                                                                    <option class="" value="1">Ene.</option>
-                                                                    <option class="" value="2">Feb.</option>
-                                                                    <option class="" value="3">Mar.</option>
-                                                                    <option class="" value="4">Abr.</option>
-                                                                    <option class="" value="5">May.</option>
-                                                                    <option class="" value="6">Jun.</option>
-                                                                    <option class="" value="7">Jul.</option>
-                                                                    <option class="" value="8">Ago.</option>
-                                                                    <option class="" value="9">Set.</option>
-                                                                    <option class="" value="10">Oct.</option>
-                                                                    <option class="" value="11">Nov.</option>
-                                                                    <option class="" value="12">Dic.</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 pAnio pleft">
-                                                                <select class="form-control" style="padding-left: 5px;
-                                                    padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
-                                                                    <option value="0">Año</option>
-                                                                    @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                                        value="{{$i}}">
-                                                                        {{$i}}
-                                                                        </option>
-                                                                        @endfor
-                                                                </select>
-                                                            </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Num. Documento</label>
+                                                    <span id="validNumDocumento" style="color: red;">*Campo Obligatorio</span>
+                                                    <span id="numR" style="color: red;">*Num. registrado</span>
+                                                    <input type="text" class="form-control" name="numDocumento" id="numDocumento" onkeypress="return isNumeric(event)"
+                                                        oninput="maxLengthCheck(this)" tabindex="2" required>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Fecha Nacimiento</label>
+                                                    <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                                    <div class="row fechasResponsive">
+                                                        <div class="col-4 prigth">
+                                                            <select class="form-control" name="dia_fecha"
+                                                                id="dia_fecha" required="">
+                                                                <option value="0">Día</option>
+                                                                @for ($i = 1; $i <32; $i++) <option class=""
+                                                                    value="{{$i}}">
+                                                                    {{$i}}</option>
+                                                                    @endfor
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-4 prigth pleft">
+                                                            <select class="form-control" name="mes_fecha"
+                                                                id="mes_fecha" required="">
+                                                                <option value="0">Mes</option>
+                                                                <option class="" value="1">Ene.</option>
+                                                                <option class="" value="2">Feb.</option>
+                                                                <option class="" value="3">Mar.</option>
+                                                                <option class="" value="4">Abr.</option>
+                                                                <option class="" value="5">May.</option>
+                                                                <option class="" value="6">Jun.</option>
+                                                                <option class="" value="7">Jul.</option>
+                                                                <option class="" value="8">Ago.</option>
+                                                                <option class="" value="9">Set.</option>
+                                                                <option class="" value="10">Oct.</option>
+                                                                <option class="" value="11">Nov.</option>
+                                                                <option class="" value="12">Dic.</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-4 pAnio pleft">
+                                                            <select class="form-control" style="padding-left: 5px; padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
+                                                                <option value="0">Año</option>
+                                                                @for ($i = 1950; $i <2011; $i++) 
+                                                                    <option class="" value="{{$i}}"> {{$i}} </option>
+                                                                @endfor
+                                                            </select>
 
                                                         </div>
-                                                        {{--  <input type="text" data-custom-class="form-control" id="fechaN" tabindex="3"
-                                                data-format="YYYY-MM-DD" data-template="D MMM YYYY" name="date"> --}}
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Nombres</label>
-                                                        <span id="validNombres" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <input type="text" class="form-control" name="nombres"
-                                                            id="nombres" tabindex="6" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Teléfono</label>
-                                                        <div class="row">
-                                                            <div class="col-4 pselect">
-                                                                <select class="form-control" id="codigoTelefono">
-                                                                    <option value="01" selected>01</option>
-                                                                    <option value="41">41</option>
-                                                                    <option value="43">43</option>
-                                                                    <option value="83">83</option>
-                                                                    <option value="54">54</option>
-                                                                    <option value="66">66</option>
-                                                                    <option value="76">76</option>
-                                                                    <option value="84">84</option>
-                                                                    <option value="67">67</option>
-                                                                    <option value="62">62</option>
-                                                                    <option value="56">56</option>
-                                                                    <option value="64">64</option>
-                                                                    <option value="44">44</option>
-                                                                    <option value="74">74</option>
-                                                                    <option value="65">65</option>
-                                                                    <option value="82">82</option>
-                                                                    <option value="53">53</option>
-                                                                    <option value="63">63</option>
-                                                                    <option value="73">73</option>
-                                                                    <option value="51">51</option>
-                                                                    <option value="42">42</option>
-                                                                    <option value="52">52</option>
-                                                                    <option value="72">72</option>
-                                                                    <option value="61">61</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <input type="number" class="form-control"
-                                                                    name="telefono" id="telefono" tabindex="9"
-                                                                    maxlength="9" onkeypress="return isNumeric(event)"
-                                                                    oninput="maxLengthCheck(this)">
-                                                            </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Apellido Paterno</label>
+                                                    <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
+                                                    <input type="text" class="form-control" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Apellido Materno</label>
+                                                    <span id="validApMaterno" style="color: red;">*Campo Obligatorio</span>
+                                                    <input type="text" class="form-control" name="apMaterno" id="apMaterno" tabindex="5" required>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Nombres</label>
+                                                    <span id="validNombres" style="color: red;">*Campo Obligatorio</span>
+                                                    <input type="text" class="form-control" name="nombres" id="nombres" tabindex="6" required>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                     <label for="sw-default">Correo Electrónico</label>
+                                                    <span id="validCorreo" style="color: red;">*Campo Obligatorio</span>
+                                                    <span id="emailR" style="color: red;">*Correo registrado</span>
+                                                    <input type="email" class="form-control" id="email" name="email" tabindex="7">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Celular</label>
+                                                    <span id="validCel" style="color: red;">*Número incorrecto.</span>
+                                                    <div class="row">
+                                                        <div class="col-4 pselect">
+                                                            <select class="form-control" id="codigoCelular">
+                                                                <option value="+51" selected>+51</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <input type="number" class="form-control" name="celular" id="celular" tabindex="8" maxlength="9"
+                                                                onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" pattern="/^9{1}|[0-9]{8,8}+">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Teléfono</label>
+                                                    <div class="row">
+                                                        <div class="col-4 pselect">
+                                                            <select class="form-control" id="codigoTelefono">
+                                                                <option value="01" selected>01</option>
+                                                                <option value="41">41</option>
+                                                                <option value="43">43</option>
+                                                                <option value="83">83</option>
+                                                                <option value="54">54</option>
+                                                                <option value="66">66</option>
+                                                                <option value="76">76</option>
+                                                                <option value="84">84</option>
+                                                                <option value="67">67</option>
+                                                                <option value="62">62</option>
+                                                                <option value="56">56</option>
+                                                                <option value="64">64</option>
+                                                                <option value="44">44</option>
+                                                                <option value="74">74</option>
+                                                                <option value="65">65</option>
+                                                                <option value="82">82</option>
+                                                                <option value="53">53</option>
+                                                                <option value="63">63</option>
+                                                                <option value="73">73</option>
+                                                                <option value="51">51</option>
+                                                                <option value="42">42</option>
+                                                                <option value="52">52</option>
+                                                                <option value="72">72</option>
+                                                                <option value="61">61</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <input type="number" class="form-control"
+                                                                name="telefono" id="telefono" tabindex="9"
+                                                                maxlength="9" onkeypress="return isNumeric(event)"
+                                                                oninput="maxLengthCheck(this)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
                                                 <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Dirección</label>
-                                                        <input type="text" class="form-control" name="direccion"
-                                                            id="direccion" tabindex="10" required>
-                                                    </div>
+                                                    <label for="sw-default">Dirección</label>
+                                                    <input type="text" class="form-control" name="direccion" id="direccion" tabindex="10" required>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Dirección Domiciliara</label>
-                                                        <select class="form-control" placeholder="Departamento"
-                                                            name="departamento" id="dep" tabindex="11" required>
-                                                            <option value="">Departamento</option>
-                                                            @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{ $departamentos->id }}">
-                                                                {{ $departamentos->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default">Lugar Nacimiento</label>
-                                                        <select class="form-control" placeholder="Departamento"
-                                                            name="departamento" id="departamento" tabindex="14"
-                                                            required>
-                                                            <option value="">Departamento</option>
-                                                            @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{ $departamentos->id }}">
-                                                                {{ $departamentos->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="normal" for="">Género</label>
-                                                        <span id="validGenero" style="color: red;">*Campo
-                                                            Obligatorio</span>
-                                                        <label class="custom-control custom-radio">
-                                                            <input type="radio" name="tipo" id="tipo" value="Femenino"
-                                                                required>
-                                                            Femenino
-                                                        </label>
-                                                    </div>
+
+
+
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Dirección Domiciliara</label>
+                                                    <select class="form-control" placeholder="Departamento"
+                                                        name="departamento" id="dep" tabindex="11" required>
+                                                        <option value="">Departamento</option>
+                                                        @foreach ($departamento as $departamentos)
+                                                        <option class="" value="{{ $departamentos->id }}">
+                                                            {{ $departamentos->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Provincia "
-                                                            name="provincia" id="prov" tabindex="12" required>
-                                                            <option value="">Provincia</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Provincia "
-                                                            name="provincia" id="provincia" tabindex="15" required>
-                                                            <option value="">Provincia</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="normal" for=""><br></label>
-                                                        <label class="custom-control custom-radio">
-                                                            <input type="radio" name="tipo" id="tipo" value="Masculino"
-                                                                required>
-                                                            Masculino
-                                                        </label>
-                                                    </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default"><br></label>
+                                                    <select class="form-control " placeholder="Provincia " name="provincia" id="prov" tabindex="12" required>
+                                                        <option value="">Provincia</option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Distrito "
-                                                            name="distrito" id="dist" tabindex="13" required>
-                                                            <option value="">Distrito</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sw-default"><br></label>
-                                                        <select class="form-control " placeholder="Distrito "
-                                                            name="distrito" id="distrito" tabindex="16" required>
-                                                            <option value="">Distrito</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="normal" for=""><br></label>
-                                                        <label class="custom-control custom-radio" data-toggle="tooltip"
-                                                            data-placement="right" title=""
-                                                            data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
-                                                            <input type="radio" name="tipo" id="tipo"
-                                                                value="Personalizado" required>
-                                                            Personalizado
-                                                        </label>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default"><br></label>
+                                                    <select class="form-control " placeholder="Distrito "
+                                                        name="distrito" id="dist" tabindex="13" required>
+                                                        <option value="">Distrito</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default">Lugar Nacimiento</label>
+                                                    <select class="form-control" placeholder="Departamento" name="departamento" id="departamento" tabindex="14" required>
+                                                        <option value="">Departamento</option>
+                                                        @foreach ($departamento as $departamentos)
+                                                        <option class="" value="{{ $departamentos->id }}">
+                                                            {{ $departamentos->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default"><br></label>
+                                                    <select class="form-control " placeholder="Provincia " name="provincia" id="provincia" tabindex="15" required>
+                                                        <option value="">Provincia</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="sw-default"><br></label>
+                                                    <select class="form-control " placeholder="Distrito " name="distrito" id="distrito" tabindex="16" required>
+                                                        <option value="">Distrito</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-12">
+                                                    <label for="" class="label_txt">Género</label>
+                                                    <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
+                                                    <div class="row">
+                                                        <div class="radio_rsp">
+                                                            <label class="custom-control custom-radio">
+                                                                <input type="radio" name="tipo" id="tipo" value="Femenino" required> Femenino
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio_rsp">
+                                                            <label class="custom-control custom-radio">
+                                                                <input type="radio" name="tipo" id="tipo" value="Masculino" required>
+                                                                Masculino
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio_rsp">
+                                                            <label class="custom-control custom-radio" data-toggle="tooltip" data-placement="right" title="" data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
+                                                                <input type="radio" name="tipo" id="tipo" value="Personalizado" required> Personalizado
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div> <!-- end row -->
@@ -3655,7 +3668,7 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Cargo <a
                                                                 onclick="$('#form-registrar').modal('hide');"
@@ -3681,7 +3694,7 @@ use Carbon\Carbon;
                                                             data-original-title="Número de documento por defecto o Ingrese un código interno">
                                                     </div>
                                                 </div> <!-- end col -->
-                                                <div class="col-4">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Área <a
                                                                 onclick="$('#form-registrar').modal('hide');"
@@ -3712,7 +3725,7 @@ use Carbon\Carbon;
                                                         </select>
                                                     </div>
                                                 </div> <!-- end col -->
-                                                <div class="col-4">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <label for="sw-default">Centro Costo <a
                                                                 onclick="$('#form-registrar').modal('hide');"
@@ -3759,9 +3772,7 @@ use Carbon\Carbon;
                                                 </div>
                                                 {{-- BOTON DE NUEVA ALTA --}}
                                                 <div class="col-xl-2 text-left">
-                                                    <button type="button" class="btn btn-sm mt-1"
-                                                        style="background-color: #383e56;"
-                                                        onclick="javascript:modalNuevaAltaReg()">
+                                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;" onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()" id="btnAgregarContrato">
                                                         + Nueva alta
                                                     </button>
                                                 </div>
@@ -3911,40 +3922,40 @@ use Carbon\Carbon;
                                                 aria-labelledby="myModalLabel" aria-hidden="true"
                                                 data-backdrop="static">
                                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                    style="width:670px;  margin-top: 150px; left:0px;">
+                                                    style="max-width:670px;  margin-top: 150px; left:0px;">
 
                                                     <div class="modal-content">
 
                                                         <div class="modal-body"
                                                             style="font-size:12px!important;background: #f3f3f3;">
                                                             <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-3">
+                                                                <div class="row" style="padding: 0 5px">
+                                                                    <div class="col-md-3 text-center mt-1 mb-1">
                                                                         <button type="button"
-                                                                            style=" max-width: 18em!important;"
+                                                                            style=" width: 20em!important; height: 43px !important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="laborableTem()"><img
                                                                                 src="{{ asset('admin/images/dormir.svg') }}"
                                                                                 height="20"> Descanso</button>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-3 text-center mt-1 mb-1">
                                                                         <button type="button"
-                                                                            style=" max-width: 18em!important;"
+                                                                            style=" width: 20em!important; height: 43px !important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="nolaborableTem()"><img
                                                                                 src="{{ asset('admin/images/evento.svg') }}"
                                                                                 height="20"> Día no
                                                                             laborable</button>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-3 text-center mt-1 mb-1">
                                                                         <button type="button"
-                                                                            style=" max-width: 18em!important;"
+                                                                            style=" width: 20em!important; height: 43px !important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
                                                                                 src="{{ asset('admin/images/calendario.svg') }}"
                                                                                 height="20"> Día feriado</button>
                                                                     </div>
-                                                                    <div class="col-md-3 text-right">
+                                                                    <div class="col-md-3 text-center mt-1 mb-1">
                                                                         {{-- <button type="button"
                                                                     style=" max-width: 18em!important;"
                                                                     class="btn btn-secondary btn-sm "
@@ -3952,7 +3963,7 @@ use Carbon\Carbon;
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                                         height="20"> Incidencia</button>
                                                                         --}}
-                                                                        <button style=" max-width: 18em!important;"
+                                                                        <button style=" width: 20em!important; height: 43px !important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="agregarinciden()"><img
                                                                                 src="{{ asset('admin/images/calendarioInc.svg') }}"
@@ -4010,14 +4021,9 @@ use Carbon\Carbon;
                                                         <div class="modal-footer">
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-7 text-right">
-                                                                        <button type="button" class="btn btn-light"
-                                                                            data-dismiss="modal">Cancelar</button>
-                                                                    </div>
-                                                                    <div class="col-md-5 text-right"
-                                                                        style="padding-right: 38px; ">
-                                                                        <button type="submit"
-                                                                            class="btn btn-secondary">Aceptar</button>
+                                                                    <div class="col-md-12 text-right">
+                                                                        <button type="button" class="btn btn-light btn-sm" onclick="$('#myModalFeriado').modal('hide');">Cancelar</button>
+                                                                        <button type="submit" class="btn btn-secondary btn-sm">Aceptar</button>
                                                                         </form>
 
                                                                     </div>
@@ -4050,7 +4056,7 @@ use Carbon\Carbon;
                                         <div id="horarioAsignar" class="modal fade" tabindex="-1" role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width:400px;  margin-top: 150px; left: 30px;">
+                                                style="max-width:400px;  margin-top: 150px;">
                                                 <div class="modal-content">
                                                     <div class="modal-body"
                                                         style="font-size:12px!important;background: #f3f3f3;">
@@ -4058,9 +4064,7 @@ use Carbon\Carbon;
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <span id="errorSel_re"
-                                                                        style="color: #8b3a1e;display:none">Seleccione
-                                                                        un
-                                                                        horario</span>
+                                                                        style="color: #8b3a1e;display:none">Seleccione un horario</span>
                                                                     <select data-plugin="customselect"
                                                                         class="form-control custom-select custom-select-sm"
                                                                         name="selectHorario" id="selectHorario">
@@ -4392,13 +4396,13 @@ use Carbon\Carbon;
                                                                             style="background: #fafafa;font-size: 14px">
                                                                             <tr>
                                                                                 <th>Actividad</th>
-                                                                                <th class="text-center">
+                                                                                <th class="text-center th_rh">
                                                                                     <i data-feather="activity"
                                                                                         style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                                     &nbsp;
                                                                                     Control Remoto
                                                                                 </th>
-                                                                                <th class="text-center">
+                                                                                <th class="text-center th_rh">
                                                                                     <i data-feather="map-pin"
                                                                                         style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                                                                     &nbsp;
@@ -4422,7 +4426,7 @@ use Carbon\Carbon;
                                             aria-labelledby="regactividadTarea" aria-hidden="true"
                                             data-backdrop="static">
                                             <div class="modal-dialog  modal-lg d-flex justify-content-center "
-                                                style="width: 550px;">
+                                                style="max-width: 550px;">
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="background-color:#163552;">
                                                         <h5 class="modal-title" id="myModalLabel"
@@ -4481,7 +4485,7 @@ use Carbon\Carbon;
                                     <div id="sw-default-step-8" class="setup-content" style="font-size: 12px!important">
                                         <div class="row pb-3">
                                             <div class="col-xl-12 col-sm-12">
-                                                <button class="btn btn-sm dropdown-toggle"
+                                                <button class="btn btn-sm dropdown-toggle mb-2"
                                                     style="background-color:#383e56;" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">+
                                                     Agregar
@@ -4587,7 +4591,7 @@ use Carbon\Carbon;
                                                                                 <th>Nombre</th>
                                                                                 <th>Codigo</th>
                                                                                 <th>Número</th>
-                                                                                <th>Actividad (%)</th>
+                                                                                <th class="text-center" width="100px">Actividad (%)</th>
                                                                                 <th>Enviado</th>
                                                                                 <th>Estado</th>
                                                                                 <th></th>
@@ -4678,7 +4682,7 @@ use Carbon\Carbon;
                                             </div> <!-- end col -->
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="sw-default">Num. Documento</label>
+                                                    <label for="sw-default">Núm. Documento</label>
                                                     <span id="v_validNumDocumento" style="color: red;">*Campo
                                                         Obligatorio</span>
                                                     <input type="text" class="form-control" name="v_numDocumento"
@@ -5965,7 +5969,7 @@ use Carbon\Carbon;
                                         </div> <!-- end col -->
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <label for="sw-default">Num. Documento</label>
+                                                <label for="sw-default">Núm. Documento</label>
                                                 <input type="text" class="form-control" name="v_numDocumentoV"
                                                     id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
                                             </div>
@@ -6506,12 +6510,17 @@ use Carbon\Carbon;
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </div>
-    <footer class="border-top">
-        <p class="text-center text-muted pt-4">© <?php echo date("Y"); ?> - RH nube Corp - USA | Todos los derechos
-            reservados.</p>
+    </div>
+    </div>
+    <footer class="border-top" style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">
+        <div class="col-md-12 text-center" style="margin-top: 10px; border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+            <span style="color: #faf3f3;font-size: 12px!important">
+                © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
+            </span>
+            <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+        </div>
     </footer>
-    </div>
-    </div>
     <script>
         var urlFoto = "";
         var hayFoto = false;

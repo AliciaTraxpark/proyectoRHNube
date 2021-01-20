@@ -321,8 +321,7 @@
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:center">
-                                                                        Hola&nbsp;{{$persona->perso_nombre}} tu codigo
-                                                                        de Modo Ruta es:
+                                                                        Hola&nbsp;{{$persona->perso_nombre}}  tu código de RH nube, Modo Control en Ruta es: 
                                                                         <strong>{{$vinculacion_ruta->hash}}</strong>
                                                                     </p>
                                                                 </td>

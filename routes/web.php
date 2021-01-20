@@ -520,4 +520,5 @@ Route::post('/eliminarCentro', 'centrocostoController@eliminarCentro');
 
 /* REPORTE PARA VER MARCACIONES DE BIOMETRICOS */
 Route::get('/reporteBiometrico', 'biometricoController@vistaReporte');
-Route::get('/empleadosOrgbio/{id}', 'ControlController@selctEmpleado');
+Route::get('/empleadosOrgbio/{id}', 'biometricoController@selctEmpleado');
+Route::get('/MarcacionesReporteBio', 'biometricoController@DatosReporte');

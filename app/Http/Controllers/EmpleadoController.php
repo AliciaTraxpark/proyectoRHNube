@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use App\invitado_empleado;
+use App\historial_horarioempleado;
 use App\Notifications\NuevaNotification;
 
 class EmpleadoController extends Controller
@@ -1981,6 +1982,7 @@ class EmpleadoController extends Controller
             $horario_dias->organi_id = session('sesionidorg');
             $horario_dias->save();
             $arrayeve->push($horario_dias);
+
             $horario_empleados = new horario_empleado();
             $horario_empleados->horario_horario_id = $idhorar;
             $horario_empleados->empleado_emple_id = $idempleado;
@@ -1994,6 +1996,31 @@ class EmpleadoController extends Controller
                 $horario_empleados->borderColor = '#5369f8';
             }
             $horario_empleados->save();
+
+            /*---- REGISTRAR HISTORIAL DE CAMBIO -------------------*/
+            /*------ SE REGISTRA SI EL CAMBIO O REGISTRO EN EL HORARIO ES EL DIA ACTUAL--- */
+            /* OBTENEMOS DIA ACTUAL */
+            $fechaHoy = Carbon::now('America/Lima');
+            $diaActual = $fechaHoy->isoFormat('YYYY-MM-DD');
+            /* --------------------------------------------- */
+            /* OBTENEMOS DIA DE HORARIO */
+            $fechaHoy1 = Carbon::create($datafechas);
+            $diaHorario = $fechaHoy1->isoFormat('YYYY-MM-DD');
+            /* --------------------------------------------- */
+            if($diaHorario==$diaActual){
+               /* SI LAS FECHAS SON IGUALES */
+               $historial_horarioE = new historial_horarioempleado();
+               $historial_horarioE->horarioEmp_id =$horario_empleados->horarioEmp_id;
+               $historial_horarioE->fechaCambio = $fechaHoy;
+               $historial_horarioE->estadohorarioEmp=1;
+               $historial_horarioE->save();
+            }
+            else{
+
+            }
+
+            /* ------------------------------- */
+
         }
         $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
         /* dd($datafechaValida); */
@@ -2059,6 +2086,36 @@ class EmpleadoController extends Controller
         $horario_empleado1 = DB::table('horario_empleado')
         ->where('horarioEmp_id', '=', $ideve)
         ->update(['estado' => 0]);
+        /*---- REGISTRAR HISTORIAL DE CAMBIO -------------------*/
+            /*------ SE REGISTRA SI la eliminacion EN EL HORARIO ES EL DIA ACTUAL--- */
+            /* OBTENEMOS DIA ACTUAL */
+            $fechaHoy = Carbon::now('America/Lima');
+            $diaActual = $fechaHoy->isoFormat('YYYY-MM-DD');
+            /* --------------------------------------------- */
+            /* OBTENEMOS DIA DE HORARIO */
+            $horario_empleadoEl = DB::table('horario_empleado as he')
+            ->select(['he.horarioEmp_id as id', 'hd.start as fechaEli'])
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('horarioEmp_id', '=', $ideve)
+            ->get()->first();
+            $fechaHorario= $horario_empleadoEl->fechaEli;
+            $fechaHoy1 = Carbon::create($fechaHorario);
+            $diaHorario = $fechaHoy1->isoFormat('YYYY-MM-DD');
+            /* --------------------------------------------- */
+            if($diaHorario==$diaActual){
+               /* SI LAS FECHAS SON IGUALES */
+               $historial_horarioE = new historial_horarioempleado();
+               $historial_horarioE->horarioEmp_id =$ideve;
+               $historial_horarioE->fechaCambio = $fechaHoy;
+               $historial_horarioE->estadohorarioEmp=0;
+               $historial_horarioE->save();
+            }
+            else{
+
+            }
+
+            /* ------------------------------- */
         return response()->json($horario_empleado1);
 
     }

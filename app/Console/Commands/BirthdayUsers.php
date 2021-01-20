@@ -9,6 +9,7 @@ use App\persona;
 use App\organizacion;
 use App\User;
 use App\Notifications\NuevaNotification;
+use Illuminate\Support\Facades\DB;
 
 class BirthdayUsers extends Command
 {
@@ -24,7 +25,7 @@ class BirthdayUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Envía notificaciones de cumpleaños de los usuarios.';
+    protected $description = 'Envía notificaciones de cumpleaños de los usuarios, un día antes.';
 
     /**
      * Create a new command instance.
@@ -43,23 +44,51 @@ class BirthdayUsers extends Command
      */
     public function handle()
     {
-        $this->info('Enviar notificaciones de cumpleaños.');
-        
-        $empleados = DB::table('organizacion')
-                    ->insert([
-                        ['organi_razonSocial' => 'SAC'],
-                        ['organi_ruc' => 'SAC'],
-                        ['organi_razonSocial' => 'SAC'],
-                        ['organi_direccion' => 'SAC'],
-                        ['organi_departamento' => 'SAC'],
-                        ['organi_provincia' => 'SAC'],
-                        ['organi_distrito' => 'SAC'],
-                        ['organi_nempleados' => '2'],
-                        ['organi_tipo' => 'SAC'],
-                        ['organi_corteCaptura' => '2'],
-                        ['created_at' => Carbon::now()],
-                        ['updated_at' => Carbon::now()],
-                    ]);
-        
+        $this->info('Enviar alerta de cumpleaños.');
+        $organizaciones = organizacion::all();
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $datos = "";
+
+        foreach ($organizaciones as $organizacion) {
+           // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
+            $empleados = DB::table('empleado')
+                    ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
+                    ->where('empleado.organi_id', '=', $organizacion->organi_id)
+                    ->select('persona.*', 'empleado.*')
+                    ->get();
+            foreach ($empleados as $persona) {
+                // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
+                if($persona->perso_fechaNacimiento != NULL){
+                   $hb = carbon::parse($persona->perso_fechaNacimiento);
+                    $mes = $hb->month;
+                    $dia = $hb->day;
+                    $anioHb = $hb->year;
+                    $today = carbon::now()->subHours(5);
+                    $anio = $today->year;
+                    $mesToday = $today->month;
+                    $dayToday = $today->day;
+                    $today = carbon::create($anio, $mesToday, $dayToday, 0, 0, 0, 'GMT');
+                    $fHb = carbon::create($anio, $mes, $dia, 0, 0, 0, 'GMT');
+                    $diff = $today->diffInDays($fHb);
+                    $edad = $anio - $anioHb;
+                    if($diff == 1 && $today < $fHb){
+                        $mensaje =  [
+                                        "idOrgani" => $organizacion->organi_id,
+                                        "idEmpleado" => $persona->emple_persona,
+                                        "empleado" => [
+                                                $persona->perso_nombre,
+                                                $persona->perso_apPaterno,
+                                                $persona->perso_apMaterno
+                                            ],
+                                        "mensaje" => "Mañana es mi cumpleaños.",
+                                        "asunto" => "birthday"
+                                    ];
+                        $recipient = User::find(1);
+                        $recipient->notify(new NuevaNotification($mensaje)); 
+                    }
+                }
+                // FIN DE NOTIFICACIÓN
+            }
+        }
     }
 }

@@ -23,7 +23,10 @@ class dispositivos extends Model
        'dispo_Manu',
        'dispo_Scan',
        'dispo_Cam','dispo_estadoActivo',
-       'version_firmware'
+       'version_firmware',
+       'dispo_todosEmp',
+       'dispo_porEmp',
+       'dispo_porArea'
 
     ];
 }

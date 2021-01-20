@@ -272,7 +272,7 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="col-md-4">
-                                    <input class="form-control" type="number" placeholder="Num de empleados"
+                                    <input class="form-control" type="number" placeholder="Núm de empleados"
                                         name="nempleados" id="nempleados" value="{{ old('nempleados') }}" required>
                                 </div>
                             </div>
@@ -332,9 +332,9 @@
                                                     src="{{asset('landing/images/plus.svg')}}" height="15">
                                             </a>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="container col-md-3">

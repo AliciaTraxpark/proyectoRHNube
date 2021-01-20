@@ -179,7 +179,8 @@ use App\invitado;
                                 src="{{URL::asset('admin/assets//images/users/avatar-7.png')}}"
                                 class="avatar-xs rounded-circle mr-2" alt="Shreyu"
                                 /> -->
-                            <i data-feather="chevron-down"></i>
+                            
+                            <img src="{{asset('landing/images/logout.png')}}" class="" width="23px">
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" style="font-size:
