@@ -597,7 +597,7 @@ class horarioController extends Controller
                     if($diaHorario==$diaActual){
                     /* SI LAS FECHAS SON IGUALES */
                     $historial_horarioE = new historial_horarioempleado();
-                    $historial_horarioE->horarioEmp_id =$idempleados;
+                    $historial_horarioE->horarioEmp_id = $horario_empleado->horarioEmp_id;
                     $historial_horarioE->fechaCambio = $fechaHoy;
                     $historial_horarioE->estadohorarioEmp=1;
                     $historial_horarioE->save();
