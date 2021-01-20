@@ -1739,7 +1739,7 @@ use App\proyecto_empleado;
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:nuevaAltaReg()">
+                    <form action="javascript:nuevaAltaReg()" onsubmit="javascript:validate(event)">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-12">
@@ -1907,6 +1907,15 @@ use App\proyecto_empleado;
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 pt-3 d-flex inline">
+                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-2" name="noti_dia_fecha" id="noti_dia_fecha" required="">
+                                    <option value="0">Día</option>
+                                @for ($i = 1; $i <32; $i++) 
+                                    <option class="" value="{{$i}}"> {{ $i }} </option>
+                                @endfor
+                                </select>
                             </div>
                         </div>
                 </div>
@@ -2442,7 +2451,7 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="idContratoD">
-                    <form action="javascript:editarDetalleCE()">
+                    <form action="javascript:editarDetalleCE()" onsubmit="javascript:validate(event)">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-6">
@@ -2630,11 +2639,19 @@ use App\proyecto_empleado;
                                                             @endfor
                                                     </select>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 pt-3 d-flex inline">
+                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-2" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
+                                    <option value="0">Día</option>
+                                @for ($i = 1; $i <32; $i++) 
+                                    <option class="" value="{{$i}}"> {{ $i }} </option>
+                                @endfor
+                                </select>
                             </div>
                         </div>
                 </div>
@@ -3155,7 +3172,6 @@ use App\proyecto_empleado;
                                                 @endfor
                                         </select>
                                     </div>
-
                                 </div>
                                 <br>
                                 <div class="form-group">
@@ -3205,6 +3221,15 @@ use App\proyecto_empleado;
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 pt-3 d-flex inline">
+                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver">
+                                    <option value="0">Día</option>
+                                @for ($i = 1; $i <32; $i++) 
+                                    <option class="" value="{{$i}}"> {{ $i }} </option>
+                                @endfor
+                                </select>
                             </div>
                         </div>
                 </div>
@@ -3599,7 +3624,7 @@ use App\proyecto_empleado;
                                     {{-- BOTON DE NUEVA ALTA --}}
                                     <div class="col-xl-2 text-left">
                                         <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                            onclick="javascript:modalNuevaAltaReg()">
+                                            onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()">
                                             + Nueva alta
                                         </button>
                                     </div>
@@ -4733,7 +4758,7 @@ use App\proyecto_empleado;
                                 {{-- BOTON DE NUEVA ALTA --}}
                                 <div class="col-xl-2 text-left">
                                     <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                        onclick="javascript:modalNuevaAlta()">
+                                        onclick="$(this).prop('disabled', true);javascript:modalNuevaAlta()">
                                         + Nueva alta
                                     </button>
                                     <div class="float-md-right" id="gifAlta" style="display: none">

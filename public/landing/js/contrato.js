@@ -76,6 +76,7 @@ function mostrarDetallesContrato(id) {
             $('#v_condicion').val(data.condPago);
             $('#v_idContrato').val(data.idC);
             $('#v_monto').val(data.monto);
+            $('#noti_dia_fecha_editar').val(data.notiTiempo);
             $('#idContratoD').val(data.idC);
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
             var VFechaDiaIE = new Date(moment(VFechaDaIE));
@@ -333,6 +334,7 @@ async function editarDetalleCE() {
     var monto = $('#v_monto').val();
     var fechaInicial;
     var fechaFinal = "0000-00-00";
+    var notiTiempo = $('#noti_dia_fecha_editar').val();
 
     //* VALIDACION DE FECHAS DE INICIO Y FINAL
     var m_AnioIE = parseInt($('#m_ano_fechaIE').val());
@@ -413,7 +415,8 @@ async function editarDetalleCE() {
             condicionPago: condicionPago,
             monto: monto,
             fechaInicial: fechaInicial,
-            fechaFinal: fechaFinal
+            fechaFinal: fechaFinal,
+            notiTiempo: notiTiempo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -711,6 +714,12 @@ function modalNuevaAlta() {
     $('#form-ver').modal('hide');
     limpiarNuevosDatosAlta();
     validacionNuevaAlta();
+}
+//* VALIDATE
+function validate(e){
+    if(e.isTrusted == true){
+        disabledForm();
+    }
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
 async function validArchivosAltaEdit() {
@@ -1332,6 +1341,7 @@ function mostrarDetallesContratoReg(id) {
             $('#contratoD').val(data.tipoContrato);
             $('#condicionD').val(data.condPago);
             $('#montoD').val(data.monto);
+            $('#noti_dia_fecha_ver').val(data.notiTiempo);
             $('#reg_idContratoD').val(data.idC);
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
             var VFechaDiaIE = new Date(moment(VFechaDaIE));
@@ -1390,6 +1400,7 @@ function modalNuevaAltaReg() {
     $('#form-registrar').modal('hide');
     limpiarNuevosDatosAltaReg();
     validacionNuevaAltaReg();
+    $('#btnAgregarContrato').prop('disabled', false);
 }
 //* VALIDACION DE NUEVA ALTA
 function validacionNuevaAltaReg() {
@@ -1540,6 +1551,7 @@ async function nuevaAltaReg() {
     var fechaInicial;
     var fechaFinal = "0000-00-00";
     var idEmpleado = $("#idEmpleado").val();
+    let notiTiempo = $('#noti_dia_fecha').val();
 
     //* FUNCIONES DE FECHAS
     var m_AnioIE = parseInt($('#m_ano_fecha').val());
@@ -1618,7 +1630,8 @@ async function nuevaAltaReg() {
             monto: monto,
             fechaInicial: fechaInicial,
             fechaFinal: fechaFinal,
-            idEmpleado: idEmpleado
+            idEmpleado: idEmpleado,
+            notiTiempo: notiTiempo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2154,6 +2167,7 @@ function mostrarDetallesContratoVer(id) {
                 $('.ocultarFechaIV').show();
             }
             $('#v_contratoV').val(data.tipoContrato);
+            $('#noti_dia_fecha_ver').val(data.notiTiempo);
             $('#v_condicionV').val(data.condPago);
             $('#v_montoV').val(data.monto);
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
@@ -2179,3 +2193,4 @@ function mostrarDetallesContratoVer(id) {
         error: function () { }
     });
 }
+

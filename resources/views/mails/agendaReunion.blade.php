@@ -352,7 +352,7 @@
                                                     <td align="center"
                                                         style="padding:0;Margin:0;padding-top:5px;padding-bottom:15px;font-size:0px">
                                                         <img class="adapt-img"
-                                                            src="https://i.ibb.co/CnDQDp1/RH-CUADRADO-NUBE.png" alt
+                                                            src="https://i.ibb.co/1R9HMHZ/RH-CUADRADO-NUBE.png" alt
                                                             style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
                                                             width="175"></td>
                                                 </tr>
@@ -454,8 +454,7 @@
                             <td style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:10px;background-color:#ffffff;background-position:left top"
                                 bgcolor="#ffffff" align="center">
                                 <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>WhatsApp:
-                                        +51
-                                        914 480 786</span></span>
+                                        +51 914 480 786</span></span>
                             </td>
                         </tr>
                     </table>

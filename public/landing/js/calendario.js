@@ -363,11 +363,11 @@ function registrarDdescanso()  {
                 buttons: {
                     confirm: {
                         label: 'Si',
-                        className: 'btn-primary'
+                        className: 'btn-primary btn-sm'
                     },
                     cancel: {
                         label: 'No',
-                        className: 'btn-light'
+                        className: 'btn-light btn-sm'
                     }
                 },
                 callback: function (result) {
@@ -469,11 +469,11 @@ function registrarDferiado()  {
                 buttons: {
                     confirm: {
                         label: 'Si',
-                        className: 'btn-primary'
+                        className: 'btn-primary btn-sm'
                     },
                     cancel: {
                         label: 'No',
-                        className: 'btn-light'
+                        className: 'btn-light btn-sm'
                     }
                 },
                 callback: function (result) {
@@ -572,11 +572,11 @@ function registrarDnlaborables()  {
                 buttons: {
                     confirm: {
                         label: 'Si',
-                        className: 'btn-primary'
+                        className: 'btn-primary btn-sm'
                     },
                     cancel: {
                         label: 'No',
-                        className: 'btn-light'
+                        className: 'btn-light btn-sm'
                     }
                 },
                 callback: function (result) {
