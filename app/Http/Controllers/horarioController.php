@@ -19,6 +19,7 @@ use App\incidencias;
 use App\incidencia_dias;
 use App\User;
 use App\eventos_empleado;
+use App\historial_horarioempleado;
 use Illuminate\Support\Facades\Auth;
 use App\pausas_horario;
 use Carbon\Carbon;
@@ -582,6 +583,29 @@ class horarioController extends Controller
                         $horario_empleado->borderColor = $temporal_eventosH->borderColor;
                     }
                     $horario_empleado->save();
+
+                     /*---- REGISTRAR HISTORIAL DE CAMBIO -------------------*/
+                    /*------ SE REGISTRA SI EL CAMBIO O REGISTRO EN EL HORARIO ES EL DIA ACTUAL--- */
+                    /* OBTENEMOS DIA ACTUAL */
+                    $fechaHoy = Carbon::now('America/Lima');
+                    $diaActual = $fechaHoy->isoFormat('YYYY-MM-DD');
+                    /* --------------------------------------------- */
+                    /* OBTENEMOS DIA DE HORARIO */
+                    $fechaHoy1 = Carbon::create($temporal_eventosH->start);
+                    $diaHorario = $fechaHoy1->isoFormat('YYYY-MM-DD');
+                    /* --------------------------------------------- */
+                    if($diaHorario==$diaActual){
+                    /* SI LAS FECHAS SON IGUALES */
+                    $historial_horarioE = new historial_horarioempleado();
+                    $historial_horarioE->horarioEmp_id =$idempleados;
+                    $historial_horarioE->fechaCambio = $fechaHoy;
+                    $historial_horarioE->estadohorarioEmp=1;
+                    $historial_horarioE->save();
+                    }
+
+
+                    /* ------------------------------- */
+
                 }
             }
         }
