@@ -40,7 +40,8 @@ class schedulingWork extends Command
         $this->info('Schedule worker started successfully.');
 
         while (true) {
-            if (now()->second === 0) {
+            $today = now();
+            if ($today->second === 0 && $today->minute === 0 && $today->hour = 5) {
                 $this->call('schedule:run');
             }
 
