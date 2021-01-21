@@ -1842,7 +1842,6 @@ class dispositivosController extends Controller
     {
         $idEntradaCambiar = $request->get('idCambiar');
         $idMarcacion = $request->get('idMarcacion');
-
         if ($idEntradaCambiar != $idMarcacion) {
             $marcacionCambiar = marcacion_puerta::findOrFail($idEntradaCambiar);     // ? MARCACION A CAMBIAR
             $marcacion = marcacion_puerta::findOrFail($idMarcacion);                 // ? MARCACION A RECIBIR ENTRADA
@@ -1895,9 +1894,11 @@ class dispositivosController extends Controller
             // *************************************** FINALIZACION ******************************************************
         } else {
             $marcacion = marcacion_puerta::findOrFail($idEntradaCambiar);
-            $marcacion->marcaMov_salida = $marcacion->marcaMov_fecha;
-            $marcacion->marcaMov_fecha = NULL;
+            $marcacion->marcaMov_fecha = $marcacion->marcaMov_salida;
+            $marcacion->marcaMov_salida = NULL;
             $marcacion->save();
+
+            return response()->json($marcacion->marcaMov_id, 200);
         }
     }
 
@@ -1937,8 +1938,8 @@ class dispositivosController extends Controller
             $marcacionCambiar = marcacion_puerta::findOrFail($idEntradaCambiar);     // ? MARCACION A CAMBIAR
             $marcacion = marcacion_puerta::findOrFail($idMarcacion);                 // ? MARCACION A RECIBIR ENTRADA
             // **************************************** VALIDACION DE NUEVO RANGOS **************************************
-            $nuevaEntrada = $marcacionCambiar->marcaMov_fecha;
-            $nuevaSalida = $marcacion->marcaMov_salida;
+            $nuevaEntrada = $marcacion->marcaMov_fecha;
+            $nuevaSalida = $marcacionCambiar->marcaMov_salida;
             // DB::enableQueryLog();
             $marcacionesValidar = DB::table('marcacion_puerta as m')
                 ->select(
@@ -1967,11 +1968,11 @@ class dispositivosController extends Controller
             }
             if ($respuesta) {
                 // ! MARCACION A CAMBIAR
-                $marcacionCambiar->marcaMov_fecha = NULL;
+                $marcacionCambiar->marcaMov_salida = NULL;
                 $marcacionCambiar->save();
 
                 // ! MARCACION A REGISTRAR ENTRADA
-                $marcacion->marcaMov_fecha = $nuevaEntrada;
+                $marcacion->marcaMov_salida = $nuevaSalida;
                 $marcacion->save();
 
                 // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
@@ -1988,6 +1989,7 @@ class dispositivosController extends Controller
             $marcacion->marcaMov_salida = $marcacion->marcaMov_fecha;
             $marcacion->marcaMov_fecha = NULL;
             $marcacion->save();
+            return response()->json($marcacion->marcaMov_id, 200);
         }
     }
 }

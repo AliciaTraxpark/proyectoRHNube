@@ -449,15 +449,28 @@ function cargartabla(fecha) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                         <div class="dropdown" id="">
-                                                                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false style="cursor: pointer">
+                                                                            <a class="dropdown" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false style="cursor: pointer">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                 ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                             </a>
-                                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                <div class="dropdown-item noExport" onclick="cambiarSalida(${marcacionData.idMarcacion},${false})">
-                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
-                                                                                    Cambiar a entrada
-                                                                                </div>
+                                                                            <ul class="dropdown-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}">
+                                                                                <h6 class="dropdown-header text-left">Opciones</h6>
+                                                                                <a class="dropdowm-item">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                            Cambiar a entrada
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </a>
+                                                                                <a class="dropdowm-item">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                            Cambiar a salida
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </a>
                                                                             </ul>
                                                                         </div>
                                                                     </td>`;
@@ -728,16 +741,29 @@ function cargartabla(fecha) {
                                         if (permisoModificarCE2 == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                                 <div class="dropdown" id="">
-                                                                                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                                                    <a class="dropdown" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
                                                                                         style="cursor: pointer">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                                     </a>
-                                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                        <div class="dropdown-item noExport" onclick="cambiarSalida(${marcacionData.idMarcacion},${false})">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
-                                                                                            Cambiar a entrada
-                                                                                        </div>
+                                                                                    <ul class="dropdown-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}">
+                                                                                        <h6 class="dropdown-header text-left">Opciones</h6>
+                                                                                        <a class="dropdowm-item">
+                                                                                            <div class="form-group noExport pl-3">
+                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                                    Cambiar a entrada
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </a>
+                                                                                        <a class="dropdowm-item">
+                                                                                            <div class="form-group noExport pl-3">
+                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                                    Cambiar a salida
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </a>
                                                                                     </ul>
                                                                                 </div>
                                                                             </td>`;
@@ -1284,10 +1310,17 @@ function listaSalida(id, fecha, idEmpleado) {
                 for (let index = 0; index < data.length; index++) {
                     container += `<optgroup label="Horario ${data[index].horario}">`;
                     data[index].data.forEach(element => {
-                        container += `<option value="${element.id}">
+                        if (element.id == id) {
+                            container += `<option value="${element.id}" selected="selected">
                                     Salida : 
                                     ${moment(element.salida).format("HH:mm:ss")}
                                 </option>`;
+                        } else {
+                            container += `<option value="${element.id}">
+                                    Salida : 
+                                    ${moment(element.salida).format("HH:mm:ss")}
+                                </option>`;
+                        }
                     });
                     container += `</optgroup`;
                 }
@@ -1299,7 +1332,7 @@ function listaSalida(id, fecha, idEmpleado) {
         error: function () { }
     });
 }
-// * FUNCION DE CAMBIAR ENTRADA A OTRA MARCACION
+// * FUNCION DE CAMBIAR ENTRADA
 function cambiarEntradaM() {
     var idCambiar = $('#idMarcacion').val();
     var idMarcacion = $('#salidaM').val();
@@ -1325,7 +1358,7 @@ function cambiarEntradaM() {
         },
         success: function (data) {
             if (data != 0) {
-                $('#valid_cruceM').hide();
+                $('#s_validCruce').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
                 $.notifyClose();
@@ -1350,7 +1383,7 @@ function cambiarEntradaM() {
                     }
                 );
             } else {
-                $('#valid_cruceM').show();
+                $('#s_validCruce').show();
             }
         },
         error: function () {
@@ -1408,5 +1441,63 @@ function listaEntrada(id, fecha, idEmpleado) {
             $('#entradaM').append(container);
         },
         error: function () { }
+    });
+}
+// * FUNCION DE CAMBIAR SALIDA
+function cambiarSalidaM() {
+    var idCambiar = $('#idMarcacionE').val();
+    var idMarcacion = $('#entradaM').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/cambiarSM",
+        data: {
+            idCambiar: idCambiar,
+            idMarcacion: idMarcacion
+        },
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data != 0) {
+                $('#e_validCruce').hide();
+                $('#listaEntradasMarcacion').modal('toggle');
+                $('#btnRecargaTabla').click();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                $('#e_validCruce').show();
+            }
+        },
+        error: function () {
+        }
     });
 }

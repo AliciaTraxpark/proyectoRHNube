@@ -258,10 +258,10 @@
                                     Cambiar a entrada
                                     <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
                                 </h6>
-                                <span id="valid_M" style="color: #8b3a1e;display:none">
+                                <span id="s_validM" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
                                 </span>
-                                <span id="valid_cruceM" style="color: #8b3a1e;display:none">
+                                <span id="s_validCruce" style="color: #8b3a1e;display:none">
                                     No se puede cambiar por cruce de horas
                                 </span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
@@ -294,7 +294,7 @@
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12">
-                    <form action="javascript:cambiarEntradaM()">
+                    <form action="javascript:cambiarSalidaM()">
                         <div class="row">
                             <input type="hidden" id="idMarcacionE">
                             <div class="col-md-12">
@@ -302,10 +302,10 @@
                                     Cambiar a salida
                                     <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
                                 </h6>
-                                <span id="valid_M" style="color: #8b3a1e;display:none">
+                                <span id="e_validM" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
                                 </span>
-                                <span id="valid_cruceM" style="color: #8b3a1e;display:none">
+                                <span id="e_validCruce" style="color: #8b3a1e;display:none">
                                     No se puede cambiar por cruce de horas
                                 </span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"

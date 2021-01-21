@@ -447,6 +447,7 @@ Route::post('/busquedaMXE', 'dispositivosController@buscarMarcacionPorEmpleado')
 Route::post('/listaMarcacionS', 'dispositivosController@listaDeSalidasSinE');
 Route::post('/cambiarEM', 'dispositivosController@cambiarEntraMarcacion');
 Route::post('/listaMarcacionE', 'dispositivosController@listaDeEntradasSinS');
+Route::post('/cambiarSM', 'dispositivosController@cambiarSalidaMarcacion');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
@@ -543,4 +544,3 @@ Route::post('/activarDisposiTar', 'DispositivoTareoController@activarDisposi');
 //vista Controladores
 Route::get('/controladoresTareo', 'controladores_tareoController@index');
 /* ------------------------------------------------------------------------ */
-
