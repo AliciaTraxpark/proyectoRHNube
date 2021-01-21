@@ -521,3 +521,22 @@ Route::post('/eliminarCentro', 'centrocostoController@eliminarCentro');
 Route::get('/reporteBiometrico', 'biometricoController@vistaReporte');
 Route::get('/empleadosOrgbio/{id}', 'biometricoController@selctEmpleado');
 Route::get('/MarcacionesReporteBio', 'biometricoController@DatosReporte');
+
+
+/* ---------------------MODO TAREO--------------------------------------- */
+//Vista dispositivos
+Route::get('/dispositivosTareo', 'DispositivoTareoController@index');
+Route::post('/tablaDispositoTareo', 'DispositivoTareoController@show');
+Route::post('/comprobarMovilTa', 'DispositivoTareoController@comprobarMovil');
+Route::post('/dispoTareStore', 'DispositivoTareoController@store');
+Route::post('/enviarMensajeTareo', 'DispositivoTareoController@enviarmensaje');
+Route::post('/reenviarmensajeDisTareo', 'DispositivoTareoController@reenviarmensaje');
+Route::post('/datosDispoTarEditar', 'DispositivoTareoController@edit');
+Route::post('/actualizarDisposTareo', 'DispositivoTareoController@update');
+Route::post('/desactivarDisposiTar', 'DispositivoTareoController@desactivarDisposi');
+Route::post('/activarDisposiTar', 'DispositivoTareoController@activarDisposi');
+
+//vista Controladores
+Route::get('/controladoresTareo', 'controladores_tareoController@index');
+/* ------------------------------------------------------------------------ */
+
