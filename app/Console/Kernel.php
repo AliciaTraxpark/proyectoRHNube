@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
        $schedule->command('telescope:prune --hours=12')->hourly();
        $schedule->command('birthday:users')->dailyAt('5:01');
        $schedule->command('happyBirth:users')->dailyAt('5:01');
-       $schedule->command('happyBirthdayMail:users')->dailyAt('5:01');
+       $schedule->command('happyBirthdayMail:users')->weekly();
        $schedule->command('finContrato:users')->dailyAt('5:01');
     }
 
