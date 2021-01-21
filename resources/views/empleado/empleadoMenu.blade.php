@@ -3647,7 +3647,7 @@ use App\proyecto_empleado;
                                     {{-- BOTON DE NUEVA ALTA --}}
                                     <div class="col-xl-2 text-left">
                                         <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                            onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()">
+                                            onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()" id="btnAgregarContrato">
                                             + Nueva alta
                                         </button>
                                     </div>
