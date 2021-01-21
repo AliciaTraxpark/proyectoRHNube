@@ -119,16 +119,7 @@ $(document).ready(function () {
         }
 
      } },
-     { data: "dispo_codigoNombre",
-     "render": function (data, type, row) {
-        if(row.dispo_codigoNombre==null){
-            return '----';
-        }
-        else{
-            return row.dispo_codigoNombre;
-        }
-      }
-          },
+   
      { data: "dispo_estado",
      "render": function (data, type, row) {
         if (row.dispo_estado ==0) {
