@@ -211,7 +211,6 @@
                                     <th>Descrip. de ubicación</th>
                                     <th>Móvil/IP Puerto</th>
                                     <th>SMS</th>
-                                    <th>Código Disp.</th>
                                     <th>Estado</th>
                                     <th>Sig. marcación</th>
                                     <th>T. de sincron.</th>

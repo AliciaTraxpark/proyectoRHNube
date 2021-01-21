@@ -387,6 +387,7 @@
                                                         <p
                                                             style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:16px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;line-height:24px;color:#666666;text-align:left">
                                                             <br>
+                                                            Hola, ellos están próximos a finalizar su contrato:
                                                             {!! $datos !!}
                                                         </p>
                                                     </td>
