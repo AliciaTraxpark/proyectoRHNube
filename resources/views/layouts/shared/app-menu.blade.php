@@ -188,6 +188,24 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     </li>
 
     <li>
+
+        <a href="javascript: void(0);">
+            <i data-feather="pocket"></i>
+            <span>Modo: Tareo</span>
+            <span class="menu-arrow"></span>
+        </a>
+
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/dispositivosTareo">Dispositivos</a>
+                <a href="/controladoresTareo">Controladores</a>
+
+
+            </li>
+        </ul>
+    </li>
+
+    <li>
         <a href="javascript: void(0);">
             <i data-feather="dollar-sign"></i>
             <span> Suscripciones </span>
@@ -332,6 +350,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
                 @endif
                 @if ($invitadod->reporteAsisten==1)
+
 
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
                 <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
