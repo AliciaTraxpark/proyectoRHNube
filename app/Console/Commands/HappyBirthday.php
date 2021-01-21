@@ -107,18 +107,14 @@ class HappyBirthday extends Command
         }
 
         //BORRAR LAS NOTIFICACIONES DE UN DÍA ANTES
-        /*$users = User::all();
+        $users = User::all();
         foreach($users as $user){
             foreach ($user->notifications as $notificacion) {
-                $date2create = carbon::parse($notificacion->created_at);
-                $date2delete = carbon::create($date2create->year, $date2create->month, $date2create->day, 0, 0, 0, 'GMT');
-                $yesterday = now()->subHours(5)->subDays(1);
-                $diff = $yesterday->diffInDays($date2delete);
-                if($diff == 0){
-                    $notificacion->delete();
+                if($notificacion->data['0']['mensaje'] == "Mañana está de cumpleaños."){
+                     DB::table('notifications')->where('id', $notificacion->id)->delete();
                 }
             }
-        }*/
+        }
         // FIN DE BORRADO DE NOTIFICACIONES
     }
 }
