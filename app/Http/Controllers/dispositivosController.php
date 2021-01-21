@@ -735,7 +735,7 @@ class dispositivosController extends Controller
     {
         $idDispo = $request->id;
         $dispositivo = dispositivos::where('dispositivos.organi_id', '=', session('sesionidorg'))
-            ->leftJoin('dispositivo_controlador as dc', 'dispositivos.idDispositivos', '=', 'dc.idDispositivos')
+
             ->where('dispositivos.idDispositivos', $idDispo)
             ->select(
                 'dispositivos.idDispositivos',
@@ -748,14 +748,22 @@ class dispositivosController extends Controller
                 'dispo_Manu',
                 'dispo_Scan',
                 'dispo_Cam',
-                'idControladores',
+         /*        'idControladores', */
                 'version_firmware',
                 'dispo_codigo',
                 'dispo_todosEmp',
                 'dispo_porEmp',
                 'dispo_porArea'
             )->get();
+            foreach( $dispositivo as  $dispositivos){
+                $disposit_controlador = DB::table('dispositivo_controlador as dc')
+                        ->select('idControladores')
+                        ->where('idDispositivos', '=', $dispositivos->idDispositivos)
+                        ->get();
 
+                 $dispositivos->idControladores =  $disposit_controlador;
+
+            }
             $dispositivo_empleado=dispositivo_empleado::where('idDispositivos','=',$idDispo)
            ->where('estado','=',1) ->get();
            /*  if($dispositivo_empleado->isNotEmpty()){

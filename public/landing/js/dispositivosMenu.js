@@ -119,7 +119,7 @@ $(document).ready(function () {
         }
 
      } },
-   
+
      { data: "dispo_estado",
      "render": function (data, type, row) {
         if (row.dispo_estado ==0) {
@@ -545,7 +545,7 @@ function editarDispo(id){
              $("#selectLectura_ed > option[value='"+value+"']").prop("selected","selected");
             $("#selectLectura_ed").trigger("change");
             });
-            $.each( data, function( index, value ){
+            $.each( data[0].idControladores, function( index, value ){
                 $("#selectControlador_ed > option[value='"+value.idControladores+"']").prop("selected","selected");
                $("#selectControlador_ed").trigger("change");
                });
