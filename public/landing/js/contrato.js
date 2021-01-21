@@ -729,6 +729,7 @@ function validate(e){
         $('#reg_guardarAlta').prop('disabled', true);
         $('#reg_guardarAlta_editar').prop('disabled', true);
         $('#edit_guardarAlta').prop('disabled', true);
+        $('#guardarAltaN').prop('disabled', true);
     }
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
@@ -814,6 +815,7 @@ async function nuevaAltaEditar() {
     var fechaInicial;
     var fechaFinal = "0000-00-00";
     var idEmpleado = $('#v_id').val();
+    var notiTiempo = $('#noti_dia_fecha_alta').val();
 
     //* FUNCIONES DE FECHAS
     var m_AnioIE = parseInt($('#m_ano_fechaIEN').val());
@@ -824,6 +826,7 @@ async function nuevaAltaEditar() {
         $('#m_validFechaCIEN').hide();
     } else {
         $('#m_validFechaCIEN').show();
+        $('#guardarAltaN').prop('disabled', false);
         return false;
     }
     if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
@@ -840,6 +843,7 @@ async function nuevaAltaEditar() {
             $('#m_validFechaCFEN').hide();
         } else {
             $('#m_validFechaCFEN').show();
+            $('#guardarAltaN').prop('disabled', false);
             return false;
 
         }
@@ -847,6 +851,7 @@ async function nuevaAltaEditar() {
         var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
         if (!momentInicio.isBefore(momentFinal)) {
             $('#m_validFechaCFEN').show();
+            $('#guardarAltaN').prop('disabled', false);
             return;
         } else {
             $('#m_validFechaCFEN').hide();
@@ -862,6 +867,7 @@ async function nuevaAltaEditar() {
     const result = await validArchivosAltaEdit();
     if (!result) {
         $('#validArchivoEditN').show();
+        $('#guardarAltaN').prop('disabled', false);
         return false;
     } else {
         $('#validArchivoEditN').hide();
@@ -875,6 +881,7 @@ async function nuevaAltaEditar() {
                                 <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
             $('#alertErrorFechaAlta').append(errorAlert);
             $('#alertErrorFechaAlta').show();
+            $('#guardarAltaN').prop('disabled', false);
             return false;
         } else {
             $('#alertErrorFechaAlta').hide();
@@ -893,7 +900,8 @@ async function nuevaAltaEditar() {
             monto: monto,
             fechaInicial: fechaInicial,
             fechaFinal: fechaFinal,
-            idEmpleado: idEmpleado
+            idEmpleado: idEmpleado,
+            notiTiempo: notiTiempo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -908,6 +916,7 @@ async function nuevaAltaEditar() {
             archivosDeNuevo(data);
             $('#contratoDetallesmodalEN').modal('toggle');
             $('#form-ver').modal('show');
+            $('#guardarAltaN').prop('disabled', false);
             historialEmp();
             $.notifyClose();
             $.notify(
@@ -976,6 +985,7 @@ function validacionNuevaAlta() {
         $('#m_mes_fechaFEN').prop("disabled", false);
         $('#m_ano_fechaFEN').prop("disabled", false);
         $('#guardarAltaN').prop("disabled", false);
+        $('#noti_dia_fecha_alta').prop("disabled", false);
     } else {
         $('#v_condicionN').prop("disabled", true);
         $('#v_montoN').prop("disabled", true);
@@ -988,6 +998,7 @@ function validacionNuevaAlta() {
         $('#m_mes_fechaFEN').prop("disabled", true);
         $('#m_ano_fechaFEN').prop("disabled", true);
         $('#guardarAltaN').prop("disabled", true);
+        $('#noti_dia_fecha_alta').prop("disabled", true);
     }
 }
 //* ELIMINAR CONTRATO
@@ -1428,6 +1439,7 @@ function validacionNuevaAltaReg() {
         $('#mf_ano_fecha').prop("disabled", false);
         $('#reg_guardarAlta').prop("disabled", false);
         $('#noti_dia_fecha').prop("disabled", false);
+        $('#noti_dia_fecha_alta').prop("disabled", false);
     } else {
         $('#condicion').prop("disabled", true);
         $('#monto').prop("disabled", true);
@@ -1440,7 +1452,7 @@ function validacionNuevaAltaReg() {
         $('#mf_mes_fecha').prop("disabled", true);
         $('#mf_ano_fecha').prop("disabled", true);
         $('#reg_guardarAlta').prop("disabled", true);
-        $('#noti_dia_fecha').prop("disabled", true);
+        $('#noti_dia_fecha_alta').prop("disabled", true);
     }
 }
 //* LIMPIAR FORMULARIO EN NUEVA ALTA
@@ -1847,6 +1859,7 @@ async function confirmarBajaHistorialReg() {
             }
         },
         success: function (data) {
+            $('#nueva_alta_again').prop("disabled", false);
             if (data.respuesta != false) {
                 $('#alertFechaBajaReg').hide();
                 archivosDeBajaReg(data);
