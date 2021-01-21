@@ -50,6 +50,8 @@ class HappyBirthday extends Command
         $organizaciones = organizacion::all();
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $datos = "";
+        $todayNow = carbon::now()->subHours(5);
+        $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
 
         foreach ($organizaciones as $organizacion) {
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
@@ -58,21 +60,24 @@ class HappyBirthday extends Command
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
                     ->select('persona.*', 'empleado.*')
                     ->get();
+            $admin = DB::table('usuario_organizacion')
+                    ->where('organi_id', $organizacion->organi_id)
+                    ->select('usuario_organizacion.user_id')
+                    ->first();
+
+            $invitado_admin = DB::table('invitado')
+                    ->where('organi_id', $organizacion->organi_id)
+                    ->where('rol_id', 1)
+                    ->select('invitado.user_Invitado')
+                    ->first();
+
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
                 if($persona->perso_fechaNacimiento != NULL){
                     $hb = carbon::parse($persona->perso_fechaNacimiento);
-                    $mes = $hb->month;
-                    $dia = $hb->day;
-                    $anioHb = $hb->year;
-                    $today = carbon::now()->subHours(5);
-                    $anio = $today->year;
-                    $mesToday = $today->month;
-                    $dayToday = $today->day;
-                    $today = carbon::create($anio, $mesToday, $dayToday, 0, 0, 0, 'GMT');
-                    $fHb = carbon::create($anio, $mes, $dia, 0, 0, 0, 'GMT');
+                    $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
                     $diff = $today->diffInDays($fHb);
-                    $edad = $anio - $anioHb;
+                    $edad = $today->year - $hb->year;
                     if($diff == 0){
                         $mensaje =  [
                                         "idOrgani" => $organizacion->organi_id,
@@ -82,30 +87,38 @@ class HappyBirthday extends Command
                                                 $persona->perso_apPaterno,
                                                 $persona->perso_apMaterno
                                             ],
-                                        "mensaje" => "Estoy de cumpleaños.",
+                                        "mensaje" => "Hoy está de cumpleaños, ".$edad." años.",
                                         "asunto" => "birthday"
                                     ];
-                        $recipient = User::find(1);
-                        $recipient->notify(new NuevaNotification($mensaje));
-                        $datos = $datos."<div class='text-left'> • ".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</div> <div class='text-left'>".$dia." de ".$meses[$mes-1]." (".$edad.")"."</div><br>";
+                        
+                        //$datos = $datos."<div class='text-left'> • ".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</div> <div class='text-left'>".$dia." de ".$meses[$mes-1]." (".$edad.")"."</div><br>";
+                        if($admin != ""){
+                            $recipient = User::find($admin->user_id);
+                            $recipient->notify(new NuevaNotification($mensaje)); 
+                        }
+                        if($invitado_admin != ""){
+                            $recipient = User::find($invitado_admin->user_Invitado);
+                            $recipient->notify(new NuevaNotification($mensaje));
+                        }
                     }
                 }
                 // FIN DE NOTIFICACIÓN
             }
         }
-        if($datos != ""){
-            $email = 'miguelpacheco.1622@gmail.com';
-            $envio = Mail::to($email)->queue(new correoHappyBirthday($datos));
-        }
 
-        $users = User::all();
+        //BORRAR LAS NOTIFICACIONES DE UN DÍA ANTES
+        /*$users = User::all();
         foreach($users as $user){
             foreach ($user->notifications as $notificacion) {
-                $json = $notificacion->data;
-                if(($notificacion->created_at < now()) && ( $json['mensaje'] == "Mañana es mi cumpleaños.")){
+                $date2create = carbon::parse($notificacion->created_at);
+                $date2delete = carbon::create($date2create->year, $date2create->month, $date2create->day, 0, 0, 0, 'GMT');
+                $yesterday = now()->subHours(5)->subDays(1);
+                $diff = $yesterday->diffInDays($date2delete);
+                if($diff == 0){
                     $notificacion->delete();
-                } 
+                }
             }
-        }
+        }*/
+        // FIN DE BORRADO DE NOTIFICACIONES
     }
 }
