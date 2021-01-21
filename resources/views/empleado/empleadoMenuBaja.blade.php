@@ -730,6 +730,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 pt-3 d-flex inline">
+                            <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                            <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
+                                <option value="0">Día</option>
+                            @for ($i = 30; $i <61; $i++) 
+                                <option class="" value="{{$i}}"> {{ $i }} </option>
+                            @endfor
+                            </select>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="$('#verEmpleadoDetalles').modal('show');" class="btn btn-sm"
@@ -1306,7 +1315,7 @@
             </div>
             <input type="hidden" id="idEmpleadoBaja">
             <div class="modal-body">
-                <form action="javascript:nuevaAlta()">
+                <form action="javascript:nuevaAlta()" onsubmit="javascript:validate(event)">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-xl-12">
@@ -1364,7 +1373,7 @@
                                     <div class="alert alert-danger" role="alert" style="display: none;"
                                         id="alertErrorFechaAlta"></div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" name="m_dia_fechaIB" id="m_dia_fechaIB"
                                                 required>
                                                 <option value="0">Día</option>
@@ -1374,7 +1383,7 @@
                                                     @endfor
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" name="m_mes_fechaIB" id="m_mes_fechaIB"
                                                 required>
                                                 <option value="0">Mes</option>
@@ -1392,7 +1401,7 @@
                                                 <option class="" value="12">Diciembre</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                                 name="m_ano_fechaIB" id="m_ano_fechaIB" required>
                                                 <option value="0">Año</option>
@@ -1438,7 +1447,7 @@
                                         <span id="m_validFechaCFB" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_dia_fechaFB" id="m_dia_fechaFB">
                                                     <option value="0">Día</option>
                                                     @for ($i = 1; $i <32; $i++) <option class="" value="{{$i}}">
@@ -1446,7 +1455,7 @@
                                                         @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control" name="m_mes_fechaFB" id="m_mes_fechaFB">
                                                     <option value="0">Mes</option>
                                                     <option class="" value="1">Enero</option>
@@ -1463,7 +1472,7 @@
                                                     <option class="" value="12">Diciembre</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <select class="form-control"
                                                     style="padding-left: 5px;padding-right: 5px;" name="m_ano_fechaFB"
                                                     id="m_ano_fechaFB">
@@ -1479,6 +1488,15 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-12 pt-3 d-flex inline">
+                            <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                            <select class="form-control col-2" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
+                                <option value="0">Día</option>
+                            @for ($i = 30; $i <61; $i++) 
+                                <option class="" value="{{$i}}"> {{ $i }} </option>
+                            @endfor
+                            </select>
                         </div>
                     </div>
             </div>

@@ -81,6 +81,13 @@ $("#smartwizardVer").on("showStep", function (
         $("#smartwizardVer :input").attr("disabled", false);
     }
 });
+
+function validate(e){
+    if(e.isTrusted == true){
+        $('#noti_dia_fecha_alta').prop('disabled', true);
+    }
+}
+
 // * ********************CRUD DE CONTRATO******************
 function limpiarBaja() {
     $("#textContratoB").val("");
@@ -1198,6 +1205,7 @@ function validacionAlta() {
         $('#m_mes_fechaFB').prop("disabled", false);
         $('#m_ano_fechaFB').prop("disabled", false);
         $('#guardarAltaB').prop("disabled", false);
+        $('#noti_dia_fecha_alta').prop("disabled", false);
     } else {
         $('#condicionB').prop("disabled", true);
         $('#montoB').prop("disabled", true);
@@ -1210,6 +1218,7 @@ function validacionAlta() {
         $('#m_mes_fechaFB').prop("disabled", true);
         $('#m_ano_fechaFB').prop("disabled", true);
         $('#guardarAltaB').prop("disabled", true);
+        $('#noti_dia_fecha_alta').prop("disabled", true);
     }
 }
 //* VALIDACION DE FORMULARIO
@@ -1326,6 +1335,7 @@ async function nuevaAlta() {
     var fechaInicial;
     var fechaFinal = "0000-00-00";
     var idEmpleado = $('#idEmpleadoBaja').val();
+    var notiTiempo = $('#noti_dia_fecha_alta').val();
 
     //* FUNCIONES DE FECHAS
     var m_AnioIE = parseInt($('#m_ano_fechaIB').val());
@@ -1336,6 +1346,7 @@ async function nuevaAlta() {
         $('#m_validFechaCIB').hide();
     } else {
         $('#m_validFechaCIB').show();
+        $('#noti_dia_fecha_alta').prop('disabled', false);
         return false;
     }
     if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
@@ -1353,6 +1364,7 @@ async function nuevaAlta() {
             $('#m_validFechaCFB').hide();
         } else {
             $('#m_validFechaCFB').show();
+            $('#noti_dia_fecha_alta').prop('disabled', false);
             return false;
 
         }
@@ -1361,6 +1373,7 @@ async function nuevaAlta() {
         console.log(momentInicio.isBefore(momentFinal));
         if (!momentInicio.isBefore(momentFinal)) {
             $('#m_validFechaCFB').show();
+            $('#noti_dia_fecha_alta').prop('disabled', false);
             return;
         } else {
             $('#m_validFechaCFB').hide();
@@ -1376,6 +1389,7 @@ async function nuevaAlta() {
     const result = await validArchivosAlta();
     if (!result) {
         $('#validArchivoB').show();
+        $('#noti_dia_fecha_alta').prop('disabled', false);
         return false;
     } else {
         $('#validArchivoB').hide();
@@ -1389,6 +1403,7 @@ async function nuevaAlta() {
                                 <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
             $('#alertErrorFechaAlta').append(errorAlert);
             $('#alertErrorFechaAlta').show();
+            $('#noti_dia_fecha_alta').prop('disabled', false);
             return false;
         } else {
             $('#alertErrorFechaAlta').hide();
@@ -1406,7 +1421,8 @@ async function nuevaAlta() {
             monto: monto,
             fechaInicial: fechaInicial,
             fechaFinal: fechaFinal,
-            idEmpleado: idEmpleado
+            idEmpleado: idEmpleado,
+            notiTiempo: notiTiempo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1419,6 +1435,7 @@ async function nuevaAlta() {
         success: function (data) {
             //* REGISTRAR ARCHIVOS EN NUEVA ALTA
             archivosDeNuevo(data);
+            $('#noti_dia_fecha_alta').prop('disabled', false);
             $('#modalAlta').modal('toggle');
             RefreshTablaEmpleado();
             $.notifyClose();
@@ -1564,6 +1581,7 @@ function mostrarDetallesContratoVer(id) {
             $('#v_contratoV').val(data.tipoContrato);
             $('#v_condicionV').val(data.condPago);
             $('#v_montoV').val(data.monto);
+            $('#noti_dia_fecha_ver').val(data.notiTiempo);
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
             var VFechaDiaIE = new Date(moment(VFechaDaIE));
             $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());
