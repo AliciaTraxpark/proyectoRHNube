@@ -722,6 +722,7 @@ function modalNuevaAlta() {
     $('#form-ver').modal('hide');
     limpiarNuevosDatosAlta();
     validacionNuevaAlta();
+    $('#nueva_alta_again').prop('disabled', false);
 }
 //* VALIDATE
 function validate(e){
@@ -1452,6 +1453,7 @@ function validacionNuevaAltaReg() {
         $('#mf_mes_fecha').prop("disabled", true);
         $('#mf_ano_fecha').prop("disabled", true);
         $('#reg_guardarAlta').prop("disabled", true);
+        $('#noti_dia_fecha').prop("disabled", true);
         $('#noti_dia_fecha_alta').prop("disabled", true);
     }
 }

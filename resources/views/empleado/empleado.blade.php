@@ -2996,6 +2996,15 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 pt-3 d-flex inline">
+                                            <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-2" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
+                                                <option value="0">Día</option>  
+                                            @for ($i = 30; $i <61; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }} </option>
+                                            @endfor
+                                            </select>
+                                        </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -5026,7 +5035,7 @@ use Carbon\Carbon;
                                             <div class="col-xl-2 text-left">
                                                 <button type="button" class="btn btn-sm mt-1"
                                                     style="background-color: #383e56;"
-                                                    onclick="javascript:modalNuevaAlta()">
+                                                    onclick="javascript:modalNuevaAlta()" id="nueva_alta_again">
                                                     + Nueva alta
                                                 </button>
                                                 <div class="float-md-right" id="gifAlta" style="display: none">
