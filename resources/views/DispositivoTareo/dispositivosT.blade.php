@@ -114,7 +114,7 @@
             zoom: 85%;
         }
 
-        .col-md-6 .select2-container .select2-selection {
+        .select2-container .select2-selection {
             height: 20px !important;
             font-size: 12.2px;
 
@@ -209,7 +209,7 @@
             {{-- Modal nuevoDispositivo --}}
             <div id="nuevoDispositivo" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
                 data-backdrop="static">
-                <div id="classMo" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 640px;">
+                <div id="classMo" class="modal-dialog  modal-lg d-flex justify-content-center " style="width: 700px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
@@ -303,9 +303,9 @@
                                                         id="selectControlador" data-placeholder="Seleccione controlador"
                                                         class="form-control">
                                                         @foreach ($controladores as $cont)
-                                                            <option class="" value="{{ $cont->idControladores }}">
-                                                                {{ $cont->cont_nombres }} {{ $cont->cont_ApPaterno }}
-                                                                {{ $cont->cont_ApMaterno }}
+                                                            <option class="" value="{{ $cont->idcontroladores_tareo }}">
+                                                                {{ $cont->contrT_nombres }} {{ $cont->contrT_ApPaterno }}
+                                                                {{ $cont->contrT_ApMaterno }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -336,7 +336,7 @@
             <div id="editarDispositivo" class="modal fade"  role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true" data-backdrop="static">
                 <div id="modalEditarClass" class="modal-dialog  modal-lg d-flex justify-content-center "
-                    style="width: 640px;">
+                    style="width: 700px;">
 
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
@@ -419,9 +419,9 @@
                                                         id="selectControlador_ed" data-placeholder="Seleccione controlador"
                                                         class="form-control">
                                                         @foreach ($controladores as $cont)
-                                                            <option class="" value="{{ $cont->idControladores }}">
-                                                                {{ $cont->cont_nombres }} {{ $cont->cont_ApPaterno }}
-                                                                {{ $cont->cont_ApMaterno }}
+                                                            <option class="" value="{{ $cont->idcontroladores_tareo }}">
+                                                                {{ $cont->contrT_nombres }} {{ $cont->contrT_ApPaterno }}
+                                                                {{ $cont->contrT_ApMaterno }}
                                                             </option>
                                                         @endforeach
                                                     </select>

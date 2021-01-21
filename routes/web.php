@@ -543,4 +543,8 @@ Route::post('/activarDisposiTar', 'DispositivoTareoController@activarDisposi');
 
 //vista Controladores
 Route::get('/controladoresTareo', 'controladores_tareoController@index');
+Route::post('/listaControladoresTa', 'controladores_tareoController@show');
+Route::post('/controladTaStore', 'controladores_tareoController@store');
+Route::post('/datosControTaEditar', 'controladores_tareoController@edit');
+Route::post('/controladTarUpdate', 'controladores_tareoController@update');
 /* ------------------------------------------------------------------------ */
