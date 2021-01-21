@@ -729,7 +729,6 @@ function validate(e){
         $('#reg_guardarAlta').prop('disabled', true);
         $('#reg_guardarAlta_editar').prop('disabled', true);
         $('#edit_guardarAlta').prop('disabled', true);
-        console.log("TRUE");
     }
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
