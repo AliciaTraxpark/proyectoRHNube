@@ -419,24 +419,33 @@ function cargartabla(fecha) {
                                                                         </button>
                                                                         <ul class="dropdown-menu"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}">
                                                                             <h6 class="dropdown-header text-left">Opciones</h6>
-                                                                            <a class="dropdowm-item">
+                                                                            <div class="dropdowm-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                         Cambiar a entrada
                                                                                     </a>
                                                                                 </div>
-                                                                            </a>
-                                                                            <a class="dropdowm-item">
+                                                                            </div>
+                                                                            <div class="dropdowm-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                         Cambiar a salida
                                                                                     </a>
                                                                                 </div>
+                                                                            </div>`;
+                                        if (marcacionData.salida != 0) {
+                                            tbodyEntradaySalida += `<div class="dropdowm-item" id="invertir${marcacionData.idMarcacion}">
+                                                                        <div class="form-group noExport pl-3">
+                                                                            <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                                Invertir orden
                                                                             </a>
-                                                                        </ul>
-                                                                    </div></td>`;
+                                                                        </div>
+                                                                    </div>`;
+                                        }
+                                        tbodyEntradaySalida += ` </ul></div></td>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
@@ -455,22 +464,30 @@ function cargartabla(fecha) {
                                                                             </a>
                                                                             <ul class="dropdown-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}">
                                                                                 <h6 class="dropdown-header text-left">Opciones</h6>
-                                                                                <a class="dropdowm-item">
+                                                                                <div class="dropdowm-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                             Cambiar a entrada
                                                                                         </a>
                                                                                     </div>
-                                                                                </a>
-                                                                                <a class="dropdowm-item">
+                                                                                </div>
+                                                                                <div class="dropdowm-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                             Cambiar a salida
                                                                                         </a>
                                                                                     </div>
-                                                                                </a>
+                                                                                </div>
+                                                                                <div class="dropdowm-item" id="invertir${marcacionData.idMarcacion}">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
+                                                                                            Invertir orden
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
                                                                             </ul>
                                                                         </div>
                                                                     </td>`;
@@ -748,22 +765,22 @@ function cargartabla(fecha) {
                                                                                     </a>
                                                                                     <ul class="dropdown-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}">
                                                                                         <h6 class="dropdown-header text-left">Opciones</h6>
-                                                                                        <a class="dropdowm-item">
+                                                                                        <div class="dropdowm-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                                     Cambiar a entrada
                                                                                                 </a>
                                                                                             </div>
-                                                                                        </a>
-                                                                                        <a class="dropdowm-item">
+                                                                                        </div>
+                                                                                        <div class="dropdowm-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                                     Cambiar a salida
                                                                                                 </a>
                                                                                             </div>
-                                                                                        </a>
+                                                                                        </div>
                                                                                     </ul>
                                                                                 </div>
                                                                             </td>`;
@@ -1280,8 +1297,9 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
     });
 }
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
-function listaSalida(id, fecha, idEmpleado) {
+function listaSalida(id, fecha, idEmpleado, hora) {
     $('#salidaM').empty();
+    $('#c_horaS').text(hora);
     $('#listaSalidasMarcacion').modal();
     $('#idMarcacion').val(id);
     $.ajax({
@@ -1357,8 +1375,8 @@ function cambiarEntradaM() {
             }
         },
         success: function (data) {
-            if (data != 0) {
-                $('#s_validCruce').hide();
+            if (data != 0 && data != -1) {
+                $('#s_valid').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
                 $.notifyClose();
@@ -1383,7 +1401,18 @@ function cambiarEntradaM() {
                     }
                 );
             } else {
-                $('#s_validCruce').show();
+                $('#s_valid').empty();
+                if (data == 0) {
+                    var container = `Posibilidad de cruze de marcación.`;
+                    $('#s_valid').append(container);
+                    $('#s_valid').show();
+                } else {
+                    if (data == -1) {
+                        var container = `Entrada debe ser menor a salida.`;
+                        $('#s_valid').append(container);
+                        $('#s_valid').show();
+                    }
+                }
             }
         },
         error: function () {
@@ -1391,8 +1420,9 @@ function cambiarEntradaM() {
     });
 }
 // * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
-function listaEntrada(id, fecha, idEmpleado) {
+function listaEntrada(id, fecha, idEmpleado, hora) {
     $('#entradaM').empty();
+    $('#c_horaE').text(hora);
     $('#listaEntradasMarcacion').modal();
     $('#idMarcacionE').val(id);
     $.ajax({
@@ -1468,8 +1498,8 @@ function cambiarSalidaM() {
             }
         },
         success: function (data) {
-            if (data != 0) {
-                $('#e_validCruce').hide();
+            if (data != 0 && data != -1) {
+                $('#e_valid').hide();
                 $('#listaEntradasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
                 $.notifyClose();
@@ -1494,7 +1524,18 @@ function cambiarSalidaM() {
                     }
                 );
             } else {
-                $('#e_validCruce').show();
+                $('#e_valid').empty();
+                if (data == 0) {
+                    var container = `Posibilidad de cruze de marcación.`;
+                    $('#e_valid').append(container);
+                    $('#e_valid').show();
+                } else {
+                    if (data == -1) {
+                        var container = `Salida debe ser mayor entrada.`;
+                        $('#e_valid').append(container);
+                        $('#e_valid').show();
+                    }
+                }
             }
         },
         error: function () {

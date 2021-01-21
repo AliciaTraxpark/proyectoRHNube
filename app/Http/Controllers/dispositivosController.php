@@ -644,11 +644,14 @@ class dispositivosController extends Controller
             ->where('mp.organi_id', '=', session('sesionidorg'))
             ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC', 'p.perso_nombre', 'ASC')
             ->get();
-        $data = agruparEmpleadosMarcaciones($data);
+        $data = agruparEmpleadosMarcaciones($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
+
+        // * UNIR EMPLEADOS CON MARCACIONES
+
         for ($index = 0; $index < sizeof($empleados); $index++) {
             $ingreso = true;
             for ($element = 0; $element < sizeof($data); $element++) {
-                if ($empleados[$index]->emple_id == $data[$element]->emple_id) {
+                if ($empleados[$index]->emple_id == $data[$element]->emple_id) {    //: BUSCAMOS EL ID EMPLEADO IGUAL
                     $ingreso = false;
                     $arrayNuevo = (object) array(
                         "emple_id" => $empleados[$index]->emple_id,
@@ -667,7 +670,7 @@ class dispositivosController extends Controller
                     array_push($marcaciones, $arrayNuevo);
                 }
             }
-            if ($ingreso && $empleados[$index]->emple_estado == 1) {
+            if ($ingreso && $empleados[$index]->emple_estado == 1) {         //: VALIDAMOS PARA EMPLEADOS QUE NO TIENEN DATA DE ESA FECHA 
                 $arrayNuevo = (object) array(
                     "emple_id" => $empleados[$index]->emple_id,
                     "emple_nDoc" => $empleados[$index]->emple_nDoc,
@@ -1853,50 +1856,54 @@ class dispositivosController extends Controller
             $marcacionCambiar = marcacion_puerta::findOrFail($idEntradaCambiar);     // ? MARCACION A CAMBIAR
             $marcacion = marcacion_puerta::findOrFail($idMarcacion);                 // ? MARCACION A RECIBIR ENTRADA
             // **************************************** VALIDACION DE NUEVO RANGOS **************************************
-            $nuevaEntrada = $marcacionCambiar->marcaMov_fecha;
+            $nuevaEntrada = $marcacionCambiar->marcaMov_fecha == null ? $marcacionCambiar->marcaMov_salida : $marcacionCambiar->marcaMov_fecha;
             $nuevaSalida = $marcacion->marcaMov_salida;
-            // DB::enableQueryLog();
-            $marcacionesValidar = DB::table('marcacion_puerta as m')
-                ->select(
-                    'm.marcaMov_id',
-                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
-                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
-                )
-                ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
-                ->get();
-            // dd(DB::getQueryLog());
-            $respuesta = true;
-            foreach ($marcacionesValidar as $mv) {
-                if ($mv->entrada != 0) {
-                    $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
-                    if ($respuestaCheck) {
-                        $respuesta = false;
-                    }
-                } else {
-                    if ($mv->salida != 0) {
-                        $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+            if (Carbon::parse($nuevaSalida)->gt(Carbon::parse($nuevaEntrada))) {
+                // DB::enableQueryLog();
+                $marcacionesValidar = DB::table('marcacion_puerta as m')
+                    ->select(
+                        'm.marcaMov_id',
+                        DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                        DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+                    )
+                    ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                    ->get();
+                // dd(DB::getQueryLog());
+                $respuesta = true;
+                foreach ($marcacionesValidar as $mv) {
+                    if ($mv->entrada != 0) {
+                        $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
                         if ($respuestaCheck) {
                             $respuesta = false;
                         }
+                    } else {
+                        if ($mv->salida != 0) {
+                            $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+                            if ($respuestaCheck) {
+                                $respuesta = false;
+                            }
+                        }
                     }
                 }
-            }
-            if ($respuesta) {
-                // ! MARCACION A CAMBIAR
-                $marcacionCambiar->marcaMov_fecha = NULL;
-                $marcacionCambiar->save();
+                if ($respuesta) {
+                    // ! MARCACION A CAMBIAR
+                    $marcacionCambiar->marcaMov_fecha = NULL;
+                    $marcacionCambiar->save();
 
-                // ! MARCACION A REGISTRAR ENTRADA
-                $marcacion->marcaMov_fecha = $nuevaEntrada;
-                $marcacion->save();
+                    // ! MARCACION A REGISTRAR ENTRADA
+                    $marcacion->marcaMov_fecha = $nuevaEntrada;
+                    $marcacion->save();
 
-                // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
-                if (is_null($marcacionCambiar->marcaMov_fecha) && is_null($marcacionCambiar->marcaMov_salida)) {
-                    $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
+                    // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
+                    if (is_null($marcacionCambiar->marcaMov_fecha) && is_null($marcacionCambiar->marcaMov_salida)) {
+                        $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
+                    }
+                    return response()->json($marcacion->marcaMov_id, 200);
+                } else {
+                    return response()->json(0, 200);
                 }
-                return response()->json($marcacion->marcaMov_id, 200);
             } else {
-                return response()->json(0, 200);
+                return response()->json(-1, 200);
             }
             // *************************************** FINALIZACION ******************************************************
         } else {
@@ -1946,49 +1953,59 @@ class dispositivosController extends Controller
             $marcacion = marcacion_puerta::findOrFail($idMarcacion);                 // ? MARCACION A RECIBIR ENTRADA
             // **************************************** VALIDACION DE NUEVO RANGOS **************************************
             $nuevaEntrada = $marcacion->marcaMov_fecha;
-            $nuevaSalida = $marcacionCambiar->marcaMov_salida;
-            // DB::enableQueryLog();
-            $marcacionesValidar = DB::table('marcacion_puerta as m')
-                ->select(
-                    'm.marcaMov_id',
-                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
-                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
-                )
-                ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
-                ->get();
-            // dd(DB::getQueryLog());
-            $respuesta = true;
-            foreach ($marcacionesValidar as $mv) {
-                if ($mv->entrada != 0) {
-                    $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
-                    if ($respuestaCheck) {
-                        $respuesta = false;
-                    }
-                } else {
-                    if ($mv->salida != 0) {
-                        $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+            $nuevaSalida = $marcacionCambiar->marcaMov_fecha == null ? $marcacionCambiar->marcaMov_salida : $marcacionCambiar->marcaMov_fecha;
+            if (Carbon::parse($nuevaSalida)->gt(Carbon::parse($nuevaEntrada))) {
+                // DB::enableQueryLog();
+                $marcacionesValidar = DB::table('marcacion_puerta as m')
+                    ->select(
+                        'm.marcaMov_id',
+                        DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                        DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+                    )
+                    ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                    ->get();
+                // dd(DB::getQueryLog());
+                $respuesta = true;
+                foreach ($marcacionesValidar as $mv) {
+                    if ($mv->entrada != 0) {
+                        $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
                         if ($respuestaCheck) {
                             $respuesta = false;
                         }
+                    } else {
+                        if ($mv->salida != 0) {
+                            $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+                            if ($respuestaCheck) {
+                                $respuesta = false;
+                            }
+                        }
                     }
                 }
-            }
-            if ($respuesta) {
-                // ! MARCACION A CAMBIAR
-                $marcacionCambiar->marcaMov_salida = NULL;
-                $marcacionCambiar->save();
+                if ($respuesta) {
+                    // ! MARCACION A CAMBIAR
+                    if (!is_null($marcacionCambiar->marcaMov_salida)) {
+                        $marcacionCambiar->marcaMov_salida = NULL;
+                    } else {
+                        if (!is_null($marcacionCambiar->marcaMov_fecha)) {
+                            $marcacionCambiar->marcaMov_fecha = NULL;
+                        }
+                    }
+                    $marcacionCambiar->save();
 
-                // ! MARCACION A REGISTRAR ENTRADA
-                $marcacion->marcaMov_salida = $nuevaSalida;
-                $marcacion->save();
+                    // ! MARCACION A REGISTRAR ENTRADA
+                    $marcacion->marcaMov_salida = $nuevaSalida;
+                    $marcacion->save();
 
-                // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
-                if (is_null($marcacionCambiar->marcaMov_fecha) && is_null($marcacionCambiar->marcaMov_salida)) {
-                    $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
+                    // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
+                    if (is_null($marcacionCambiar->marcaMov_fecha) && is_null($marcacionCambiar->marcaMov_salida)) {
+                        $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
+                    }
+                    return response()->json($marcacion->marcaMov_id, 200);
+                } else {
+                    return response()->json(0, 200);
                 }
-                return response()->json($marcacion->marcaMov_id, 200);
             } else {
-                return response()->json(0, 200);
+                return response()->json(-1, 200);
             }
             // *************************************** FINALIZACION ******************************************************
         } else {

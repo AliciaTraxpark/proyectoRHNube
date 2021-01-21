@@ -257,12 +257,11 @@
                                 <h6 style="color:#62778c;font-weight: bold">
                                     Cambiar a entrada
                                     <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                    &nbsp;
+                                    <span id="c_horaS" style="color:#62778c;font-weight: bold"></span>
                                 </h6>
-                                <span id="s_validM" style="color: #8b3a1e;display:none">
+                                <span id="s_valid" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
-                                </span>
-                                <span id="s_validCruce" style="color: #8b3a1e;display:none">
-                                    No se puede cambiar por cruce de horas
                                 </span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                     id="salidaM" required>
@@ -301,12 +300,11 @@
                                 <h6 style="color:#62778c;font-weight: bold">
                                     Cambiar a salida
                                     <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                    &nbsp;
+                                    <span id="c_horaE" style="color:#62778c;font-weight: bold"></span>
                                 </h6>
-                                <span id="e_validM" style="color: #8b3a1e;display:none">
+                                <span id="e_valid" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
-                                </span>
-                                <span id="e_validCruce" style="color: #8b3a1e;display:none">
-                                    No se puede cambiar por cruce de horas
                                 </span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                     id="entradaM" required>
