@@ -443,7 +443,9 @@ Route::get('/ReporteFecha', 'dispositivosController@ReporteFecha');
 Route::get('/reporteTablaEmp', 'dispositivosController@reporteTablaEmp');
 Route::post('/registrarNTardanza', 'dispositivosController@registrarNTardanza');
 Route::post('/editarRowEntrada', 'dispositivosController@editarRowEntrada');
-Route::get('/busquedaMXE', 'dispositivosController@buscarMarcacionPorEmpleado');
+Route::post('/busquedaMXE', 'dispositivosController@buscarMarcacionPorEmpleado');
+Route::post('/listaMarcacionS', 'dispositivosController@listaDeSalidasSinE');
+Route::post('/cambiarEM', 'dispositivosController@cambiarEntraMarcacion');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');

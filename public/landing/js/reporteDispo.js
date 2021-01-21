@@ -410,19 +410,32 @@ function cargartabla(fecha) {
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important"><div class="dropdown" >
-                                                                        <button class="btn dropdown-toggle" onclick="escondiendoInp(${marcacionData.idMarcacion})" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important">
+                                                                    <div class="dropdown">
+                                                                        <button class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                                         </button>
-                                                                        <form class="dropdown-menu dropdown p-3"  aria-labelledby="dropdownMenuButton" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
-                                                                            <div class="form-group noExport">
-                                                                                <a id="rowEntradaA2${marcacionData.idMarcacion}" style="cursor:pointer; font-size:12px;padding-top: 2px;"  onclick="cambiarEntrada(${marcacionData.idMarcacion},${false})"> <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
-                                                                                    Cambiar a salida
-                                                                                </a>
-                                                                            </div>
-                                                                        </form>
+                                                                        <ul class="dropdown-menu"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}">
+                                                                            <h6 class="dropdown-header text-left">Opciones</h6>
+                                                                            <a class="dropdowm-item">
+                                                                                <div class="form-group noExport pl-3">
+                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                        Cambiar a entrada
+                                                                                    </a>
+                                                                                </div>
+                                                                            </a>
+                                                                            <a class="dropdowm-item">
+                                                                                <div class="form-group noExport pl-3">
+                                                                                    <a style="cursor:pointer; font-size:12px;padding-top: 2px;"  onclick="cambiarEntrada(${marcacionData.idMarcacion},${false})">
+                                                                                    <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
+                                                                                        Cambiar a salida
+                                                                                    </a>
+                                                                                </div>
+                                                                            </a>
+                                                                        </ul>
                                                                     </div></td>`;
                                     }
                                     else {
@@ -435,20 +448,19 @@ function cargartabla(fecha) {
                                     if (marcacionData.salida != 0) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
-                                                                                <div class="dropdown" id="">
-                                                                                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false
-                                                                                        style="cursor: pointer">
-                                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
-                                                                                        ${moment(marcacionData.salida).format("HH:mm:ss")}
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                        <div class="dropdown-item noExport" onclick="cambiarSalida(${marcacionData.idMarcacion},${false})">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
-                                                                                            Cambiar a entrada
-                                                                                        </div>
-                                                                                    </ul>
+                                                                        <div class="dropdown" id="">
+                                                                            <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false style="cursor: pointer">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
+                                                                                ${moment(marcacionData.salida).format("HH:mm:ss")}
+                                                                            </a>
+                                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                                <div class="dropdown-item noExport" onclick="cambiarSalida(${marcacionData.idMarcacion},${false})">
+                                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
+                                                                                    Cambiar a entrada
                                                                                 </div>
-                                                                            </td>`;
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>`;
                                         } else {
                                             tbodyEntradaySalida += `<td>
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
@@ -627,23 +639,31 @@ function cargartabla(fecha) {
                                     } else {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
-                                                                                <div class="dropdown noExport" id="">
-                                                                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                                                                        aria-haspopup="true" aria-expanded="false" id="dropSalida${marcacionData.idMarcacion}"
-                                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                                        <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                                            No tiene salida
-                                                                                        </span>
-                                                                                    </button>
-                                                                                    <form class="dropdown-menu dropdown p-3" id="UlS${marcacionData.idMarcacion}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
-                                                                                        <div class="form-group">
-                                                                                            <input type="text" id="horaSalidaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasSalida" >
-                                                                                            &nbsp; <a onclick="insertarSalida(${marcacionData.idMarcacion}) " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15"></a>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </td>`;
+                                                                        <div class="dropdown noExport">
+                                                                            <button type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
+                                                                                aria-expanded="false"
+                                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                                                    <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                                                    No tiene salida
+                                                                                </span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu"  aria-labelledby="dropSalida${marcacionData.idMarcacion}">
+                                                                                <form class="pr-3 pl-3 dropdown-item">
+                                                                                    <div class="form-group">
+                                                                                        <h6 class="dropdown-header text-left">
+                                                                                            Hora salida
+                                                                                            &nbsp; 
+                                                                                            <a onclick="insertarSalida(${marcacionData.idMarcacion}) " style="cursor: pointer">
+                                                                                                <img src="admin/images/checkH.svg" height="15">
+                                                                                            </a>
+                                                                                        </h6> 
+                                                                                        <input type="text" id="horaSalidaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasSalida" onchange="$(this).removeClass('borderColor');">
+                                                                                    </div>
+                                                                                </form>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>`;
                                         }
                                         else {
                                             tbodyEntradaySalida += `<td>
@@ -669,25 +689,30 @@ function cargartabla(fecha) {
                                         //* COLUMNA DE ENTRADA
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
-                                                                                <div class=" dropdown noExport">
-                                                                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                                        <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
-                                                                                            <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                                                            No tiene entrada
-                                                                                        </span>
-                                                                                    </button>
-                                                                                    <form class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
-                                                                                        <div class="form-group">
-                                                                                            <input type="text" id="horaEntradaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasEntrada">
+                                                                        <div class=" dropdown noExport">
+                                                                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;" id="dropEntrada${marcacionData.idMarcacion}">
+                                                                                <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                                                    <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                                                    No tiene entrada
+                                                                                </span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}">
+                                                                                <form class="pr-3 pl-3">
+                                                                                    <div class="form-group">
+                                                                                        <h6 class="dropdown-header text-left">
+                                                                                            Hora entrada
                                                                                             &nbsp;
                                                                                             <a onclick="insertarEntrada(${marcacionData.idMarcacion})" style="cursor: pointer">
                                                                                                 <img src="admin/images/checkH.svg" height="15">
                                                                                             </a>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </td>`;
+                                                                                        </h6>
+                                                                                        <input type="text" id="horaEntradaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasEntrada" onchange="$(this).removeClass('borderColor');">
+                                                                                    </div>
+                                                                                </form>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>`;
                                         }
                                         else {
                                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
@@ -1135,12 +1160,12 @@ function insertarSalida(idMarca) {
         },
     });
 }
-
+// ! *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
     $.ajax({
         async: false,
-        type: "GET",
+        type: "POST",
         url: "/busquedaMXE",
         data: {
             fecha: fecha,
@@ -1158,15 +1183,188 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
                 location.reload();
             }
         },
-        success: function (data, e) {
+        success: function (data) {
             if (data != null) {
                 if ($('#dropSalida' + data) != undefined) {
-                    $('#dropSalida' + data).dropdown('toggle');
-                    $('#dropSalida' + data).trigger('click');
-                    // e.preventDefault();
+                    $('#dropSalida' + data).dropdown("toggle");
+                    $('#horaSalidaN' + data).addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nRegistrar marcación de entrada.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                } else {
+                    if ($('#dropEntrada' + data) != undefined) {
+                        $('#dropEntrada' + data).dropdown("toggle");
+                        $('#horaEntradaN' + data).addClass("borderColor");
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nRegistrar marcación de salida.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    }
                 }
             }
         },
         error: function () { }
+    });
+}
+// * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
+function listaSalida(id, fecha, idEmpleado) {
+    $('#selectMarc').empty();
+    $('#listaMarcacion').modal();
+    $('#idMarcacion').val(id);
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/listaMarcacionS",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            var container = `<option value="" disabled selected>Seleccionar salida</option>`;
+            for (let index = 0; index < data.length; index++) {
+                container += `<optgroup label="Horario ${data[index].horario}">`;
+                data[index].data.forEach(element => {
+                    container += `<option value="${element.id}">
+                                    Salida : 
+                                    ${moment(element.salida).format("HH:mm:ss")}
+                                </option>`;
+                });
+                container += `</optgroup`;
+            }
+            $('#selectMarc').append(container);
+        },
+        error: function () { }
+    });
+}
+// * FUNCION DE CAMBIAR ENTRADA A OTRA MARCACION
+function cambiarEntradaM() {
+    var idCambiar = $('#idMarcacion').val();
+    var idMarcacion = $('#selectMarc').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/cambiarEM",
+        data: {
+            idCambiar: idCambiar,
+            idMarcacion: idMarcacion
+        },
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data != null) {
+                $('#listaMarcacion').modal('toggle');
+                $('#btnRecargaTabla').click();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                $.notifyClose();
+                $.notify({
+                    message: '\nNo se puede cambiar por cruce de horas',
+                    icon: 'landing/images/bell.svg',
+                }, {
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+        },
+        error: function () {
+        }
     });
 }

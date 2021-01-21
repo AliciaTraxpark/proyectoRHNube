@@ -41,15 +41,15 @@ class dispositivosController extends Controller
             ->get();
 
         $area = DB::table('area as ar')
-        ->where('ar.organi_id','=',session('sesionidorg'))
-        ->select(
-            'ar.area_id as idarea',
-            'area_descripcion as descripcion'
-        )
-        ->groupBy('ar.area_id')
-        ->get();
+            ->where('ar.organi_id', '=', session('sesionidorg'))
+            ->select(
+                'ar.area_id as idarea',
+                'area_descripcion as descripcion'
+            )
+            ->groupBy('ar.area_id')
+            ->get();
 
-         /* FILTRAMOS EMPLEADOS */
+        /* FILTRAMOS EMPLEADOS */
         if ($invitadod) {
 
             /* SI EL INVITADO TIENE PERMISO A VER TODOS LOS EMPLEADOS */
@@ -69,7 +69,7 @@ class dispositivosController extends Controller
                     ->where('invem.emple_id', '!=', null)
                     ->get()->first();
 
-                    /* SI ES PERMISO POR EMPLEADO PERSONALIZADO */
+                /* SI ES PERMISO POR EMPLEADO PERSONALIZADO */
                 if ($invitado_empleadoIn != null) {
 
                     $empleados = DB::table('empleado as e')
@@ -107,14 +107,14 @@ class dispositivosController extends Controller
                         ->get()->first();
                     return view('Dispositivos.dispositivos', [
                         'verPuerta' => $permiso_invitado->verPuerta, 'agregarPuerta' => $permiso_invitado->agregarPuerta,
-                         'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores,'area'=>$area,'empleado'=>$empleados
+                        'modifPuerta' => $permiso_invitado->modifPuerta, 'controladores' => $controladores, 'area' => $area, 'empleado' => $empleados
                     ]);
                 } else {
                     return redirect('/dashboard');
                 }
                 /*   */
             } else {
-                return view('Dispositivos.dispositivos', ['controladores' => $controladores,'area'=>$area,'empleado'=>$empleados]);
+                return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados]);
             }
         } else {
 
@@ -126,7 +126,7 @@ class dispositivosController extends Controller
                 ->where('e.asistencia_puerta', '=', 1)
                 ->get();
 
-            return view('Dispositivos.dispositivos', ['controladores' => $controladores,'area'=>$area,'empleado'=>$empleados]);
+            return view('Dispositivos.dispositivos', ['controladores' => $controladores, 'area' => $area, 'empleado' => $empleados]);
         }
     }
     public function store(Request $request)
@@ -180,9 +180,9 @@ class dispositivosController extends Controller
             $dispositivosAc->save();
 
 
-           $nroCel= substr($dispositivosAc->dispo_movil, 2);
+            $nroCel = substr($dispositivosAc->dispo_movil, 2);
 
-            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+            $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -217,9 +217,9 @@ class dispositivosController extends Controller
         $dispositivosAc->dispo_estado = 1;
         $dispositivosAc->dispo_codigo = $codigo;
         $dispositivosAc->save();
-        $nroCel= substr($dispositivosAc->dispo_movil, 2);
+        $nroCel = substr($dispositivosAc->dispo_movil, 2);
 
-        $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+        $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -251,9 +251,9 @@ class dispositivosController extends Controller
 
         $dispositivosAc = dispositivos::findOrFail($request->idDis);
         $codigo = $dispositivosAc->dispo_codigo;
-        $nroCel= substr($dispositivosAc->dispo_movil, 2);
+        $nroCel = substr($dispositivosAc->dispo_movil, 2);
 
-            $mensaje = "Dispositivo " .$nroCel. " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo. " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
+        $mensaje = "Dispositivo " . $nroCel . " registrado en RH nube - Modo Asistencia en puerta, tu codigo es " . $codigo . " - Descargalo en https://play.google.com/store/apps/details?id=com.pe.rhnube";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.broadcastermobile.com/brdcstr-endpoint-web/services/messaging/",
@@ -735,16 +735,16 @@ class dispositivosController extends Controller
                 'dispo_porArea'
             )->get();
 
-            $dispositivo_empleado=dispositivo_empleado::where('idDispositivos','=',$idDispo)
-           ->where('estado','=',1) ->get();
-           /*  if($dispositivo_empleado->isNotEmpty()){
+        $dispositivo_empleado = dispositivo_empleado::where('idDispositivos', '=', $idDispo)
+            ->where('estado', '=', 1)->get();
+        /*  if($dispositivo_empleado->isNotEmpty()){
 
             else{
 
             } */
-            $dispositivo_area=dispositivo_area::where('idDispositivos','=',$idDispo)
-            ->where('estado','=',1) ->get();
-        return [$dispositivo[0],$dispositivo_empleado,$dispositivo_area];
+        $dispositivo_area = dispositivo_area::where('idDispositivos', '=', $idDispo)
+            ->where('estado', '=', 1)->get();
+        return [$dispositivo[0], $dispositivo_empleado, $dispositivo_area];
     }
 
     public function actualizarDispos(Request $request)
@@ -1807,8 +1807,97 @@ class dispositivosController extends Controller
         // dd(DB::getQueryLog());
         if ($marcacion) {
             return response()->json($marcacion->marcaMov_id, 200);
+        }
+        return response()->json(null, 200);
+    }
+
+    // * LISTA DE SALIDAS CON ENTRADA NULL
+    function listaDeSalidasSinE(Request $request)
+    {
+        $id = $request->get('id');
+        $fecha = $request->get('fecha');
+        $idEmpleado = $request->get('idEmpleado');
+
+        function agruparMarcacionesHorario($array)
+        {
+            $resultado = array();
+
+            foreach ($array as $horario) {
+                if (!isset($resultado[$horario->idH])) {
+                    $resultado[$horario->idH] = (object) array("idH" => $horario->idH, "horario" => $horario->horario);
+                }
+                if (!isset($resultado[$horario->idH]->data)) {
+                    $resultado[$horario->idH]->data = array();
+                }
+                $arraySalida = (object) array(
+                    "id" => $horario->id,
+                    "salida" => $horario->salida
+                );
+                array_push($resultado[$horario->idH]->data, $arraySalida);
+            }
+
+            return array_values($resultado);
+        }
+
+        $salidas = DB::table('marcacion_puerta as mp')
+            ->leftJoin('horario_empleado as he', 'mp.horarioEmp_id', '=', 'he.horarioEmp_id')
+            ->leftJoin('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->select(
+                'mp.marcaMov_id as id',
+                'mp.marcaMov_salida as salida',
+                DB::raw('IF(mp.horarioEmp_id is null, 0 , mp.horarioEmp_id ) as idH'),
+                'h.horario_descripcion as horario'
+            )
+            ->whereNotNull('mp.marcaMov_salida')
+            ->whereNull('mp.marcaMov_fecha')
+            ->whereRaw("DATE(marcaMov_salida) = '$fecha'")
+            ->where('mp.marcaMov_emple_id', '=', $idEmpleado)
+            ->get();
+
+        $salidas = agruparMarcacionesHorario($salidas);
+
+        return response()->json($salidas, 200);
+    }
+
+    // * CAMBIAR ENTRADA A OTRA MARCACION
+    public function cambiarEntraMarcacion(Request $request)
+    {
+        $idEntradaCambiar = $request->get('idCambiar');
+        $idMarcacion = $request->get('idMarcacion');
+
+        $marcacionCambiar = marcacion_puerta::findOrFail($idEntradaCambiar);     // ? MARCACION A CAMBIAR
+        $marcacion = marcacion_puerta::findOrFail($idMarcacion);                 // ? MARCACION A RECIBIR ENTRADA
+        // **************************************** VALIDACION DE NUEVO RANGOS **************************************
+        $nuevaEntrada = $marcacionCambiar->marcaMov_fecha;
+        $nuevaSalida = $marcacion->marcaMov_salida;
+
+        $marcacionesValidar = DB::table('marcacion_puerta as m')
+            ->select('m.marcaMov_id')
+            ->where(
+                DB::raw("IF(m.marcaMov_fecha is null, 
+                m.marcaMov_salida >='" . $nuevaEntrada . "' AND m.marcaMov_salida < '" . $nuevaSalida . "',
+                marcaMov_fecha >='" . $nuevaEntrada . "' AND marcaMov_fecha < '" . $nuevaSalida . "')")
+            )
+            ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+            ->get()
+            ->first();
+        if (!$marcacionesValidar) {
+            // ! MARCACION A CAMBIAR
+            $marcacionCambiar->marcaMov_fecha = NULL;
+            $marcacionCambiar->save();
+
+            // ! MARCACION A REGISTRAR ENTRADA
+            $marcacion->marcaMov_fecha = $nuevaEntrada;
+            $marcacion->save();
+
+            // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
+            if (is_null($marcacionCambiar->marcaMov_fecha) && is_null($marcacionCambiar->marcaMov_salida)) {
+                $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
+            }
+            return response()->json($marcacion->marcaMov_id, 200);
         } else {
             return response()->json(null, 200);
         }
+        // *************************************** FINALIZACION ******************************************************
     }
 }

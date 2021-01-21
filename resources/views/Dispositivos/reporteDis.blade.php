@@ -117,8 +117,7 @@
     .select2-container .select2-selection--single .select2-selection__rendered {
         line-height: 31px;
     }
-</style>
-<style>
+
     .table {
         width: 100% !important;
     }
@@ -131,6 +130,10 @@
     .table td {
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
+    }
+
+    .borderColor {
+        border-color: red;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -152,8 +155,7 @@
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
-                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
-                                    data-input>
+                                <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -240,7 +242,48 @@
         </div>
     </div>
 </div>
-{{-- modificar --}}
+{{-- MODAL DE LISTA DE MARCACION --}}
+<div id="listaMarcacion" class="modal fade" role="dialog" aria-labelledby="listaMarcacion" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12">
+                    <form action="javascript:cambiarEntradaM()">
+                        <div class="row">
+                            <input type="hidden" id="idMarcacion">
+                            <div class="col-md-12">
+                                <h6 style="color:#62778c;font-weight: bold">
+                                    Cambiar a entrada
+                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                </h6>
+                                <span id="valid_M" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="selectMarc" required>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Registrar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODIFICAR --}}
 @if (isset($modifReporte))
 @if ($modifReporte==1)
 <input type="hidden" id="modifReporte" value="1">
