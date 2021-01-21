@@ -562,7 +562,7 @@ function editarDispo(id) {
                 );
                 $("#selectLectura_ed").trigger("change");
             });
-            $.each(data, function (index, value) {
+            $.each(data[0].idConts, function (index, value) {
                 $(
                     "#selectControlador_ed > option[value='" +
                         value.idcontroladores_tareo +

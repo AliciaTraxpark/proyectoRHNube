@@ -181,7 +181,7 @@ class DispositivoTareoController extends Controller
         //
         $idDispo = $request->id;
         $dispositivo = dispositivos_tareo::where('dispositivos_tareo.organi_id', '=', session('sesionidorg'))
-            ->leftJoin('dispositivo_controlador_tareo as dc', 'dispositivos_tareo.iddispositivos_tareo', '=', 'dc.iddispositivos_tareo')
+
             ->where('dispositivos_tareo.iddispositivos_tareo', $idDispo)
             ->select(
                 'dispositivos_tareo.iddispositivos_tareo',
@@ -194,9 +194,18 @@ class DispositivoTareoController extends Controller
                 'dispoT_Manu',
                 'dispoT_Scan',
                 'dispoT_Cam',
-                'idcontroladores_tareo',
                 'dispoT_codigo'
             )->get();
+
+            foreach( $dispositivo as  $dispositivos){
+                $disposit_controlador = DB::table('dispositivo_controlador_tareo as dc')
+                        ->select('idcontroladores_tareo')
+                        ->where('dc.iddispositivos_tareo', '=', $dispositivos->iddispositivos_tareo)
+                        ->get();
+
+                 $dispositivos->idConts =  $disposit_controlador;
+
+            }
 
         return [$dispositivo[0]];
     }
@@ -243,6 +252,7 @@ class DispositivoTareoController extends Controller
         /*---------------------- SI HAY DATOS------------------  */
         if ($dispositivo_contAnt->isNotEmpty()) {
             /* ------------------------------------------- */
+            if ($idcont_id != null) {
             foreach ($idcont_id as $idconts) {
                 $estado = false;
                 for ($index = 0; $index < sizeof($dispositivo_contAnt); $index++) {
@@ -263,15 +273,19 @@ class DispositivoTareoController extends Controller
                 }
 
             }
+            }
 
             /* COMPARAMOS LOS REGISTRADOS CON LA LISTA DE CONTROLADORES PARA DESCARTAR LOS QUE YA NO TIENEN*/
             foreach ($dispositivo_contAnt as $idcontDis) {
                 $estadoEReg = false;
+                
+                if ($idcont_id != null) {
                 foreach ($idcont_id as $idcos) {
                     if ($idcontDis->idcontroladores_tareo == $idcos) {
                         $estadoEReg = true;
                     }
                 }
+            }
                 if ($estadoEReg == false) {
 
                     $borrarDispo = dispositivo_controlador_tareo::where('iddispositivos_tareo', '=', $request->idDisposEd_ed)
