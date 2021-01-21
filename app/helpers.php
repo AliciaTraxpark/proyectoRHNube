@@ -43,3 +43,47 @@ function object_sorter($clave, $orden = null)
         return $result;
     };
 }
+
+// * FUNCION DE AGRUPAR PARA LISTAS EN MARCACIONES PARA SALIDA
+function agruparMarcacionesHorario($array)
+{
+    $resultado = array();
+
+    foreach ($array as $horario) {
+        if (!isset($resultado[$horario->idH])) {
+            $resultado[$horario->idH] = (object) array("idH" => $horario->idH, "horario" => $horario->horario);
+        }
+        if (!isset($resultado[$horario->idH]->data)) {
+            $resultado[$horario->idH]->data = array();
+        }
+        $arraySalida = (object) array(
+            "id" => $horario->id,
+            "salida" => $horario->salida
+        );
+        array_push($resultado[$horario->idH]->data, $arraySalida);
+    }
+
+    return array_values($resultado);
+}
+
+// * FUNCION DE AGRUPAR PARA LISTAS EN MARCACIONES PARA ENTRADA
+function agruparMarcacionesEHorario($array)
+{
+    $resultado = array();
+
+    foreach ($array as $horario) {
+        if (!isset($resultado[$horario->idH])) {
+            $resultado[$horario->idH] = (object) array("idH" => $horario->idH, "horario" => $horario->horario);
+        }
+        if (!isset($resultado[$horario->idH]->data)) {
+            $resultado[$horario->idH]->data = array();
+        }
+        $arrayEntrada = (object) array(
+            "id" => $horario->id,
+            "entrada" => $horario->entrada
+        );
+        array_push($resultado[$horario->idH]->data, $arrayEntrada);
+    }
+
+    return array_values($resultado);
+}

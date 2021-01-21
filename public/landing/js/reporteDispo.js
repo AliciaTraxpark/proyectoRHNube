@@ -429,7 +429,7 @@ function cargartabla(fecha) {
                                                                             </a>
                                                                             <a class="dropdowm-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a style="cursor:pointer; font-size:12px;padding-top: 2px;"  onclick="cambiarEntrada(${marcacionData.idMarcacion},${false})">
+                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                         Cambiar a salida
                                                                                     </a>
@@ -1255,8 +1255,8 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
 }
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
 function listaSalida(id, fecha, idEmpleado) {
-    $('#selectMarc').empty();
-    $('#listaMarcacion').modal();
+    $('#salidaM').empty();
+    $('#listaSalidasMarcacion').modal();
     $('#idMarcacion').val(id);
     $.ajax({
         async: false,
@@ -1294,7 +1294,7 @@ function listaSalida(id, fecha, idEmpleado) {
             } else {
                 var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
             }
-            $('#selectMarc').append(container);
+            $('#salidaM').append(container);
         },
         error: function () { }
     });
@@ -1302,7 +1302,7 @@ function listaSalida(id, fecha, idEmpleado) {
 // * FUNCION DE CAMBIAR ENTRADA A OTRA MARCACION
 function cambiarEntradaM() {
     var idCambiar = $('#idMarcacion').val();
-    var idMarcacion = $('#selectMarc').val();
+    var idMarcacion = $('#salidaM').val();
     $.ajax({
         async: false,
         type: "POST",
@@ -1324,8 +1324,9 @@ function cambiarEntradaM() {
             }
         },
         success: function (data) {
-            if (data != null) {
-                $('#listaMarcacion').modal('toggle');
+            if (data != 0) {
+                $('#valid_cruceM').hide();
+                $('#listaSalidasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
                 $.notifyClose();
                 $.notify(
@@ -1349,26 +1350,63 @@ function cambiarEntradaM() {
                     }
                 );
             } else {
-                $.notifyClose();
-                $.notify({
-                    message: '\nNo se puede cambiar por cruce de horas',
-                    icon: 'landing/images/bell.svg',
-                }, {
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
+                $('#valid_cruceM').show();
             }
         },
         error: function () {
         }
+    });
+}
+// * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
+function listaEntrada(id, fecha, idEmpleado) {
+    $('#entradaM').empty();
+    $('#listaEntradasMarcacion').modal();
+    $('#idMarcacionE').val(id);
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/listaMarcacionE",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.length != 0) {
+                var container = `<option value="" disabled selected>Seleccionar salida</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    container += `<optgroup label="Horario ${data[index].horario}">`;
+                    data[index].data.forEach(element => {
+                        if (element.id == id) {
+                            container += `<option value="${element.id}" selected="selected">
+                                    Entrada : 
+                                    ${moment(element.entrada).format("HH:mm:ss")}
+                                </option>`;
+                        } else {
+                            container += `<option value="${element.id}">
+                                    Entrada : 
+                                    ${moment(element.entrada).format("HH:mm:ss")}
+                                </option>`;
+                        }
+                    });
+                    container += `</optgroup`;
+                }
+            } else {
+                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
+            }
+            $('#entradaM').append(container);
+        },
+        error: function () { }
     });
 }

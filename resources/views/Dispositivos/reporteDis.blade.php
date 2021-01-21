@@ -242,9 +242,9 @@
         </div>
     </div>
 </div>
-{{-- MODAL DE LISTA DE MARCACION --}}
-<div id="listaMarcacion" class="modal fade" role="dialog" aria-labelledby="listaMarcacion" aria-hidden="true"
-    data-backdrop="static">
+{{-- MODAL DE LISTA DE SALIDAS MARCACION --}}
+<div id="listaSalidasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaSalidasMarcacion"
+    aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
@@ -261,8 +261,55 @@
                                 <span id="valid_M" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
                                 </span>
+                                <span id="valid_cruceM" style="color: #8b3a1e;display:none">
+                                    No se puede cambiar por cruce de horas
+                                </span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
-                                    id="selectMarc" required>
+                                    id="salidaM" required>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Registrar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+<div id="listaEntradasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaEntradasMarcacion"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12">
+                    <form action="javascript:cambiarEntradaM()">
+                        <div class="row">
+                            <input type="hidden" id="idMarcacionE">
+                            <div class="col-md-12">
+                                <h6 style="color:#62778c;font-weight: bold">
+                                    Cambiar a salida
+                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                </h6>
+                                <span id="valid_M" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                                <span id="valid_cruceM" style="color: #8b3a1e;display:none">
+                                    No se puede cambiar por cruce de horas
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="entradaM" required>
                                 </select>
                             </div>
                         </div>

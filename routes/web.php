@@ -446,6 +446,7 @@ Route::post('/editarRowEntrada', 'dispositivosController@editarRowEntrada');
 Route::post('/busquedaMXE', 'dispositivosController@buscarMarcacionPorEmpleado');
 Route::post('/listaMarcacionS', 'dispositivosController@listaDeSalidasSinE');
 Route::post('/cambiarEM', 'dispositivosController@cambiarEntraMarcacion');
+Route::post('/listaMarcacionE', 'dispositivosController@listaDeEntradasSinS');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
