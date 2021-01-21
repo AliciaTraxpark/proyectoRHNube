@@ -49,40 +49,52 @@ class MailHappyBirthday extends Command
         $this->info('Enviar correo de cumpleaños.');
         $organizaciones = organizacion::all();
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        $datos = "";
-
+        $todayNow = carbon::now()->subHours(5);
+        $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
+        
         foreach ($organizaciones as $organizacion) {
+            $datos = "";
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
             $empleados = DB::table('empleado')
                 ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                 ->where('empleado.organi_id', '=', $organizacion->organi_id)
                 ->select('persona.*', 'empleado.*')
                 ->get();
+
+            $admin = DB::table('usuario_organizacion')
+                    ->where('organi_id', $organizacion->organi_id)
+                    ->select('usuario_organizacion.user_id')
+                    ->first();
+
+            $invitado_admin = DB::table('invitado')
+                    ->where('organi_id', $organizacion->organi_id)
+                    ->where('rol_id', 1)
+                    ->select('invitado.user_Invitado')
+                    ->first();
+
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
                 if($persona->perso_fechaNacimiento != NULL){
                     $hb = carbon::parse($persona->perso_fechaNacimiento);
-                    $mes = $hb->month;
-                    $dia = $hb->day;
-                    $anioHb = $hb->year;
-                    $today = carbon::now()->subHours(5);
-                    $anio = $today->year;
-                    $mesToday = $today->month;
-                    $dayToday = $today->day;
-                    $today = carbon::create($anio, $mesToday, $dayToday, 0, 0, 0, 'GMT');
-                    $fHb = carbon::create($anio, $mes, $dia, 0, 0, 0, 'GMT');
+                    $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
                     $diff = $today->diffInDays($fHb);
-                    $edad = $anio - $anioHb;
+                    $edad = $today->year - $hb->year;
                     if($diff < 7 && $today <= $fHb){
-                        $datos = $datos."<div class='text-left'> • ".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</div> <div class='text-left'>".$dia." de ".$meses[$mes-1]." (".$edad.")"."</div><br>";
+                        $datos = $datos."<div class=''> • <strong>".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</strong>&nbsp;&nbsp;&nbsp;".$hb->day." de ".$meses[($hb->month)-1]." &nbsp;&nbsp;&nbsp; (".$edad." años)"."</div><br>";
                     }
                 // FIN DE NOTIFICACIÓN
                 }  
             }
-        }
-        if($datos != ""){
-            $email = 'miguelpacheco.1622@gmail.com';
-            $envio = Mail::to($email)->queue(new correoHappyBirthday($datos));
+            if($datos != "" && $admin != ""){
+                $mail_body = "<h4>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
+                $email = User::find($admin->user_id)->email;
+                $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
+            }
+            if($datos != "" && $invitado_admin != ""){
+                $mail_body = "<h4>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
+                $email = User::find($invitado_admin->user_Invitado)->email;
+                $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
+            }
         }
     }
 }

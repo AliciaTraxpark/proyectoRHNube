@@ -59,6 +59,8 @@ function mostrarDetallesContrato(id) {
             }
         },
         success: function (data) {
+            $('#edit_guardarAlta').prop('disabled', false);
+            console.log("edit_guardarAlta -> NORMAL");
             if (data.estado == 0) {
                 $('.ocultarFechaIE').hide();
             } else {
@@ -345,6 +347,7 @@ async function editarDetalleCE() {
         $('#m_validFechaCIE').hide();
     } else {
         $('#m_validFechaCIE').show();
+        $('#edit_guardarAlta').prop('disabled', false);
         return false;
     }
     if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
@@ -361,6 +364,7 @@ async function editarDetalleCE() {
             $('#m_validFechaCFE').hide();
         } else {
             $('#m_validFechaCFE').show();
+            $('#edit_guardarAlta').prop('disabled', false);
             return false;
 
         }
@@ -368,6 +372,7 @@ async function editarDetalleCE() {
         var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
         if (!momentInicio.isBefore(momentFinal)) {
             $('#m_validFechaCFE').show();
+            $('#edit_guardarAlta').prop('disabled', false);
             return;
         } else {
             $('#m_validFechaCFE').hide();
@@ -382,6 +387,7 @@ async function editarDetalleCE() {
     const result = await validArchivosEdit();
     if (!result) {
         $('#validArchivoEdit').show();
+        $('#edit_guardarAlta').prop('disabled', false);
         return false;
     } else {
         $('#validArchivoEdit').hide();
@@ -396,6 +402,7 @@ async function editarDetalleCE() {
                                 <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
             $('#alertErrorFecha').append(errorAlert);
             $('#alertErrorFecha').show();
+            $('#edit_guardarAlta').prop('disabled', false);
             return false;
         } else {
             $('#alertErrorFecha').hide();
@@ -428,6 +435,7 @@ async function editarDetalleCE() {
         },
         success: function (data) {
             archivosDeEdit(idContrato);
+            $('#edit_guardarAlta').prop('disabled', false);
             historialEmp();
             $.notifyClose();
             $.notify(
@@ -718,7 +726,10 @@ function modalNuevaAlta() {
 //* VALIDATE
 function validate(e){
     if(e.isTrusted == true){
-        disabledForm();
+        $('#reg_guardarAlta').prop('disabled', true);
+        $('#reg_guardarAlta_editar').prop('disabled', true);
+        $('#edit_guardarAlta').prop('disabled', true);
+        console.log("TRUE");
     }
 }
 //* VALIDACION DE ARCHIVOS EN NUEVA ALTA EN EDITAR
@@ -1325,6 +1336,7 @@ function mostrarDetallesContratoReg(id) {
             }
         },
         success: function (data) {
+            $('#reg_guardarAlta_editar').prop('disabled', false);
             if (data.estado == 0) {
                 $('.ocultarFechaD').hide();
             } else {
@@ -1416,6 +1428,7 @@ function validacionNuevaAltaReg() {
         $('#mf_mes_fecha').prop("disabled", false);
         $('#mf_ano_fecha').prop("disabled", false);
         $('#reg_guardarAlta').prop("disabled", false);
+        $('#noti_dia_fecha').prop("disabled", false);
     } else {
         $('#condicion').prop("disabled", true);
         $('#monto').prop("disabled", true);
@@ -1428,6 +1441,7 @@ function validacionNuevaAltaReg() {
         $('#mf_mes_fecha').prop("disabled", true);
         $('#mf_ano_fecha').prop("disabled", true);
         $('#reg_guardarAlta').prop("disabled", true);
+        $('#noti_dia_fecha').prop("disabled", true);
     }
 }
 //* LIMPIAR FORMULARIO EN NUEVA ALTA
@@ -1562,6 +1576,7 @@ async function nuevaAltaReg() {
         $('#m_validFechaC').hide();
     } else {
         $('#m_validFechaC').show();
+        $('#reg_guardarAlta').prop('disabled', false);
         return false;
     }
     if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
@@ -1578,6 +1593,7 @@ async function nuevaAltaReg() {
             $('#mf_validFechaC').hide();
         } else {
             $('#mf_validFechaC').show();
+            $('#reg_guardarAlta').prop('disabled', false);
             return false;
 
         }
@@ -1585,6 +1601,7 @@ async function nuevaAltaReg() {
         var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
         if (!momentInicio.isBefore(momentFinal)) {
             $('#mf_validFechaC').show();
+            $('#reg_guardarAlta').prop('disabled', false);
             return;
         } else {
             $('#mf_validFechaC').hide();
@@ -1600,6 +1617,7 @@ async function nuevaAltaReg() {
     const result = await validArchivosReg();
     if (!result) {
         $('#validArchivoReg').show();
+        $('#reg_guardarAlta').prop('disabled', false);
         return false;
     } else {
         $('#validArchivoReg').hide();
@@ -1613,6 +1631,7 @@ async function nuevaAltaReg() {
                                 <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
             $('#alertErrorFechaReg').append(errorAlert);
             $('#alertErrorFechaReg').show();
+            $('#reg_guardarAlta').prop('disabled', false);
             return false;
         } else {
             $('#alertErrorFechaReg').hide();
@@ -1646,6 +1665,9 @@ async function nuevaAltaReg() {
             archivosRegistrar(data);
             $('#contratoDetallesmodal').modal('toggle');
             $('#form-registrar').modal('show');
+            $('#reg_guardarAlta').prop('disabled', false);
+            $('#edit_guardarAlta').prop('disabled', false);
+            console.log("FALSE");
             historialEmpReg();
             $.notifyClose();
             $.notify(
@@ -1925,6 +1947,7 @@ async function editarDetalleCReg() {
     var idContrato = $('#reg_idContratoD').val();
     var condicionPago = $('#condicionD').val();
     var monto = $('#montoD').val();
+    var notiTiempo = $('#noti_dia_fecha_ver').val();
     var fechaInicial;
     var fechaFinal = "0000-00-00";
 
@@ -1937,6 +1960,7 @@ async function editarDetalleCReg() {
         $('#m_validFechaCD').hide();
     } else {
         $('#m_validFechaCD').show();
+        $('#reg_guardarAlta_editar').prop('disabled', false);
         return false;
     }
     if (m_AnioIE != 0 && m_MesIE != -1 && m_DiaIE != 0) {
@@ -1953,6 +1977,7 @@ async function editarDetalleCReg() {
             $('#mf_validFechaCD').hide();
         } else {
             $('#mf_validFechaCD').show();
+            $('#reg_guardarAlta_editar').prop('disabled', false);
             return false;
 
         }
@@ -1960,6 +1985,7 @@ async function editarDetalleCReg() {
         var momentFinal = moment([mf_AnioFE, mf_MesFE, mf_DiaFE]);
         if (!momentInicio.isBefore(momentFinal)) {
             $('#mf_validFechaCD').show();
+            $('#reg_guardarAlta_editar').prop('disabled', false);
             return;
         } else {
             $('#mf_validFechaCD').hide();
@@ -1974,6 +2000,7 @@ async function editarDetalleCReg() {
     const result = await validArchivosDetalleReg();
     if (!result) {
         $('#validArchivoD').show();
+        $('#reg_guardarAlta_editar').prop('disabled', false);
         return false;
     } else {
         $('#validArchivoD').hide();
@@ -1988,6 +2015,7 @@ async function editarDetalleCReg() {
                                 <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
             $('#alertErrorFechaDetalleReg').append(errorAlert);
             $('#alertErrorFechaDetalleReg').show();
+            $('#reg_guardarAlta_editar').prop('disabled', false);
             return false;
         } else {
             $('#alertErrorFechaDetalleReg').hide();
@@ -2007,7 +2035,8 @@ async function editarDetalleCReg() {
             condicionPago: condicionPago,
             monto: monto,
             fechaInicial: fechaInicial,
-            fechaFinal: fechaFinal
+            fechaFinal: fechaFinal,
+            notiTiempo: notiTiempo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2019,6 +2048,7 @@ async function editarDetalleCReg() {
         },
         success: function (data) {
             archivosDeDetalleCReg(idContrato);
+            $('#reg_guardarAlta_editar').prop('disabled', false);
             historialEmpReg();
             $.notifyClose();
             $.notify(
@@ -2170,6 +2200,7 @@ function mostrarDetallesContratoVer(id) {
             $('#noti_dia_fecha_ver').val(data.notiTiempo);
             $('#v_condicionV').val(data.condPago);
             $('#v_montoV').val(data.monto);
+            $('#ver_noti_dia_fecha').val(data.notiTiempo);
             var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
             var VFechaDiaIE = new Date(moment(VFechaDaIE));
             $('#m_dia_fechaIEV').val(VFechaDiaIE.getDate());

@@ -16,7 +16,8 @@ class contrato extends Model
         'fechaFinal',
         'monto',
         'idEmpleado',
-        'estado'
+        'estado',
+        'notiTiempo'
     ];
     public $timestamps = false;
 }

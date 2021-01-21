@@ -52,6 +52,7 @@ function showNotificaciones() {
                                     </div>
                                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
                                     </p>
                                 </a>`;
                         } else{
@@ -64,27 +65,48 @@ function showNotificaciones() {
                                         </button>
                                     </div>
                                     <div class="notify-icon" style="background: #163552; m-0 p-0">
-                                        <img src="/landing/images/birthday.png" height="20" class="mb-1">
+                                        <img src="/landing/images/birthday_visto.png" height="20" class="mb-1">
                                     </div>
                                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
                                     </p>
                                 </a>`;
                             } else {
-                                a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
-                                    <div class="badge float-right mt-0 mr-1">
-                                        <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" >
-                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                            <img src="/landing/images/flecha (1).svg" height="20">
-                                        </button>
-                                    </div>
-                                    <div class="notify-icon" style="background: #163552; m-0 p-0">
-                                        <img src="/landing/images/campana.svg" height="20" class="mb-1">
-                                    </div>
-                                    <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
-                                        <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                    </p>
-                                </a>`;
+                                if(data[i].data[0].asunto=='contract'){
+                                    a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                                        <div class="badge float-right mt-0 mr-1">
+                                            <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" onclick="javascript:checkBirthday('${data[i].id}')" >
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                <img src="/landing/images/flecha (1).svg" height="20">
+                                            </button>
+                                        </div>
+                                        <div class="notify-icon" style="background: #163552; m-0 p-0">
+                                            <img src="/landing/images/contrato1.png" height="20" class="mb-1">
+                                        </div>
+                                        <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                            <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                        </p>
+                                    </a>`;
+                                } else {
+                                    a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
+                                        <div class="badge float-right mt-0 mr-1">
+                                            <button class="btn btn-sm" style="background-color: #163552;color:#fdfdfd;" >
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                <img src="/landing/images/flecha (1).svg" height="20">
+                                            </button>
+                                        </div>
+                                        <div class="notify-icon" style="background: #163552; m-0 p-0">
+                                            <img src="/landing/images/campana.svg" height="20" class="mb-1">
+                                        </div>
+                                        <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
+                                            <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                        </p>
+                                    </a>`;
+                                }
+                            
                             }
                         }
                         grupo = a + grupo;
@@ -121,6 +143,7 @@ function showNotificaciones() {
                                         </div>
                                         <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                             <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
                                         </p>
                                     </a>`;
                                 }

@@ -1917,7 +1917,7 @@ use App\proyecto_empleado;
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-2" name="noti_dia_fecha" id="noti_dia_fecha" required="">
                                     <option value="0">Día</option>
-                                @for ($i = 1; $i <32; $i++) 
+                                @for ($i = 30; $i <61; $i++) 
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
@@ -1954,7 +1954,7 @@ use App\proyecto_empleado;
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="reg_idContratoD">
-                    <form action="javascript:editarDetalleCReg()">
+                    <form action="javascript:editarDetalleCReg()" onsubmit="javascript:validate(event)">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-12">
@@ -2133,6 +2133,15 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 pt-3 d-flex inline">
+                                    <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                    <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
+                                        <option value="0">Día</option>
+                                    @for ($i = 30; $i <61; $i++) 
+                                        <option class="" value="{{$i}}"> {{ $i }} </option>
+                                    @endfor
+                                    </select>
+                                </div>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -2140,7 +2149,7 @@ use App\proyecto_empleado;
                         data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">
+                    <button type="submit" class="btn btn-sm" id="reg_guardarAlta_editar" style="background-color:#163552;">
                         Guardar
                     </button>
                 </div>
@@ -2653,7 +2662,7 @@ use App\proyecto_empleado;
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-2" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
                                     <option value="0">Día</option>
-                                @for ($i = 1; $i <32; $i++) 
+                                @for ($i = 30; $i <61; $i++) 
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
@@ -2663,7 +2672,7 @@ use App\proyecto_empleado;
                 <div class="modal-footer">
                     <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-sm" style="background-color:#163552;">Guardar</button>
+                    <button type="submit" class="btn btn-sm" id="edit_guardarAlta" style="background-color:#163552;">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -2685,7 +2694,7 @@ use App\proyecto_empleado;
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:nuevaAltaEditar()">
+                    <form action="javascript:nuevaAltaEditar()" onsubmit="javascript:validate(event)">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-12">
@@ -3229,9 +3238,9 @@ use App\proyecto_empleado;
                             </div>
                             <div class="col-md-12 pt-3 d-flex inline">
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver">
+                                <select class="form-control col-2" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                     <option value="0">Día</option>
-                                @for ($i = 1; $i <32; $i++) 
+                                @for ($i = 30; $i <61; $i++) 
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
