@@ -1279,16 +1279,20 @@ function listaSalida(id, fecha, idEmpleado) {
             }
         },
         success: function (data) {
-            var container = `<option value="" disabled selected>Seleccionar salida</option>`;
-            for (let index = 0; index < data.length; index++) {
-                container += `<optgroup label="Horario ${data[index].horario}">`;
-                data[index].data.forEach(element => {
-                    container += `<option value="${element.id}">
+            if (data.length != 0) {
+                var container = `<option value="" disabled selected>Seleccionar salida</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    container += `<optgroup label="Horario ${data[index].horario}">`;
+                    data[index].data.forEach(element => {
+                        container += `<option value="${element.id}">
                                     Salida : 
                                     ${moment(element.salida).format("HH:mm:ss")}
                                 </option>`;
-                });
-                container += `</optgroup`;
+                    });
+                    container += `</optgroup`;
+                }
+            } else {
+                var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
             }
             $('#selectMarc').append(container);
         },
