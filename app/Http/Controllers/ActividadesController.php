@@ -107,6 +107,7 @@ class ActividadesController extends Controller
                 'a.asistenciaPuerta',
                 'a.controlRuta',
                 'a.eliminacion',
+                'a.modoTareo',
                 DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA"),
                 DB::raw("CASE WHEN(cp.idCaptura) IS NULL THEN 'No' ELSE 'Si' END AS respuesta")
             )
@@ -140,6 +141,7 @@ class ActividadesController extends Controller
         $actividad->globalArea = $request->get('globalArea');
         $actividad->porEmpleados = $request->get('asignacionEmpleado');
         $actividad->porAreas = $request->get('asignacionArea');
+        $actividad->modoTareo = $request->get('modoTareo');
         $actividad->save();
 
         $idActividad = $actividad->Activi_id;
@@ -204,7 +206,8 @@ class ActividadesController extends Controller
                 'a.codigoActividad',
                 'a.porEmpleados',
                 'a.porAreas',
-                'a.globalEmpleado'
+                'a.globalEmpleado',
+                'a.modoTareo'
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.Activi_id', '=', $idA)
@@ -239,6 +242,7 @@ class ActividadesController extends Controller
                 $actividad->porEmpleados = $request->get('asignacionEmpleado');
                 $actividad->porAreas = $request->get('asignacionArea');
                 $actividad->globalArea = $request->get('globalArea');
+                $actividad->modoTareo = $request->get('modoTareo');
                 $actividad->save();
 
                 //* ACTUALIZACION ACTIVIDADES DE EMPLEADOS
@@ -415,6 +419,9 @@ class ActividadesController extends Controller
             }
             if ($control == "AP") {
                 $actividad->asistenciaPuerta = $request->get('valor');
+            }
+            if ($control == "MT") {
+                $actividad->modoTareo = $request->get('valor');
             }
             $actividad->save();
         }

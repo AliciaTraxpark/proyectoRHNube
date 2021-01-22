@@ -221,6 +221,21 @@ function actividadesOrganizacion() {
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
+                    if (data[index].modoTareo == 1) {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    } else {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
                     if (data[index].respuesta === 'Si') {
                         tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     } else {
@@ -270,6 +285,21 @@ function actividadesOrganizacion() {
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\">\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
+                    if (data[index].modoTareo == 1) {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked >\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    } else {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" >\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
@@ -454,6 +484,41 @@ function cambiarEstadoActividad(id) {
                 },
             });
     });
+
+    /* MODO TAREO SWITCH */
+    $("#switchActvMT" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "MT";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado de la  actividad?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Actividad",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    actividadesOrganizacion();
+                },
+            });
+    });
+    /* ------------------ */
 }
 $("#actividades").on('shown.bs.collapse', function () {
     $($.fn.dataTable.tables(true)).DataTable()

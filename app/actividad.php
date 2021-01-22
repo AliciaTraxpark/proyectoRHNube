@@ -21,7 +21,8 @@ class actividad extends Model
         'porEmpleados',
         'porAreas',
         'globalEmpleado',
-        'globalArea'
+        'globalArea',
+        'modoTareo'
     ];
     public $timestamps = false;
 }

@@ -183,6 +183,7 @@
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Control en ruta</th>
                             <th class="text-center">Asistencia en puerta</th>
+                            <th class="text-center">Modo Tareo</th>
                             <th class="text-center">En uso</th>
                             <th class="text-center"></th>
                         </tr>
@@ -261,7 +262,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-12 text-left">
                                     <div class="custom-control custom-switch mb-2">
                                         <input type="checkbox" class="custom-control-input" id="customMT">
                                         <label class="custom-control-label" for="customMT" style="font-weight: bold">
