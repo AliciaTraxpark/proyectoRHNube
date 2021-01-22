@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\controladores_tareo;
 use App\dispositivos_tareo;
 use App\dispoTareo_nombres;
 use App\marcacion_tareo;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
-use Illuminate\Database\Eloquent\Collection;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SoporteApiTareo;
+use App\Mail\SugerenciaApiTareo;
 class apimarcacionTareoController extends Controller
 {
     //
@@ -125,7 +129,7 @@ class apimarcacionTareoController extends Controller
     }
 
     //EMPLEADOS
-    public function EmpleadoMovil(Request $request)
+    public function EmpleadoTareo(Request $request)
     {
 
         /* OBTENEMOS EL ID DE ORGANIZACION */
@@ -153,7 +157,7 @@ class apimarcacionTareoController extends Controller
     }
 
     //ACTIVIDADES
-    public function ActivMovil(Request $request)
+    public function ActivTareo(Request $request)
     {
 
         /* OBTENEMOS EL ID DE ORGANIZACION */
@@ -186,7 +190,7 @@ class apimarcacionTareoController extends Controller
     }
 
     //CONTROLADORES
-    public function controladoresAct(Request $request)
+    public function controladoresActTareo(Request $request)
     {
 
         /* OBTENEMOS PARAMENTROS */
@@ -199,7 +203,7 @@ class apimarcacionTareoController extends Controller
             ->join('controladores_tareo as con', 'dc.idcontroladores_tareo', '=', 'con.idcontroladores_tareo')
             ->join('dispositivos_tareo as dis', 'dc.iddispositivos_tareo', '=', 'dis.iddispositivos_tareo')
             ->select('con.idcontroladores_tareo', 'con.contrT_codigo', 'con.contrT_nombres',
-             'con.contrT_ApPaterno', 'con.contrT_ApMaterno',
+                'con.contrT_ApPaterno', 'con.contrT_ApMaterno',
                 'con.contrT_estado')
             ->where('dis.iddispositivos_tareo', '=', $idDispo)
             ->where('dis.organi_id', '=', $organi_id)
@@ -218,74 +222,69 @@ class apimarcacionTareoController extends Controller
     }
 
     /* MARCACIONES EN PUERTA  */
-    public function marcacionTareo(Request $request){
+    public function marcacionTareo(Request $request)
+    {
 
         /* --------------ORDENAMOS DE MENOR A MAYOR-------------------------------------------------- */
 
-        $arrayDatos=new Collection();
+        $arrayDatos = new Collection();
 
         /* RECORREMOS ARRAY RECIBIDO */
         foreach ($request->all() as $req) {
 
             /* OBTENEMOS PARAMENTROS */
-            $tipoMarcacion= $req['tipoMarcacion'];
-            $fechaMarcacion=$req['fechaMarcacion'];
-            $idEmpleado=$req['idEmpleado'];
-            $idControlador=$req['idControlador'];
-            $idDisposi=$req['idDisposi'];
-            $organi_id=$req['organi_id'];
+            $tipoMarcacion = $req['tipoMarcacion'];
+            $fechaMarcacion = $req['fechaMarcacion'];
+            $idEmpleado = $req['idEmpleado'];
+            $idControlador = $req['idControlador'];
+            $idDisposi = $req['idDisposi'];
+            $organi_id = $req['organi_id'];
 
-            if(empty($req['activ_id'])) {
-                $activ_id=null;
-            }
-            else{
-                $activ_id=$req['activ_id'];
-            }
-
-             if(empty($req['idHoraEmp'])) {
-                 $idHoraEmp=null;
-             }
-            else{
-                $idHoraEmp=$req['idHoraEmp'];
+            if (empty($req['activ_id'])) {
+                $activ_id = null;
+            } else {
+                $activ_id = $req['activ_id'];
             }
 
-            if(empty($req['latitud'])) {
-                $latitud=null;
-            }
-            else{
-                $latitud=$req['latitud'];
-            }
-
-            if(empty($req['longitud'])) {
-                $longitud=null;
-            }
-            else{
-                $longitud=$req['longitud'];
+            if (empty($req['idHoraEmp'])) {
+                $idHoraEmp = null;
+            } else {
+                $idHoraEmp = $req['idHoraEmp'];
             }
 
-            if(empty($req['puntoC_id'])) {
-                $puntoC_id=null;
-            }
-            else{
-                $puntoC_id=$req['puntoC_id'];
-            }
-
-            if(empty($req['centC_id'])) {
-                $centC_id=null;
-            }
-            else{
-                $centC_id=$req['centC_id'];
+            if (empty($req['latitud'])) {
+                $latitud = null;
+            } else {
+                $latitud = $req['latitud'];
             }
 
-                /* INSERTAMOS EN COLLECTION */
-                $datos = [ 'tipoMarcacion' => $tipoMarcacion, 'fechaMarcacion' => $fechaMarcacion,
+            if (empty($req['longitud'])) {
+                $longitud = null;
+            } else {
+                $longitud = $req['longitud'];
+            }
+
+            if (empty($req['puntoC_id'])) {
+                $puntoC_id = null;
+            } else {
+                $puntoC_id = $req['puntoC_id'];
+            }
+
+            if (empty($req['centC_id'])) {
+                $centC_id = null;
+            } else {
+                $centC_id = $req['centC_id'];
+            }
+
+            /* INSERTAMOS EN COLLECTION */
+            $datos = ['tipoMarcacion' => $tipoMarcacion, 'fechaMarcacion' => $fechaMarcacion,
                 'idEmpleado' => $idEmpleado, 'idControlador' => $idControlador,
-                'idDisposi' => $idDisposi, 'organi_id' => $organi_id,'activ_id' => $activ_id,
+                'idDisposi' => $idDisposi, 'organi_id' => $organi_id, 'activ_id' => $activ_id,
                 'idHoraEmp' => $idHoraEmp, 'latitud' => $latitud, 'longitud' => $longitud,
-                'puntoC_id' => $puntoC_id, 'centC_id' => $centC_id
-                 ];
+                'puntoC_id' => $puntoC_id, 'centC_id' => $centC_id,
+            ];
 
-                 $arrayDatos->push($datos);
+            $arrayDatos->push($datos);
         }
         /* ORDENAMOS POR FECHA */
         $arrayOrdenado = $arrayDatos->sortBy('fechaMarcacion');
@@ -293,149 +292,291 @@ class apimarcacionTareoController extends Controller
         /* ----------------------------------------------------------------------------------------------------*/
 
         /* RECORREMOS ARRAY ORDENADO PARA REGISTRAR */
-       foreach($arrayOrdenado as $req){
+        foreach ($arrayOrdenado as $req) {
 
-        /* SI ES ENTRADA */
-            if($req['tipoMarcacion']==1){
-            /* --------CREAMOS NUEVA MARCACION---------------------- */
-            $marcacion_tareo=new marcacion_tareo();
-            $marcacion_tareo->marcaTareo_entrada= $req['fechaMarcacion'];
-            $marcacion_tareo->marcaTareo_idempleado=$req['idEmpleado'];
-            $marcacion_tareo->idcontroladores_tareo=$req['idControlador'];
-            $marcacion_tareo->iddispositivos_tareo=$req['idDisposi'];
-            $marcacion_tareo->organi_id=$req['organi_id'];
-            if(empty($req['activ_id'])) {}
-            else{
-                $marcacion_tareo->Activi_id=$req['activ_id'];
-            }
+            /* SI ES ENTRADA */
+            if ($req['tipoMarcacion'] == 1) {
+                /* --------CREAMOS NUEVA MARCACION---------------------- */
+                $marcacion_tareo = new marcacion_tareo();
+                $marcacion_tareo->marcaTareo_entrada = $req['fechaMarcacion'];
+                $marcacion_tareo->marcaTareo_idempleado = $req['idEmpleado'];
+                $marcacion_tareo->idcontroladores_tareo = $req['idControlador'];
+                $marcacion_tareo->iddispositivos_tareo = $req['idDisposi'];
+                $marcacion_tareo->organi_id = $req['organi_id'];
+                if (empty($req['activ_id'])) {} else {
+                    $marcacion_tareo->Activi_id = $req['activ_id'];
+                }
 
+                if (empty($req['idHoraEmp'])) {} else {
+                    $marcacion_tareo->horarioEmp_id = $req['idHoraEmp'];
+                }
+                if (empty($req['latitud'])) {} else {
+                    $marcacion_tareo->marcaTareo_latitud = $req['latitud'];
+                }
+                if (empty($req['longitud'])) {} else {
+                    $marcacion_tareo->marcaTareo_longitud = $req['longitud'];
+                }
 
-             if(empty($req['idHoraEmp'])) {}
-            else{
-                $marcacion_tareo->horarioEmp_id=$req['idHoraEmp'];
-            }
-            if(empty($req['latitud'])) {}
-            else{
-                $marcacion_tareo->marcaTareo_latitud=$req['latitud'];
-            }
-            if(empty($req['longitud'])) {}
-            else{
-                $marcacion_tareo->marcaTareo_longitud=$req['longitud'];
-            }
-
-            if(empty($req['puntoC_id'])) {}
-            else{
-                $marcacion_tareo->puntoC_id=$req['puntoC_id'];
-            }
-            if(empty($req['centC_id'])) {}
-            else{
-                $marcacion_tareo->centroC_id=$req['centC_id'];
-            }
-            $marcacion_tareo->save();
-            } else{
+                if (empty($req['puntoC_id'])) {} else {
+                    $marcacion_tareo->puntoC_id = $req['puntoC_id'];
+                }
+                if (empty($req['centC_id'])) {} else {
+                    $marcacion_tareo->centroC_id = $req['centC_id'];
+                }
+                $marcacion_tareo->save();
+            } else {
 
                 /* OBTENEMOS LA FECHA EN FORMATO DATE */
                 $fecha1 = Carbon::create($req['fechaMarcacion'])->toDateString();
 
                 /* VERIFICAMOS SI EXISTE OTRA MARCACION CON EL MISMO DIA Y EMPLEADO */
-                $marcacion_tareo00 =DB::table('marcacion_tareo as mt')
-                ->where('mt.marcaTareo_idempleado', '=',$req['idEmpleado'] )
-                ->where('mt.marcaTareo_salida', '!=',null )
-                ->where('mt.marcaTareo_entrada', '!=',null )
-                ->whereDate('mt.marcaTareo_entrada', '=',$fecha1 )
-                ->where('mt.idcontroladores_tareo', '=',$req['idControlador'] )
-                ->where('mt.iddispositivos_tareo', '=',$req['idDisposi'])
-                ->orderby('marcaTareo_entrada','ASC')
-                ->get()->last();
+                $marcacion_tareo00 = DB::table('marcacion_tareo as mt')
+                    ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
+                    ->where('mt.marcaTareo_salida', '!=', null)
+                    ->where('mt.marcaTareo_entrada', '!=', null)
+                    ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
+                    ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
+                    ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+                    ->orderby('marcaTareo_entrada', 'ASC')
+                    ->get()->last();
                 /* ---------------------------------------------------------------- */
 
                 /* SI EXISTE MARCACION ANTERIOR */
-                if($marcacion_tareo00){
-                   /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
-                   if($marcacion_tareo00->marcaTareo_entrada > $req['fechaMarcacion']){
+                if ($marcacion_tareo00) {
+                    /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
+                    if ($marcacion_tareo00->marcaTareo_entrada > $req['fechaMarcacion']) {
 
-                       /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
-                       $marcacion_tareo1 =DB::table('marcacion_tareo as mt')
-                       ->where('mt.marcaTareo_idempleado', '=',$req['idEmpleado'] )
-                       ->where('mt.marcaTareo_salida', '=',null )
-                       ->whereDate('mt.marcaTareo_entrada', '=',$fecha1 )
-                       ->where('mt.marcaTareo_entrada', '<=',$req['fechaMarcacion'] )
-                       ->where('mt.controladores_idControladores', '=',$req['idControlador'] )
-                       ->where('mt.dispositivos_idDispositivos', '=',$req['idDisposi'])
-                       ->orderby('marcaTareo_entrada','ASC')
-                       ->get()->first();
-                   }
-                   else{
-                    $marcacion_tareo1=[];
-                    $marcacion_tareo1==null;
-                   }
+                        /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
+                        $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
+                            ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
+                            ->where('mt.marcaTareo_salida', '=', null)
+                            ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
+                            ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
+                            ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
+                            ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+                            ->orderby('marcaTareo_entrada', 'ASC')
+                            ->get()->first();
+                    } else {
+                        $marcacion_tareo1 = [];
+                        $marcacion_tareo1 == null;
+                    }
 
-                } else{
-                    $marcacion_tareo1 =DB::table('marcacion_tareo as mt')
-                    ->where('mt.marcaTareo_idempleado', '=',$req['idEmpleado'] )
-                    ->where('mt.marcaTareo_salida', '=',null )
-                    ->whereDate('mt.marcaTareo_entrada', '=',$fecha1 )
-                    ->where('mt.marcaTareo_entrada', '<=',$req['fechaMarcacion'] )
-                    ->where('mt.controladores_idControladores', '=',$req['idControlador'] )
-                    ->where('mt.dispositivos_idDispositivos', '=',$req['idDisposi'])
-                    ->orderby('marcaTareo_entrada','ASC')
-                    ->get()->last();
+                } else {
+                    $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
+                        ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
+                        ->where('mt.marcaTareo_salida', '=', null)
+                        ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
+                        ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
+                        ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
+                        ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+                        ->orderby('marcaTareo_entrada', 'ASC')
+                        ->get()->last();
                 }
 
-              /* SI NO EXISTE MARCACION SIN SALIDA */
-             if($marcacion_tareo1==null){
-                /* creamos nueva marcacion */
-            $marcacion_tareo=new marcacion_tareo();
-            $marcacion_tareo->marcaTareo_salida= $req['fechaMarcacion'];
-            $marcacion_tareo->marcaTareo_idempleado=$req['idEmpleado'];
-            $marcacion_tareo->controladores_idControladores=$req['idControlador'];
-            $marcacion_tareo->dispositivos_idDispositivos=$req['idDisposi'];
-            $marcacion_tareo->organi_id=$req['organi_id'];
-            if(empty($req['activ_id'])) {}
-            else{
-               /*  $marcacion_tareo->marcaIdActivi=$req['activ_id']; */
+                /* SI NO EXISTE MARCACION SIN SALIDA */
+                if ($marcacion_tareo1 == null) {
+                    /* creamos nueva marcacion */
+                    $marcacion_tareo = new marcacion_tareo();
+                    $marcacion_tareo->marcaTareo_salida = $req['fechaMarcacion'];
+                    $marcacion_tareo->marcaTareo_idempleado = $req['idEmpleado'];
+                    $marcacion_tareo->idcontroladores_tareo = $req['idControlador'];
+                    $marcacion_tareo->iddispositivos_tareo = $req['idDisposi'];
+                    $marcacion_tareo->organi_id = $req['organi_id'];
+                    if (empty($req['activ_id'])) {} else {
+                        /*  $marcacion_tareo->marcaIdActivi=$req['activ_id']; */
+                    }
+
+                    if (empty($req['idHoraEmp'])) {} else {
+                        $marcacion_tareo->horarioEmp_id = $req['idHoraEmp'];
+                    }
+                    if (empty($req['latitud'])) {} else {
+                        $marcacion_tareo->marcaTareo_latitud = $req['latitud'];
+                    }
+                    if (empty($req['longitud'])) {} else {
+                        $marcacion_tareo->marcaTareo_longitud = $req['longitud'];
+                    }
+                    if (empty($req['puntoC_id'])) {} else {
+
+                    }
+                    if (empty($req['centC_id'])) {} else {
+
+                    }
+                    $marcacion_tareo->save();
+                } else {
+
+                    /* EMPAREJAMOS CON LA MARCACION SIN SALIDA QUE ENCONTRAMOS */
+                    $marcacion_tareo = marcacion_tareo::find($marcacion_tareo1->idmarcaciones_tareo);
+                    $marcacion_tareo->marcaTareo_salida = $req['fechaMarcacion'];
+                    $marcacion_tareo->save();
+                }
             }
 
-            if(empty($req['idHoraEmp'])) {}
-            else{
-                $marcacion_tareo->horarioEmp_id=$req['idHoraEmp'];
-            }
-            if(empty($req['latitud'])) {}
-            else{
-                $marcacion_tareo->marca_latitud=$req['latitud'];
-            }
-            if(empty($req['longitud'])) {}
-            else{
-                $marcacion_tareo->marca_longitud=$req['longitud'];
-            }
-            if(empty($req['puntoC_id'])) {}
-            else{
-
-            }
-            if(empty($req['centC_id'])) {}
-            else{
-
-            }
-            $marcacion_tareo->save();
-            } else{
-
-                /* EMPAREJAMOS CON LA MARCACION SIN SALIDA QUE ENCONTRAMOS */
-                $marcacion_tareo = marcacion_tareo::find($marcacion_tareo1->marcaMov_id);
-                $marcacion_tareo->marcaTareo_salida=$req['fechaMarcacion'];
-                $marcacion_tareo->save();
-            }
-            }
-
-           }
-
-        if($marcacion_tareo){
-            return response()->json(array('status'=>200,'title' => 'Marcacion registrada correctamente',
-            'detail' => 'Marcacion registrada correctamente en la base de datos'),200);
         }
-        else{
-            return response()->json(array('status'=>400,'title' => 'No se pudo registrar marcacion',
-            'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'),400);
+
+        if ($marcacion_tareo) {
+            return response()->json(array('status' => 200, 'title' => 'Marcacion registrada correctamente',
+                'detail' => 'Marcacion registrada correctamente en la base de datos'), 200);
+        } else {
+            return response()->json(array('status' => 400, 'title' => 'No se pudo registrar marcacion',
+                'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 400);
         }
 
     }
+
+    /* HORARIOS DEL DIA DE EMPELADO  */
+    public function empleadoHorarioTareo(Request $request)
+    {
+
+        /* RECIBIMOS ID ORGANIZACION */
+        $organi_id = $request->organi_id;
+        /* ------------------------- */
+
+        /* OBTENEMOS LA FECHA ACTUAL */
+        $fecha = Carbon::now();
+        /* -------------------------- */
+
+        /* CAMBIAMOS FORMATO DE FECHA */
+        $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+        /* ------------------------------------- */
+
+        /* BUSCAMOS EMPLEADOS CON HORARIOS DE ESTA FECHA ACTUAL */
+        $empleado = DB::table('empleado as e')
+            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+            ->select('p.perso_nombre', 'p.perso_apPaterno', 'p.perso_apMaterno', 'e.emple_nDoc as dni',
+                'e.emple_id as idempleado', 'h.horaI', 'h.horaF', 'h.horario_tolerancia as toleranciaIni',
+                'h.horario_toleranciaF as toleranciaFin', 'he.horarioEmp_id', 'hd.start as diaActual',
+                'he.fuera_horario as trabajafueraHor', 'he.horarioComp as horarioCompensable', 'he.horaAdic as horasAdicionales')
+            ->join('horario_empleado as he', 'e.emple_id', '=', 'he.empleado_emple_id')
+            ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+            ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+            ->where('e.organi_id', '=', $organi_id)
+            ->where('e.emple_estado', '=', 1)
+            ->where('e.modoTareo', '=', 1)
+            ->where('hd.start', '=', $fechaHoy)
+            ->where('he.estado', '=', 1)
+            ->paginate();
+        /* -------------------------------------------------------- */
+
+        /* VERIFICAMOS SI EXISTEN */
+        if ($empleado != null) {
+            return response()->json(array('status' => 200, "empleados" => $empleado));
+        } else {
+            return response()->json(array('status' => 400, 'title' => 'Empleados no encontrados',
+                'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
+        }
+
+    }
+
+    /* TICKET SOPORTE */
+    public function ticketSoporteTareo(Request $request)
+    {
+        /* OBTENEMOS DATOS DE PARAMETROS RECIBIDOS */
+        $idControlador = $request->get('idControlador');
+        $tipo = $request->get('tipo');
+        $contenido = $request->get('contenido');
+        $asunto = $request->get('asunto');
+        $celular = $request->get('celular');
+        /* ----------------------------------------- */
+
+        /* VERIFICAMOS QUE CONTROLADOR EXISTA */
+        $controlador = controladores_tareo::findOrFail($idControlador);
+        /* ---------------------------------------- */
+
+        /* SI EXISTE EL CONTROLADOR */
+        if ($controlador) {
+            $controlador = controladores_tareo::findOrFail($idControlador);
+            $email = "info@rhnube.com.pe";
+
+            /* ENVIAMOS EMAIL DE TIPO SOPORTE */
+            if ($tipo == "soporte") {
+
+                Mail::to($email)->queue(new SoporteApiTareo($contenido, $controlador, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+            /* ---------------------------------------- */
+
+             /* ENVIAMOS EMAIL DE TIPO SUGERENCIA */
+            if ($tipo == "sugerencia") {
+                Mail::to($email)->queue(new SugerenciaApiTareo($contenido, $controlador, $asunto, $celular));
+                return response()->json("Correo Enviado con éxito", 200);
+            }
+             /* ---------------------------------------- */
+        }
+
+        return response()->json("Controlador no se encuentra registrado.", 400);
+    }
+
+     //CENTRO COSTO
+     public function centroCostosTareo(Request $request){
+
+        /* OBTENEMOS EL ID DE ORGANIZACION */
+       $organi_id=$request->organi_id;
+        /* ------------------------------- */
+
+         /* OBTENEMOS CENTRO DE COSTOS DE ESTA ORGANIZACION */
+       $centroCosto = DB::table('centro_costo as cc')
+           ->select(
+               'cc.centroC_id',
+               'cc.centroC_descripcion',
+               'cc.organi_id'
+           )
+           ->where('cc.organi_id', '=', $organi_id)
+           ->get();
+           /* ------------------------------------------------ */
+
+        /* VERIFICAMOS SI EXISTE */
+       if($centroCosto!=null){
+            return response()->json(array('status'=>200,"centroCosto"=>$centroCosto));
+       }
+       else{
+           return response()->json(array('status'=>400,'title' => 'Centros de costos no encontrados',
+           'detail' => 'No se encontro centro de costos en esta organizacion'),400);
+       }
+   }
+
+   //PUNTO CONTROL
+   public function puntoControlTareo(Request $request){
+
+       /* OBTENEMOS EL ID DE ORGANIZACION */
+       $organi_id=$request->organi_id;
+       /* ------------------------------- */
+
+       /* OBTENEMOS PUNTOS DE CONTROL DE ESTA ORGANIZACION */
+       $punto_control = DB::table('punto_control as pc')
+           ->select(
+               'pc.id',
+               'pc.descripcion',
+               'pc.codigoControl',
+               'pc.verificacion',
+               'pc.estado'
+           )
+           ->where('pc.organi_id', '=', $organi_id)
+           ->where('pc.ModoTareo', '=', 1)
+           ->where('pc.estado', '=',1)
+           ->get();
+       /* ------------------------------------------------- */
+
+         /* recorremos punto de de geo de cada punto de control */
+           foreach ($punto_control as $tab) {
+               $punto_control_geo = DB::table('punto_control_geo as pcg')
+                   ->select('pcg.id','pcg.latitud','pcg.longitud',	'pcg.radio')
+                   ->where('pcg.idPuntoControl', '=', $tab->id)
+                   ->distinct('pcg.id')
+                   ->get();
+
+                   /* INSERTAMOS PUNTOS GEO */
+               $tab->puntosGeo = $punto_control_geo;
+
+           }
+
+        /* VERIFICAMOS DI EXISTE */
+       if($punto_control!=null){
+            return response()->json(array('status'=>200,"puntosControl"=>$punto_control));
+       }
+       else{
+           return response()->json(array('status'=>400,'title' => 'puntos de control no encontrados',
+           'detail' => 'No se encontro puntos de control en esta organizacion'),400);
+       }
+
+   }
 }

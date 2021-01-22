@@ -297,7 +297,7 @@
                                                                         class="adapt-img"
                                                                         src="http://rhnube.com.pe/landing/images/NUBE_SOLA.png"
                                                                         style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                        width="193"></td>
+                                                                        width="80"></td>
                                                             </tr>
                                                         </table>
                                                     </td>

@@ -372,7 +372,13 @@
                                                                     style="padding:0;Margin:0;padding-right:35px;padding-left:40px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:24px;color:#666666;text-align:center">
+                                                                       {{--  @if ($persona)
                                                                         <strong>Remitente:</strong> {{$persona->perso_nombre}} {{$persona->perso_apPaterno}} {{$persona->perso_apMaterno}}
+
+                                                                        @else --}}
+                                                                        <strong>Remitente:</strong> {{$controlador->contrT_nombres}} {{$controlador->contrT_ApPaterno}} {{$controlador->contrT_ApMaterno}}
+                                                                       {{--  @endif --}}
+
                                                                     </p>
                                                                 </td>
                                                             </tr>
