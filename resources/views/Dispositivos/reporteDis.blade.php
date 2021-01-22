@@ -179,6 +179,11 @@
     }
 
     /* FINALIZACION */
+    .scrollable-menu {
+        height: auto;
+        max-height: 200px;
+        overflow: auto;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -352,6 +357,60 @@
                                 </span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                     id="entradaM" required>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Registrar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+<div id="asignacionMarcacion" class="modal fade" role="dialog" aria-labelledby="asignacionMarcacion" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12">
+                    <form action="javascript:guardarAsignacion()">
+                        <div class="row">
+                            <input type="hidden" id="idMarcacionA">
+                            <input type="hidden" id="tipoM">
+                            <div class="col-md-12">
+                                <h6 style="color:#62778c;font-weight: bold">
+                                    Hora de marcación
+                                    &nbsp;
+                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" id="img_a" />
+                                    &nbsp;
+                                    <span id="a_hora" style="color:#62778c;font-weight: bold"></span>
+                                </h6>
+                                <span id="a_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                            </div>
+                            <div class="col-xl-8">
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="horarioM" required></select>
+                            </div>
+                            <div class="col-xl-4">
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="asignacionM" required>
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    <option value="1">Entrada</option>
+                                    <option value="2">Salida</option>
                                 </select>
                             </div>
                         </div>

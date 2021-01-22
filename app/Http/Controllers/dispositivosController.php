@@ -415,7 +415,8 @@ class dispositivosController extends Controller
                     "idMarcacion" => $empleado->idMarcacion,
                     "entrada" => $empleado->entrada,
                     "salida" => $empleado->salida,
-                    "idH" => $empleado->idHorario
+                    "idH" => $empleado->idHorario,
+                    "idHE" => $empleado->idHorarioE
                 );
                 array_push($resultado[$empleado->emple_id]->data[$empleado->idHorario]["marcaciones"], $arrayMarcacion);
             }
@@ -638,6 +639,7 @@ class dispositivosController extends Controller
                 DB::raw("IF(hor.horaI is null , null , horario_descripcion) as detalleHorario"),
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
+                DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'mp.marcaMov_id as idMarcacion'
             )
             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
@@ -1967,5 +1969,116 @@ class dispositivosController extends Controller
         } else {
             return response()->json(0, 200);
         }
+    }
+
+    // * HORARIOS DE MARCACIONES
+    public function horariosxMarcacion(Request $request)
+    {
+        $tipo = $request->get('tipo');
+        $id = $request->get('id');
+        $marcacion = marcacion_puerta::findOrFail($id);
+        $fechaM = $tipo == 2 ? $marcacion->marcaMov_salida : $marcacion->marcaMov_fecha;
+        $fecha = Carbon::parse($fechaM)->isoFormat("YYYY-MM-DD");
+
+        $respuesta = [];
+
+        $horario = DB::table('horario_empleado as he')
+            ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+            ->join('horario as h', 'h.horario_id', '=', 'horario_horario_id')
+            ->select(
+                'he.horarioEmp_id as id',
+                'h.horario_descripcion',
+                'h.horaI',
+                'h.horaF',
+                'h.horario_tolerancia',
+                'h.horario_toleranciaF',
+                DB::raw("CONCAT( DATE(hd.start),' ', h.horaI) as horarioInicio"),
+                DB::raw("IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF)) as horarioFin")
+            )
+            ->where('he.empleado_emple_id', '=', $marcacion->marcaMov_emple_id)
+            ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+            ->where('he.estado', '=', 1)
+            ->get();
+
+        foreach ($horario as $h) {
+            $horarioFSuma = Carbon::parse($h->horarioFin)->addMinutes($h->horario_toleranciaF);
+            $horarioIResta = Carbon::parse($h->horarioInicio)->subMinutes($h->horario_tolerancia);
+            // * VALIDACION DE HORARIO CON EL TIEMPO DE MARCACION
+            if (Carbon::parse($fechaM)->gte($horarioIResta) && Carbon::parse($fechaM)->lt($horarioFSuma)) {
+                $arrayHorario = (object) array(
+                    "id" => $h->id,
+                    "horario_descripcion" => $h->horario_descripcion,
+                    "horaI" => $h->horaI,
+                    "horaF" => $h->horaF
+                );
+
+                array_push($respuesta, $arrayHorario);
+            }
+        }
+
+        return response()->json($respuesta, 200);
+    }
+
+    // * GUARDAR A NUEVA ASIGNACION
+    public function asignacionMarcacion(Request $request)
+    {
+        $id = $request->get('id');
+        $idHorarioE = $request->get('idHorario');
+        $marcacionTipo = $request->get('tipoM');
+        $tipo = $request->get('tipo');
+        $marcacion = marcacion_puerta::findOrFail($id);
+
+        // * TOMAR MARCACION PARA NUEVA MARCACION
+        if ($marcacionTipo == 1) {
+            $nuevaMarcacion = $marcacion->marcaMov_fecha;
+            $marcacion->marcaMov_fecha = NULL;
+            $marcacion->save();
+        } else {
+            $nuevaMarcacion = $marcacion->marcaMov_salida;
+            $marcacion->marcaMov_salida = NULL;
+            $marcacion->save();
+        }
+
+        // * GENERAR NUEVA MARCACION
+        $newMarcacion = new marcacion_puerta();
+        if ($tipo ==  1) {
+            $newMarcacion->marcaMov_fecha = $nuevaMarcacion;
+        } else {
+            $newMarcacion->marcaMov_salida = $nuevaMarcacion;
+        }
+        $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
+        $newMarcacion->organi_id =  $marcacion->organi_id;
+        $newMarcacion->horarioEmp_id = $idHorarioE;
+        $newMarcacion->marca_latitud = $marcacion->marca_latitud;
+        $newMarcacion->marca_longitud = $marcacion->marca_longitud;
+        $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;
+        $newMarcacion->puntoC_id = $marcacion->puntoC_id;
+        $newMarcacion->centC_id = $marcacion->centC_id;
+        $newMarcacion->save();
+
+        return response()->json($newMarcacion->marcaMov_id, 200);
+    }
+
+    // * ELIMINAR MARCACION
+    public function eliminarMarcacion(Request $request)
+    {
+        $id = $request->get('id');
+        $tipo = $request->get('tipo');
+
+        // * BUSCAMOS MARCACION
+        $marcacion = marcacion_puerta::findOrFail($id);
+        if ($tipo == 1) {
+            $marcacion->marcaMov_fecha = NULL;
+            $marcacion->save();
+        } else {
+            $marcacion->marcaMov_salida = NULL;
+            $marcacion->save();
+        }
+
+        if (is_null($marcacion->marcaMov_fecha) && is_null($marcacion->marcaMov_salida)) {
+            $marcacion->delete();
+        }
+
+        return response()->json("Marcación eliminada.", 200);
     }
 }

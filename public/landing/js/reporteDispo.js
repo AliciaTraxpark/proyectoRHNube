@@ -417,8 +417,12 @@ function cargartabla(fecha) {
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                                         </button>
-                                                                        <ul class="dropdown-menu"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}">
-                                                                            <h6 class="dropdown-header text-left">Opciones</h6>
+                                                                        <ul class="dropdown-menu scrollable-menu noti-scroll"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                Opciones
+                                                                            </h6>
+                                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                             <div class="dropdowm-item">
                                                                                 <div class="form-group noExport pl-3">
                                                                                     <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
@@ -443,9 +447,25 @@ function cargartabla(fecha) {
                                                                                 Convertir orden
                                                                             </a>
                                                                         </div>
+                                                                    </div>
+                                                                    <div class="dropdowm-item">
+                                                                        <div class="form-group noExport pl-3">
+                                                                            <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                Asignar a nueva marc.
+                                                                            </a>
+                                                                        </div>
                                                                     </div>`;
                                         }
-                                        tbodyEntradaySalida += ` </ul></div></td>`;
+                                        tbodyEntradaySalida += ` <div class="dropdowm-item">
+                                                                    <div class="form-group noExport pl-3">
+                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                            Eliminar marc.
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul></div></td>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
@@ -462,8 +482,12 @@ function cargartabla(fecha) {
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                 ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                             </a>
-                                                                            <ul class="dropdown-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}">
-                                                                                <h6 class="dropdown-header text-left">Opciones</h6>
+                                                                            <ul class="dropdown-menu scrollable-menu noti-scroll"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" padding: 0rem 0rem;>
+                                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                    Opciones
+                                                                                </h6>
+                                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                 <div class="dropdowm-item">
                                                                                     <div class="form-group noExport pl-3">
                                                                                         <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
@@ -485,6 +509,22 @@ function cargartabla(fecha) {
                                                                                         <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
                                                                                             Convertir orden
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="dropdowm-item">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                            Asignar a nueva marc.
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="dropdowm-item">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                                            Eliminar marc.
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
@@ -678,10 +718,10 @@ function cargartabla(fecha) {
                                                                                     No tiene salida
                                                                                 </span>
                                                                             </button>
-                                                                            <ul class="dropdown-menu"  aria-labelledby="dropSalida${marcacionData.idMarcacion}">
+                                                                            <ul class="dropdown-menu"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
                                                                                 <form class="pr-3 pl-3 dropdown-item">
                                                                                     <div class="form-group">
-                                                                                        <h6 class="dropdown-header text-left">
+                                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;">
                                                                                             Hora salida
                                                                                             &nbsp; 
                                                                                             <a onclick="insertarSalida(${marcacionData.idMarcacion}) " style="cursor: pointer">
@@ -727,10 +767,10 @@ function cargartabla(fecha) {
                                                                                     No tiene entrada
                                                                                 </span>
                                                                             </button>
-                                                                            <ul class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}">
+                                                                            <ul class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
                                                                                 <form class="pr-3 pl-3">
                                                                                     <div class="form-group">
-                                                                                        <h6 class="dropdown-header text-left">
+                                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;">
                                                                                             Hora entrada
                                                                                             &nbsp;
                                                                                             <a onclick="insertarEntrada(${marcacionData.idMarcacion})" style="cursor: pointer">
@@ -763,8 +803,12 @@ function cargartabla(fecha) {
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                                     </a>
-                                                                                    <ul class="dropdown-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}">
-                                                                                        <h6 class="dropdown-header text-left">Opciones</h6>
+                                                                                    <ul class="dropdown-menu scrollable-menu noti-scroll"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                            <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                            Opciones
+                                                                                        </h6>
+                                                                                        <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                         <div class="dropdowm-item">
                                                                                             <div class="form-group noExport pl-3">
                                                                                                 <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
@@ -778,6 +822,14 @@ function cargartabla(fecha) {
                                                                                                 <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                                     Cambiar a salida
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="dropdowm-item">
+                                                                                            <div class="form-group noExport pl-3">
+                                                                                                <a onclick="eliminarM(${marcacionData.idMarcacion},2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                    <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
+                                                                                                    Eliminar marc.
                                                                                                 </a>
                                                                                             </div>
                                                                                         </div>
@@ -878,7 +930,6 @@ function cargartabla(fecha) {
                             </td>`;
                     tbody += `</tr>`;
                 }
-                console.log(tbody);
                 $('#tbodyD').html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
                 // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
@@ -1519,6 +1570,150 @@ function convertirOrden(id) {
         })
         .setting({
             title: "Modificar Marcación",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+}
+// * ASIGNAR NUEVA MARCACION
+function asignarNuevaM(id, hora, tipo, horario) {
+    $('#idMarcacionA').val(id);
+    $('#tipoM').val(tipo);
+    $('#a_hora').text(hora);
+    if (tipo == 1) {
+        $('#img_a').attr("src", "landing/images/entradaD.svg");
+    } else {
+        $('#img_a').attr("src", "landing/images/salidaD.svg");
+    }
+    $('#horarioM').empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/horarioxM",
+        data: {
+            id: id,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            var option = `<option value="0" selected>Sin horario</option>`;
+            for (let index = 0; index < data.length; index++) {
+                option += `<option value="${data[index].id}">Horario: ${data[index].horario_descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
+            }
+            $('#horarioM').append(option);
+            $('#horarioM').val(horario).trigger("change");
+        },
+        error: function () { }
+    });
+    $('#asignacionMarcacion').modal();
+    $('#asignacionM').val(tipo).trigger('change');
+}
+
+// * GUARDAR ASIGNACION
+function guardarAsignacion() {
+    var id = $('#idMarcacionA').val();
+    var idHorario = $('#horarioM').val();
+    var tipoM = $('#tipoM').val();
+    var tipo = $('#asignacionM').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/asignacionNew",
+        data: {
+            id: id,
+            idHorario: idHorario,
+            tipoM: tipoM,
+            tipo: tipo
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#btnRecargaTabla').click();
+            $('#asignacionMarcacion').modal('toggle');
+        },
+        error: function () { }
+    });
+}
+
+function eliminarM(id, tipo) {
+    alertify
+        .confirm("¿Desea Convertir orden si o no?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/eliminarMarcacion",
+                    data: {
+                        id: id,
+                        tipo: tipo
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                        $('#btnRecargaTabla').click();
+                        $.notifyClose();
+                        $.notify({
+                            message: data,
+                            icon: '/landing/images/alert1.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { }
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar Marcación",
             labels: {
                 ok: "Si",
                 cancel: "No",
