@@ -35,6 +35,7 @@ class PuntosControlController extends Controller
                 'pc.descripcion',
                 'pc.controlRuta',
                 'pc.asistenciaPuerta',
+                'pc.ModoTareo',
                 DB::raw("CASE WHEN(pc.codigoControl) IS NULL THEN 'No definido' ELSE pc.codigoControl END AS codigoP")
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
@@ -783,6 +784,9 @@ class PuntosControlController extends Controller
             }
             if ($control == "AP") {
                 $punto->asistenciaPuerta = $request->get('valor');
+            }
+            if ($control == "MT") {
+                $punto->ModoTareo = $request->get('valor');
             }
             $punto->save();
         }

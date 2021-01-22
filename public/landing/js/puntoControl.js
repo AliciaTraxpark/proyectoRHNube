@@ -112,6 +112,23 @@ function puntosControlOrganizacion() {
                                 </td>`;
                     }
 
+                    // * MODO TAREO
+                    if (data[index].ModoTareo == 1) {
+                        tbody += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchPuntoMTOrg${data[index].id}" checked>
+                                        <label class="custom-control-label" for="switchPuntoMTOrg${data[index].id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
+                    } else {
+                        tbody += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchPuntoMTOrg${data[index].id}">
+                                        <label class="custom-control-label" for="switchPuntoMTOrg${data[index].id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
+                    }
+
                     tbody += `<td class="text-center">
                                 <a onclick="javascript:editarPunto(${data[index].id})" style="cursor: pointer">
                                     <img src="/admin/images/edit.svg" height="15">
@@ -2861,6 +2878,40 @@ function cambiarEstadoPunto(id) {
 
     $("#switchPuntoAPOrg" + id).on("change.bootstrapSwitch", function (event) {
         var control = "AP";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado del punto control?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoDeControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Punto Control",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    puntosControlOrganizacion();
+                },
+            });
+    });
+
+    /* MODO TAREO SWITCH */
+    $("#switchPuntoMTOrg" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "MT";
         if (event.target.checked == true) {
             var valor = 1;
         } else {
