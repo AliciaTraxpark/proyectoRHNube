@@ -261,6 +261,17 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="col-md-6 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customMT">
+                                        <label class="custom-control-label" for="customMT" style="font-weight: bold">
+                                            <i data-feather="pocket"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Modo tareo
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row border-top rowEmpleados" style="display: none">
                                 <div class="col-md-12 text-left">
@@ -414,6 +425,17 @@
                                                 style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                             &nbsp;&nbsp;
                                             Asistencia en Puerta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_customMT">
+                                        <label class="custom-control-label" for="e_customMT" style="font-weight: bold">
+                                            <i data-feather="pocket"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Modo tareo
                                         </label>
                                     </div>
                                 </div>

@@ -52,6 +52,7 @@ function limpiarModo() {
     $('#codigoTarea').val("");
     $('#customCR').prop("checked", false);
     $('#customCRT').prop("checked", false);
+    $('#customMT').prop("checked", false);
     $('#customAP').prop("checked", false);
     $('.rowEmpleados').hide();
     $('#customAE').prop("checked", false);
@@ -62,6 +63,7 @@ function limpiarModo() {
     $('#e_customCR').prop("checked", false);
     $('#e_customCRT').prop("checked", false);
     $('#e_customAP').prop("checked", false);
+    $('#e_customMT').prop("checked", false);
 }
 function eliminarActividad(id) {
     alertify
@@ -546,6 +548,29 @@ $('#e_customAP').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
+
+//: FUNCIONALIDAD DEL SWITCH MODO TAREO
+$('#e_customMT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    } else {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    }
+});
 //: ***********************************************
 $('#FormEditarActividadTarea').attr('novalidate', true);
 $('#FormEditarActividadTarea').submit(function (e) {
@@ -653,6 +678,11 @@ function editarActividad(id) {
             } else {
                 $('#e_customAP').prop("checked", false);
             }
+            if (data.modoTareo === 1) {
+                $('#e_customMT').prop("checked", true);
+            } else {
+                $('#e_customMT').prop("checked", false);
+            }
             if (data.controlRemoto === 1 || data.controlRuta === 1) {
                 $('.rowEmpleadosEditar').show();
             } else {
@@ -693,6 +723,7 @@ function editarActividadTarea() {
     var asignacionEmpleado;
     var asignacionArea;
     var globalArea;
+    var modoTareo;
     //* CONTROL REMOTO
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
@@ -704,6 +735,13 @@ function editarActividadTarea() {
         var asistenciaPuerta = 1;
     } else {
         var asistenciaPuerta = 0;
+    }
+
+    //* MODO TAREO
+    if ($('#e_customMT').is(":checked") == true) {
+        var modoTareo = 1;
+    } else {
+        var modoTareo = 0;
     }
     //* CONTROL EN RUTA
     if ($('#e_customCRT').is(":checked") == true) {
@@ -749,7 +787,8 @@ function editarActividadTarea() {
             asignacionEmpleado: asignacionEmpleado,
             areas: areas,
             asignacionArea: asignacionArea,
-            globalArea: globalArea
+            globalArea: globalArea,
+            modoTareo:modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1199,6 +1238,28 @@ $('#customAP').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
+//: FUNCIONALIDAD DEL SWITCH MODO tareo
+$('#customMT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    } else {
+        if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    }
+});
 //: FUNCTION ESTADOS SWITCH
 function estadoAsignacionesReg() {
     if (!$('#customAE').is(":checked")) {
@@ -1321,6 +1382,7 @@ function registrarActividadTarea() {
     var asignacionEmpleado;
     var asignacionArea;
     var globalArea;
+    var modoTareo;
     //* CONTROL REMOTO
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
@@ -1332,6 +1394,12 @@ function registrarActividadTarea() {
         var asistenciaPuerta = 1;
     } else {
         var asistenciaPuerta = 0;
+    }
+     //* MODO TAREO
+     if ($('#customMT').is(":checked") == true) {
+        var modoTareo = 1;
+    } else {
+        var modoTareo = 0;
     }
     //* CONTROL EN RUTA
     if ($('#customCRT').is(":checked") == true) {
@@ -1377,7 +1445,8 @@ function registrarActividadTarea() {
             asignacionEmpleado: asignacionEmpleado,
             areas: areas,
             asignacionArea: asignacionArea,
-            globalArea: globalArea
+            globalArea: globalArea,
+            modoTareo: modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
