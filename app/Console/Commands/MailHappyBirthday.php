@@ -47,7 +47,7 @@ class MailHappyBirthday extends Command
     public function handle()
     {
         $this->info('Enviar correo de cumpleaños.');
-        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial');
+        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo');
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
@@ -58,19 +58,13 @@ class MailHappyBirthday extends Command
             $empleados = DB::table('empleado')
                 ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                 ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_persona')
+                ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno')
                 ->get();
 
-            $admin = DB::table('usuario_organizacion')
+            $admins = DB::table('usuario_organizacion')
                     ->where('organi_id', $organizacion->organi_id)
                     ->select('usuario_organizacion.user_id')
-                    ->first();
-
-            $invitado_admin = DB::table('invitado')
-                    ->where('organi_id', $organizacion->organi_id)
-                    ->where('rol_id', 1)
-                    ->select('invitado.user_Invitado')
-                    ->first();
+                    ->get();
 
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
@@ -79,21 +73,18 @@ class MailHappyBirthday extends Command
                     $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
                     $diff = $today->diffInDays($fHb);
                     $edad = $today->year - $hb->year;
-                    if($diff < 7 && $today <= $fHb){
+                    if($diff <= 7 && $today <= $fHb){
                         $datos = $datos."<div class=''> • <strong>".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</strong>&nbsp;&nbsp;&nbsp;".$hb->day." de ".$meses[($hb->month)-1]." &nbsp;&nbsp;&nbsp; (".$edad." años)"."</div><br>";
                     }
                 // FIN DE NOTIFICACIÓN
                 }  
             }
-            if($datos != "" && $admin != ""){
-                $mail_body = "<h4>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
-                $email = User::find($admin->user_id)->email;
-                $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
-            }
-            if($datos != "" && $invitado_admin != ""){
-                $mail_body = "<h4>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
-                $email = User::find($invitado_admin->user_Invitado)->email;
-                $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
+            if($datos != "" && isset($admins)){
+                $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
+                foreach ($admins as $admin) {
+                    $email = User::find($admin->user_id)->email;
+                    $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
+                }
             }
         }
     }
