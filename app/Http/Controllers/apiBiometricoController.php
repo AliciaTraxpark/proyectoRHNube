@@ -945,7 +945,7 @@ class apiBiometricoController extends Controller
         $horaActual = $fechaHoy->isoFormat('YYYY-MM-DD HH:mm:ss');
 
         /* --------------ORDENAMOS DE MENOR A MAYOR-------------------------------------------------- */
-        /* $arrayDatos = new Collection();
+        $arrayDatos = new Collection();
         foreach ($request->all() as $req) {
 
             if (empty($req['idHoraEmp'])) {
@@ -962,11 +962,11 @@ class apiBiometricoController extends Controller
             $arrayDatos->push($datos);
         }
         $arrayOrdenado = $arrayDatos->sortBy('fechaMarcacion');
-        $arrayOrdenado->values()->all(); */
+        $arrayOrdenado->values()->all(); 
         /* dd($arrayOrdenado); */
         /* ----------------------------------------------------------------------------------------------------*/
          /*OBTENEMOS ARCHIVO FILE Y CREAMOS NUEBO COLLECTION   */
-         $contents = new Collection();
+      /*    $contents = new Collection();
          $file = $request->file('file');
          $data = file_get_contents($file);
          $datosJ = json_decode($data, true);
@@ -979,12 +979,12 @@ class apiBiometricoController extends Controller
                  ];
 
                  $contents->push($datos);
-         }
+         } */
          /* --------------------------------------------- */
 
          /* ORDENAMOS ARRAY POR FECHA DE MARCACION */
-         $arrayOrdenado = $contents->sortBy('fechaMarcacion');
-         $arrayOrdenado->values()->all();
+         /* $arrayOrdenado = $contents->sortBy('fechaMarcacion');
+         $arrayOrdenado->values()->all(); */
 
         /*---------------------------------------------------------------------------------------------------  */
 
