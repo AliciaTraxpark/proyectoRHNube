@@ -224,6 +224,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_modoT">
+                                        <label class="custom-control-label" for="e_modoT" style="font-weight: bold">
+                                            <i data-feather="pocket"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Modo tareo
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
                                     <div class="form-group mb-0 mt-0 mb-2">
                                         <input type="checkbox" id="e_verificacion" class="ml-1 mt-1">
                                         <img src="{{asset('landing/images/placeholder.svg')}}" class="ml-4 mb-1"
@@ -587,6 +598,17 @@
                                                 style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                             &nbsp;&nbsp;
                                             Asistencia en Puerta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="r_modoT">
+                                        <label class="custom-control-label" for="r_modoT" style="font-weight: bold">
+                                            <i data-feather="pocket"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Modo tareo
                                         </label>
                                     </div>
                                 </div>
