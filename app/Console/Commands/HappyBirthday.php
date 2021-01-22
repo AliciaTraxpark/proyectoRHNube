@@ -47,9 +47,7 @@ class HappyBirthday extends Command
     public function handle()
     {
         $this->info('Enviar notificación de cumpleaños.');
-        $organizaciones = organizacion::all();
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        $datos = "";
+        $organizaciones = organizacion::all('organi_id');
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
 
@@ -58,7 +56,7 @@ class HappyBirthday extends Command
             $empleados = DB::table('empleado')
                     ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.*', 'empleado.*')
+                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_persona')
                     ->get();
             $admin = DB::table('usuario_organizacion')
                     ->where('organi_id', $organizacion->organi_id)
@@ -90,8 +88,6 @@ class HappyBirthday extends Command
                                         "mensaje" => "Hoy está de cumpleaños, ".$edad." años.",
                                         "asunto" => "birthday"
                                     ];
-                        
-                        //$datos = $datos."<div class='text-left'> • ".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</div> <div class='text-left'>".$dia." de ".$meses[$mes-1]." (".$edad.")"."</div><br>";
                         if($admin != ""){
                             $recipient = User::find($admin->user_id);
                             $recipient->notify(new NuevaNotification($mensaje)); 

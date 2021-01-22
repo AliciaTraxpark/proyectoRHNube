@@ -47,12 +47,10 @@ class FinContrato extends Command
     public function handle()
     {
         $this->info('Enviar correo de fin de contrato.');
-        $organizaciones = organizacion::all();
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial');
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
         
-
         foreach ($organizaciones as $organizacion) {
             $datos = "";
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
@@ -60,7 +58,7 @@ class FinContrato extends Command
                     ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                     ->join('contrato', 'emple_id', '=', 'contrato.idEmpleado')
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.*', 'empleado.*', 'contrato.fechaFinal', 'contrato.notiTiempo')
+                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_persona', 'contrato.fechaFinal', 'contrato.notiTiempo')
                     ->get();
 
             $admin = DB::table('usuario_organizacion')

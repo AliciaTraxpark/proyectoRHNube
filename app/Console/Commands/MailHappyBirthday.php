@@ -47,7 +47,7 @@ class MailHappyBirthday extends Command
     public function handle()
     {
         $this->info('Enviar correo de cumpleaños.');
-        $organizaciones = organizacion::all();
+        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial');
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
@@ -58,7 +58,7 @@ class MailHappyBirthday extends Command
             $empleados = DB::table('empleado')
                 ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                 ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                ->select('persona.*', 'empleado.*')
+                ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_persona')
                 ->get();
 
             $admin = DB::table('usuario_organizacion')
