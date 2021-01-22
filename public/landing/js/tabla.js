@@ -75,17 +75,17 @@ function RefreshTablaEmpleadoArea() {
 
                 tbody += "</td>";
                 tbody +=
-                    '<td class="text-center"> <div class="text-wrap width-400">' +
+                    '<td class="text-center">' +
                     data[i].emple_nDoc +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
+                    '</td>\
+                            <td>' +
                     data[i].perso_nombre +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
+                    '</td>\
+                            <td>' +
                     data[i].perso_apPaterno +
                     " " +
                     data[i].perso_apMaterno +
-                    "</div></td>";
+                    "</td>";
                 if (data[i].dispositivos.includes(1) == false) {
                     tbody +=
                         '<td class="text-center">\
@@ -398,22 +398,52 @@ function RefreshTablaEmpleadoArea() {
                 </td>';
 
                 }
-                if (data[i].cargo_descripcion == null) {
-                    tbody += '<td><div class="text-wrap width-400"></div></td>';
+                if (data[i].modoTareo == 1) {
+                    tbody +=
+                        '<td class="text-center">\
+                                <div class="custom-control custom-switch mb-2">\
+                                    <input type="checkbox" class="custom-control-input"\
+                                        id="customSwitchMT' +
+                        data[i].emple_id +
+                        '" onclick="modoTareo(' + data[i].emple_id + ')" checked>\
+                                    <label class="custom-control-label" for="customSwitchMT' +
+                        data[i].emple_id +
+                        '"\
+                                        style="font-weight: bold"></label>\
+                                </div>\
+                    </td>';
                 } else {
                     tbody +=
-                        '<td><div class="text-wrap width-400">' +
+                        '<td class="text-center">\
+                            <div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchMT' +
+                        data[i].emple_id +
+                        '" onclick="modoTareo(' + data[i].emple_id + ')">\
+                                <label class="custom-control-label" for="customSwitchMT' +
+                        data[i].emple_id +
+                        '"\
+                                    style="font-weight: bold"></label>\
+                            </div>\
+                </td>';
+
+                }
+                if (data[i].cargo_descripcion == null) {
+                    tbody += '<td></td>';
+                } else {
+                    tbody +=
+                        '<td>' +
                         data[i].cargo_descripcion +
-                        "</div></td>";
+                        "</td>";
                 }
                 if (data[i].area_descripcion == null) {
                     tbody +=
-                        '<td><div class="text-wrap width-400"></div></td></tr>';
+                        '<td></td></tr>';
                 } else {
                     tbody +=
-                        '<td><div class="text-wrap width-400">' +
+                        '<td>' +
                         data[i].area_descripcion +
-                        "</div></td></tr>";
+                        "</td></tr>";
                 }
             }
             $("#tbodyr").html(tbody);
@@ -583,17 +613,17 @@ function RefreshTablaEmpleado() {
                     "> </td>";
 
                 tbody +=
-                    '<td> <div class="text-wrap width-400">' +
+                    '<td> ' +
                     data[i].emple_nDoc +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
+                    '</td>\
+                            <td> ' +
                     data[i].perso_nombre +
-                    '</div></td>\
-                            <td> <div class="text-wrap width-400">' +
+                    '</td>\
+                            <td> ' +
                     data[i].perso_apPaterno +
                     " " +
                     data[i].perso_apMaterno +
-                    "</div></td>";
+                    "</td>";
                 if (data[i].dispositivos.includes(1) == false) {
                     tbody +=
                         '<td class="text-center">\
@@ -908,22 +938,52 @@ function RefreshTablaEmpleado() {
                 </td>';
 
                 }
-                if (data[i].cargo_descripcion == null) {
-                    tbody += '<td><div class="text-wrap width-400"></div></td>';
+                if (data[i].modoTareo == 1) {
+                    tbody +=
+                        '<td class="text-center">\
+                                <div class="custom-control custom-switch mb-2">\
+                                    <input type="checkbox" class="custom-control-input"\
+                                        id="customSwitchMT' +
+                        data[i].emple_id +
+                        '" onclick="modoTareo(' + data[i].emple_id + ')" checked>\
+                                    <label class="custom-control-label" for="customSwitchMT' +
+                        data[i].emple_id +
+                        '"\
+                                        style="font-weight: bold"></label>\
+                                </div>\
+                    </td>';
                 } else {
                     tbody +=
-                        '<td><div class="text-wrap width-400">' +
+                        '<td class="text-center">\
+                            <div class="custom-control custom-switch mb-2">\
+                                <input type="checkbox" class="custom-control-input"\
+                                    id="customSwitchMT' +
+                        data[i].emple_id +
+                        '" onclick="modoTareo(' + data[i].emple_id + ')">\
+                                <label class="custom-control-label" for="customSwitchMT' +
+                        data[i].emple_id +
+                        '"\
+                                    style="font-weight: bold"></label>\
+                            </div>\
+                </td>';
+
+                }
+                if (data[i].cargo_descripcion == null) {
+                    tbody += '<td></td>';
+                } else {
+                    tbody +=
+                        '<td>' +
                         data[i].cargo_descripcion +
-                        "</div></td>";
+                        "</td>";
                 }
                 if (data[i].area_descripcion == null) {
                     tbody +=
-                        '<td><div class="text-wrap width-400"></div></td></tr>';
+                        '<td></td></tr>';
                 } else {
                     tbody +=
-                        '<td><div class="text-wrap width-400">' +
+                        '<td>' +
                         data[i].area_descripcion +
-                        "</div></td></tr>";
+                        "</td></tr>";
                 }
             }
             $("#tbodyr").html(tbody);

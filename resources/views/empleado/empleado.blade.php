@@ -773,7 +773,7 @@ use Carbon\Carbon;
         max-width: 130px!important;
     } */
         .container {
-            
+
         }
 
         tr:first-child>td>.fc-day-grid-event {
@@ -1034,17 +1034,17 @@ use Carbon\Carbon;
             </div>
 
             <div class="col-sm-3 col-md-2 col-xl-2 text-center">
-                <a href="{{('/empleado/cargar')}}"> 
+                <a href="{{('/empleado/cargar')}}">
                     <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c; margin-bottom: 2px;">
                         <img src="{{asset('admin/images/subir.ico')}}" height="25" class="">Carga masiva emp.
                     </button>
-                </a> 
+                </a>
                 <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c" id="cargaMasivaF">
                     <img src="{{asset('admin/images/image.ico')}}" height="25" class="">Carga masiva fotos
                 </button>
             </div>
         </nav>
-        
+
     </header>
     <div class="content-page" style="margin-top: 20px;margin-left: 0px">
         <div class="content">
@@ -1077,8 +1077,8 @@ use Carbon\Carbon;
                                             <option value="2">Documento</option>
                                             <option value="3">Nombre</option>
                                             <option value="4" selected>Apellidos</option>
-                                            <option value="8">Cargo</option>
-                                            <option value="9">Área</option>
+                                            <option value="9">Cargo</option>
+                                            <option value="10">Área</option>
                                         </select>
                                     </td>
                                 </div>
@@ -1986,7 +1986,7 @@ use Carbon\Carbon;
                                             <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                             <select class="form-control col-2" name="noti_dia_fecha" id="noti_dia_fecha" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++) 
+                                            @for ($i = 30; $i <61; $i++)
                                                 <option class="" value="{{$i}}"> {{ $i }} </option>
                                             @endfor
                                             </select>
@@ -2213,7 +2213,7 @@ use Carbon\Carbon;
                                             <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                             <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++) 
+                                            @for ($i = 30; $i <61; $i++)
                                                 <option class="" value="{{$i}}"> {{ $i }} </option>
                                             @endfor
                                             </select>
@@ -2775,7 +2775,7 @@ use Carbon\Carbon;
                                             <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                             <select class="form-control col-2" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++) 
+                                            @for ($i = 30; $i <61; $i++)
                                                 <option class="" value="{{$i}}"> {{ $i }} </option>
                                             @endfor
                                             </select>
@@ -2999,8 +2999,8 @@ use Carbon\Carbon;
                                         <div class="col-md-12 pt-3 d-flex inline">
                                             <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                             <select class="form-control col-2" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
-                                                <option value="0">Día</option>  
-                                            @for ($i = 30; $i <61; $i++) 
+                                                <option value="0">Día</option>
+                                            @for ($i = 30; $i <61; $i++)
                                                 <option class="" value="{{$i}}"> {{ $i }} </option>
                                             @endfor
                                             </select>
@@ -3394,7 +3394,7 @@ use Carbon\Carbon;
                                             <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                             <select class="form-control col-2" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++) 
+                                            @for ($i = 30; $i <61; $i++)
                                                 <option class="" value="{{$i}}"> {{ $i }} </option>
                                             @endfor
                                             </select>
@@ -3508,7 +3508,7 @@ use Carbon\Carbon;
                                                         <div class="col-4 pAnio pleft">
                                                             <select class="form-control" style="padding-left: 5px; padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i <2011; $i++) 
+                                                                @for ($i = 1950; $i <2011; $i++)
                                                                     <option class="" value="{{$i}}"> {{$i}} </option>
                                                                 @endfor
                                                             </select>

@@ -1051,8 +1051,8 @@ use App\proyecto_empleado;
                                 <option value="2">Documento</option>
                                 <option value="3">Nombre</option>
                                 <option value="4" selected>Apellidos</option>
-                                <option value="8">Cargo</option>
-                                <option value="9">Área</option>
+                                <option value="9">Cargo</option>
+                                <option value="10">Área</option>
                             </select>
                         </td>
                     </div>
@@ -1917,7 +1917,7 @@ use App\proyecto_empleado;
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-2" name="noti_dia_fecha" id="noti_dia_fecha" required="">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++) 
+                                @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
@@ -2137,7 +2137,7 @@ use App\proyecto_empleado;
                                     <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                     <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
                                         <option value="0">Día</option>
-                                    @for ($i = 30; $i <61; $i++) 
+                                    @for ($i = 30; $i <61; $i++)
                                         <option class="" value="{{$i}}"> {{ $i }} </option>
                                     @endfor
                                     </select>
@@ -2662,7 +2662,7 @@ use App\proyecto_empleado;
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-2" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++) 
+                                @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
@@ -2875,8 +2875,8 @@ use App\proyecto_empleado;
                             <div class="col-md-12 pt-3 d-flex inline">
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-2" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
-                                    <option value="0">Día</option>  
-                                @for ($i = 30; $i <61; $i++) 
+                                    <option value="0">Día</option>
+                                @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
@@ -3249,7 +3249,7 @@ use App\proyecto_empleado;
                                 <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-2" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++) 
+                                @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
                                 @endfor
                                 </select>
