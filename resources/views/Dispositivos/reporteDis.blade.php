@@ -135,6 +135,50 @@
     .borderColor {
         border-color: red;
     }
+
+    /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
+
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 28px;
+        min-width: 75px;
+    }
+
+    .ajs-cancel {
+        font-size: 12px !important;
+    }
+
+    .ajs-ok {
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
+    }
+
+    /* FINALIZACION */
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">

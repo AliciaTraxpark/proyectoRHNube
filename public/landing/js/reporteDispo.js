@@ -436,11 +436,11 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                             </div>`;
                                         if (marcacionData.salida != 0) {
-                                            tbodyEntradaySalida += `<div class="dropdowm-item" id="invertir${marcacionData.idMarcacion}">
+                                            tbodyEntradaySalida += `<div class="dropdowm-item">
                                                                         <div class="form-group noExport pl-3">
-                                                                            <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
-                                                                                Invertir orden
+                                                                                Convertir orden
                                                                             </a>
                                                                         </div>
                                                                     </div>`;
@@ -458,7 +458,7 @@ function cargartabla(fecha) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                         <div class="dropdown" id="">
-                                                                            <a class="dropdown" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false style="cursor: pointer">
+                                                                            <a class="dropdown" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                 ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                             </a>
@@ -480,11 +480,11 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdowm-item" id="invertir${marcacionData.idMarcacion}">
+                                                                                <div class="dropdowm-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
-                                                                                            Invertir orden
+                                                                                            Convertir orden
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
@@ -649,23 +649,23 @@ function cargartabla(fecha) {
                                                     }
                                                 }
                                             }
-                                            // * FINALIZACION
-                                            tbodyEntradaySalida += `<td name="tiempoSitHi">
-                                                                            <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
-                                                                            <a class="badge badge-soft-primary mr-2">
-                                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                                ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-                                                                            </a>
-                                                                        </td>
-                                                                        <td name="tiempoSitHi">
-                                                                            <a class="badge badge-soft-danger mr-2">
-                                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                                            </a>
-                                                                        </td>
-                                                                        <td name="tiempoSitHi">--</td>
-                                                                        <td name="tiempoSitHi">--</td>`;
                                         }
+                                        // * FINALIZACION
+                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
+                                                                    <a class="badge badge-soft-primary mr-2">
+                                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+                                                                    </a>
+                                                                </td>
+                                                                <td name="tiempoSitHi">
+                                                                    <a class="badge badge-soft-danger mr-2">
+                                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                                    </a>
+                                                                </td>
+                                                                <td name="tiempoSitHi">--</td>
+                                                                <td name="tiempoSitHi">--</td>`;
                                     } else {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
@@ -878,6 +878,7 @@ function cargartabla(fecha) {
                             </td>`;
                     tbody += `</tr>`;
                 }
+                console.log(tbody);
                 $('#tbodyD').html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
                 // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
@@ -989,110 +990,6 @@ function togglePausas() {
         $('[name="datosPausa"]').hide();
         setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
     }
-}
-function cambiarEntrada(idMarca, respuesta) {
-    $.ajax({
-        type: "post",
-        url: "/cambiarEntrada",
-        data: {
-            idMarca: idMarca,
-            respuesta: respuesta
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            if (data == 0) {
-                alertify
-                    .confirm("¿Desea generar nueva marcación si o no?", function (
-                        e
-                    ) {
-                        if (e) {
-                            cambiarEntrada(idMarca, true);
-                        }
-                    })
-                    .setting({
-                        title: "Nueva marcación",
-                        labels: {
-                            ok: "Si",
-                            cancel: "No",
-                        },
-                        modal: true,
-                        startMaximized: false,
-                        reverseButtons: true,
-                        resizable: false,
-                        closable: false,
-                        transition: "zoom",
-                        oncancel: function (closeEvent) {
-                        },
-                    });
-            } else {
-                $('#btnRecargaTabla').click();
-                $('#espera').hide();
-                $('#tableZoom').show();
-            }
-        },
-        error: function () {
-            alert("Hay un error");
-        },
-    });
-}
-function cambiarSalida(idMarca, respuesta) {
-    $.ajax({
-        type: "post",
-        url: "/cambiarSalida",
-        data: {
-            idMarca: idMarca,
-            respuesta: respuesta
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            if (data == 0) {
-                alertify
-                    .confirm("¿Desea generar nueva marcación si o no?", function (
-                        e
-                    ) {
-                        if (e) {
-                            cambiarEntrada(idMarca, true);
-                        }
-                    })
-                    .setting({
-                        title: "Nueva marcación",
-                        labels: {
-                            ok: "Si",
-                            cancel: "No",
-                        },
-                        modal: true,
-                        startMaximized: false,
-                        reverseButtons: true,
-                        resizable: false,
-                        closable: false,
-                        transition: "zoom",
-                        oncancel: function (closeEvent) {
-                        },
-                    });
-            } else {
-                $('#btnRecargaTabla').click();
-                $('#espera').hide();
-                $('#tableZoom').show();
-            }
-        },
-        error: function () {
-            alert("Hay un error");
-        },
-    });
 }
 
 function insertarEntrada(idMarca) {
@@ -1214,7 +1111,6 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
             fecha: fecha,
             idEmpleado: idEmpleado
         },
-        async: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1310,7 +1206,6 @@ function listaSalida(id, fecha, idEmpleado, hora) {
             fecha: fecha,
             idEmpleado: idEmpleado
         },
-        async: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1362,7 +1257,6 @@ function cambiarEntradaM() {
             idCambiar: idCambiar,
             idMarcacion: idMarcacion
         },
-        async: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1433,7 +1327,6 @@ function listaEntrada(id, fecha, idEmpleado, hora) {
             fecha: fecha,
             idEmpleado: idEmpleado
         },
-        async: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1485,7 +1378,6 @@ function cambiarSalidaM() {
             idCambiar: idCambiar,
             idMarcacion: idMarcacion
         },
-        async: false,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -1541,4 +1433,103 @@ function cambiarSalidaM() {
         error: function () {
         }
     });
+}
+// * CONVERTIR ORDEN
+function convertirOrden(id) {
+    alertify
+        .confirm("¿Desea Convertir orden si o no?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/convertirM",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+                        if (data != 0) {
+                            $('#btnRecargaTabla').click();
+                            $.notifyClose();
+                            $.notify(
+                                {
+                                    message: "\nMarcación modificada.",
+                                    icon: "admin/images/checked.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 5000,
+                                    template:
+                                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                    spacing: 35,
+                                }
+                            );
+                        } else {
+                            $.notifyClose();
+                            $.notify(
+                                {
+                                    message:
+                                        "\nHora final debe ser mayor a entrada.",
+                                    icon: "admin/images/warning.svg",
+                                },
+                                {
+                                    position: "fixed",
+                                    mouse_over: "pause",
+                                    placement: {
+                                        from: "top",
+                                        align: "center",
+                                    },
+                                    icon_type: "image",
+                                    newest_on_top: true,
+                                    delay: 2000,
+                                    template:
+                                        '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                        '<span data-notify="title">{1}</span> ' +
+                                        '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                        "</div>",
+                                    spacing: 35,
+                                }
+                            );
+                        }
+                    },
+                    error: function () { }
+                });
+            }
+        })
+        .setting({
+            title: "Modificar Marcación",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
 }

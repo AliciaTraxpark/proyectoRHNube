@@ -812,74 +812,6 @@ class dispositivosController extends Controller
         $dispositivos->save();
     }
 
-    public function cambiarEntrada(Request $request)
-    {
-
-        $idMarca = $request->get('idMarca');
-        $respuesta = $request->get('respuesta');
-
-        $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
-        $nuevaFecha = $marcacion_puerta->marcaMov_fecha;   //* OBTENEMOS FECHA QUE A CAMBIAR
-        if (!is_null($marcacion_puerta->marcaMov_salida) && !is_null($marcacion_puerta->marcaMov_fecha)) {
-            if (filter_var($respuesta, FILTER_VALIDATE_BOOLEAN)) {
-                $marcacion_puerta->marcaMov_fecha = null;
-                $marcacion_puerta->save();
-                // * NUEVA MARCACION
-                $nuevaMarcacion = new marcacion_puerta();
-                $nuevaMarcacion->marcaMov_emple_id = $marcacion_puerta->marcaMov_emple_id;
-                $nuevaMarcacion->controladores_idControladores = $marcacion_puerta->controladores_idControladores;
-                $nuevaMarcacion->dispositivos_idDispositivos = $marcacion_puerta->dispositivos_idDispositivos;
-                $nuevaMarcacion->organi_id = $marcacion_puerta->organi_id;
-                $nuevaMarcacion->horarioEmp_id = $marcacion_puerta->horarioEmp_id;
-                $nuevaMarcacion->marcaMov_salida = $nuevaFecha;
-                $nuevaMarcacion->marca_latitud = $marcacion_puerta->marca_latitud;
-                $nuevaMarcacion->marca_longitud = $marcacion_puerta->marca_longitud;
-                $nuevaMarcacion->save();
-                return response()->json($idMarca, 200);
-            } else {
-                return 0;
-            }
-        } else {
-            $marcacion_puerta->marcaMov_fecha = null;
-            $marcacion_puerta->marcaMov_salida = $nuevaFecha;
-            $marcacion_puerta->save();
-            return response()->json($idMarca, 200);
-        }
-    }
-
-    public function cambiarSalida(Request $request)
-    {
-        $idMarca = $request->get('idMarca');
-        $respuesta = $request->get('respuesta');
-        $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
-        $nuevaFecha = $marcacion_puerta->marcaMov_salida;  //* OBTENEMOS FECHA QUE A CAMBIAR
-        if (!is_null($marcacion_puerta->marcaMov_salida) && !is_null($marcacion_puerta->marcaMov_fecha)) {
-            if (filter_var($respuesta, FILTER_VALIDATE_BOOLEAN)) {
-                $marcacion_puerta->marcaMov_salida = null;
-                $marcacion_puerta->save();
-                // * NUEVA MARCACION
-                $nuevaMarcacion = new marcacion_puerta();
-                $nuevaMarcacion->marcaMov_emple_id = $marcacion_puerta->marcaMov_emple_id;
-                $nuevaMarcacion->controladores_idControladores = $marcacion_puerta->controladores_idControladores;
-                $nuevaMarcacion->dispositivos_idDispositivos = $marcacion_puerta->dispositivos_idDispositivos;
-                $nuevaMarcacion->organi_id = $marcacion_puerta->organi_id;
-                $nuevaMarcacion->horarioEmp_id = $marcacion_puerta->horarioEmp_id;
-                $nuevaMarcacion->marcaMov_fecha = $nuevaFecha;
-                $nuevaMarcacion->marca_latitud = $marcacion_puerta->marca_latitud;
-                $nuevaMarcacion->marca_longitud = $marcacion_puerta->marca_longitud;
-                $nuevaMarcacion->save();
-
-                return response()->json($idMarca, 200);
-            } else {
-                return 0;
-            }
-        } else {
-            $marcacion_puerta->marcaMov_salida = null;
-            $marcacion_puerta->marcaMov_fecha = $nuevaFecha;
-            $marcacion_puerta->save();
-            return response()->json($idMarca, 200);
-        }
-    }
     public function registrarNEntrada(Request $request)
     {
         $idMarca = $request->idMarca;
@@ -2014,6 +1946,26 @@ class dispositivosController extends Controller
             $marcacion->marcaMov_fecha = NULL;
             $marcacion->save();
             return response()->json($marcacion->marcaMov_id, 200);
+        }
+    }
+
+    // * CONVERTIR TIEMPOS
+    public function convertirTiempos(Request $request)
+    {
+        $idM = $request->get('id');
+
+        $marcacion = marcacion_puerta::findOrFail($idM);
+        $carbonEntrada = carbon::parse($marcacion->marcaMov_fecha);
+        $carbonSalida = carbon::parse($marcacion->marcaMov_salida);
+
+        if ($carbonSalida->lt($carbonEntrada)) {        // ? COMPARAMOS SI LA SALIDA ES MENOR A LA ENTRADA
+            $marcacion->marcaMov_fecha = $carbonSalida;
+            $marcacion->marcaMov_salida = $carbonEntrada;
+            $marcacion->save();
+
+            return response()->json($marcacion->marcaMov_id, 200);
+        } else {
+            return response()->json(0, 200);
         }
     }
 }

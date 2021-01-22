@@ -434,8 +434,6 @@ Route::post('/datosDispoEditar', 'dispositivosController@datosDispoEditar');
 Route::post('/actualizarDispos', 'dispositivosController@actualizarDispos');
 Route::post('/desactivarDisposi', 'dispositivosController@desactivarDisposi');
 Route::post('/activarDisposi', 'dispositivosController@activarDisposi');
-Route::post('/cambiarEntrada', 'dispositivosController@cambiarEntrada');
-Route::post('/cambiarSalida', 'dispositivosController@cambiarSalida');
 Route::post('/registrarNEntrada', 'dispositivosController@registrarNEntrada');
 Route::post('/registrarNSalida', 'dispositivosController@registrarNSalida');
 Route::get('/ReporteEmpleado', 'dispositivosController@reporteMarcacionesEmp');
@@ -448,6 +446,7 @@ Route::post('/listaMarcacionS', 'dispositivosController@listaDeSalidasSinE');
 Route::post('/cambiarEM', 'dispositivosController@cambiarEntraMarcacion');
 Route::post('/listaMarcacionE', 'dispositivosController@listaDeEntradasSinS');
 Route::post('/cambiarSM', 'dispositivosController@cambiarSalidaMarcacion');
+Route::post('/convertirM', 'dispositivosController@convertirTiempos');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
