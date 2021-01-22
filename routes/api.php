@@ -46,7 +46,7 @@ Route::post("ticketSoporte", "apiVersionDosController@ticketSoporte")->middlewar
 
 //? TIEMPO DEL SERVIDOR
 Route::get("tiempoRHbox", "apiVersionDosController@horaServidor")->middleware('token')->middleware('apilogger');
-Route::post("tiempoEmpleadoRHbox", "apiVersionDosController@tiempoEmpleado")->middleware('token')->middleware('apilogger');
+Route::post("tiempoEmpleadoRHbox", "apiVersionDosController@tiempoEmpleado");
 Route::get("logoutLogin", "apiVersionDosController@logoutNewToken")->middleware('apilogger');
 
 //* API MOVILES
