@@ -125,6 +125,9 @@
     /* .dataTables_scrollHeadInner {
             width: 100% !important;
         } */
+    .dataTables_scrollBody {
+        overflow-y: hidden !important;
+    }
 
     .table th,
     .table td {
@@ -181,8 +184,14 @@
     /* FINALIZACION */
     .scrollable-menu {
         height: auto;
-        max-height: 200px;
+        max-height: 142px;
         overflow: auto;
+        position: absolute;
+    }
+
+    .dropdown-item {
+        padding: 0.1rem 0.1rem !important;
+        color: #6c757d !important;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -301,7 +310,10 @@
                 <div class="col-md-12">
                     <form action="javascript:cambiarEntradaM()">
                         <div class="row">
+                            {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacion">
+                            {{-- EL TIPO SI ENTRADA O SALIDA --}}
+                            <input type="hidden" id="c_tipoS">
                             <div class="col-md-12">
                                 <h6 style="color:#62778c;font-weight: bold">
                                     Cambiar a entrada
@@ -344,7 +356,10 @@
                 <div class="col-md-12">
                     <form action="javascript:cambiarSalidaM()">
                         <div class="row">
+                            {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacionE">
+                            {{-- EL TIPO SI FUE ENTRADA O SALIDA --}}
+                            <input type="hidden" id="c_tipoE">
                             <div class="col-md-12">
                                 <h6 style="color:#62778c;font-weight: bold">
                                     Cambiar a salida
@@ -387,7 +402,9 @@
                 <div class="col-md-12">
                     <form action="javascript:guardarAsignacion()">
                         <div class="row">
+                            {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacionA">
+                            {{-- EL TIPO DE MARCACION SI FUE ENTRADA O SALIDA --}}
                             <input type="hidden" id="tipoM">
                             <div class="col-md-12">
                                 <h6 style="color:#62778c;font-weight: bold">
@@ -412,6 +429,68 @@
                                     <option value="1">Entrada</option>
                                     <option value="2">Salida</option>
                                 </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Registrar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+<div id="insertarSalida" class="modal fade" role="dialog" aria-labelledby="insertarSalida" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12"></div>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12">
+                    <form action="javascript:insertarSalida()">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacionIS">
+                            {{-- ID DE HORARIO --}}
+                            <input type="hidden" id="idHorarioIS">
+                            <div class="col-md-12">
+                                <h6 style="color:#62778c;font-weight: bold">Insertar salida</h6>
+                            </div>
+                            <div class="col-md-12">
+                                <span id="i_validS" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                            </div>
+                            <div class="col-xl-5 mt-2">
+                                <label>
+                                    Entrada
+                                    &nbsp;
+                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                    &nbsp;
+                                    <span id="i_hora" style="color:#62778c;font-weight: bold"></span>
+                                </label>
+                            </div>
+                            <div class="col-xl-7">
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label text-right">Salida &nbsp;
+                                        <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                    </label>
+                                    <div class="col-lg-7 mt-1">
+                                        <input type="text" class="form-control form-control-sm horasEntrada"
+                                            onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 </div>

@@ -319,7 +319,11 @@ function cargartabla(fecha) {
                 for (let m = 0; m < cantidadGruposHorario; m++) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
-                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;">Horario</th><th>Tiempo horario</th>`;
+                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;">
+                                        Horario
+                                    </th>
+                                    <th class="text-center">Tiempo horario</th>
+                                    <th>Tolerancia</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
@@ -367,7 +371,7 @@ function cargartabla(fecha) {
                     if (data[index].cargo_descripcion != null) {
                         tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
-                        tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        tbody += `<td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     }
                     // * ARMAR GRUPO DE HORARIOS
                     var grupoHorario = "";
@@ -385,62 +389,71 @@ function cargartabla(fecha) {
                                                 </td>
                                                 <td>
                                                     ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                </td>`;
+                                                </td>
+                                                <td class="text-center">${horarioData.tolerancia} min.</td>`;
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                     <a class="badge badge-soft-danger mr-2">
                                                         Sin horario
                                                     </a>
                                                 </td>
-                                                <td>---</td>`;
+                                                <td class="text-center">---</td><td class="text-center">---</td>`;
                             }
-                            // * PAUSAS
-                            var tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                            var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                            var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                            //* EXCESO
-                            var tiempoHoraExceso = "00";
-                            var tiempoMinutoExceso = "00";
-                            var tiempoSegundoExceso = "00";
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             // : HORA
                             var idHorarioM = [];
                             for (let j = 0; j < data[index].data[m].marcaciones.length; j++) {
+                                // * PAUSAS
+                                var tiempoHoraPausa = "00";        //: HORAS TARDANZA
+                                var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
+                                var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
+                                //* EXCESO
+                                var tiempoHoraExceso = "00";
+                                var tiempoMinutoExceso = "00";
+                                var tiempoSegundoExceso = "00";
+                                // * TIEMPO EN SITIO
+                                var segundosTiempo = "00";
+                                var minutosTiempo = "00";
+                                var horasTiempo = "00";
+                                // * TARDANZA
+                                var segundosTardanza = "00";
+                                var minutosTardanza = "00";
+                                var horasTardanza = "00";
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important">
                                                                     <div class="dropdown">
-                                                                        <button class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                                        <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
-                                                                        </button>
-                                                                        <ul class="dropdown-menu scrollable-menu noti-scroll"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                        </a>
+                                                                        <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
                                                                             <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                                 <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                                 Opciones
                                                                             </h6>
                                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                            <div class="dropdowm-item">
+                                                                            <div class="dropdown-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                         Cambiar a entrada
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="dropdowm-item">
+                                                                            <div class="dropdown-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                         Cambiar a salida
                                                                                     </a>
                                                                                 </div>
                                                                             </div>`;
                                         if (marcacionData.salida != 0) {
-                                            tbodyEntradaySalida += `<div class="dropdowm-item">
+                                            tbodyEntradaySalida += `<div class="dropdown-item">
                                                                         <div class="form-group noExport pl-3">
                                                                             <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
@@ -448,7 +461,7 @@ function cargartabla(fecha) {
                                                                             </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="dropdowm-item">
+                                                                    <div class="dropdown-item">
                                                                         <div class="form-group noExport pl-3">
                                                                             <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -457,7 +470,7 @@ function cargartabla(fecha) {
                                                                         </div>
                                                                     </div>`;
                                         }
-                                        tbodyEntradaySalida += ` <div class="dropdowm-item">
+                                        tbodyEntradaySalida += ` <div class="dropdown-item">
                                                                     <div class="form-group noExport pl-3">
                                                                         <a onclick="eliminarM(${marcacionData.idMarcacion},1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
@@ -474,37 +487,66 @@ function cargartabla(fecha) {
                                                                         </td>`;
                                     }
 
+                                    // * TARDANZA
+                                    if (marcacionData.idH != 0) {
+                                        var horaInicial = moment(marcacionData.entrada);
+                                        // ******************************* TARDANZA ***************************************
+                                        // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
+                                        if (!idHorarioM.includes(marcacionData.idH)) {
+                                            idHorarioM.push(marcacionData.idH);  // : AGREGAMOS EL ID AL ARRAY
+                                            var horaInicioHorario = moment(horarioData.horarioIni);
+                                            var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
+                                            //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
+                                            if (horaInicial.isAfter(horaConTolerancia)) {
+                                                var tardanza = horaInicial - horaInicioHorario;
+                                                segundosTardanza = moment.duration(tardanza).seconds();
+                                                minutosTardanza = moment.duration(tardanza).minutes();
+                                                horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
+                                                if (horasTardanza < 10) {
+                                                    horasTardanza = '0' + horasTardanza;
+                                                }
+                                                if (minutosTardanza < 10) {
+                                                    minutosTardanza = '0' + minutosTardanza;
+                                                }
+                                                if (segundosTardanza < 10) {
+                                                    segundosTardanza = '0' + segundosTardanza;
+                                                }
+                                            }
+                                        }
+                                        sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
+                                    }
                                     if (marcacionData.salida != 0) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                         <div class="dropdown" id="">
-                                                                            <a class="dropdown" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">
+                                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" 
+                                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                 ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                             </a>
-                                                                            <ul class="dropdown-menu scrollable-menu noti-scroll"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" padding: 0rem 0rem;>
+                                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
                                                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                                     Opciones
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdowm-item">
+                                                                                <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                             Cambiar a entrada
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdowm-item">
+                                                                                <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                             Cambiar a salida
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdowm-item">
+                                                                                <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
                                                                                         <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
@@ -512,7 +554,7 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdowm-item">
+                                                                                <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
                                                                                         <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -520,7 +562,7 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdowm-item">
+                                                                                <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
                                                                                         <a onclick="eliminarM(${marcacionData.idMarcacion},2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
@@ -541,16 +583,12 @@ function cargartabla(fecha) {
                                         // * CALCULAR TIEMPO TOTAL , TIEMPO DE TARDANZA Y EXCESO DE PAUSAS
                                         var horaFinal = moment(marcacionData.salida);
                                         var horaInicial = moment(marcacionData.entrada);
-                                        // * TIEMPO DE TARDANZA
-                                        var segundosTardanza = "00";
-                                        var minutosTardanza = "00";
-                                        var horasTardanza = "00";
                                         if (horaFinal.isSameOrAfter(horaInicial)) {
                                             // * TIEMPO TOTAL TRABAJADA
                                             var tiempoRestante = horaFinal - horaInicial;
-                                            var segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            var minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            var horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
+                                            segundosTiempo = moment.duration(tiempoRestante).seconds();
+                                            minutosTiempo = moment.duration(tiempoRestante).minutes();
+                                            horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
                                             if (horasTiempo < 10) {
                                                 horasTiempo = '0' + horasTiempo;
                                             }
@@ -562,31 +600,7 @@ function cargartabla(fecha) {
                                             }
                                             sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
                                             tiempoTotal = tiempoTotal.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                            // * TARDANZA Y PAUSAS
                                             if (marcacionData.idH != 0) {
-                                                // ******************************* TARDANZA ***************************************
-                                                // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
-                                                if (!idHorarioM.includes(marcacionData.idH)) {
-                                                    idHorarioM.push(marcacionData.idH);  // : AGREGAMOS EL ID AL ARRAY
-                                                    var horaInicioHorario = moment(horarioData.horarioIni);
-                                                    //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
-                                                    if (horaInicial.isAfter(horaInicioHorario)) {
-                                                        var tardanza = horaInicial - horaInicioHorario;
-                                                        segundosTardanza = moment.duration(tardanza).seconds();
-                                                        minutosTardanza = moment.duration(tardanza).minutes();
-                                                        horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
-                                                        if (horasTardanza < 10) {
-                                                            horasTardanza = '0' + horasTardanza;
-                                                        }
-                                                        if (minutosTardanza < 10) {
-                                                            minutosTardanza = '0' + minutosTardanza;
-                                                        }
-                                                        if (segundosTardanza < 10) {
-                                                            segundosTardanza = '0' + segundosTardanza;
-                                                        }
-                                                    }
-                                                }
-                                                sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                                 // ****************************************** PAUSAS ****************************************
                                                 for (let indice = 0; indice < data[index].data[m].pausas.length; indice++) {
                                                     var contenidoP = data[index].data[m].pausas[indice];
@@ -710,48 +724,54 @@ function cargartabla(fecha) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                         <div class="dropdown noExport">
-                                                                            <button type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
-                                                                                aria-expanded="false"
-                                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                                            <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
+                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                                 <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                                     No tiene salida
                                                                                 </span>
-                                                                            </button>
+                                                                            </a>
                                                                             <ul class="dropdown-menu"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-                                                                                <form class="pr-3 pl-3 dropdown-item">
-                                                                                    <div class="form-group">
-                                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;">
-                                                                                            Hora salida
-                                                                                            &nbsp; 
-                                                                                            <a onclick="insertarSalida(${marcacionData.idMarcacion}) " style="cursor: pointer">
-                                                                                                <img src="admin/images/checkH.svg" height="15">
-                                                                                            </a>
-                                                                                        </h6> 
-                                                                                        <input type="text" id="horaSalidaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasSalida" onchange="$(this).removeClass('borderColor');">
+                                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                    Opciones
+                                                                                </h6>
+                                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                                <div class="dropdown-item">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                            Insertar salida
+                                                                                        </a>
                                                                                     </div>
-                                                                                </form>
+                                                                                </div>
                                                                             </ul>
                                                                         </div>
                                                                     </td>`;
                                         }
                                         else {
                                             tbodyEntradaySalida += `<td>
-                                                                                <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                                    No tiene salida
-                                                                                </span>
-                                                                            </td>`;
+                                                                        <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                                            No tiene salida
+                                                                        </span>
+                                                                    </td>`;
                                         }
 
                                         tbodyEntradaySalida += `<td name="tiempoSitHi">
-                                                                            <span class="badge badge-soft-secondary">
-                                                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                                --:--:--
-                                                                            </span>
-                                                                        </td>
-                                                                        <td name="tiempoSitHi">--</td>
-                                                                        <td name="tiempoSitHi">--</td>
-                                                                        <td name="tiempoSitHi">--</td>`;
+                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
+                                                                    <a class="badge badge-soft-primary mr-2">
+                                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+                                                                    </a>
+                                                                </td>
+                                                                <td name="tiempoSitHi">
+                                                                    <a class="badge badge-soft-danger mr-2">
+                                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                                    </a>
+                                                                </td>
+                                                                <td name="tiempoSitHi">--</td>
+                                                                <td name="tiempoSitHi">--</td>`;
                                     }
 
                                 } else {
@@ -798,34 +818,34 @@ function cargartabla(fecha) {
                                         if (permisoModificarCE2 == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                                 <div class="dropdown" id="">
-                                                                                    <a class="dropdown" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
-                                                                                        style="cursor: pointer">
+                                                                                    <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
+                                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                                     </a>
-                                                                                    <ul class="dropdown-menu scrollable-menu noti-scroll"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                                    <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
                                                                                         <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                                             <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                                             Opciones
                                                                                         </h6>
                                                                                         <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                        <div class="dropdowm-item">
+                                                                                        <div class="dropdown-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                                     Cambiar a entrada
                                                                                                 </a>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="dropdowm-item">
+                                                                                        <div class="dropdown-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                                     Cambiar a salida
                                                                                                 </a>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="dropdowm-item">
+                                                                                        <div class="dropdown-item">
                                                                                             <div class="form-group noExport pl-3">
                                                                                                 <a onclick="eliminarM(${marcacionData.idMarcacion},2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
@@ -844,20 +864,31 @@ function cargartabla(fecha) {
                                         }
 
                                         tbodyEntradaySalida += `<td name="tiempoSitHi">
-                                                                            <span class="badge badge-soft-secondary">
-                                                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                                --:--:--
-                                                                            </span>
-                                                                        </td>
-                                                                <td name="tiempoSitHi">--</td>
-                                                                <td name="tiempoSitHi">--</td>
-                                                                <td name="tiempoSitHi">--</td>`;
+                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
+                                                                    <a class="badge badge-soft-primary mr-2">
+                                                                        <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
+                                                                    </a>
+                                                                </td>
+                                                                <td name="tiempoSitHi">
+                                                                    <a class="badge badge-soft-danger mr-2">
+                                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                                    </a>
+                                                                </td>
+                                                                <td name="tiempoSitHi" class="text-center">--</td>
+                                                                <td name="tiempoSitHi" class="text-center">--</td>`;
 
                                     }
                                 }
                             }
                             for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">---</td><td>---</td><td name="tiempoSitHi">---</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
+                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                                        <td class="text-center">---</td>
+                                                        <td name="tiempoSitHi" class="text-center">---</td>
+                                                        <td name="tiempoSitHi" class="text-center">--</td>
+                                                        <td name="tiempoSitHi" class="text-center">--</td>
+                                                        <td name="tiempoSitHi" class="text-center">--</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
@@ -880,30 +911,35 @@ function cargartabla(fecha) {
                                         </td>`;
                             }
                             for (let cp = data[index].data[m].pausas.length; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa">----</td>
-                                                <td name="datosPausa">-----</td>
-                                                <td name="datosPausa">-----</td>
-                                                <td name="datosPausa">------</td>`;
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa" class="text-center">----</td>
+                                                <td name="datosPausa" class="text-center">-----</td>
+                                                <td name="datosPausa" class="text-center">-----</td>
+                                                <td name="datosPausa" class="text-center">------</td>`;
                             }
                             grupoHorario += tbodyPausas;
                         } else {
-                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;">
+                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                             ----
                                         </td>
-                                        <td>---</td>`;
+                                        <td class="text-center">---</td><td class="text-center">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">---</td><td>---</td><td name="tiempoSitHi">---</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
+                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                                        <td class="text-center">---</td>
+                                                        <td name="tiempoSitHi" class="text-center">---</td>
+                                                        <td name="tiempoSitHi" class="text-center">--</td>
+                                                        <td name="tiempoSitHi" class="text-center">--</td>
+                                                        <td name="tiempoSitHi" class="text-center">--</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
                             var tbodyPausas = "";
                             for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa">----</td>
-                                                <td name="datosPausa">-----</td>
-                                                <td name="datosPausa">-----</td>
-                                                <td name="datosPausa">------</td>`;
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa" class="text-center">----</td>
+                                                <td name="datosPausa" class="text-center">-----</td>
+                                                <td name="datosPausa" class="text-center">-----</td>
+                                                <td name="datosPausa" class="text-center">------</td>`;
                             }
                             grupoHorario += tbodyPausas;
                         }
@@ -922,8 +958,8 @@ function cargartabla(fecha) {
                                     ${sumaTardanzas.format("HH:mm:ss")}
                                 </a>
                             </td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td class="text-center">--</td>
+                            <td class="text-center">--</td>
                             <td style="border-left:2px solid #f05454!important;" data-toggle="tooltip" data-placement="right" title="Marcación total - (Tiempo pausa)"
                             data-original-title="">
                                 ${tiempoTotal.format("HH:mm:ss")}
@@ -941,7 +977,7 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td></td><td></td><td></td><td></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td></td><td></td>';
+                        tbodyTR += '<td></td><td></td><td></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyTR += '<td><br></td><td></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td>';
@@ -1096,61 +1132,6 @@ function insertarEntrada(idMarca) {
         },
     });
 }
-
-function insertarSalida(idMarca) {
-    let hora = $('#horaSalidaN' + idMarca + '').val();
-    let fecha = $('#pasandoV').val() + ' ' + hora;
-
-    $.ajax({
-        type: "post",
-        url: "/registrarNSalida",
-        data: {
-            idMarca, hora, fecha
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            console.log('data[0]' + data[0]);
-            if (data[0] == 1) {
-                $('#tableZoom').hide();
-                $('#espera').show();
-                $('#btnRecargaTabla').click();
-                $('#espera').hide();
-                $('#tableZoom').show();
-            } else {
-
-                $.notifyClose();
-                $.notify({
-                    message: data[1],
-                    icon: '/landing/images/alert1.svg',
-                }, {
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            }
-
-
-        },
-        error: function () {
-            alert("Hay un error");
-        },
-    });
-}
 // ! *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
@@ -1244,9 +1225,10 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
     });
 }
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
-function listaSalida(id, fecha, idEmpleado, hora) {
+function listaSalida(id, fecha, idEmpleado, hora, tipo) {
     $('#salidaM').empty();
     $('#c_horaS').text(hora);
+    $('#c_tipoS').val(tipo);
     $('#listaSalidasMarcacion').modal();
     $('#idMarcacion').val(id);
     $.ajax({
@@ -1300,13 +1282,15 @@ function listaSalida(id, fecha, idEmpleado, hora) {
 function cambiarEntradaM() {
     var idCambiar = $('#idMarcacion').val();
     var idMarcacion = $('#salidaM').val();
+    var tipo = $('#c_tipoS').val();
     $.ajax({
         async: false,
         type: "POST",
         url: "/cambiarEM",
         data: {
             idCambiar: idCambiar,
-            idMarcacion: idMarcacion
+            idMarcacion: idMarcacion,
+            tipo: tipo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1365,9 +1349,10 @@ function cambiarEntradaM() {
     });
 }
 // * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
-function listaEntrada(id, fecha, idEmpleado, hora) {
+function listaEntrada(id, fecha, idEmpleado, hora, tipo) {
     $('#entradaM').empty();
     $('#c_horaE').text(hora);
+    $('#c_tipoE').val(tipo);
     $('#listaEntradasMarcacion').modal();
     $('#idMarcacionE').val(id);
     $.ajax({
@@ -1421,13 +1406,15 @@ function listaEntrada(id, fecha, idEmpleado, hora) {
 function cambiarSalidaM() {
     var idCambiar = $('#idMarcacionE').val();
     var idMarcacion = $('#entradaM').val();
+    var tipo = $('#c_tipoE').val();
     $.ajax({
         async: false,
         type: "POST",
         url: "/cambiarSM",
         data: {
             idCambiar: idCambiar,
-            idMarcacion: idMarcacion
+            idMarcacion: idMarcacion,
+            tipo: tipo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1627,7 +1614,6 @@ function asignarNuevaM(id, hora, tipo, horario) {
     $('#asignacionMarcacion').modal();
     $('#asignacionM').val(tipo).trigger('change');
 }
-
 // * GUARDAR ASIGNACION
 function guardarAsignacion() {
     var id = $('#idMarcacionA').val();
@@ -1662,7 +1648,7 @@ function guardarAsignacion() {
         error: function () { }
     });
 }
-
+// * ELIMINAR MARCACION
 function eliminarM(id, tipo) {
     alertify
         .confirm("¿Desea Convertir orden si o no?", function (
@@ -1727,4 +1713,69 @@ function eliminarM(id, tipo) {
             oncancel: function (closeEvent) {
             },
         });
+}
+// * MODAL DE INSERTAR SALIDA
+function insertarSalidaModal(hora, id, idH) {
+    $('#idMarcacionIS').val(id);
+    $('#i_hora').text(hora);
+    $('#idHorarioIS').val(idH);
+    $('#insertarSalida').modal();
+}
+function insertarSalida() {
+    var id = $('#idMarcacionIS').val();
+    var salida = $('#horaSalidaNueva').val();
+    var horario = $('#idHorarioIS').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/registrarNSalida",
+        data: {
+            id: id,
+            salida: salida,
+            horario: horario
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta != undefined) {
+                console.log(data.respuesta);
+                $('#i_validS').empty();
+                $('#i_validS').append(data.respuesta);
+                $('#i_validS').show();
+            } else {
+                $('#i_validS').empty();
+                $('#i_validS').hide();
+                $('#btnRecargaTabla').click();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {
+        },
+    });
 }
