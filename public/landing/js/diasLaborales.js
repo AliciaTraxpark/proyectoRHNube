@@ -111,38 +111,38 @@ function calendario_edit() {
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({  html: true, title: 'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
+                            $(info.el).tooltip({  html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
                             info.event.extendedProps.horaF + '  <br> Trabaja fuera de horario' +
                              '  <br>    Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas '
                              +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
                              ' <br>  Pausas programadas:    '+cadenaPausas + '</label>'});
                         } else {
-                            $(info.el).tooltip({  html: true, title: 'Horario'+info.event.title+' :  '+info.event.extendedProps.horaI + '-' +
+                            $(info.el).tooltip({  html: true, title: 'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' +
                              info.event.extendedProps.horaF + ' <br>  Trabaja fuera de horario '
                              +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
                              ' <br>    Pausas programadas:    '+cadenaPausas});
                         }
                     }
                     else {
-                        $(info.el).tooltip({   html: true, title: 'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
+                        $(info.el).tooltip({   html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
                          info.event.extendedProps.horaF +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga+' <br>    Pausas programadas:    ' +cadenaPausas });
                     }
                 }
                 else{
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({ html: true,title: 'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
+                            $(info.el).tooltip({ html: true,title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
                              info.event.extendedProps.horaF + ' <br>  Trabaja fuera de horario' +
                               ' <br>     Marca horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas'
                               +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga});
                         } else {
-                            $(info.el).tooltip({html: true, title: 'Horario'+info.event.title+' :  '+info.event.extendedProps.horaI + '-' +
+                            $(info.el).tooltip({html: true, title: 'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' +
                              info.event.extendedProps.horaF + ' <br>  Trabaja fuera de horario'
                              +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
                         }
                     }
                     else {
-                        $(info.el).tooltip({html: true, title: 'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
+                        $(info.el).tooltip({html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
                         info.event.extendedProps.horaF+'<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
                     }
                 }

@@ -545,14 +545,14 @@ function calendario() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                        $(info.el).tooltip({ title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
                     } else {
-                        $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                        $(info.el).tooltip({ title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
                 else {
-                    $(info.el).tooltip({ title: 'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
             /*if(info.event.borderColor=='#5369f8'){
