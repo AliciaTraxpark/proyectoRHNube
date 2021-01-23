@@ -1913,9 +1913,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 pt-3 d-flex inline">
-                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-2" name="noti_dia_fecha" id="noti_dia_fecha" required="">
+                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha" required="">
                                     <option value="0">Día</option>
                                 @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -1974,7 +1975,7 @@ use App\proyecto_empleado;
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="sw-default">
                                         Condición Pago
@@ -1992,7 +1993,7 @@ use App\proyecto_empleado;
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-6" style="padding-top: 2.2em">
+                            <div class="col-6" style="padding-top: 2.2em">
                                 <div class="dropdown" id="reg_documentosDetalles">
                                     <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                         style="cursor: pointer">
@@ -2133,9 +2134,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 pt-3 d-flex inline">
-                                    <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                    <select class="form-control col-2" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
+                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                    <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
                                         <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++)
                                         <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -2468,7 +2470,7 @@ use App\proyecto_empleado;
                     <form action="javascript:editarDetalleCE()" onsubmit="javascript:validate(event)">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="sw-default">
                                         Contrato
@@ -2483,7 +2485,7 @@ use App\proyecto_empleado;
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-6" style="padding-top: 2.2em">
+                            <div class="col-6" style="padding-top: 2.2em">
                                 <div class="dropdown" id="documentosDetalles">
                                     <a class="dropdown" data-toggle="dropdown" aria-expanded="false"
                                         style="cursor: pointer">
@@ -2658,9 +2660,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 pt-3 d-flex inline">
-                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-2" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
+                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
                                     <option value="0">Día</option>
                                 @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -2872,9 +2875,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 pt-3 d-flex inline">
-                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-2" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
+                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
                                     <option value="0">Día</option>
                                 @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -3245,9 +3249,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 pt-3 d-flex inline">
-                                <label class="col-md-10 pt-1">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-2" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
+                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                     <option value="0">Día</option>
                                 @for ($i = 30; $i <61; $i++)
                                     <option class="" value="{{$i}}"> {{ $i }} </option>

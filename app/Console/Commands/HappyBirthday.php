@@ -56,18 +56,13 @@ class HappyBirthday extends Command
             $empleados = DB::table('empleado')
                     ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_persona')
+                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id')
                     ->get();
-            $admin = DB::table('usuario_organizacion')
+
+            $admins = DB::table('usuario_organizacion')
                     ->where('organi_id', $organizacion->organi_id)
                     ->select('usuario_organizacion.user_id')
-                    ->first();
-
-            $invitado_admin = DB::table('invitado')
-                    ->where('organi_id', $organizacion->organi_id)
-                    ->where('rol_id', 1)
-                    ->select('invitado.user_Invitado')
-                    ->first();
+                    ->get();
 
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
@@ -79,7 +74,7 @@ class HappyBirthday extends Command
                     if($diff == 0){
                         $mensaje =  [
                                         "idOrgani" => $organizacion->organi_id,
-                                        "idEmpleado" => $persona->emple_persona,
+                                        "idEmpleado" => $persona->emple_id,
                                         "empleado" => [
                                                 $persona->perso_nombre,
                                                 $persona->perso_apPaterno,
@@ -88,13 +83,11 @@ class HappyBirthday extends Command
                                         "mensaje" => "Hoy está de cumpleaños, ".$edad." años.",
                                         "asunto" => "birthday"
                                     ];
-                        if($admin != ""){
-                            $recipient = User::find($admin->user_id);
-                            $recipient->notify(new NuevaNotification($mensaje)); 
-                        }
-                        if($invitado_admin != ""){
-                            $recipient = User::find($invitado_admin->user_Invitado);
-                            $recipient->notify(new NuevaNotification($mensaje));
+                        if($admins){
+                            foreach ($admins as $admin) {
+                                $recipient = User::find($admin->user_id);
+                                $recipient->notify(new NuevaNotification($mensaje)); 
+                            }
                         }
                     }
                 }
@@ -106,7 +99,9 @@ class HappyBirthday extends Command
         $users = User::all();
         foreach($users as $user){
             foreach ($user->notifications as $notificacion) {
-                if($notificacion->data['0']['mensaje'] == "Mañana está de cumpleaños."){
+                $create = Carbon::parse($notificacion->created_at);
+                $yesterdayD = now()->diffInDays($create);
+                if(($notificacion->data['0']['mensaje'] == "Mañana está de cumpleaños.") && $yesterdayD == 1){
                      DB::table('notifications')->where('id', $notificacion->id)->delete();
                 }
             }
