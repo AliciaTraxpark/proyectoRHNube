@@ -190,28 +190,31 @@
             <th class="text-center"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
 
             <th>
-                <div class="width-100">Documento</div>
+                Documento
             </th>
             <th>
-                <div class="width-100">Nombres</div>
+                Nombres
             </th>
             <th>
-                <div class="width-100">Apellidos</div>
+               Apellidos
             </th>
-            <th class="text-center">
-                <div class="width-400">Control Remoto</div>
+            <th >
+                Cont. Remoto
             </th>
-            <th class="text-center">
-                <div class="width-400">Control Ruta</div>
-            </th>
-            <th>
-                <div class="width-400">Asistencia en puerta</div>
+            <th >
+               Cont. Ruta
             </th>
             <th>
-                <div class="width-100">Cargo</div>
+                Asist. en puerta
             </th>
             <th>
-                <div class="width-100">Área</div>
+                Modo tareo
+            </th>
+            <th>
+                Cargo
+            </th>
+            <th>
+               Área
             </th>
         </tr>
     </thead>
@@ -243,17 +246,17 @@
             </td>
             {{-- NUMERO DE DOCUMENTO --}}
             <td>
-                <div class="text-wrap width-100">{{$tabla_empleados->emple_nDoc}}</div>
+                {{$tabla_empleados->emple_nDoc}}
             </td>
             {{-- NOMBRE --}}
             <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->perso_nombre}}</div>
+                {{$tabla_empleados->perso_nombre}}
             </td>
             {{-- APELLIDOS --}}
             <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->perso_apPaterno}}
+                {{$tabla_empleados->perso_apPaterno}}
                     {{$tabla_empleados->perso_apMaterno}}
-                </div>
+
             </td>
             {{-- CONTROL REMOTO --}}
             @if(!in_array("1",$tabla_empleados->dispositivos))
@@ -438,12 +441,35 @@
                 </div>
             </td>
             @endif
+             {{-- CONTROL MODO TAREO --}}
+             @if($tabla_empleados->modoTareo==1)
+             <td class="text-center">
+                 <div class="custom-control custom-switch mb-2">
+                     <input type="checkbox" class="custom-control-input"
+                         id="customSwitchMT{{$tabla_empleados->emple_id}}"
+                         onclick="modoTareo({{$tabla_empleados->emple_id}})" checked>
+                     <label class="custom-control-label" for="customSwitchMT{{$tabla_empleados->emple_id}}"
+                         style="font-weight: bold"></label>
+                 </div>
+             </td>
+             @else
+             <td class="text-center">
+                 <div class="custom-control custom-switch mb-2">
+                     <input type="checkbox" class="custom-control-input"
+                         id="customSwitchMT{{$tabla_empleados->emple_id}}"
+                         onclick="modoTareo({{$tabla_empleados->emple_id}})">
+                     <label class="custom-control-label" for="customSwitchMT{{$tabla_empleados->emple_id}}"
+                         style="font-weight: bold"></label>
+                 </div>
+             </td>
+             @endif
+             {{-- FIN MODO TAREO --}}
 
             <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->cargo_descripcion}}</div>
+               {{$tabla_empleados->cargo_descripcion}}
             </td>
             <td>
-                <div class="text-wrap width-400">{{$tabla_empleados->area_descripcion}}</div>
+                {{$tabla_empleados->area_descripcion}}
             </td>
         </tr>
         @endforeach
@@ -933,7 +959,7 @@ function verDEmpleado(idempleadoVer){
                         $('#modalEliminar').modal('toggle');
                     }else{
                         $('#alertFechaBajaH').empty();
-                        var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+                        var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong>
                                         <span style="font-size: 14px;">Su fecha de baja debe ser mayor a la fecha de alta de su contrato ${moment(data.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
                         $('#alertFechaBajaH').append(errorAlert);
                         $('#alertFechaBajaH').show();

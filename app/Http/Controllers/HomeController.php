@@ -50,32 +50,39 @@ class HomeController extends Controller
 
             if ($invitadod) {
                 if ($invitadod->dashboard == 0) {
+                    if($invitadod->gestCalendario == 1){
 
-                    if ($invitadod->permiso_Emp == 1) {
-                        return redirect('/empleados');
-                    } else {
-                        if ($invitadod->gestionActiv == 1) {
-                            return redirect('/actividad');
+                        return redirect('/calendarios');
+                    }
+                    else{
+                       
+                        if ($invitadod->permiso_Emp == 1) {
+                            return redirect('/empleados');
                         } else {
-                            if ($invitadod->modoCR == 1) {
-                                return redirect('/controlRemoto');
+                            if ($invitadod->gestionActiv == 1) {
+                                return redirect('/actividad');
                             } else {
-                                if($invitadod->ControlRuta == 1){
-                                    return redirect('/ruta');
-                                }
-                                else{
-                                   if ($invitadod->asistePuerta == 1) {
-                                    if ($invitadod->reporteAsisten == 1) {
-                                        return redirect('/reporteAsistencia');
-                                    } else {
-                                        return redirect('/dispositivos');
+                                if ($invitadod->modoCR == 1) {
+                                    return redirect('/controlRemoto');
+                                } else {
+                                    if($invitadod->ControlRuta == 1){
+                                        return redirect('/ruta');
                                     }
-                                }
-                                }
+                                    else{
+                                       if ($invitadod->asistePuerta == 1) {
+                                        if ($invitadod->reporteAsisten == 1) {
+                                            return redirect('/reporteAsistencia');
+                                        } else {
+                                            return redirect('/dispositivos');
+                                        }
+                                    }
+                                    }
 
+                                }
                             }
                         }
                     }
+
                 } else {
                     return view('dashboard', ['variable' => $variable]);
                 }

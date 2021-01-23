@@ -35,6 +35,7 @@ class PuntosControlController extends Controller
                 'pc.descripcion',
                 'pc.controlRuta',
                 'pc.asistenciaPuerta',
+                'pc.ModoTareo',
                 DB::raw("CASE WHEN(pc.codigoControl) IS NULL THEN 'No definido' ELSE pc.codigoControl END AS codigoP")
             )
             ->where('pc.organi_id', '=', session('sesionidorg'))
@@ -60,6 +61,7 @@ class PuntosControlController extends Controller
                         "descripcion" => $punto->descripcion,
                         "controlRuta" => $punto->controlRuta,
                         "asistenciaPuerta" => $punto->asistenciaPuerta,
+                        "ModoTareo" => $punto->ModoTareo,
                         "codigoControl" => $punto->codigoControl,
                         "porEmpleados" => $punto->porEmpleados,
                         "porAreas" => $punto->porAreas,
@@ -93,6 +95,7 @@ class PuntosControlController extends Controller
                 'pc.descripcion',
                 'pc.controlRuta',
                 'pc.asistenciaPuerta',
+                'pc.ModoTareo',
                 'pc.codigoControl',
                 'pc.porEmpleados',
                 'pc.porAreas',
@@ -222,6 +225,7 @@ class PuntosControlController extends Controller
             $puntoControl->codigoControl = $request->get('codigo');
             $puntoControl->controlRuta = $request->get('cr');
             $puntoControl->asistenciaPuerta = $request->get('ap');
+            $puntoControl->ModoTareo = $request->get('modoTareo');
             $puntoControl->porEmpleados = $request->get('porEmpleados');
             $puntoControl->porAreas = $request->get('porAreas');
             $puntoControl->verificacion = $request->get('verificacion');
@@ -666,6 +670,7 @@ class PuntosControlController extends Controller
         $puntoControl->descripcion = $request->get('descripcion');
         $puntoControl->controlRuta = $request->get('cr');
         $puntoControl->asistenciaPuerta = $request->get('ap');
+        $puntoControl->ModoTareo = $request->get('modoTareo');
         $puntoControl->organi_id = session('sesionidorg');
         $puntoControl->codigoControl = $request->get('codigo');
         $puntoControl->porEmpleados = $request->get('porEmpleados');
@@ -779,6 +784,9 @@ class PuntosControlController extends Controller
             }
             if ($control == "AP") {
                 $punto->asistenciaPuerta = $request->get('valor');
+            }
+            if ($control == "MT") {
+                $punto->ModoTareo = $request->get('valor');
             }
             $punto->save();
         }

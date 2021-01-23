@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class schedulingWork extends Command
 {
@@ -38,10 +39,15 @@ class schedulingWork extends Command
     public function handle()
     {
         $this->info('Schedule worker started successfully.');
-
+        $today = Carbon::now();
+        $temp = Carbon::create($today->year, $today->month, $today->day, 5, 0, 0, 'GMT');
+        // LAS EJECUCIÓN SE DARÁ TODOS LOS DÍAS A LAS 5:00 AM (5Hrs GTM-5)
         while (true) {
-            if (now()->second === 0) {
+            $today = Carbon::now();
+            $diffD = $today->diffInDays($temp);
+            if (( $today->minute === 0 && $diffD > 0 ) || ( $today->hour === 5 )) {
                 $this->call('schedule:run');
+                $temp = Carbon::create($today->year, $today->month, $today->day, 5, 0, 0, 'GMT');
             }
 
             sleep(1);

@@ -14,10 +14,10 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Arr;
+
 class apiBiometricoController extends Controller
 {
     //
@@ -277,6 +277,7 @@ class apiBiometricoController extends Controller
                             ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
                                 'dispo_codigo as serie', 'version_firmware')
                             ->where('tipoDispositivo', '=', 3)
+                            ->where('dispo_estadoActivo', '=', 1)
                             ->where('organi_id', '=', $usuario_organizacion->organi_id)
                             ->get();
                         return response()->json(
@@ -290,6 +291,7 @@ class apiBiometricoController extends Controller
                                 ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
                                     'dispo_codigo as serie', 'version_firmware')
                                 ->where('tipoDispositivo', '=', 3)
+                                ->where('dispo_estadoActivo', '=', 1)
                                 ->where('organi_id', '=', $usuario_organizacion->organi_id)
                                 ->get();
                             return response()->json(
@@ -319,6 +321,7 @@ class apiBiometricoController extends Controller
                     ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
                         'dispo_codigo as serie', 'version_firmware')
                     ->where('tipoDispositivo', '=', 3)
+                    ->where('dispo_estadoActivo', '=', 1)
                     ->where('organi_id', '=', $usuario_organizacion->organi_id)
                     ->get();
                 return response()->json(
@@ -330,13 +333,6 @@ class apiBiometricoController extends Controller
             return response()->json(array('status' => 400, 'title' => 'Organizacion desactivada',
                 'detail' => 'La organizacion se encuentra desactivada'), 400);
         }
-
-        /*  if($usuario_organizacion->rol_id==3) {
-    dd('soy inv');
-    }
-    else{
-    dd('soy admin');
-    } */
 
     }
 
@@ -415,8 +411,9 @@ class apiBiometricoController extends Controller
             ->get()->first();
 
         /* FUNCION PARA AGRUPAR CON ID DE BIOMETRICOS */
-        function agruparIDBiometricos($empleado){
-            $idBiometricos=array();
+        function agruparIDBiometricos($empleado)
+        {
+            $idBiometricos = array();
             foreach ($empleado as $tab1) {
 
                 /* VERIFICAMOS DISPOSITIVOS CON TODOS LOS EMPLEADOS */
@@ -424,11 +421,12 @@ class apiBiometricoController extends Controller
                     ->where('di.dispo_porEmp', '=', 1)
                     ->where('di.dispo_todosEmp', '=', 1)
                     ->where('di.tipoDispositivo', '=', 3)
+                    ->where('di.dispo_estadoActivo', '=', 1)
                     ->get();
-                if($dispositivosBi->isNotEmpty()){
-                    foreach($dispositivosBi as $dispositivosBis){
-                        $datos1=["idDispositivo" => $dispositivosBis->idDispositivos];
-                        array_push( $idBiometricos,$datos1);
+                if ($dispositivosBi->isNotEmpty()) {
+                    foreach ($dispositivosBi as $dispositivosBis) {
+                        $datos1 = ["idDispositivo" => $dispositivosBis->idDispositivos];
+                        array_push($idBiometricos, $datos1);
 
                     }
                 }
@@ -437,32 +435,36 @@ class apiBiometricoController extends Controller
 
                 /* VERIFICAR DISPOSTIVOS CON EMPLEADOS */
                 $dispositivosBiEmp = DB::table('dispositivo_empleado as de')
-                ->where('de.emple_id', '=', $tab1->idempleado)
-                ->where('de.estado', '=', 1)
-                ->get();
-                if($dispositivosBiEmp->isNotEmpty()){
-                  foreach($dispositivosBiEmp as $dispositivosBiEmps){
-                    $datos2=["idDispositivo" =>  $dispositivosBiEmps->idDispositivos];
-                    array_push( $idBiometricos,$datos2);
-                }
+                    ->join('dispositivos as di','de.idDispositivos','=','di.idDispositivos')
+                    ->where('de.emple_id', '=', $tab1->idempleado)
+                    ->where('di.dispo_estadoActivo', '=', 1)
+                    ->where('de.estado', '=', 1)
+                    ->get();
+                if ($dispositivosBiEmp->isNotEmpty()) {
+                    foreach ($dispositivosBiEmp as $dispositivosBiEmps) {
+                        $datos2 = ["idDispositivo" => $dispositivosBiEmps->idDispositivos];
+                        array_push($idBiometricos, $datos2);
+                    }
                 }
 
                 /* ---------------------------------------------- */
                 /* VERIFICAR DISPOSITIVOS POR AREAS */
                 $dispositivosBiAr = DB::table('dispositivo_area as da')
-                ->where('da.area_id', '=', $tab1->emple_area)
-                ->where('da.estado', '=', 1)
-                ->get();
-                if($dispositivosBiAr->isNotEmpty()){
-                    foreach($dispositivosBiAr as $dispositivosBiArs){
-                        $datos3=["idDispositivo" => $dispositivosBiArs->idDispositivos];
-                        array_push( $idBiometricos,$datos3);
+                ->join('dispositivos as di','da.idDispositivos','=','di.idDispositivos')
+                    ->where('da.area_id', '=', $tab1->emple_area)
+                    ->where('di.dispo_estadoActivo', '=', 1)
+                    ->where('da.estado', '=', 1)
+                    ->get();
+                if ($dispositivosBiAr->isNotEmpty()) {
+                    foreach ($dispositivosBiAr as $dispositivosBiArs) {
+                        $datos3 = ["idDispositivo" => $dispositivosBiArs->idDispositivos];
+                        array_push($idBiometricos, $datos3);
                     }
                 }
                 /* ------------------------------------- */
-               $idUnicos=array_unique($idBiometricos, SORT_REGULAR);
+                $idUnicos = array_unique($idBiometricos, SORT_REGULAR);
 
-                $tab1->idBiometrico =array_values($idUnicos) ;
+                $tab1->idBiometrico = array_values($idUnicos);
 
             }
             return $empleado;
@@ -488,16 +490,14 @@ class apiBiometricoController extends Controller
                         ->select('e.emple_id as idempleado',
                             'p.perso_nombre as nombre',
                             DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                            'e.emple_nDoc as dni','e.emple_area'
+                            'e.emple_nDoc as dni', 'e.emple_area'
                         )
                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                         ->where('e.emple_estado', '=', 1)
                         ->where('e.asistencia_puerta', '=', 1)
                         ->distinct('e.emple_id')
                         ->paginate();
-                        $empleado = agruparIDBiometricos($empleado);
-
-
+                    $empleado = agruparIDBiometricos($empleado);
 
                 } else {
                     /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -515,7 +515,7 @@ class apiBiometricoController extends Controller
                             ->select('e.emple_id as idempleado',
                                 'p.perso_nombre as nombre',
                                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                'e.emple_nDoc as dni','e.emple_area'
+                                'e.emple_nDoc as dni', 'e.emple_area'
                             )
                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                             ->where('e.emple_estado', '=', 1)
@@ -524,7 +524,7 @@ class apiBiometricoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->distinct('e.emple_id')
                             ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado);
 
                     } else {
                         /* EMPLEADOS POR AREA */
@@ -536,7 +536,7 @@ class apiBiometricoController extends Controller
                             ->select('e.emple_id as idempleado',
                                 'p.perso_nombre as nombre',
                                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                'e.emple_nDoc as dni','e.emple_area'
+                                'e.emple_nDoc as dni', 'e.emple_area'
                             )
                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                             ->where('e.emple_estado', '=', 1)
@@ -545,7 +545,7 @@ class apiBiometricoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->distinct('e.emple_id')
                             ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado);
 
                     }
                 }
@@ -556,14 +556,14 @@ class apiBiometricoController extends Controller
                     ->select('e.emple_id as idempleado',
                         'p.perso_nombre as nombre',
                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                        'e.emple_nDoc as dni','e.emple_area'
+                        'e.emple_nDoc as dni', 'e.emple_area'
                     )
                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                     ->where('e.emple_estado', '=', 1)
                     ->where('e.asistencia_puerta', '=', 1)
                     ->distinct('e.emple_id')
                     ->paginate();
-                    $empleado = agruparIDBiometricos($empleado);
+                $empleado = agruparIDBiometricos($empleado);
 
             }
         } else {
@@ -604,14 +604,14 @@ class apiBiometricoController extends Controller
                                 ->select('e.emple_id as idempleado',
                                     'p.perso_nombre as nombre',
                                     DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                    'e.emple_nDoc as dni','e.emple_area'
+                                    'e.emple_nDoc as dni', 'e.emple_area'
                                 )
                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                 ->where('e.emple_estado', '=', 1)
                                 ->where('e.asistencia_puerta', '=', 1)
                                 ->distinct('e.emple_id')
                                 ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                            $empleado = agruparIDBiometricos($empleado);
 
                         } else {
                             /* CUADNO TIENE EMPLEADOS ASIGNADOS */
@@ -629,7 +629,7 @@ class apiBiometricoController extends Controller
                                     ->select('e.emple_id as idempleado',
                                         'p.perso_nombre as nombre',
                                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                        'e.emple_nDoc as dni','e.emple_area'
+                                        'e.emple_nDoc as dni', 'e.emple_area'
                                     )
                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                     ->where('e.emple_estado', '=', 1)
@@ -638,7 +638,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                    $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado);
 
                             } else {
                                 /* EMPLEADOS POR AREA */
@@ -650,7 +650,7 @@ class apiBiometricoController extends Controller
                                     ->select('e.emple_id as idempleado',
                                         'p.perso_nombre as nombre',
                                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                        'e.emple_nDoc as dni','e.emple_area'
+                                        'e.emple_nDoc as dni', 'e.emple_area'
                                     )
                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                     ->where('e.emple_estado', '=', 1)
@@ -659,7 +659,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                    $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado);
 
                             }
                         }
@@ -670,14 +670,14 @@ class apiBiometricoController extends Controller
                             ->select('e.emple_id as idempleado',
                                 'p.perso_nombre as nombre',
                                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                'e.emple_nDoc as dni','e.emple_area'
+                                'e.emple_nDoc as dni', 'e.emple_area'
                             )
                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                             ->where('e.emple_estado', '=', 1)
                             ->where('e.asistencia_puerta', '=', 1)
                             ->distinct('e.emple_id')
                             ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado);
 
                     }
 
@@ -703,7 +703,7 @@ class apiBiometricoController extends Controller
                                 ->select('e.emple_id as idempleado',
                                     'p.perso_nombre as nombre',
                                     DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                    'e.emple_nDoc as dni','e.emple_area'
+                                    'e.emple_nDoc as dni', 'e.emple_area'
                                 )
                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                 ->where('e.emple_estado', '=', 1)
@@ -712,7 +712,7 @@ class apiBiometricoController extends Controller
                                 ->where('de.idDispositivos', '=', $idbiometrico)
                                 ->distinct('e.emple_id')
                                 ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                            $empleado = agruparIDBiometricos($empleado);
                             /* --------------------------------------------------------------------- */
 
                         } else {
@@ -734,7 +734,7 @@ class apiBiometricoController extends Controller
                                     ->select('e.emple_id as idempleado',
                                         'p.perso_nombre as nombre',
                                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                        'e.emple_nDoc as dni','e.emple_area'
+                                        'e.emple_nDoc as dni', 'e.emple_area'
                                     )
                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                     ->where('e.emple_estado', '=', 1)
@@ -745,7 +745,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                    $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado);
                                 /* ----------------------------------------------------------------- */
 
                             } else {
@@ -761,7 +761,7 @@ class apiBiometricoController extends Controller
                                     ->select('e.emple_id as idempleado',
                                         'p.perso_nombre as nombre',
                                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                        'e.emple_nDoc as dni','e.emple_area'
+                                        'e.emple_nDoc as dni', 'e.emple_area'
                                     )
                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                     ->where('e.emple_estado', '=', 1)
@@ -772,7 +772,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                    $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado);
                                 /* -------------------------------------------------------------- */
 
                             }
@@ -786,7 +786,7 @@ class apiBiometricoController extends Controller
                             ->select('e.emple_id as idempleado',
                                 'p.perso_nombre as nombre',
                                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                'e.emple_nDoc as dni','e.emple_area'
+                                'e.emple_nDoc as dni', 'e.emple_area'
                             )
                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                             ->where('e.emple_estado', '=', 1)
@@ -795,7 +795,7 @@ class apiBiometricoController extends Controller
                             ->where('de.idDispositivos', '=', $idbiometrico)
                             ->distinct('e.emple_id')
                             ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado);
                         /* --------------------------------------------------------------------- */
 
                     }
@@ -825,7 +825,7 @@ class apiBiometricoController extends Controller
                                 ->select('e.emple_id as idempleado',
                                     'p.perso_nombre as nombre',
                                     DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                    'e.emple_nDoc as dni','e.emple_area'
+                                    'e.emple_nDoc as dni', 'e.emple_area'
                                 )
                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                 ->where('e.emple_estado', '=', 1)
@@ -834,7 +834,7 @@ class apiBiometricoController extends Controller
                                 ->where('da.idDispositivos', '=', $idbiometrico)
                                 ->distinct('e.emple_id')
                                 ->paginate();
-                                $empleado = agruparIDBiometricos($empleado);
+                            $empleado = agruparIDBiometricos($empleado);
                             /* --------------------------------------------------------------------- */
 
                         } else {
@@ -856,7 +856,7 @@ class apiBiometricoController extends Controller
                                     ->select('e.emple_id as idempleado',
                                         'p.perso_nombre as nombre',
                                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                        'e.emple_nDoc as dni','e.emple_area'
+                                        'e.emple_nDoc as dni', 'e.emple_area'
                                     )
                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                     ->where('e.emple_estado', '=', 1)
@@ -867,7 +867,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                    $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado);
                                 /* ----------------------------------------------------------------- */
 
                             } else {
@@ -884,7 +884,7 @@ class apiBiometricoController extends Controller
                                     ->select('e.emple_id as idempleado',
                                         'p.perso_nombre as nombre',
                                         DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                        'e.emple_nDoc as dni','e.emple_area'
+                                        'e.emple_nDoc as dni', 'e.emple_area'
                                     )
                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                                     ->where('e.emple_estado', '=', 1)
@@ -895,7 +895,7 @@ class apiBiometricoController extends Controller
                                     ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                                     ->distinct('e.emple_id')
                                     ->paginate();
-                                    $empleado = agruparIDBiometricos($empleado);
+                                $empleado = agruparIDBiometricos($empleado);
                                 /* -------------------------------------------------------------- */
 
                             }
@@ -910,7 +910,7 @@ class apiBiometricoController extends Controller
                             ->select('e.emple_id as idempleado',
                                 'p.perso_nombre as nombre',
                                 DB::raw('CONCAT(p.perso_apPaterno," ",p.perso_apMaterno) as apellidos'),
-                                'e.emple_nDoc as dni','e.emple_area'
+                                'e.emple_nDoc as dni', 'e.emple_area'
                             )
                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
                             ->where('e.emple_estado', '=', 1)
@@ -919,7 +919,7 @@ class apiBiometricoController extends Controller
                             ->where('da.idDispositivos', '=', $idbiometrico)
                             ->distinct('e.emple_id')
                             ->paginate();
-                            $empleado = agruparIDBiometricos($empleado);
+                        $empleado = agruparIDBiometricos($empleado);
                         /* --------------------------------------------------------------------- */
 
                     }
@@ -962,9 +962,31 @@ class apiBiometricoController extends Controller
             $arrayDatos->push($datos);
         }
         $arrayOrdenado = $arrayDatos->sortBy('fechaMarcacion');
-        $arrayOrdenado->values()->all();
+        $arrayOrdenado->values()->all(); 
         /* dd($arrayOrdenado); */
         /* ----------------------------------------------------------------------------------------------------*/
+         /*OBTENEMOS ARCHIVO FILE Y CREAMOS NUEBO COLLECTION   */
+      /*    $contents = new Collection();
+         $file = $request->file('file');
+         $data = file_get_contents($file);
+         $datosJ = json_decode($data, true);
+
+         foreach ($datosJ as $req) {
+
+                 $datos = ['idDisposi' => $req['idDisposi'], 'idEmpleado' => $req['idEmpleado'],
+                     'tipoMarcacion' => $req['tipoMarcacion'], 'fechaMarcacion' => $req['fechaMarcacion'],
+                     'idHoraEmp' => $req['idHoraEmp'],
+                 ];
+
+                 $contents->push($datos);
+         } */
+         /* --------------------------------------------- */
+
+         /* ORDENAMOS ARRAY POR FECHA DE MARCACION */
+         /* $arrayOrdenado = $contents->sortBy('fechaMarcacion');
+         $arrayOrdenado->values()->all(); */
+
+        /*---------------------------------------------------------------------------------------------------  */
 
         /*------------------- RECORREMOS ARRAY ORDENADO------------------------------------------------------- */
         foreach ($arrayOrdenado as $req) {
@@ -1185,6 +1207,7 @@ class apiBiometricoController extends Controller
                     }
                 }
             }
+
 
         }
 
@@ -2460,7 +2483,7 @@ class apiBiometricoController extends Controller
             if ($plantilla_empleadobioVali) {
 
                 $plantilla_empleadobioArray = array(
-                    'id'=> $plantilla_empleadobioVali->id,
+                    'id' => $plantilla_empleadobioVali->id,
                     'idempleado' => $idempleado,
                     'error' => 'Empleado con biometria duplicada',
                     'exitoso' => false);
@@ -2536,41 +2559,73 @@ class apiBiometricoController extends Controller
 
     }
 
-    public function importar(Request $request){
+    public function importar(Request $request)
+    {
 
+        /*OBTENEMOS ARCHIVO FILE Y CREAMOS NUEBO COLLECTION   */
+        $contents = new Collection();
+        $file = $request->file('file');
+        $file1 = File::get($file);
+        /* --------------------------------------------- */
 
+        /* obtenemos fila de archivo hacemos explode para espacio*/
+        $row = explode("\r\n", $file1);
+        /* ----------------------------------------------------- */
 
+        /*---- RECORREMOS FILAS------------- */
+        foreach ($row as $filas) {
 
-            /* foreach ($request->file('file') as $filesC) { */
-                $contents = new Collection();
-                $file = $request->file('file');
+            /* SI LAS FILAS NO ESTAN VACIAS LA GUARDAMOS */
+            if ($filas != "" || $filas != null) {
 
-                /*  $fileName = uniqid() . $file->getClientOriginalName(); */
+                /* SEPARAMOS POR COMAS */
+                $row2 = explode(",", $filas);
+                /* ------------------------- */
+                /* CREAMOS ARRAY PARA INSERTAR EN COLLECTION */
+                $datos = ["tipoMarcacion" => $row2[0], "fechaMarcacion" => $row2[1],
+                    "idEmpleado" => $row2[2],
+                    "idDisposi" => $row2[1], "idHoraEmp" => $row2[2]];
+                /* ---------------------------------------------------- */
 
-               $filas= File::get($file);
+                /* INSERTAMOS DATOS */
+                $contents->push($datos);
+            }
+            /* ---------------------------------------- */
 
-                   $file1=File::get($file);
-                   $row = explode("\r\n", $file1);
-                   foreach($row as $filas){
-                    $row2 = explode(",", $filas);
-                    $contents->push($row2);
-                   }
+        }
+        /* --------------------------------- */
 
-                   /* $contents->values()->all(); */
-                   return  $contents;
-                  /*  $datos = ['idDisposi' =>  $row2['0'], 'idEmpleado' =>  $row2['1'],
-                   'tipoMarcacion' =>  $row2['2'], 'fechaMarcacion' =>  $row2['3'],
-                   'idHoraEmp' =>  $row2['4']
-               ];
-                   $contents->push($datos); */
+        /* ORDENAMOS ARRAY POR FECHA DE MARCACION */
+        $arrayOrdenado = $contents->sortBy('fechaMarcacion');
+        $arrayOrdenado->values()->all();
+        dd($arrayOrdenado);
 
-             }
+    }
 
+    public function importarJS(Request $request)
+    {
 
+        /*OBTENEMOS ARCHIVO FILE Y CREAMOS NUEBO COLLECTION   */
+        $contents = new Collection();
+        $file = $request->file('file');
+        $data = file_get_contents($file);
+        $datosJ = json_decode($data, true);
 
+        foreach ($datosJ as $req) {
 
+                $datos = ['idDisposi' => $req['idDisposi'], 'idEmpleado' => $req['idEmpleado'],
+                    'tipoMarcacion' => $req['tipoMarcacion'], 'fechaMarcacion' => $req['fechaMarcacion'],
+                    'idHoraEmp' => $req['idHoraEmp'],
+                ];
 
+                $contents->push($datos);
+        }
+        /* --------------------------------------------- */
 
+        /* ORDENAMOS ARRAY POR FECHA DE MARCACION */
+        $arrayOrdenado = $contents->sortBy('fechaMarcacion');
+        $arrayOrdenado->values()->all();
+        dd($arrayOrdenado);
 
-
+    }
 }

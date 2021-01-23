@@ -151,6 +151,7 @@
                             <th>Código</th>
                             <th class="text-center">Control en ruta</th>
                             <th class="text-center">Asistencia en puerta</th>
+                            <th class="text-center">Modo tareo</th>
                             <th class="text-center"></th>
                         </tr>
                     </thead>
@@ -220,6 +221,17 @@
                                                 style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                             &nbsp;&nbsp;
                                             Asistencia en Puerta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="e_modoT">
+                                        <label class="custom-control-label" for="e_modoT" style="font-weight: bold">
+                                            <i data-feather="pocket"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Modo tareo
                                         </label>
                                     </div>
                                 </div>
@@ -587,6 +599,17 @@
                                                 style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
                                             &nbsp;&nbsp;
                                             Asistencia en Puerta
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-left">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="r_modoT">
+                                        <label class="custom-control-label" for="r_modoT" style="font-weight: bold">
+                                            <i data-feather="pocket"
+                                                style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                                            &nbsp;&nbsp;
+                                            Modo tareo
                                         </label>
                                     </div>
                                 </div>

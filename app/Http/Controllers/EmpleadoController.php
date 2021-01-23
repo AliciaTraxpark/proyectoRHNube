@@ -261,7 +261,8 @@ class EmpleadoController extends Controller
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
-                        'e.asistencia_puerta'
+                        'e.asistencia_puerta',
+                        'e.modoTareo'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
@@ -300,7 +301,8 @@ class EmpleadoController extends Controller
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
-                            'e.asistencia_puerta'
+                            'e.asistencia_puerta',
+                            'e.modoTareo'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -332,7 +334,8 @@ class EmpleadoController extends Controller
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
-                            'e.asistencia_puerta'
+                            'e.asistencia_puerta',
+                            'e.modoTareo'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -362,7 +365,8 @@ class EmpleadoController extends Controller
                     'e.emple_id',
                     'md.idTipoModo as dispositivo',
                     'e.emple_foto',
-                    'e.asistencia_puerta'
+                    'e.asistencia_puerta',
+                    'e.modoTareo'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
@@ -480,7 +484,8 @@ class EmpleadoController extends Controller
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
-                        'e.asistencia_puerta'
+                        'e.asistencia_puerta',
+                        'e.modoTareo'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
@@ -518,7 +523,8 @@ class EmpleadoController extends Controller
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
-                            'e.asistencia_puerta'
+                            'e.asistencia_puerta',
+                            'e.modoTareo'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -550,7 +556,8 @@ class EmpleadoController extends Controller
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
-                            'e.asistencia_puerta'
+                            'e.asistencia_puerta',
+                            'e.modoTareo'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -581,7 +588,8 @@ class EmpleadoController extends Controller
                     'e.emple_id',
                     'md.idTipoModo as dispositivo',
                     'e.emple_foto',
-                    'e.asistencia_puerta'
+                    'e.asistencia_puerta',
+                    'e.modoTareo'
                 )
                 ->where('e.organi_id', '=', session('sesionidorg'))
                 ->where('e.emple_estado', '=', 1)
@@ -2312,7 +2320,8 @@ class EmpleadoController extends Controller
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
-                                'e.asistencia_puerta'
+                                'e.asistencia_puerta',
+                                'e.modoTareo'
                             )
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
@@ -2341,7 +2350,8 @@ class EmpleadoController extends Controller
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
-                                'e.asistencia_puerta'
+                                'e.asistencia_puerta',
+                                'e.modoTareo'
                             )
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
@@ -2368,7 +2378,8 @@ class EmpleadoController extends Controller
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
-                            'e.asistencia_puerta'
+                            'e.asistencia_puerta',
+                            'e.modoTareo'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -2433,7 +2444,8 @@ class EmpleadoController extends Controller
                             'e.emple_id',
                             'md.idTipoModo as dispositivo',
                             'e.emple_foto',
-                            'e.asistencia_puerta'
+                            'e.asistencia_puerta',
+                            'e.modoTareo'
                         )
                         ->where('e.organi_id', '=', session('sesionidorg'))
                         ->where('e.emple_estado', '=', 1)
@@ -2467,7 +2479,8 @@ class EmpleadoController extends Controller
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
-                                'e.asistencia_puerta'
+                                'e.asistencia_puerta',
+                                'e.modoTareo'
                             )
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
@@ -2495,7 +2508,8 @@ class EmpleadoController extends Controller
                                 'e.emple_id',
                                 'md.idTipoModo as dispositivo',
                                 'e.emple_foto',
-                                'e.asistencia_puerta'
+                                'e.asistencia_puerta',
+                                'e.modoTareo'
                             )
                             ->where('e.organi_id', '=', session('sesionidorg'))
                             ->where('e.emple_estado', '=', 1)
@@ -2522,7 +2536,8 @@ class EmpleadoController extends Controller
                         'e.emple_id',
                         'md.idTipoModo as dispositivo',
                         'e.emple_foto',
-                        'e.asistencia_puerta'
+                        'e.asistencia_puerta',
+                        'e.modoTareo'
                     )
                     ->where('e.organi_id', '=', session('sesionidorg'))
                     ->where('e.emple_estado', '=', 1)
@@ -2770,5 +2785,15 @@ class EmpleadoController extends Controller
         }
 
         return json_encode(array('status' => true));
+    }
+
+    /* MODO TAREO CAMBIAR ESTADO */
+    public function modoTareo(Request $request)
+    {
+        $empleado = empleado::find($request->get('idTareo'));
+        if ($empleado) {
+            $empleado->modoTareo = $request->get('estadoP');
+            $empleado->save();
+        }
     }
 }

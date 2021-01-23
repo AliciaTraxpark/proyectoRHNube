@@ -45,30 +45,24 @@ class BirthdayUsers extends Command
     public function handle()
     {
         $this->info('Enviar alerta de cumpleaños.');
-        $organizaciones = organizacion::all();
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        $datos = "";
+        $organizaciones = organizacion::all('organi_id');
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
 
         foreach ($organizaciones as $organizacion) {
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
+            //SOLAMENTE EMPLEADOS
             $empleados = DB::table('empleado')
                     ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.*', 'empleado.*')
+                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id')
                     ->get();
 
-            $admin = DB::table('usuario_organizacion')
+            //COLECCIÓN DE ADMINISTRADORES POR ORGANIZACIÓN
+            $admins = DB::table('usuario_organizacion')
                     ->where('organi_id', $organizacion->organi_id)
                     ->select('usuario_organizacion.user_id')
-                    ->first();
-
-            $invitado_admin = DB::table('invitado')
-                    ->where('organi_id', $organizacion->organi_id)
-                    ->where('rol_id', 1)
-                    ->select('invitado.user_Invitado')
-                    ->first();
+                    ->get();
 
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
@@ -81,7 +75,7 @@ class BirthdayUsers extends Command
                     if($diff == 1 && $today < $fHb){
                         $mensaje =  [
                                         "idOrgani" => $organizacion->organi_id,
-                                        "idEmpleado" => $persona->emple_persona,
+                                        "idEmpleado" => $persona->emple_id,
                                         "empleado" => [
                                                 $persona->perso_nombre,
                                                 $persona->perso_apPaterno,
@@ -91,13 +85,11 @@ class BirthdayUsers extends Command
                                         "asunto" => "birthday"
                                     ];
 
-                        if($admin != ""){
-                            $recipient = User::find($admin->user_id);
-                            $recipient->notify(new NuevaNotification($mensaje)); 
-                        }
-                        if($invitado_admin != ""){
-                            $recipient = User::find($invitado_admin->user_Invitado);
-                            $recipient->notify(new NuevaNotification($mensaje));
+                        if($admins){
+                            foreach ($admins as $admin) {
+                                $recipient = User::find($admin->user_id);
+                                $recipient->notify(new NuevaNotification($mensaje));
+                            }
                         }
                     }
                 }

@@ -47,12 +47,10 @@ class FinContrato extends Command
     public function handle()
     {
         $this->info('Enviar correo de fin de contrato.');
-        $organizaciones = organizacion::all();
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo');
         $todayNow = carbon::now()->subHours(5);
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
         
-
         foreach ($organizaciones as $organizacion) {
             $datos = "";
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
@@ -60,19 +58,13 @@ class FinContrato extends Command
                     ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                     ->join('contrato', 'emple_id', '=', 'contrato.idEmpleado')
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
-                    ->select('persona.*', 'empleado.*', 'contrato.fechaFinal', 'contrato.notiTiempo')
+                    ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id', 'contrato.fechaFinal', 'contrato.notiTiempo')
                     ->get();
 
-            $admin = DB::table('usuario_organizacion')
+            $admins = DB::table('usuario_organizacion')
                     ->where('organi_id', $organizacion->organi_id)
                     ->select('usuario_organizacion.user_id')
-                    ->first();
-
-            $invitado_admin = DB::table('invitado')
-                    ->where('organi_id', $organizacion->organi_id)
-                    ->where('rol_id', 1)
-                    ->select('invitado.user_Invitado')
-                    ->first();
+                    ->get();
 
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
@@ -85,7 +77,7 @@ class FinContrato extends Command
                         $datos = $datos."<div class=''><strong>• ".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</strong>, su contrato finaliza el <strong>".$persona->fechaFinal."</strong> le quedan ".$diff." días. </div><br>";
                         $mensaje =  [
                                         "idOrgani" => $organizacion->organi_id,
-                                        "idEmpleado" => $persona->emple_persona,
+                                        "idEmpleado" => $persona->emple_id,
                                         "empleado" => [
                                                 $persona->perso_nombre,
                                                 $persona->perso_apPaterno,
@@ -95,27 +87,22 @@ class FinContrato extends Command
                                         "asunto" => "contract"
                                     ];
 
-                        if($admin != ""){
-                            $recipient = User::find($admin->user_id);
-                            $recipient->notify(new NuevaNotification($mensaje)); 
-                        }
-                        if($invitado_admin != ""){
-                            $recipient = User::find($invitado_admin->user_Invitado);
-                            $recipient->notify(new NuevaNotification($mensaje));
+                        if($admins){
+                            foreach ($admins as $admin){
+                                $recipient = User::find($admin->user_id);
+                                $recipient->notify(new NuevaNotification($mensaje)); 
+                            }
                         }
                     }
                 }
                 // FIN DE NOTIFICACIÓN
             }
-            if($datos != "" && $admin != ""){
-                $mail_body = "<h4>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
-                $email = User::find($admin->user_id)->email;
-                $envio = Mail::to($email)->queue(new correoFinContrato($mail_body));
-            }
-            if($datos != "" && $invitado_admin != ""){
-                $mail_body = "<h4>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
-                $email = User::find($invitado_admin->user_Invitado)->email;
-                $envio = Mail::to($email)->queue(new correoFinContrato($mail_body));
+            if($datos != "" && isset($admins)){
+                $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4>".$datos;
+                foreach ($admins as $admin) {
+                    $email = User::find($admin->user_id)->email;
+                    $envio = Mail::to($email)->queue(new correoFinContrato($mail_body));
+                }
             }
         }
     }

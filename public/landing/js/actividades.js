@@ -52,6 +52,7 @@ function limpiarModo() {
     $('#codigoTarea').val("");
     $('#customCR').prop("checked", false);
     $('#customCRT').prop("checked", false);
+    $('#customMT').prop("checked", false);
     $('#customAP').prop("checked", false);
     $('.rowEmpleados').hide();
     $('#customAE').prop("checked", false);
@@ -62,6 +63,7 @@ function limpiarModo() {
     $('#e_customCR').prop("checked", false);
     $('#e_customCRT').prop("checked", false);
     $('#e_customAP').prop("checked", false);
+    $('#e_customMT').prop("checked", false);
 }
 function eliminarActividad(id) {
     alertify
@@ -219,6 +221,21 @@ function actividadesOrganizacion() {
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
+                    if (data[index].modoTareo == 1) {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    } else {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
                     if (data[index].respuesta === 'Si') {
                         tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/checkH.svg\" height=\"13\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     } else {
@@ -268,6 +285,21 @@ function actividadesOrganizacion() {
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvAP"+ data[index].Activi_id + "\">\
                             <label class=\"custom-control-label\" for=\"switchActvAP"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    }
+                    if (data[index].modoTareo == 1) {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked >\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                            </div></td>";
+                    } else {
+                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" >\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     }
@@ -452,6 +484,41 @@ function cambiarEstadoActividad(id) {
                 },
             });
     });
+
+    /* MODO TAREO SWITCH */
+    $("#switchActvMT" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "MT";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado de la  actividad?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoParaControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Actividad",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    actividadesOrganizacion();
+                },
+            });
+    });
+    /* ------------------ */
 }
 $("#actividades").on('shown.bs.collapse', function () {
     $($.fn.dataTable.tables(true)).DataTable()
@@ -526,6 +593,29 @@ $('#e_customCRT').on("change.bootstrapSwitch", function (event) {
 //: ***********************************************
 //: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
 $('#e_customAP').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    } else {
+        if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
+            $('.rowEmpleadosEditar').show();
+            estadoAsignaciones();
+        } else {
+            $('.rowEmpleadosEditar').hide();
+            limpiarAsignacionPorEmpleado();
+            limpiarAsignacionPorArea();
+        }
+    }
+});
+
+//: FUNCIONALIDAD DEL SWITCH MODO TAREO
+$('#e_customMT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         if ($('#e_customCR').is(":checked") || $('#e_customCRT').is(":checked")) {
             $('.rowEmpleadosEditar').show();
@@ -653,6 +743,11 @@ function editarActividad(id) {
             } else {
                 $('#e_customAP').prop("checked", false);
             }
+            if (data.modoTareo === 1) {
+                $('#e_customMT').prop("checked", true);
+            } else {
+                $('#e_customMT').prop("checked", false);
+            }
             if (data.controlRemoto === 1 || data.controlRuta === 1) {
                 $('.rowEmpleadosEditar').show();
             } else {
@@ -693,6 +788,7 @@ function editarActividadTarea() {
     var asignacionEmpleado;
     var asignacionArea;
     var globalArea;
+    var modoTareo;
     //* CONTROL REMOTO
     if ($('#e_customCR').is(":checked") == true) {
         var controlRemoto = 1;
@@ -704,6 +800,13 @@ function editarActividadTarea() {
         var asistenciaPuerta = 1;
     } else {
         var asistenciaPuerta = 0;
+    }
+
+    //* MODO TAREO
+    if ($('#e_customMT').is(":checked") == true) {
+        var modoTareo = 1;
+    } else {
+        var modoTareo = 0;
     }
     //* CONTROL EN RUTA
     if ($('#e_customCRT').is(":checked") == true) {
@@ -749,7 +852,8 @@ function editarActividadTarea() {
             asignacionEmpleado: asignacionEmpleado,
             areas: areas,
             asignacionArea: asignacionArea,
-            globalArea: globalArea
+            globalArea: globalArea,
+            modoTareo:modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1199,6 +1303,28 @@ $('#customAP').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
+//: FUNCIONALIDAD DEL SWITCH MODO tareo
+$('#customMT').on("change.bootstrapSwitch", function (event) {
+    if (event.target.checked == true) {
+        if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    } else {
+        if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
+            $('.rowEmpleados').show();
+            estadoAsignacionesReg();
+        } else {
+            $('.rowEmpleados').hide();
+            limpiarAsignacionPorEmpleadoReg();
+            limpiarAsignacionPorAreaReg();
+        }
+    }
+});
 //: FUNCTION ESTADOS SWITCH
 function estadoAsignacionesReg() {
     if (!$('#customAE').is(":checked")) {
@@ -1321,6 +1447,7 @@ function registrarActividadTarea() {
     var asignacionEmpleado;
     var asignacionArea;
     var globalArea;
+    var modoTareo;
     //* CONTROL REMOTO
     if ($('#customCR').is(":checked") == true) {
         var controlRemoto = 1;
@@ -1332,6 +1459,12 @@ function registrarActividadTarea() {
         var asistenciaPuerta = 1;
     } else {
         var asistenciaPuerta = 0;
+    }
+     //* MODO TAREO
+     if ($('#customMT').is(":checked") == true) {
+        var modoTareo = 1;
+    } else {
+        var modoTareo = 0;
     }
     //* CONTROL EN RUTA
     if ($('#customCRT').is(":checked") == true) {
@@ -1377,7 +1510,8 @@ function registrarActividadTarea() {
             asignacionEmpleado: asignacionEmpleado,
             areas: areas,
             asignacionArea: asignacionArea,
-            globalArea: globalArea
+            globalArea: globalArea,
+            modoTareo: modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

@@ -35,6 +35,7 @@ class empleado extends Model
         'emple_codigo',
         'id_contrato',
         'asistencia_puerta',
-        'organi_id'
+        'organi_id',
+        'modoTareo'
     ];
 }

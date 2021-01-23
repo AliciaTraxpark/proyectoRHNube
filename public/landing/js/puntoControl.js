@@ -112,6 +112,23 @@ function puntosControlOrganizacion() {
                                 </td>`;
                     }
 
+                    // * MODO TAREO
+                    if (data[index].ModoTareo == 1) {
+                        tbody += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchPuntoMTOrg${data[index].id}" checked>
+                                        <label class="custom-control-label" for="switchPuntoMTOrg${data[index].id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
+                    } else {
+                        tbody += `<td class="text-center">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchPuntoMTOrg${data[index].id}">
+                                        <label class="custom-control-label" for="switchPuntoMTOrg${data[index].id}" style="font-weight: bold"></label>
+                                    </div>
+                                </td>`;
+                    }
+
                     tbody += `<td class="text-center">
                                 <a onclick="javascript:editarPunto(${data[index].id})" style="cursor: pointer">
                                     <img src="/admin/images/edit.svg" height="15">
@@ -198,6 +215,12 @@ function editarPunto(id) {
             } else {
                 $('#e_puntoAP').prop("checked", false);
             }
+            //* MODO TAREO
+            if (data[0].ModoTareo == 1) {
+                $('#e_modoT').prop("checked", true);
+            } else {
+                $('#e_modoT').prop("checked", false);
+            }
             // * POR EMPLEADOS
             if (data[0].porEmpleados == 1) {
                 $('#e_puntosPorE').prop("checked", true);
@@ -238,12 +261,12 @@ function editarPunto(id) {
                                 <input type="hidden" class="rowIdGeo" value="${geo[index].idGeo}">
                                 <div class="col-md-12">
                                     <span id="validGeo${geo[index].idGeo}" style="color: red;display:none"></span>
-                                    <div class="card border" 
+                                    <div class="card border"
                                         style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                         <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                             <span style="font-weight: bold;">Datos GPS</span>
                                             &nbsp;`;
-                colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip" 
+                colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo(${geo[index].idGeo})" style="cursor: pointer" data-toggle="tooltip"
                                 data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                                 <img src="/admin/images/delete.svg" height="13">
                             </a>`;
@@ -254,7 +277,7 @@ function editarPunto(id) {
                                 <div class="col-md-12">
                                     <div class="form-group row" style="margin-bottom: 0.4rem;">
                                         <label class="col-lg-4 col-form-label">Latitud:</label>
-                                        <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitud${geo[index].idGeo}" 
+                                        <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitud${geo[index].idGeo}"
                                             value="${geo[index].latitud}" onkeyup="javascript:changeLatitud(${geo[index].idGeo})">
                                         <a onclick="javascript:blurLatitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLat${geo[index].idGeo}"
                                             data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
@@ -265,7 +288,7 @@ function editarPunto(id) {
                                 <div class="col-md-12">
                                     <div class="form-group row" style="margin-bottom: 0.4rem;">
                                         <label class="col-lg-4 col-form-label">Longitud:</label>
-                                        <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitud${geo[index].idGeo}" 
+                                        <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitud${geo[index].idGeo}"
                                             value="${geo[index].longitud}" onkeyup="javascript:changeLongitud(${geo[index].idGeo})">
                                         <a onclick="javascript:blurLongitud(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLng${geo[index].idGeo}"
                                             data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
@@ -276,7 +299,7 @@ function editarPunto(id) {
                                 <div class="col-md-12">
                                     <div class="form-group row" style="margin-bottom: 0.4rem;">
                                         <label class="col-lg-4 col-form-label">Radio (m):</label>
-                                        <input type="number" class="form-control form-control-sm col-6" id="e_radio${geo[index].idGeo}" 
+                                        <input type="number" class="form-control form-control-sm col-6" id="e_radio${geo[index].idGeo}"
                                             value="${geo[index].radio}" onkeyup="javascript:changeRadio(${geo[index].idGeo})">
                                         <a onclick="javascript:blurRadio(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaR${geo[index].idGeo}"
                                             data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
@@ -287,7 +310,7 @@ function editarPunto(id) {
                                 <div class="col-md-12">
                                     <div class="form-group row" style="margin-bottom: 0.4rem;">
                                         <label class="col-lg-4 col-form-label">Color:</label>
-                                        <input type="color" class="form-control form-control-sm col-6" id="e_color${geo[index].idGeo}" 
+                                        <input type="color" class="form-control form-control-sm col-6" id="e_color${geo[index].idGeo}"
                                             value="${geo[index].color}" onchange="javascript:changeColor(${geo[index].idGeo})">
                                         <a onclick="javascript:blurColor(${geo[index].idGeo})" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaC${geo[index].idGeo}"
                                             data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
@@ -316,7 +339,7 @@ function editarPunto(id) {
             for (let item = 0; item < det.length; item++) {
                 nuevoInput += `<div class="form-group row" style="margin-bottom: 0.4rem;margin-left: 0.1rem">
                                     <input type="hidden" class="e_colD" value="${det[item].idDetalle}">
-                                    <input type="text" class="form-control form-control-sm col-6 e_inp${det[item].idDetalle}" id="e_nuevaD${det[item].idDetalle}" maxlength="50" 
+                                    <input type="text" class="form-control form-control-sm col-6 e_inp${det[item].idDetalle}" id="e_nuevaD${det[item].idDetalle}" maxlength="50"
                                         placeholder="Nueva Descripcion" value="${det[item].detalle}">
                                     <a onclick="javascript:e_eliminarI(${det[item].idDetalle})" style="cursor: pointer;" class="col-2 pt-1 e_inp${det[item].idDetalle}" id="e_cambiaC"
                                         data-toggle="tooltip" data-placement="right" title="Eliminar descripcion" data-original-title="Eliminar descripcion">
@@ -442,6 +465,7 @@ function editarPuntoControl() {
     var porAreas;
     var controlRuta;
     var asistenciaPuerta;
+    var modoTareo;
     var verificacion;
     var puntosGeo = contenido();
     var descripciones = contenidoDes();
@@ -456,6 +480,12 @@ function editarPuntoControl() {
         asistenciaPuerta = 1;
     } else {
         asistenciaPuerta = 0;
+    }
+     //* MODO TAREO
+     if ($('#e_modoT').is(":checked")) {
+        modoTareo = 1;
+    } else {
+        modoTareo = 0;
     }
     //* POR EMPLEADOS
     if ($('#e_puntosPorE').is(":checked")) {
@@ -490,7 +520,8 @@ function editarPuntoControl() {
             porAreas: porAreas,
             puntosGeo: puntosGeo,
             verificacion: verificacion,
-            descripciones: descripciones
+            descripciones: descripciones,
+            modoTareo:modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -938,12 +969,12 @@ function edit_agregarGPS() {
                     <input type="hidden" class="rowIdGeo" value="Nuevo${variableU}">
                     <div class="col-md-12">
                         <span id="validGeoNuevo${variableU}" style="color: red;display:none"></span>
-                        <div class="card border" 
+                        <div class="card border"
                             style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                 <span style="font-weight: bold;">Datos GPS</span>
                                 &nbsp;`;
-    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip" 
+    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip"
                     data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                     <img src="/admin/images/delete.svg" height="13">
                 </a>`;
@@ -954,7 +985,7 @@ function edit_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Latitud:</label>
-                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitudNuevo${variableU}" 
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitudNuevo${variableU}"
                                 value="${latitud}" onkeyup="javascript:changeLatitud('Nuevo${variableU}')">
                             <a onclick="javascript:blurLatitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLatNuevo${variableU}"
                                 data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
@@ -965,7 +996,7 @@ function edit_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Longitud:</label>
-                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitudNuevo${variableU}" 
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitudNuevo${variableU}"
                                 value="${longitud}" onkeyup="javascript:changeLongitud('Nuevo${variableU}')">
                                 <a onclick="javascript:blurLongitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLngNuevo${variableU}"
                                     data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
@@ -976,7 +1007,7 @@ function edit_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Radio (m):</label>
-                            <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}" 
+                            <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}"
                                 value="${radio}" onkeyup="javascript:changeRadio('Nuevo${variableU}')">
                                 <a onclick="javascript:blurRadio('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaRNuevo${variableU}"
                                     data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
@@ -987,7 +1018,7 @@ function edit_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Color:</label>
-                            <input type="color" class="form-control form-control-sm col-6" id="e_colorNuevo${variableU}" 
+                            <input type="color" class="form-control form-control-sm col-6" id="e_colorNuevo${variableU}"
                                 value="${color}" onchange="javascript:changeColor('Nuevo${variableU}')">
                             <a onclick="javascript:blurColor('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaCNuevo${variableU}"
                                 data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
@@ -1112,12 +1143,12 @@ function addMarker(e) {
                                     <input type="hidden" class="rowIdGeo" value="Nuevo${variableU}">
                                     <div class="col-md-12">
                                         <span id="validGeoNuevo${variableU}" style="color: red;display:none"></span>
-                                        <div class="card border" 
+                                        <div class="card border"
                                             style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                                 <span style="font-weight: bold;">Datos GPS</span>
                                                 &nbsp;`;
-                    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip" 
+                    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip"
                                     data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                                     <img src="/admin/images/delete.svg" height="13">
                                 </a>`;
@@ -1128,7 +1159,7 @@ function addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Latitud:</label>
-                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitudNuevo${variableU}" 
+                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_latitudNuevo${variableU}"
                                                 value="${nuevoLatitud}" onkeyup="javascript:changeLatitud('Nuevo${variableU}')">
                                             <a onclick="javascript:blurLatitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLatNuevo${variableU}"
                                                 data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
@@ -1139,7 +1170,7 @@ function addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Longitud:</label>
-                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitudNuevo${variableU}" 
+                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="e_longitudNuevo${variableU}"
                                                 value="${nuevoLongitud}" onkeyup="javascript:changeLongitud('Nuevo${variableU}')">
                                                 <a onclick="javascript:blurLongitud('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaLngNuevo${variableU}"
                                                     data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
@@ -1150,7 +1181,7 @@ function addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Radio (m):</label>
-                                            <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}" 
+                                            <input type="number" class="form-control form-control-sm col-6" id="e_radioNuevo${variableU}"
                                                 value="100" onkeyup="javascript:changeRadio('Nuevo${variableU}')">
                                                 <a onclick="javascript:blurRadio('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaRNuevo${variableU}"
                                                     data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
@@ -1161,7 +1192,7 @@ function addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Color:</label>
-                                            <input type="color" class="form-control form-control-sm col-6" id="e_colorNuevo${variableU}" 
+                                            <input type="color" class="form-control form-control-sm col-6" id="e_colorNuevo${variableU}"
                                                 value="#FF0000" onchange="javascript:changeColor('Nuevo${variableU}')">
                                             <a onclick="javascript:blurColor('Nuevo${variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="e_cambiaCNuevo${variableU}"
                                                 data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
@@ -1345,7 +1376,7 @@ function asignacionPunto() {
     $('#a_puntosPorA').attr("disabled", true);
     listaPuntos();
 }
-//: POR EMPLEADOS 
+//: POR EMPLEADOS
 function a_empleadosPuntos(id) {
     $('#a_empleadosPunto').empty();
     $.ajax({
@@ -1762,7 +1793,7 @@ $('#r_puntosPorA').on("change.bootstrapSwitch", function (event) {
         r_limpiarxEmpleado();
     }
 });
-//? POR EMPLEADOS 
+//? POR EMPLEADOS
 function r_empleadosPuntos() {
     $('#r_empleadosPunto').empty();
     $.ajax({
@@ -1939,12 +1970,12 @@ function reg_agregarGPS() {
                     <input type="hidden" class="r_rowIdGeo" value="Nuevo${reg_variableU}">
                     <div class="col-md-12">
                         <span id="r_validGeoNuevo${reg_variableU}" style="color: red;display:none"></span>
-                        <div class="card border" 
+                        <div class="card border"
                             style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                 <span style="font-weight: bold;">Datos GPS</span>
                                 &nbsp;`;
-    colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip" 
+    colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip"
                     data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                     <img src="/admin/images/delete.svg" height="13">
                 </a>`;
@@ -1955,7 +1986,7 @@ function reg_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Latitud:</label>
-                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_latitudNuevo${reg_variableU}" 
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_latitudNuevo${reg_variableU}"
                                 value="${latitud}" onkeyup="javascript:r_changeLatitud('Nuevo${reg_variableU}')">
                             <a onclick="javascript:r_blurLatitud('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaLatNuevo${reg_variableU}"
                                 data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
@@ -1966,7 +1997,7 @@ function reg_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Longitud:</label>
-                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_longitudNuevo${reg_variableU}" 
+                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_longitudNuevo${reg_variableU}"
                                 value="${longitud}" onkeyup="javascript:r_changeLongitud('Nuevo${reg_variableU}')">
                                 <a onclick="javascript:r_blurLongitud('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaLngNuevo${reg_variableU}"
                                     data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
@@ -1977,7 +2008,7 @@ function reg_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Radio (m):</label>
-                            <input type="number" class="form-control form-control-sm col-6" id="r_radioNuevo${reg_variableU}" 
+                            <input type="number" class="form-control form-control-sm col-6" id="r_radioNuevo${reg_variableU}"
                                 value="${radio}" onkeyup="javascript:r_changeRadio('Nuevo${reg_variableU}')">
                                 <a onclick="javascript:r_blurRadio('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaRNuevo${reg_variableU}"
                                     data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
@@ -1988,7 +2019,7 @@ function reg_agregarGPS() {
                     <div class="col-md-12">
                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                             <label class="col-lg-4 col-form-label">Color:</label>
-                            <input type="color" class="form-control form-control-sm col-6" id="r_colorNuevo${reg_variableU}" 
+                            <input type="color" class="form-control form-control-sm col-6" id="r_colorNuevo${reg_variableU}"
                                 value="${color}" onchange="javascript:r_changeColor('Nuevo${reg_variableU}')">
                             <a onclick="javascript:r_blurColor('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaCNuevo${reg_variableU}"
                                 data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
@@ -2100,12 +2131,12 @@ function r_addMarker(e) {
                                     <input type="hidden" class="r_rowIdGeo" value="Nuevo${reg_variableU}">
                                     <div class="col-md-12">
                                         <span id="r_validGeoNuevo${reg_variableU}" style="color: red;display:none"></span>
-                                        <div class="card border" 
+                                        <div class="card border"
                                             style="border-color: #e4e9f0;box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                                 <span style="font-weight: bold;">Datos GPS</span>
                                                 &nbsp;`;
-                    colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip" 
+                    colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip"
                                     data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                                     <img src="/admin/images/delete.svg" height="13">
                                 </a>`;
@@ -2116,7 +2147,7 @@ function r_addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Latitud:</label>
-                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_latitudNuevo${reg_variableU}" 
+                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_latitudNuevo${reg_variableU}"
                                                 value="${nuevoLatitud}" onkeyup="javascript:r_changeLatitud('Nuevo${reg_variableU}')">
                                             <a onclick="javascript:r_blurLatitud('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaLatNuevo${reg_variableU}"
                                                 data-toggle="tooltip" data-placement="right" title="Cambiar latitud" data-original-title="Cambiar latitud">
@@ -2127,7 +2158,7 @@ function r_addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Longitud:</label>
-                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_longitudNuevo${reg_variableU}" 
+                                            <input type="number" step="any" class="form-control form-control-sm col-6" id="r_longitudNuevo${reg_variableU}"
                                                 value="${nuevoLongitud}" onkeyup="javascript:r_changeLongitud('Nuevo${reg_variableU}')">
                                                 <a onclick="javascript:r_blurLongitud('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaLngNuevo${reg_variableU}"
                                                     data-toggle="tooltip" data-placement="right" title="Cambiar longitud" data-original-title="Cambiar longitud">
@@ -2138,7 +2169,7 @@ function r_addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Radio (m):</label>
-                                            <input type="number" class="form-control form-control-sm col-6" id="r_radioNuevo${reg_variableU}" 
+                                            <input type="number" class="form-control form-control-sm col-6" id="r_radioNuevo${reg_variableU}"
                                                 value="100" onkeyup="javascript:r_changeRadio('Nuevo${reg_variableU}')">
                                                 <a onclick="javascript:r_blurRadio('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaRNuevo${reg_variableU}"
                                                     data-toggle="tooltip" data-placement="right" title="Cambiar radio" data-original-title="Cambiar radio">
@@ -2149,7 +2180,7 @@ function r_addMarker(e) {
                                     <div class="col-md-12">
                                         <div class="form-group row" style="margin-bottom: 0.4rem;">
                                             <label class="col-lg-4 col-form-label">Color:</label>
-                                            <input type="color" class="form-control form-control-sm col-6" id="r_colorNuevo${reg_variableU}" 
+                                            <input type="color" class="form-control form-control-sm col-6" id="r_colorNuevo${reg_variableU}"
                                                 value="#FF0000" onchange="javascript:r_changeColor('Nuevo${reg_variableU}')">
                                             <a onclick="javascript:r_blurColor('Nuevo${reg_variableU}')" style="cursor: pointer;display:none" class="col-2 pt-1" id="r_cambiaCNuevo${reg_variableU}"
                                                 data-toggle="tooltip" data-placement="right" title="Cambiar color" data-original-title="Cambiar color">
@@ -2379,6 +2410,7 @@ function registrarPunto() {
     var porAreas;
     var controlRuta;
     var asistenciaPuerta;
+    var modoTareo;
     var verificacion;
     var puntosGeo = r_contenido();
     var descripciones = r_contenidoDes();
@@ -2393,6 +2425,12 @@ function registrarPunto() {
         asistenciaPuerta = 1;
     } else {
         asistenciaPuerta = 0;
+    }
+    //* MODO TAREO
+    if ($('#r_modoT').is(":checked")) {
+        modoTareo = 1;
+    } else {
+        modoTareo = 0;
     }
     //* POR EMPLEADOS
     if ($('#r_puntosPorE').is(":checked")) {
@@ -2426,7 +2464,8 @@ function registrarPunto() {
             porAreas: porAreas,
             verificacion: verificacion,
             puntosGeo: puntosGeo,
-            descripciones: descripciones
+            descripciones: descripciones,
+            modoTareo:modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -2684,6 +2723,7 @@ function limpiarPunto() {
     r_limpiarxArea();
     $('#r_puntoCRT').prop("checked", false);
     $('#r_puntoAP').prop("checked", false);
+    $('#r_modoT').prop("checked", false);
     $('#r_verificacion').prop("checked", false);
     $('#r_cardEA').hide();
 }
@@ -2838,6 +2878,40 @@ function cambiarEstadoPunto(id) {
 
     $("#switchPuntoAPOrg" + id).on("change.bootstrapSwitch", function (event) {
         var control = "AP";
+        if (event.target.checked == true) {
+            var valor = 1;
+        } else {
+            var valor = 0;
+        }
+        alertify
+            .confirm("¿Desea modificar el estado del punto control?", function (
+                e
+            ) {
+                if (e) {
+                    cambiarEstadoDeControles(id, valor, control);
+                }
+            })
+            .setting({
+                title: "Modificar Punto Control",
+                labels: {
+                    ok: "Aceptar",
+                    cancel: "Cancelar",
+                },
+                modal: true,
+                startMaximized: false,
+                reverseButtons: true,
+                resizable: false,
+                closable: false,
+                transition: "zoom",
+                oncancel: function (closeEvent) {
+                    puntosControlOrganizacion();
+                },
+            });
+    });
+
+    /* MODO TAREO SWITCH */
+    $("#switchPuntoMTOrg" + id).on("change.bootstrapSwitch", function (event) {
+        var control = "MT";
         if (event.target.checked == true) {
             var valor = 1;
         } else {

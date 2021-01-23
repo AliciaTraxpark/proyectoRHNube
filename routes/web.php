@@ -149,6 +149,7 @@ Route::get('tablaempleado/refresh', 'EmpleadoController@refresTabla');
 Route::get('/empleado/agregarCorreo', 'EmpleadoController@agregarCorreoE');
 Route::get('/empleado/agregarCelular', 'EmpleadoController@agregarCelularE');
 Route::post('/empleado/asisPuerta', 'EmpleadoController@asisPuerta');
+Route::post('/empleado/modoTareo', 'EmpleadoController@modoTareo');
 Route::post('tablaempleado/refreshArea', 'EmpleadoController@refresTablaAre');
 Route::get('/empleadosdeBaja', 'EmpleadoController@empleadosBaja')->middleware('auth');
 Route::get('tablaempleado/refreshBaja', 'EmpleadoController@refresTablaEmpBaja');
@@ -197,6 +198,7 @@ Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
 Route::get('/empleadosRep', 'ControlController@empledosReporteSemanalMensual');
 Route::get('/mostrarCapturas', 'ControlController@mostrarCapturas');
+Route::get('/reporteTardanzas', 'ControlController@RTardanzas');
 //FUNCION PARA MOSTRAR CAPTURAS Y MINIATURAS
 Route::get("mostrarMiniatura/{url}", "ControlController@apiMostrarCapturas");
 
@@ -549,4 +551,8 @@ Route::post('/listaControladoresTa', 'controladores_tareoController@show');
 Route::post('/controladTaStore', 'controladores_tareoController@store');
 Route::post('/datosControTaEditar', 'controladores_tareoController@edit');
 Route::post('/controladTarUpdate', 'controladores_tareoController@update');
+
+//Vista reporte fecha
+Route::get('/reporteTareo', 'marcacionTareoController@index');
+Route::get('/tablaTareo', 'marcacionTareoController@show');
 /* ------------------------------------------------------------------------ */

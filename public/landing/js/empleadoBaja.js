@@ -916,10 +916,10 @@ function calendario3() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                 }
                 else {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
         },
@@ -989,11 +989,11 @@ function calendario4() {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
                 if (info.event.borderColor == '#5369f8') {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                    $(info.el).tooltip({ title: 'Horario'+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
 
                 }
                 else {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title:'Horario'+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
         },
@@ -1399,7 +1399,7 @@ async function nuevaAlta() {
     if (respFecha.respuesta != undefined) {
         if (!respFecha.respuesta) {
             $('#alertErrorFechaAlta').empty();
-            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong> 
+            var errorAlert = `<strong><img src="/landing/images/alert1.svg" height="20" class="mr-1 mt-0"></strong>
                                 <span style="font-size: 14px;">Su fecha inicial debe ser mayor a la fecha de baja de su contrato anterior ${moment(respFecha.fecha).lang('es').format("DD MMMM YYYY")}</span>`;
             $('#alertErrorFechaAlta').append(errorAlert);
             $('#alertErrorFechaAlta').show();

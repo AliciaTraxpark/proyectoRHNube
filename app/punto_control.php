@@ -18,7 +18,8 @@ class punto_control extends Model
         'porEmpleados',
         'porAreas',
         'organi_id',
-        'estado'
+        'estado',
+        'ModoTareo'
     ];
     public $timestamps = false;
 }

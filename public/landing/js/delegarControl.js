@@ -31,6 +31,7 @@ function abrirRegist() {
     $("#divAsisPu").show();
     $("#divControlRe").show();
     $("#divControlRuta").show();
+    $("#divCalendario").show();
     $("#divExtractor").show();
     $("#divReporteAsis").show();
     $("#divGestActivi").show();
@@ -140,7 +141,10 @@ function registrarInvit() {
 
     ///////////////////////////////////////////////
 
-    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked") && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") && !$("#ControlRutaCheck").is(":checked") && !$("#ExtractorCheck").is(":checked") && !$("#asistPuertaCheck").is(":checked")) {
+    if (!$("#adminCheck").is(":checked") && !$("#dashboardCheck").is(":checked")  && !$("#AlcaAdminCheck").is(":checked")
+    && !$("#gestActiCheck").is(":checked") && !$("#ControlReCheck").is(":checked") &&
+    !$("#ControlRutaCheck").is(":checked") && !$("#ExtractorCheck").is(":checked") &&
+    !$("#asistPuertaCheck").is(":checked") && !$("#calendarCheck").is(":checked") ) {
 
         $('#divParaSelec').show();
         return false;
@@ -244,6 +248,12 @@ function registrarInvit() {
                         switchCRuta = 1;
                     } else {
                         switchCRuta = 0;
+                    }
+                    var switchCalend;
+                    if ($("#calendarCheck").is(":checked")) {
+                        switchCalend = 1;
+                    } else {
+                        switchCalend = 0;
                     }
                     var switchExtractor;
                     if ($("#ExtractorCheck").is(":checked")) {
@@ -370,7 +380,8 @@ function registrarInvit() {
                                 switchExtractor,
                                 checkTodoEmp,
                                 swReporteAsis,
-                                swMoReporteAsis
+                                swMoReporteAsis,
+                                switchCalend
                             },
                             statusCode: {
                                 419: function () {
@@ -427,7 +438,8 @@ function registrarInvit() {
                                 switchExtractor,
                                 checkTodoEmp,
                                 swReporteAsis,
-                                swMoReporteAsis
+                                swMoReporteAsis,
+                                switchCalend
                             },
                             statusCode: {
                                 419: function () {
@@ -479,6 +491,7 @@ $("#adminCheck").click(function () {
         $("#divAsisPu").hide();
         $("#divControlRe").hide();
         $("#divControlRuta").hide();
+        $("#divCalendario").hide();
         $("#divExtractor").hide();
         $("#divReporteAsis").hide();
         $("#opcionesAPuerta").hide();
@@ -497,6 +510,7 @@ $("#adminCheck").click(function () {
         $("#divAsisPu").show();
         $("#divControlRe").show();
         $("#divControlRuta").show();
+        $("#divCalendario").show();
         $("#divExtractor").show();
         $("#divReporteAsis").show();
         $("#divGestActivi").show();
@@ -533,6 +547,7 @@ function editarInv(idi) {
             $("#emailInvi_edit").val(data[0].email_inv);
             if (data[0].rol_id == 1) {
                 $("#adminCheck_edit").prop("checked", true);
+                $("#divCalendario_edit").hide();
                 $("#divInvitado_edit").hide();
                 $("#divAdminPersona_edit").hide();
                 $("#nombreEmpleado_edit").prop("required", false);
@@ -543,6 +558,7 @@ function editarInv(idi) {
                 $("#opcionesAPuerta_edit").hide();
                 $("#divControlRe_edit").hide();
                 $("#divControlRuta_edit").hide();
+                $("#divCalendario_edit").hide();
                 $("#divExtractor_edit").hide();
                 $("#divReporteAsis_edit").hide();
                  $("#opcionesGE_edit").hide();
@@ -555,6 +571,7 @@ function editarInv(idi) {
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
                 $("#divControlRuta_edit").show();
+                $("#divCalendario_edit").show();
                 $("#divExtractor_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
@@ -566,6 +583,8 @@ function editarInv(idi) {
                     $("#switchEmpS_edit").prop("checked", true);
                     $("#nombreEmpleado_edit").prop("required", false);
                     $("#divEmpleado_edit").hide();
+                    $("#divArea_edit").hide();
+                    $("#divTodoECheck_edit").show();
                 } else {
                     if (data[0].emple_id != null) {
                         $("#switchEmpS_edit").prop("checked", true);
@@ -584,6 +603,7 @@ function editarInv(idi) {
                     } else {
                         $("#switchEmpS_edit").prop("checked", false);
                         $("#switchAreaS_edit").prop("checked", true);
+                        $("#divTodoECheck_edit").hide();
                         $("#divArea_edit").show();
                         $.each(data, function (index, value) {
                             $(
@@ -737,6 +757,12 @@ function editarInv(idi) {
             } else {
                 $("#ControlRutaCheck_edit").prop("checked", false);
             }
+             //calend
+             if (data[0].gestCalendario == 1) {
+                $("#calendarCheck_edit").prop("checked", true);
+            } else {
+                $("#calendarCheck_edit").prop("checked", false);
+            }
 
             if (data[0].extractorRH == 1) {
                 $("#ExtractorCheck_edit").prop("checked", true);
@@ -772,6 +798,7 @@ $("#adminCheck_edit").click(function () {
         $("#opcionesAPuerta_edit").hide();
         $("#divControlRe_edit").hide();
         $("#divControlRuta_edit").hide();
+        $("#divCalendario_edit").hide();
         $("#divExtractor_edit").hide();
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
@@ -815,8 +842,10 @@ $("#adminCheck_edit").click(function () {
             if ($("#switchEmpS_edit").is(":checked")) {
                 $("#switchEmpS_edit").prop("checked", true);
                 $("#divEmpleado_edit").show();
+                $("#divTodoECheck_edit").show();
             } else {
                 $("#divEmpleado_edit").hide();
+                $("#divTodoECheck_edit").hide();
             }
         }
         $("#nombreEmpleado_edit").prop("required", true);
@@ -827,6 +856,7 @@ $("#adminCheck_edit").click(function () {
                 $("#divGestActivi_edit").show();
                 $("#divControlRe_edit").show();
                 $("#divControlRuta_edit").show();
+                $("#divCalendario_edit").show();
                 $("#divExtractor_edit").show();
                 $("#divAsisPu_edit").show();
                 $("#divReporteAsis_edit").show();
@@ -940,7 +970,7 @@ function registrarInvit_edit() {
     }
      ///////////////////////////////////////////////
 
-     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#ControlRutaCheck_edit").is(":checked")  && !$("#ExtractorCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
+     if (!$("#adminCheck_edit").is(":checked") && !$("#dashboardCheck_edit").is(":checked")  && !$("#AlcaAdminCheck_edit").is(":checked") && !$("#gestActiCheck_edit").is(":checked") && !$("#ControlReCheck_edit").is(":checked") && !$("#ControlRutaCheck_edit").is(":checked") && !$("#calendarCheck_edit").is(":checked")  && !$("#ExtractorCheck_edit").is(":checked") && !$("#asistPuertaCheck_edit").is(":checked")) {
 
         $('#divParaSelec_edit').show();
         return false;
@@ -1021,6 +1051,13 @@ function registrarInvit_edit() {
             switchCRuta_ed = 1;
         } else {
             switchCRuta_ed = 0;
+        }
+
+        var switchCalend_ed;
+        if ($("#calendarCheck_edit").is(":checked")) {
+            switchCalend_ed = 1;
+        } else {
+            switchCalend_ed = 0;
         }
         var extractor_ed;
         if ($("#ExtractorCheck_edit").is(":checked")) {
@@ -1149,6 +1186,7 @@ function registrarInvit_edit() {
                     verPuerta_ed,
                     agregPuerta_ed,
                     ModifPuerta_ed,
+                    switchCalend_ed
                 },
                 statusCode: {
                     419: function () {
@@ -1204,6 +1242,7 @@ function registrarInvit_edit() {
                         verPuerta_ed,
                         agregPuerta_ed,
                         ModifPuerta_ed,
+                        switchCalend_ed
                     },
                     statusCode: {
                         419: function () {

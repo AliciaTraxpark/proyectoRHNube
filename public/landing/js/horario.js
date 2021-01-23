@@ -545,14 +545,14 @@ function calendario() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                        $(info.el).tooltip({ title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
                     } else {
-                        $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                        $(info.el).tooltip({ title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
                 else {
-                    $(info.el).tooltip({ title: info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
             /*if(info.event.borderColor=='#5369f8'){
@@ -5466,7 +5466,7 @@ function contenidoInput(id) {
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <input type="text"  class="form-control form-control-sm finP" id="FinPausa${r_cont}" name="finP" 
+                            <input type="text"  class="form-control form-control-sm finP" id="FinPausa${r_cont}" name="finP"
                                 onchange="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
@@ -5490,7 +5490,7 @@ function contenidoInput(id) {
                         </div>
                     </div>
                     <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
-                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
                             margin-top: 5px;margin-left: 20px" onclick="javascript:contenidoInput(${r_cont})" id="agregar${r_cont}">
                         +
                     </button>
@@ -6056,7 +6056,7 @@ function modalEditar(id) {
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP" 
+                                        <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP"
                                            value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
                                     <div class="col-md-2">
@@ -6091,19 +6091,19 @@ function modalEditar(id) {
                     if (index != (data.pausas.length - 1)) {
                         contenido += `
                                 <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
-                                    padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                                    padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
                                         margin-top: 5px;margin-left: 20px; display:none" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
                                     +
                                 </button>`;
                     } else {
                         contenido += `
                                 <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
-                                    padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                                    padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
                                         margin-top: 5px;margin-left: 20px;" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
                                     +
                                 </button>`;
                     }
-                    contenido += `            
+                    contenido += `
                             </div>
                         </div>`;
                 }
@@ -6310,7 +6310,7 @@ function e_contenidoInput(id) {
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <input type="text"  class="form-control form-control-sm finP" id="e_FinPausaNew${e_cont}" name="finP" 
+                            <input type="text"  class="form-control form-control-sm finP" id="e_FinPausaNew${e_cont}" name="finP"
                                 onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
@@ -6334,7 +6334,7 @@ function e_contenidoInput(id) {
                         </div>
                     </div>
                     <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
-                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
                             margin-top: 5px;margin-left: 20px" onclick="javascript:e_contenidoInput('New${e_cont}')" id="e_agregarNew${e_cont}">
                         +
                     </button>
@@ -6582,7 +6582,7 @@ function pausasHorario(id) {
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP" 
+                                    <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP"
                                        value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');">
                                 </div>
                                 <div class="col-md-2">
@@ -6615,7 +6615,7 @@ function pausasHorario(id) {
                                 </div>
                             </div>
                             <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
-                                padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; 
+                                padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
                                     margin-top: 5px;margin-left: 20px" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
                                 +
                             </button>

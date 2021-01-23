@@ -70,7 +70,7 @@ function dispositivosWindows() {
                     $('#inactivar' + data[i].idVinculacion).empty();
                     $('#correo' + data[i].idVinculacion).empty();
                     if (data[i].dispositivoD == 'WINDOWS') {
-                        var td = `<a  onclick="javascript:modalWindowsEditar(${data[i].idVinculacion});" data-toggle="tooltip" data-placement="right" 
+                        var td = `<a  onclick="javascript:modalWindowsEditar(${data[i].idVinculacion});" data-toggle="tooltip" data-placement="right"
                                     title="Enviar correo empleado" data-original-title="Habilitar activación" style="cursor: pointer">
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
@@ -113,7 +113,7 @@ function dispositivosAndroid() {
                                 <td>${data[index].dispositivoD}</td>
                                 <td>Android</td>
                                 <td class="hidetext">${data[index].codigo}</td>
-                                <td class="cursorDispositivo" id="tdNumero${data[index].idV}" 
+                                <td class="cursorDispositivo" id="tdNumero${data[index].idV}"
                                     data-toggle="tooltip" data-placement="right" title="doble click para editar número">
                                     ${data[index].numero}
                                 </td>
@@ -151,7 +151,7 @@ function dispositivosAndroid() {
                     $('#trA' + data[index].idV).find("td:eq(6)").text("Inactivo");
                     $('#inactivarA' + data[index].idV).empty();
                     $('#sms' + data[index].idV).empty();
-                    var tdSms = `<a  onclick="javascript:smsAndroid(${data[index].idV});" data-toggle="tooltip" data-placement="right" 
+                    var tdSms = `<a  onclick="javascript:smsAndroid(${data[index].idV});" data-toggle="tooltip" data-placement="right"
                                     title="Enviar sms empleado" data-original-title="Enviar sms empleado" style="cursor: pointer">
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
@@ -1027,7 +1027,7 @@ function dispositivosWindowsRegistrar() {
                     $('#inactivarR' + data[i].idVinculacion).empty();
                     $('#correoR' + data[i].idVinculacion).empty();
                     if (data[i].dispositivoD == 'WINDOWS') {
-                        var td = `<a  onclick="javascript:modalWindows(${data[i].idVinculacion});" data-toggle="tooltip" data-placement="right" 
+                        var td = `<a  onclick="javascript:modalWindows(${data[i].idVinculacion});" data-toggle="tooltip" data-placement="right"
                                     title="Enviar correo empleado" data-original-title="Habilitar activación" style="cursor: pointer">
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
@@ -1070,7 +1070,7 @@ function dispositivosAndroidRegistrar() {
                                     <td>${data[index].dispositivoD}</td>
                                     <td>Android</td>
                                     <td class="hidetext">${data[index].codigo}</td>
-                                    <td class="cursorDispositivo" id="tdNumeroReg${data[index].idV}" 
+                                    <td class="cursorDispositivo" id="tdNumeroReg${data[index].idV}"
                                         data-toggle="tooltip" data-placement="right" title="doble click para editar número">
                                         ${data[index].numero}
                                     </td>
@@ -1081,7 +1081,7 @@ function dispositivosAndroidRegistrar() {
                                     <td id="enviadoAReg${data[index].idV}">${data[index].envio}</td>
                                     <td id="estadoAReg${data[index].idV}"></td>
                                     <td id="smsReg${data[index].idV}">
-                                        <a  onclick="javascript:smsAndroidReg(${data[index].idV});" data-toggle="tooltip" data-placement="right" 
+                                        <a  onclick="javascript:smsAndroidReg(${data[index].idV});" data-toggle="tooltip" data-placement="right"
                                             title="Enviar sms empleado" data-original-title="Enviar sms empleado" style="cursor: pointer">
                                             <img src="landing/images/note.svg" height="20">
                                         </a>
@@ -1114,7 +1114,7 @@ function dispositivosAndroidRegistrar() {
                     $('#trAR' + data[index].idV).find("td:eq(6)").text("Inactivo");
                     $('#inactivarAReg' + data[index].idV).empty();
                     $('#smsReg' + data[index].idV).empty();
-                    var tdSms = `<a  onclick="javascript:smsAndroidReg(${data[index].idV});" data-toggle="tooltip" data-placement="right" 
+                    var tdSms = `<a  onclick="javascript:smsAndroidReg(${data[index].idV});" data-toggle="tooltip" data-placement="right"
                                     title="Enviar sms empleado" data-original-title="Enviar sms empleado" style="cursor: pointer">
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
@@ -2063,7 +2063,7 @@ function dispositivosAndroidVer() {
                     $('#trVerA' + data[index].idV).find("td:eq(6)").text("Inactivo");
                     $('#inactivarVerA' + data[index].idV).empty();
                     $('#smsVer' + data[index].idV).empty();
-                    var tdSms = `<a>  
+                    var tdSms = `<a>
                                     <img src="landing/images/email (4).svg" height="20">
                                 </a>`;
                     $('#smsVer' + data[index].idV).append(tdSms);
@@ -2126,6 +2126,64 @@ function controlPuerta(idPuerta) {
             },
             success: function (data) {
                 $('#customSwitchCP' + idPuerta).prop('checked', false);
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+
+    }
+}
+
+/* CAMBIAR ESTADO MODO TAREO */
+function modoTareo(idTareo) {
+    var estadoP;
+    if ($('#customSwitchMT' + idTareo).is(':checked')) {
+        estadoP = 1;
+
+        $.ajax({
+            type: "post",
+            url: "/empleado/modoTareo",
+            data: {
+                idTareo,
+                estadoP
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                },
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#customSwitchMT' + idTareo).prop('checked', true);
+            },
+            error: function (data) {
+                alert("Ocurrio un error");
+            },
+        });
+    }
+    else {
+        estadoP = 0;
+
+        $.ajax({
+            type: "post",
+            url: "/empleado/modoTareo",
+            data: {
+                idTareo,
+                estadoP
+            },
+            statusCode: {
+                419: function () {
+                    location.reload();
+                },
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                $('#customSwitchMT' + idTareo).prop('checked', false);
             },
             error: function (data) {
                 alert("Ocurrio un error");

@@ -70,7 +70,7 @@
     }
     table{
         table-layout: fixed;
-        
+
     }
 
     #colTable1{
@@ -234,6 +234,15 @@
                                         <label class="custom-control-label" for="dashboardCheck"
                                             style="margin-top: 2px;"><i data-feather="home"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Ver Dashboard
                                             general</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 " id="divCalendario">
+
+                                    <div class="custom-control custom-switch" style="top: 5px">
+                                        <input type="checkbox" class="custom-control-input" id="calendarCheck">
+                                        <label class="custom-control-label" for="calendarCheck"
+                                            style="margin-top: 2px;"><i data-feather="calendar"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;">
+                                            </i> &nbsp; Gestión de calendario</label>
                                     </div>
                                 </div>
 
@@ -556,6 +565,14 @@
                                         <label class="custom-control-label" for="dashboardCheck_edit"
                                             style="margin-top: 2px;font-style: oblique;"><i data-feather="home"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Ver Dashboard
                                             general</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 " id="divCalendario_edit">
+                                    <div class="custom-control custom-switch" style="top: 5px">
+                                        <input type="checkbox" class="custom-control-input" id="calendarCheck_edit">
+                                        <label class="custom-control-label" for="calendarCheck_edit"
+                                            style="margin-top: 2px;"><i data-feather="calendar"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;">
+                                            </i> &nbsp; Gestión de calendario</label>
                                     </div>
                                 </div>
                                 <div class="col-md-8 " id="divAdminPersona_edit" style="padding-top: 10px;">

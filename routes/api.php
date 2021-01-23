@@ -46,7 +46,7 @@ Route::post("ticketSoporte", "apiVersionDosController@ticketSoporte")->middlewar
 
 //? TIEMPO DEL SERVIDOR
 Route::get("tiempoRHbox", "apiVersionDosController@horaServidor")->middleware('token')->middleware('apilogger');
-Route::post("tiempoEmpleadoRHbox", "apiVersionDosController@tiempoEmpleado")->middleware('token')->middleware('apilogger');
+Route::post("tiempoEmpleadoRHbox", "apiVersionDosController@tiempoEmpleado");
 Route::get("logoutLogin", "apiVersionDosController@logoutNewToken")->middleware('apilogger');
 
 //* API MOVILES
@@ -78,5 +78,21 @@ Route::post("empleadosBiometrico", "apiBiometricoController@empleadosBiometrico"
 Route::post("empleadosHorarioBi", "apiBiometricoController@empleadosHorarioBi")->middleware('token')->middleware('apilogger');
 Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico")->middleware('token')->middleware('apilogger');
 Route::post("historialHorario", "apiBiometricoController@historialHorario")->middleware('token')->middleware('apilogger');
+
    /* ------------- REGISTRO DE HUELLAS */
-   Route::post("registroHuella", "apiBiometricoController@registroHuella")->middleware('token')->middleware('apilogger');
+Route::post("registroHuella", "apiBiometricoController@registroHuella")->middleware('token')->middleware('apilogger');
+Route::post("importar", "apiBiometricoController@importar");
+Route::post("importarJS", "apiBiometricoController@importarJS");
+/* ----------------------------------------------------------------------------------------------- */
+
+// * APIS MODO TAREO
+Route::post("verificacionTareo", "apimarcacionTareoController@apiActivacion")->middleware('apilogger');
+Route::post("EmpleadoTareo", "apimarcacionTareoController@EmpleadoTareo")->middleware('token')->middleware('apilogger');
+Route::post("ActividadesTareo", "apimarcacionTareoController@ActivTareo")->middleware('token')->middleware('apilogger');
+Route::post("controladoresTareo", "apimarcacionTareoController@controladoresActTareo")->middleware('token')->middleware('apilogger');
+Route::post("marcacionTareo", "apimarcacionTareoController@marcacionTareo")->middleware('token')->middleware('apilogger');
+Route::post("empleadoHorarioTareo", "apimarcacionTareoController@empleadoHorarioTareo")->middleware('token')->middleware('apilogger');
+Route::post("ticketSoporteTareo", "apimarcacionTareoController@ticketSoporteTareo")->middleware('token')->middleware('apilogger');
+Route::post("centroCostosTareo", "apimarcacionTareoController@centroCostosTareo")->middleware('token')->middleware('apilogger');
+Route::post("puntoControlTareo", "apimarcacionTareoController@puntoControlTareo")->middleware('token')->middleware('apilogger');
+/* ------------------------------------------------------------- */
