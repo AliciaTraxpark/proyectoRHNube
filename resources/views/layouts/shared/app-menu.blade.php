@@ -157,8 +157,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <li>
                         <a href="/reporteSemanal">Tiempos por semana</a>
                         <a href="/reporteMensual">Tiempos por mes</a>
-                        <a href="/reporteTardanzas">Tardanzas</a>
-                        <a href="#">Matríz de tardanzas</a>
+                        {{-- <a href="/reporteTardanzas">Tardanzas</a>
+                        <a href="#">Matríz de tardanzas</a> --}}
                     </li>
                 </ul>
             </li>
