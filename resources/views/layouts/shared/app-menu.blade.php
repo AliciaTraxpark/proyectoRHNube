@@ -37,6 +37,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 ->where('organi_id','=',session('sesionidorg'))
 ->get();
 @endphp
+{{-- MENU CUANDO ES ADMIN  --}}
 @if ($usuario_organizacion[0]->rol_id==1)
 <ul class="metismenu" id="menu-bar">
     <li>
@@ -230,8 +231,9 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </a>
     </li>
 </ul>
-
+{{-- ----------------------------------- --}}
 @endif
+{{-- MENU CUANDO ES INVITADO --}}
 @if ($usuario_organizacion[0]->rol_id==3)
 
 <ul class="metismenu" id="menu-bar">
@@ -255,6 +257,17 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
 
     @endif
+
+    @if ($invitadod->gestCalendario==1)
+    <li >
+        <a href="/calendarios">
+                <i data-feather="calendar"></i>
+                <span> Calendarios </span>
+            </a>
+
+    </li>
+    @endif
+
     @if ($invitadod->permiso_Emp==1)
     <li>
         <a href="javascript: void(0);">
