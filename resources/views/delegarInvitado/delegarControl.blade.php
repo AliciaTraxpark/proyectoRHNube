@@ -242,7 +242,7 @@
                                         <input type="checkbox" class="custom-control-input" id="calendarCheck">
                                         <label class="custom-control-label" for="calendarCheck"
                                             style="margin-top: 2px;"><i data-feather="calendar"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;">
-                                            </i> &nbsp; Gestion de calendario</label>
+                                            </i> &nbsp; Gestión de calendario</label>
                                     </div>
                                 </div>
 
@@ -572,7 +572,7 @@
                                         <input type="checkbox" class="custom-control-input" id="calendarCheck_edit">
                                         <label class="custom-control-label" for="calendarCheck_edit"
                                             style="margin-top: 2px;"><i data-feather="calendar"  style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;">
-                                            </i> &nbsp; Gestion de calendario</label>
+                                            </i> &nbsp; Gestión de calendario</label>
                                     </div>
                                 </div>
                                 <div class="col-md-8 " id="divAdminPersona_edit" style="padding-top: 10px;">

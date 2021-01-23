@@ -547,6 +547,7 @@ function editarInv(idi) {
             $("#emailInvi_edit").val(data[0].email_inv);
             if (data[0].rol_id == 1) {
                 $("#adminCheck_edit").prop("checked", true);
+                $("#divCalendario_edit").hide();
                 $("#divInvitado_edit").hide();
                 $("#divAdminPersona_edit").hide();
                 $("#nombreEmpleado_edit").prop("required", false);
