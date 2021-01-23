@@ -352,7 +352,7 @@ class calendarioController extends Controller
                 if($invitadod){
                     if ($invitadod->rol_id!=1){
 
-                        if($invitadod->gestCalendario=1){
+                        if($invitadod->gestCalendario==1){
                             return view('calendario.calendarioMenu', ['pais' => $paises, 'calendario' => $calendarioSel,
                         'fechaEnvi' => $fechaEnvi,'fechaEnviFi' => $fechaEnviFi,'diaAnt' => $diaAnt,'empleado' => $empleado,
                         'area'=>$area,'cargo'=>$cargo,'local'=>$local,'fechaOrga'=>$fechaOrga,'fechaEnviJS' => $fechaEnviJS]);
