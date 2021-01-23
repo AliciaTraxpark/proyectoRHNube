@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\controladores_tareo;
 use App\dispositivos_tareo;
 use App\dispoTareo_nombres;
+use App\Mail\SoporteApiTareo;
+use App\Mail\SugerenciaApiTareo;
 use App\marcacion_tareo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SoporteApiTareo;
-use App\Mail\SugerenciaApiTareo;
+
 class apimarcacionTareoController extends Controller
 {
     //
@@ -177,6 +178,28 @@ class apimarcacionTareoController extends Controller
             ->where('a.modoTareo', '=', 1)
             ->get();
 
+        foreach ($actividades as $actividadesSub) {
+            $Subactividades = DB::table('actividad_subactividad as asu')
+            ->join('subactividad as su','asu.subActividad','=','su.idsubActividad')
+                ->select(
+                    'asu.Activi_id',
+                    'su.idsubActividad',
+                    'su.subAct_nombre',
+                    'su.subAct_codigo',
+                    'su.estado',
+                    'su.modoTareo',
+                    'su.organi_id'
+                )
+                ->where('asu.Activi_id', '=',  $actividadesSub->Activi_id)
+                ->where('su.estado', '=', 1)
+                ->where('su.modoTareo', '=', 1)
+                ->groupBy('asu.idactividad_subactividad')
+                ->get();
+
+                $actividadesSub->subactividades = $Subactividades;
+
+        }
+
         /* ---------------------------------------------------------------- */
 
         /* VERIFICAMOS QUE EXISTAN LAS ACTIVIDADES */
@@ -245,6 +268,11 @@ class apimarcacionTareoController extends Controller
             } else {
                 $activ_id = $req['activ_id'];
             }
+            if (empty($req['idsubActividad'])) {
+                $idsubActividad = null;
+            } else {
+                $idsubActividad = $req['idsubActividad'];
+            }
 
             if (empty($req['idHoraEmp'])) {
                 $idHoraEmp = null;
@@ -279,7 +307,7 @@ class apimarcacionTareoController extends Controller
             /* INSERTAMOS EN COLLECTION */
             $datos = ['tipoMarcacion' => $tipoMarcacion, 'fechaMarcacion' => $fechaMarcacion,
                 'idEmpleado' => $idEmpleado, 'idControlador' => $idControlador,
-                'idDisposi' => $idDisposi, 'organi_id' => $organi_id, 'activ_id' => $activ_id,
+                'idDisposi' => $idDisposi, 'organi_id' => $organi_id, 'activ_id' => $activ_id,'idsubActividad' => $idsubActividad,
                 'idHoraEmp' => $idHoraEmp, 'latitud' => $latitud, 'longitud' => $longitud,
                 'puntoC_id' => $puntoC_id, 'centC_id' => $centC_id,
             ];
@@ -305,6 +333,9 @@ class apimarcacionTareoController extends Controller
                 $marcacion_tareo->organi_id = $req['organi_id'];
                 if (empty($req['activ_id'])) {} else {
                     $marcacion_tareo->Activi_id = $req['activ_id'];
+                }
+                if (empty($req['idsubActividad'])) {} else {
+                    $marcacion_tareo->idsubActividad = $req['idsubActividad'];
                 }
 
                 if (empty($req['idHoraEmp'])) {} else {
@@ -384,6 +415,9 @@ class apimarcacionTareoController extends Controller
                     $marcacion_tareo->organi_id = $req['organi_id'];
                     if (empty($req['activ_id'])) {} else {
                         /*  $marcacion_tareo->marcaIdActivi=$req['activ_id']; */
+                    }
+                    if (empty($req['idsubActividad'])) {} else {
+                       /*  $marcacion_tareo->idsubActividad = $req['idsubActividad']; */
                     }
 
                     if (empty($req['idHoraEmp'])) {} else {
@@ -495,88 +529,88 @@ class apimarcacionTareoController extends Controller
             }
             /* ---------------------------------------- */
 
-             /* ENVIAMOS EMAIL DE TIPO SUGERENCIA */
+            /* ENVIAMOS EMAIL DE TIPO SUGERENCIA */
             if ($tipo == "sugerencia") {
                 Mail::to($email)->queue(new SugerenciaApiTareo($contenido, $controlador, $asunto, $celular));
                 return response()->json("Correo Enviado con éxito", 200);
             }
-             /* ---------------------------------------- */
+            /* ---------------------------------------- */
         }
 
         return response()->json("Controlador no se encuentra registrado.", 400);
     }
 
-     //CENTRO COSTO
-     public function centroCostosTareo(Request $request){
+    //CENTRO COSTO
+    public function centroCostosTareo(Request $request)
+    {
 
         /* OBTENEMOS EL ID DE ORGANIZACION */
-       $organi_id=$request->organi_id;
+        $organi_id = $request->organi_id;
         /* ------------------------------- */
 
-         /* OBTENEMOS CENTRO DE COSTOS DE ESTA ORGANIZACION */
-       $centroCosto = DB::table('centro_costo as cc')
-           ->select(
-               'cc.centroC_id',
-               'cc.centroC_descripcion',
-               'cc.organi_id'
-           )
-           ->where('cc.organi_id', '=', $organi_id)
-           ->get();
-           /* ------------------------------------------------ */
+        /* OBTENEMOS CENTRO DE COSTOS DE ESTA ORGANIZACION */
+        $centroCosto = DB::table('centro_costo as cc')
+            ->select(
+                'cc.centroC_id',
+                'cc.centroC_descripcion',
+                'cc.organi_id'
+            )
+            ->where('cc.organi_id', '=', $organi_id)
+            ->get();
+        /* ------------------------------------------------ */
 
         /* VERIFICAMOS SI EXISTE */
-       if($centroCosto!=null){
-            return response()->json(array('status'=>200,"centroCosto"=>$centroCosto));
-       }
-       else{
-           return response()->json(array('status'=>400,'title' => 'Centros de costos no encontrados',
-           'detail' => 'No se encontro centro de costos en esta organizacion'),400);
-       }
-   }
+        if ($centroCosto != null) {
+            return response()->json(array('status' => 200, "centroCosto" => $centroCosto));
+        } else {
+            return response()->json(array('status' => 400, 'title' => 'Centros de costos no encontrados',
+                'detail' => 'No se encontro centro de costos en esta organizacion'), 400);
+        }
+    }
 
-   //PUNTO CONTROL
-   public function puntoControlTareo(Request $request){
+    //PUNTO CONTROL
+    public function puntoControlTareo(Request $request)
+    {
 
-       /* OBTENEMOS EL ID DE ORGANIZACION */
-       $organi_id=$request->organi_id;
-       /* ------------------------------- */
+        /* OBTENEMOS EL ID DE ORGANIZACION */
+        $organi_id = $request->organi_id;
+        /* ------------------------------- */
 
-       /* OBTENEMOS PUNTOS DE CONTROL DE ESTA ORGANIZACION */
-       $punto_control = DB::table('punto_control as pc')
-           ->select(
-               'pc.id',
-               'pc.descripcion',
-               'pc.codigoControl',
-               'pc.verificacion',
-               'pc.estado'
-           )
-           ->where('pc.organi_id', '=', $organi_id)
-           ->where('pc.ModoTareo', '=', 1)
-           ->where('pc.estado', '=',1)
-           ->get();
-       /* ------------------------------------------------- */
+        /* OBTENEMOS PUNTOS DE CONTROL DE ESTA ORGANIZACION */
+        $punto_control = DB::table('punto_control as pc')
+            ->select(
+                'pc.id',
+                'pc.descripcion',
+                'pc.codigoControl',
+                'pc.verificacion',
+                'pc.estado'
+            )
+            ->where('pc.organi_id', '=', $organi_id)
+            ->where('pc.ModoTareo', '=', 1)
+            ->where('pc.estado', '=', 1)
+            ->get();
+        /* ------------------------------------------------- */
 
-         /* recorremos punto de de geo de cada punto de control */
-           foreach ($punto_control as $tab) {
-               $punto_control_geo = DB::table('punto_control_geo as pcg')
-                   ->select('pcg.id','pcg.latitud','pcg.longitud',	'pcg.radio')
-                   ->where('pcg.idPuntoControl', '=', $tab->id)
-                   ->distinct('pcg.id')
-                   ->get();
+        /* recorremos punto de de geo de cada punto de control */
+        foreach ($punto_control as $tab) {
+            $punto_control_geo = DB::table('punto_control_geo as pcg')
+                ->select('pcg.id', 'pcg.latitud', 'pcg.longitud', 'pcg.radio')
+                ->where('pcg.idPuntoControl', '=', $tab->id)
+                ->distinct('pcg.id')
+                ->get();
 
-                   /* INSERTAMOS PUNTOS GEO */
-               $tab->puntosGeo = $punto_control_geo;
+            /* INSERTAMOS PUNTOS GEO */
+            $tab->puntosGeo = $punto_control_geo;
 
-           }
+        }
 
         /* VERIFICAMOS DI EXISTE */
-       if($punto_control!=null){
-            return response()->json(array('status'=>200,"puntosControl"=>$punto_control));
-       }
-       else{
-           return response()->json(array('status'=>400,'title' => 'puntos de control no encontrados',
-           'detail' => 'No se encontro puntos de control en esta organizacion'),400);
-       }
+        if ($punto_control != null) {
+            return response()->json(array('status' => 200, "puntosControl" => $punto_control));
+        } else {
+            return response()->json(array('status' => 400, 'title' => 'puntos de control no encontrados',
+                'detail' => 'No se encontro puntos de control en esta organizacion'), 400);
+        }
 
-   }
+    }
 }
