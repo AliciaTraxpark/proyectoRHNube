@@ -573,7 +573,7 @@ use Carbon\Carbon;
                             <div class="col-md-12 text-right" style="padding-right: 0px;">
                                 <button type="button" class="btn btn-light  btn-sm"
                                     style="background:#f3f3f3;border-color: #f3f3f3;"
-                                    onclick="$('#horarioAsignar_ed').modal('hide')">
+                                    onclick="$('#horarioAsignar_ed').modal('hide'); $('*').removeClass('fc-highlight');">
                                     Cancelar
                                 </button>
                                 <button type="button" class="btn btn-primary btn-sm"

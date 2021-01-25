@@ -367,6 +367,7 @@ $('#horaFen').flatpickr({
 
 
 $('#btnasignar').on('click', function (e) {
+    $('#guardarHorarioEventos').prop('disabled', false);
     $('#divOtrodia').hide();
     $('input[type=checkbox]').prop('checked', false);
     $.get("/vaciartemporal", {}, function (data, status) {
@@ -770,8 +771,20 @@ $('#guardarHorarioEventos').click(function () {
 ////////////
 $('#guardarTodoHorario').click(function () {
     $('#tablaEmpleadoExcel').DataTable().destroy();
+
+    if ($("*").hasClass("fc-highlight")) {
+        $('#guardarTodoHorario').prop('disabled', false);
+    } else {
+        $('#guardarTodoHorario').prop('disabled', false);
+        bootbox.alert({
+            message: "Primero debe asignar dia(s) de calendario.",
+
+        })
+        return false;
+    }
     $('#guardarTodoHorario').prop('disabled', true);
     idemps = $('#nombreEmpleado').val();
+
     if (idemps == '') {
 
         bootbox.alert({
