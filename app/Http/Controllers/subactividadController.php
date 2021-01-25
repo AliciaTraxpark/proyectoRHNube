@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\actividad;
 use App\actividad_subactividad;
 use App\marcacion_tareo;
 use App\subactividad;
@@ -76,16 +77,43 @@ class subactividadController extends Controller
         $modoTareo = $request->tareosub;
 
         /* VERIFICAMOS NOMBRE Y CODIGO */
+
+
         $subactividadBuscar = subactividad::where('subAct_nombre', '=', $nombreSub)
         ->where('organi_id', '=', session('sesionidorg'))->get()->first();
-        if ($subactividadBuscar) {
-            return response()->json(array("estado" => 1, "subactividad" => $subactividadBuscar), 200);
+
+        /* BUSCAMOS SU ACTIVIDAD PADRE */
+        if($subactividadBuscar!=null){
+            $actividad_subactividadBu=actividad_subactividad::where('subActividad','=',$subactividadBuscar->idsubActividad)
+            ->get()->first();
+
+            $actividadEstado=actividad::findOrFail($actividad_subactividadBu->Activi_id);
+
         }
+
+
+        /* ------------------------ */
+        if ($subactividadBuscar) {
+            return response()->json(array("estado" => 1, "subactividad" => $subactividadBuscar,
+            "actividadEstado" =>$actividadEstado->modoTareo), 200);
+        }
+
+        
         $subactividadB = subactividad::where('subAct_codigo', '=',$codigoSub)->where('organi_id', '=', session('sesionidorg'))
         ->whereNotNull('subAct_codigo')->get()->first();
-        if ($subactividadB) {
-            return response()->json(array("estado" => 0, "subactividad" => $subactividadB), 200);
+
+        /* BUSCAMOS SU ACTIVIDAD PADRE */
+        if($subactividadB!=null){
+            $actividad_subactividadBu2=actividad_subactividad::where('subActividad','=',$subactividadB->idsubActividad)
+            ->get()->first();
+
+            $actividadEstado2=actividad::findOrFail($actividad_subactividadBu2->Activi_id);
+            return response()->json(array("estado" => 0, "subactividad" => $subactividadB,
+             "actividadEstado" => $actividadEstado2->modoTareo), 200);
+
         }
+
+
         /* ---------------------------------- */
 
         /* REGISTRAMOS SUBCTIVIDAD */
@@ -296,6 +324,7 @@ class subactividadController extends Controller
     public function recuperarSubactividad(Request $request)
     {
         $idSubactividad = $request->get('id');
+
         $subactividad = subactividad::findOrFail($idSubactividad);
         if ($subactividad) {
             $subactividad->estado = 1;
@@ -311,8 +340,9 @@ class subactividadController extends Controller
         $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSubactividad)
         ->get()->first();
 
-        $actividad = subactividad::findOrFail($actividad_subactividad->Activi_id);
+        $actividad = actividad::findOrFail($actividad_subactividad->Activi_id);
         $actividad->estado=1;
+        $actividad->modoTareo=1;
         $actividad->save();
 
 

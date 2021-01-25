@@ -285,7 +285,9 @@ function registrarSubactividad() {
         success: function (data) {
             if (data.estado === 1) {
                 if (data.subactividad.estado == 0) {
-                    alertify
+
+                    if(data.actividadEstado==1){
+                        alertify
                         .confirm(
                             "Ya existe una subactividad inactiva con este nombre. ¿Desea recuperarla si o no?",
                             function (e) {
@@ -310,6 +312,37 @@ function registrarSubactividad() {
                             transition: "zoom",
                             oncancel: function (closeEvent) {},
                         });
+                    }
+                    else{
+                        alertify
+                        .confirm(
+                            "Ya existe una subactividad inactiva con este nombre y la actividad asignada tiene desactivado "+
+                            "el modo tareo. ¿Desea recuperar la subactividad y activar el modo tareo de la actividad padre?",
+
+                            function (e) {
+                                if (e) {
+                                    recuperarSubactividad(
+                                        data.subactividad.idsubActividad
+                                    );
+                                }
+                            }
+                        )
+                        .setting({
+                            title: "Modificar subactividad",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {},
+                        });
+                    }
+
                 } else {
                     $("#nombreSubact").addClass("borderColor");
                     $.notifyClose();
@@ -344,7 +377,8 @@ function registrarSubactividad() {
             } else {
                 if (data.estado === 0) {
                     if (data.subactividad.estado == 0) {
-                        alertify
+                        if(data.actividadEstado==1){
+                            alertify
                             .confirm(
                                 "Ya existe una subactividad inactiva con este código. ¿Desea recuperarla si o no?",
                                 function (e) {
@@ -369,6 +403,35 @@ function registrarSubactividad() {
                                 transition: "zoom",
                                 oncancel: function (closeEvent) {},
                             });
+                        } else{
+                            alertify
+                            .confirm(
+                                "Ya existe una subactividad inactiva con este código y la actividad asignada tiene desactivado "+
+                                "el modo tareo. ¿Desea recuperar la subactividad y activar el modo tareo de la actividad padre?",
+                                function (e) {
+                                    if (e) {
+                                        recuperarSubactividad(
+                                            data.subactividad.idsubActividad
+                                        );
+                                    }
+                                }
+                            )
+                            .setting({
+                                title: "Modificar subactividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {},
+                            });
+                        }
+
                     } else {
                         $("#codigoSubact").addClass("borderColor");
                         $.notifyClose();
