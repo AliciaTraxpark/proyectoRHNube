@@ -51,8 +51,8 @@ class soportesPorCorreoController extends Controller
         $minute = $today->minute;
         $second = $today->second;
         $fecha = "".$dia." de ".$mes." del ".$año." ".$hour.":".$minute.":".$second."";
-        //$email = 'info@rhnube.com.pe';
-        $email = 'miguelpacheco.1622@gmail.com';
+        $email = 'info@rhnube.com.pe';
+        //$email = 'miguelpacheco.1622@gmail.com';
         $nombres = $request->get('modal_saveMeet_name');
         $apellidos = $request->get('modal_saveMeet_lastname');
         $telefono = $request->get('modal_saveMeet_movil');
