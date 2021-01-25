@@ -192,6 +192,7 @@ class apimarcacionTareoController extends Controller
                 )
                 ->where('asu.Activi_id', '=',  $actividadesSub->Activi_id)
                 ->where('su.estado', '=', 1)
+                ->where('asu.estado', '=', 1)
                 ->where('su.modoTareo', '=', 1)
                 ->groupBy('asu.idactividad_subactividad')
                 ->get();

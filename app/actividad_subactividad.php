@@ -12,7 +12,8 @@ class actividad_subactividad extends Model
     protected $fillable = [
         'idactividad_subactividad',
         'Activi_id',
-        'subActividad'
+        'subActividad',
+        'estado'
     ];
     public $timestamps = false;
 }
