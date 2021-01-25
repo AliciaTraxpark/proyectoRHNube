@@ -183,7 +183,7 @@
                             <th class="text-center">Control remoto</th>
                             <th class="text-center">Control en ruta</th>
                             <th class="text-center">Asistencia en puerta</th>
-                            <th class="text-center">Modo Tareo</th>
+                            <th class="">Modo Tareo</th>
                             <th class="text-center">En uso</th>
                             <th class="text-center"></th>
                         </tr>
@@ -438,6 +438,8 @@
                                             &nbsp;&nbsp;
                                             Modo tareo
                                         </label>
+                                        <img id="svgInfo"  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'
+                                         style="cursor: pointer;display:none" src='landing/images/info.svg' height='14'>
                                     </div>
                                 </div>
                             </div>

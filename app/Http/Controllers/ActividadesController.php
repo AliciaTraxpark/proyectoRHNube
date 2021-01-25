@@ -115,6 +115,23 @@ class ActividadesController extends Controller
             ->where('a.estado', '=', 1)
             ->groupBy('a.Activi_id')
             ->get();
+
+        foreach($actividades as $actividadesT){
+            $actividad_subactividad = DB::table('actividad_subactividad as asu')
+            ->where('asu.Activi_id', '=', $actividadesT->Activi_id)
+            ->where('asu.estado', '=',1)
+            ->groupBy('asu.Activi_id')
+            ->get();
+
+            /*  SI ESTA EN USO*/
+            if ($actividad_subactividad->isNotEmpty()) {
+                $actividadesT->padreSubactividad = 1;
+            }
+            /* SI NO ESTA EN USO */
+            else {
+                $actividadesT->padreSubactividad = 0;
+            }
+        }
         // dd(DB::getQueryLog());
         return response()->json($actividades, 200);
     }
@@ -213,9 +230,25 @@ class ActividadesController extends Controller
             ->where('a.Activi_id', '=', $idA)
             ->where('a.estado', '=', 1)
             ->get()
-            ->first();
+            ;
+            foreach($actividades as $actividadesT){
+                $actividad_subactividad = DB::table('actividad_subactividad as asu')
+                ->where('asu.Activi_id', '=', $actividadesT->Activi_id)
+                ->where('asu.estado', '=',1)
+                ->groupBy('asu.Activi_id')
+                ->get();
 
-        return response()->json($actividades, 200);
+                /*  SI ESTA EN USO*/
+                if ($actividad_subactividad->isNotEmpty()) {
+                    $actividadesT->padreSubactividad = 1;
+                }
+                /* SI NO ESTA EN USO */
+                else {
+                    $actividadesT->padreSubactividad = 0;
+                }
+            }
+
+        return response()->json($actividades->first(), 200);
     }
 
     //REGISTRAR DATOS AL EDITAR
