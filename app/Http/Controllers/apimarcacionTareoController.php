@@ -557,6 +557,7 @@ class apimarcacionTareoController extends Controller
                 'cc.organi_id'
             )
             ->where('cc.organi_id', '=', $organi_id)
+            ->where('cc.estado', '=', 1)
             ->get();
         /* ------------------------------------------------ */
 
