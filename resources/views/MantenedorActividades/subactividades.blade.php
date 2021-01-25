@@ -164,7 +164,7 @@
                         <thead style="background: #fafafa;" style="width:100%!important">
                             <tr>
                                 <th>#</th>
-                                <th>Actividad</th>
+                                <th>Subctividad</th>
                                 <th>Código</th>
                                 <th class="text-center">Modo Tareo</th>
                                 <th class="text-center">En uso</th>
