@@ -395,14 +395,21 @@ class delegarInvController extends Controller
         $invitadoG=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)->get()->first();
 
+        /* DATOS DE INVITADO PERSONALIZADO CUANDO NO TEINE LA OPCION DE VER TODOS LOS EMPLEADOS */
         $invitado=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->join('invitado_empleado as inve','i.idinvitado','=','inve.idinvitado')
         ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
         ->get();
+        /* -------------------------------------------------------------------- */
+
+        /* DATOS DE INVITADO ADMIN */
         $invitado2=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->get();
+        /* -------------------------- */
+
+        /* DATOS DE INVITADO PERSONALIZADO CUANDO TEINE LA OPCION DE VER TODOS LOS EMPLEADOS */
         $invitado3=DB::table('invitado as i')
         ->where('i.idinvitado','=', $idinvitado)
         ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
@@ -431,6 +438,7 @@ class delegarInvController extends Controller
 
         }
         else{
+            /* COMO ANTES ERA INVITADO PERSONALIZADO ELIMINADOS Y ACTUALIZAMOS SUS PERMISOA */
             $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
             $invitado_empleado->each->delete();
 
@@ -451,6 +459,8 @@ class delegarInvController extends Controller
     }
 
    public function editarInviI(Request $request ){
+
+    /*------------------------ OBTENEMOS PARAMETROS------------ */
     $idinvitado=$request->idinvitado;
     $idEmpleado=$request->idEmpleado;
     $dash_ed=$request->dash_ed;
@@ -463,7 +473,7 @@ class delegarInvController extends Controller
     $switchCalend_ed=$request->switchCalend_ed;
     $switchExtractor_ed=$request->extractor_ed;
     $swReporteAsis_ed=$request->swReporteAsis_ed;
-    $swMoReporteAsis_ed=$request->swMoReporteAsis_ed; //aqui me quede falta buscar y agregar
+    $swMoReporteAsis_ed=$request->swMoReporteAsis_ed; //
     $checkTodoEmp_ed=$request->checkTodoEmp_ed;
 
     $agregarEmp_ed=$request->agregarEmp_ed;
@@ -476,12 +486,20 @@ class delegarInvController extends Controller
     $verPuerta_ed=$request->verPuerta_ed;
     $agregPuerta_ed=$request->agregPuerta_ed;
     $ModifPuerta_ed=$request->ModifPuerta_ed;
+    /* ------------------------------------------------------------------------- */
 
+    /* BUSCAMOS INVITADOS */
     $invitado = invitado::find( $idinvitado);
+
+    /* SI INVITADO EN PERSONALIZADO CON OPCIONES OSEA NO ADMIN */
     if($invitado->rol_id==3){
         ///delete all emp
+        /* ELIMINAMOS SUS ANTIGUOS PERMISO DE EMPLEADOS */
        $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
        $invitado_empleado->each->delete();
+       /*  ----------------------------------------------------------------------*/
+
+       /* CREAMOS SUS PERMISO POR EMPLEADOS */
        if($checkTodoEmp_ed==0){
         ////copiar empleado
        foreach($idEmpleado as $idEmpleados){
@@ -492,8 +510,10 @@ class delegarInvController extends Controller
         $invitado_empleado->save();
         }
       }
+      /* --------------------------------------------------------------- */
 
-        ///
+
+       /*------------------------ ACTUALIZAMOS DATOS DE INVITADO--------------------------------------------------- */
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
@@ -501,16 +521,25 @@ class delegarInvController extends Controller
            'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
+        /* ------------------------------------------------------------------------------------------------------- */
 
-           //actualizar permiso invitado
+
+         /*----------------- ACTUALIZAMOS PERMISOS DE OPCIONES ----------------------------------------------- */
            $permisoActu  = DB::table('permiso_invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
            'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
            'bajaActi'=>$bajaActi_ed,
            'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
+           /* ------------------------------------------------------------------------------------------------------ */
     }
     else{
+
+         /*-- AQUI SERA MAS COMPLEJO PORQUE EL INVITADO ANTES ERA ADMIN ASI QUE AHORA LE CREAREMSO
+        TODOS LOS PERMISO COMO INVITADO------------------------------------------------------------------------ */
+
+        /* -----CREAREMOS SUS PERMISOS PARA EMPLEADOS PERSONALIZADOS  CUANDO ESTE DESACTIVADA LA OPCION QUE NO TIENE
+        ------------TODO LOS EMPLEADOS-----------------*/
         if($checkTodoEmp_ed==0){
         foreach($idEmpleado as $idEmpleados){
             $invitado_empleado = new invitado_empleado();
@@ -519,19 +548,27 @@ class delegarInvController extends Controller
             $invitado_empleado->save();
         }
        }
+       /* ---------------------------------------------------------------------------------------------------- */
+
+       /*-------------------------------- ACTUALIZAMOS INVITADO--------------------------------------------- */
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
-           'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestCalendario'=> $switchCalend_ed, 'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestCalendario'=> $switchCalend_ed,
+            'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
+        /* --------------------------------------------------------------------------------------------------- */
 
+        /* ACTUALIZAMOS ESTA DEL USUARIO EN LA ORGANIZACION */
            $usuario_organizacion =DB::table('usuario_organizacion')
            ->where('user_id', '=', $invitado->user_Invitado )
            ->where('organi_id', '=', session('sesionidorg'))
            ->update(['rol_id' => 3]);
+        /* ------------------------------------------------------------------- */
            ////////////////////////////////////////////////////////////////
-           $permiso_invitado= new permiso_invitado();
+        /* CREAMOS PERMISOS DE INVITADO */
+        $permiso_invitado= new permiso_invitado();
         $permiso_invitado->idinvitado =$invitado->idinvitado;
         if($permisoEmp_ed==1){
         $permiso_invitado->agregarEmp=$agregarEmp_ed;
@@ -567,6 +604,7 @@ class delegarInvController extends Controller
         }
 
         $permiso_invitado->save();
+        /* -------------------------------------------- */
            ////////////////////////////////////////////////////////////////
     }
    }
@@ -601,6 +639,7 @@ class delegarInvController extends Controller
 
    public function registrarInvitadoAreas(Request $request){
 
+    /*----------------------OBTENEMOS PARAMETROS----------------  */
     $emailInv=$request->emailInv;
     $idarea=$request->idareas;
     $dash=$request->dash;
@@ -625,7 +664,9 @@ class delegarInvController extends Controller
     $verPuerta=$request->verPuerta;
     $agregPuerta=$request->agregPuerta;
     $ModifPuerta=$request->ModifPuerta;
+    /* ---------------------------------------------------------- */
 
+    /* REGISTRAMOS AL INVITADO CON TODO Y PERMISOS GENERALES */
     $organi = organizacion::find(session('sesionidorg'));
     $invitado = new invitado();
     $invitado->organi_id =  session('sesionidorg');
@@ -646,7 +687,9 @@ class delegarInvController extends Controller
     $invitado->reporteAsisten=$swReporteAsis;
     $invitado->ModificarReportePuerta=$swMoReporteAsis;
     $invitado->save();
+    /* ---------------------------------------------------- */
 
+    /* ---------REGISTRAMOS PERMISOS PARA AREAS--------------------- */
     if($checkTodoEmp!=1){
     foreach($idarea as $idareas){
         $invitado_empleado = new invitado_empleado();
@@ -655,7 +698,9 @@ class delegarInvController extends Controller
         $invitado_empleado->save();
     }
   }
+  /* -------------------------------------------------------- */
 
+  /* REGISTRAMOS PERMISOS DE CADA OPCION DE MENU */
     $permiso_invitado= new permiso_invitado();
         $permiso_invitado->idinvitado =$invitado->idinvitado;
         if($permisoEmp==1){
@@ -690,11 +735,15 @@ class delegarInvController extends Controller
                     $permiso_invitado->modifPuerta=0;
                 }
         $permiso_invitado->save();
+        /* ----------------------------------------------------------- */
 
+    /* Y POR ULTIMO ENVIAMOS EMAIL */
     Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
 }
 public function editarInviArea(Request $request){
+
+    /* OBTENEMOS TODOS LOS PARAMETROS */
     $idinvitado=$request->idinvitado;
     $idareas_edit=$request->idareas_edit;
     $dash_ed=$request->dash_ed;
@@ -720,23 +769,37 @@ public function editarInviArea(Request $request){
     $verPuerta_ed=$request->verPuerta_ed;
     $agregPuerta_ed=$request->agregPuerta_ed;
     $ModifPuerta_ed=$request->ModifPuerta_ed;
+    /* ----------------------------------------------- */
 
+    /* BUSCAMOS INVITADOS */
     $invitado = invitado::find( $idinvitado);
+
+    /* SI EL INVITADO TIENE ROL 3 OSEA TENDRA OPCIONES DE MENU */
     if($invitado->rol_id==3){
+
+        /* SOLO ACTUALIZAREMOS SUS PERMISOS */
         ///delete all emp
+
+        /* COMO AHORA ES PO AREA ELIMINAMOS PERMISO A EMPLEADOS PERSONALIZADOS */
        $invitado_empleado = invitado_empleado::where('idinvitado','=', $idinvitado)->get();
        $invitado_empleado->each->delete();
+       /* ---------------------------------------------------------------------- */
+
+       /* INSERTAMOS PERMISOS POR AREAS */
        if($checkTodoEmp_ed==0){
         ////copiar empleado
-       foreach($idareas_edit as $idareas_edits){
-        $invitado_empleado = new invitado_empleado();
-        $invitado_empleado->idinvitado = $invitado->idinvitado;
-        $invitado_empleado->area_id = $idareas_edits;
+        foreach($idareas_edit as $idareas_edits){
+            $invitado_empleado = new invitado_empleado();
+            $invitado_empleado->idinvitado = $invitado->idinvitado;
+            $invitado_empleado->area_id = $idareas_edits;
 
-        $invitado_empleado->save();
+            $invitado_empleado->save();
+            }
         }
-    }
+        /* ------------------------------- */
         ///
+
+        /*----------------------- ACTUALIZAMOS PERMISO  DE INVITADOD--------------------------------- */
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
@@ -744,25 +807,34 @@ public function editarInviArea(Request $request){
            'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
-           //actualizar permiso invitado
+        /* ----------------------------------------------------------------------------------------- */
+
+           /*------------------------------- ACTUALIXAMOS PERMISOS DE MENUS ------------------------------------*/
            $permisoActu  = DB::table('permiso_invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
            'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
            'bajaActi'=>$bajaActi_ed,
            'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
+           /* -------------------------------------------------------------------------------------------------- */
 
     }
     else{
+        /*-- AQUI SERA MAS COMPLEJO PORQUE EL INVITADO ANTES ERA ADMIN ASI QUE AHORA LE CREAREMSO
+        TODOS LOS PERMISO COMO INVITADO------------------------------------------------------------------------ */
+
+        /* ----------------PERMISOS PARA AREAS -------------------*/
         if($checkTodoEmp_ed==0){
         foreach($idareas_edit as $idareas_edits){
             $invitado_empleado = new invitado_empleado();
             $invitado_empleado->idinvitado = $invitado->idinvitado;
             $invitado_empleado->area_id = $idareas_edits;
             $invitado_empleado->save();
-        }
-    }
+         }
+       }
+       /* ---------------------------------------------------------- */
 
+       /* ----------------------ACTUALIZAMOS PERMISO DE INVITADOS---------------------------------------------------- */
         $invitadoAct  = DB::table('invitado')
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
@@ -770,13 +842,18 @@ public function editarInviArea(Request $request){
            'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
+        /* ----------------------------------------------------------------------------------------------------------- */
 
-           $usuario_organizacion =DB::table('usuario_organizacion')
+        /* --------------ACTUALIZAMOS ROL EN EL SISTEMA---------------------------- */
+        $usuario_organizacion =DB::table('usuario_organizacion')
            ->where('user_id', '=', $invitado->user_Invitado )
            ->where('organi_id', '=', session('sesionidorg'))
            ->update(['rol_id' => 3]);
+        /* ------------------------------------------------------------------------------- */
            ////////////////////////////////////////////////////////////////
-           $permiso_invitado= new permiso_invitado();
+
+        /* CREAMOS PERMISOS PARA CADA MENU  */
+        $permiso_invitado= new permiso_invitado();
         $permiso_invitado->idinvitado =$invitado->idinvitado;
         if($permisoEmp_ed==1){
         $permiso_invitado->agregarEmp=$agregarEmp_ed;
@@ -812,12 +889,16 @@ public function editarInviArea(Request $request){
         }
 
         $permiso_invitado->save();
+        /*--------------------------------------------------- */
            ////////////////////////////////////////////////////////////////
     }
 }
 
 public function verificarEmaDSiEdi(Request $request){
+
     $email=$request->email;
+
+    /*  verificamos si el email ya esta rgistrado de invitado*/
     $invitado=DB::table('invitado')
     ->where('organi_id','=',session('sesionidorg'))
     ->where('email_inv','=',  $email)
@@ -828,6 +909,7 @@ public function verificarEmaDSiEdi(Request $request){
     ->where('organi_id','=',session('sesionidorg'))
     ->where('users.email','=',  $email)
     ->get();
+    /* ---------------------------------------------------- */
     if(count($invitado) || count($usuario_organizacion)){
         return [1, $invitado[0]->idinvitado];
     } else{

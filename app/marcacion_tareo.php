@@ -14,6 +14,6 @@ class marcacion_tareo extends Model
     'idcontroladores_tareo','iddispositivos_tareo','organi_id',
     'horarioEmp_id','marcaTareo_salida',
     'marcaTareo_latitud','marcaTareo_longitud',
-    'Activi_id','puntoC_id','centroC_id'];
+    'Activi_id','puntoC_id','centroC_id','idsubActividad'];
     public $timestamps = false;
 }

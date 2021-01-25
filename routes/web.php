@@ -556,3 +556,14 @@ Route::post('/controladTarUpdate', 'controladores_tareoController@update');
 Route::get('/reporteTareo', 'marcacionTareoController@index');
 Route::get('/tablaTareo', 'marcacionTareoController@show');
 /* ------------------------------------------------------------------------ */
+
+/*------------------------ SUBACTIVIDADES--------------------------------- */
+Route::get('/subactividad', 'subactividadController@index');
+Route::get('/listActiviTareo', 'subactividadController@actividadesTareo');
+Route::post('/registrarSubact', 'subactividadController@store');
+Route::get('/listaSubactividades', 'subactividadController@show');
+Route::get('/eliminSubactiv', 'subactividadController@destroy');
+Route::post('/editarSubactividad', 'subactividadController@edit');
+Route::post('/actualizarSubactividad', 'subactividadController@update');
+Route::get('/recuperarSubact', 'subactividadController@recuperarSubactividad');
+/* ----------------------------------------------------------------------- */
