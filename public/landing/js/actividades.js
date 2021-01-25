@@ -321,11 +321,18 @@ function actividadesOrganizacion() {
                     } else {
                         tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                    if(data[index].padreSubactividad == 1){
+                        tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                                 <img src=\"/admin/images/edit.svg\" height=\"15\">\
+                                </a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else{
+                        tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
                                 </a>&nbsp;&nbsp;&nbsp;<a name=\"deletePermiso\" onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
                                  </a></td>";
+                    }
+
                 }
                 tr += "</tr>";
             }
