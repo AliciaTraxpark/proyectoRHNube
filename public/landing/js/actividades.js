@@ -331,6 +331,7 @@ function actividadesOrganizacion() {
             }
             $('#actividOrga').html(tr);
             tablaActividades();
+            $('[data-toggle="tooltip"]').tooltip();
         },
         error: function () {
 

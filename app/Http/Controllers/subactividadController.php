@@ -226,24 +226,27 @@ class subactividadController extends Controller
         ->where('idsubActividad', '!=', $idSuactiv)
         ->whereNotNull('subAct_codigo')
         ->where('organi_id', '=', session('sesionidorg'))
-        ->get()
-        ->first();
+        ->get();
+
         /* ------------------------------------------- */
-        
-        if (!$buscarCodigo) {
+
+        if ($buscarCodigo->isEmpty()) {
             $subactividad=subactividad::findOrFail($idSuactiv);
             $subactividad->subAct_codigo=$codigo;
             $subactividad->modoTareo=$modoTareo;
             $subactividad->save();
+            $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSuactiv)
+        ->update(['Activi_id' => $idActividad]);
+        return response()->json($subactividad, 200);
         }
         else{
+
             return 0;
 
         }
 
 
-        $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSuactiv)
-        ->update(['Activi_id' => $idActividad]);
+
 
     }
 
@@ -299,8 +302,19 @@ class subactividadController extends Controller
             $subactividad->save();
         }
 
+        /* ACTIVAR RELACION  */
         $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSubactividad)
         ->update(['estado' => 1]);
+        /* ---------------------------------- */
+
+        /* ACTIVAR MDO TAREA EN ACTIVIDAD POR SIACASO */
+        $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSubactividad)
+        ->get()->first();
+
+        $actividad = subactividad::findOrFail($actividad_subactividad->Activi_id);
+        $actividad->estado=1;
+        $actividad->save();
+
 
         return response()->json($subactividad, 200);
     }
