@@ -75,7 +75,7 @@ use App\persona;
             float-right mb-0">
 
             @if (count($istaOrganizacion) > 0)
-             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organizacion">
+             <li class="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="cambiar organización">
                 <div class="btn-group mt-3">
                 <button type="button" class="btn  dropdown-toggle" style="font-size: 14px!important;
                 font-weight: 700;     color: white; background-color: #163552!important; border-color: #163552!important;padding-top: 9px;"
