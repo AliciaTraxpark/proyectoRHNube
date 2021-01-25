@@ -193,6 +193,11 @@
         padding: 0.1rem 0.1rem !important;
         color: #6c757d !important;
     }
+
+    /* SYYLE DE GROUP */
+    .select2-container--default .select2-results__group {
+        color: #62778c;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -308,19 +313,18 @@
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12">
-                    <form action="javascript:cambiarEntradaM()">
+                    <form action="javascript:cambiarEntradaM()" id="formCambiarEntradaM">
                         <div class="row">
                             {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacion">
                             {{-- EL TIPO SI ENTRADA O SALIDA --}}
                             <input type="hidden" id="c_tipoS">
                             <div class="col-md-12">
-                                <h6 style="color:#62778c;font-weight: bold">
-                                    Cambiar a entrada
-                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                    &nbsp;
-                                    <span id="c_horaS" style="color:#62778c;font-weight: bold"></span>
-                                </h6>
+                                <span style="color:#62778c;font-weight: bold">Cambiar a entrada</span>
+                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12" class="ml-1 mr-1" />
+                                <span id="c_horaS"></span>
+                            </div>
+                            <div class="col-md-12 pt-1">
                                 <span id="s_valid" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
                                 </span>
@@ -333,7 +337,8 @@
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
-                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
@@ -354,19 +359,18 @@
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12">
-                    <form action="javascript:cambiarSalidaM()">
+                    <form action="javascript:cambiarSalidaM()" id="formCambiarSalidaM">
                         <div class="row">
                             {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacionE">
                             {{-- EL TIPO SI FUE ENTRADA O SALIDA --}}
                             <input type="hidden" id="c_tipoE">
                             <div class="col-md-12">
-                                <h6 style="color:#62778c;font-weight: bold">
-                                    Cambiar a salida
-                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                    &nbsp;
-                                    <span id="c_horaE" style="color:#62778c;font-weight: bold"></span>
-                                </h6>
+                                <span style="color:#62778c;font-weight: bold">Cambiar a salida</span>
+                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12" class="ml-1 mr-1" />
+                                <span id="c_horaE"></span>
+                            </div>
+                            <div class="col-md-12 pt-1">
                                 <span id="e_valid" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
                                 </span>
@@ -379,10 +383,11 @@
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
-                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
                         Registrar
                     </button>
                     </form>

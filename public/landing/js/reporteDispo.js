@@ -1132,7 +1132,7 @@ function insertarEntrada(idMarca) {
         },
     });
 }
-// ! *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
+// TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
     $.ajax({
@@ -1224,6 +1224,7 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
         error: function () { }
     });
 }
+// ! *********************************** CAMBIAR A ENTRADA ********************************************
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
 function listaSalida(id, fecha, idEmpleado, hora, tipo) {
     $('#salidaM').empty();
@@ -1258,12 +1259,10 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo) {
                     data[index].data.forEach(element => {
                         if (element.id == id) {
                             container += `<option value="${element.id}" selected="selected">
-                                    Salida : 
                                     ${moment(element.salida).format("HH:mm:ss")}
                                 </option>`;
                         } else {
                             container += `<option value="${element.id}">
-                                    Salida : 
                                     ${moment(element.salida).format("HH:mm:ss")}
                                 </option>`;
                         }
@@ -1274,6 +1273,7 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo) {
                 var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
             }
             $('#salidaM').append(container);
+            imagenesSalida();
         },
         error: function () { }
     });
@@ -1308,6 +1308,7 @@ function cambiarEntradaM() {
                 $('#s_valid').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
+                limpiarAtributos();
                 $.notifyClose();
                 $.notify(
                     {
@@ -1348,6 +1349,38 @@ function cambiarEntradaM() {
         }
     });
 }
+// * COMBOX DE SALIDA
+function imagenesSalida() {
+    function formatState(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "landing/images/salidaD.svg";
+        var $state = $(
+            `<span>Salida : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
+        );
+        return $state;
+    };
+    $("#salidaM").select2({
+        templateResult: formatState
+    });
+}
+// * VALIDACION
+$('#formCambiarEntradaM').attr('novalidate', true);
+$('#formCambiarEntradaM').submit(function (e) {
+    e.preventDefault();
+    console.log($("#salidaM").val());
+    if ($("#salidaM").val() == "" || $("#salidaM").val() == null) {
+        $('#s_valid').empty();
+        $('#s_valid').append("Seleccionar marcación.");
+        $('#s_valid').show();
+        return;
+    }
+    $('#s_valid').empty();
+    $('#s_valid').hide();
+    this.submit();
+});
+// ! *********************************** CAMBIAR A SALIDA ****************************************************
 // * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
 function listaEntrada(id, fecha, idEmpleado, hora, tipo) {
     $('#entradaM').empty();
@@ -1382,12 +1415,10 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo) {
                     data[index].data.forEach(element => {
                         if (element.id == id) {
                             container += `<option value="${element.id}" selected="selected">
-                                    Entrada : 
                                     ${moment(element.entrada).format("HH:mm:ss")}
                                 </option>`;
                         } else {
                             container += `<option value="${element.id}">
-                                    Entrada : 
                                     ${moment(element.entrada).format("HH:mm:ss")}
                                 </option>`;
                         }
@@ -1398,6 +1429,7 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo) {
                 var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
             }
             $('#entradaM').append(container);
+            imagenesEntrada();
         },
         error: function () { }
     });
@@ -1472,6 +1504,37 @@ function cambiarSalidaM() {
         }
     });
 }
+// * COMBOX DE ENTRADA
+function imagenesEntrada() {
+    function formatState(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "landing/images/entradaD.svg";
+        var $state = $(
+            `<span>Entrada : <img src="${baseUrl}" height="12" class="ml-1 mr-1" /> ${state.text} </span>`
+        );
+        return $state;
+    };
+    $("#entradaM").select2({
+        templateResult: formatState
+    });
+}
+// * VALIDACION
+$('#formCambiarSalidaM').attr('novalidate', true);
+$('#formCambiarSalidaM').submit(function (e) {
+    e.preventDefault();
+    if ($("#entradaM").val() == "" || $("#entradaM").val() == null) {
+        $('#e_valid').empty();
+        $('#e_valid').append("Seleccionar marcación.");
+        $('#e_valid').show();
+        return;
+    }
+    $('#e_valid').empty();
+    $('#e_valid').hide();
+    this.submit();
+});
+// ! *********************************** CONVERTIR ORDEN ******************************************************
 // * CONVERTIR ORDEN
 function convertirOrden(id) {
     alertify
@@ -1571,6 +1634,7 @@ function convertirOrden(id) {
             },
         });
 }
+// ! ********************************** ASIGNAR A NUEVA MARCACIÓN *********************************************
 // * ASIGNAR NUEVA MARCACION
 function asignarNuevaM(id, hora, tipo, horario) {
     $('#idMarcacionA').val(id);
@@ -1648,6 +1712,7 @@ function guardarAsignacion() {
         error: function () { }
     });
 }
+// ! ********************************** ELIMINAR MARCACIÓN *****************************************************
 // * ELIMINAR MARCACION
 function eliminarM(id, tipo) {
     alertify
@@ -1714,6 +1779,7 @@ function eliminarM(id, tipo) {
             },
         });
 }
+// ! ******************************** INSERTAR SALIDA **********************************************************
 // * MODAL DE INSERTAR SALIDA
 function insertarSalidaModal(hora, id, idH) {
     $('#idMarcacionIS').val(id);
@@ -1721,6 +1787,7 @@ function insertarSalidaModal(hora, id, idH) {
     $('#idHorarioIS').val(idH);
     $('#insertarSalida').modal();
 }
+// * INSERTAR SALIDA
 function insertarSalida() {
     var id = $('#idMarcacionIS').val();
     var salida = $('#horaSalidaNueva').val();
@@ -1778,4 +1845,18 @@ function insertarSalida() {
         error: function () {
         },
     });
+}
+// ! ********************************* FINALIZACION *************************************************************
+// * LIMPIEZA DE CAMPOS
+function limpiarAtributos() {
+    // ? MODAL DE CAMBIAR ENTRADA
+    $('#entradaM').empty();
+    $('#e_valid').empty();
+    $('#e_valid').hide();
+    $('#c_horaE').empty();
+    // ? MODAL DE CAMBIAR SALIDA
+    $('#salidaM').empty();
+    $('#s_valid').empty();
+    $('#s_valid').hide();
+    $('#c_horaS').empty();
 }
