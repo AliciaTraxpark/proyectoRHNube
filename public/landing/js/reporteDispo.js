@@ -386,8 +386,30 @@ function cargartabla(fecha) {
                             // ! HORARIO
                             var horarioData = data[index].data[m].horario;
                             if (horarioData.horario != null) {
-                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;">
-                                                    ${horarioData.horario}
+                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                    <div class="dropdown">
+                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                            <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                ${horarioData.horario}
+                                                            </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                Opciones
+                                                            </h6>
+                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                            <div class="dropdown-item">
+                                                                <div class="form-group noExport pl-3">
+                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                        Cambiar horario
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
@@ -1950,6 +1972,139 @@ $('#formInsertarEntrada').submit(function (e) {
     $('#i_validE').hide();
     this.submit();
 });
+// ! ****************************** CAMBIAR DE HORARIO ***********************************************************
+var datosHorario = {};
+// * MODAL CON LISTA DE HORARIOS
+function modalCambiarHorario(idHE, fecha, id) {
+    $('#idHorarioECH').val(idHE);
+    $('#fechaCH').val(fecha);
+    $('#idEmpleadoCH').val(id);
+    $('#modalCambiarHorario').modal();
+    $('#horarioXE').empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/horariosxEmpleado",
+        data: {
+            idHE: idHE,
+            fecha: fecha,
+            idEmpleado: id
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            datosHorario = data;
+            if (data.length != 0) {
+                var container = `<option value="" disabled selected>Seleccionar horario</option>
+                                <option value="0">Sin horario</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    container += `<option value="${data[index].idHorarioE}">${data[index].descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
+                }
+            } else {
+                var container = `<option value="" disabled selected>No hay horarios disponibles</option>`;
+            }
+            $('#horarioXE').append(container);
+        },
+        error: function () { }
+    });
+}
+// * MOSTRAR DETALLES DE HORARIO
+$('#horarioXE').on("change", function () {
+    $('#detalleHorarios').empty();
+    var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
+    datosHorario.forEach(element => {
+        if (element.idHorarioE == $('#horarioXE').val()) {
+            contenido += `<div class="row ml-3 mr-4" style="background: #ffffff;border-radius: 5px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Horario:</span>
+                                        <span>${element.descripcion}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Hora inicio:</span>
+                                        <span>${element.horaI}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Hora fin:</span>
+                                        <span>${element.horaF}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Horas obligadas:</span>
+                                        <span>${element.horasObligadas}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Permitir trabajar fuera horario:</span>
+                                        <span>${(element.fueraH == 1) ? "Si" : "No"}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Tolerancia inicio (minutos):</span>
+                                        <span>${element.toleranciaI}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Tolerancia fin (minutos):</span>
+                                        <span>${element.toleranciaF}</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="color:#62778c;">Horas adicionales:</span>
+                                        <span>${element.horasAdicionales}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+        }
+    });
+    $('#detalleHorarios').append(contenido);
+    $('#detalleHorarios').show();
+});
+function cambiarHorarioM() {
+    var newH = $('#horarioXE').val();
+    var idHE = $('#idHorarioECH').val();
+    var fecha = $('#fechaCH').val();
+    var idEmpleado = $('#idEmpleadoCH').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/cambiarHorarioM",
+        data: {
+            idHE: idHE,
+            idNuevo: newH,
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#ch_valid').hide();
+                $('#modalCambiarHorario').modal("toggle");
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+            } else {
+                $('#ch_valid').empty();
+                $('#ch_valid').append(data.respuesta);
+                $('#ch_valid').show();
+            }
+        },
+        error: function () { }
+    });
+}
 // ! ********************************* FINALIZACION *************************************************************
 // * LIMPIEZA DE CAMPOS
 function limpiarAtributos() {
@@ -1980,4 +2135,10 @@ function limpiarAtributos() {
     if (horasE.config != undefined) {
         horasE.setDate("00:00:00");
     }
+    // ? MODAL DE CAMBIAR HORARIO
+    $('#ch_valid').empty();
+    $('#ch_valid').hide();
+    $('#horarioXE').empty();
+    $('#detalleHorarios').empty();
+    $('#detalleHorarios').hide();
 }

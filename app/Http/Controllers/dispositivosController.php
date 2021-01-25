@@ -7,17 +7,15 @@ use App\dispositivo_controlador;
 use App\dispositivo_empleado;
 use App\dispositivos;
 use App\horario;
+use App\horario_empleado;
 use App\marcacion_puerta;
-use App\pausas_horario;
 use App\tardanza;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
-use LengthException;
 
 class dispositivosController extends Controller
 {
@@ -403,7 +401,8 @@ class dispositivosController extends Controller
                         "horarioIni" => $empleado->horarioIni,
                         "horarioFin" => $empleado->horarioFin,
                         "idHorario" => $empleado->idHorario,
-                        "tolerancia" => $empleado->tolerancia
+                        "tolerancia" => $empleado->tolerancia,
+                        "idHorarioE" => $empleado->idHorarioE
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorario]["pausas"])) {
@@ -2067,7 +2066,8 @@ class dispositivosController extends Controller
                     'h.horaF',
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
-                    'he.fuera_horario as fueraH'
+                    'he.fuera_horario as fueraH',
+                    'he.nHoraAdic as horasA'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
@@ -2126,7 +2126,7 @@ class dispositivosController extends Controller
                     if ($horario->fueraH == 0) {
                         // * VALIDAR SIN FUERA DE HORARIO
                         $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
 
                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                             $marcacion->marcaMov_salida = $salida;
@@ -2174,7 +2174,8 @@ class dispositivosController extends Controller
                     'h.horaF',
                     'h.horario_tolerancia as toleranciaI',
                     'h.horario_toleranciaF as toleranciaF',
-                    'he.fuera_horario as fueraH'
+                    'he.fuera_horario as fueraH',
+                    'he.nHoraAdic as horasA'
                 )
                 ->where('he.horarioEmp_id', '=', $idhorarioE)
                 ->get()
@@ -2233,7 +2234,7 @@ class dispositivosController extends Controller
                     if ($horario->fueraH == 0) {
                         // * VALIDAR SIN FUERA DE HORARIO
                         $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
 
                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                             $marcacion->marcaMov_fecha = $entrada;
@@ -2260,6 +2261,120 @@ class dispositivosController extends Controller
             }
         } else {
             return response()->json(array("respuesta" => "Entrada debe ser menor a salida."), 200);
+        }
+    }
+
+    // * LISTAS DE HORARIOS POR EMPLEADO
+    public function horarioEmpleado(Request $request)
+    {
+        $fecha = $request->get('fecha');
+        $idHorarioE = $request->get('idHE');
+        $idEmpleado = $request->get('idEmpleado');
+        // DB::enableQueryLog();
+        $horario = DB::table('horario_empleado as he')
+            ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+            ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+            ->select(
+                'h.horario_descripcion as descripcion',
+                'h.horaI',
+                'h.horaF',
+                'h.horario_tolerancia as toleranciaI',
+                'h.horario_toleranciaF as toleranciaF',
+                'he.fuera_horario as fueraH',
+                'he.horarioEmp_id as idHorarioE',
+                'h.horasObliga as horasObligadas',
+                DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasAdicionales')
+            )
+            ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+            ->where('he.empleado_emple_id', '=', $idEmpleado)
+            ->where('he.horarioEmp_id', '!=', $idHorarioE)
+            ->where('he.estado', '=', 1)
+            ->get();
+        // dd(DB::getQueryLog());
+
+        return response()->json($horario, 200);
+    }
+
+    // * CAMBIAR HORARIO DE MARCACIONES
+    public function cambiarHorario(Request $request)
+    {
+        $idHorarioE = $request->get('idHE') == 0 ? null : $request->get('idHE');
+        $nuevoHorarioE = $request->get('idNuevo');
+        $fecha = $request->get('fecha');
+        $idEmpleado = $request->get('idEmpleado');
+
+        $marcacion = marcacion_puerta::where('horarioEmp_id', '=', $idHorarioE)
+            ->where(DB::raw("IF(marcaMov_fecha is null,DATE(marcaMov_salida),DATE(marcaMov_fecha))"), '=', $fecha)
+            ->where('marcaMov_emple_id', '=', $idEmpleado)
+            ->get();
+
+        if ($nuevoHorarioE != 0) {
+            $horarioEmpleado = horario_empleado::findOrFail($nuevoHorarioE);
+            if ($horarioEmpleado->fuera_horario == 1) {
+                foreach ($marcacion as $m) {
+                    $actualizarM = marcacion_puerta::findOrFail($m->marcaMov_id);
+                    $actualizarM->horarioEmp_id = $horarioEmpleado->horarioEmp_id;
+                    $actualizarM->save();
+                }
+                return response()->json($nuevoHorarioE, 200);
+            } else {
+                $horario = DB::table('horario_empleado as he')
+                    ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                    ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                    ->select(
+                        'h.horaI',
+                        'h.horaF',
+                        'h.horario_tolerancia as toleranciaI',
+                        'h.horario_toleranciaF as toleranciaF',
+                        DB::raw('DATE(hd.start) as fecha'),
+                        'he.nHoraAdic as horasA'
+                    )
+                    ->where('he.horarioEmp_id', '=', $horarioEmpleado->horarioEmp_id)
+                    ->get()
+                    ->first();
+                $horarioInicio = Carbon::parse($horario->fecha . " " . $horario->horaI);
+                if ($horario->horaF > $horario->horaI) {
+                    $horarioFin = Carbon::parse($horario->fecha . " " . $horario->horaF);
+                } else {
+                    $fechaSiguiente = Carbon::parse($horario->fecha)->addDays(1)->isoFormat('YYYY-MM-DD');
+                    $horarioFin = Carbon::parse($fechaSiguiente . " " . $horario->horaF);
+                }
+                // * VALIDAR SIN FUERA DE HORARIO
+                $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+                $respuesta = true;
+                foreach ($marcacion as $m) {
+                    if (!is_null($m->marcaMov_fecha)) {
+                        $respuestaCheck = checkHora($horarioInicioT, $horarioFinT, $m->marcaMov_fecha);
+                        if (!$respuestaCheck) {
+                            $respuesta  = false;
+                        }
+                    }
+                    if (!is_null($m->marcaMov_salida)) {
+                        $respuestaCheck = checkHora($horarioInicioT, $horarioFinT, $m->marcaMov_salida);
+                        if (!$respuestaCheck) {
+                            $respuesta  = false;
+                        }
+                    }
+                }
+                if ($respuesta) {
+                    foreach ($marcacion as $m) {
+                        $actualizarM = marcacion_puerta::findOrFail($m->marcaMov_id);
+                        $actualizarM->horarioEmp_id = $horarioEmpleado->horarioEmp_id;
+                        $actualizarM->save();
+                    }
+                    return response()->json($nuevoHorarioE, 200);
+                } else {
+                    return response()->json(array("respuesta" => "Algunas marcaciones fuera de rango"), 200);
+                }
+            }
+        } else {
+            foreach ($marcacion as $m) {
+                $actualizarM = marcacion_puerta::findOrFail($m->marcaMov_id);
+                $actualizarM->horarioEmp_id = NULL;
+                $actualizarM->save();
+            }
+            return response()->json($nuevoHorarioE, 200);
         }
     }
 }

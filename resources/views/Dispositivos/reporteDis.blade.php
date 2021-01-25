@@ -308,7 +308,7 @@
 {{-- MODAL DE LISTA DE SALIDAS MARCACION --}}
 <div id="listaSalidasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaSalidasMarcacion"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
@@ -342,7 +342,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
-                        Registrar
+                        Guardar
                     </button>
                     </form>
                 </div>
@@ -354,7 +354,7 @@
 {{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
 <div id="listaEntradasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaEntradasMarcacion"
     aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
+    <div class="modal-dialog  d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
@@ -388,7 +388,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
-                        Registrar
+                        Guardar
                     </button>
                     </form>
                 </div>
@@ -400,7 +400,7 @@
 {{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
 <div id="asignacionMarcacion" class="modal fade" role="dialog" aria-labelledby="asignacionMarcacion" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 400px;">
+    <div class="modal-dialog modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
@@ -445,7 +445,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
-                        Registrar
+                        Guardar
                     </button>
                     </form>
                 </div>
@@ -457,7 +457,7 @@
 {{-- MODAL DE INSERTAR SALIDA --}}
 <div id="insertarSalida" class="modal fade" role="dialog" aria-labelledby="insertarSalida" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 450px;">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12"></div>
@@ -508,7 +508,7 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
-                        Registrar
+                        Guardar
                     </button>
                     </form>
                 </div>
@@ -520,7 +520,7 @@
 {{-- MODAL DE INSERTAR ENTRADA --}}
 <div id="insertarEntrada" class="modal fade" role="dialog" aria-labelledby="insertarEntrada" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 450px;">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12"></div>
@@ -571,7 +571,54 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
-                        Registrar
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE CAMBIAR DE HORARIO --}}
+<div id="modalCambiarHorario" class="modal fade" role="dialog" aria-labelledby="modalCambiarHorario" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog   d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12">
+                    <form action="javascript:cambiarHorarioM()">
+                        {{-- ID HORARIO EMPLEADO --}}
+                        <input type="hidden" id="idHorarioECH">
+                        {{-- FECHA --}}
+                        <input type="hidden" id="fechaCH">
+                        {{-- EMPLEADO --}}
+                        <input type="hidden" id="idEmpleadoCH">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Horario</span>
+                            </div>
+                            <div class="col-md-12 pt-1">
+                                <span id="ch_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar horario
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="horarioXE" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pt-2" id="detalleHorarios" style="display: none"></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
                     </button>
                     </form>
                 </div>

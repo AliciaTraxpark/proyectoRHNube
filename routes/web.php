@@ -452,6 +452,8 @@ Route::post('/convertirM', 'dispositivosController@convertirTiempos');
 Route::post('/horarioxM', 'dispositivosController@horariosxMarcacion');
 Route::post('/asignacionNew', 'dispositivosController@asignacionMarcacion');
 Route::post('/eliminarMarcacion', 'dispositivosController@eliminarMarcacion');
+Route::post('/horariosxEmpleado', 'dispositivosController@horarioEmpleado');
+Route::post('/cambiarHorarioM', 'dispositivosController@cambiarHorario');
 //CONTROLADORES
 Route::get('/controladores', 'controladoresController@index');
 Route::post('/controladStore', 'controladoresController@store');
