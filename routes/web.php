@@ -558,4 +558,5 @@ Route::get('/listaSubactividades', 'subactividadController@show');
 Route::get('/eliminSubactiv', 'subactividadController@destroy');
 Route::post('/editarSubactividad', 'subactividadController@edit');
 Route::post('/actualizarSubactividad', 'subactividadController@update');
+Route::get('/recuperarSubact', 'subactividadController@recuperarSubactividad');
 /* ----------------------------------------------------------------------- */

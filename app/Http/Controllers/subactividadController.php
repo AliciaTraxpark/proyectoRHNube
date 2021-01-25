@@ -75,6 +75,19 @@ class subactividadController extends Controller
         $idActividad = $request->idActividad;
         $modoTareo = $request->tareosub;
 
+        /* VERIFICAMOS NOMBRE Y CODIGO */
+        $subactividadBuscar = subactividad::where('subAct_nombre', '=', $nombreSub)
+        ->where('organi_id', '=', session('sesionidorg'))->get()->first();
+        if ($subactividadBuscar) {
+            return response()->json(array("estado" => 1, "subactividad" => $subactividadBuscar), 200);
+        }
+        $subactividadB = subactividad::where('subAct_codigo', '=',$codigoSub)->where('organi_id', '=', session('sesionidorg'))
+        ->whereNotNull('subAct_codigo')->get()->first();
+        if ($subactividadB) {
+            return response()->json(array("estado" => 0, "subactividad" => $subactividadB), 200);
+        }
+        /* ---------------------------------- */
+
         /* REGISTRAMOS SUBCTIVIDAD */
         $subactividad = new subactividad();
         $subactividad->subAct_nombre = $nombreSub;
@@ -90,6 +103,7 @@ class subactividadController extends Controller
         $actividad_subactividad = new actividad_subactividad();
         $actividad_subactividad->Activi_id = $idActividad;
         $actividad_subactividad->subActividad = $subactividad->idsubActividad;
+        $actividad_subactividad->estado = 1;
         $actividad_subactividad->save();
 
     }
@@ -162,6 +176,7 @@ class subactividadController extends Controller
         )
         ->where('su.organi_id', '=', session('sesionidorg'))
         ->where('su.estado', '=', 1)
+        ->where('asu.estado', '=', 1)
         ->where('su.idsubActividad','=',$idSub)
         ->groupBy('su.idsubActividad')
         ->get();
@@ -200,15 +215,32 @@ class subactividadController extends Controller
     {
         //
 
+
         $idSuactiv=$request->idSuactiv;
         $codigo=$request->codigo;
         $idActividad=$request->idActividad;
         $modoTareo=$request->modoTareo;
 
-        $subactividad=subactividad::findOrFail($idSuactiv);
-        $subactividad->subAct_codigo=$codigo;
-        $subactividad->modoTareo=$modoTareo;
-        $subactividad->save();
+        /* BUSCAMOS SI YA EXISTE EL CODIGO */
+        $buscarCodigo = subactividad::where('subAct_codigo', '=',  $codigo)
+        ->where('idsubActividad', '!=', $idSuactiv)
+        ->whereNotNull('subAct_codigo')
+        ->where('organi_id', '=', session('sesionidorg'))
+        ->get()
+        ->first();
+        /* ------------------------------------------- */
+        
+        if (!$buscarCodigo) {
+            $subactividad=subactividad::findOrFail($idSuactiv);
+            $subactividad->subAct_codigo=$codigo;
+            $subactividad->modoTareo=$modoTareo;
+            $subactividad->save();
+        }
+        else{
+            return 0;
+
+        }
+
 
         $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSuactiv)
         ->update(['Activi_id' => $idActividad]);
@@ -236,8 +268,7 @@ class subactividadController extends Controller
                 $subactividad->save();
 
                 $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSubactiv)
-                    ->get()->first();
-                $actividad_subactividad->delete();
+                ->update(['estado' => 0]);
             }
             return response()->json($subactividad, 200);
 
@@ -256,5 +287,21 @@ class subactividadController extends Controller
             ->get();
 
         return response()->json($actividades, 200);
+    }
+
+    //RECUPERAR SUBACTIVIDAD
+    public function recuperarSubactividad(Request $request)
+    {
+        $idSubactividad = $request->get('id');
+        $subactividad = subactividad::findOrFail($idSubactividad);
+        if ($subactividad) {
+            $subactividad->estado = 1;
+            $subactividad->save();
+        }
+
+        $actividad_subactividad = actividad_subactividad::where('subActividad', '=', $idSubactividad)
+        ->update(['estado' => 1]);
+
+        return response()->json($subactividad, 200);
     }
 }

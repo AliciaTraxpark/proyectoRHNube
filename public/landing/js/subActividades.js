@@ -243,6 +243,9 @@ function abrirRegistroSubact() {
     //reseteamos formulario
     $("#FormRegistrarSubactividad")[0].reset();
 
+    //removemos clases
+    $("#nombreSubact").removeClass("borderColor");
+    $("#codigoSubact").removeClass("borderColor");
     //listamos actividades en select2
     listaActividades();
 
@@ -280,29 +283,149 @@ function registrarSubactividad() {
             }*/
         },
         success: function (data) {
-            tablaSubactividades();
-            $("#regSubactividad").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nSubactividad registrada.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
+            if (data.estado === 1) {
+                if (data.subactividad.estado == 0) {
+                    alertify
+                        .confirm(
+                            "Ya existe una subactividad inactiva con este nombre. ¿Desea recuperarla si o no?",
+                            function (e) {
+                                if (e) {
+                                    recuperarSubactividad(
+                                        data.subactividad.idsubActividad
+                                    );
+                                }
+                            }
+                        )
+                        .setting({
+                            title: "Modificar subactividad",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {},
+                        });
+                } else {
+                    $("#nombreSubact").addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nYa existe una subactividad con este nombre.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $("#regSubactividad"),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
                 }
-            );
+            } else {
+                if (data.estado === 0) {
+                    if (data.subactividad.estado == 0) {
+                        alertify
+                            .confirm(
+                                "Ya existe una subactividad inactiva con este código. ¿Desea recuperarla si o no?",
+                                function (e) {
+                                    if (e) {
+                                        recuperarSubactividad(
+                                            data.subactividad.idsubActividad
+                                        );
+                                    }
+                                }
+                            )
+                            .setting({
+                                title: "Modificar subactividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {},
+                            });
+                    } else {
+                        $("#codigoSubact").addClass("borderColor");
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nYa existe una subactividad con este código.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                element: $("#regSubactividad"),
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    }
+                } else {
+                    tablaSubactividades();
+                    $("#regSubactividad").modal("hide");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nSubactividad registrada.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
         },
         error: function () {},
     });
@@ -426,7 +549,13 @@ function editarSubactividad(id) {
             }*/
         },
         success: function (data) {
+
+            //removemos clases
+            $("#nombreSubact_ed").removeClass("borderColor");
+            $("#codigoSubact_ed").removeClass("borderColor");
+            //
             listaActividades();
+
             $("#idSubAct").val(data.idsubActividad);
             $("#nombreSubact_ed").val(data.subAct_nombre);
             $("#codigoSubact_ed").val(data.subAct_codigo);
@@ -470,7 +599,87 @@ function actualizarSubactividad() {
     $.ajax({
         url: "/actualizarSubactividad",
         method: "POST",
-        data: { idSuactiv, codigo, idActividad, modoTareo},
+        data: { idSuactiv, codigo, idActividad, modoTareo },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            if (data != 0) {
+                tablaSubactividades();
+                $("#editSubactividad").modal("hide");
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nSubactividad actualizada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                $("#codigoSubact_ed").addClass("borderColor");
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nYa existe una subactividad con este código.",
+                        icon: "admin/images/warning.svg",
+                    },
+                    {
+                        element: $("#editSubactividad"),
+                        position: "fixed",
+                        mouse_over: "pause",
+                        placement: {
+                            from: "top",
+                            align: "center",
+                        },
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 2000,
+                        template:
+                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {},
+    });
+}
+/* --------------------------------------------- */
+
+/* FUNCION PARA RECUERAR SUBACTIVIDAD */
+function recuperarSubactividad(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarSubact",
+        data: {
+            id: id,
+        },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
@@ -484,30 +693,10 @@ function actualizarSubactividad() {
         },
         success: function (data) {
             tablaSubactividades();
-            $("#editSubactividad").modal("hide");
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nSubactividad actualizada.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
+            $("#regSubactividad").modal("toggle");
+            editarSubactividad(data.idsubActividad);
         },
         error: function () {},
     });
 }
-/* --------------------------------------------- */
+/*  */
