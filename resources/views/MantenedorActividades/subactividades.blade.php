@@ -201,7 +201,7 @@
                                         <div class="form-group">
                                             <label for="">Nombre:</label>
                                             <input type="text" class="form-control form-control-sm" id="nombreSubact"
-                                                maxlength="40" required>
+                                                maxlength="100" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -283,7 +283,7 @@
                                         <div class="form-group">
                                             <label for="">Nombre:</label>
                                             <input type="text" class="form-control form-control-sm" id="nombreSubact_ed"
-                                              disabled  maxlength="40" required>
+                                              disabled  maxlength="100" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -294,7 +294,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <label class="mb-0">Seleccionar Actividad: </label> &nbsp; &nbsp;
                                         <br><span style="font-size: 11px;">
                                             *Se visualizara actividades con modo tareo
@@ -304,6 +304,12 @@
                                             required>
                                             <option value="" disabled selected>Seleccionar actividad</option>
                                         </select>
+                                    </div>
+                                    <div class="col-md-6 text-left colResponsive">
+                                        <br> <br>
+                                        <button type="button" class="btn btn-sm" style="background-color: #163552;margin-top: 12px"
+                                         onclick="$('#regactividadTarea').modal();javascript:estadoAsignacionesReg()">+ Nueva
+                                        </button>
                                     </div>
                                     <div class="col-md-12  text-left">
                                         <div class="custom-control custom-switch">
@@ -364,7 +370,7 @@
                                         <div class="form-group">
                                             <label for="">Nombre:</label>
                                             <input type="text" class="form-control form-control-sm" id="nombreTarea"
-                                                maxlength="40" required>
+                                                maxlength="100" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">

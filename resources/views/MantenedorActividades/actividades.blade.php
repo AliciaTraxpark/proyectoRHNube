@@ -217,7 +217,7 @@
                                     <div class="form-group">
                                         <label for="">Nombre:</label>
                                         <input type="text" class="form-control form-control-sm" id="nombreTarea"
-                                            maxlength="40" required>
+                                            maxlength="100" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -384,7 +384,7 @@
                                     <div class="form-group">
                                         <label for="">Nombre:</label>
                                         <input type="text" class="form-control form-control-sm" id="e_nombreTarea"
-                                            maxlength="40" required disabled>
+                                            maxlength="100" required disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
