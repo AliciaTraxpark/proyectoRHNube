@@ -425,7 +425,7 @@ class apiBiometricoController extends Controller
                     ->get();
                 if ($dispositivosBi->isNotEmpty()) {
                     foreach ($dispositivosBi as $dispositivosBis) {
-                        $datos1 = ["idDispositivo" => $dispositivosBis->idDispositivos];
+                        $datos1 = ["idDispositivos" => $dispositivosBis->idDispositivos];
                         array_push($idBiometricos, $datos1);
 
                     }
@@ -442,7 +442,7 @@ class apiBiometricoController extends Controller
                     ->get();
                 if ($dispositivosBiEmp->isNotEmpty()) {
                     foreach ($dispositivosBiEmp as $dispositivosBiEmps) {
-                        $datos2 = ["idDispositivo" => $dispositivosBiEmps->idDispositivos];
+                        $datos2 = ["idDispositivos" => $dispositivosBiEmps->idDispositivos];
                         array_push($idBiometricos, $datos2);
                     }
                 }
@@ -457,14 +457,14 @@ class apiBiometricoController extends Controller
                     ->get();
                 if ($dispositivosBiAr->isNotEmpty()) {
                     foreach ($dispositivosBiAr as $dispositivosBiArs) {
-                        $datos3 = ["idDispositivo" => $dispositivosBiArs->idDispositivos];
+                        $datos3 = ["idDispositivos" => $dispositivosBiArs->idDispositivos];
                         array_push($idBiometricos, $datos3);
                     }
                 }
                 /* ------------------------------------- */
                 $idUnicos = array_unique($idBiometricos, SORT_REGULAR);
 
-                $tab1->idBiometrico = array_values($idUnicos);
+                $tab1->biometricos = array_values($idUnicos);
 
             }
             return $empleado;
@@ -962,7 +962,7 @@ class apiBiometricoController extends Controller
             $arrayDatos->push($datos);
         }
         $arrayOrdenado = $arrayDatos->sortBy('fechaMarcacion');
-        $arrayOrdenado->values()->all(); 
+        $arrayOrdenado->values()->all();
         /* dd($arrayOrdenado); */
         /* ----------------------------------------------------------------------------------------------------*/
          /*OBTENEMOS ARCHIVO FILE Y CREAMOS NUEBO COLLECTION   */
