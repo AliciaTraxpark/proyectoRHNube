@@ -297,7 +297,7 @@ function actividadesOrganizacion() {
                             <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                                 <img  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'" + "\"\
-                                style=\"cursor: pointer\" src='landing/images/info.svg' height='14'></div> </td>";
+                                title='Tiene asignado subactividades' style=\"cursor: pointer\" src='landing/images/info.svg' height='14'></div> </td>";
                         }
                         else{
                             tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
@@ -2195,3 +2195,12 @@ $(function () {
     });
 });
 //* ************************ FINALIZACION ****************************** *//
+
+/* AGREGANDO TOOLTIP PORQUE CUANDO DE PAGINACION DESAPARECE */
+$('#actividades tbody').on('mouseover', 'tr', function () {
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'hover',
+        html: true
+    });
+});
+/* ----------------------------------------------------------- */
