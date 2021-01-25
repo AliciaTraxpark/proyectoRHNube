@@ -405,7 +405,7 @@
             <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12">
-                    <form action="javascript:guardarAsignacion()">
+                    <form action="javascript:guardarAsignacion()" id="formGuardarAsignacion">
                         <div class="row">
                             {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacionA">
@@ -440,7 +440,8 @@
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
-                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
@@ -453,7 +454,7 @@
     </div>
 </div>
 {{-- FINALIZACION --}}
-{{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+{{-- MODAL DE INSERTAR SALIDA --}}
 <div id="insertarSalida" class="modal fade" role="dialog" aria-labelledby="insertarSalida" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 450px;">
@@ -463,7 +464,7 @@
             </div>
             <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                 <div class="col-md-12">
-                    <form action="javascript:insertarSalida()">
+                    <form action="javascript:insertarSalida()" id="formInsertarSalida">
                         <div class="row">
                             {{-- ID DE MARCACION --}}
                             <input type="hidden" id="idMarcacionIS">
@@ -502,7 +503,71 @@
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
-                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Registrar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE INSERTAR ENTRADA --}}
+<div id="insertarEntrada" class="modal fade" role="dialog" aria-labelledby="insertarEntrada" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog  modal-lg d-flex modal-dialog-centered justify-content-center " style="max-width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12"></div>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+                <div class="col-md-12">
+                    <form action="javascript:insertarEntrada()" id="formInsertarEntrada">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacionIE">
+                            {{-- ID DE HORARIO --}}
+                            <input type="hidden" id="idHorarioIE">
+                            <div class="col-md-12">
+                                <h6 style="color:#62778c;font-weight: bold">Insertar entrada</h6>
+                            </div>
+                            <div class="col-md-12">
+                                <span id="i_validE" style="color: #8b3a1e;display:none">
+                                    Ingresar entrada
+                                </span>
+                            </div>
+                            <div class="col-xl-7">
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label text-right">Entrada &nbsp;
+                                        <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                    </label>
+                                    <div class="col-lg-7 mt-1">
+                                        <input type="text" class="form-control form-control-sm horasEntrada"
+                                            onchange="$(this).removeClass('borderColor');" id="horasEntradaNueva">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 mt-2">
+                                <label>
+                                    Salida
+                                    &nbsp;
+                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                    &nbsp;
+                                    <span id="ie_hora" style="color:#62778c;font-weight: bold"></span>
+                                </label>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
                     <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
@@ -529,14 +594,9 @@
 @section('script')
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
 <!-- Plugins Js -->
-
-
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-
-
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
@@ -550,9 +610,7 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
-
 @endsection
-
 @section('script-bottom')
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 <script src="{{ asset('landing/js/notificacionesUser.js') }}"></script>

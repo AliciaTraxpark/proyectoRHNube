@@ -245,6 +245,8 @@ function inicializarTabla() {
 var razonSocial;
 var direccion;
 var ruc;
+var horasE = {};
+var horasS = {};
 function cargartabla(fecha) {
     var idemp = $('#idempleado').val();
     $.ajax({
@@ -626,53 +628,55 @@ function cargartabla(fecha) {
                                                         // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
                                                         if (horaFinal.isAfter(restaToleranciaPausa) && horaFinal.isBefore(sumaToleranciaPausa)) {
                                                             // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
-                                                            if (data[index].data[m].marcaciones[j + 1].entrada != undefined) {
-                                                                var horaEntradaDespues = moment(data[index].data[m].marcaciones[j + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                                                var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                 //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA
-                                                                tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
-                                                                tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
-                                                                tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
-                                                                if (tiempoHoraPausa < 10) {
-                                                                    tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                                                }
-                                                                if (tiempoMinutoPausa < 10) {
-                                                                    tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                                                }
-                                                                if (tiempoSegundoPausa < 10) {
-                                                                    tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                                                }
-                                                                // * RESTAR EL TIEMPO DE PAUSA
-                                                                tiempoTotal = tiempoTotal.add(
-                                                                    {
-                                                                        "hours": -tiempoHoraPausa,
-                                                                        "minutes": -tiempoMinutoPausa,
-                                                                        "seconds": -tiempoSegundoPausa
+                                                            if (data[index].data[m].marcaciones[j + 1] != undefined) {
+                                                                if (data[index].data[m].marcaciones[j + 1].entrada != undefined) {
+                                                                    var horaEntradaDespues = moment(data[index].data[m].marcaciones[j + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
+                                                                    var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                 //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA
+                                                                    tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
+                                                                    tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
+                                                                    tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
+                                                                    if (tiempoHoraPausa < 10) {
+                                                                        tiempoHoraPausa = '0' + tiempoHoraPausa;
                                                                     }
-                                                                );
-                                                                // * VERIFICAR TIEMPO DE EXCESO
-                                                                var clonarPausaI = pausaI.clone();
-                                                                var clonarPausaF = pausaF.clone();
-                                                                var restaEntrePausa = clonarPausaF - clonarPausaI;
-                                                                // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
-                                                                if (restarTiempoMarcacion <= restaEntrePausa) {
-                                                                    tiempoHoraExceso = "00";
-                                                                    tiempoMinutoExceso = "00";
-                                                                    tiempoSegundoExceso = "00";
-                                                                } else {
-                                                                    var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
-                                                                    tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
-                                                                    tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
-                                                                    tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
-                                                                    if (tiempoHoraExceso < 10) {
-                                                                        tiempoHoraExceso = '0' + tiempoHoraExceso;
-                                                                    }
-                                                                    if (tiempoMinutoExceso < 10) {
-                                                                        tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                                    if (tiempoMinutoPausa < 10) {
+                                                                        tiempoMinutoPausa = '0' + tiempoMinutoPausa;
                                                                     }
                                                                     if (tiempoSegundoPausa < 10) {
-                                                                        tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                                        tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                                     }
-                                                                    console.log(restarTiempoMarcacion, restaEntrePausa, restaParaExceso);
+                                                                    // * RESTAR EL TIEMPO DE PAUSA
+                                                                    tiempoTotal = tiempoTotal.add(
+                                                                        {
+                                                                            "hours": -tiempoHoraPausa,
+                                                                            "minutes": -tiempoMinutoPausa,
+                                                                            "seconds": -tiempoSegundoPausa
+                                                                        }
+                                                                    );
+                                                                    // * VERIFICAR TIEMPO DE EXCESO
+                                                                    var clonarPausaI = pausaI.clone();
+                                                                    var clonarPausaF = pausaF.clone();
+                                                                    var restaEntrePausa = clonarPausaF - clonarPausaI;
+                                                                    // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
+                                                                    if (restarTiempoMarcacion <= restaEntrePausa) {
+                                                                        tiempoHoraExceso = "00";
+                                                                        tiempoMinutoExceso = "00";
+                                                                        tiempoSegundoExceso = "00";
+                                                                    } else {
+                                                                        var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
+                                                                        tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
+                                                                        tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
+                                                                        tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
+                                                                        if (tiempoHoraExceso < 10) {
+                                                                            tiempoHoraExceso = '0' + tiempoHoraExceso;
+                                                                        }
+                                                                        if (tiempoMinutoExceso < 10) {
+                                                                            tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                                        }
+                                                                        if (tiempoSegundoPausa < 10) {
+                                                                            tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                                        }
+                                                                        console.log(restarTiempoMarcacion, restaEntrePausa, restaParaExceso);
+                                                                    }
                                                                 }
                                                             }
                                                         } else {
@@ -780,26 +784,27 @@ function cargartabla(fecha) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
                                                                         <div class=" dropdown noExport">
-                                                                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;" id="dropEntrada${marcacionData.idMarcacion}">
+                                                                            <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
+                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                                 <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                                                     No tiene entrada
                                                                                 </span>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-                                                                                <form class="pr-3 pl-3">
-                                                                                    <div class="form-group">
-                                                                                        <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;">
-                                                                                            Hora entrada
-                                                                                            &nbsp;
-                                                                                            <a onclick="insertarEntrada(${marcacionData.idMarcacion})" style="cursor: pointer">
-                                                                                                <img src="admin/images/checkH.svg" height="15">
-                                                                                            </a>
-                                                                                        </h6>
-                                                                                        <input type="text" id="horaEntradaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasEntrada" onchange="$(this).removeClass('borderColor');">
+                                                                            </a>
+                                                                            <ul class="dropdown-menu" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                                    Opciones
+                                                                                </h6>
+                                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                                <div class="dropdown-item">
+                                                                                    <div class="form-group noExport pl-3">
+                                                                                        <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                                            Insertar entrada
+                                                                                        </a>
                                                                                     </div>
-                                                                                </form>
+                                                                                </div>
                                                                             </ul>
                                                                         </div>
                                                                     </td>`;
@@ -1023,29 +1028,6 @@ function cargartabla(fecha) {
             }
         },
         error: function () { }
-    });
-    $('.horasEntrada').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-
-        time_24hr: true,
-        enableSeconds: true,
-        /*  inline:true, */
-        static: true
-    });
-
-    $('.horasSalida').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-
-        time_24hr: true,
-        enableSeconds: true,
-        /*  inline:true, */
-        static: true
     });
 }
 
@@ -1304,7 +1286,7 @@ function cambiarEntradaM() {
             }
         },
         success: function (data) {
-            if (data != 0 && data != -1) {
+            if (data == undefined) {
                 $('#s_valid').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
@@ -1331,18 +1313,8 @@ function cambiarEntradaM() {
                     }
                 );
             } else {
-                $('#s_valid').empty();
-                if (data == 0) {
-                    var container = `Posibilidad de cruze de marcación.`;
-                    $('#s_valid').append(container);
-                    $('#s_valid').show();
-                } else {
-                    if (data == -1) {
-                        var container = `Entrada debe ser menor a salida.`;
-                        $('#s_valid').append(container);
-                        $('#s_valid').show();
-                    }
-                }
+                $('#s_valid').append(data.respuesta);
+                $('#s_valid').show();
             }
         },
         error: function () {
@@ -1460,7 +1432,7 @@ function cambiarSalidaM() {
             }
         },
         success: function (data) {
-            if (data != 0 && data != -1) {
+            if (data.respuesta == undefined) {
                 $('#e_valid').hide();
                 $('#listaEntradasMarcacion').modal('toggle');
                 $('#btnRecargaTabla').click();
@@ -1487,17 +1459,8 @@ function cambiarSalidaM() {
                 );
             } else {
                 $('#e_valid').empty();
-                if (data == 0) {
-                    var container = `Posibilidad de cruze de marcación.`;
-                    $('#e_valid').append(container);
-                    $('#e_valid').show();
-                } else {
-                    if (data == -1) {
-                        var container = `Salida debe ser mayor entrada.`;
-                        $('#e_valid').append(container);
-                        $('#e_valid').show();
-                    }
-                }
+                $('#e_valid').append(data.respuesta);
+                $('#e_valid').show();
             }
         },
         error: function () {
@@ -1561,7 +1524,7 @@ function convertirOrden(id) {
                         }
                     },
                     success: function (data) {
-                        if (data != 0) {
+                        if (data.respuesta == undefined) {
                             $('#btnRecargaTabla').click();
                             $.notifyClose();
                             $.notify(
@@ -1588,8 +1551,7 @@ function convertirOrden(id) {
                             $.notifyClose();
                             $.notify(
                                 {
-                                    message:
-                                        "\nHora final debe ser mayor a entrada.",
+                                    message: data.respuesta,
                                     icon: "admin/images/warning.svg",
                                 },
                                 {
@@ -1706,17 +1668,45 @@ function guardarAsignacion() {
             }
         },
         success: function (data) {
-            $('#btnRecargaTabla').click();
-            $('#asignacionMarcacion').modal('toggle');
+            if (data.respuesta == undefined) {
+                $('#a_valid').empty();
+                $('#a_valid').hide();
+                $('#btnRecargaTabla').click();
+                $('#asignacionMarcacion').modal('toggle');
+                limpiarAtributos();
+            } else {
+                $('#a_valid').empty();
+                $('#a_valid').append(data.respuesta);
+                $('#a_valid').show();
+            }
         },
         error: function () { }
     });
 }
+$('#formGuardarAsignacion').attr('novalidate', true);
+$('#formGuardarAsignacion').submit(function (e) {
+    e.preventDefault();
+    if ($("#horarioM").val() == "" || $("#horarioM").val() == null) {
+        $('#a_valid').empty();
+        $('#a_valid').append("Seleccionar horario.");
+        $('#a_valid').show();
+        return;
+    }
+    if ($("#asignacionM").val() == "" || $("#asignacionM").val() == null) {
+        $('#a_valid').empty();
+        $('#a_valid').append("Seleccionar marcación.");
+        $('#a_valid').show();
+        return;
+    }
+    $('#a_valid').empty();
+    $('#a_valid').hide();
+    this.submit();
+});
 // ! ********************************** ELIMINAR MARCACIÓN *****************************************************
 // * ELIMINAR MARCACION
 function eliminarM(id, tipo) {
     alertify
-        .confirm("¿Desea Convertir orden si o no?", function (
+        .confirm("¿Desea eliminar marcación si o no?", function (
             e
         ) {
             if (e) {
@@ -1786,6 +1776,15 @@ function insertarSalidaModal(hora, id, idH) {
     $('#i_hora').text(hora);
     $('#idHorarioIS').val(idH);
     $('#insertarSalida').modal();
+    horasS = $('#horaSalidaNueva').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
 }
 // * INSERTAR SALIDA
 function insertarSalida() {
@@ -1811,14 +1810,15 @@ function insertarSalida() {
         },
         success: function (data) {
             if (data.respuesta != undefined) {
-                console.log(data.respuesta);
                 $('#i_validS').empty();
                 $('#i_validS').append(data.respuesta);
                 $('#i_validS').show();
             } else {
                 $('#i_validS').empty();
                 $('#i_validS').hide();
+                $('#insertarSalida').modal('toggle');
                 $('#btnRecargaTabla').click();
+                limpiarAtributos();
                 $.notifyClose();
                 $.notify(
                     {
@@ -1846,6 +1846,110 @@ function insertarSalida() {
         },
     });
 }
+// * VALIDACION
+$('#formInsertarSalida').attr('novalidate', true);
+$('#formInsertarSalida').submit(function (e) {
+    e.preventDefault();
+    if ($("#horaSalidaNueva").val() == "00:00:00" || $("#horaSalidaNueva").val() == "00:00:0") {
+        $('#i_validS').empty();
+        $('#i_validS').append("Ingresar salida.");
+        $('#i_validS').show();
+        return;
+    }
+    $('#i_validS').empty();
+    $('#i_validS').hide();
+    this.submit();
+});
+// ! ********************************* INSERTAR ENTRADA ********************************************************
+function insertarEntradaModal(hora, id, idH) {
+    $('#idMarcacionIE').val(id);
+    $('#ie_hora').text(hora);
+    $('#idHorarioIE').val(idH);
+    $('#insertarEntrada').modal();
+    horasE = $('#horasEntradaNueva').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
+}
+// * INSERTAR SALIDA
+function insertarEntrada() {
+    var id = $('#idMarcacionIE').val();
+    var entrada = $('#horasEntradaNueva').val();
+    var horario = $('#idHorarioIE').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/registrarNEntrada",
+        data: {
+            id: id,
+            entrada: entrada,
+            horario: horario
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta != undefined) {
+                $('#i_validE').empty();
+                $('#i_validE').append(data.respuesta);
+                $('#i_validE').show();
+            } else {
+                $('#i_validE').empty();
+                $('#i_validE').hide();
+                $('#insertarEntrada').modal('toggle');
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {
+        },
+    });
+}
+// * VALIDACION
+$('#formInsertarEntrada').attr('novalidate', true);
+$('#formInsertarEntrada').submit(function (e) {
+    e.preventDefault();
+    if ($("#horasEntradaNueva").val() == "00:00:00" || $("#horasEntradaNueva").val() == "00:00:0") {
+        $('#i_validE').empty();
+        $('#i_validE').append("Ingresar entrada.");
+        $('#i_validE').show();
+        return;
+    }
+    $('#i_validE').empty();
+    $('#i_validE').hide();
+    this.submit();
+});
 // ! ********************************* FINALIZACION *************************************************************
 // * LIMPIEZA DE CAMPOS
 function limpiarAtributos() {
@@ -1859,4 +1963,21 @@ function limpiarAtributos() {
     $('#s_valid').empty();
     $('#s_valid').hide();
     $('#c_horaS').empty();
+    // ? MODAL DE ASIGNACION A NUEVA MARCACIÓN
+    $('#a_valid').empty();
+    $('#a_valid').hide();
+    $('#horarioM').empty();
+    $('#a_hora').empty();
+    // ? MODAL DE INSERTAR SALIDA
+    $('#i_validS').empty();
+    $('#i_validS').hide();
+    if (horasS.config != undefined) {
+        horasS.setDate("00:00:00");
+    }
+    // ? MODAL DE INSERTAR ENTRADA
+    $('#i_validE').empty();
+    $('#i_validE').hide();
+    if (horasE.config != undefined) {
+        horasE.setDate("00:00:00");
+    }
 }

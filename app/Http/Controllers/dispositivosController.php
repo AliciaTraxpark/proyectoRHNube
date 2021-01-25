@@ -816,133 +816,6 @@ class dispositivosController extends Controller
         $dispositivos->save();
     }
 
-    public function registrarNEntrada(Request $request)
-    {
-        $idMarca = $request->idMarca;
-        $hora = $request->hora;
-        $fecha = $request->fecha;
-        $fecha1 = Carbon::create($fecha);
-
-        $marcacion_puerta = marcacion_puerta::findOrFail($idMarca);
-        $fechaSalida = $marcacion_puerta->marcaMov_salida;
-
-        if ($fecha1->gte($fechaSalida)) {
-            return 0;
-        } else {
-            $marcacion_puerta->marcaMov_fecha = $fecha1;
-            $marcacion_puerta->save();
-            return 1;
-        }
-    }
-
-    public function registrarNSalida(Request $request)
-    {
-        $id = $request->get('id');
-        $tiempo = $request->get('salida');
-        $idhorarioE = $request->get('horario');
-
-        $marcacion = marcacion_puerta::findOrFail($id);
-        $entrada = Carbon::parse($marcacion->marcaMov_fecha);
-        // * COMPROBAR SI TIENE HORARIO EMPLEADO
-        if ($idhorarioE != 0) {
-            $horario = DB::table('horario_empleado as he')
-                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
-                ->select(
-                    'h.horario_descripcion as descripcion',
-                    'h.horaI',
-                    'h.horaF',
-                    'h.horario_tolerancia as toleranciaI',
-                    'h.horario_toleranciaF as toleranciaF',
-                    'he.fuera_horario as fueraH'
-                )
-                ->where('he.horarioEmp_id', '=', $idhorarioE)
-                ->get()
-                ->first();
-            // * OBTENER TIEMPO DE HORARIOS
-            $horarioInicio = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
-            if ($horario->horaF > $horario->horaI) {
-                $horarioFin = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaF);
-                // ? OBTENER TIEMPO DE SALIDA
-                $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-            } else {
-                $nuevaFecha = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
-                $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
-                if ($tiempo > $entrada->copy()->isoFormat('HH:mm:ss')) {
-                    // ? OBTENER TIEMPO DE SALIDA
-                    $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-                } else {
-                    // ? OBTENER TIEMPO DE SALIDA
-                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
-                }
-            }
-            $salida = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
-        }
-        $salida = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
-        // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
-        if ($salida->gt($entrada)) {
-            // * VALIDACION ENTRE CRUCES DE HORAS
-            $marcacionesValidar = DB::table('marcacion_puerta as m')
-                ->select(
-                    'm.marcaMov_id',
-                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
-                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
-                )
-                ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
-                ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
-                ->get();
-            $respuesta = true;
-            foreach ($marcacionesValidar as $mv) {
-                if ($mv->entrada != 0) {
-                    $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
-                    if ($respuestaCheck) {
-                        $respuesta = false;
-                    }
-                } else {
-                    if ($mv->salida != 0) {
-                        $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
-                        if ($respuestaCheck) {
-                            $respuesta = false;
-                        }
-                    }
-                }
-            }
-            // ! SI NO ENCUENTRA CRUCES
-            if ($respuesta) {
-                // * VALIDAR CON EL HORARIO
-                if ($idhorarioE != 0) {
-                    if ($horario->fueraH == 0) {
-                        // * VALIDAR SIN FUERA DE HORARIO
-                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
-
-                        if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
-                            $marcacion->marcaMov_salida = $salida;
-                            $marcacion->save();
-                            return response()->json($marcacion->marcaMov_id, 200);
-                        } else {
-                            return response()->json(
-                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
-                                200
-                            );
-                        }
-                    } else {
-                        $marcacion->marcaMov_salida = $salida;
-                        $marcacion->save();
-                        return response()->json($marcacion->marcaMov_id, 200);
-                    }
-                } else {
-                    $marcacion->marcaMov_salida = $salida;
-                    $marcacion->save();
-                    return response()->json($marcacion->marcaMov_id, 200);
-                }
-            } else {
-                return response()->json(array("respuesta" => "Posibilidad de cruce de hora"), 200);
-            }
-        } else {
-            return response()->json(array("respuesta" => "Salida debe ser mayor a entrada."), 200);
-        }
-    }
-
     public function reporteMarcacionesEmp()
     {
         $organizacion = DB::table('organizacion')
@@ -1800,7 +1673,6 @@ class dispositivosController extends Controller
     {
         $idEmpleado = $request->get('idEmpleado');
         $fecha = $request->get('fecha');
-        // DB::enableQueryLog();
         $marcacion = marcacion_puerta::select('marcaMov_id')
             ->whereRaw("IF(marcaMov_fecha is null, DATE(marcaMov_salida), DATE(marcaMov_fecha)) = '$fecha'")
             ->where(function ($query) {
@@ -1810,7 +1682,6 @@ class dispositivosController extends Controller
             ->where('marcaMov_emple_id', '=', $idEmpleado)
             ->get()
             ->first();
-        // dd(DB::getQueryLog());
         if ($marcacion) {
             return response()->json($marcacion->marcaMov_id, 200);
         }
@@ -1901,10 +1772,10 @@ class dispositivosController extends Controller
                     }
                     return response()->json($marcacion->marcaMov_id, 200);
                 } else {
-                    return response()->json(0, 200);
+                    return response()->json(array("respuesta" => "Posibilidad de cruze de marcación."), 200);
                 }
             } else {
-                return response()->json(-1, 200);
+                return response()->json(array("respuesta" => "Entrada debe ser menor a salida."), 200);
             }
             // *************************************** FINALIZACION ******************************************************
         } else {
@@ -2002,10 +1873,10 @@ class dispositivosController extends Controller
                     }
                     return response()->json($marcacion->marcaMov_id, 200);
                 } else {
-                    return response()->json(0, 200);
+                    return response()->json(array("respuesta" => "Posibilidad de cruze de marcación."), 200);
                 }
             } else {
-                return response()->json(-1, 200);
+                return response()->json(array("respuesta" => "Salida debe ser mayor entrada."), 200);
             }
             // *************************************** FINALIZACION ******************************************************
         } else {
@@ -2033,7 +1904,7 @@ class dispositivosController extends Controller
 
             return response()->json($marcacion->marcaMov_id, 200);
         } else {
-            return response()->json(0, 200);
+            return response()->json(array("respuesta" => "Hora final debe ser mayor a entrada."), 200);
         }
     }
 
@@ -2094,35 +1965,64 @@ class dispositivosController extends Controller
         $tipo = $request->get('tipo');
         $marcacion = marcacion_puerta::findOrFail($id);
 
-        // * TOMAR MARCACION PARA NUEVA MARCACION
-        if ($marcacionTipo == 1) {
-            $nuevaMarcacion = $marcacion->marcaMov_fecha;
-            $marcacion->marcaMov_fecha = NULL;
-            $marcacion->save();
-        } else {
-            $nuevaMarcacion = $marcacion->marcaMov_salida;
-            $marcacion->marcaMov_salida = NULL;
-            $marcacion->save();
+        // * VALIDACIONES
+        $marcacionesValidar = DB::table('marcacion_puerta as m')
+            ->select(
+                'm.marcaMov_id',
+                DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+            )
+            ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+            ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
+            ->whereNotNull('m.marcaMov_fecha')
+            ->whereNotNull('m.marcaMov_salida')
+            ->get();
+        // dd(DB::getQueryLog());
+        $respuesta = true;
+        foreach ($marcacionesValidar as $mv) {
+            if ($marcacionTipo == 1) {
+                $respuestaCheck = checkHora($mv->entrada, $mv->salida, $marcacion->marcaMov_fecha);
+            } else {
+                $respuestaCheck = checkHora($mv->entrada, $mv->salida, $marcacion->marcaMov_salida);
+            }
+            if ($respuestaCheck) {
+                $respuesta = false;
+            }
         }
 
-        // * GENERAR NUEVA MARCACION
-        $newMarcacion = new marcacion_puerta();
-        if ($tipo ==  1) {
-            $newMarcacion->marcaMov_fecha = $nuevaMarcacion;
-        } else {
-            $newMarcacion->marcaMov_salida = $nuevaMarcacion;
-        }
-        $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
-        $newMarcacion->organi_id =  $marcacion->organi_id;
-        $newMarcacion->horarioEmp_id = $idHorarioE;
-        $newMarcacion->marca_latitud = $marcacion->marca_latitud;
-        $newMarcacion->marca_longitud = $marcacion->marca_longitud;
-        $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;
-        $newMarcacion->puntoC_id = $marcacion->puntoC_id;
-        $newMarcacion->centC_id = $marcacion->centC_id;
-        $newMarcacion->save();
+        if ($respuesta) {
+            // * TOMAR MARCACION PARA NUEVA MARCACION
+            if ($marcacionTipo == 1) {
+                $nuevaMarcacion = $marcacion->marcaMov_fecha;
+                $marcacion->marcaMov_fecha = NULL;
+                $marcacion->save();
+            } else {
+                $nuevaMarcacion = $marcacion->marcaMov_salida;
+                $marcacion->marcaMov_salida = NULL;
+                $marcacion->save();
+            }
 
-        return response()->json($newMarcacion->marcaMov_id, 200);
+            // * GENERAR NUEVA MARCACION
+            $newMarcacion = new marcacion_puerta();
+            if ($tipo ==  1) {
+                $newMarcacion->marcaMov_fecha = $nuevaMarcacion;
+            } else {
+                $newMarcacion->marcaMov_salida = $nuevaMarcacion;
+            }
+            $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
+            $newMarcacion->organi_id =  $marcacion->organi_id;
+            $newMarcacion->horarioEmp_id = $idHorarioE;
+            $newMarcacion->marca_latitud = $marcacion->marca_latitud;
+            $newMarcacion->marca_longitud = $marcacion->marca_longitud;
+            $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;
+            $newMarcacion->puntoC_id = $marcacion->puntoC_id;
+            $newMarcacion->centC_id = $marcacion->centC_id;
+            $newMarcacion->save();
+
+            return response()->json($newMarcacion->marcaMov_id, 200);
+        } else {
+            return response()->json(array("respuesta" => "Posibilidad de cruze de marcación."), 200);
+        }
     }
 
     // * ELIMINAR MARCACION
@@ -2146,5 +2046,220 @@ class dispositivosController extends Controller
         }
 
         return response()->json("Marcación eliminada.", 200);
+    }
+
+    // * NUEVA SALIDA
+    public function registrarNSalida(Request $request)
+    {
+        $id = $request->get('id');
+        $tiempo = $request->get('salida');
+        $idhorarioE = $request->get('horario');
+
+        $marcacion = marcacion_puerta::findOrFail($id);
+        $entrada = Carbon::parse($marcacion->marcaMov_fecha);
+        // * COMPROBAR SI TIENE HORARIO EMPLEADO
+        if ($idhorarioE != 0) {
+            $horario = DB::table('horario_empleado as he')
+                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->select(
+                    'h.horario_descripcion as descripcion',
+                    'h.horaI',
+                    'h.horaF',
+                    'h.horario_tolerancia as toleranciaI',
+                    'h.horario_toleranciaF as toleranciaF',
+                    'he.fuera_horario as fueraH'
+                )
+                ->where('he.horarioEmp_id', '=', $idhorarioE)
+                ->get()
+                ->first();
+            // * OBTENER TIEMPO DE HORARIOS
+            $horarioInicio = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
+            if ($horario->horaF > $horario->horaI) {
+                $horarioFin = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaF);
+                // ? OBTENER TIEMPO DE SALIDA
+                $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+            } else {
+                $nuevaFecha = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
+                $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
+                if ($tiempo > $entrada->copy()->isoFormat('HH:mm:ss')) {
+                    // ? OBTENER TIEMPO DE SALIDA
+                    $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+                } else {
+                    // ? OBTENER TIEMPO DE SALIDA
+                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
+                }
+            }
+            $salida = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
+        }
+        $salida = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
+        // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
+        if ($salida->gt($entrada)) {
+            // * VALIDACION ENTRE CRUCES DE HORAS
+            $marcacionesValidar = DB::table('marcacion_puerta as m')
+                ->select(
+                    'm.marcaMov_id',
+                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+                )
+                ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
+                ->get();
+            $respuesta = true;
+            foreach ($marcacionesValidar as $mv) {
+                if ($mv->entrada != 0) {
+                    $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
+                    if ($respuestaCheck) {
+                        $respuesta = false;
+                    }
+                }
+                if ($mv->salida != 0) {
+                    $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
+                    if ($respuestaCheck) {
+                        $respuesta = false;
+                    }
+                }
+            }
+            // ! SI NO ENCUENTRA CRUCES
+            if ($respuesta) {
+                // * VALIDAR CON EL HORARIO
+                if ($idhorarioE != 0) {
+                    if ($horario->fueraH == 0) {
+                        // * VALIDAR SIN FUERA DE HORARIO
+                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+
+                        if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                            $marcacion->marcaMov_salida = $salida;
+                            $marcacion->save();
+                            return response()->json($marcacion->marcaMov_id, 200);
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                200
+                            );
+                        }
+                    } else {
+                        $marcacion->marcaMov_salida = $salida;
+                        $marcacion->save();
+                        return response()->json($marcacion->marcaMov_id, 200);
+                    }
+                } else {
+                    $marcacion->marcaMov_salida = $salida;
+                    $marcacion->save();
+                    return response()->json($marcacion->marcaMov_id, 200);
+                }
+            } else {
+                return response()->json(array("respuesta" => "Posibilidad de cruce de hora"), 200);
+            }
+        } else {
+            return response()->json(array("respuesta" => "Salida debe ser mayor a entrada."), 200);
+        }
+    }
+    // * NUEVA ENTRADA
+    public function registrarNEntrada(Request $request)
+    {
+        $id = $request->get('id');
+        $tiempo = $request->get('entrada');
+        $idhorarioE = $request->get('horario');
+
+        $marcacion = marcacion_puerta::findOrFail($id);
+        $salida = Carbon::parse($marcacion->marcaMov_salida);
+        // * COMPROBAR SI TIENE HORARIO EMPLEADO
+        if ($idhorarioE != 0) {
+            $horario = DB::table('horario_empleado as he')
+                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->select(
+                    'h.horario_descripcion as descripcion',
+                    'h.horaI',
+                    'h.horaF',
+                    'h.horario_tolerancia as toleranciaI',
+                    'h.horario_toleranciaF as toleranciaF',
+                    'he.fuera_horario as fueraH'
+                )
+                ->where('he.horarioEmp_id', '=', $idhorarioE)
+                ->get()
+                ->first();
+            // * OBTENER TIEMPO DE HORARIOS
+            $horarioInicio = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
+            if ($horario->horaF > $horario->horaI) {
+                $horarioFin = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaF);
+                // ? OBTENER TIEMPO DE SALIDA
+                $nuevoTiempo = $salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+            } else {
+                $nuevaFecha = $salida->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
+                $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
+                if ($tiempo > $salida->copy()->isoFormat('HH:mm:ss')) {
+                    // ? OBTENER TIEMPO DE SALIDA
+                    $nuevoTiempo = $salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+                } else {
+                    // ? OBTENER TIEMPO DE SALIDA
+                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
+                }
+            }
+            $entrada = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
+        }
+        $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
+        // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
+        if ($salida->gt($entrada)) {
+            // * VALIDACION ENTRE CRUCES DE HORAS
+            $marcacionesValidar = DB::table('marcacion_puerta as m')
+                ->select(
+                    'm.marcaMov_id',
+                    DB::raw('IF(m.marcaMov_fecha is null,0,m.marcaMov_fecha) AS entrada'),
+                    DB::raw('IF(m.marcaMov_salida is null,0,m.marcaMov_salida) AS salida')
+                )
+                ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                ->whereNotIn('m.marcaMov_id', [$marcacion->marcaMov_id])
+                ->get();
+            $respuesta = true;
+            foreach ($marcacionesValidar as $mv) {
+                if ($mv->entrada != 0) {
+                    $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
+                    if ($respuestaCheck) {
+                        $respuesta = false;
+                    }
+                }
+                if ($mv->salida != 0) {
+                    $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
+                    if ($respuestaCheck) {
+                        $respuesta = false;
+                    }
+                }
+            }
+            // ! SI NO ENCUENTRA CRUCES
+            if ($respuesta) {
+                // * VALIDAR CON EL HORARIO
+                if ($idhorarioE != 0) {
+                    if ($horario->fueraH == 0) {
+                        // * VALIDAR SIN FUERA DE HORARIO
+                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF);
+
+                        if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                            $marcacion->marcaMov_fecha = $entrada;
+                            $marcacion->save();
+                            return response()->json($marcacion->marcaMov_id, 200);
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                200
+                            );
+                        }
+                    } else {
+                        $marcacion->marcaMov_fecha = $entrada;
+                        $marcacion->save();
+                        return response()->json($marcacion->marcaMov_id, 200);
+                    }
+                } else {
+                    $marcacion->marcaMov_fecha = $entrada;
+                    $marcacion->save();
+                    return response()->json($marcacion->marcaMov_id, 200);
+                }
+            } else {
+                return response()->json(array("respuesta" => "Posibilidad de cruce de hora"), 200);
+            }
+        } else {
+            return response()->json(array("respuesta" => "Entrada debe ser menor a salida."), 200);
+        }
     }
 }
