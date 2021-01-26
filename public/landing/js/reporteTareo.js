@@ -439,7 +439,7 @@ function cargartabla(fecha) {
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                         orientation: 'landscape',
-                        pageSize: 'A1',
+                        pageSize: 'A3',
                         title: 'Asistencia',
                         exportOptions: {
                             columns: ":visible:not(.noExport)"
