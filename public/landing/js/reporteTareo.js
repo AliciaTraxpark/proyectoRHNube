@@ -76,7 +76,7 @@ function cargartabla(fecha) {
                                     <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
-                
+
                     theadTabla += `<th>Cod.</th>
                                     <th>Actividad</th>
                                     <th>Cod.</th>
@@ -292,7 +292,7 @@ function cargartabla(fecha) {
                     }
 
                         /*------- N DE COLUMNAS DE REPETICION---------------- */
-                        tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
+                       /*  tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`; */
                         /* --------------------------------------------------- */
 
                     tbody += tbodyEntradaySalida;
