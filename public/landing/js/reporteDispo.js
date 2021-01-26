@@ -417,9 +417,29 @@ function cargartabla(fecha) {
                                                 <td class="text-center">${horarioData.tolerancia} min.</td>`;
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                    <a class="badge badge-soft-danger mr-2">
-                                                        Sin horario
-                                                    </a>
+                                                    <div class="dropdown">
+                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                Sin horario
+                                                            </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                Opciones
+                                                            </h6>
+                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                            <div class="dropdown-item">
+                                                                <div class="form-group noExport pl-3">
+                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                        Cambiar horario
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
                                                 </td>
                                                 <td class="text-center">---</td><td class="text-center">---</td>`;
                             }
@@ -2067,6 +2087,7 @@ $('#horarioXE').on("change", function () {
     $('#detalleHorarios').append(contenido);
     $('#detalleHorarios').show();
 });
+// * FUNCION DE CAMBIAR DE HORARIO
 function cambiarHorarioM() {
     var newH = $('#horarioXE').val();
     var idHE = $('#idHorarioECH').val();
@@ -2105,6 +2126,20 @@ function cambiarHorarioM() {
         error: function () { }
     });
 }
+// * VALIDACION
+$('#formCambiarHorarioM').attr('novalidate', true);
+$('#formCambiarHorarioM').submit(function (e) {
+    e.preventDefault();
+    if ($("#horarioXE").val() == null || $("#horarioXE").val() == "") {
+        $('#ch_valid').empty();
+        $('#ch_valid').append("Seleccionar horario.");
+        $('#ch_valid').show();
+        return;
+    }
+    $('#ch_valid').empty();
+    $('#ch_valid').hide();
+    this.submit();
+});
 // ! ********************************* FINALIZACION *************************************************************
 // * LIMPIEZA DE CAMPOS
 function limpiarAtributos() {
