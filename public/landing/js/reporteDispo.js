@@ -367,8 +367,9 @@ function cargartabla(fecha) {
                     tbody += `<tr>`;
                     if (permisoModificar == 1) {
                         tbody += `<td class="noExport text-center">
-                                    <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')">
-                                        <img style="margin-bottom: 3px;" src="landing/images/plusM.svg"  height="17" />
+                                    <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                        style="cursor:pointer">
+                                        <img style="margin-bottom: 3px;" src="landing/images/addD.svg"  height="17" />
                                     </a>
                                 </td>`;
                     }
@@ -810,7 +811,7 @@ function cargartabla(fecha) {
                                             tbodyEntradaySalida += `<td>
                                                                         <div class="dropdown noExport">
                                                                             <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
-                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                                                aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                                 <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                                     No tiene salida
@@ -1054,6 +1055,7 @@ function cargartabla(fecha) {
                 }
                 $('#tbodyD').html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
+                $('.dropdown-toggle').dropdown();
                 // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
                 if (data.length == 1) {
                     var tbodyTR = '';
@@ -1141,6 +1143,7 @@ function togglePausas() {
 }
 
 // TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
+// ! *********************************** NUEVA MARCACION ********************************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
     var estadoH = false;
@@ -1174,15 +1177,14 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
             }
         },
         success: function (data) {
-            if (data != null) {
+            if (data.respuesta == undefined) {
+                console.log(data);
                 if ($('#dropSalida' + data) != undefined) {
-                    $('#dropSalida' + data).dropdown("toggle");
-                    $('#horaSalidaN' + data).addClass("borderColor");
                     $.notifyClose();
                     $.notify(
                         {
                             message:
-                                "\nRegistrar marcación de entrada.",
+                                "\nRegistrar marcación de salida.",
                             icon: "admin/images/warning.svg",
                         },
                         {
@@ -1207,13 +1209,11 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
                     );
                 } else {
                     if ($('#dropEntrada' + data) != undefined) {
-                        $('#dropEntrada' + data).dropdown("toggle");
-                        $('#horaEntradaN' + data).addClass("borderColor");
                         $.notifyClose();
                         $.notify(
                             {
                                 message:
-                                    "\nRegistrar marcación de salida.",
+                                    "\nRegistrar marcación de entrada.",
                                 icon: "admin/images/warning.svg",
                             },
                             {
@@ -1238,9 +1238,74 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
                         );
                     }
                 }
+            } else {
+                $('#modalAgregar').modal();
             }
         },
         error: function () { }
+    });
+    listaHorariosD(idEmpleado, fecha);
+}
+//* LISTA DE HORARIOS DISPONIBLES
+function listaHorariosD(idEmpleado, fecha) {
+    $('#r_horarioXE').empty();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/horariosxEmpleado",
+        data: {
+            idHE: 0,
+            fecha: fecha,
+            idEmpleado: idEmpleado
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            datosHorario = data;
+            var container = `<option value="" disabled selected>Seleccionar horario</option>
+                                <option value="0">Sin horario</option>`;
+            for (let index = 0; index < data.length; index++) {
+                container += `<option value="${data[index].idHorarioE}">${data[index].descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
+            }
+            $('#r_horarioXE').append(container);
+        },
+        error: function () { }
+    });
+}
+// * MOSTRAR BOTON DE AGREGAR MARCACION
+$('#r_horarioXE').on("change", function () {
+    $('#btnAgregarES').show();
+});
+// * MODAL DE AGREGAR MARCACION
+var newEntrada = {};
+var newSalida = {};
+function modalAgregarMH() {
+    $('#marcacionHES').modal();
+    // * INPUT DE ENTRADA
+    newEntrada = $('#nuevaEntrada').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
+    // * INPUT DE SALIDA
+    newSalida = $('#nuevaSalida').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
     });
 }
 // ! *********************************** CAMBIAR A ENTRADA ********************************************

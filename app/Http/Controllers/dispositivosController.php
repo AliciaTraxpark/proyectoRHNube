@@ -1686,7 +1686,7 @@ class dispositivosController extends Controller
         if ($marcacion) {
             return response()->json($marcacion->marcaMov_id, 200);
         }
-        return response()->json(null, 200);
+        return response()->json(array("respuesta" => "ok"), 200);
     }
 
     // * LISTA DE SALIDAS CON ENTRADA NULL
