@@ -390,7 +390,46 @@ class marcacionTareoController extends Controller
             }
         } else {
             if ($idemp == 0 || $idemp == ' ') {
-                $marcaciones = DB::table('empleado as e')
+
+                $marcaciones=DB::table('marcacion_tareo as mt')
+                ->join('empleado as e','mt.marcaTareo_idempleado', '=', 'e.emple_id')
+                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
+                ->leftJoin('controladores_tareo as cont','mt.idcontroladores_tareo','=','cont.idcontroladores_tareo')
+                ->leftJoin('actividad as act','mt.Activi_id','=','act.Activi_id')
+                ->leftJoin('punto_control as pc','mt.puntoC_id','=','pc.id')
+                ->leftJoin('centro_costo as centC','mt.centroC_id','=','centC.centroC_id')
+                ->leftJoin('subactividad as sub','mt.idsubActividad','=','sub.idsubActividad')
+
+                ->select(
+                    'e.emple_id',
+                    'mt.idmarcaciones_tareo',
+                    'e.emple_nDoc',
+                    DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
+                    'p.perso_nombre',
+                    'p.perso_apPaterno',
+                    'p.perso_apMaterno',
+                    DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                     DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                    'act.Activi_Nombre',
+                    DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                    'sub.subAct_nombre',
+                    DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                    DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                    'mt.idmarcaciones_tareo as idMarcacion',
+                    'cont.contrT_nombres',
+                    'cont.contrT_ApPaterno',
+                    'cont.contrT_ApMaterno',
+                    'pc.descripcion as puntoControl'
+
+                )
+                ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                ->where('mt.organi_id', '=', session('sesionidorg'))
+                ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
+                ->get();
+                return $marcaciones;
+
+                /* $marcaciones = DB::table('empleado as e')
                     ->join('marcacion_tareo as mt', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -400,7 +439,6 @@ class marcacionTareoController extends Controller
 
                     ->select(
                         'e.emple_id',
-
                         'mt.idmarcaciones_tareo',
                         'e.emple_nDoc',
                         'p.perso_nombre',
@@ -420,7 +458,7 @@ class marcacionTareoController extends Controller
 
                     ->where('mt.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
-                    ->get();
+                    ->get(); */
                 $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
             } else {
                 $marcaciones = DB::table('empleado as e')
