@@ -310,8 +310,12 @@
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
-            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
-            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:cambiarEntradaM()" id="formCambiarEntradaM">
                         <div class="row">
@@ -335,7 +339,7 @@
                         </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                     <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
                         onclick="javascript:limpiarAtributos()">
@@ -356,8 +360,12 @@
     aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog  d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
-            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
-            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:cambiarSalidaM()" id="formCambiarSalidaM">
                         <div class="row">
@@ -381,7 +389,7 @@
                         </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                     <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
                         onclick="javascript:limpiarAtributos()">
@@ -402,8 +410,12 @@
     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered justify-content-center">
         <div class="modal-content">
-            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
-            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:guardarAsignacion()" id="formGuardarAsignacion">
                         <div class="row">
@@ -412,22 +424,20 @@
                             {{-- EL TIPO DE MARCACION SI FUE ENTRADA O SALIDA --}}
                             <input type="hidden" id="tipoM">
                             <div class="col-md-12">
-                                <h6 style="color:#62778c;font-weight: bold">
-                                    Hora de marcación
-                                    &nbsp;
-                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" id="img_a" />
-                                    &nbsp;
-                                    <span id="a_hora" style="color:#62778c;font-weight: bold"></span>
-                                </h6>
+                                <span style="color:#62778c;font-weight: bold">Hora de marcación</span>
+                                &nbsp;
+                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12" id="img_a" />
+                                &nbsp;
+                                <span id="a_hora"></span>
                                 <span id="a_valid" style="color: #8b3a1e;display:none">
                                     Seleccionar marcación
                                 </span>
                             </div>
-                            <div class="col-xl-8">
+                            <div class="col-xl-8 mt-1">
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                     id="horarioM" required></select>
                             </div>
-                            <div class="col-xl-4">
+                            <div class="col-xl-4 mt-1">
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                     id="asignacionM" required>
                                     <option value="" disabled selected>Seleccionar</option>
@@ -438,7 +448,7 @@
                         </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                     <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
                         onclick="javascript:limpiarAtributos()">
@@ -459,10 +469,12 @@
     data-backdrop="static">
     <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
-            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;">
-                <div class="col-md-12"></div>
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
             </div>
-            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+            <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:insertarSalida()" id="formInsertarSalida">
                         <div class="row">
@@ -471,7 +483,7 @@
                             {{-- ID DE HORARIO --}}
                             <input type="hidden" id="idHorarioIS">
                             <div class="col-md-12">
-                                <h6 style="color:#62778c;font-weight: bold">Insertar salida</h6>
+                                <span style="color:#62778c;font-weight: bold">Agregar salida</span>
                             </div>
                             <div class="col-md-12">
                                 <span id="i_validS" style="color: #8b3a1e;display:none">
@@ -484,7 +496,7 @@
                                     &nbsp;
                                     <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
                                     &nbsp;
-                                    <span id="i_hora" style="color:#62778c;font-weight: bold"></span>
+                                    <span id="i_hora" style="color:#383e56;font-weight: bold"></span>
                                 </label>
                             </div>
                             <div class="col-xl-7">
@@ -501,13 +513,13 @@
                         </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                     <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
                         onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
                         Guardar
                     </button>
                     </form>
@@ -522,10 +534,12 @@
     data-backdrop="static">
     <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
-            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;">
-                <div class="col-md-12"></div>
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
             </div>
-            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+            <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
                     <form action="javascript:insertarEntrada()" id="formInsertarEntrada">
                         <div class="row">
@@ -534,7 +548,7 @@
                             {{-- ID DE HORARIO --}}
                             <input type="hidden" id="idHorarioIE">
                             <div class="col-md-12">
-                                <h6 style="color:#62778c;font-weight: bold">Insertar entrada</h6>
+                                <span style="color:#62778c;font-weight: bold">Insertar entrada</span>
                             </div>
                             <div class="col-md-12">
                                 <span id="i_validE" style="color: #8b3a1e;display:none">
@@ -543,10 +557,10 @@
                             </div>
                             <div class="col-xl-7">
                                 <div class="form-group row">
-                                    <label class="col-lg-5 col-form-label text-right">Entrada &nbsp;
+                                    <label class="col-lg-4 col-form-label text-left">Entrada &nbsp;
                                         <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
                                     </label>
-                                    <div class="col-lg-7 mt-1">
+                                    <div class="col-lg-8 mt-1 text-left">
                                         <input type="text" class="form-control form-control-sm horasEntrada"
                                             onchange="$(this).removeClass('borderColor');" id="horasEntradaNueva">
                                     </div>
@@ -564,13 +578,13 @@
                         </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                     <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
                         onclick="javascript:limpiarAtributos()">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
                         Guardar
                     </button>
                     </form>

@@ -407,7 +407,7 @@ function cargartabla(fecha) {
                                                                 </h6>
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item">
-                                                                    <div class="form-group noExport pl-3">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
@@ -426,7 +426,7 @@ function cargartabla(fecha) {
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario">
                                                                     <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
                                                                     ${horarioData.horario}
                                                                 </span>
@@ -438,7 +438,7 @@ function cargartabla(fecha) {
                                                                 </h6>
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item noExport">
-                                                                    <div class="form-group noExport pl-3 mt-1">
+                                                                    <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
@@ -469,7 +469,7 @@ function cargartabla(fecha) {
                                                             </h6>
                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                             <div class="dropdown-item noExport">
-                                                                <div class="form-group noExport pl-3">
+                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                     <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
                                                                         Cambiar horario
@@ -519,7 +519,7 @@ function cargartabla(fecha) {
                                                                             </h6>
                                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                             <div class="dropdown-item noExport">
-                                                                                <div class="form-group noExport pl-3">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                     <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                         Cambiar a entrada
@@ -527,7 +527,7 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                             </div>
                                                                             <div class="dropdown-item noExport">
-                                                                                <div class="form-group noExport pl-3">
+                                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                     <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                         Cambiar a salida
@@ -536,7 +536,7 @@ function cargartabla(fecha) {
                                                                             </div>`;
                                         if (marcacionData.salida != 0) {
                                             tbodyEntradaySalida += `<div class="dropdown-item noExport">
-                                                                        <div class="form-group noExport pl-3">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                             <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
                                                                                 Convertir orden
@@ -544,7 +544,7 @@ function cargartabla(fecha) {
                                                                         </div>
                                                                     </div>
                                                                     <div class="dropdown-item noExport">
-                                                                        <div class="form-group noExport pl-3">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                             <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                                                 Asignar a nueva marc.
@@ -553,7 +553,7 @@ function cargartabla(fecha) {
                                                                     </div>`;
                                         }
                                         tbodyEntradaySalida += ` <div class="dropdown-item noExport">
-                                                                    <div class="form-group noExport pl-3">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                             Eliminar marc.
@@ -613,7 +613,7 @@ function cargartabla(fecha) {
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                 <div class="dropdown-item noExport">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                             Cambiar a entrada
@@ -621,7 +621,7 @@ function cargartabla(fecha) {
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="dropdown-item noExport">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                             Cambiar a salida
@@ -629,7 +629,7 @@ function cargartabla(fecha) {
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="dropdown-item noExport">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
                                                                                             Convertir orden
@@ -637,7 +637,7 @@ function cargartabla(fecha) {
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="dropdown-item noExport">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                                                             Asignar a nueva marc.
@@ -645,7 +645,7 @@ function cargartabla(fecha) {
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="dropdown-item noExport">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                                             Eliminar marc.
@@ -822,7 +822,7 @@ function cargartabla(fecha) {
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                 <div class="dropdown-item noExport">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                                                             Insertar salida
@@ -878,7 +878,7 @@ function cargartabla(fecha) {
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                 <div class="dropdown-item">
-                                                                                    <div class="form-group noExport pl-3">
+                                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                                                             Insertar entrada
@@ -915,7 +915,7 @@ function cargartabla(fecha) {
                                                                                         </h6>
                                                                                         <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                         <div class="dropdown-item noExport">
-                                                                                            <div class="form-group noExport pl-3">
+                                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                                 <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                                     Cambiar a entrada
@@ -923,7 +923,7 @@ function cargartabla(fecha) {
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="dropdown-item noExport">
-                                                                                            <div class="form-group noExport pl-3">
+                                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                                 <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                                     Cambiar a salida
@@ -931,7 +931,7 @@ function cargartabla(fecha) {
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="dropdown-item noExport">
-                                                                                            <div class="form-group noExport pl-3">
+                                                                                            <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                                 <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                                                     Eliminar marc.
