@@ -34,7 +34,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-        <h4 class="header-title mt-0 "></i>Actividades en modo tareo</h4>
+        <h4 class="header-title mt-0 "></i>Detalle de tareo por dia</h4>
     </div>
 </div>
 @endsection
@@ -235,9 +235,10 @@
                     border-collapse: collapse !important;
                 }
             </style>
-          
+
         </div>
         <div id="tableZoom" class="col-md-12">
+            
             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                     <tr>
@@ -245,7 +246,8 @@
                         <th>Código</th>
                         <th>DNI</th>
                         <th>Apellidos y nombres</th>
-                        <th>Cargo</th>
+                        <th name="tiempoSitHi">Sexo</th>
+                        <th name="tiempoSitHi">Cargo</th>
                         <th>Cod.</th>
                         <th>Actividad</th>
                         <th>Cod.</th>

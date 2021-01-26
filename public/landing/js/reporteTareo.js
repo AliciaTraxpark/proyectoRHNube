@@ -71,10 +71,12 @@ function cargartabla(fecha) {
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
                                     <th>CC&nbsp;</th>
+                                    <th name="tiempoSitHi">Fecha</th>
                                     <th>Código</th>
                                     <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                    <th name="tiempoSitHi">Sexo</th>
+                                    <th name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
 
                     theadTabla += `<th>Cod.</th>
@@ -83,10 +85,10 @@ function cargartabla(fecha) {
                                     <th>Subactividad</th>
                                     <th>Hora de entrada</th>
                                     <th>Hora de salida</th>
-                                    <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
+                                    <th >Tiempo en sitio</th>`;
 
 
-                theadTabla += `<th>Tiempo total</th>
+                theadTabla += `
                                    <th>Punto de control</th>
                                    <th>Controlador</th></tr>`;
 
@@ -104,6 +106,7 @@ function cargartabla(fecha) {
 
                                 <td>${index + 1}&nbsp;</td>
 
+                                <td name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
                                 <td>${
                                     data[index].emple_codigo
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -118,8 +121,14 @@ function cargartabla(fecha) {
                                     data[index].perso_apMaterno
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
+                                if (data[index].perso_sexo != null) {
+                                    tbody += `<td name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                } else {
+                                    tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                }
+
                                 if (data[index].cargo_descripcion != null) {
-                                    tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 } else {
                                     tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 }
@@ -208,7 +217,7 @@ function cargartabla(fecha) {
                                                 segundosTiempo =
                                                     "0" + segundosTiempo;
                                             }
-                                            tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                            tbodyEntradaySalida += `<td >
                                                                     <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                     <a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
@@ -228,7 +237,7 @@ function cargartabla(fecha) {
                                         /* SI NO TENGO SALIDA */
                                         tbodyEntradaySalida += `<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
 
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                        tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                 --:--:--
@@ -279,7 +288,7 @@ function cargartabla(fecha) {
                                             marcacionData.salida
                                         ).format("HH:mm:ss")}</td>`;
 
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                        tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                 --:--:--
@@ -297,24 +306,21 @@ function cargartabla(fecha) {
 
                     tbody += tbodyEntradaySalida;
 
-                    tbody += `<td id="TiempoTotal${data[index].emple_id}">
-                               <a class="badge badge-soft-primary mr-2">
-                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                            ${sumaTiempos.format("HH:mm:ss")}
-                               </a>
-                              </td>
+                    /* -----------PUNTO DE CONTRO Y CONTROLADOR------------- */
+                    tbody += `
 
                               <td> ${marcacionData.puntoControl} </td>
                                 <td>  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
+                    /* ----------------------------------------- ------------------*/
                 }
                 $("#tbodyD").html(tbody);
 
-                /* DATOS PARA TABLA */
+                /* DATOS PARA EXPORTAR TABLA */
                 var razonSocial=$('#nameOrganizacion').val();
                 var direccion=$('#direccionO').val();
                 var ruc=$('#rucOrg').val();
 
-                var fechaAsisteDH = moment($('#pasandoV').val()).format('DD/MM/YYYY')
+                var fechaAsisteDH = moment($('#pasandoV').val()).format('DD/MM/YYYY');
 
                 /* ------------------------ */
 
@@ -359,7 +365,8 @@ function cargartabla(fecha) {
                         },
                     },
                     dom: 'Bfrtip',
-                    buttons: [{
+                    buttons: [
+                        {
                         extend: 'excel',
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",

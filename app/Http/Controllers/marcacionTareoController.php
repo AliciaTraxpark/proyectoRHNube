@@ -137,7 +137,7 @@ class marcacionTareoController extends Controller
         $dia = $fecha->day;
         $ndia = $dia + 1;
 
-     
+
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -165,6 +165,7 @@ class marcacionTareoController extends Controller
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
+                            'p.perso_sexo',
                             DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                             DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                             'act.Activi_Nombre',
@@ -203,6 +204,7 @@ class marcacionTareoController extends Controller
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
+                            'p.perso_sexo',
                             DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                             DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                             'act.Activi_Nombre',
@@ -253,6 +255,7 @@ class marcacionTareoController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
+                                'p.perso_sexo',
                                 DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                                 DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                                 'act.Activi_Nombre',
@@ -296,6 +299,7 @@ class marcacionTareoController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
+                                'p.perso_sexo',
                                 DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                                 DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                                 'act.Activi_Nombre',
@@ -343,6 +347,7 @@ class marcacionTareoController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
+                                'p.perso_sexo',
                                 DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                                 DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                                 'act.Activi_Nombre',
@@ -387,6 +392,7 @@ class marcacionTareoController extends Controller
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
+                                'p.perso_sexo',
                                 DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                                 DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                                 'act.Activi_Nombre',
@@ -434,6 +440,7 @@ class marcacionTareoController extends Controller
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
+                        'p.perso_sexo',
                         DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                         DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                         'act.Activi_Nombre',
@@ -473,6 +480,7 @@ class marcacionTareoController extends Controller
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
+                        'p.perso_sexo',
                         DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
                         DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
                         'act.Activi_Nombre',
