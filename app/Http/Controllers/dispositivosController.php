@@ -402,7 +402,8 @@ class dispositivosController extends Controller
                         "horarioFin" => $empleado->horarioFin,
                         "idHorario" => $empleado->idHorario,
                         "tolerancia" => $empleado->tolerancia,
-                        "idHorarioE" => $empleado->idHorarioE
+                        "idHorarioE" => $empleado->idHorarioE,
+                        "estado" => $empleado->estado
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorario]["pausas"])) {
@@ -641,7 +642,8 @@ class dispositivosController extends Controller
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'hor.horario_tolerancia as tolerancia',
-                'mp.marcaMov_id as idMarcacion'
+                'mp.marcaMov_id as idMarcacion',
+                'hoe.estado'
             )
             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))

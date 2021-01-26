@@ -248,6 +248,8 @@ var ruc;
 // * HORAS PARA INSERTAR ENTRADA Y SALIDA
 var horasE = {};
 var horasS = {};
+// * ESTADO DE HORARIO EMPLEADO
+var contenidoHorario = [];
 function cargartabla(fecha) {
     var idemp = $('#idempleado').val();
     $.ajax({
@@ -387,36 +389,70 @@ function cargartabla(fecha) {
                         if (data[index].data[m] != undefined) {
                             // ! HORARIO
                             var horarioData = data[index].data[m].horario;
+                            contenidoHorario.push(horarioData);
                             if (horarioData.horario != null) {
-                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                    <div class="dropdown">
-                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                            <span class="badge badge-soft-primary mr-2" class="text-center">
-                                                                ${horarioData.horario}
-                                                            </span>
-                                                        </a>
-                                                        <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                Opciones
-                                                            </h6>
-                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                            <div class="dropdown-item">
-                                                                <div class="form-group noExport pl-3">
-                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
-                                                                        Cambiar horario
-                                                                    </a>
+                                if (horarioData.estado == 1) {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                    ${horarioData.horario}
+                                                                </span>
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item">
+                                                                    <div class="form-group noExport pl-3">
+                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                            Actualizar horario
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                </td>
-                                                <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                    </td>
+                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                } else {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                    ${horarioData.horario}
+                                                                </span>
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item">
+                                                                    <div class="form-group noExport pl-3 mt-1">
+                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                            Actualizar horario
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                    </td>
+                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                }
                             } else {
                                 grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                     <div class="dropdown">
@@ -484,7 +520,7 @@ function cargartabla(fecha) {
                                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                             <div class="dropdown-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                         Cambiar a entrada
                                                                                     </a>
@@ -492,7 +528,7 @@ function cargartabla(fecha) {
                                                                             </div>
                                                                             <div class="dropdown-item">
                                                                                 <div class="form-group noExport pl-3">
-                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                    <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                         Cambiar a salida
                                                                                     </a>
@@ -501,7 +537,7 @@ function cargartabla(fecha) {
                                         if (marcacionData.salida != 0) {
                                             tbodyEntradaySalida += `<div class="dropdown-item">
                                                                         <div class="form-group noExport pl-3">
-                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
                                                                                 Convertir orden
                                                                             </a>
@@ -518,7 +554,7 @@ function cargartabla(fecha) {
                                         }
                                         tbodyEntradaySalida += ` <div class="dropdown-item">
                                                                     <div class="form-group noExport pl-3">
-                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},1)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                             Eliminar marc.
                                                                         </a>
@@ -578,7 +614,7 @@ function cargartabla(fecha) {
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                 <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                             Cambiar a entrada
                                                                                         </a>
@@ -586,7 +622,7 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                                 <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                             Cambiar a salida
                                                                                         </a>
@@ -594,7 +630,7 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                                 <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="convertirOrden(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
                                                                                             Convertir orden
                                                                                         </a>
@@ -610,7 +646,7 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                                 <div class="dropdown-item">
                                                                                     <div class="form-group noExport pl-3">
-                                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                        <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                                             Eliminar marc.
                                                                                         </a>
@@ -880,7 +916,7 @@ function cargartabla(fecha) {
                                                                                         <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                                         <div class="dropdown-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
                                                                                                     Cambiar a entrada
                                                                                                 </a>
@@ -888,7 +924,7 @@ function cargartabla(fecha) {
                                                                                         </div>
                                                                                         <div class="dropdown-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
                                                                                                     Cambiar a salida
                                                                                                 </a>
@@ -896,7 +932,7 @@ function cargartabla(fecha) {
                                                                                         </div>
                                                                                         <div class="dropdown-item">
                                                                                             <div class="form-group noExport pl-3">
-                                                                                                <a onclick="eliminarM(${marcacionData.idMarcacion},2)" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                                <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
                                                                                                     Eliminar marc.
                                                                                                 </a>
@@ -1197,7 +1233,18 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
 }
 // ! *********************************** CAMBIAR A ENTRADA ********************************************
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
-function listaSalida(id, fecha, idEmpleado, hora, tipo) {
+function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     $('#salidaM').empty();
     $('#c_horaS').text(hora);
     $('#c_tipoS').val(tipo);
@@ -1223,6 +1270,7 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo) {
             }
         },
         success: function (data) {
+            contenidoHorario = [];
             if (data.length != 0) {
                 var container = `<option value="" disabled selected>Seleccionar salida</option>`;
                 for (let index = 0; index < data.length; index++) {
@@ -1344,7 +1392,18 @@ $('#formCambiarEntradaM').submit(function (e) {
 });
 // ! *********************************** CAMBIAR A SALIDA ****************************************************
 // * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
-function listaEntrada(id, fecha, idEmpleado, hora, tipo) {
+function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     $('#entradaM').empty();
     $('#c_horaE').text(hora);
     $('#c_tipoE').val(tipo);
@@ -1490,7 +1549,18 @@ $('#formCambiarSalidaM').submit(function (e) {
 });
 // ! *********************************** CONVERTIR ORDEN ******************************************************
 // * CONVERTIR ORDEN
-function convertirOrden(id) {
+function convertirOrden(id, idHE) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     alertify
         .confirm("¿Desea Convertir orden si o no?", function (
             e
@@ -1591,6 +1661,17 @@ function convertirOrden(id) {
 // ! ********************************** ASIGNAR A NUEVA MARCACIÓN *********************************************
 // * ASIGNAR NUEVA MARCACION
 function asignarNuevaM(id, hora, tipo, horario) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == horario) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     $('#idMarcacionA').val(id);
     $('#tipoM').val(tipo);
     $('#a_hora').text(hora);
@@ -1697,7 +1778,18 @@ $('#formGuardarAsignacion').submit(function (e) {
 });
 // ! ********************************** ELIMINAR MARCACIÓN *****************************************************
 // * ELIMINAR MARCACION
-function eliminarM(id, tipo) {
+function eliminarM(id, tipo, idHE) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idHE) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     alertify
         .confirm("¿Desea eliminar marcación si o no?", function (
             e
@@ -1766,6 +1858,17 @@ function eliminarM(id, tipo) {
 // ! ******************************** INSERTAR SALIDA **********************************************************
 // * MODAL DE INSERTAR SALIDA
 function insertarSalidaModal(hora, id, idH) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idH) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     $('#idMarcacionIS').val(id);
     $('#i_hora').text(hora);
     $('#idHorarioIS').val(idH);
@@ -1857,6 +1960,17 @@ $('#formInsertarSalida').submit(function (e) {
 });
 // ! ********************************* INSERTAR ENTRADA ********************************************************
 function insertarEntradaModal(hora, id, idH) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idH) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     $('#idMarcacionIE').val(id);
     $('#ie_hora').text(hora);
     $('#idHorarioIE').val(idH);
@@ -1974,14 +2088,10 @@ function modalCambiarHorario(idHE, fecha, id) {
         },
         success: function (data) {
             datosHorario = data;
-            if (data.length != 0) {
-                var container = `<option value="" disabled selected>Seleccionar horario</option>
+            var container = `<option value="" disabled selected>Seleccionar horario</option>
                                 <option value="0">Sin horario</option>`;
-                for (let index = 0; index < data.length; index++) {
-                    container += `<option value="${data[index].idHorarioE}">${data[index].descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
-                }
-            } else {
-                var container = `<option value="" disabled selected>No hay horarios disponibles</option>`;
+            for (let index = 0; index < data.length; index++) {
+                container += `<option value="${data[index].idHorarioE}">${data[index].descripcion} (${data[index].horaI} - ${data[index].horaF})</option>`;
             }
             $('#horarioXE').append(container);
         },

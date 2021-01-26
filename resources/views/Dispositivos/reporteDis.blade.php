@@ -627,6 +627,29 @@
     </div>
 </div>
 {{-- FINALIZACION --}}
+{{-- ACTUALIZAR HORARIO --}}
+<div class="modal fade" id="actualizarH" tabindex="-1" role="dialog" aria-labelledby="actualizarH" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="{{asset('landing/images/calendarioA.svg')}}" height="50" class="mt-1">
+                <h6 class="text-danger font-weight-bold mt-3">Actualizar horario</h6>
+                <span>
+                    <img src="{{asset('admin/images/warning.svg')}}" height="18">&nbsp;
+                    Horario asignado actualmente fue eliminado.<br>Recomendamos actualizar horario.
+                </span>
+                <div class="mt-4">
+                    <a class="btn btn-rounded width-md" data-dismiss="modal"
+                        style="background: #183b5d;color:#ffffff;cursor: pointer;">
+                        Entendido
+                    </a>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION --}}
 {{-- MODIFICAR --}}
 @if (isset($modifReporte))
 @if ($modifReporte==1)
