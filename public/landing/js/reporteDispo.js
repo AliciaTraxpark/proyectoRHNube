@@ -9,7 +9,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     wrap: true,
     allowInput: true,
 });
-
+var fechaGlobal = {};
 $(function () {
     $('#idempleado').select2({
         placeholder: 'Seleccionar',
@@ -241,10 +241,11 @@ function inicializarTabla() {
         },
     });
 }
-
+// * VARIABLES PARA EXCEL Y PDF
 var razonSocial;
 var direccion;
 var ruc;
+// * HORAS PARA INSERTAR ENTRADA Y SALIDA
 var horasE = {};
 var horasS = {};
 function cargartabla(fecha) {
@@ -269,6 +270,7 @@ function cargartabla(fecha) {
             }
         },
         success: function (data) {
+            fechaGlobal = fecha;
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
@@ -1072,9 +1074,7 @@ function cargartabla(fecha) {
         error: function () { }
     });
 }
-
 function cambiarF() {
-
     f1 = $("#fechaInput").val();
     f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
@@ -1125,6 +1125,7 @@ function insertarEntrada(idMarca) {
             if (data == 1) {
                 $('#tableZoom').hide();
                 $('#espera').show();
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 $('#espera').hide();
                 $('#tableZoom').show();
@@ -1331,6 +1332,7 @@ function cambiarEntradaM() {
             if (data == undefined) {
                 $('#s_valid').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
                 $.notifyClose();
@@ -1477,6 +1479,7 @@ function cambiarSalidaM() {
             if (data.respuesta == undefined) {
                 $('#e_valid').hide();
                 $('#listaEntradasMarcacion').modal('toggle');
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 $.notifyClose();
                 $.notify(
@@ -1567,6 +1570,7 @@ function convertirOrden(id) {
                     },
                     success: function (data) {
                         if (data.respuesta == undefined) {
+                            fechaValue.setDate(fechaGlobal);
                             $('#btnRecargaTabla').click();
                             $.notifyClose();
                             $.notify(
@@ -1713,6 +1717,7 @@ function guardarAsignacion() {
             if (data.respuesta == undefined) {
                 $('#a_valid').empty();
                 $('#a_valid').hide();
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 $('#asignacionMarcacion').modal('toggle');
                 limpiarAtributos();
@@ -1772,6 +1777,7 @@ function eliminarM(id, tipo) {
                         }
                     },
                     success: function (data) {
+                        fechaValue.setDate(fechaGlobal);
                         $('#btnRecargaTabla').click();
                         $.notifyClose();
                         $.notify({
@@ -1859,6 +1865,7 @@ function insertarSalida() {
                 $('#i_validS').empty();
                 $('#i_validS').hide();
                 $('#insertarSalida').modal('toggle');
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
                 $.notifyClose();
@@ -1949,6 +1956,7 @@ function insertarEntrada() {
                 $('#i_validE').empty();
                 $('#i_validE').hide();
                 $('#insertarEntrada').modal('toggle');
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
                 $.notifyClose();
@@ -2115,6 +2123,7 @@ function cambiarHorarioM() {
             if (data.respuesta == undefined) {
                 $('#ch_valid').hide();
                 $('#modalCambiarHorario').modal("toggle");
+                fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
             } else {
