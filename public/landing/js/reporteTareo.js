@@ -76,7 +76,7 @@ function cargartabla(fecha) {
                                     <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                     <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
-                for (let j = 0; j < cantidadColumnasHoras; j++) {
+                
                     theadTabla += `<th>Cod.</th>
                                     <th>Actividad</th>
                                     <th>Cod.</th>
@@ -84,7 +84,7 @@ function cargartabla(fecha) {
                                     <th>Hora de entrada</th>
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>`;
-                }
+
 
                 theadTabla += `<th>Tiempo total</th>
                                    <th>Punto de control</th>
@@ -290,7 +290,7 @@ function cargartabla(fecha) {
                             }
 
                     }
-                    
+
                         /*------- N DE COLUMNAS DE REPETICION---------------- */
                         tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
                         /* --------------------------------------------------- */
