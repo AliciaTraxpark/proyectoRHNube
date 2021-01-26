@@ -212,7 +212,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <label class="mb-0">Seleccionar Actividad: </label> &nbsp; &nbsp;
                                         <br><span style="font-size: 11px;">
                                             *Se visualizara actividades con modo tareo
@@ -222,6 +222,12 @@
                                             required>
                                             <option value="" disabled selected>Seleccionar actividad</option>
                                         </select>
+                                    </div>
+                                    <div id="divNAct" class="col-md-6 text-left colResponsive">
+                                        <br> <br>
+                                        <button type="button" class="btn btn-sm" title="Registrar nueva actividad"  style="background-color: #163552;margin-top: 12px"
+                                         onclick="javascript:abrirNActividad()">+
+                                        </button>
                                     </div>
                                     <div class="col-md-12  text-left">
                                         <div class="custom-control custom-switch">
@@ -305,10 +311,10 @@
                                             <option value="" disabled selected>Seleccionar actividad</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6 text-left colResponsive">
+                                    <div id="divNAct_ed" class="col-md-6 text-left colResponsive">
                                         <br> <br>
-                                        <button type="button" class="btn btn-sm" style="background-color: #163552;margin-top: 12px"
-                                         onclick="$('#regactividadTarea').modal();javascript:estadoAsignacionesReg()">+ Nueva
+                                        <button type="button" class="btn btn-sm" title="Registrar nueva actividad"  style="background-color: #163552;margin-top: 12px"
+                                         onclick="javascript:abrirNActividad()">+
                                         </button>
                                     </div>
                                     <div class="col-md-12  text-left">
@@ -364,6 +370,8 @@
                 <div class="modal-body" style="font-size:12px!important">
                     <div class="row">
                         <div class="col-md-12">
+                            {{-- SETEAMOS R SI SERVIRA PARA REGISTRAR O E PAR EDITAR --}}
+                            <input type="hidden" id="TipoRoE">
                             <form action="javascript:registrarActividadTarea()" id="FormRegistrarActividadTarea">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -382,42 +390,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
+
+
                                     <div class="col-md-12 text-left">
                                         <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCR">
-                                            <label class="custom-control-label" for="customCR" style="font-weight: bold">
-                                                <i data-feather="activity"
-                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
-                                                &nbsp;&nbsp;
-                                                Control Remoto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-left">
-                                        <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCRT">
-                                            <label class="custom-control-label" for="customCRT" style="font-weight: bold">
-                                                <i data-feather="map-pin"
-                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
-                                                &nbsp;&nbsp;
-                                                Control en Ruta
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 text-left">
-                                        <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customAP">
-                                            <label class="custom-control-label" for="customAP" style="font-weight: bold">
-                                                <i data-feather="check-circle"
-                                                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
-                                                &nbsp;&nbsp;
-                                                Asistencia en Puerta
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-left">
-                                        <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customMT">
+                                            <input type="checkbox" class="custom-control-input" id="customMT" checked disabled>
                                             <label class="custom-control-label" for="customMT" style="font-weight: bold">
                                                 <i data-feather="pocket"
                                                     style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
@@ -427,74 +404,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row border-top rowEmpleados" style="display: none">
-                                    <div class="col-md-12 text-left">
-                                        <label for="">Asignar por:</label>
-                                    </div>
-                                    <div class="col-md-12 text-left">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" id="customAE">
-                                            <label class="custom-control-label" for="customAE" style="font-weight: bold">
-                                                Seleccionar por empleados
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-left" id="porEmpleadosReg">
-                                        <div class="form-group mb-0 mt-2">
-                                            <input type="checkbox" id="checkboxEmpleadosTodosReg">
-                                            <label for="" class="mb-0">Todos, incluyendo nuevos</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-right todosColReg aNuevosR">
-                                        <div class="form-group mb-0 mt-3 groupResp">
-                                            <input type="checkbox" id="checkboxEmpleadosReg">
-                                            <label for="" class="mb-0">Seleccionar a todos</label>
-                                            <div class="float-left mb-0">
-                                                <span style="font-size: 11px;">
-                                                    *Se visualizara empleados con esta actividad asignada
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 todosColReg aNuevosR">
-                                        <select id="reg_empleados" data-plugin="customselect" class="form-control"
-                                            multiple="multiple">
-                                            <option value="" disabled selected>Seleccionar Empleados</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row pt-2 rowEmpleados" style="display: none">
-                                    <div class="col-md-12 text-left">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" id="customAA">
-                                            <label class="custom-control-label" for="customAA" style="font-weight: bold">
-                                                Seleccionar por áreas
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-left colAreasReg">
-                                        <div class="form-group mb-0 mt-2">
-                                            <input type="checkbox" id="checkboxAreasTodosReg">
-                                            <label for="" class="mb-0">Nuevos por área</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-right colAreasReg">
-                                        <div class="form-group mb-0 mt-3 groupResp">
-                                            <input type="checkbox" id="checkboxAreasReg">
-                                            <label for="" class="mb-0">Seleccionar todos</label>
-                                            <div class="float-left mb-0">
-                                                <span style="font-size: 11px;">
-                                                    *Se visualizara áreas con esta actividad asignada
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-left colAreasReg">
-                                        <select id="areaAsignarReg" data-plugin="customselect"
-                                            class="form-control form-control-sm select2Multiple" multiple="multiple">
-                                        </select>
-                                    </div>
-                                </div>
+
                         </div>
                     </div>
                 </div>

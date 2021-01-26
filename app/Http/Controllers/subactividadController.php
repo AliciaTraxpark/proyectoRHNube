@@ -98,7 +98,7 @@ class subactividadController extends Controller
             "actividadEstado" =>$actividadEstado->modoTareo), 200);
         }
 
-        
+
         $subactividadB = subactividad::where('subAct_codigo', '=',$codigoSub)->where('organi_id', '=', session('sesionidorg'))
         ->whereNotNull('subAct_codigo')->get()->first();
 
@@ -348,4 +348,45 @@ class subactividadController extends Controller
 
         return response()->json($subactividad, 200);
     }
+
+    // REGISTRAR ACTIVIDAD PARA ORGANIZACION
+    public function registrarActividadE(Request $request)
+    {
+        $actividadBuscar = actividad::where('Activi_Nombre', '=', $request->get('nombre'))->where('organi_id', '=', session('sesionidorg'))->get()->first();
+        if ($actividadBuscar) {
+            return response()->json(array("estado" => 1, "actividad" => $actividadBuscar), 200);
+        }
+        $actividadB = actividad::where('codigoActividad', '=', $request->get('codigo'))->where('organi_id', '=', session('sesionidorg'))->whereNotNull('codigoActividad')->get()->first();
+        if ($actividadB) {
+            return response()->json(array("estado" => 0, "actividad" => $actividadB), 200);
+        }
+        $actividad = new actividad();
+        $actividad->Activi_Nombre = $request->get('nombre');
+        $actividad->controlRemoto = 0;
+        $actividad->controlRuta = 0;
+        $actividad->asistenciaPuerta = 0;
+        $actividad->organi_id = session('sesionidorg');
+        $actividad->codigoActividad = $request->get('codigo');
+        $actividad->globalEmpleado = 0;
+        $actividad->globalArea = 0;
+        $actividad->porEmpleados = 0;
+        $actividad->porAreas = 0;
+        $actividad->modoTareo = 1;
+        $actividad->save();
+        return response()->json($actividad, 200);
+    }
+
+    public function recuperarActividad(Request $request)
+    {
+        $idActividad = $request->get('id');
+        $actividad = actividad::findOrFail($idActividad);
+        if ($actividad) {
+            $actividad->estado = 1;
+            $actividad->modoTareo = 1;
+            $actividad->save();
+        }
+
+        return response()->json($actividad, 200);
+    }
+
 }
