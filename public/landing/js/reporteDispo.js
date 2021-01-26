@@ -273,6 +273,7 @@ function cargartabla(fecha) {
         },
         success: function (data) {
             fechaGlobal = fecha;
+            contenidoHorario.length = 0;
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
@@ -389,7 +390,7 @@ function cargartabla(fecha) {
                         if (data[index].data[m] != undefined) {
                             // ! HORARIO
                             var horarioData = data[index].data[m].horario;
-                            contenidoHorario.push(horarioData);
+                            contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
                             if (horarioData.horario != null) {
                                 if (horarioData.estado == 1) {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
@@ -1142,6 +1143,17 @@ function togglePausas() {
 // TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idEmpleado == idEmpleado) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
     $.ajax({
         async: false,
         type: "POST",
@@ -1270,7 +1282,6 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
             }
         },
         success: function (data) {
-            contenidoHorario = [];
             if (data.length != 0) {
                 var container = `<option value="" disabled selected>Seleccionar salida</option>`;
                 for (let index = 0; index < data.length; index++) {
