@@ -1103,60 +1103,6 @@ function togglePausas() {
     }
 }
 
-function insertarEntrada(idMarca) {
-    let hora = $('#horaEntradaN' + idMarca + '').val();
-    let fecha = $('#pasandoV').val() + ' ' + hora;
-
-    $.ajax({
-        type: "post",
-        url: "/registrarNEntrada",
-        data: {
-            idMarca, hora, fecha
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            if (data == 1) {
-                $('#tableZoom').hide();
-                $('#espera').show();
-                fechaValue.setDate(fechaGlobal);
-                $('#btnRecargaTabla').click();
-                $('#espera').hide();
-                $('#tableZoom').show();
-            } else {
-
-                $.notifyClose();
-                $.notify({
-                    message: '\nHora de entrada debe ser menor que hora de salida.',
-                    icon: '/landing/images/alert1.svg',
-                }, {
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            }
-
-
-        },
-        error: function () {
-            alert("Hay un error");
-        },
-    });
-}
 // TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
