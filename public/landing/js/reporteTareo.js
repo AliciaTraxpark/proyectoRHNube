@@ -131,11 +131,7 @@ function cargartabla(fecha) {
                     /* -------------------------------------------- */
                     //: HORA
                     for (let h = 0; h < 24; h++) {
-                        for (
-                            let j = 0;
-                            j < data.length;
-                            j++
-                        ) {
+
                             var marcacionData = data[index];
 
                             /* SI TENGO ENTRADA */
@@ -292,17 +288,13 @@ function cargartabla(fecha) {
                                     }
                                 }
                             }
-                        }
+
                     }
-                    for (
-                        let m = data.length;
-                        m < cantidadColumnasHoras;
-                        m++
-                    ) {
+                    
                         /*------- N DE COLUMNAS DE REPETICION---------------- */
                         tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`;
                         /* --------------------------------------------------- */
-                    }
+
                     tbody += tbodyEntradaySalida;
 
                     tbody += `<td id="TiempoTotal${data[index].emple_id}">
