@@ -122,7 +122,16 @@ function tablaSubactividades() {
                     tr +=
                         '<td class="text-center" style="font-size:12px"><img src="/admin/images/borrarH.svg" height="11" class="mr-2">NO</td>';
                 }
-                tr +=
+                if (data[index].uso == 1) {
+                    tr +=
+                    '<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(' +
+                    data[index].idsubActividad +
+                    ')" style="cursor: pointer">\
+                                <img src="/admin/images/edit.svg" height="15">\
+                            </a>&nbsp;&nbsp;&nbsp;</td>';
+                }
+                else{
+                    tr +=
                     '<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(' +
                     data[index].idsubActividad +
                     ')" style="cursor: pointer">\
@@ -132,6 +141,8 @@ function tablaSubactividades() {
                     ')" style="cursor: pointer">\
                                 <img src="/admin/images/delete.svg" height="15">\
                                 </a></td>';
+                }
+
 
                 tr += "</tr>";
             }

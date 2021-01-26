@@ -370,6 +370,9 @@
                 <div class="modal-body" style="font-size:12px!important">
                     <div class="row">
                         <div class="col-md-12">
+                            <label for="">Registro de actividad para modo tareo, si desea registrar un actividad completa
+                                registre desde el menu actividades.
+                            </label>
                             {{-- SETEAMOS R SI SERVIRA PARA REGISTRAR O E PAR EDITAR --}}
                             <input type="hidden" id="TipoRoE">
                             <form action="javascript:registrarActividadTarea()" id="FormRegistrarActividadTarea">
