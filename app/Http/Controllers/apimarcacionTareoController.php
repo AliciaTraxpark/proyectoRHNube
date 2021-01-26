@@ -415,10 +415,10 @@ class apimarcacionTareoController extends Controller
                     $marcacion_tareo->iddispositivos_tareo = $req['idDisposi'];
                     $marcacion_tareo->organi_id = $req['organi_id'];
                     if (empty($req['activ_id'])) {} else {
-                        /*  $marcacion_tareo->marcaIdActivi=$req['activ_id']; */
+                        $marcacion_tareo->Activi_id = $req['activ_id'];
                     }
                     if (empty($req['idsubActividad'])) {} else {
-                       /*  $marcacion_tareo->idsubActividad = $req['idsubActividad']; */
+                        $marcacion_tareo->idsubActividad = $req['idsubActividad'];
                     }
 
                     if (empty($req['idHoraEmp'])) {} else {
@@ -430,11 +430,12 @@ class apimarcacionTareoController extends Controller
                     if (empty($req['longitud'])) {} else {
                         $marcacion_tareo->marcaTareo_longitud = $req['longitud'];
                     }
-                    if (empty($req['puntoC_id'])) {} else {
 
+                    if (empty($req['puntoC_id'])) {} else {
+                        $marcacion_tareo->puntoC_id = $req['puntoC_id'];
                     }
                     if (empty($req['centC_id'])) {} else {
-
+                        $marcacion_tareo->centroC_id = $req['centC_id'];
                     }
                     $marcacion_tareo->save();
                 } else {
