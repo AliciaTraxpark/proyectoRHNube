@@ -305,7 +305,7 @@ function cargartabla(fecha) {
                               </td>
 
                               <td> ${marcacionData.puntoControl} </td>
-                                <td>  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.puntoControl}</td></tr>`;
+                                <td>  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
                 }
                 $("#tbodyD").html(tbody);
 
