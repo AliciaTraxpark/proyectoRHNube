@@ -225,6 +225,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <li>
                 <a href="/dispositivosTareo">Dispositivos</a>
                 <a href="/controladoresTareo">Controladores</a>
+                <a href="/reporteTareo">Detalle de tareo</a>
 
 
             </li>
