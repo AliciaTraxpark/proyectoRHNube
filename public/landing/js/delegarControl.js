@@ -647,7 +647,7 @@ function editarInv(idi) {
                 $("#divReporteAsis_edit").show();
 
                 $("#divAdminPersona_edit").show();
-                $("#nombreEmpleado_edit").prop("required", true);
+
                 /* ----------------------------------------------- */
 
                 /* SI TIENE OPCION DE VER TODOS LOS EMPLEADOS */
@@ -670,6 +670,7 @@ function editarInv(idi) {
                     if (data[0].emple_id != null) {
                         $("#switchEmpS_edit").prop("checked", true);
                         $("#divEmpleado_edit").show();
+                        $("#nombreEmpleado_edit").prop("required", true);
                         $("#switchAreaS_edit").prop("checked", false);
 
                         /* SELLECCIONAMOS EMPLEADOS EN EL SELEECT */
