@@ -832,6 +832,18 @@ function RegistraBiome(){
     var selectEmp=$("#nombreEmpleado").val();
     var selectArea=$("#selectArea").val();
 
+
+  var valid= ValidateIPaddress(ip);
+
+   console.log(valid);
+   if(valid==false){
+    $('#errorIPr').show();
+       return false;
+   }
+   else{
+    $('#errorIPr').hide();
+   }
+
     /* ASIGNANDO VALORES A SWITCHS */
     if ($("#TodoECheck").is(":checked")) {
         checkTodoEmp=1;
@@ -908,6 +920,21 @@ function RegistraBiome(){
         },
     });
 }
+
+function ValidateIPaddress(inputText) {
+    var ipformat =
+      "^$|([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+      "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+      "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+      "([01]?\\d\\d?|2[0-4]\\d|25[0-5])((/([01]?\\d\\d?|2[0-4]\\d|25[0-5]))?)$";
+    if (inputText.match(ipformat)) {
+      return true;
+    } else {
+      console.log("ip mal");
+      return false;
+    }
+  }
+
 function EditaBiome(){
     var descripccionUb_ed=$('#descripcionDisBio_ed').val();
     var nserie_ed=$('#descripcionBiome_ed').val();
@@ -925,6 +952,17 @@ function EditaBiome(){
     var selectEmp_ed=$("#nombreEmpleado_edit").val();
     var selectArea_ed=$("#selectArea_edit").val();
     /* ---------------------------------- */
+
+    /* VALIDADNDO IP */
+    var valid= ValidateIPaddress(IP_ed);
+   if(valid==false){
+    $('#errorIPr_ed').show();
+       return false;
+   }
+   else{
+    $('#errorIPr_ed').hide();
+   }
+
 
     /* ASIGNANDO VALORES A SWITCHS */
     if ($("#TodoECheck_edit").is(":checked")) {
