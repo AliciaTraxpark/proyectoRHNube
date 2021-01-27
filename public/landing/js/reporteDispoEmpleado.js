@@ -381,7 +381,7 @@ function cargartabla(fecha1, fecha2) {
                                         <th name="datosPausa">Tiempo pausa</th>
                                         <th name="datosPausa">Exceso pausa</th>`;
                 }
-                theadTabla += `<th>Marcación T.</th><th >Tardanza T.</th>
+                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">Marcación T.</th><th >Tardanza T.</th>
                 <th >Faltas T.</th>
                 <th >Incidencias T.</th> 
                 <th style="border-left:2px solid #f05454!important;">Tiempo T.</th>
