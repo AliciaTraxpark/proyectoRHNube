@@ -2029,7 +2029,7 @@ class dispositivosController extends Controller
             }
             $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
             $newMarcacion->organi_id =  $marcacion->organi_id;
-            $newMarcacion->horarioEmp_id = $idHorarioE;
+            $newMarcacion->horarioEmp_id = $idHorarioE == 0 ? NULL : $idHorarioE;
             $newMarcacion->marca_latitud = $marcacion->marca_latitud;
             $newMarcacion->marca_longitud = $marcacion->marca_longitud;
             $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;

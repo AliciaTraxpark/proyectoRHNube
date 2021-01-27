@@ -1371,6 +1371,7 @@ function registrarMar() {
                 $('#am_valid').empty();
                 $('#am_valid').hide();
                 $('#modalAgregar').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
@@ -1396,6 +1397,7 @@ function registrarMar() {
                     }
                 );
             } else {
+                $('button[type="submit"]').attr("disabled", false);
                 $('#am_valid').empty();
                 $('#am_valid').append(data.respuesta);
                 $('#am_valid').show();
@@ -1411,6 +1413,7 @@ $('#formRegistrarMar').submit(function (e) {
         $('#am_valid').empty();
         $('#am_valid').append("Seleccionar horario.");
         $('#am_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     if (!$('#v_entrada').is(":checked")) {
@@ -1418,6 +1421,7 @@ $('#formRegistrarMar').submit(function (e) {
             $('#am_valid').empty();
             $('#am_valid').append("Ingresar entrada.");
             $('#am_valid').show();
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
@@ -1426,11 +1430,13 @@ $('#formRegistrarMar').submit(function (e) {
             $('#am_valid').empty();
             $('#am_valid').append("Ingresar salida.");
             $('#am_valid').show();
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
     $('#am_valid').empty();
     $('#am_valid').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! *********************************** CAMBIAR A ENTRADA ********************************************
@@ -1527,6 +1533,7 @@ function cambiarEntradaM() {
             if (data.respuesta == undefined) {
                 $('#s_valid').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
@@ -1552,6 +1559,7 @@ function cambiarEntradaM() {
                     }
                 );
             } else {
+                $('button[type="submit"]').attr("disabled", false);
                 $('#s_valid').append(data.respuesta);
                 $('#s_valid').show();
             }
@@ -1585,10 +1593,12 @@ $('#formCambiarEntradaM').submit(function (e) {
         $('#s_valid').empty();
         $('#s_valid').append("Seleccionar marcación.");
         $('#s_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     $('#s_valid').empty();
     $('#s_valid').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! *********************************** CAMBIAR A SALIDA ****************************************************
@@ -1685,6 +1695,7 @@ function cambiarSalidaM() {
             if (data.respuesta == undefined) {
                 $('#e_valid').hide();
                 $('#listaEntradasMarcacion').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 $.notifyClose();
@@ -1712,6 +1723,7 @@ function cambiarSalidaM() {
                 $('#e_valid').empty();
                 $('#e_valid').append(data.respuesta);
                 $('#e_valid').show();
+                $('button[type="submit"]').attr("disabled", false);
             }
         },
         error: function () {
@@ -1742,10 +1754,12 @@ $('#formCambiarSalidaM').submit(function (e) {
         $('#e_valid').empty();
         $('#e_valid').append("Seleccionar marcación.");
         $('#e_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     $('#e_valid').empty();
     $('#e_valid').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! *********************************** CONVERTIR ORDEN ******************************************************
@@ -1948,11 +1962,13 @@ function guardarAsignacion() {
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 $('#asignacionMarcacion').modal('toggle');
-                limpiarAtributos();
+                $('button[type="submit"]').attr("disabled", false);
+                limpiarAtributos(); 
             } else {
                 $('#a_valid').empty();
                 $('#a_valid').append(data.respuesta);
                 $('#a_valid').show();
+                $('button[type="submit"]').attr("disabled", false);
             }
         },
         error: function () { }
@@ -1965,16 +1981,19 @@ $('#formGuardarAsignacion').submit(function (e) {
         $('#a_valid').empty();
         $('#a_valid').append("Seleccionar horario.");
         $('#a_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     if ($("#asignacionM").val() == "" || $("#asignacionM").val() == null) {
         $('#a_valid').empty();
         $('#a_valid').append("Seleccionar marcación.");
         $('#a_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     $('#a_valid').empty();
     $('#a_valid').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! ********************************** ELIMINAR MARCACIÓN *****************************************************
@@ -2111,10 +2130,12 @@ function insertarSalida() {
                 $('#i_validS').empty();
                 $('#i_validS').append(data.respuesta);
                 $('#i_validS').show();
+                $('button[type="submit"]').attr("disabled", false);
             } else {
                 $('#i_validS').empty();
                 $('#i_validS').hide();
                 $('#insertarSalida').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
@@ -2153,10 +2174,12 @@ $('#formInsertarSalida').submit(function (e) {
         $('#i_validS').empty();
         $('#i_validS').append("Ingresar salida.");
         $('#i_validS').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     $('#i_validS').empty();
     $('#i_validS').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! ********************************* INSERTAR ENTRADA ********************************************************
@@ -2213,10 +2236,12 @@ function insertarEntrada() {
                 $('#i_validE').empty();
                 $('#i_validE').append(data.respuesta);
                 $('#i_validE').show();
+                $('button[type="submit"]').attr("disabled", false);
             } else {
                 $('#i_validE').empty();
                 $('#i_validE').hide();
                 $('#insertarEntrada').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
@@ -2255,10 +2280,12 @@ $('#formInsertarEntrada').submit(function (e) {
         $('#i_validE').empty();
         $('#i_validE').append("Ingresar entrada.");
         $('#i_validE').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     $('#i_validE').empty();
     $('#i_validE').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! ****************************** CAMBIAR DE HORARIO ***********************************************************
@@ -2380,6 +2407,7 @@ function cambiarHorarioM() {
             if (data.respuesta == undefined) {
                 $('#ch_valid').hide();
                 $('#modalCambiarHorario').modal("toggle");
+                $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
                 $('#btnRecargaTabla').click();
                 limpiarAtributos();
@@ -2387,6 +2415,7 @@ function cambiarHorarioM() {
                 $('#ch_valid').empty();
                 $('#ch_valid').append(data.respuesta);
                 $('#ch_valid').show();
+                $('button[type="submit"]').attr("disabled", false);
             }
         },
         error: function () { }
@@ -2400,10 +2429,12 @@ $('#formCambiarHorarioM').submit(function (e) {
         $('#ch_valid').empty();
         $('#ch_valid').append("Seleccionar horario.");
         $('#ch_valid').show();
+        $('button[type="submit"]').attr("disabled", false);
         return;
     }
     $('#ch_valid').empty();
     $('#ch_valid').hide();
+    $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
 // ! ********************************* FINALIZACION *************************************************************
