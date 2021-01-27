@@ -27,7 +27,12 @@ class invitado extends Model
         'ControlRuta',
         'ModificarReportePuerta',
         'extractorRH',
-        'gestCalendario'
+        'gestCalendario',
+        'puntoControl',
+        'centroCosto',
+        'empleado',
+        'area'
+
     ];
 
 }

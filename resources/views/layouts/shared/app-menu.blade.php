@@ -119,7 +119,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     <li>
         <a href="javascript: void(0);">
             <i data-feather="layers"></i>
-            <span>Gestion de actividades</span>
+            <span>Gestión de actividades</span>
             <span class="menu-arrow"></span>
         </a>
         <ul class="nav-second-level" aria-expanded="false">
@@ -128,7 +128,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span>Actividades</span>
                 </a>
                 <a href="/subactividad">
-                    <span>SubActividades</span>
+                    <span>Subactividades</span>
                 </a>
 
             </li>
@@ -320,7 +320,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     <li>
         <a href="javascript: void(0);">
             <i data-feather="layers"></i>
-            <span>Gestion de actividades</span>
+            <span>Gestión de actividades</span>
             <span class="menu-arrow"></span>
         </a>
         <ul class="nav-second-level" aria-expanded="false">
@@ -329,7 +329,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <span>Actividades</span>
                 </a>
                 <a href="/subactividad">
-                    <span>SubActividades</span>
+                    <span>Subactividades</span>
                 </a>
 
             </li>

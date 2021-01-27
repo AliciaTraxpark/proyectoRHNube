@@ -721,7 +721,7 @@ class EmpleadoController extends Controller
             ->where('uso.organi_id', '=', session('sesionidorg'))
             ->where('uso.user_id', '=', Auth::user()->id)
             ->get()->first();
-        if ($usuario_organizacion->rol_id == 3) {
+         if ($usuario_organizacion->rol_id == 3) {
             $invitado = DB::table('invitado as in')
                 ->where('organi_id', '=', session('sesionidorg'))
                 ->where('rol_id', '=', 3)
@@ -730,7 +730,7 @@ class EmpleadoController extends Controller
             $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                 ->where('invem.idinvitado', '=',  $invitado->idinvitado)
                 ->get()->first();
-            if ($invitado_empleadoIn != null) {
+            if ($invitado->empleado==1) {
                 $invitado_empleado = new invitado_empleado();
                 $invitado_empleado->idinvitado = $invitado->idinvitado;
                 $invitado_empleado->emple_id = $empleado->emple_id;

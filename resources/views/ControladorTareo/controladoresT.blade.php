@@ -26,7 +26,7 @@
     <div class="row page-title">
         <div class="col-md-12">
             {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-            <h4 class="header-title mt-0 "></i>Controladores modo tareo</h4>
+            <h4 class="header-title mt-0 "></i>Modo Tareo: Controladores</h4>
         </div>
     </div>
 @endsection
