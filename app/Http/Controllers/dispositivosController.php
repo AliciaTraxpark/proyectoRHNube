@@ -1027,7 +1027,10 @@ class dispositivosController extends Controller
                     $resultado[$empleado->emple_id]->datos[$empleado->entradaModif][$empleado->idhorario] = (object)array(
                         "idHorario" => $empleado->idhorario,
                         "horario" => $empleado->horario,
-                        "fecha" => $empleado->entradaModif
+                        "fecha" => $empleado->entradaModif,
+                        "tolerancia" => $empleado->tolerancia,
+                        "horarioIni" => $empleado->horarioIni,
+                        "horarioFin" => $empleado->horarioFin
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->datos[$empleado->entradaModif][$empleado->idhorario]->marcaciones)) {
@@ -1036,7 +1039,8 @@ class dispositivosController extends Controller
                 $arrayMarcaciones = (object) array(
                     "idMarcacion" => $empleado->idMarcacion,
                     "entrada" => $empleado->entrada,
-                    "salida" => $empleado->salida
+                    "salida" => $empleado->salida,
+                    "idHorario" => $empleado->idhorario,
                 );
                 array_push($resultado[$empleado->emple_id]->datos[$empleado->entradaModif][$empleado->idhorario]->marcaciones, $arrayMarcaciones);
             }
@@ -1166,6 +1170,7 @@ class dispositivosController extends Controller
                 ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                 ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                 ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
                 ->select(
                     'e.emple_id',
                     'o.organi_razonSocial',
@@ -1181,7 +1186,10 @@ class dispositivosController extends Controller
                     'c.cargo_descripcion',
                     'mp.organi_id',
                     DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
+                    DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
+                    DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                     'mp.marcaMov_id as idMarcacion',
+                    'hor.horario_tolerancia as tolerancia',
                     DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                     DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
                 )
