@@ -9,12 +9,19 @@ var fechaValue = $("#fechaSelec").flatpickr({
     wrap: true,
     allowInput: true,
     conjunction: " a ",
+    minRange: 1,
     onChange: function (selectedDates) {
         var _this = this;
         var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
         $('#ID_START').val(dateArr[0]);
         $('#ID_END').val(dateArr[1]);
     },
+    onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length == 1) {
+            var fm = moment(selectedDates[0]).add("day", -1).format("YYYY-MM-DD");
+            instance.setDate([fm, selectedDates[0]], true);
+        }
+    }
 });
 $(function () {
     $('#idempleado').select2({
