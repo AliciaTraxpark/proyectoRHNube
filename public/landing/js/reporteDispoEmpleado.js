@@ -36,7 +36,233 @@ $(function () {
     $('#ID_START').val(fAyer);
     $('#ID_END').val(fHoy);
 });
+// * INICIALIZAR TABLA
+var table;
+function inicializarTabla() {
+    table = $("#tablaReport").DataTable({
+        "searching": false,
+        "scrollX": true,
+        "ordering": false,
+        "autoWidth": false,
+        "bInfo": false,
+        "bLengthChange": false,
+        fixedHeader: true,
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ ",
+            sInfoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: ">",
+                sPrevious: "<",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+            buttons: {
+                copy: "Copiar",
+                colvis: "Visibilidad",
+            },
 
+        },
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excel',
+            className: 'btn btn-sm mt-1',
+            text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+            customize: function (xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var downrows = 5;
+                var clRow = $('row', sheet);
+                clRow[0].children[0].remove();
+                //update Row
+                clRow.each(function () {
+                    var attr = $(this).attr('r');
+                    var ind = parseInt(attr);
+                    ind = ind + downrows;
+                    $(this).attr("r", ind);
+                });
+
+                // Update  row > c
+                $('row c ', sheet).each(function () {
+                    var attr = $(this).attr('r');
+                    var pre = attr.substring(0, 1);
+                    var ind = parseInt(attr.substring(1, attr.length));
+                    ind = ind + downrows;
+                    $(this).attr("r", pre + ind);
+                });
+
+                function Addrow(index, data) {
+                    msg = '<row r="' + index + '">'
+                    for (i = 0; i < data.length; i++) {
+                        var key = data[i].k;
+                        var value = data[i].v;
+                        var bold = data[i].s;
+                        msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                        msg += '<is>';
+                        msg += '<t>' + value + '</t>';
+                        msg += '</is>';
+                        msg += '</c>';
+                    }
+                    msg += '</row>';
+                    return msg;
+                }
+                var now = new Date();
+                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                //insert
+                var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
+                var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
+            },
+            sheetName: 'Asistencia',
+            title: 'Asistencia',
+            autoFilter: false,
+            exportOptions: {
+                columns: ":visible:not(.noExport)",
+                format: {
+                    body: function (data, row, column, node) {
+                        var cont = $.trim($(node).text());
+                        var cambiar = cont.replace('Cambiar a entrada', '');
+                        cambiar = cambiar.replace('Cambiar a salida', '');
+                        cambiar = cambiar.replace('No tiene entrada', '---');
+                        cambiar = cambiar.replace('No tiene salida', '---');
+                        cambiar = cambiar.replace('Opciones', '');
+                        cambiar = cambiar.replace('Convertir orden', '');
+                        cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                        cambiar = cambiar.replace('Eliminar marc.', '');
+                        cambiar = cambiar.replace('Actualizar horario', '');
+                        cambiar = cambiar.replace('Insertar salida', '');
+                        cambiar = cambiar.replace('Insertar entrada', '');
+
+                        return $.trim(cambiar);
+                    }
+                }
+            },
+        }, {
+            extend: "pdfHtml5",
+            className: 'btn btn-sm mt-1',
+            text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+            orientation: 'landscape',
+            pageSize: 'A1',
+            title: 'Asistencia',
+            exportOptions: {
+                columns: ":visible:not(.noExport)"
+            },
+            customize: function (doc) {
+                doc['styles'] = {
+                    table: {
+                        width: '100%'
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 11,
+                        color: '#6c757d',
+                        fillColor: '#ffffff',
+                        alignment: 'left'
+                    },
+                    defaultStyle: {
+                        fontSize: 10,
+                        alignment: 'center'
+                    }
+                };
+                doc.pageMargins = [20, 120, 20, 30];
+                doc.content[1].margin = [30, 0, 30, 0];
+                var colCount = new Array();
+                var tr = $('#tablaReport tbody tr:first-child');
+                var trWidth = $(tr).width();
+                $('#tablaReport').find('tbody tr:first-child td').each(function () {
+                    var tdWidth = $(this).width();
+                    var widthFinal = parseFloat(tdWidth * 130);
+                    widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
+                    if ($(this).attr('colspan')) {
+                        for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                            colCount.push('*');
+                        }
+                    } else {
+                        colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
+                    }
+                });
+                var bodyCompleto = [];
+                doc.content[1].table.body.forEach(function (line, i) {
+                    var bodyNuevo = [];
+                    if (i >= 1) {
+                        line.forEach(element => {
+                            var textOriginal = element.text;
+                            var cambiar = textOriginal.replace('Cambiar a entrada', '');
+                            cambiar = cambiar.replace('Cambiar a salida', '');
+                            cambiar = cambiar.replace('No tiene entrada', '---');
+                            cambiar = cambiar.replace('No tiene salida', '---');
+                            cambiar = cambiar.replace('Opciones', '');
+                            cambiar = cambiar.replace('Convertir orden', '');
+                            cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                            cambiar = cambiar.replace('Eliminar marc.', '');
+                            cambiar = cambiar.replace('Actualizar horario', '');
+                            cambiar = cambiar.replace('Insertar salida', '');
+                            cambiar = cambiar.replace('Insertar entrada', '');
+                            cambiar = $.trim(cambiar);
+                            bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                        });
+                        bodyCompleto.push(bodyNuevo);
+                    } else {
+                        bodyCompleto.push(line);
+                    }
+                });
+                doc.content.splice(0, 1);
+                doc.content[0].table.body = bodyCompleto;
+                var objLayout = {};
+                objLayout['hLineWidth'] = function (i) { return .2; };
+                objLayout['vLineWidth'] = function (i) { return .2; };
+                objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                doc.content[0].layout = objLayout;
+                var now = new Date();
+                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                doc["header"] = function () {
+                    return {
+                        columns: [
+                            {
+                                alignment: 'left',
+                                italics: false,
+                                text: [
+                                    { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
+                                    { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                    { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                    { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                    { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                ],
+
+                                fontSize: 10,
+                                margin: [30, 0]
+                            },
+                        ],
+                        margin: 20
+                    };
+                };
+            }
+        }],
+        paging: true,
+        initComplete: function () {
+            setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
+        },
+    });
+}
 
 function cargartabla(fecha1, fecha2) {
 
@@ -80,6 +306,7 @@ function cargartabla(fecha1, fecha2) {
             }
         },
         success: function (data) {
+            console.log(data);
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
@@ -87,23 +314,25 @@ function cargartabla(fecha1, fecha2) {
                 $('#btnsDescarga').show();
                 // ! *********** CABEZERA DE TABLA**********
                 $('#theadD').empty();
-                //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
+                //* CANTIDAD MININO VALOR DE COLUMNAS PARA MARACIONES
                 var cantidadColumnasHoras = 0;
-                for (let i = 0; i < data.length; i++) {
-                    //* OBTENER CANTIDAD TOTAL DE COLUMNAS
-                    if (cantidadColumnasHoras < data[i].marcaciones.length) {
-                        cantidadColumnasHoras = data[i].marcaciones.length;
+                data.datos.forEach(element => {
+                    console.log(element.marcaciones.length);
+                    if (cantidadColumnasHoras < element.marcaciones.length) {
+                        cantidadColumnasHoras = element.marcaciones.length;
                     }
-                }
+                });
                 //* ARMAR CABEZERA
                 var theadTabla = `<tr>
                                     <th>CC&nbsp;</th>
                                     <th>Fecha&nbsp;</th>
+                                    <th>Horario&nbsp;</th>
                                    `;
                 for (let j = 0; j < cantidadColumnasHoras; j++) {
                     theadTabla += `<th style="border-left-color: #c8d4de!important;
-                    border-left: 2px solid;">Horario</th>
-                                     <th>Hora de entrada</th>
+                                        border-left: 2px solid;">
+                                        Hora de entrada
+                                    </th>
                                     <th>Hora de salida</th>
                                     <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
                                     <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
@@ -117,203 +346,78 @@ function cargartabla(fecha1, fecha2) {
                 $('#tbodyD').empty();
                 var tbody = "";
                 //* ARMAMOS BODY DE TABLA
-                for (let index = 0; index < data.length; index++) {
+                for (let index = 0; index < data.datos.length; index++) {
+                    var contenidoData = data.datos[index];
                     tbody += `<tr>
                     <td>${(index + 1)}&nbsp;</td>
-                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-
-                    //* ARMAR Y ORDENAR MARCACIONES
+                    <td>${moment(contenidoData.fecha).format('DD/MM/YYYY')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    // * HORARIO
+                    if (contenidoData.horario != 0) {
+                        tbody += `<td>${contenidoData.horario}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    } else {
+                        tbody += `<td>Sin horario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
+                    // * ARMAR MARCACIONES
                     var tbodyEntradaySalida = "";
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");
-                    //: HORA
-                    for (let h = 0; h < 24; h++) {
-                        for (let j = 0; j < data[index].marcaciones.length; j++) {
-                            var marcacionData = data[index].marcaciones[j];
-                            if (marcacionData.entrada != 0) {
-                                if (h == moment(marcacionData.entrada).format("HH")) {
-                                    var permisoModificarCS = $('#modifReporte').val();
-                                    if (data[index].horario != 0) {
-                                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
-                                        border-left: 2px solid;">${data[index].horario}</td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
-                                        border-left: 2px solid;">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>>`;
-                                    }
-                                    if (permisoModificarCS == 1) {
-                                        tbodyEntradaySalida += `<td><div class="dropdown" id="">
-                                                                <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                style="cursor: pointer">
-                                                                    <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
-                                                                    ${moment(marcacionData.entrada).format("HH:mm:ss")}
-                                                                </a>
-                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                    <div class="dropdown-item" onclick="cambiarEntrada(${marcacionData.idMarcacion})">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12" />
-                                                                        Cambiar a salida
-                                                                    </div>
-                                                                </ul>
-                                                            </div></td>`;
-                                    }
-                                    else {
-                                        tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(marcacionData.entrada).format("HH:mm:ss")}</td>`;
-                                    }
-
-                                    if (marcacionData.salida != 0) {
-                                        var permisoModificarCE1 = $('#modifReporte').val();
-                                        if (permisoModificarCE1 == 1) {
-                                            tbodyEntradaySalida += `<td><div class="dropdown" id="">
-                                                                <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false
-                                                                style="cursor: pointer">
-                                                                <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
-                                                                    ${moment(marcacionData.salida).format("HH:mm:ss")}
-                                                                </a>
-                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                    <div class="dropdown-item" onclick="cambiarSalida(${marcacionData.idMarcacion})">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
-                                                                        Cambiar a entrada
-                                                                    </div>
-                                                                </ul>
-                                                            </div></td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
-
-                                        }
-
-                                        var horaFinal = moment(marcacionData.salida);
-                                        var horaInicial = moment(marcacionData.entrada);
-                                        if (horaFinal.isSameOrAfter(horaInicial)) {
-                                            var tiempoRestante = horaFinal - horaInicial;
-                                            var segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            var minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            var horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = '0' + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo = '0' + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo = '0' + segundosTiempo;
-                                            }
-                                            tbodyEntradaySalida += `<td name="tiempoSitHi">
-                                                                    <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
-                                                                    <a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-                                                                    </a>
-                                                                </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
-                                            sumaTiempos = moment(sumaTiempos).add(segundosTiempo, 'seconds');
-                                            sumaTiempos = moment(sumaTiempos).add(minutosTiempo, 'minutes');
-                                            sumaTiempos = moment(sumaTiempos).add(horasTiempo, 'hours');
-                                        }
-                                    } else {
-                                        var permisoModificarS = $('#modifReporte').val();
-                                        if (permisoModificarS == 1) {
-                                            tbodyEntradaySalida += `<td><div class="dropdown" id="">
-                                                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                                                    aria-haspopup="true" aria-expanded="false"
-                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                        No tiene salida
-                                                                    </span>
-                                                                </button>
-                                                                <form class="dropdown-menu dropdown p-3" id="UlS${marcacionData.idMarcacion}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
-                                                                    <div class="form-group">
-                                                                        <input type="text" id="horaSalidaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasSalida" >
-                                                                        &nbsp; <a onclick="insertarSalida(${marcacionData.idMarcacion}) " style="cursor: pointer"><img src="admin/images/checkH.svg" height="15"></a>
-                                                                    </div>
-                                                                </form>
-                                                            </div></td>`;
-                                        }
-                                        else {
-                                            tbodyEntradaySalida += `<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
-                                        }
-
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
-                                                            <span class="badge badge-soft-secondary">
-                                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                --:--:--
-                                                            </span>
-                                                        </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
-                                    }
-                                }
+                    for (let i = 0; i < contenidoData.marcaciones.length; i++) {
+                        var contenidoMarcacion = contenidoData.marcaciones[i];
+                        // * SI TIENE TIEMPO DE ENTRADA
+                        if (contenidoMarcacion.entrada != 0) {
+                            tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
+                                                        ${moment(contenidoMarcacion.entrada).format("HH:mm:ss")}
+                                                    </td>`;
+                            // * SI TIENE TIEMPO DE SALIDA
+                            if (contenidoMarcacion.salida != 0) {
+                                tbodyEntradaySalida += `<td>
+                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                                                            ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
+                                                        </td>`;
                             } else {
-                                if (marcacionData.salida != 0) {
-                                    if (h == moment(marcacionData.salida).format("HH")) {
-                                        //* COLUMNA DE ENTRADA
-                                        if (data[index].horario != 0) {
-                                            tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
-                                            border-left: 2px solid;">${data[index].horario}</td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
-                                            border-left: 2px solid;">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>`;
-                                        }
-                                        var permisoModificarE = $('#modifReporte').val();
-                                        if (permisoModificarE == 1) {
-                                            tbodyEntradaySalida += `<td>
-                                                                <div class=" dropdown">
-                                                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                        style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                        <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
-                                                                            No tiene entrada
-                                                                        </span>
-                                                                    </button>
-                                                                    <form class="dropdown-menu dropdown p-3"  id="UlE${marcacionData.idMarcacion}" style="padding-left: 8px!important;padding-right: 32px!important;padding-bottom: 4px!important;">
-                                                                        <div class="form-group">
-                                                                            <input type="text" id="horaEntradaN${marcacionData.idMarcacion}" class="form-control form-control-sm horasEntrada">
-                                                                            &nbsp;
-                                                                            <a onclick="insertarEntrada(${marcacionData.idMarcacion})" style="cursor: pointer">
-                                                                                <img src="admin/images/checkH.svg" height="15">
-                                                                            </a>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </td>`;
-                                        }
-                                        else {
-                                            tbodyEntradaySalida += `<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td>`;
-                                        }
-
-                                        //* COLUMNA DE SALIDA
-                                        var permisoModificarCE2 = $('#modifReporte').val();
-                                        if (permisoModificarCE2 == 1) {
-                                            tbodyEntradaySalida += `<td>
-                                                                <div class="dropdown" id="">
-                                                                    <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                                        style="cursor: pointer">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
-                                                                        ${moment(marcacionData.salida).format("HH:mm:ss")}
-                                                                    </a>
-                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <div class="dropdown-item" onclick="cambiarSalida(${marcacionData.idMarcacion})">
-                                                                            <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12" />
-                                                                            Cambiar a entrada
-                                                                        </div>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
-                                        }
-
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                tbodyEntradaySalida += `<td>
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
-                                                                --:--:--
+                                                                No tiene salida
                                                             </span>
-                                                        </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
-                                    }
-                                }
+                                                        </td>`;
+                            }
+                        } else {
+                            if (contenidoMarcacion.salida != 0) {
+                                tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                                                            <span class="badge badge-soft-warning">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                                No tiene entrada
+                                                            </span>
+                                                        </td>`;
+                                tbodyEntradaySalida += `<td>
+                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                                                            ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
+                                                        </td>`;
                             }
                         }
+                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                                    <span class="badge badge-soft-secondary">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                        --:--:--
+                                                    </span>
+                                                </td>
+                                                <td name="tiempoSitHi">--</td>
+                                                <td name="tiempoSitHi">--</td>
+                                                <td name="tiempoSitHi">--</td>`;
                     }
-                    for (let m = data[index].marcaciones.length; m < cantidadColumnasHoras; m++) {
-                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
-                        border-left: 2px solid;">---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
+                    for (let m = contenidoData.marcaciones.length; m < cantidadColumnasHoras; m++) {
+                        tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;border-left: 2px solid;">
+                                                    ---
+                                                </td>
+                                                <td>---</td>
+                                                <td name="tiempoSitHi">---</td>
+                                                <td name="tiempoSitHi">--</td>
+                                                <td name="tiempoSitHi">--</td>
+                                                <td name="tiempoSitHi">--</td>`;
                     }
                     tbody += tbodyEntradaySalida;
-                    tbody += `<td id="TiempoTotal${data[index].emple_id}">
+                    tbody += `<td>
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
@@ -322,56 +426,14 @@ function cargartabla(fecha1, fecha2) {
                             <td >--</td>
                             <td >--</td> </tr>`;
                 }
+
                 $('#tbodyD').html(tbody);
-
-                table = $("#tablaReport").DataTable({
-                    "bLengthChange": false,
-                    "searching": false,
-                    "scrollX": true,
-                    "ordering": false,
-                    "autoWidth": false,
-                    fixedHeader: true,
-                    language: {
-                        sProcessing: "Procesando...",
-                        sLengthMenu: "Mostrar _MENU_ registros",
-                        sZeroRecords: "No se encontraron resultados",
-                        sEmptyTable: "Ningún dato disponible en esta tabla",
-                        sInfo: "Mostrando registros del _START_ al _END_ ",
-                        sInfoEmpty:
-                            "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-                        sInfoPostFix: "",
-                        sSearch: "Buscar:",
-                        sUrl: "",
-                        sInfoThousands: ",",
-                        sLoadingRecords: "Cargando...",
-                        oPaginate: {
-                            sFirst: "Primero",
-                            sLast: "Último",
-                            sNext: ">",
-                            sPrevious: "<",
-                        },
-                        oAria: {
-                            sSortAscending:
-                                ": Activar para ordenar la columna de manera ascendente",
-                            sSortDescending:
-                                ": Activar para ordenar la columna de manera descendente",
-                        },
-                        buttons: {
-                            copy: "Copiar",
-                            colvis: "Visibilidad",
-                        },
-                    },
-                    initComplete: function () {
-                        setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
-                    },
-
-
-                });
+                inicializarTabla();
                 $(window).on('resize', function () {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
                 });
+                console.log($('#customSwitDetalles').is(':checked'));
                 if ($('#customSwitDetalles').is(':checked')) {
                     $('[name="tiempoSitHi"]').show();
                     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
@@ -380,250 +442,10 @@ function cargartabla(fecha1, fecha2) {
                     $('[name="tiempoSitHi"]').hide();
                     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
                 }
-            } else {
-                $('#btnsDescarga').hide();
-                $('#tbodyD').empty();
-                $('#tbodyD').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
             }
-
-            /* CREANDO TABLAS PARA IMPORTAR */
-            if (data.length != 0) {
-
-                // ! *********** CABEZERA DE TABLA**********
-                $('#theadDI').empty();
-                //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
-                var cantidadColumnasHorasI = 0;
-                for (let i = 0; i < data.length; i++) {
-                    //* OBTENER CANTIDAD TOTAL DE COLUMNAS
-                    if (cantidadColumnasHorasI < data[i].marcaciones.length) {
-                        cantidadColumnasHorasI = data[i].marcaciones.length;
-                    }
-                }
-                //* ARMAR CABEZERA
-                var theadTablaI = `<tr class="">
-                                    <th class="">CC&nbsp;</th>
-                                    <th class="">Fecha&nbsp;</th>
-                                   `;
-                for (let j = 0; j < cantidadColumnasHorasI; j++) {
-                    theadTablaI += `<th class="" >horario</th>
-                                     <th class="">Hora de entrada</th>
-                                    <th class="" >Hora de salida</th>
-                                    <th  class="" id="" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
-                                    <th  name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
-                }
-                theadTablaI += `<th class="">Tiempo total</th><th >Tardanza T.</th>
-                <th >Faltas T.</th>
-                <th >Incidencias T.</th> </tr>`;
-
-
-                var inicioR = moment($('#ID_START').val()).format('DD/MM/YYYY');
-                var finR = moment($('#ID_END').val()).format('DD/MM/YYYY');
-                $('#RangoFechas').html(' De ' + inicioR + ' ' + ' a ' + ' ' + finR)
-
-
-
-                //* DIBUJAMOS CABEZERA
-                $('#theadDI').html(theadTablaI);
-                // ! *********** BODY DE TABLA**********
-                $('#tbodyIDI').empty();
-                var tbodyI = "";
-                //* ARMAMOS BODY DE TABLA
-                for (let index = 0; index < data.length; index++) {
-                    $('#ponerDNI').html(data[index].emple_nDoc);
-                    $('#ponerApe').html(data[index].perso_apPaterno + ' ' + data[index].perso_apMaterno + ' ' + data[index].perso_nombre);
-                    if (data[index].area_descripcion != null) {
-                        $('#ponerArea').html(data[index].area_descripcion);
-                    }
-                    else {
-                        $('#ponerArea').html('--');
-                    }
-
-                    if (data[index].cargo_descripcion != null) {
-                        $('#ponerCarg').html(data[index].cargo_descripcion);
-                    }
-                    else {
-                        $('#ponerCarg').html('--');
-                    }
-                    tbodyI += `<tr>
-                    <td>${(index + 1)}&nbsp;</td>
-                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-
-                    //* ARMAR Y ORDENAR MARCACIONES
-                    var tbodyIEntradaySalida = "";
-                    var sumaTiemposI = moment("00:00:00", "HH:mm:ss");
-                    //: HORA
-                    for (let h = 0; h < 24; h++) {
-                        for (let j = 0; j < data[index].marcaciones.length; j++) {
-                            var marcacionDataI = data[index].marcaciones[j];
-                            if (marcacionDataI.entrada != 0) {
-                                if (h == moment(marcacionDataI.entrada).format("HH")) {
-                                    var permisoModificarCS = $('#modifReporte').val();
-                                    if (marcacionDataI.horario != 0) {
-                                        tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
-                                    } else {
-                                        tbodyIEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                    }
-                                    if (permisoModificarCS == 1) {
-                                        tbodyIEntradaySalida += `<td >
-                                                                    ${moment(marcacionDataI.entrada).format("HH:mm:ss")}
-                                                               </td>`;
-                                    }
-                                    else {
-                                        tbodyIEntradaySalida += `<td >${moment(marcacionDataI.entrada).format("HH:mm:ss")}</td>`;
-                                    }
-
-                                    if (marcacionDataI.salida != 0) {
-                                        var permisoModificarCE1 = $('#modifReporte').val();
-                                        if (permisoModificarCE1 == 1) {
-                                            tbodyIEntradaySalida += `<td >
-                                                                    ${moment(marcacionDataI.salida).format("HH:mm:ss")}
-                                                                </td>`;
-                                        } else {
-                                            tbodyIEntradaySalida += `<td> ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
-
-                                        }
-
-                                        var horaFinal = moment(marcacionDataI.salida);
-                                        var horaInicial = moment(marcacionDataI.entrada);
-                                        if (horaFinal.isSameOrAfter(horaInicial)) {
-                                            var tiempoRestante = horaFinal - horaInicial;
-                                            var segundosTiempo = moment.duration(tiempoRestante).seconds();
-                                            var minutosTiempo = moment.duration(tiempoRestante).minutes();
-                                            var horasTiempo = Math.trunc(moment.duration(tiempoRestante).asHours());
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = '0' + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo = '0' + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo = '0' + segundosTiempo;
-                                            }
-                                            tbodyIEntradaySalida += `<td  name="tiempoSitHi">
-
-                                                                        ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-
-                                                                </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
-                                            sumaTiemposI = moment(sumaTiemposI).add(segundosTiempo, 'seconds');
-                                            sumaTiemposI = moment(sumaTiemposI).add(minutosTiempo, 'minutes');
-                                            sumaTiemposI = moment(sumaTiemposI).add(horasTiempo, 'hours');
-                                        }
-                                    } else {
-                                        var permisoModificarS = $('#modifReporte').val();
-                                        if (permisoModificarS == 1) {
-                                            tbodyIEntradaySalida += `<td >
-                                                                        No tiene salida
-                                                                  </td>`;
-                                        }
-                                        else {
-                                            tbodyIEntradaySalida += `<td >No tiene salida</td>`;
-                                        }
-
-                                        tbodyIEntradaySalida += `<td  name="tiempoSitHi">
-
-                                                                --:--:--
-
-                                                        </td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td><td name="tiempoSitHi">--</td>`;
-                                    }
-                                }
-                            } else {
-                                if (marcacionDataI.salida != 0) {
-                                    if (h == moment(marcacionDataI.salida).format("HH")) {
-                                        //* COLUMNA DE ENTRADA
-                                        if (marcacionDataI.horario != 0) {
-                                            tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
-                                        } else {
-                                            tbodyIEntradaySalida += `<td  >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                        }
-                                        var permisoModificarE = $('#modifReporte').val();
-                                        if (permisoModificarE == 1) {
-                                            tbodyIEntradaySalida += `<td  >
-
-                                                                            No tiene entrada
-
-
-                                                            </td>`;
-                                        }
-                                        else {
-                                            tbodyIEntradaySalida += `<td  >No tiene entrada</td>`;
-                                        }
-
-                                        //* COLUMNA DE SALIDA
-                                        var permisoModificarCE2 = $('#modifReporte').val();
-                                        if (permisoModificarCE2 == 1) {
-                                            tbodyIEntradaySalida += `<td  >
-
-                                                                        ${moment(marcacionDataI.salida).format("HH:mm:ss")}
-
-                                                            </td>`;
-                                        } else {
-                                            tbodyIEntradaySalida += `<td  > ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
-                                        }
-
-                                        tbodyIEntradaySalida += `<td   name="tiempoSitHi">
-
-                                                                --:--:--
-
-                                                        </td ><td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    for (let m = data[index].marcaciones.length; m < cantidadColumnasHorasI; m++) {
-                        tbodyIEntradaySalida += `<td  >---</td><td  >---</td><td  >---</td><td   name="tiempoSitHi">---</td> <td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td><td class="tableHi" name="tiempoSitHi">---</td>`;
-                    }
-                    tbodyI += tbodyIEntradaySalida;
-                    tbodyI += `<td id="TiempoTotal${data[index].emple_id}">
-
-                                    ${sumaTiemposI.format("HH:mm:ss")}
-
-                            </td> <td >--</td>
-                            <td >--</td>
-                            <td >--</td></tr>`;
-                }
-                $('#tbodyIDI').html(tbodyI);
-
-
-                if ($('#customSwitDetalles').is(':checked')) {
-                    $('[name="tiempoSitHi"]').show();
-
-                }
-                else {
-                    $('[name="tiempoSitHi"]').hide();
-
-                }
-            } else {
-                $('#tbodyIDI').empty();
-                $('#tbodyIDI').append('<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>');
-            }
-            /*  */
 
         },
         error: function () { }
-    });
-    $('.horasEntrada').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-
-        time_24hr: true,
-        enableSeconds: true,
-        /*  inline:true, */
-        static: true
-    });
-
-    $('.horasSalida').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i:s",
-        defaultDate: "00:00:00",
-
-        time_24hr: true,
-        enableSeconds: true,
-        /*  inline:true, */
-        static: true
     });
 }
 
