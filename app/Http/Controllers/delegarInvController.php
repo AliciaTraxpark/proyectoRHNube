@@ -151,6 +151,8 @@ class delegarInvController extends Controller
         $invitado->verTodosEmps=$checkTodoEmp;
         $invitado->reporteAsisten=$swReporteAsis;
         $invitado->ModificarReportePuerta=$swMoReporteAsis;
+        $invitado->empleado=1;
+        $invitado->area=0;
         $invitado->save();
         if($checkTodoEmp!=1){
         foreach($idEmpleado as $idEmpleados){
@@ -214,6 +216,8 @@ class delegarInvController extends Controller
         $invitado->dashboard =1;
         $invitado->users_id =Auth::user()->id;
         $invitado->estado_condic=1;
+        $invitado->empleado=0;
+        $invitado->area=0;
         $invitado->save();
 
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
@@ -446,7 +450,7 @@ class delegarInvController extends Controller
 
             $invitadoAct  = DB::table('invitado')
             ->where('idinvitado', '=',  $idinvitado)
-               ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> 1]);
+               ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> 1,'empleado'=>0, 'area'=>0]);
 
 
 
@@ -519,7 +523,7 @@ class delegarInvController extends Controller
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed, 'gestCalendario'=> $switchCalend_ed,
            'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed, 'empleado'=>1, 'area'=>0,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
         /* ------------------------------------------------------------------------------------------------------- */
 
@@ -556,7 +560,7 @@ class delegarInvController extends Controller
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestCalendario'=> $switchCalend_ed,
             'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>1, 'area'=>0,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
         /* --------------------------------------------------------------------------------------------------- */
 
@@ -676,6 +680,8 @@ class delegarInvController extends Controller
     $invitado->users_id =Auth::user()->id;
     $invitado->dashboard =$dash;
     $invitado->estado_condic=1;
+    $invitado->empleado=0;
+    $invitado->area=1;
     $invitado->permiso_Emp=$permisoEmp;
     $invitado->modoCR=$switchCRemo;
     $invitado->ControlRuta=$switchCRuta;
@@ -805,7 +811,7 @@ public function editarInviArea(Request $request){
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed,'extractorRH'=>$switchExtractor_ed,
            'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
         /* ----------------------------------------------------------------------------------------- */
 
@@ -840,7 +846,7 @@ public function editarInviArea(Request $request){
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed, 'ControlRuta'=>$switchCRuta_ed, 'extractorRH'=>$switchExtractor_ed,
            'gestCalendario'=>$switchCalend_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
-           'verTodosEmps'=>$checkTodoEmp_ed,
+           'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>0, 'area'=>1,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
         /* ----------------------------------------------------------------------------------------------------------- */
 
