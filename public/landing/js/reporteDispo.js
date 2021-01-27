@@ -717,7 +717,7 @@ function cargartabla(fecha) {
                                                                     </td>`;
 
                                         }
-                                        // * CALCULAR TIEMPO TOTAL , TIEMPO DE TARDANZA Y EXCESO DE PAUSAS
+                                        // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
                                         var horaFinal = moment(marcacionData.salida);
                                         var horaInicial = moment(marcacionData.entrada);
                                         if (horaFinal.isSameOrAfter(horaInicial)) {
