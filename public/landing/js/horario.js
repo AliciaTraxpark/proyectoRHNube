@@ -546,14 +546,14 @@ function calendario() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
+                        $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
                     } else {
-                        $(info.el).tooltip({ title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
+                        $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
                     }
 
                 }
                 else {
-                    $(info.el).tooltip({ title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
                 }
             }
             /*if(info.event.borderColor=='#5369f8'){
@@ -5856,6 +5856,7 @@ function registrarNuevoHorario() {
     var horasO = $('#horaOblig').val();
     var tardanza;
     var pausas = obtenerPausas();
+    console.log(pausas);
     if ($('#SwitchTardanza').is(":checked")) {
         tardanza = 1;
     } else {
@@ -6044,6 +6045,7 @@ function modalEditar(id) {
                 var contenido = "";
                 for (let index = 0; index < data.pausas.length; index++) {
                     var pausa = data.pausas[index];
+                    console.log(pausa);
                     contenido +=
                         `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}">
                             <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
@@ -6059,7 +6061,7 @@ function modalEditar(id) {
                                     </div>
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
+                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" 
                                                value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -6074,7 +6076,7 @@ function modalEditar(id) {
                                     </div>
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
+                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" 
                                                value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
