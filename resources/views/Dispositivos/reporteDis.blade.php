@@ -198,6 +198,16 @@
     .select2-container--default .select2-results__group {
         color: #62778c;
     }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
+    }
+
+    .opClass {
+        opacity: 0.4;
+        filter: alpha(opacity=40);
+        /* For IE8 and earlier */
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -672,7 +682,7 @@
 <div id="modalAgregar" class="modal fade" role="dialog" aria-labelledby="modalAgregar" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center">
-        <div class="modal-content">
+        <div class="modal-content" id="contentM">
             <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
                 <h6 class="modal-title" style="color:#ffffff;">
                     Mantenimiento de Marcaciones
@@ -680,127 +690,75 @@
             </div>
             <div class="modal-body" style="font-size:12px!important;">
                 <div class="col-md-12">
-                    <form action="javascript:">
+                    {{-- FECHA --}}
+                    <input type="hidden" id="a_fecha">
+                    {{-- ID EMPLEADO --}}
+                    <input type="hidden" id="a_idE">
+                    <form action="javascript:registrarMar()" id="formRegistrarMar">
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="mb-0" style="color:#62778c;font-weight: bold">Horario</label>
+                                <span id="am_valid" style="color: #8b3a1e;display:none"></span>
                                 <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
                                     id="r_horarioXE" required>
                                 </select>
-                                <button type="button" class="btn btn-sm mt-2"
-                                    style="background-color:#383e56;display:none" id="btnAgregarES"
-                                    onclick="javascript:modalAgregarMH()">
-                                    + Agregar Marcación
-                                </button>
                             </div>
                         </div>
-                        <div class="row pt-3">
+                        <div class="row pt-3" style="display: none" id="rowDatosM">
                             <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table id="tablaM" class="table table-hover"
-                                        style="font-size: 13px!important;width: 100% !important">
-                                        <thead style="background: #fafafa;font-size: 14px;width: 100% !important">
-                                            <tr>
-                                                <th>N°</th>
-                                                <th>
-                                                    Entrada&nbsp;
-                                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
-                                                </th>
-                                                <th>
-                                                    Salida &nbsp;
-                                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tbodyM"
-                                            style="background:#ffffff;color: #585858;font-size: 12px;width: 100% !important">
-                                        </tbody>
-                                    </table>
+                                {{-- CABEZALES --}}
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <span>Tipo</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Hora</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Sin marcación
+                                    </div>
+                                </div>
+                                {{-- PRIMERA COLUMNA --}}
+                                <div class="row pt-2">
+                                    <div class="col-md-2">
+                                        <span>
+                                            <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                            &nbsp;Entrada
+                                        </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0 mt-2 ml-2">
+                                            <input type="checkbox" id="v_entrada">
+                                            <label for="" class="mb-0"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- SEGUNDA COLUMNA --}}
+                                <div class="row pt-2">
+                                    <div class="col-md-2">
+                                        <span>
+                                            <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                            &nbsp;Salida
+                                        </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="nuevaSalida">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0 mt-2 ml-2">
+                                            <input type="checkbox" id="v_salida">
+                                            <label for="" class="mb-0"></label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                 </div>
             </div>
             <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
-                <div class="col-md-12 text-right" style="padding-right: 0px;">
-                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
-                        onclick="javascript:limpiarAtributos()">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
-                        Guardar
-                    </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- FINALIZACION --}}
-{{-- MARCACION HORARIO --}}
-<div id="marcacionHES" class="modal fade" role="dialog" aria-labelledby="marcacionHES" aria-hidden="true"
-    data-backdrop="static">
-    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
-        <div class="modal-content">
-            <div class="modal-header" style="font-size:12px!important;background: #f3f3f3;"></div>
-            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
-                <div class="col-md-12">
-                    <form action="javascript:cambiarHorarioM()">
-                        <div class="row ml-3">
-                            <div class="col-md-12">
-                                <span style="color:#62778c;font-weight: bold">Marcaciones</span>
-                            </div>
-                            <div class="col-md-12 pt-1">
-                                <span id="a_validMH" style="color: #8b3a1e;display:none">
-                                    Seleccionar horario
-                                </span>
-                            </div>
-                        </div>
-                        {{-- CABEZALES --}}
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <span>Tipo</span>
-                            </div>
-                            <div class="col-md-4">
-                                <span>Hora</span>
-                            </div>
-                            <div class="col-md-3">
-                                Sin marcación
-                            </div>
-                        </div>
-                        {{-- PRIMERA COLUMNA --}}
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <span>Entrada</span>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-0 mt-2">
-                                    <input type="checkbox" id="v_entrada">
-                                    <label for="" class="mb-0"></label>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- SEGUNDA COLUMNA --}}
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <span>Salida</span>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control form-control-sm" id="nuevaSalida">
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-0 mt-2">
-                                    <input type="checkbox" id="v_salida">
-                                    <label for="" class="mb-0"></label>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;background: #f3f3f3;">
                 <div class="col-md-12 text-right" style="padding-right: 0px;">
                     <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
                         onclick="javascript:limpiarAtributos()">

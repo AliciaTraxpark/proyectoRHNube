@@ -1178,7 +1178,6 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
         },
         success: function (data) {
             if (data.respuesta == undefined) {
-                console.log(data);
                 if ($('#dropSalida' + data) != undefined) {
                     $.notifyClose();
                     $.notify(
@@ -1240,6 +1239,8 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
                 }
             } else {
                 $('#modalAgregar').modal();
+                $('#a_fecha').val(fecha);
+                $('#a_idE').val(idEmpleado);
             }
         },
         error: function () { }
@@ -1250,7 +1251,6 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
 function listaHorariosD(idEmpleado, fecha) {
     $('#r_horarioXE').empty();
     $.ajax({
-        async: false,
         type: "POST",
         url: "/horariosxEmpleado",
         data: {
@@ -1278,15 +1278,14 @@ function listaHorariosD(idEmpleado, fecha) {
         error: function () { }
     });
 }
-// * MOSTRAR BOTON DE AGREGAR MARCACION
-$('#r_horarioXE').on("change", function () {
-    $('#btnAgregarES').show();
-});
-// * MODAL DE AGREGAR MARCACION
+// * VARIABLES DE MARCACIONES
 var newEntrada = {};
 var newSalida = {};
-function modalAgregarMH() {
-    $('#marcacionHES').modal();
+// * MOSTRAR BOTON DE AGREGAR MARCACION
+$('#r_horarioXE').on("change", function () {
+    $('#am_valid').empty();
+    $('#am_valid').hide();
+    $('#rowDatosM').show();
     // * INPUT DE ENTRADA
     newEntrada = $('#nuevaEntrada').flatpickr({
         enableTime: true,
@@ -1307,7 +1306,133 @@ function modalAgregarMH() {
         enableSeconds: true,
         static: true
     });
+});
+// * SIN ENTRADA
+$('#v_entrada').on("change", function (event) {
+    if (event.target.checked) {
+        newEntrada.setDate("00:00:00");
+        $('#nuevaEntrada').prop("disabled", true);
+        $('#nuevaSalida').prop("disabled", false);
+        $('#v_salida').prop("checked", false);
+    } else {
+        $('#nuevaEntrada').prop("disabled", false);
+    }
+});
+// * SIN SALIDA
+$('#v_salida').on("change", function (event) {
+    if (event.target.checked) {
+        newSalida.setDate("00:00:00");
+        $('#nuevaSalida').prop("disabled", true);
+        $('#v_entrada').prop("checked", false);
+        $('#nuevaEntrada').prop("disabled", false);
+    } else {
+        $('#nuevaSalida').prop("disabled", false);
+    }
+});
+// * REGISTRAR MARCACION
+function registrarMar() {
+    var fecha = $('#a_fecha').val();
+    var idEmpleado = $('#a_idE').val();
+    var idHorarioE = $('#r_horarioXE').val();
+    if ($('#v_entrada').is(":checked")) {
+        var horaI = null;
+    } else {
+        var horaI = $('#nuevaEntrada').val();
+    }
+    if ($('#v_salida').is(":checked")) {
+        var horaF = null;
+    } else {
+        var horaF = $('#nuevaSalida').val();
+    }
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/agregarM",
+        data: {
+            fecha: fecha,
+            idEmpleado: idEmpleado,
+            horaI: horaI,
+            horaF: horaF,
+            idHE: idHorarioE
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            if (data.respuesta == undefined) {
+                $('#am_valid').empty();
+                $('#am_valid').hide();
+                $('#modalAgregar').modal('toggle');
+                fechaValue.setDate(fechaGlobal);
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación registrada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                $('#am_valid').empty();
+                $('#am_valid').append(data.respuesta);
+                $('#am_valid').show();
+            }
+        },
+        error: function () { }
+    });
 }
+$('#formRegistrarMar').attr('novalidate', true);
+$('#formRegistrarMar').submit(function (e) {
+    e.preventDefault();
+    if ($('#r_horarioXE').val() == "" || $('#r_horarioXE').val() == null) {
+        $('#am_valid').empty();
+        $('#am_valid').append("Seleccionar horario.");
+        $('#am_valid').show();
+        return;
+    }
+    if (!$('#v_entrada').is(":checked")) {
+        if ($('#nuevaEntrada').val() == "00:00:0" || $('#nuevaEntrada').val() == "00:00:00") {
+            $('#am_valid').empty();
+            $('#am_valid').append("Ingresar entrada.");
+            $('#am_valid').show();
+            return;
+        }
+    }
+    if (!$('#v_salida').is(":checked")) {
+        if ($('#nuevaSalida').val() == "00:00:0" || $('#nuevaSalida').val() == "00:00:00") {
+            $('#am_valid').empty();
+            $('#am_valid').append("Ingresar salida.");
+            $('#am_valid').show();
+            return;
+        }
+    }
+    $('#am_valid').empty();
+    $('#am_valid').hide();
+    this.submit();
+});
 // ! *********************************** CAMBIAR A ENTRADA ********************************************
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
 function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
@@ -1399,7 +1524,7 @@ function cambiarEntradaM() {
             }
         },
         success: function (data) {
-            if (data == undefined) {
+            if (data.respuesta == undefined) {
                 $('#s_valid').hide();
                 $('#listaSalidasMarcacion').modal('toggle');
                 fechaValue.setDate(fechaGlobal);
@@ -2317,4 +2442,17 @@ function limpiarAtributos() {
     $('#horarioXE').empty();
     $('#detalleHorarios').empty();
     $('#detalleHorarios').hide();
+    // ? MODAL DE NUEVA MARCACION
+    $('#v_entrada').prop("checked", false);
+    $('#v_salida').prop("checked", false);
+    $('#nuevaEntrada').prop("disabled", false);
+    $('#nuevaSalida').prop("disabled", false);
+    if (newSalida.config != undefined) {
+        newSalida.setDate("00:00:00");
+    }
+    if (newEntrada.config != undefined) {
+        newEntrada.setDate("00:00:00");
+    }
+    $('#rowDatosM').hide();
+    $('#r_horarioXE').empty();
 }
