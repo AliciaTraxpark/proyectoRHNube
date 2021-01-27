@@ -38,12 +38,19 @@ $(function () {
 });
 // * INICIALIZAR TABLA
 var table;
+var razonSocial;
+var direccion;
+var ruc;
+var dni;
+var nombre;
+var area;
+var cargo;
 function inicializarTabla() {
     table = $("#tablaReport").DataTable({
         "searching": false,
         "scrollX": true,
         "ordering": false,
-        "autoWidth": false,
+        "autoWidth": true,
         "bInfo": false,
         "bLengthChange": false,
         fixedHeader: true,
@@ -86,7 +93,7 @@ function inicializarTabla() {
             text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
             customize: function (xlsx) {
                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                var downrows = 5;
+                var downrows = 10;
                 var clRow = $('row', sheet);
                 clRow[0].children[0].remove();
                 //update Row
@@ -107,29 +114,32 @@ function inicializarTabla() {
                 });
 
                 function Addrow(index, data) {
-                    msg = '<row r="' + index + '">'
+                    msg = `<row r="${index}">`;
                     for (i = 0; i < data.length; i++) {
                         var key = data[i].k;
                         var value = data[i].v;
                         var bold = data[i].s;
-                        msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
-                        msg += '<is>';
-                        msg += '<t>' + value + '</t>';
-                        msg += '</is>';
-                        msg += '</c>';
+                        msg += `<c t="inlineStr" r="${key} ${index}" s="${bold}" wpx="149">`;
+                        msg += `<is>`;
+                        msg += `<t>${value}</t>`;
+                        msg += `</is>`;
+                        msg += `</c>`;
                     }
-                    msg += '</row>';
+                    msg += `</row>`;
                     return msg;
                 }
-                var now = new Date();
-                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                var fechas = 'Desde ' + $('#ID_START').val() + ' Hasta ' + $('#ID_END').val();
                 //insert
-                var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
-                var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
-                var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
-                var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
-                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
+                var r1 = Addrow(1, [{ k: 'A', v: 'Registro Permanente de Control de Asistencia', s: 51 }]);
+                var r2 = Addrow(2, [{ k: 'A', v: fechas, s: 2 }]);
+                var r3 = Addrow(3, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                var r4 = Addrow(4, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                var r5 = Addrow(5, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                var r6 = Addrow(7, [{ k: 'A', v: 'DNI:', s: 2 }, { k: 'C', v: dni, s: 0 }]);
+                var r7 = Addrow(8, [{ k: 'A', v: 'Apellidos y Nombres:', s: 2 }, { k: 'C', v: nombre, s: 0 }]);
+                var r8 = Addrow(9, [{ k: 'A', v: 'Area:', s: 2 }, { k: 'C', v: area, s: 0 }]);
+                var r9 = Addrow(10, [{ k: 'A', v: 'Cargo:', s: 2 }, { k: 'C', v: cargo, s: 0 }]);
+                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9 + sheet.childNodes[0].childNodes[1].innerHTML;
             },
             sheetName: 'Asistencia',
             title: 'Asistencia',
@@ -182,7 +192,7 @@ function inicializarTabla() {
                         alignment: 'center'
                     }
                 };
-                doc.pageMargins = [20, 120, 20, 30];
+                doc.pageMargins = [20, 150, 20, 30];
                 doc.content[1].margin = [30, 0, 30, 0];
                 var colCount = new Array();
                 var tr = $('#tablaReport tbody tr:first-child');
@@ -241,13 +251,15 @@ function inicializarTabla() {
                                 alignment: 'left',
                                 italics: false,
                                 text: [
-                                    { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
-                                    { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                    { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                    { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
-                                    { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    { text: '\nRegistro Permanente de Control de Asistencia\n', bold: true },
+                                    { text: '\nRazon Social:\t\t\t\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                    { text: '\nDireccion:\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: direccion, bold: false },
+                                    { text: '\nNumero de Ruc:\t\t\t\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                    { text: '\nDNI:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: dni, bold: false },
+                                    { text: '\nApellidos y Nombres:\t\t\t\t\t\t', bold: false }, { text: nombre, bold: false },
+                                    { text: '\nArea:\t\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: area, bold: false },
+                                    { text: '\nCargo:\t\t\t\t\t\t\t\t\t\t\t\t', bold: false }, { text: cargo, bold: false }
                                 ],
-
                                 fontSize: 10,
                                 margin: [30, 0]
                             },
@@ -307,6 +319,13 @@ function cargartabla(fecha1, fecha2) {
         success: function (data) {
             console.log(data);
             if (data.length != 0) {
+                razonSocial = data.organi_razonSocial;
+                direccion = data.organi_direccion;
+                ruc = data.organi_ruc;
+                dni = data.nDoc;
+                nombre = data.nombre + "\t" + data.apPaterno + "\t" + data.apMaterno;
+                area = (data.area == null) ? "------" : data.area;
+                cargo = (data.cargo == null) ? "------" : data.cargo;
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
                 }
@@ -375,15 +394,15 @@ function cargartabla(fecha1, fecha2) {
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");
                     var tiempoTotal = moment("00:00:00", "HH:mm:ss");
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");
+                    // * TIEMPO DE PAUSA
+                    var tiempoHoraPausa = "00";
+                    var tiempoMinutoPausa = "00";
+                    var tiempoSegundoPausa = "00";
+                    // * TIEMPO DE EXCESO DE PAUSA
+                    var tiempoHoraExceso = "00";
+                    var tiempoMinutoExceso = "00";
+                    var tiempoSegundoExceso = "00";
                     for (let i = 0; i < contenidoData.marcaciones.length; i++) {
-                        // * TIEMPO DE PAUSA
-                        var tiempoHoraPausa = "00";
-                        var tiempoMinutoPausa = "00";
-                        var tiempoSegundoPausa = "00";
-                        // * TIEMPO DE EXCESO DE PAUSA
-                        var tiempoHoraExceso = "00";
-                        var tiempoMinutoExceso = "00";
-                        var tiempoSegundoExceso = "00";
                         // * TARDANZA
                         var segundosTardanza = "00";
                         var minutosTardanza = "00";
@@ -761,57 +780,5 @@ function togglePausas() {
         $('[name="datosPausa"]').hide();
         setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
     }
-}
-/////////GENERAR EXCEL////////////
-function s2ab(s) {
-    var buf = new ArrayBuffer(s.length);
-    var view = new Uint8Array(buf);
-    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-    return buf;
-}
-function doexcel() {
-    var wb = XLSX.utils.table_to_book(document.getElementById("tableZoomI"), { sheet: "Sheet 1" })	//my html table
-
-    wb["Sheets"]["Sheet 1"]["!cols"] = [{ wpx: 149 }, { wpx: 130 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },
-    { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },
-    { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },
-    { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },];
-
-    console.log(wb);
-
-    var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
-    saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Asistencia.xlsx');
-}
-function generatePDF() {
-
-    var doc = new jsPDF('l', 'pt', 'legal');
-    var htmlstring = '';
-    var tempVarToCheckPageHeight = 0;
-    var pageHeight = 0;
-    pageHeight = doc.internal.pageSize.height;
-    specialElementHandlers = {
-        // element with id of "bypass" - jQuery style selector
-        '#bypassme': function (element, renderer) {
-            // true = "handled elsewhere, bypass text extraction"
-            return true
-        }
-    };
-
-    var y = 20;
-    doc.setLineWidth(2);
-
-    doc.autoTable({
-        html: '#Encabezado',
-        startY: 40,
-        theme: 'plain'
-
-    })
-    doc.autoTable({
-        html: '#tablaReportI',
-        startY: 250
-
-    })
-    doc.save('Asistencia.pdf');
-
 }
 
