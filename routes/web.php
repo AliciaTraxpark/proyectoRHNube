@@ -569,4 +569,7 @@ Route::get('/eliminSubactiv', 'subactividadController@destroy');
 Route::post('/editarSubactividad', 'subactividadController@edit');
 Route::post('/actualizarSubactividad', 'subactividadController@update');
 Route::get('/recuperarSubact', 'subactividadController@recuperarSubactividad');
+
+Route::post('/registrarActivSimple', 'subactividadController@registrarActividadE');
+Route::get('/recuperarActSimple', 'subactividadController@recuperarActividad');
 /* ----------------------------------------------------------------------- */

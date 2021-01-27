@@ -76,7 +76,12 @@ function tablaSubactividades() {
         success: function (data) {
             var tr = "";
             for (let index = 0; index < data.length; index++) {
-                tr += "<tr ><td>" + (index + 1) + "</td>";
+                tr +=
+                    "<tr id=tr" +
+                    data[index].idsubActividad +
+                    "><td>" +
+                    (index + 1) +
+                    "</td>";
                 tr += "<td>" + data[index].subAct_nombre + "</td>";
 
                 if (data[index].subAct_codigo != null) {
@@ -117,7 +122,16 @@ function tablaSubactividades() {
                     tr +=
                         '<td class="text-center" style="font-size:12px"><img src="/admin/images/borrarH.svg" height="11" class="mr-2">NO</td>';
                 }
-                tr +=
+                if (data[index].uso == 1) {
+                    tr +=
+                    '<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(' +
+                    data[index].idsubActividad +
+                    ')" style="cursor: pointer">\
+                                <img src="/admin/images/edit.svg" height="15">\
+                            </a>&nbsp;&nbsp;&nbsp;</td>';
+                }
+                else{
+                    tr +=
                     '<td class="text-center"><a name="aedit" onclick="javascript:editarSubactividad(' +
                     data[index].idsubActividad +
                     ')" style="cursor: pointer">\
@@ -127,6 +141,8 @@ function tablaSubactividades() {
                     ')" style="cursor: pointer">\
                                 <img src="/admin/images/delete.svg" height="15">\
                                 </a></td>';
+                }
+
 
                 tr += "</tr>";
             }
@@ -149,16 +165,19 @@ tablaSubactividades();
 /* ------------------------------------------------------- */
 /* -----LIMPIAR FORMULARIO DE REGISTRAR ACTIVIDAD ---------*/
 function limpiarModo() {
+    $("#regactividadTarea").modal("hide");
+
     //* FORMULARIO REGISTRAR
+    let modoRoE=$("#TipoRoE").val();
+    if (modoRoE == "R") {
+        $("#regSubactividad").modal("show");
+    } else {
+        $("#editSubactividad").modal("show");
+    }
+
     $("#nombreTarea").val("");
     $("#codigoTarea").val("");
-    $("#customCR").prop("checked", false);
-    $("#customCRT").prop("checked", false);
     $("#customMT").prop("checked", false);
-    $("#customAP").prop("checked", false);
-    $(".rowEmpleados").hide();
-    $("#customAE").prop("checked", false);
-    $("#customAA").prop("checked", false);
 }
 /* ------------------------------------------------------- */
 
@@ -187,16 +206,17 @@ $("input.global_filter").on("keyup click change clear", function () {
 // CLASE A SELECT
 $("#actividadesAsignar").select2({
     placeholder: "Seleccionar actividad",
-    matcher: matchStart,
 });
 
 $("#actividadesAsignar_ed").select2({
     placeholder: "Seleccionar actividad",
-    matcher: matchStart,
 });
 
 //LISTAR ACTIVIDADES EN EL SELECT
 function listaActividades() {
+    if ($.fn.DataTable.isDataTable("#subActividades")) {
+        $("#subActividades").DataTable().destroy();
+    }
     /* PARA REGISTRO */
     $("#actividadesAsignar").empty();
     var container = $("#actividadesAsignar");
@@ -240,6 +260,7 @@ function listaActividades() {
 
 //ABRIR REGISTRO SUBACTIVIDAD
 function abrirRegistroSubact() {
+    $("#TipoRoE").val("R");
     //reseteamos formulario
     $("#FormRegistrarSubactividad")[0].reset();
 
@@ -285,31 +306,61 @@ function registrarSubactividad() {
         success: function (data) {
             if (data.estado === 1) {
                 if (data.subactividad.estado == 0) {
-                    alertify
-                        .confirm(
-                            "Ya existe una subactividad inactiva con este nombre. ¿Desea recuperarla si o no?",
-                            function (e) {
-                                if (e) {
-                                    recuperarSubactividad(
-                                        data.subactividad.idsubActividad
-                                    );
+                    if (data.actividadEstado == 1) {
+                        alertify
+                            .confirm(
+                                "Ya existe una subactividad inactiva con este nombre. ¿Desea recuperarla si o no?",
+                                function (e) {
+                                    if (e) {
+                                        recuperarSubactividad(
+                                            data.subactividad.idsubActividad
+                                        );
+                                    }
                                 }
-                            }
-                        )
-                        .setting({
-                            title: "Modificar subactividad",
-                            labels: {
-                                ok: "Si",
-                                cancel: "No",
-                            },
-                            modal: true,
-                            startMaximized: false,
-                            reverseButtons: true,
-                            resizable: false,
-                            closable: false,
-                            transition: "zoom",
-                            oncancel: function (closeEvent) {},
-                        });
+                            )
+                            .setting({
+                                title: "Modificar subactividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {},
+                            });
+                    } else {
+                        alertify
+                            .confirm(
+                                "Ya existe una subactividad inactiva con este nombre y la actividad asignada tiene desactivado " +
+                                    "el modo tareo. ¿Desea recuperar la subactividad y activar el modo tareo de la actividad padre?",
+
+                                function (e) {
+                                    if (e) {
+                                        recuperarSubactividad(
+                                            data.subactividad.idsubActividad
+                                        );
+                                    }
+                                }
+                            )
+                            .setting({
+                                title: "Modificar subactividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {},
+                            });
+                    }
                 } else {
                     $("#nombreSubact").addClass("borderColor");
                     $.notifyClose();
@@ -344,31 +395,60 @@ function registrarSubactividad() {
             } else {
                 if (data.estado === 0) {
                     if (data.subactividad.estado == 0) {
-                        alertify
-                            .confirm(
-                                "Ya existe una subactividad inactiva con este código. ¿Desea recuperarla si o no?",
-                                function (e) {
-                                    if (e) {
-                                        recuperarSubactividad(
-                                            data.subactividad.idsubActividad
-                                        );
+                        if (data.actividadEstado == 1) {
+                            alertify
+                                .confirm(
+                                    "Ya existe una subactividad inactiva con este código. ¿Desea recuperarla si o no?",
+                                    function (e) {
+                                        if (e) {
+                                            recuperarSubactividad(
+                                                data.subactividad.idsubActividad
+                                            );
+                                        }
                                     }
-                                }
-                            )
-                            .setting({
-                                title: "Modificar subactividad",
-                                labels: {
-                                    ok: "Si",
-                                    cancel: "No",
-                                },
-                                modal: true,
-                                startMaximized: false,
-                                reverseButtons: true,
-                                resizable: false,
-                                closable: false,
-                                transition: "zoom",
-                                oncancel: function (closeEvent) {},
-                            });
+                                )
+                                .setting({
+                                    title: "Modificar subactividad",
+                                    labels: {
+                                        ok: "Si",
+                                        cancel: "No",
+                                    },
+                                    modal: true,
+                                    startMaximized: false,
+                                    reverseButtons: true,
+                                    resizable: false,
+                                    closable: false,
+                                    transition: "zoom",
+                                    oncancel: function (closeEvent) {},
+                                });
+                        } else {
+                            alertify
+                                .confirm(
+                                    "Ya existe una subactividad inactiva con este código y la actividad asignada tiene desactivado " +
+                                        "el modo tareo. ¿Desea recuperar la subactividad y activar el modo tareo de la actividad padre?",
+                                    function (e) {
+                                        if (e) {
+                                            recuperarSubactividad(
+                                                data.subactividad.idsubActividad
+                                            );
+                                        }
+                                    }
+                                )
+                                .setting({
+                                    title: "Modificar subactividad",
+                                    labels: {
+                                        ok: "Si",
+                                        cancel: "No",
+                                    },
+                                    modal: true,
+                                    startMaximized: false,
+                                    reverseButtons: true,
+                                    resizable: false,
+                                    closable: false,
+                                    transition: "zoom",
+                                    oncancel: function (closeEvent) {},
+                                });
+                        }
                     } else {
                         $("#codigoSubact").addClass("borderColor");
                         $.notifyClose();
@@ -482,6 +562,8 @@ function eliminarSubacti(id) {
                             );
                         } else {
                             tablaSubactividades();
+
+                            /*  $('#tr'+id).remove(); */
                             $.notifyClose();
                             $.notify(
                                 {
@@ -530,6 +612,7 @@ function eliminarSubacti(id) {
 
 /* FUNCION EDITAR/VER DATOS SUACTIVIDAD */
 function editarSubactividad(id) {
+    $("#TipoRoE").val("E");
     $.ajax({
         async: false,
         type: "POST",
@@ -549,7 +632,6 @@ function editarSubactividad(id) {
             }*/
         },
         success: function (data) {
-
             //removemos clases
             $("#nombreSubact_ed").removeClass("borderColor");
             $("#codigoSubact_ed").removeClass("borderColor");
@@ -557,6 +639,7 @@ function editarSubactividad(id) {
             listaActividades();
 
             $("#idSubAct").val(data.idsubActividad);
+
             $("#nombreSubact_ed").val(data.subAct_nombre);
             $("#codigoSubact_ed").val(data.subAct_codigo);
             if (data.subAct_codigo === null) {
@@ -566,6 +649,13 @@ function editarSubactividad(id) {
             }
 
             $("#actividadesAsignar_ed").val(data.Activi_id);
+            if (data.uso == 1) {
+                $("#actividadesAsignar_ed").prop("disabled", true);
+                $("#divNAct").hide();
+            } else {
+                $("#actividadesAsignar_ed").prop("disabled", false);
+                $("#divNAct").show();
+            }
 
             if (data.modoTareo === 1) {
                 $("#customMTSubact_ed").prop("checked", true);
@@ -641,7 +731,8 @@ function actualizarSubactividad() {
                 $.notifyClose();
                 $.notify(
                     {
-                        message: "\nYa existe una subactividad con este código.",
+                        message:
+                            "\nYa existe una subactividad con este código.",
                         icon: "admin/images/warning.svg",
                     },
                     {
@@ -700,3 +791,244 @@ function recuperarSubactividad(id) {
     });
 }
 /*  */
+
+/*PARA REGISTRAR NUEVA ACTIVIDAD SIMPLE  */
+
+/* ABRIR MODAL Y LIMPIAR */
+function abrirNActividad() {
+    $("#FormRegistrarActividadTarea")[0].reset();
+    $("#editSubactividad").modal("hide");
+    $("#regSubactividad").modal("hide");
+    $("#regactividadTarea").modal("show");
+}
+/* ----------------------------------------------- */
+
+/* -------------------------------------------------------- */
+/* --------REGISTRAR ACTIVIDAD SIMPLE MODO TAREO----------- */
+//: REGISTRAR NUEVA ACTIVIDAD
+function registrarActividadTarea() {
+    var nombre = $("#nombreTarea").val();
+    var codigo = $("#codigoTarea").val();
+
+    var modoTareo;
+
+    //* MODO TAREO
+    if ($("#customMT").is(":checked") == true) {
+        var modoTareo = 1;
+    } else {
+        var modoTareo = 0;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/registrarActivSimple",
+        data: {
+            nombre: nombre,
+            codigo: codigo,
+            modoTareo: modoTareo,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            if (data.estado === 1) {
+                if (data.actividad.estado == 0) {
+                    alertify
+                        .confirm(
+                            "Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla com modo tareo activado si o no?",
+                            function (e) {
+                                if (e) {
+                                    recuperarActividad(
+                                        data.actividad.Activi_id
+                                    );
+                                }
+                            }
+                        )
+                        .setting({
+                            title: "Modificar Actividad",
+                            labels: {
+                                ok: "Si",
+                                cancel: "No",
+                            },
+                            modal: true,
+                            startMaximized: false,
+                            reverseButtons: true,
+                            resizable: false,
+                            closable: false,
+                            transition: "zoom",
+                            oncancel: function (closeEvent) {},
+                        });
+                } else {
+                    $("#nombreTarea").addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message:
+                                "\nYa existe una actividad con este nombre.",
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $("#regactividadTarea"),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            } else {
+                if (data.estado === 0) {
+                    if (data.actividad.estado == 0) {
+                        alertify
+                            .confirm(
+                                "Ya existe una actividad inactiva con este código. ¿Desea recuperarla con modo tareo activado si o no?",
+                                function (e) {
+                                    if (e) {
+                                        recuperarActividad(
+                                            data.actividad.Activi_id
+                                        );
+                                    }
+                                }
+                            )
+                            .setting({
+                                title: "Modificar Actividad",
+                                labels: {
+                                    ok: "Si",
+                                    cancel: "No",
+                                },
+                                modal: true,
+                                startMaximized: false,
+                                reverseButtons: true,
+                                resizable: false,
+                                closable: false,
+                                transition: "zoom",
+                                oncancel: function (closeEvent) {},
+                            });
+                    } else {
+                        $("#codigoTarea").addClass("borderColor");
+                        $.notifyClose();
+                        $.notify(
+                            {
+                                message:
+                                    "\nYa existe una actividad con este código.",
+                                icon: "admin/images/warning.svg",
+                            },
+                            {
+                                element: $("#regactividadTarea"),
+                                position: "fixed",
+                                mouse_over: "pause",
+                                placement: {
+                                    from: "top",
+                                    align: "center",
+                                },
+                                icon_type: "image",
+                                newest_on_top: true,
+                                delay: 2000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
+                    }
+                } else {
+                    listaActividades();
+                    let modoRoE=$("#TipoRoE").val();
+                     if (modoRoE == "R") {
+                        $("#actividadesAsignar").val(data.Activi_id);
+                        $("#regactividadTarea").modal("toggle");
+                        $("#regSubactividad").modal("show");
+                    } else {
+                        $("#regactividadTarea").modal("toggle");
+                        $("#actividadesAsignar_ed").val(data.Activi_id);
+                        $("#editSubactividad").modal("show");
+                    }
+
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: "\nActividad registrada.",
+                            icon: "admin/images/checked.svg",
+                        },
+                        {
+                            position: "fixed",
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 5000,
+                            template:
+                                '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
+            }
+        },
+        error: function () {},
+    });
+}
+//: RECUPERAR ACTIVIDAD
+function recuperarActividad(id) {
+    $.ajax({
+        type: "GET",
+        url: "/recuperarActSimple",
+        data: {
+            id: id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            listaActividades();
+            let modoRoE=$("#TipoRoE").val();
+            if (modoRoE == "R") {
+                $("#actividadesAsignar").val(data.Activi_id);
+                $("#regactividadTarea").modal("toggle");
+                $("#regSubactividad").modal("show");
+            } else {
+                $("#regactividadTarea").modal("toggle");
+                $("#actividadesAsignar_ed").val(data.Activi_id);
+                $("#editSubactividad").modal("show");
+            }
+        },
+        error: function () {},
+    });
+}
+/* -------------------------------------------------------- */

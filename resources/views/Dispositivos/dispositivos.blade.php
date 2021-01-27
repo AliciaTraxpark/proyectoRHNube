@@ -516,7 +516,7 @@
 
                                             <div class="col-md-4 col-4">
                                                 <div class="form-group">
-                                                    <label for="">IP:</label>
+                                                    <label for="">IP:</label> <span id="errorIPr" style="color:#690f0f;display:none">IP inválido</span>
                                                     <input type="text" class="form-control form-control-sm" required
                                                         class="form-input" id="ipv4" name="ipv4"
                                                         placeholder="xxx.xxx.xxx.xxx" />
@@ -687,7 +687,7 @@
 
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
-                                                    <label for="">IP:</label>
+                                                    <label for="">IP:</label><span id="errorIPr_ed" style="color:#690f0f;display:none">IP inválido</span>
                                                     <input type="text" class="form-control form-control-sm" required
                                                         class="form-input" id="ipv4_ed" name="ipv4_ed"
                                                         placeholder="xxx.xxx.xxx.xxx" />

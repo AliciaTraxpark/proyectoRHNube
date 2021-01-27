@@ -266,7 +266,7 @@ use Carbon\Carbon;
             </div>
             <div class="col-sm-10 col-md-10 col-xl-8 text-center">
                 <h5 style="color: #ffffff">Gestión de Horarios</h5>
-                <label for="" class="blanco font-italic">Asignemos los turnos y horarios</label>
+                <label for="" class="blanco font-italic">Ahora creamos y asignamos horarios</label>
             </div>
         </nav>
     </header>
@@ -573,7 +573,7 @@ use Carbon\Carbon;
                             <div class="col-md-12 text-right" style="padding-right: 0px;">
                                 <button type="button" class="btn btn-light  btn-sm"
                                     style="background:#f3f3f3;border-color: #f3f3f3;"
-                                    onclick="$('#horarioAsignar_ed').modal('hide')">
+                                    onclick="$('#horarioAsignar_ed').modal('hide'); $('*').removeClass('fc-highlight');">
                                     Cancelar
                                 </button>
                                 <button type="button" class="btn btn-primary btn-sm"
@@ -1478,7 +1478,7 @@ use Carbon\Carbon;
             {{-- FINALIZAR --}}
         </div>
     </div>
-    
+
     </div>
     </div>
     <footer class="border-top" style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">

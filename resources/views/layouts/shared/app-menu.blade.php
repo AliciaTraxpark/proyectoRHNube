@@ -117,10 +117,22 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
     <li>
-        <a href="/actividad">
+        <a href="javascript: void(0);">
             <i data-feather="layers"></i>
-            <span>Actividades</span>
+            <span>Gestion de actividades</span>
+            <span class="menu-arrow"></span>
         </a>
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/actividad">
+                    <span>Actividades</span>
+                </a>
+                <a href="/subactividad">
+                    <span>SubActividades</span>
+                </a>
+
+            </li>
+        </ul>
     </li>
     <li>
         <a href="/puntoControl">
@@ -213,6 +225,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <li>
                 <a href="/dispositivosTareo">Dispositivos</a>
                 <a href="/controladoresTareo">Controladores</a>
+                <a href="/reporteTareo">Detalle de tareo</a>
 
 
             </li>
@@ -305,10 +318,22 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
     @if ($invitadod->gestionActiv==1)
     <li>
-        <a href="/actividad">
+        <a href="javascript: void(0);">
             <i data-feather="layers"></i>
-            <span>Actividades</span>
+            <span>Gestion de actividades</span>
+            <span class="menu-arrow"></span>
         </a>
+        <ul class="nav-second-level" aria-expanded="false">
+            <li>
+                <a href="/actividad">
+                    <span>Actividades</span>
+                </a>
+                <a href="/subactividad">
+                    <span>SubActividades</span>
+                </a>
+
+            </li>
+        </ul>
     </li>
     @endif
 

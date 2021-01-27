@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\marcacion_tareo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use Illuminate\Support\Arr;
+
 class marcacionTareoController extends Controller
 {
     /**
@@ -137,23 +137,7 @@ class marcacionTareoController extends Controller
         $dia = $fecha->day;
         $ndia = $dia + 1;
 
-        function agruparEmpleadosMarcaciones($array)
-        {
-            $resultado = array();
 
-            foreach ($array as $empleado) {
-                if (!isset($resultado[$empleado->emple_id])) {
-                    $resultado[$empleado->emple_id] = $empleado;
-                }
-                if (!isset($resultado[$empleado->emple_id]->marcaciones)) {
-                    $resultado[$empleado->emple_id]->marcaciones = array();
-                }
-                $arrayMarcacion = array("idMarcacion" => $empleado->idMarcacion, "entrada" => $empleado->entrada, "salida" => $empleado->salida,
-                "actividad" => $empleado->actividad,  "horario" => $empleado->horario, "horarioIni" => $empleado->horarioIni, "horarioFin" => $empleado->horarioFin);
-                array_push($resultado[$empleado->emple_id]->marcaciones, $arrayMarcacion);
-            }
-            return array_values($resultado);
-        }
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -163,72 +147,87 @@ class marcacionTareoController extends Controller
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
                 if ($idemp == 0 || $idemp == ' ') {
-                    $marcaciones = DB::table('empleado as e')
-                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                    $marcaciones = DB::table('marcacion_tareo as mt')
+                        ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                        ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                        ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                        ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                        ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                         ->select(
                             'e.emple_id',
-
-                            'mp.marcaMov_id',
+                            'mt.idmarcaciones_tareo',
                             'e.emple_nDoc',
+                            DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
-                            'c.cargo_descripcion',
-                            'mp.organi_id',
+                            'p.perso_sexo',
+                            DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                            DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                            'act.Activi_Nombre',
+                            DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                            'sub.subAct_nombre',
+                            DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                            DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                            'mt.idmarcaciones_tareo as idMarcacion',
+                            'cont.contrT_nombres',
+                            'cont.contrT_ApPaterno',
+                            'cont.contrT_ApMaterno',
+                            'pc.descripcion as puntoControl'
 
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                            DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                            'mp.marcaMov_id as idMarcacion'
                         )
-                        ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
-
-                        ->where('mp.organi_id', '=', session('sesionidorg'))
-                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                        ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                        ->where('mt.organi_id', '=', session('sesionidorg'))
+                        ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                         ->get();
-                    $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
                 } else {
-                    $marcaciones = DB::table('empleado as e')
-                        ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                    $marcaciones = DB::table('marcacion_tareo as mt')
+                        ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                        ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                        ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                        ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                        ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                        ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                         ->select(
                             'e.emple_id',
-
-                            'mp.marcaMov_id',
+                            'mt.idmarcaciones_tareo',
                             'e.emple_nDoc',
+                            DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
-                            'c.cargo_descripcion',
-                            'mp.organi_id',
+                            'p.perso_sexo',
+                            DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                            DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                            'act.Activi_Nombre',
+                            DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                            'sub.subAct_nombre',
+                            DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                            DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                            'mt.idmarcaciones_tareo as idMarcacion',
+                            'cont.contrT_nombres',
+                            'cont.contrT_ApPaterno',
+                            'cont.contrT_ApMaterno',
+                            'pc.descripcion as puntoControl'
 
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                            DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                            DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                            'mp.marcaMov_id as idMarcacion'
                         )
-                        ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+                        ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                        ->where('mt.organi_id', '=', session('sesionidorg'))
+                        ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                         ->where('e.emple_id', $idemp)
-
-                        ->where('mp.organi_id', '=', session('sesionidorg'))
-                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                         ->get();
-                    $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
                 }
             } else {
+                /* CUANDO ES POR EMPLEADOS PERSONALIZADOS */
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                     ->where('invem.idinvitado', '=', $invitadod->idinvitado)
                     ->where('invem.area_id', '=', null)
@@ -236,225 +235,273 @@ class marcacionTareoController extends Controller
                     ->get()->first();
                 if ($invitado_empleadoIn != null) {
                     if ($idemp == 0 || $idemp == ' ') {
-                        $marcaciones = DB::table('empleado as e')
-                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        $marcaciones = DB::table('marcacion_tareo as mt')
+                            ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                            ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                            ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                            ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                             ->select(
                                 'e.emple_id',
-
-                                'mp.marcaMov_id',
+                                'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
+                                DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'mp.organi_id',
+                                'p.perso_sexo',
+                                DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                                DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                                'act.Activi_Nombre',
+                                DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                                'sub.subAct_nombre',
+                                DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                                DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                                'mt.idmarcaciones_tareo as idMarcacion',
+                                'cont.contrT_nombres',
+                                'cont.contrT_ApPaterno',
+                                'cont.contrT_ApMaterno',
+                                'pc.descripcion as puntoControl'
 
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                                'mp.marcaMov_id as idMarcacion'
                             )
+                            ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                            ->where('mt.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
-
-                            ->where('mp.organi_id', '=', session('sesionidorg'))
-                            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                            ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-                        $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
+
                     } else {
-                        $marcaciones = DB::table('empleado as e')
-                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        $marcaciones = DB::table('marcacion_tareo as mt')
+                            ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                            ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                            ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                            ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                             ->select(
                                 'e.emple_id',
-
-                                'mp.marcaMov_id',
+                                'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
+                                DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'mp.organi_id',
+                                'p.perso_sexo',
+                                DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                                DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                                'act.Activi_Nombre',
+                                DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                                'sub.subAct_nombre',
+                                DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                                DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                                'mt.idmarcaciones_tareo as idMarcacion',
+                                'cont.contrT_nombres',
+                                'cont.contrT_ApPaterno',
+                                'cont.contrT_ApMaterno',
+                                'pc.descripcion as puntoControl'
 
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                                'mp.marcaMov_id as idMarcacion'
                             )
+                            ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                            ->where('mt.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                             ->where('e.emple_id', $idemp)
-
-                            ->where('mp.organi_id', '=', session('sesionidorg'))
-                            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                            ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-                        $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
+
                     }
                 } else {
                     if ($idemp == 0 || $idemp == ' ') {
-                        $marcaciones = DB::table('empleado as e')
-                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        $marcaciones = DB::table('marcacion_tareo as mt')
+                            ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                            ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                            ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                            ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                             ->select(
                                 'e.emple_id',
-
-                                'mp.marcaMov_id',
+                                'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
+                                DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'mp.organi_id',
+                                'p.perso_sexo',
+                                DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                                DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                                'act.Activi_Nombre',
+                                DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                                'sub.subAct_nombre',
+                                DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                                DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                                'mt.idmarcaciones_tareo as idMarcacion',
+                                'cont.contrT_nombres',
+                                'cont.contrT_ApPaterno',
+                                'cont.contrT_ApMaterno',
+                                'pc.descripcion as puntoControl'
 
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                                'mp.marcaMov_id as idMarcacion'
                             )
+                            ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                            ->where('mt.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
-
-                            ->where('mp.organi_id', '=', session('sesionidorg'))
-                            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                            ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-                        $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
+
                     } else {
-                        $marcaciones = DB::table('empleado as e')
-                            ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
-                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        $marcaciones = DB::table('marcacion_tareo as mt')
+                            ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                            ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                            ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                            ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                            ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                             ->select(
                                 'e.emple_id',
-
-                                'mp.marcaMov_id',
+                                'mt.idmarcaciones_tareo',
                                 'e.emple_nDoc',
+                                DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
-                                'c.cargo_descripcion',
-                                'mp.organi_id',
+                                'p.perso_sexo',
+                                DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                                DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                                'act.Activi_Nombre',
+                                DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                                'sub.subAct_nombre',
+                                DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                                DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                                'mt.idmarcaciones_tareo as idMarcacion',
+                                'cont.contrT_nombres',
+                                'cont.contrT_ApPaterno',
+                                'cont.contrT_ApMaterno',
+                                'pc.descripcion as puntoControl'
 
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                                DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                                DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                                DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                                'mp.marcaMov_id as idMarcacion'
                             )
+                            ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                            ->where('mt.organi_id', '=', session('sesionidorg'))
                             ->where('invi.estado', '=', 1)
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
-                            ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
                             ->where('e.emple_id', $idemp)
-
-                            ->where('mp.organi_id', '=', session('sesionidorg'))
-                            ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
+                            ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-                        $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
+
                     }
                 }
             }
         } else {
             if ($idemp == 0 || $idemp == ' ') {
-                $marcaciones = DB::table('empleado as e')
-                    ->join('marcacion_tareo as mt', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
+
+                $marcaciones = DB::table('marcacion_tareo as mt')
+                    ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->leftJoin('horario_empleado as hoe', 'mt.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
-                    ->leftJoin('actividad as act','mt.Activi_id','=','act.Activi_id')
+                    ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                    ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                    ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                    ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                    ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                     ->select(
                         'e.emple_id',
-
                         'mt.idmarcaciones_tareo',
                         'e.emple_nDoc',
+                        DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
-                        'c.cargo_descripcion',
-                        'mt.organi_id',
-                        DB::raw('IF(act.Activi_Nombre is null, 0 , act.Activi_Nombre) as actividad'),
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
+                        'p.perso_sexo',
+                        DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                        DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                        'act.Activi_Nombre',
+                        DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                        'sub.subAct_nombre',
                         DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                         DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
-                        'mt.idmarcaciones_tareo as idMarcacion'
+                        'mt.idmarcaciones_tareo as idMarcacion',
+                        'cont.contrT_nombres',
+                        'cont.contrT_ApPaterno',
+                        'cont.contrT_ApMaterno',
+                        'pc.descripcion as puntoControl'
+
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
-
                     ->where('mt.organi_id', '=', session('sesionidorg'))
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->get();
-                $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
+
             } else {
-                $marcaciones = DB::table('empleado as e')
-                    ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
+                $marcaciones = DB::table('marcacion_tareo as mt')
+                    ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
-                    ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                    ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_tareo', '=', 'cont.idcontroladores_tareo')
+                    ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
+                    ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
+                    ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
+                    ->leftJoin('subactividad as sub', 'mt.idsubActividad', '=', 'sub.idsubActividad')
 
                     ->select(
                         'e.emple_id',
-
-                        'mp.marcaMov_id',
+                        'mt.idmarcaciones_tareo',
                         'e.emple_nDoc',
+                        DB::raw('IF(e.emple_codigo is null, 0 ,e.emple_codigo) as emple_codigo'),
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
-                        'c.cargo_descripcion',
-                        'mp.organi_id',
+                        'p.perso_sexo',
+                        DB::raw('IF(c.cargo_descripcion is null, 0 ,c.cargo_descripcion) as cargo_descripcion'),
+                        DB::raw('IF(act.codigoActividad is null, 0 , act.codigoActividad) as codigoActividad'),
+                        'act.Activi_Nombre',
+                        DB::raw('IF(sub.subAct_codigo is null, 0 ,sub.subAct_codigo) as codigoSubactiv'),
+                        'sub.subAct_nombre',
+                        DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
+                        DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
+                        'mt.idmarcaciones_tareo as idMarcacion',
+                        'cont.contrT_nombres',
+                        'cont.contrT_ApPaterno',
+                        'cont.contrT_ApMaterno',
+                        'pc.descripcion as puntoControl'
 
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horario_descripcion) as horario'),
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaI) as horarioIni'),
-                        DB::raw('IF(hor.horario_descripcion is null, 0 , hor.horaF) as horarioFin'),
-                        DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
-                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
-                        'mp.marcaMov_id as idMarcacion'
                     )
-                    ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
+                    ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
+                    ->where('mt.organi_id', '=', session('sesionidorg'))
+                    ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->where('e.emple_id', $idemp)
-
-                    ->where('mp.organi_id', '=', session('sesionidorg'))
-                    ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)', 'ASC'))
                     ->get();
-                $marcaciones = agruparEmpleadosMarcaciones($marcaciones);
+
+
             }
         }
         return response()->json($marcaciones, 200);

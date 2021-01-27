@@ -222,14 +222,14 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     if (data[index].modoTareo == 1) {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
                             <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvMT"+ data[index].Activi_id + "\" disabled>\
                             <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
@@ -289,14 +289,27 @@ function actividadesOrganizacion() {
                             </div></td>";
                     }
                     if (data[index].modoTareo == 1) {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+
+                        if(data[index].padreSubactividad == 1){
+                            tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
+                            <input type=\"checkbox\" class=\"custom-control-input\"\
+                                id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
+                            <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
+                                style=\"font-weight: bold\"></label>\
+                                <img  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'" + "\"\
+                                title='Tiene asignado subactividades' style=\"cursor: pointer\" src='landing/images/info.svg' height='14'></div> </td>";
+                        }
+                        else{
+                            tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvMT"+ data[index].Activi_id + "\" checked >\
                             <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
                                 style=\"font-weight: bold\"></label>\
                             </div></td>";
+                        }
+
                     } else {
-                        tr += "<td class=\"text-center\"><div class=\"custom-control custom-switch mb-2\">\
+                        tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvMT"+ data[index].Activi_id + "\" >\
                             <label class=\"custom-control-label\" for=\"switchActvMT"+ data[index].Activi_id + "\"\
@@ -308,16 +321,24 @@ function actividadesOrganizacion() {
                     } else {
                         tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                    if(data[index].padreSubactividad == 1){
+                        tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
+                                 <img src=\"/admin/images/edit.svg\" height=\"15\">\
+                                </a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else{
+                        tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
                                 </a>&nbsp;&nbsp;&nbsp;<a name=\"deletePermiso\" onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                     <img src=\"/admin/images/delete.svg\" height=\"15\">\
                                  </a></td>";
+                    }
+
                 }
                 tr += "</tr>";
             }
             $('#actividOrga').html(tr);
             tablaActividades();
+            $('[data-toggle="tooltip"]').tooltip();
         },
         error: function () {
 
@@ -745,7 +766,16 @@ function editarActividad(id) {
             }
             if (data.modoTareo === 1) {
                 $('#e_customMT').prop("checked", true);
+                if(data.padreSubactividad === 1){
+                    $('#svgInfo').show();
+                    $('#e_customMT').prop("disabled", true);
+                } else{
+                    $('#svgInfo').hide();
+                    $('#e_customMT').prop("disabled", false);
+                }
             } else {
+                $('#svgInfo').hide();
+                $('#e_customMT').prop("disabled", false);
                 $('#e_customMT').prop("checked", false);
             }
             if (data.controlRemoto === 1 || data.controlRuta === 1) {
@@ -2198,3 +2228,12 @@ $(function () {
     });
 });
 //* ************************ FINALIZACION ****************************** *//
+
+/* AGREGANDO TOOLTIP PORQUE CUANDO DE PAGINACION DESAPARECE */
+$('#actividades tbody').on('mouseover', 'tr', function () {
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'hover',
+        html: true
+    });
+});
+/* ----------------------------------------------------------- */

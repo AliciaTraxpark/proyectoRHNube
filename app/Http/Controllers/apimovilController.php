@@ -429,7 +429,7 @@ class apimovilController extends Controller
             }
             $marcacion_puerta->save();
             } else{
-                
+
                 /* EMPAREJAMOS CON LA MARCACION SIN SALIDA QUE ENCONTRAMOS */
                 $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
                 $marcacion_puerta->marcaMov_salida=$req['fechaMarcacion'];
@@ -547,6 +547,7 @@ class apimovilController extends Controller
                 'cc.organi_id'
             )
             ->where('cc.organi_id', '=', $organi_id)
+            ->where('cc.estado', '=', 1)
             ->get();
             /* ------------------------------------------------ */
 
