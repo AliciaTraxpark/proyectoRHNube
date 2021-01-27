@@ -417,7 +417,8 @@ class dispositivosController extends Controller
                     "entrada" => $empleado->entrada,
                     "salida" => $empleado->salida,
                     "idH" => $empleado->idHorario,
-                    "idHE" => $empleado->idHorarioE
+                    "idHE" => $empleado->idHorarioE,
+                    "dispositivo" => $empleado->dispositivo
                 );
                 array_push($resultado[$empleado->emple_id]->data[$empleado->idHorario]["marcaciones"], $arrayMarcacion);
             }
@@ -630,6 +631,8 @@ class dispositivosController extends Controller
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
+            ->leftJoin('dispositivos as d', 'd.idDispositivos', '=', 'mp.dispositivos_idDispositivos')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
             ->select(
                 'e.emple_id',
                 'mp.marcaMov_id',
@@ -643,6 +646,7 @@ class dispositivosController extends Controller
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
                 'hor.horario_tolerancia as tolerancia',
                 'mp.marcaMov_id as idMarcacion',
+                DB::raw("IF(td.dispositivo_descripcion is null, 'MANUAL' , td.dispositivo_descripcion) as dispositivo"),
                 'hoe.estado'
             )
             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)

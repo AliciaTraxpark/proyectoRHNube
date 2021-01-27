@@ -508,7 +508,7 @@ function cargartabla(fecha) {
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important">
-                                                                    <div class="dropdown">
+                                                                    <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                         <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
@@ -602,7 +602,7 @@ function cargartabla(fecha) {
                                     if (marcacionData.salida != 0) {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td>
-                                                                        <div class="dropdown" id="">
+                                                                        <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" 
                                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
@@ -904,7 +904,7 @@ function cargartabla(fecha) {
                                         var permisoModificarCE2 = $('#modifReporte').val();
                                         if (permisoModificarCE2 == 1) {
                                             tbodyEntradaySalida += `<td>
-                                                                                <div class="dropdown" id="">
+                                                                                <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                                     <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
                                                                                         style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
