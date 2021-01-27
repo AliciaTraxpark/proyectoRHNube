@@ -392,9 +392,10 @@ function cargartabla(fecha) {
                             // ! HORARIO
                             var horarioData = data[index].data[m].horario;
                             contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
-                            if (horarioData.horario != null) {
-                                if (horarioData.estado == 1) {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                            if (permisoModificar == 1) {
+                                if (horarioData.horario != null) {
+                                    if (horarioData.estado == 1) {
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -423,8 +424,8 @@ function cargartabla(fecha) {
                                                         ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                     </td>
                                                     <td class="text-center">${horarioData.tolerancia} min.</td>`;
-                                } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                    } else {
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -454,9 +455,9 @@ function cargartabla(fecha) {
                                                         ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                     </td>
                                                     <td class="text-center">${horarioData.tolerancia} min.</td>`;
-                                }
-                            } else {
-                                grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                    }
+                                } else {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                     <div class="dropdown">
                                                         <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -482,6 +483,44 @@ function cargartabla(fecha) {
                                                     </div>
                                                 </td>
                                                 <td class="text-center">---</td><td class="text-center">---</td>`;
+                                }
+                            } else {
+                                if (horarioData.horario != null) {
+                                    if (horarioData.estado == 1) {
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                            <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                     ${horarioData.horario}
+                                                                </span>
+                                                            </a>
+                                                    </td>
+                                                    <td>
+                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                    </td>
+                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                    } else {
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                            <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                     ${horarioData.horario}
+                                                                </span>
+                                                            </a>
+                                                    </td>
+                                                    <td>
+                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                    </td>
+                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                    }
+                                } else {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                        <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                 Sin horario
+                                                            </span>
+                                                        </a>
+                                                </td>
+                                                <td class="text-center">---</td><td class="text-center">---</td>`;
+                                }
                             }
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";

@@ -202,12 +202,6 @@
     .form-control:disabled {
         background-color: #fcfcfc;
     }
-
-    .opClass {
-        opacity: 0.4;
-        filter: alpha(opacity=40);
-        /* For IE8 and earlier */
-    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
