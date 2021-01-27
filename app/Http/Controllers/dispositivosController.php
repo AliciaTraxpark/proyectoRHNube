@@ -1008,9 +1008,7 @@ class dispositivosController extends Controller
                         'e.emple_id',
                         DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
                         DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
-
                         'ar.area_descripcion',
-                        /* 'mp.marcaMov_id', */
                         'e.emple_nDoc',
                         'p.perso_nombre',
                         'p.perso_apPaterno',
@@ -1018,11 +1016,10 @@ class dispositivosController extends Controller
                         'c.cargo_descripcion',
                         'mp.organi_id',
                         DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
-
-
                     )
                     ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
                     ->where('e.emple_id', $idemp)
+                    ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'))
                     ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
                     ->where('mp.organi_id', '=', session('sesionidorg'))
                     ->get();
@@ -1049,7 +1046,6 @@ class dispositivosController extends Controller
                             DB::raw('IF(mp.marcaMov_fecha is null,mp.marcaMov_salida ,mp.marcaMov_fecha) as entradaModif'),
                             DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                             'ar.area_descripcion',
-
                             'e.emple_nDoc',
                             'p.perso_nombre',
                             'p.perso_apPaterno',

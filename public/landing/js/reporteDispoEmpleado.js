@@ -8,6 +8,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     maxDate: "today",
     wrap: true,
     allowInput: true,
+    conjunction: " a ",
     onChange: function (selectedDates) {
         var _this = this;
         var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
@@ -27,12 +28,13 @@ $(function () {
         },
         minimumInputLength: 2
     });
-    f = moment().format("YYYY-MM-DD");
-    fechaValue.setDate(f);
+    f = moment();
+    fHoy = f.clone().format("YYYY-MM-DD");
+    fAyer = f.clone().add("day", -1).format("YYYY-MM-DD");
+    fechaValue.setDate([fAyer, fHoy]);
     $("#fechaInput").change();
-    $('#ID_START').val(f);
-    $('#ID_END').val(f);
-    /*  cambiarF(); */
+    $('#ID_START').val(fAyer);
+    $('#ID_END').val(fHoy);
 });
 
 
@@ -78,7 +80,6 @@ function cargartabla(fecha1, fecha2) {
             }
         },
         success: function (data) {
-            console.log(data);
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
@@ -632,12 +633,37 @@ function cambiarF() {
     f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
     f3 = $("#ID_END").val();
-    if ($.fn.DataTable.isDataTable("#tablaReport")) {
-
-        /* $('#tablaReport').DataTable().destroy(); */
+    if ($('#idempleado').val() == "" || $('#idempleado').val() == null) {
+        $.notifyClose();
+        $.notify(
+            {
+                message:
+                    "\nElegir empleado.",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+    } else {
+        cargartabla(f2, f3);
     }
-    console.log(f2);
-    cargartabla(f2, f3);
 
 }
 function cambiartabla() {
@@ -650,8 +676,6 @@ function cambiartabla() {
         setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
     }
 }
-
-
 
 /////////GENERAR EXCEL////////////
 function s2ab(s) {
