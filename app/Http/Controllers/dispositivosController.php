@@ -1114,6 +1114,7 @@ class dispositivosController extends Controller
                         ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
                         ->select(
                             'e.emple_id',
                             'o.organi_razonSocial',
@@ -1157,6 +1158,7 @@ class dispositivosController extends Controller
                         ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                         ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                        ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
                         ->select(
                             'e.emple_id',
                             'o.organi_razonSocial',
