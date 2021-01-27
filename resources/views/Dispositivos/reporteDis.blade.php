@@ -607,7 +607,7 @@
 {{-- MODAL DE CAMBIAR DE HORARIO --}}
 <div id="modalCambiarHorario" class="modal fade" role="dialog" aria-labelledby="modalCambiarHorario" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog   d-flex modal-dialog-centered justify-content-center">
+    <div class="modal-dialog modal-lg   d-flex modal-dialog-centered justify-content-center">
         <div class="modal-content">
             <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
                 <h6 class="modal-title" style="color:#ffffff;">

@@ -1963,7 +1963,7 @@ function guardarAsignacion() {
                 $('#btnRecargaTabla').click();
                 $('#asignacionMarcacion').modal('toggle');
                 $('button[type="submit"]').attr("disabled", false);
-                limpiarAtributos(); 
+                limpiarAtributos();
             } else {
                 $('#a_valid').empty();
                 $('#a_valid').append(data.respuesta);
@@ -2329,55 +2329,74 @@ function modalCambiarHorario(idHE, fecha, id) {
 // * MOSTRAR DETALLES DE HORARIO
 $('#horarioXE').on("change", function () {
     $('#detalleHorarios').empty();
-    var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
-    datosHorario.forEach(element => {
-        if (element.idHorarioE == $('#horarioXE').val()) {
-            contenido += `<div class="row ml-3 mr-4" style="background: #ffffff;border-radius: 5px">
+    $('#detalleHorarios').hide();
+    if ($(this).val() != 0) {
+        var contenido = `<div class="col-md-12"><span style="color:#183b5d;font-weight: bold">Detalles de Horario</span></div>`;
+        datosHorario.forEach(element => {
+            if (element.idHorarioE == $('#horarioXE').val()) {
+                contenido += `<div class="row ml-3 mr-4" style="background: #ffffff;border-radius: 5px">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <span style="color:#62778c;">Horario:</span>
+                                    </div>
+                                    <div class="col-md-8">
                                         <span>${element.descripcion}</span>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <span style="color:#62778c;">Hora inicio:</span>
+                                    </div>
+                                    <div class="col-md-8">
                                         <span>${element.horaI}</span>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <span style="color:#62778c;">Hora fin:</span>
+                                    </div>
+                                    <div class="col-md-8">
                                         <span>${element.horaF}</span>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <span style="color:#62778c;">Horas obligadas:</span>
+                                    </div>
+                                    <div class="col-md-8">
                                         <span>${element.horasObligadas}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <span style="color:#62778c;">Permitir trabajar fuera horario:</span>
+                                    </div>
+                                    <div class="col-md-4">
                                         <span>${(element.fueraH == 1) ? "Si" : "No"}</span>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <span style="color:#62778c;">Tolerancia inicio (minutos):</span>
+                                    </div>
+                                    <div class="col-md-4">
                                         <span>${element.toleranciaI}</span>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <span style="color:#62778c;">Tolerancia fin (minutos):</span>
+                                    </div>
+                                    <div class="col-md-4">
                                         <span>${element.toleranciaF}</span>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <span style="color:#62778c;">Horas adicionales:</span>
+                                    </div>
+                                    <div class="col-md-4">
                                         <span>${element.horasAdicionales}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>`;
-        }
-    });
-    $('#detalleHorarios').append(contenido);
-    $('#detalleHorarios').show();
+            }
+        });
+        $('#detalleHorarios').append(contenido);
+        $('#detalleHorarios').show();
+    }
 });
 // * FUNCION DE CAMBIAR DE HORARIO
 function cambiarHorarioM() {
