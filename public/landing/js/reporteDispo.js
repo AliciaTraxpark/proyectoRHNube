@@ -131,12 +131,19 @@ function inicializarTabla() {
                 format: {
                     body: function (data, row, column, node) {
                         var cont = $.trim($(node).text());
-                        var cont1 = cont.replace('Cambiar a entrada', '');
-                        var cont2 = cont1.replace('Cambiar a salida', '');
-                        var cont3 = cont2.replace('No tiene entrada', '---');
-                        var cont4 = cont3.replace('No tiene salida', '---');
+                        var cambiar = cont.replace('Cambiar a entrada', '');
+                        cambiar = cambiar.replace('Cambiar a salida', '');
+                        cambiar = cambiar.replace('No tiene entrada', '---');
+                        cambiar = cambiar.replace('No tiene salida', '---');
+                        cambiar = cambiar.replace('Opciones', '');
+                        cambiar = cambiar.replace('Convertir orden', '');
+                        cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                        cambiar = cambiar.replace('Eliminar marc.', '');
+                        cambiar = cambiar.replace('Actualizar horario', '');
+                        cambiar = cambiar.replace('Insertar salida', '');
+                        cambiar = cambiar.replace('Insertar entrada', '');
 
-                        return $.trim(cont4);
+                        return $.trim(cambiar);
                     }
                 }
             },
@@ -191,11 +198,18 @@ function inicializarTabla() {
                         line.forEach(element => {
                             var textOriginal = element.text;
                             var cambiar = textOriginal.replace('Cambiar a entrada', '');
-                            var cambiar2 = cambiar.replace('Cambiar a salida', '');
-                            var cambiar3 = cambiar2.replace('No tiene entrada', '---');
-                            var cambiar4 = cambiar3.replace('No tiene salida', '---');
-                            var cambiar5 = cambiar4.trim();
-                            bodyNuevo.push({ text: cambiar5, style: 'defaultStyle' });
+                            cambiar = cambiar.replace('Cambiar a salida', '');
+                            cambiar = cambiar.replace('No tiene entrada', '---');
+                            cambiar = cambiar.replace('No tiene salida', '---');
+                            cambiar = cambiar.replace('Opciones', '');
+                            cambiar = cambiar.replace('Convertir orden', '');
+                            cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                            cambiar = cambiar.replace('Eliminar marc.', '');
+                            cambiar = cambiar.replace('Actualizar horario', '');
+                            cambiar = cambiar.replace('Insertar salida', '');
+                            cambiar = cambiar.replace('Insertar entrada', '');
+                            cambiar = $.trim(cambiar);
+                            bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
                         });
                         bodyCompleto.push(bodyNuevo);
                     } else {
@@ -475,7 +489,7 @@ function cargartabla(fecha) {
                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                     <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
-                                                                        Cambiar horario
+                                                                        Actualizar horario
                                                                     </a>
                                                                 </div>
                                                             </div>
