@@ -1058,6 +1058,7 @@ class dispositivosController extends Controller
             if ($invitadod->verTodosEmps == 1) {
 
                 $marcaciones = DB::table('empleado as e')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                     ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -1065,8 +1066,12 @@ class dispositivosController extends Controller
                     ->leftJoin('actividad as acti', 'mp.marcaIdActivi', '=', 'acti.Activi_id')
                     ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
                     ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
+                    ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
                     ->select(
                         'e.emple_id',
+                        'o.organi_razonSocial',
+                        'o.organi_direccion',
+                        'o.organi_ruc',
                         DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
                         DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                         'ar.area_descripcion',
@@ -1076,14 +1081,20 @@ class dispositivosController extends Controller
                         'p.perso_apMaterno',
                         'c.cargo_descripcion',
                         'mp.organi_id',
-                        DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
+                        DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
+                        DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
+                        DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
+                        'mp.marcaMov_id as idMarcacion',
+                        'hor.horario_tolerancia as tolerancia',
+                        DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                        DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
                     )
                     ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
                     ->where('e.emple_id', $idemp)
-                    ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), 'ASC')
-                    ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                    ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC')
                     ->where('mp.organi_id', '=', session('sesionidorg'))
                     ->get();
+                $marcaciones = agruparPorFechayHorario($marcaciones);
             } else {
                 $invitado_empleadoIn = DB::table('invitado_empleado as invem')
                     ->where('invem.idinvitado', '=',  $invitadod->idinvitado)
@@ -1093,6 +1104,7 @@ class dispositivosController extends Controller
                 if ($invitado_empleadoIn != null) {
 
                     $marcaciones = DB::table('empleado as e')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                         ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
@@ -1104,6 +1116,9 @@ class dispositivosController extends Controller
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->select(
                             'e.emple_id',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
                             DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
                             DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                             'ar.area_descripcion',
@@ -1113,20 +1128,26 @@ class dispositivosController extends Controller
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
-                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
-
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
+                            DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
+                            DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
+                            'mp.marcaMov_id as idMarcacion',
+                            'hor.horario_tolerancia as tolerancia',
+                            DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
                         ->where('e.emple_id', $idemp)
-                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), 'ASC')
-                        ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC')
                         ->where('mp.organi_id', '=', session('sesionidorg'))
                         ->get();
+                    $marcaciones = agruparPorFechayHorario($marcaciones);
                 } else {
 
                     $marcaciones = DB::table('empleado as e')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                         ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
@@ -1138,27 +1159,34 @@ class dispositivosController extends Controller
                         ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
                         ->select(
                             'e.emple_id',
+                            'o.organi_razonSocial',
+                            'o.organi_direccion',
+                            'o.organi_ruc',
                             DB::raw('IF(mp.marcaMov_fecha is null,DATE(mp.marcaMov_salida) ,DATE(mp.marcaMov_fecha)) as entradaModif'),
                             DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id) as idhorario'),
                             'ar.area_descripcion',
-
                             'e.emple_nDoc',
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
                             'c.cargo_descripcion',
                             'mp.organi_id',
-
-                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario')
+                            DB::raw('IF(hor.horario_id is null, 0 , hor.horario_descripcion) as horario'),
+                            DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
+                            DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
+                            'mp.marcaMov_id as idMarcacion',
+                            'hor.horario_tolerancia as tolerancia',
+                            DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
+                            DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida')
                         )
                         ->where('invi.estado', '=', 1)
                         ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                         ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
                         ->where('e.emple_id', $idemp)
-                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), 'ASC')
-                        ->groupBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), DB::raw('IF(hor.horario_id is null, 0 , hor.horario_id)'))
+                        ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC')
                         ->where('mp.organi_id', '=', session('sesionidorg'))
                         ->get();
+                    $marcaciones = agruparPorFechayHorario($marcaciones);
                 }
             }
         } else {
