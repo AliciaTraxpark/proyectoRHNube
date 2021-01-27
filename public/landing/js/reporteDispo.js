@@ -822,7 +822,6 @@ function cargartabla(fecha) {
                                                                             if (tiempoSegundoPausa < 10) {
                                                                                 tiempoSegundoExceso = '0' + tiempoSegundoExceso;
                                                                             }
-                                                                            console.log(restarTiempoMarcacion, restaEntrePausa, restaParaExceso);
                                                                         }
                                                                     }
                                                                 }

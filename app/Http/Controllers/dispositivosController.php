@@ -712,6 +712,7 @@ class dispositivosController extends Controller
                 if ($d["horario"]->idHorario != 0) {
                     // * AÑADIR PAUSAS DEL HORARIO
                     $pausas = DB::table('pausas_horario')->select(
+                        'idpausas_horario as id',
                         'pausH_descripcion as descripcion',
                         'pausH_Inicio as inicio',
                         'pausH_Fin as fin',
