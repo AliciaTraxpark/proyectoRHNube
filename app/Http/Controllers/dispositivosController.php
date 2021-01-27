@@ -1195,7 +1195,7 @@ class dispositivosController extends Controller
                 )
                 ->whereBetween(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), [$fecha, $fechaF])
                 ->where('e.emple_id', $idemp)
-                ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida) , DATE(mp.marcaMov_fecha))'), 'ASC')
+                ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC')
                 ->where('mp.organi_id', '=', session('sesionidorg'))
                 ->get();
             $marcaciones = agruparPorFechayHorario($marcaciones);
@@ -1213,7 +1213,8 @@ class dispositivosController extends Controller
                         'pausH_Inicio as inicio',
                         'pausH_Fin as fin',
                         'tolerancia_inicio as toleranciaI',
-                        'tolerancia_fin as toleranciaF'
+                        'tolerancia_fin as toleranciaF',
+                        'horario_id as idH'
                     )
                         ->where('horario_id', '=', $idHorario)
                         ->get();

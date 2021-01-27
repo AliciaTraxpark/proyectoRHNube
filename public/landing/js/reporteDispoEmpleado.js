@@ -452,111 +452,110 @@ function cargartabla(fecha1, fecha2) {
                                     }
                                     sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
                                     tiempoTotal = tiempoTotal.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                    // if (marcacionData.idH != 0) {
-                                    //     // ****************************************** PAUSAS ****************************************
-                                    //     // for (let indice = 0; indice < data[index].data[m].pausas.length; indice++) {
-                                    //     //     var contenidoP = data[index].data[m].pausas[indice];
-                                    //     //     if (contenidoP.horario_id == marcacionData.idH) {
-                                    //     //         var fechaI = horaInicial.clone().format("YYYY-MM-DD");
-                                    //     //         var fechaF;
-                                    //     //         if (contenidoP.inicio > contenidoP.fin) {
-                                    //     //             fechaF = horaInicial.clone().add(1, 'day').format("YYYY-MM-DD");
-                                    //     //         } else {
-                                    //     //             fechaF = horaInicial.clone().format("YYYY-MM-DD");
-                                    //     //         }
-                                    //     //         var pausaI = moment(fechaI + " " + contenidoP.inicio);
-                                    //     //         var pausaF = moment(fechaF + " " + contenidoP.fin);
-                                    //     //         // ! COMPROBAR SI TIENE SALIDA PARA PAUSA
-                                    //     //         var sumaToleranciaPausa = moment(
-                                    //     //             pausaI.clone().add(
-                                    //     //                 { "minutes": contenidoP.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
-                                    //     //             ).toString());
-                                    //     //         var restaToleranciaPausa = moment(
-                                    //     //             pausaI.clone().subtract(
-                                    //     //                 { "minutes": contenidoP.tolerancia_inicio }
-                                    //     //             ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
-                                    //     //         // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
-                                    //     //         if (horaFinal.isAfter(restaToleranciaPausa) && horaFinal.isBefore(sumaToleranciaPausa)) {
-                                    //     //             // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
-                                    //     //             if (data[index].data[m].marcaciones[j + 1] != undefined) {
-                                    //     //                 if (data[index].data[m].marcaciones[j + 1].entrada != undefined) {
-                                    //     //                     var horaEntradaDespues = moment(data[index].data[m].marcaciones[j + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                    //     //                     var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                 //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA
-                                    //     //                     tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
-                                    //     //                     tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
-                                    //     //                     tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
-                                    //     //                     if (tiempoHoraPausa < 10) {
-                                    //     //                         tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                    //     //                     }
-                                    //     //                     if (tiempoMinutoPausa < 10) {
-                                    //     //                         tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                    //     //                     }
-                                    //     //                     if (tiempoSegundoPausa < 10) {
-                                    //     //                         tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                    //     //                     }
-                                    //     //                     // * RESTAR EL TIEMPO DE PAUSA
-                                    //     //                     tiempoTotal = tiempoTotal.add(
-                                    //     //                         {
-                                    //     //                             "hours": -tiempoHoraPausa,
-                                    //     //                             "minutes": -tiempoMinutoPausa,
-                                    //     //                             "seconds": -tiempoSegundoPausa
-                                    //     //                         }
-                                    //     //                     );
-                                    //     //                     // * VERIFICAR TIEMPO DE EXCESO
-                                    //     //                     var clonarPausaI = pausaI.clone();
-                                    //     //                     var clonarPausaF = pausaF.clone();
-                                    //     //                     var restaEntrePausa = clonarPausaF - clonarPausaI;
-                                    //     //                     // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
-                                    //     //                     if (restarTiempoMarcacion <= restaEntrePausa) {
-                                    //     //                         tiempoHoraExceso = "00";
-                                    //     //                         tiempoMinutoExceso = "00";
-                                    //     //                         tiempoSegundoExceso = "00";
-                                    //     //                     } else {
-                                    //     //                         var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
-                                    //     //                         tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
-                                    //     //                         tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
-                                    //     //                         tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
-                                    //     //                         if (tiempoHoraExceso < 10) {
-                                    //     //                             tiempoHoraExceso = '0' + tiempoHoraExceso;
-                                    //     //                         }
-                                    //     //                         if (tiempoMinutoExceso < 10) {
-                                    //     //                             tiempoMinutoExceso = '0' + tiempoMinutoExceso;
-                                    //     //                         }
-                                    //     //                         if (tiempoSegundoPausa < 10) {
-                                    //     //                             tiempoSegundoExceso = '0' + tiempoSegundoExceso;
-                                    //     //                         }
-                                    //     //                         console.log(restarTiempoMarcacion, restaEntrePausa, restaParaExceso);
-                                    //     //                     }
-                                    //     //                 }
-                                    //     //             }
-                                    //     //         } else {
-                                    //     //             if (pausaI.isAfter(horaInicial) && pausaI.isBefore(horaFinal)) {
-                                    //     //                 var momentpausainicio = moment(contenidoP.inicio, ["HH:mm"]);
-                                    //     //                 var momentpausafin = moment(contenidoP.fin, ["HH:mm"]);
-                                    //     //                 var restaPausa = momentpausafin - momentpausainicio;
-                                    //     //                 tiempoSegundoPausa = moment.duration(restaPausa).seconds();
-                                    //     //                 tiempoMinutoPausa = moment.duration(restaPausa).minutes();
-                                    //     //                 tiempoHoraPausa = Math.trunc(moment.duration(restaPausa).asHours());
-                                    //     //                 if (tiempoHoraPausa < 10) {
-                                    //     //                     tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                    //     //                 }
-                                    //     //                 if (tiempoMinutoPausa < 10) {
-                                    //     //                     tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                    //     //                 }
-                                    //     //                 if (tiempoSegundoPausa < 10) {
-                                    //     //                     tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                    //     //                 }
-                                    //     //                 // ************************* RESTAR LA PAUSA ******************************
-                                    //     //                 tiempoTotal = tiempoTotal.add({
-                                    //     //                     "hours": -tiempoHoraPausa,
-                                    //     //                     "minutes": -tiempoMinutoPausa,
-                                    //     //                     "seconds": -tiempoSegundoPausa
-                                    //     //                 });
-                                    //     //             }
-                                    //     //         }
-                                    //     //     }
-                                    //     // }
-                                    // }
+                                    if (contenidoMarcacion.idHorario != 0) {
+                                        // ****************************************** PAUSAS ****************************************
+                                        for (let indice = 0; indice < contenidoData.pausas.length; indice++) {
+                                            var contenidoP = contenidoData.pausas[indice];
+                                            if (contenidoP.idH == contenidoMarcacion.idHorario) {
+                                                var fechaI = horaInicial.clone().format("YYYY-MM-DD");
+                                                var fechaF;
+                                                if (contenidoP.inicio > contenidoP.fin) {
+                                                    fechaF = horaInicial.clone().add(1, 'day').format("YYYY-MM-DD");
+                                                } else {
+                                                    fechaF = horaInicial.clone().format("YYYY-MM-DD");
+                                                }
+                                                var pausaI = moment(fechaI + " " + contenidoP.inicio);
+                                                var pausaF = moment(fechaF + " " + contenidoP.fin);
+                                                // ! COMPROBAR SI TIENE SALIDA PARA PAUSA
+                                                var sumaToleranciaPausa = moment(
+                                                    pausaI.clone().add(
+                                                        { "minutes": contenidoP.toleranciaI }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
+                                                    ).toString());
+                                                var restaToleranciaPausa = moment(
+                                                    pausaI.clone().subtract(
+                                                        { "minutes": contenidoP.toleranciaI }
+                                                    ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
+                                                // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
+                                                if (horaFinal.isAfter(restaToleranciaPausa) && horaFinal.isBefore(sumaToleranciaPausa)) {
+                                                    // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
+                                                    if (contenidoData.marcaciones[i + 1] != undefined) {
+                                                        if (contenidoData.marcaciones[i + 1].entrada != undefined) {
+                                                            var horaEntradaDespues = moment(contenidoData.marcaciones[i + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
+                                                            var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                 //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA
+                                                            tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
+                                                            tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
+                                                            tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
+                                                            if (tiempoHoraPausa < 10) {
+                                                                tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                            }
+                                                            if (tiempoMinutoPausa < 10) {
+                                                                tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                            }
+                                                            if (tiempoSegundoPausa < 10) {
+                                                                tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                            }
+                                                            // * RESTAR EL TIEMPO DE PAUSA
+                                                            tiempoTotal = tiempoTotal.add(
+                                                                {
+                                                                    "hours": -tiempoHoraPausa,
+                                                                    "minutes": -tiempoMinutoPausa,
+                                                                    "seconds": -tiempoSegundoPausa
+                                                                }
+                                                            );
+                                                            // * VERIFICAR TIEMPO DE EXCESO
+                                                            var clonarPausaI = pausaI.clone();
+                                                            var clonarPausaF = pausaF.clone();
+                                                            var restaEntrePausa = clonarPausaF - clonarPausaI;
+                                                            // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
+                                                            if (restarTiempoMarcacion <= restaEntrePausa) {
+                                                                tiempoHoraExceso = "00";
+                                                                tiempoMinutoExceso = "00";
+                                                                tiempoSegundoExceso = "00";
+                                                            } else {
+                                                                var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
+                                                                tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
+                                                                tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
+                                                                tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
+                                                                if (tiempoHoraExceso < 10) {
+                                                                    tiempoHoraExceso = '0' + tiempoHoraExceso;
+                                                                }
+                                                                if (tiempoMinutoExceso < 10) {
+                                                                    tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                                }
+                                                                if (tiempoSegundoPausa < 10) {
+                                                                    tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (pausaI.isAfter(horaInicial) && pausaI.isBefore(horaFinal)) {
+                                                        var momentpausainicio = moment(contenidoP.inicio, ["HH:mm"]);
+                                                        var momentpausafin = moment(contenidoP.fin, ["HH:mm"]);
+                                                        var restaPausa = momentpausafin - momentpausainicio;
+                                                        tiempoSegundoPausa = moment.duration(restaPausa).seconds();
+                                                        tiempoMinutoPausa = moment.duration(restaPausa).minutes();
+                                                        tiempoHoraPausa = Math.trunc(moment.duration(restaPausa).asHours());
+                                                        if (tiempoHoraPausa < 10) {
+                                                            tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                        }
+                                                        if (tiempoMinutoPausa < 10) {
+                                                            tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                        }
+                                                        if (tiempoSegundoPausa < 10) {
+                                                            tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                        }
+                                                        // ************************* RESTAR LA PAUSA ******************************
+                                                        tiempoTotal = tiempoTotal.add({
+                                                            "hours": -tiempoHoraPausa,
+                                                            "minutes": -tiempoMinutoPausa,
+                                                            "seconds": -tiempoSegundoPausa
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             } else {
                                 tbodyEntradaySalida += `<td>
