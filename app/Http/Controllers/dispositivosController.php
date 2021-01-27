@@ -2518,7 +2518,7 @@ class dispositivosController extends Controller
                 $respuesta = true;
                 foreach ($marcacionesValidar as $mv) {
                     if (!is_null($entrada)) {
-                        $entrada = $entrada->isoFormat("YYYY-MM-DD H:mm:ss");
+                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                             if ($respuestaCheck) {
@@ -2541,7 +2541,7 @@ class dispositivosController extends Controller
                         }
                     }
                     if (!is_null($salida)) {
-                        $salida = $salida->isoFormat("YYYY-MM-DD H:mm:ss");
+                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                             if ($respuestaCheck) {
@@ -2592,7 +2592,7 @@ class dispositivosController extends Controller
                 }
             }
         } else {
-            $fecha = Carbon::create($fechaM);
+            $fecha = Carbon::parse($fechaM);
             $fechaNext = $fecha->copy()->addDays(1)->isoFormat("YYYY-MM-DD");
             $entrada = $inicio == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $inicio);
             $salida = $fin == null ? NULL : Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $fin);
@@ -2614,7 +2614,7 @@ class dispositivosController extends Controller
                 $respuesta = true;
                 foreach ($marcacionesValidar as $mv) {
                     if (!is_null($entrada)) {
-                        $entrada = $entrada->isoFormat("YYYY-MM-DD H:mm:ss");
+                        $entrada = Carbon::parse($entrada)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $entrada);
                             if ($respuestaCheck) {
@@ -2637,7 +2637,7 @@ class dispositivosController extends Controller
                         }
                     }
                     if (!is_null($salida)) {
-                        $salida = $salida->isoFormat("YYYY-MM-DD H:mm:ss");
+                        $salida = Carbon::parse($salida)->isoFormat("YYYY-MM-DD H:mm:ss");
                         if ($mv->entrada != 0 && $mv->salida != 0) {
                             $respuestaCheck = checkHora($mv->entrada, $mv->salida, $salida);
                             if ($respuestaCheck) {

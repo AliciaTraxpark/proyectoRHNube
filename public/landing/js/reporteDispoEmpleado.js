@@ -78,6 +78,7 @@ function cargartabla(fecha1, fecha2) {
             }
         },
         success: function (data) {
+            console.log(data);
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
