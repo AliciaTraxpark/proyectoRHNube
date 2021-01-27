@@ -59,7 +59,7 @@ function inicializarTabla() {
         "searching": false,
         "scrollX": true,
         "ordering": false,
-        "autoWidth": true,
+        "autoWidth": false,
         "bInfo": false,
         "bLengthChange": false,
         fixedHeader: true,
