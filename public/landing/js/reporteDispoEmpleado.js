@@ -36,6 +36,8 @@ $(function () {
     $('#ID_START').val(fAyer);
     $('#ID_END').val(fHoy);
 });
+$('#customSwitDetalles').prop("disabled", true);
+$('#switPausas').prop("disabled", true);
 // * INICIALIZAR TABLA
 var table;
 var razonSocial;
@@ -173,7 +175,7 @@ function inicializarTabla() {
             pageSize: 'A1',
             title: 'Asistencia',
             exportOptions: {
-                columns: ":visible:not(.noExport)"
+                columns: ":visible:not(.noExport)",
             },
             customize: function (doc) {
                 doc['styles'] = {
@@ -272,6 +274,12 @@ function inicializarTabla() {
         paging: true,
         initComplete: function () {
             setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
+            console.log(this.api().data().length);
+            if (this.api().data().length == 0) {
+                $('.buttons-html5').prop("disabled", true);
+            } else {
+                $('.buttons-html5').prop("disabled", false);
+            }
         },
     });
 }
@@ -317,8 +325,9 @@ function cargartabla(fecha1, fecha2) {
             }
         },
         success: function (data) {
-            console.log(data);
             if (data.length != 0) {
+                $('#customSwitDetalles').prop("disabled", false);
+                $('#switPausas').prop("disabled", false);
                 razonSocial = data.organi_razonSocial;
                 direccion = data.organi_direccion;
                 ruc = data.organi_ruc;

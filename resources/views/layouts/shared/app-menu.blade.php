@@ -404,7 +404,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
 
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                <a href="/ReporteEmpleado" style="display: none">Reporte de asistencia por empleado</a>
+                <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
                 @endif
 
 
