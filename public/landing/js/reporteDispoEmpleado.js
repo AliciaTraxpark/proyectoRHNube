@@ -263,7 +263,6 @@ function inicializarTabla() {
         },
     });
 }
-
 function cargartabla(fecha1, fecha2) {
 
     var idemp = $('#idempleado').val();
@@ -306,12 +305,10 @@ function cargartabla(fecha1, fecha2) {
             }
         },
         success: function (data) {
-            console.log(data);
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
                 }
-                $('#btnsDescarga').show();
                 // ! *********** CABEZERA DE TABLA**********
                 $('#theadD').empty();
                 //* CANTIDAD MININO VALOR DE COLUMNAS PARA MARACIONES
@@ -442,8 +439,13 @@ function cargartabla(fecha1, fecha2) {
                     $('[name="tiempoSitHi"]').hide();
                     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
                 }
+            } else {
+                if ($.fn.DataTable.isDataTable("#tablaReport")) {
+                    $("#tablaReport").DataTable().destroy();
+                }
+                $('#tbodyD').empty();
+                inicializarTabla();
             }
-
         },
         error: function () { }
     });
