@@ -1112,11 +1112,11 @@ function cargartabla(fecha) {
                 // * PARA PODER MENUS CUANDO SOLO HAY UNA COLUMNA
                 if (data.length == 1) {
                     var tbodyTR = '';
-                    tbodyTR += '<tr style=" height: 5px;">';
+                    tbodyTR += '<tr>';
                     if (permisoModificar == 1) {
                         tbodyTR += `<td></td>`;
                     }
-                    tbodyTR += '<td></td><td></td><td></td><td></td>';
+                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         tbodyTR += '<td></td><td></td><td></td>';
                         // ! MARCACIONES
