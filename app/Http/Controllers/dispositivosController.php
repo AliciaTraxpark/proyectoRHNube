@@ -435,6 +435,7 @@ class dispositivosController extends Controller
                 if ($idemp == 0 || $idemp == ' ') {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                         ->select(
                             'e.emple_id',
                             'e.emple_nDoc',
@@ -454,6 +455,7 @@ class dispositivosController extends Controller
                 } else {
                     $empleados = DB::table('empleado as e')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                         ->select(
                             'e.emple_id',
@@ -481,6 +483,7 @@ class dispositivosController extends Controller
                     if ($idemp == 0 || $idemp == ' ') {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -505,6 +508,7 @@ class dispositivosController extends Controller
                     } else {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -531,6 +535,7 @@ class dispositivosController extends Controller
                     if ($idemp == 0 || $idemp == ' ') {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -556,6 +561,7 @@ class dispositivosController extends Controller
                     } else {
                         $empleados = DB::table('empleado as e')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
@@ -606,6 +612,7 @@ class dispositivosController extends Controller
             } else {
                 $empleados = DB::table('empleado as e')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                    ->join('organizacion as o', 'o.organi_id', '=', 'e.organi_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
                     ->select(
                         'e.emple_id',
