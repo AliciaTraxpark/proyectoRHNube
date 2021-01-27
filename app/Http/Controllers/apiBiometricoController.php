@@ -275,11 +275,60 @@ class apiBiometricoController extends Controller
 
                         $biometricos = DB::table('dispositivos')
                             ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                                'dispo_codigo as serie', 'version_firmware')
+                                'dispo_codigo as serie', 'version_firmware','dispo_todosEmp','dispo_porEmp')
                             ->where('tipoDispositivo', '=', 3)
                             ->where('dispo_estadoActivo', '=', 1)
                             ->where('organi_id', '=', $usuario_organizacion->organi_id)
                             ->get();
+                            foreach( $biometricos as  $biometricosT){
+                                if($biometricosT->dispo_todosEmp==1){
+                                 $empleados = DB::table('empleado as e')
+                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                 ->where('e.emple_estado', '=', 1)
+                                 ->where('e.asistencia_puerta', '=', 1)
+                                 ->distinct('e.emple_id')
+                                 ->count();
+                                 $biometricosT->totalEmpleados=$empleados;
+                                 unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                }
+                                else{
+                                    /* SI ES POR EMPLEADOS PERSONALIZADSO */
+                                    if($biometricosT->dispo_porEmp==1){
+                                     $dispositivosBiEmp = DB::table('dispositivo_empleado as de')
+                                     ->join('dispositivos as di','de.idDispositivos','=','di.idDispositivos')
+                                     ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                     ->where('de.idDispositivos', '=',$biometricosT->idDispositivos)
+                                     ->where('di.dispo_estadoActivo', '=', 1)
+                                     ->where('de.estado', '=', 1)
+                                     ->where('e.emple_estado', '=', 1)
+                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                     ->count();
+                                     $biometricosT->totalEmpleados=$dispositivosBiEmp;
+                                     unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                    }
+
+                                    /* SI ES POR AREAS */
+                                    else{
+                                     $dispositivosBiAr = DB::table('empleado as e')
+                                     ->join('dispositivo_area as da','e.emple_area','=','da.area_id')
+                                     ->join('dispositivos as di','da.idDispositivos','=','di.idDispositivos')
+                                         ->where('da.idDispositivos', '=', $biometricosT->idDispositivos)
+                                         ->where('di.dispo_estadoActivo', '=', 1)
+                                         ->where('da.estado', '=', 1)
+                                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                        ->where('e.emple_estado', '=', 1)
+                                        ->where('e.asistencia_puerta', '=', 1)
+                                         ->count();
+
+                                         $biometricosT->totalEmpleados= $dispositivosBiAr;
+                                         unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+
+                                    }
+                                }
+
+
+
+                            }
                         return response()->json(
                             $biometricos
                             , 200);
@@ -289,14 +338,198 @@ class apiBiometricoController extends Controller
                             /*   dd('soy admin con reestricciones'); */
                             $biometricos = DB::table('dispositivos')
                                 ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                                    'dispo_codigo as serie', 'version_firmware')
+                                    'dispo_codigo as serie', 'version_firmware','dispo_todosEmp','dispo_porEmp')
                                 ->where('tipoDispositivo', '=', 3)
                                 ->where('dispo_estadoActivo', '=', 1)
                                 ->where('organi_id', '=', $usuario_organizacion->organi_id)
                                 ->get();
+                            if($invitado->verTodosEmps==1){
+
+
+                                foreach( $biometricos as  $biometricosT){
+                                    if($biometricosT->dispo_todosEmp==1){
+                                     $empleados = DB::table('empleado as e')
+                                     ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                     ->where('e.emple_estado', '=', 1)
+                                     ->where('e.asistencia_puerta', '=', 1)
+                                     ->distinct('e.emple_id')
+                                     ->count();
+                                     $biometricosT->totalEmpleados=$empleados;
+                                     unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                    }
+                                    else{
+                                        /* SI ES POR EMPLEADOS PERSONALIZADSO */
+                                        if($biometricosT->dispo_porEmp==1){
+                                         $dispositivosBiEmp = DB::table('dispositivo_empleado as de')
+                                         ->join('dispositivos as di','de.idDispositivos','=','di.idDispositivos')
+                                         ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                         ->where('de.idDispositivos', '=',$biometricosT->idDispositivos)
+                                         ->where('di.dispo_estadoActivo', '=', 1)
+                                         ->where('de.estado', '=', 1)
+                                         ->where('e.emple_estado', '=', 1)
+                                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                         ->count();
+                                         $biometricosT->totalEmpleados=$dispositivosBiEmp;
+                                         unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                        }
+
+                                        /* SI ES POR AREAS */
+                                        else{
+                                         $dispositivosBiAr = DB::table('empleado as e')
+                                         ->join('dispositivo_area as da','e.emple_area','=','da.area_id')
+                                         ->join('dispositivos as di','da.idDispositivos','=','di.idDispositivos')
+                                             ->where('da.idDispositivos', '=', $biometricosT->idDispositivos)
+                                             ->where('di.dispo_estadoActivo', '=', 1)
+                                             ->where('da.estado', '=', 1)
+                                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                            ->where('e.emple_estado', '=', 1)
+                                            ->where('e.asistencia_puerta', '=', 1)
+                                             ->count();
+
+                                             $biometricosT->totalEmpleados= $dispositivosBiAr;
+                                             unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+
+                                        }
+                                    }
+
+                                }
                             return response()->json(
                                 $biometricos
                                 , 200);
+                            }
+                            else{
+                                if($invitado->empleado==1){
+                                    foreach( $biometricos as  $biometricosT){
+                                        if($biometricosT->dispo_todosEmp==1){
+                                         $empleados = DB::table('empleado as e')
+                                         ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                          ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                         ->where('e.emple_estado', '=', 1)
+                                         ->where('e.asistencia_puerta', '=', 1)
+                                         ->distinct('e.emple_id')
+                                         ->where('invi.estado', '=', 1)
+                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                         ->count();
+                                         $biometricosT->totalEmpleados=$empleados;
+                                         unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                        }
+                                        else{
+                                            /* SI ES POR EMPLEADOS PERSONALIZADSO */
+                                            if($biometricosT->dispo_porEmp==1){
+                                             $dispositivosBiEmp = DB::table('dispositivo_empleado as de')
+                                             ->join('dispositivos as di','de.idDispositivos','=','di.idDispositivos')
+                                             ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                             ->where('de.idDispositivos', '=',$biometricosT->idDispositivos)
+                                             ->where('invi.estado', '=', 1)
+                                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                             ->where('di.dispo_estadoActivo', '=', 1)
+                                             ->where('de.estado', '=', 1)
+                                             ->where('e.emple_estado', '=', 1)
+                                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                             ->count();
+                                             $biometricosT->totalEmpleados=$dispositivosBiEmp;
+                                             unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                            }
+
+                                            /* SI ES POR AREAS */
+                                            else{
+                                             $dispositivosBiAr = DB::table('empleado as e')
+                                             ->join('dispositivo_area as da','e.emple_area','=','da.area_id')
+                                             ->join('dispositivos as di','da.idDispositivos','=','di.idDispositivos')
+                                             ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                                 ->where('da.idDispositivos', '=', $biometricosT->idDispositivos)
+                                                 ->where('di.dispo_estadoActivo', '=', 1)
+                                                 ->where('da.estado', '=', 1)
+                                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                                ->where('e.emple_estado', '=', 1)
+                                                ->where('e.asistencia_puerta', '=', 1)
+                                                ->where('invi.estado', '=', 1)
+                                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+
+                                                 ->count();
+
+                                                 $biometricosT->totalEmpleados= $dispositivosBiAr;
+                                                 unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+
+                                            }
+                                        }
+
+                                    }
+                                    return response()->json(
+                                        $biometricos
+                                        , 200);
+                                }
+                                else{
+                                    foreach( $biometricos as  $biometricosT){
+                                        if($biometricosT->dispo_todosEmp==1){
+                                         $empleados = DB::table('empleado as e')
+                                         ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                         ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                         ->where('e.emple_estado', '=', 1)
+                                         ->where('e.asistencia_puerta', '=', 1)
+                                         ->where('invi.estado', '=', 1)
+                                         ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                         ->distinct('e.emple_id')
+                                         ->count();
+                                         $biometricosT->totalEmpleados=$empleados;
+                                         unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                        }
+                                        else{
+                                            /* SI ES POR EMPLEADOS PERSONALIZADSO */
+                                            if($biometricosT->dispo_porEmp==1){
+                                             $dispositivosBiEmp = DB::table('dispositivo_empleado as de')
+                                             ->join('dispositivos as di','de.idDispositivos','=','di.idDispositivos')
+                                             ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                             ->where('de.idDispositivos', '=',$biometricosT->idDispositivos)
+                                             ->where('di.dispo_estadoActivo', '=', 1)
+                                             ->where('de.estado', '=', 1)
+                                             ->where('e.emple_estado', '=', 1)
+                                             ->where('invi.estado', '=', 1)
+                                             ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                             ->count();
+                                             $biometricosT->totalEmpleados=$dispositivosBiEmp;
+                                             unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                                            }
+
+                                            /* SI ES POR AREAS */
+                                            else{
+                                             $dispositivosBiAr = DB::table('empleado as e')
+                                             ->join('dispositivo_area as da','e.emple_area','=','da.area_id')
+                                             ->join('dispositivos as di','da.idDispositivos','=','di.idDispositivos')
+                                             ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                                 ->where('da.idDispositivos', '=', $biometricosT->idDispositivos)
+                                                 ->where('di.dispo_estadoActivo', '=', 1)
+                                                 ->where('da.estado', '=', 1)
+                                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                                ->where('e.emple_estado', '=', 1)
+                                                ->where('e.asistencia_puerta', '=', 1)
+                                                ->where('invi.estado', '=', 1)
+                                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                                 ->count();
+
+                                                 $biometricosT->totalEmpleados= $dispositivosBiAr;
+                                                 unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+
+                                            }
+                                        }
+
+                                    }
+                                    return response()->json(
+                                        $biometricos
+                                        , 200);
+
+                                }
+                            }
+
                         } else {
                             Auth::logout();
                             session()->forget('sesionidorg');
@@ -319,14 +552,69 @@ class apiBiometricoController extends Controller
 
                 $biometricos = DB::table('dispositivos')
                     ->select('idDispositivos', 'dispo_descripUbicacion as descripcion', 'dispo_movil as ipPuerto',
-                        'dispo_codigo as serie', 'version_firmware')
+                        'dispo_codigo as serie', 'version_firmware','dispo_todosEmp','dispo_porEmp')
                     ->where('tipoDispositivo', '=', 3)
                     ->where('dispo_estadoActivo', '=', 1)
                     ->where('organi_id', '=', $usuario_organizacion->organi_id)
                     ->get();
+
+                    foreach( $biometricos as  $biometricosT){
+                        if($biometricosT->dispo_todosEmp==1){
+                         $empleados = DB::table('empleado as e')
+                         ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                         ->where('e.emple_estado', '=', 1)
+                         ->where('e.asistencia_puerta', '=', 1)
+                         ->distinct('e.emple_id')
+                         ->count();
+                         $biometricosT->totalEmpleados=$empleados;
+                         unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                        }
+                        else{
+                            /* SI ES POR EMPLEADOS PERSONALIZADSO */
+                            if($biometricosT->dispo_porEmp==1){
+                             $dispositivosBiEmp = DB::table('dispositivo_empleado as de')
+                             ->join('dispositivos as di','de.idDispositivos','=','di.idDispositivos')
+                             ->join('empleado as e', 'de.emple_id', '=', 'e.emple_id')
+                             ->where('de.idDispositivos', '=',$biometricosT->idDispositivos)
+                             ->where('di.dispo_estadoActivo', '=', 1)
+                             ->where('de.estado', '=', 1)
+                             ->where('e.emple_estado', '=', 1)
+                             ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                             ->count();
+                             $biometricosT->totalEmpleados=$dispositivosBiEmp;
+                             unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+                            }
+
+                            /* SI ES POR AREAS */
+                            else{
+                             $dispositivosBiAr = DB::table('empleado as e')
+                             ->join('dispositivo_area as da','e.emple_area','=','da.area_id')
+                             ->join('dispositivos as di','da.idDispositivos','=','di.idDispositivos')
+                                 ->where('da.idDispositivos', '=', $biometricosT->idDispositivos)
+                                 ->where('di.dispo_estadoActivo', '=', 1)
+                                 ->where('da.estado', '=', 1)
+                                 ->where('e.organi_id', '=', $usuario_organizacion->organi_id)
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('e.asistencia_puerta', '=', 1)
+                                 ->count();
+
+                                 $biometricosT->totalEmpleados= $dispositivosBiAr;
+                                /*  $biometricos->pull($biometricosT->dispo_todosEmp); */
+                                 unset($biometricosT->dispo_todosEmp,$biometricosT->dispo_porEmp);
+
+                            }
+                        }
+
+
+
+                    }
+
+                   /*  $biometricos->pull('dispo_todosEmp','dispo_porEmp'); */
                 return response()->json(
                     $biometricos
                     , 200);
+
+
             }
             /*  */
         } else {

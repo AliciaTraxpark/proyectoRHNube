@@ -667,7 +667,7 @@ function editarInv(idi) {
                     /* -------------------------------------- */
                 } else {
                     /* SI LA SELEECCION ES POR EMPLEADOS PERSONALIZADOS */
-                    if (data[0].emple_id != null) {
+                    if (data[0].empleado ==1) {
                         $("#switchEmpS_edit").prop("checked", true);
                         $("#divEmpleado_edit").show();
                         $("#nombreEmpleado_edit").prop("required", true);
