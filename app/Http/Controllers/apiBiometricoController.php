@@ -2916,4 +2916,9 @@ class apiBiometricoController extends Controller
         dd($arrayOrdenado);
 
     }
+
+    public function descargarExtractor()
+    {
+        return response()->download(app_path() . "/Extractor/ExtractorRHnube.zip");
+    }
 }

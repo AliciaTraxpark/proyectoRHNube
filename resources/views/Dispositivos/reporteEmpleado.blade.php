@@ -19,12 +19,10 @@
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
 {{-- plugin de ALERTIFY --}}
 <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
-{{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
 <!-- Semantic UI theme -->
 <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -40,7 +38,6 @@
 </div>
 <div class="row page-title">
     <div class="col-md-12">
-        {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
         <h4 class="header-title mt-0 "></i>Reporte de asistencia por empleado</h4>
     </div>
 </div>
@@ -122,8 +119,7 @@
     .select2-container .select2-selection--single .select2-selection__rendered {
         line-height: 31px;
     }
-</style>
-<style>
+
     .table {
         width: 100% !important;
     }
@@ -150,8 +146,6 @@
             <input type="hidden" id="pasandoV">
             <div class="card-body border">
                 <div class="row justify-content-center">
-                </div>
-                <div class="row justify-content-center">
                     <div class="col-xl-6">
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label">Rango de fechas:</label>
@@ -159,8 +153,7 @@
                             <input type="hidden" id="ID_END">
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
-                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
-                                    data-input>
+                                <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -177,7 +170,7 @@
                             <div class="col-lg-9">
                                 <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
                                     class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option value="0" selected></option>
+                                    <option value="0" selected disabled>Seleccionar Empleado</option>
                                     @foreach ($empleado as $empleados)
                                     <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
                                         {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
@@ -189,185 +182,172 @@
                     </div>
                     <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
                         <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()"> <img
-                                src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
+                            style="background-color: #163552;" onclick="javascript:cambiarF()">
+                            <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
+                        </button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
+                                onclick="javascript:cambiartabla()">
+                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">
+                                Mostrar detalles
+                            </label>
+                        </div>
+                    </div>
+                    {{-- GIF DE ESPERA --}}
+                    <div id="espera" class="text-center" style="display: none">
+                        <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                     </div>
 
-                    {{-- <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10 colR">
-                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
-                                    @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                    {{$area->area_descripcion}}</option>
-                    @endforeach
-                    </select>
-                </div>
+                    {{-- <div class="col-md-12">
+                        <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga" style="display: none">
+                            <button class="btn btn-secondary   btn-sm mt-1" type="button" onclick="doexcel()">
+                                <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
+                            </button>
+                            <button class="btn btn-secondary  btn-sm mt-1" type="button" onclick="generatePDF()">
+                                <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
+                            </button>
+                        </div>
+                    </div> --}}
+                    <style>
+                        .tableHi {
+                            border: 1px solid rgb(20, 19, 19) !important;
+                            border-collapse: collapse !important;
+                        }
+                    </style>
+                    {{--  TABLAS OCULTA --}}
+                    <div id="tableZoomI" class="col-md-12" style="display: none">
+                        <table id="Encabezado" class="table" style="font-size: 12.8px;border-collapse: collapse;">
+                            <thead>
 
-            </div>
-        </div> --}}
-    </div>
+                                <tr>
 
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                    onclick="javascript:cambiartabla()">
-                <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar
-                    detalles</label>
-            </div>
-        </div>
-
-        {{-- GIF DE ESPERA --}}
-        <div id="espera" class="text-center" style="display: none">
-            <img src="{{ asset('landing/images/loading.gif') }}" height="100">
-        </div>
-
-        <div class="col-md-12">
-            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga" style="display: none">
-                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="doexcel()">
-                    <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
-                </button>
-                 <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
-                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
-                 </button>
-            </div>
-        </div>
-        <style>
-            .tableHi{
-                    border: 1px solid rgb(20, 19, 19)!important; border-collapse: collapse!important;
-                }
-        </style>
-       {{--  TABLAS OCULTA --}}
-       <div id="tableZoomI" class="col-md-12" style="display: none" >
-        <table id="Encabezado" class="table" style="font-size: 12.8px;border-collapse: collapse;">
-            <thead>
-
-                <tr>
-
-                    <th  style=" font-weight: 600;text-align: center " colspan="3">
-                        CONTROL DE REGISTRO DE ASISTENCIA</th>
-                </tr>
-                <tr>
+                                    <th style=" font-weight: 600;text-align: center " colspan="3">
+                                        CONTROL DE REGISTRO DE ASISTENCIA</th>
+                                </tr>
+                                <tr>
 
 
-                    <th  id="RangoFechas"></th>
-                </tr>
-            </thead>
-            <tbody>
+                                    <th id="RangoFechas"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                <tr>
+                                <tr>
 
-                    <td  >Razon social:</td>
-                    <td >{{$organizacion}}</td>
-                </tr>
-                <tr>
+                                    <td>Razon social:</td>
+                                    <td>{{$organizacion}}</td>
+                                </tr>
+                                <tr>
 
-                    <td >Direccion:</td>
-                    <td >{{$direccion}}</td>
-                </tr>
-                <tr>
+                                    <td>Direccion:</td>
+                                    <td>{{$direccion}}</td>
+                                </tr>
+                                <tr>
 
-                    <td >Numero de Ruc:</td>
-                    <td >{{$ruc}}</td>
-                </tr>
+                                    <td>Numero de Ruc:</td>
+                                    <td>{{$ruc}}</td>
+                                </tr>
 
-                <tr>
+                                <tr>
 
-                    <td >DNI:</td>
-                    <td  id="ponerDNI" colspan="1" > </td>
-                </tr>
-                <tr>
+                                    <td>DNI:</td>
+                                    <td id="ponerDNI" colspan="1"> </td>
+                                </tr>
+                                <tr>
 
-                    <td >Apellidos y nombres:</td>
-                    <td id="ponerApe" colspan="1" > </td>
-                </tr>
-                <tr>
+                                    <td>Apellidos y nombres:</td>
+                                    <td id="ponerApe" colspan="1"> </td>
+                                </tr>
+                                <tr>
 
-                    <td >Area:</td>
-                    <td  id="ponerArea" colspan="1" > </td>
-                </tr>
-                <tr>
+                                    <td>Area:</td>
+                                    <td id="ponerArea" colspan="1"> </td>
+                                </tr>
+                                <tr>
 
-                    <td >cargo:</td>
-                    <td   id="ponerCarg" colspan="1" > </td>
-                </tr>
-                <tr>
-                   <td>
-                       <br>
-                   </td>
-                </tr>
+                                    <td>cargo:</td>
+                                    <td id="ponerCarg" colspan="1"> </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                    </td>
+                                </tr>
 
-            </tbody>
-        </table>
-        <table id="tablaReportI"  border=1  class=" " style="font-size: 12.8px;border-collapse: collapse;">
+                            </tbody>
+                        </table>
+                        <table id="tablaReportI" border=1 class=" "
+                            style="font-size: 12.8px;border-collapse: collapse;">
 
-            <thead id="theadDI" >
+                            <thead id="theadDI">
 
-                <tr>
-                    <th>CC</th>
-                    <th>Fecha</th>
-                    {{-- <th>Horario</th>
+                                <tr>
+                                    <th>CC</th>
+                                    <th>Fecha</th>
+                                    {{-- <th>Horario</th>
 
                     <th>Cargo</th> --}}
-                    <th colspan="2">Horario</th>
+                                    <th colspan="2">Horario</th>
 
-                    <th colspan="2" id="hEntradaI">Hora de entrada</th>
-                    <th colspan="2" id="hSalidaI">Hora de salida</th>
-                    <th colspan="2" id="tSitioI">Tiempo en sitio</th>
-                    <th colspan="2" >Tardanza T.</th>
-                    <th colspan="2">Faltas T.</th>
-                    <th colspan="2">Incidencias T.</th>
+                                    <th colspan="2" id="hEntradaI">Hora de entrada</th>
+                                    <th colspan="2" id="hSalidaI">Hora de salida</th>
+                                    <th colspan="2" id="tSitioI">Tiempo en sitio</th>
+                                    <th colspan="2">Tardanza T.</th>
+                                    <th colspan="2">Faltas T.</th>
+                                    <th colspan="2">Incidencias T.</th>
 
-                </tr>
-            </thead>
-            <tbody class="" id="tbodyIDI">
-            </tbody>
-        </table>
+                                </tr>
+                            </thead>
+                            <tbody class="" id="tbodyIDI">
+                            </tbody>
+                        </table>
 
-    </div>
-       {{--  --}}
-        <div id="tableZoom" class="col-md-12">
-            <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
-                <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
-                    <tr>
-                        <th>CC</th>
-                        <th>Fecha</th>
-                        {{-- <th>Horario</th>
+                    </div>
+                    {{--  --}}
+                    <div id="tableZoom" class="col-md-12">
+                        <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
+                            <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
+                                <tr>
+                                    <th>CC</th>
+                                    <th>Fecha</th>
+                                    {{-- <th>Horario</th>
 
                         <th>Cargo</th> --}}
-                        <th>Horario</th>
+                                    <th>Horario</th>
 
-                        <th id="hEntrada">Hora de entrada</th>
-                        <th id="hSalida">Hora de salida</th>
-                        <th id="tSitio">Tiempo en sitio</th>
-                        <th >Tardanza T.</th>
-                        <th>Faltas T.</th>
-                        <th>Incidencias T.</th>
+                                    <th id="hEntrada">Hora de entrada</th>
+                                    <th id="hSalida">Hora de salida</th>
+                                    <th id="tSitio">Tiempo en sitio</th>
+                                    <th>Tardanza T.</th>
+                                    <th>Faltas T.</th>
+                                    <th>Incidencias T.</th>
 
-                    </tr>
-                </thead>
-                <tbody id="tbodyD">
-                </tbody>
-            </table>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyD">
+                            </tbody>
+                        </table>
 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-    {{-- modificar --}}
-    @if (isset($modifReporte))
-    @if ($modifReporte==1)
-    <input type="hidden" id="modifReporte" value="0">
-    @else
-    <input type="hidden" id="modifReporte" value="0">
-    @endif
-    @else
-    <input type="hidden" id="modifReporte" value="0">
-    @endif
+{{-- modificar --}}
+@if (isset($modifReporte))
+@if ($modifReporte==1)
+<input type="hidden" id="modifReporte" value="0">
+@else
+<input type="hidden" id="modifReporte" value="0">
+@endif
+@else
+<input type="hidden" id="modifReporte" value="0">
+@endif
 @endsection
 @section('script')
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>

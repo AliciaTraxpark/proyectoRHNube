@@ -883,7 +883,7 @@ function editarActividadTarea() {
             areas: areas,
             asignacionArea: asignacionArea,
             globalArea: globalArea,
-            modoTareo:modoTareo
+            modoTareo: modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1490,8 +1490,8 @@ function registrarActividadTarea() {
     } else {
         var asistenciaPuerta = 0;
     }
-     //* MODO TAREO
-     if ($('#customMT').is(":checked") == true) {
+    //* MODO TAREO
+    if ($('#customMT').is(":checked") == true) {
         var modoTareo = 1;
     } else {
         var modoTareo = 0;
@@ -2045,11 +2045,37 @@ $('#a_customAE').on("change.bootstrapSwitch", function (event) {
 $('#FormAsignarActividadEmpleado').attr('novalidate', true);
 $('#FormAsignarActividadEmpleado').submit(function (e) {
     e.preventDefault();
+    if ($('#actividadesAsignar').val() == "" || $('#actividadesAsignar').val() == null) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar actividad',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#asignarPorArea"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        return;
+    }
     if ($('#a_customAA').is(":checked")) {
         if ($('#areaAsignar').val().length == 0) {
             $.notifyClose();
             $.notify({
-                message: '\nSeleccionar Actividad',
+                message: '\nSeleccionar área',
                 icon: 'landing/images/bell.svg',
             }, {
                 element: $("#asignarPorArea"),
@@ -2077,7 +2103,7 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
         if ($("#empleAsignar").val().length == 0) {
             $.notifyClose();
             $.notify({
-                message: '\nSeleccionar Empleado',
+                message: '\nSeleccionar empleado',
                 icon: 'landing/images/bell.svg',
             }, {
                 element: $("#asignarPorArea"),

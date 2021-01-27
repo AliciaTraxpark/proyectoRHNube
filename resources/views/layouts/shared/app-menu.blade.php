@@ -207,7 +207,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                 <a href="/controladores">Controladores</a>
                 <a href="/reporteAsistencia">Detalle de asistencia</a>
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                <a href="/ReporteEmpleado" style="display: none">Reporte de asistencia por empleado</a>
 
             </li>
         </ul>
@@ -285,11 +285,11 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     @endif
 
     @if ($invitadod->gestCalendario==1)
-    <li >
+    <li>
         <a href="/calendarios">
-                <i data-feather="calendar"></i>
-                <span> Calendarios </span>
-            </a>
+            <i data-feather="calendar"></i>
+            <span> Calendarios </span>
+        </a>
 
     </li>
     @endif
@@ -404,7 +404,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
 
 
                 <a href="/ReporteFecha">Reporte de asistencia por fecha</a>
-                <a href="/ReporteEmpleado">Reporte de asistencia por empleado</a>
+                <a href="/ReporteEmpleado" style="display: none">Reporte de asistencia por empleado</a>
                 @endif
 
 

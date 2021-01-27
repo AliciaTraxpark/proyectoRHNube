@@ -33,7 +33,6 @@
 </div>
 <div class="row page-title">
     <div class="col-md-12">
-        {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
         <h4 class="header-title mt-0 "></i>Reporte de asistencia por fecha</h4>
     </div>
 </div>
@@ -143,15 +142,12 @@
             <input type="hidden" id="pasandoV">
             <div class="card-body border">
                 <div class="row justify-content-center">
-                </div>
-                <div class="row justify-content-center">
                     <div class="col-xl-4">
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
-                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
-                                    data-input>
+                                <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -180,176 +176,92 @@
                     </div>
                     <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
                         <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()"> <img
-                                src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
+                            style="background-color: #163552;" onclick="javascript:cambiarF()">
+                            <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
+                        </button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12 pb-2">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
+                                onclick="javascript:cambiartabla()">
+                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">
+                                Mostrar detalles
+                            </label>
+                        </div>
                     </div>
 
-                    {{-- <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10 colR">
-                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
-                                    @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                    {{$area->area_descripcion}}</option>
-                    @endforeach
-                    </select>
+                    <div class="col-md-12 pb-2">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="switPausas"
+                                onclick="javascript:togglePausas()">
+                            <label class="custom-control-label" for="switPausas" style="font-weight: bold">
+                                Mostrar pausas
+                            </label>
+                        </div>
+                    </div>
+                    {{-- GIF DE ESPERA --}}
+                    <div id="espera" class="text-center" style="display: none">
+                        <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                    </div>
+                    <div id="tableZoom" class="col-md-12">
+                        <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
+                            <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
+                                <tr>
+                                    <th>CC</th>
+                                    <th>DNI</th>
+                                    <th>Nombre</th>
+                                    <th>Cargo</th>
+                                    <th>Horario</th>
+                                    <th id="hEntrada">Hora de entrada</th>
+                                    <th id="hSalida">Hora de salida</th>
+                                    <th id="tSitio">Tiempo en sitio</th>
+                                    <th>Tardanza</th>
+                                    <th>Faltas</th>
+                                    <th>Incidencias</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyD">
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
-
             </div>
-        </div> --}}
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                    onclick="javascript:cambiartabla()">
-                <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar
-                    detalles</label>
-            </div>
-        </div>
-
-        {{-- GIF DE ESPERA --}}
-        <div id="espera" class="text-center" style="display: none">
-            <img src="{{ asset('landing/images/loading.gif') }}" height="100">
-        </div>
-        <div class="col-md-12">
-            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga">
-                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="toExcel()">
-                    <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
-                </button>
-                 <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
-                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
-                 </button>
-            </div>
-        </div>
-
-
-        <div id="tableZoomI" class="col-md-12 " style="display: none">
-            <table>
-                <thead>
-                    <tr>
-                        <th><br><br></th>
-                        <th  colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td  colspan="3">Razon social:</td>
-                        <td  colspan="3">{{$organizacion}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Direccion:</td>
-                        <td colspan="3">{{$direccion}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Numero de Ruc:</td>
-                        <td colspan="1">{{$ruc}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Fecha:</td>
-                        <td colspan="1" id="fechaAsiste"> </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><br></td>
-                        <td colspan="3"><br></td>
-                    </tr>
-                </tbody>
-            </table>
-            <style>
-                .tableHi{
-                    border: 0.2px solid rgb(182, 182, 182)!important; border-collapse: collapse!important;
-                }
-            </style>
-            <table id="tablaReportI" class="table tableHi"  style="font-size: 12.8px;">
-                <thead id="theadDI" class="tableHi" >
-                    <tr class="tableHi">
-                        <th class="tableHi"  >CC</th>
-                        <th class="tableHi" >DNI</th>
-                        <th class="tableHi" >Nombre</th>
-                        <th  class="tableHi">Cargo</th>
-                        <th class="tableHi">Horario</th>
-                        <th  class="tableHi" id="hEntradaI">Hora de entrada</th>
-                        <th  class="tableHi"  id="hSalidaI">Hora de salida</th>
-                        <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
-                        <th class="tableHi">Tardanza T.</th>
-                        <th class="tableHi">Faltas T.</th>
-                        <th class="tableHi">Incidencias T.</th>
-
-                    </tr>
-                </thead>
-                <tbody id="tbodyDI">
-                </tbody>
-            </table>
-
-        </div>
-        <div id="tableZoom" class="col-md-12">
-            <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
-                <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
-                    <tr>
-                        <th>CC</th>
-                        <th>DNI</th>
-                        <th>Nombre</th>
-                        <th>Cargo</th>
-                        <th >Horario</th>
-                        <th id="hEntrada">Hora de entrada</th>
-                        <th id="hSalida">Hora de salida</th>
-                        <th id="tSitio">Tiempo en sitio</th>
-                        <th>Tardanza</th>
-                        <th >Faltas</th>
-                        <th >Incidencias</th>
-
-                    </tr>
-                </thead>
-                <tbody id="tbodyD">
-                </tbody>
-            </table>
-
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-    {{-- modificar --}}
-    @if (isset($modifReporte))
-    @if ($modifReporte==1)
-    <input type="hidden" id="modifReporte" value="0">
-    @else
-    <input type="hidden" id="modifReporte" value="0">
-    @endif
-    @else
-    <input type="hidden" id="modifReporte" value="0">
-    @endif
+{{-- modificar --}}
+@if (isset($modifReporte))
+@if ($modifReporte==1)
+<input type="hidden" id="modifReporte" value="0">
+@else
+<input type="hidden" id="modifReporte" value="0">
+@endif
+@else
+<input type="hidden" id="modifReporte" value="0">
+@endif
 @endsection
 @section('script')
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
 <!-- Plugins Js -->
-
-
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-
-
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
-    }}"></script>
-
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
-
 @endsection
-
 @section('script-bottom')
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 <script src="{{ asset('landing/js/notificacionesUser.js') }}"></script>

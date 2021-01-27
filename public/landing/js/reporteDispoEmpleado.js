@@ -8,9 +8,10 @@ var fechaValue = $("#fechaSelec").flatpickr({
     maxDate: "today",
     wrap: true,
     allowInput: true,
-    onChange:function(selectedDates){
-        var _this=this;
-        var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+    conjunction: " a ",
+    onChange: function (selectedDates) {
+        var _this = this;
+        var dateArr = selectedDates.map(function (date) { return _this.formatDate(date, 'Y-m-d'); });
         $('#ID_START').val(dateArr[0]);
         $('#ID_END').val(dateArr[1]);
     },
@@ -27,19 +28,20 @@ $(function () {
         },
         minimumInputLength: 2
     });
-    f = moment().format("YYYY-MM-DD");
-    fechaValue.setDate(f);
+    f = moment();
+    fHoy = f.clone().format("YYYY-MM-DD");
+    fAyer = f.clone().add("day", -1).format("YYYY-MM-DD");
+    fechaValue.setDate([fAyer, fHoy]);
     $("#fechaInput").change();
-    $('#ID_START').val(f);
-    $('#ID_END').val(f);
-   /*  cambiarF(); */
+    $('#ID_START').val(fAyer);
+    $('#ID_END').val(fHoy);
 });
 
 
-function cargartabla(fecha1,fecha2) {
+function cargartabla(fecha1, fecha2) {
 
     var idemp = $('#idempleado').val();
-    if(idemp==0){
+    if (idemp == 0) {
         $.notifyClose();
         $.notify({
             message: '\nSeleccione empleado.',
@@ -63,7 +65,7 @@ function cargartabla(fecha1,fecha2) {
         type: "GET",
         url: "/reporteTablaEmp",
         data: {
-            fecha1,fecha2, idemp
+            fecha1, fecha2, idemp
         },
         async: false,
         headers: {
@@ -118,7 +120,7 @@ function cargartabla(fecha1,fecha2) {
                 for (let index = 0; index < data.length; index++) {
                     tbody += `<tr>
                     <td>${(index + 1)}&nbsp;</td>
-                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
@@ -129,7 +131,7 @@ function cargartabla(fecha1,fecha2) {
                             var marcacionData = data[index].marcaciones[j];
                             if (marcacionData.entrada != 0) {
                                 if (h == moment(marcacionData.entrada).format("HH")) {
-                                    var permisoModificarCS=$('#modifReporte').val();
+                                    var permisoModificarCS = $('#modifReporte').val();
                                     if (data[index].horario != 0) {
                                         tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
                                         border-left: 2px solid;">${data[index].horario}</td>`;
@@ -137,7 +139,7 @@ function cargartabla(fecha1,fecha2) {
                                         tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
                                         border-left: 2px solid;">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>>`;
                                     }
-                                    if(permisoModificarCS==1){
+                                    if (permisoModificarCS == 1) {
                                         tbodyEntradaySalida += `<td><div class="dropdown" id="">
                                                                 <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                 style="cursor: pointer">
@@ -152,13 +154,13 @@ function cargartabla(fecha1,fecha2) {
                                                                 </ul>
                                                             </div></td>`;
                                     }
-                                    else{
+                                    else {
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(marcacionData.entrada).format("HH:mm:ss")}</td>`;
                                     }
 
                                     if (marcacionData.salida != 0) {
-                                        var permisoModificarCE1=$('#modifReporte').val();
-                                        if(permisoModificarCE1==1){
+                                        var permisoModificarCE1 = $('#modifReporte').val();
+                                        if (permisoModificarCE1 == 1) {
                                             tbodyEntradaySalida += `<td><div class="dropdown" id="">
                                                                 <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false
                                                                 style="cursor: pointer">
@@ -172,7 +174,7 @@ function cargartabla(fecha1,fecha2) {
                                                                     </div>
                                                                 </ul>
                                                             </div></td>`;
-                                        } else{
+                                        } else {
                                             tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
 
                                         }
@@ -204,8 +206,8 @@ function cargartabla(fecha1,fecha2) {
                                             sumaTiempos = moment(sumaTiempos).add(horasTiempo, 'hours');
                                         }
                                     } else {
-                                        var permisoModificarS=$('#modifReporte').val();
-                                        if(permisoModificarS==1){
+                                        var permisoModificarS = $('#modifReporte').val();
+                                        if (permisoModificarS == 1) {
                                             tbodyEntradaySalida += `<td><div class="dropdown" id="">
                                                                 <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
                                                                     aria-haspopup="true" aria-expanded="false"
@@ -223,8 +225,8 @@ function cargartabla(fecha1,fecha2) {
                                                                 </form>
                                                             </div></td>`;
                                         }
-                                        else{
-                                            tbodyEntradaySalida +=`<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
+                                        else {
+                                            tbodyEntradaySalida += `<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
                                         }
 
                                         tbodyEntradaySalida += `<td name="tiempoSitHi">
@@ -246,8 +248,8 @@ function cargartabla(fecha1,fecha2) {
                                             tbodyEntradaySalida += `<td style="border-left-color: #c8d4de!important;
                                             border-left: 2px solid;">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>`;
                                         }
-                                        var permisoModificarE=$('#modifReporte').val();
-                                        if(permisoModificarE==1){
+                                        var permisoModificarE = $('#modifReporte').val();
+                                        if (permisoModificarE == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                 <div class=" dropdown">
                                                                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -269,13 +271,13 @@ function cargartabla(fecha1,fecha2) {
                                                                 </div>
                                                             </td>`;
                                         }
-                                        else{
+                                        else {
                                             tbodyEntradaySalida += `<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td>`;
                                         }
 
                                         //* COLUMNA DE SALIDA
-                                        var permisoModificarCE2=$('#modifReporte').val();
-                                        if(permisoModificarCE2==1){
+                                        var permisoModificarCE2 = $('#modifReporte').val();
+                                        if (permisoModificarCE2 == 1) {
                                             tbodyEntradaySalida += `<td>
                                                                 <div class="dropdown" id="">
                                                                     <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -291,7 +293,7 @@ function cargartabla(fecha1,fecha2) {
                                                                     </ul>
                                                                 </div>
                                                             </td>`;
-                                        } else{
+                                        } else {
                                             tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(marcacionData.salida).format("HH:mm:ss")}</td>`;
                                         }
 
@@ -323,7 +325,7 @@ function cargartabla(fecha1,fecha2) {
                 $('#tbodyD').html(tbody);
 
                 table = $("#tablaReport").DataTable({
-                    "bLengthChange" : false,
+                    "bLengthChange": false,
                     "searching": false,
                     "scrollX": true,
                     "ordering": false,
@@ -414,9 +416,9 @@ function cargartabla(fecha1,fecha2) {
                 <th >Incidencias T.</th> </tr>`;
 
 
-                 var inicioR=moment($('#ID_START').val()).format('DD/MM/YYYY');
-                 var finR=moment($('#ID_END').val()).format('DD/MM/YYYY');
-                $('#RangoFechas').html(' De '+inicioR+' '+' a '+' '+finR)
+                var inicioR = moment($('#ID_START').val()).format('DD/MM/YYYY');
+                var finR = moment($('#ID_END').val()).format('DD/MM/YYYY');
+                $('#RangoFechas').html(' De ' + inicioR + ' ' + ' a ' + ' ' + finR)
 
 
 
@@ -428,23 +430,23 @@ function cargartabla(fecha1,fecha2) {
                 //* ARMAMOS BODY DE TABLA
                 for (let index = 0; index < data.length; index++) {
                     $('#ponerDNI').html(data[index].emple_nDoc);
-                    $('#ponerApe').html(data[index].perso_apPaterno+' '+data[index].perso_apMaterno+' '+data[index].perso_nombre);
+                    $('#ponerApe').html(data[index].perso_apPaterno + ' ' + data[index].perso_apMaterno + ' ' + data[index].perso_nombre);
                     if (data[index].area_descripcion != null) {
-                         $('#ponerArea').html(data[index].area_descripcion);
+                        $('#ponerArea').html(data[index].area_descripcion);
                     }
-                    else{
+                    else {
                         $('#ponerArea').html('--');
                     }
 
                     if (data[index].cargo_descripcion != null) {
                         $('#ponerCarg').html(data[index].cargo_descripcion);
-                   }
-                   else{
-                    $('#ponerCarg').html('--');
-                   }
+                    }
+                    else {
+                        $('#ponerCarg').html('--');
+                    }
                     tbodyI += `<tr>
                     <td>${(index + 1)}&nbsp;</td>
-                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY') }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    <td>${moment(data[index].entradaModif).format('DD/MM/YYYY')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyIEntradaySalida = "";
@@ -455,28 +457,28 @@ function cargartabla(fecha1,fecha2) {
                             var marcacionDataI = data[index].marcaciones[j];
                             if (marcacionDataI.entrada != 0) {
                                 if (h == moment(marcacionDataI.entrada).format("HH")) {
-                                    var permisoModificarCS=$('#modifReporte').val();
+                                    var permisoModificarCS = $('#modifReporte').val();
                                     if (marcacionDataI.horario != 0) {
                                         tbodyIEntradaySalida += `<td  >${marcacionDataI.horario}</td>`;
                                     } else {
                                         tbodyIEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
-                                    if(permisoModificarCS==1){
+                                    if (permisoModificarCS == 1) {
                                         tbodyIEntradaySalida += `<td >
                                                                     ${moment(marcacionDataI.entrada).format("HH:mm:ss")}
                                                                </td>`;
                                     }
-                                    else{
+                                    else {
                                         tbodyIEntradaySalida += `<td >${moment(marcacionDataI.entrada).format("HH:mm:ss")}</td>`;
                                     }
 
                                     if (marcacionDataI.salida != 0) {
-                                        var permisoModificarCE1=$('#modifReporte').val();
-                                        if(permisoModificarCE1==1){
+                                        var permisoModificarCE1 = $('#modifReporte').val();
+                                        if (permisoModificarCE1 == 1) {
                                             tbodyIEntradaySalida += `<td >
                                                                     ${moment(marcacionDataI.salida).format("HH:mm:ss")}
                                                                 </td>`;
-                                        } else{
+                                        } else {
                                             tbodyIEntradaySalida += `<td> ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
 
                                         }
@@ -507,14 +509,14 @@ function cargartabla(fecha1,fecha2) {
                                             sumaTiemposI = moment(sumaTiemposI).add(horasTiempo, 'hours');
                                         }
                                     } else {
-                                        var permisoModificarS=$('#modifReporte').val();
-                                        if(permisoModificarS==1){
+                                        var permisoModificarS = $('#modifReporte').val();
+                                        if (permisoModificarS == 1) {
                                             tbodyIEntradaySalida += `<td >
                                                                         No tiene salida
                                                                   </td>`;
                                         }
-                                        else{
-                                            tbodyIEntradaySalida +=`<td >No tiene salida</td>`;
+                                        else {
+                                            tbodyIEntradaySalida += `<td >No tiene salida</td>`;
                                         }
 
                                         tbodyIEntradaySalida += `<td  name="tiempoSitHi">
@@ -533,8 +535,8 @@ function cargartabla(fecha1,fecha2) {
                                         } else {
                                             tbodyIEntradaySalida += `<td  >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
-                                        var permisoModificarE=$('#modifReporte').val();
-                                        if(permisoModificarE==1){
+                                        var permisoModificarE = $('#modifReporte').val();
+                                        if (permisoModificarE == 1) {
                                             tbodyIEntradaySalida += `<td  >
 
                                                                             No tiene entrada
@@ -542,19 +544,19 @@ function cargartabla(fecha1,fecha2) {
 
                                                             </td>`;
                                         }
-                                        else{
+                                        else {
                                             tbodyIEntradaySalida += `<td  >No tiene entrada</td>`;
                                         }
 
                                         //* COLUMNA DE SALIDA
-                                        var permisoModificarCE2=$('#modifReporte').val();
-                                        if(permisoModificarCE2==1){
+                                        var permisoModificarCE2 = $('#modifReporte').val();
+                                        if (permisoModificarCE2 == 1) {
                                             tbodyIEntradaySalida += `<td  >
 
                                                                         ${moment(marcacionDataI.salida).format("HH:mm:ss")}
 
                                                             </td>`;
-                                        } else{
+                                        } else {
                                             tbodyIEntradaySalida += `<td  > ${moment(marcacionDataI.salida).format("HH:mm:ss")}</td>`;
                                         }
 
@@ -631,12 +633,37 @@ function cambiarF() {
     f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
     f3 = $("#ID_END").val();
-    if ($.fn.DataTable.isDataTable("#tablaReport")) {
-
-        /* $('#tablaReport').DataTable().destroy(); */
+    if ($('#idempleado').val() == "" || $('#idempleado').val() == null) {
+        $.notifyClose();
+        $.notify(
+            {
+                message:
+                    "\nElegir empleado.",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+    } else {
+        cargartabla(f2, f3);
     }
-    console.log(f2);
-    cargartabla(f2,f3);
 
 }
 function cambiartabla() {
@@ -650,50 +677,48 @@ function cambiartabla() {
     }
 }
 
-
-
 /////////GENERAR EXCEL////////////
 function s2ab(s) {
     var buf = new ArrayBuffer(s.length);
     var view = new Uint8Array(buf);
-    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
     return buf;
-  }
-  function doexcel(){
-      var wb = XLSX.utils.table_to_book(document.getElementById("tableZoomI"),{sheet:"Sheet 1"})	//my html table
+}
+function doexcel() {
+    var wb = XLSX.utils.table_to_book(document.getElementById("tableZoomI"), { sheet: "Sheet 1" })	//my html table
 
-       wb["Sheets"]["Sheet 1"]["!cols"] = [{ wpx : 149 },{ wpx : 130 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
-        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
-        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },
-        { wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },{ wpx : 100 },];
+    wb["Sheets"]["Sheet 1"]["!cols"] = [{ wpx: 149 }, { wpx: 130 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },
+    { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },
+    { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },
+    { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 },];
 
-     console.log(wb);
+    console.log(wb);
 
-      var wbout = XLSX.write(wb, {bookType:'xlsx',  bookSST:true, type: 'binary'});
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Asistencia.xlsx');
-  }
+    var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+    saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Asistencia.xlsx');
+}
 function generatePDF() {
 
-var doc = new jsPDF('l', 'pt', 'legal');
+    var doc = new jsPDF('l', 'pt', 'legal');
     var htmlstring = '';
     var tempVarToCheckPageHeight = 0;
     var pageHeight = 0;
     pageHeight = doc.internal.pageSize.height;
     specialElementHandlers = {
         // element with id of "bypass" - jQuery style selector
-        '#bypassme': function(element, renderer) {
+        '#bypassme': function (element, renderer) {
             // true = "handled elsewhere, bypass text extraction"
             return true
         }
     };
-  
+
     var y = 20;
     doc.setLineWidth(2);
 
     doc.autoTable({
         html: '#Encabezado',
         startY: 40,
-        theme:'plain'
+        theme: 'plain'
 
     })
     doc.autoTable({
@@ -703,5 +728,5 @@ var doc = new jsPDF('l', 'pt', 'legal');
     })
     doc.save('Asistencia.pdf');
 
-  }
+}
 

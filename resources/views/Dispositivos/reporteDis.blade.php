@@ -10,6 +10,8 @@
 <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}" rel="stylesheet"
     type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="{{asset('admin/assets/js/html2pdf.bundle.min.js')}}"></script>
 <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
@@ -115,8 +117,7 @@
     .select2-container .select2-selection--single .select2-selection__rendered {
         line-height: 31px;
     }
-</style>
-<style>
+
     .table {
         width: 100% !important;
     }
@@ -124,11 +125,82 @@
     /* .dataTables_scrollHeadInner {
             width: 100% !important;
         } */
+    .dataTables_scrollBody {
+        overflow-y: hidden !important;
+    }
 
     .table th,
     .table td {
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
+    }
+
+    .borderColor {
+        border-color: red;
+    }
+
+    /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
+
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 28px;
+        min-width: 75px;
+    }
+
+    .ajs-cancel {
+        font-size: 12px !important;
+    }
+
+    .ajs-ok {
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
+    }
+
+    /* FINALIZACION */
+    .scrollable-menu {
+        height: auto;
+        max-height: 142px;
+        overflow: auto;
+        position: absolute;
+    }
+
+    .dropdown-item {
+        padding: 0.1rem 0.1rem !important;
+        color: #6c757d !important;
+    }
+
+    /* SYYLE DE GROUP */
+    .select2-container--default .select2-results__group {
+        color: #62778c;
+    }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -150,8 +222,7 @@
                             <label class="col-lg-3 col-form-label">Fecha:</label>
                             <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                 id="fechaSelec">
-                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
-                                    data-input>
+                                <input type="text" id="fechaInput" class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -180,135 +251,524 @@
                     </div>
                     <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
                         <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()"> <img
-                                src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
+                            style="background-color: #163552;" onclick="javascript:cambiarF()">
+                            <img src="{{asset('landing/images/loupe (1).svg')}}" height="15">
+                        </button>
                     </div>
-
-                    {{-- <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10 colR">
-                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
-                                    @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                    {{$area->area_descripcion}}</option>
-                    @endforeach
-                    </select>
                 </div>
 
+                <div class="row justify-content-left">
+                    <div class="col-md-12 pb-2">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
+                                onclick="javascript:cambiartabla()">
+                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">
+                                Mostrar detalles
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 pb-2">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="switPausas"
+                                onclick="javascript:togglePausas()">
+                            <label class="custom-control-label" for="switPausas" style="font-weight: bold">
+                                Mostrar pausas
+                            </label>
+                        </div>
+                    </div>
+                    {{-- GIF DE ESPERA --}}
+                    <div id="espera" class="row justify-content-center" style="display: none">
+                        <div class="col-md-4">
+                            <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                        </div>
+                    </div>
+                    <div id="tableZoom" class="col-md-12">
+                        <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
+                            <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
+                                <tr>
+                                    <th>CC</th>
+                                    <th>DNI</th>
+                                    <th>Nombre</th>
+                                    <th>Cargo</th>
+                                    <th>Horario</th>
+                                    <th id="hEntrada">Hora de entrada</th>
+                                    <th id="hSalida">Hora de salida</th>
+                                    <th id="tSitio">Tiempo en sitio</th>
+                                    <th>Tardanza T.</th>
+                                    <th>Faltas T.</th>
+                                    <th>Incidencias T.</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyD"></tbody>
+                        </table>
+
+                    </div>
+                </div>
             </div>
-        </div> --}}
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                    onclick="javascript:cambiartabla()">
-                <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar
-                    detalles</label>
-            </div>
-        </div>
-
-        {{-- GIF DE ESPERA --}}
-        <div id="espera" class="text-center" style="display: none">
-            <img src="{{ asset('landing/images/loading.gif') }}" height="100">
-        </div>
-        <div class="col-md-12">
-            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga">
-                <button class="btn btn-secondary   btn-sm mt-1" type="button" onclick="toExcel()">
-                    <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
-                </button>
-                <button class="btn btn-secondary  btn-sm mt-1" type="button" onclick="generatePDF()">
-                    <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
-                </button>
-            </div>
-        </div>
-
-        <div id="tableZoomI" class="col-md-12 " style="display: none">
-            <table>
-                <thead>
-                    <tr>
-                        <th><br><br></th>
-                        <th colspan="8">CONTROL DE REGISTRO DE ASISTENCIA</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="3">Razon social:</td>
-                        <td colspan="3">{{$organizacion}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Direccion:</td>
-                        <td colspan="3">{{$direccion}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Numero de Ruc:</td>
-                        <td colspan="1">{{$ruc}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Fecha:</td>
-                        <td colspan="1" id="fechaAsiste"> </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><br></td>
-                        <td colspan="3"><br></td>
-                    </tr>
-                </tbody>
-            </table>
-            <style>
-                .tableHi {
-                    border: 0.2px solid rgb(182, 182, 182) !important;
-                    border-collapse: collapse !important;
-                }
-            </style>
-            <table id="tablaReportI" class="table tableHi" style="font-size: 12.8px;">
-                <thead id="theadDI" class="tableHi">
-                    <tr class="tableHi">
-                        <th class="tableHi">CC</th>
-                        <th class="tableHi">DNI</th>
-                        <th class="tableHi">Nombre</th>
-                        <th class="tableHi">Cargo</th>
-                        <th class="tableHi">Horario</th>
-                        <th class="tableHi" id="hEntradaI">Hora de entrada</th>
-                        <th class="tableHi" id="hSalidaI">Hora de salida</th>
-                        <th class="tableHi" id="tSitioI">Tiempo en sitio</th>
-                        <th class="tableHi">Tardanza T.</th>
-                        <th class="tableHi">Faltas T.</th>
-                        <th class="tableHi">Incidencias T.</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyDI">
-                </tbody>
-            </table>
-        </div>
-        <div id="tableZoom" class="col-md-12">
-            <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
-                <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
-                    <tr>
-                        <th>CC</th>
-                        <th>DNI</th>
-                        <th>Nombre</th>
-                        <th>Cargo</th>
-                        <th>Horario</th>
-                        <th id="hEntrada">Hora de entrada</th>
-                        <th id="hSalida">Hora de salida</th>
-                        <th id="tSitio">Tiempo en sitio</th>
-                        <th>Tardanza T.</th>
-                        <th>Faltas T.</th>
-                        <th>Incidencias T.</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyD"></tbody>
-            </table>
-
         </div>
     </div>
 </div>
+{{-- MODAL DE LISTA DE SALIDAS MARCACION --}}
+<div id="listaSalidasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaSalidasMarcacion"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    <form action="javascript:cambiarEntradaM()" id="formCambiarEntradaM">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacion">
+                            {{-- EL TIPO SI ENTRADA O SALIDA --}}
+                            <input type="hidden" id="c_tipoS">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Cambiar a entrada</span>
+                                <img src="{{asset('landing/images/entradaD.svg') }}" height="12" class="ml-1 mr-1" />
+                                <span id="c_horaS"></span>
+                            </div>
+                            <div class="col-md-12 pt-1">
+                                <span id="s_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="salidaM" required>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+<div id="listaEntradasMarcacion" class="modal fade" role="dialog" aria-labelledby="listaEntradasMarcacion"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    <form action="javascript:cambiarSalidaM()" id="formCambiarSalidaM">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacionE">
+                            {{-- EL TIPO SI FUE ENTRADA O SALIDA --}}
+                            <input type="hidden" id="c_tipoE">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Cambiar a salida</span>
+                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12" class="ml-1 mr-1" />
+                                <span id="c_horaE"></span>
+                            </div>
+                            <div class="col-md-12 pt-1">
+                                <span id="e_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="entradaM" required>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE LISTA DE ENTRADAS MARCACION --}}
+<div id="asignacionMarcacion" class="modal fade" role="dialog" aria-labelledby="asignacionMarcacion" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    <form action="javascript:guardarAsignacion()" id="formGuardarAsignacion">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacionA">
+                            {{-- EL TIPO DE MARCACION SI FUE ENTRADA O SALIDA --}}
+                            <input type="hidden" id="tipoM">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Hora de marcación</span>
+                                &nbsp;
+                                <img src="{{asset('landing/images/salidaD.svg') }}" height="12" id="img_a" />
+                                &nbsp;
+                                <span id="a_hora"></span>
+                                <span id="a_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                            </div>
+                            <div class="col-xl-8 mt-1">
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="horarioM" required></select>
+                            </div>
+                            <div class="col-xl-4 mt-1">
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="asignacionM" required>
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    <option value="1">Entrada</option>
+                                    <option value="2">Salida</option>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{{-- modificar --}}
+{{-- FINALIZACION --}}
+{{-- MODAL DE INSERTAR SALIDA --}}
+<div id="insertarSalida" class="modal fade" role="dialog" aria-labelledby="insertarSalida" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    <form action="javascript:insertarSalida()" id="formInsertarSalida">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacionIS">
+                            {{-- ID DE HORARIO --}}
+                            <input type="hidden" id="idHorarioIS">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Agregar salida</span>
+                            </div>
+                            <div class="col-md-12">
+                                <span id="i_validS" style="color: #8b3a1e;display:none">
+                                    Seleccionar marcación
+                                </span>
+                            </div>
+                            <div class="col-xl-5 mt-2">
+                                <label>
+                                    Entrada
+                                    &nbsp;
+                                    <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                    &nbsp;
+                                    <span id="i_hora" style="color:#383e56;font-weight: bold"></span>
+                                </label>
+                            </div>
+                            <div class="col-xl-7">
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label text-right">Salida &nbsp;
+                                        <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                    </label>
+                                    <div class="col-lg-7 mt-1">
+                                        <input type="text" class="form-control form-control-sm horasEntrada"
+                                            onchange="$(this).removeClass('borderColor');" id="horaSalidaNueva">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE INSERTAR ENTRADA --}}
+<div id="insertarEntrada" class="modal fade" role="dialog" aria-labelledby="insertarEntrada" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    <form action="javascript:insertarEntrada()" id="formInsertarEntrada">
+                        <div class="row">
+                            {{-- ID DE MARCACION --}}
+                            <input type="hidden" id="idMarcacionIE">
+                            {{-- ID DE HORARIO --}}
+                            <input type="hidden" id="idHorarioIE">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Insertar entrada</span>
+                            </div>
+                            <div class="col-md-12">
+                                <span id="i_validE" style="color: #8b3a1e;display:none">
+                                    Ingresar entrada
+                                </span>
+                            </div>
+                            <div class="col-xl-7">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label text-left">Entrada &nbsp;
+                                        <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                    </label>
+                                    <div class="col-lg-8 mt-1 text-left">
+                                        <input type="text" class="form-control form-control-sm horasEntrada"
+                                            onchange="$(this).removeClass('borderColor');" id="horasEntradaNueva">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 mt-2">
+                                <label>
+                                    Salida
+                                    &nbsp;
+                                    <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                    &nbsp;
+                                    <span id="ie_hora" style="color:#62778c;font-weight: bold"></span>
+                                </label>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODAL DE CAMBIAR DE HORARIO --}}
+<div id="modalCambiarHorario" class="modal fade" role="dialog" aria-labelledby="modalCambiarHorario" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-lg   d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    <form action="javascript:cambiarHorarioM()" id="formCambiarHorarioM">
+                        {{-- ID HORARIO EMPLEADO --}}
+                        <input type="hidden" id="idHorarioECH">
+                        {{-- FECHA --}}
+                        <input type="hidden" id="fechaCH">
+                        {{-- EMPLEADO --}}
+                        <input type="hidden" id="idEmpleadoCH">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span style="color:#62778c;font-weight: bold">Horario</span>
+                            </div>
+                            <div class="col-md-12 pt-1">
+                                <span id="ch_valid" style="color: #8b3a1e;display:none">
+                                    Seleccionar horario
+                                </span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="horarioXE" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pt-2" id="detalleHorarios" style="display: none"></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- ACTUALIZAR HORARIO --}}
+<div class="modal fade" id="actualizarH" tabindex="-1" role="dialog" aria-labelledby="actualizarH" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="{{asset('landing/images/calendarioA.svg')}}" height="50" class="mt-1">
+                <h6 class="text-danger font-weight-bold mt-3">Actualizar horario</h6>
+                <span>
+                    <img src="{{asset('admin/images/warning.svg')}}" height="18">&nbsp;
+                    Horario asignado actualmente fue eliminado.<br>Recomendamos actualizar horario.
+                </span>
+                <div class="mt-4">
+                    <a class="btn btn-rounded width-md" data-dismiss="modal"
+                        style="background: #183b5d;color:#ffffff;cursor: pointer;">
+                        Entendido
+                    </a>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- FINALIZACION --}}
+{{-- AGREGAR MARCACIONES --}}
+<div id="modalAgregar" class="modal fade" role="dialog" aria-labelledby="modalAgregar" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-lg d-flex modal-dialog-centered justify-content-center">
+        <div class="modal-content" id="contentM">
+            <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                <h6 class="modal-title" style="color:#ffffff;">
+                    Mantenimiento de Marcaciones
+                </h6>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;">
+                <div class="col-md-12">
+                    {{-- FECHA --}}
+                    <input type="hidden" id="a_fecha">
+                    {{-- ID EMPLEADO --}}
+                    <input type="hidden" id="a_idE">
+                    <form action="javascript:registrarMar()" id="formRegistrarMar">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="mb-0" style="color:#62778c;font-weight: bold">Horario</label>
+                                <span id="am_valid" style="color: #8b3a1e;display:none"></span>
+                                <select data-plugin="customselect" class="form-control custom-select custom-select-sm"
+                                    id="r_horarioXE" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pt-3" style="display: none" id="rowDatosM">
+                            <div class="col-md-12">
+                                {{-- CABEZALES --}}
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <span>Tipo</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Hora</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Sin marcación
+                                    </div>
+                                </div>
+                                {{-- PRIMERA COLUMNA --}}
+                                <div class="row pt-2">
+                                    <div class="col-md-2">
+                                        <span>
+                                            <img src="{{asset('landing/images/entradaD.svg') }}" height="12" />
+                                            &nbsp;Entrada
+                                        </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="nuevaEntrada">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0 mt-2 ml-2">
+                                            <input type="checkbox" id="v_entrada">
+                                            <label for="" class="mb-0"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- SEGUNDA COLUMNA --}}
+                                <div class="row pt-2">
+                                    <div class="col-md-2">
+                                        <span>
+                                            <img src="{{asset('landing/images/salidaD.svg') }}" height="12" />
+                                            &nbsp;Salida
+                                        </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control form-control-sm" id="nuevaSalida">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0 mt-2 ml-2">
+                                            <input type="checkbox" id="v_salida">
+                                            <label for="" class="mb-0"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                <div class="col-md-12 text-right" style="padding-right: 0px;">
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                        onclick="javascript:limpiarAtributos()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm" style="background: #183b5d;border-color:#62778c;">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- FINALIZACION --}}
+{{-- MODIFICAR --}}
 @if (isset($modifReporte))
 @if ($modifReporte==1)
 <input type="hidden" id="modifReporte" value="1">
@@ -322,30 +782,23 @@
 @section('script')
 <script src="{{ asset('landing/js/actualizarPDatos.js') }}"></script>
 <!-- Plugins Js -->
-
-
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-
-
 <script src="{{ URL::asset('admin/assets/libs/flatpickr/es.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/select2/select2.min.js') }}"></script>
-
 <script src="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/moment.js')}}"></script>
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
-    }}"></script>
-
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
 <script src="{{ asset('landing/js/reporteDispo.js') }}"></script>
-
 @endsection
-
 @section('script-bottom')
 <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 <script src="{{ asset('landing/js/notificacionesUser.js') }}"></script>
