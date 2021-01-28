@@ -34,7 +34,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-        <h4 class="header-title mt-0 "></i>Detalle de tareo por dia</h4>
+        <h4 class="header-title mt-0 "></i>Detalle de tareo por día</h4>
     </div>
 </div>
 @endsection
@@ -130,6 +130,36 @@
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
     }
+    .dt-button-collection a.buttons-columnVisibility:before,
+.dt-button-collection a.buttons-columnVisibility.active span:before {
+	display:block;
+	position:absolute;
+	top:1.2em;
+    left:0;
+	width:12px;
+	height:12px;
+	box-sizing:border-box;
+}
+
+.dt-button-collection a.buttons-columnVisibility:before {
+	content:' ';
+	margin-top:-6px;
+	margin-left:10px;
+	border:1px solid black;
+	border-radius:3px;
+}
+
+.dt-button-collection a.buttons-columnVisibility.active span:before {
+	content:'\2714';
+	margin-top:-11px;
+	margin-left:12px;
+	text-align:center;
+	text-shadow:1px 1px #DDD, -1px -1px #DDD, 1px -1px #DDD, -1px 1px #DDD;
+}
+
+.dt-button-collection a.buttons-columnVisibility span {
+    margin-left:20px;
+}
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -238,19 +268,19 @@
 
         </div>
         <div id="tableZoom" class="col-md-12">
-            
+
             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                     <tr>
                         <th>CC</th>
                         <th>Código</th>
-                        <th>DNI</th>
-                        <th>Apellidos y nombres</th>
+                        <th>Número de documento </th>
+                        <th>Nombres y apellidos</th>
                         <th name="tiempoSitHi">Sexo</th>
                         <th name="tiempoSitHi">Cargo</th>
-                        <th>Cod.</th>
+                        <th>Código –</th>
                         <th>Actividad</th>
-                        <th>Cod.</th>
+                        <th>Código –</th>
                         <th>Subactividad</th>
                         <th id="hEntrada">Hora de entrada</th>
                         <th id="hSalida">Hora de salida</th>
@@ -299,6 +329,7 @@
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
     }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"></script>
 
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>

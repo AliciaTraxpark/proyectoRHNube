@@ -71,17 +71,17 @@ function cargartabla(fecha) {
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
                                     <th>CC&nbsp;</th>
-                                    <th name="tiempoSitHi">Fecha</th>
+                                    <th class="noExport" name="tiempoSitHi">Fecha</th>
                                     <th>Código</th>
-                                    <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th name="tiempoSitHi">Sexo</th>
-                                    <th name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                    <th>Número de documento </th>
+                                    <th>Nombres y Apellidos</th>
+                                    <th class="noExport" name="tiempoSitHi">Sexo</th>
+                                    <th class="noExport" name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
 
-                    theadTabla += `<th>Cod.</th>
+                    theadTabla += `<th>Código –</th>
                                     <th>Actividad</th>
-                                    <th>Cod.</th>
+                                    <th>Código –</th>
                                     <th>Subactividad</th>
                                     <th>Hora de entrada</th>
                                     <th>Hora de salida</th>
@@ -106,7 +106,7 @@ function cargartabla(fecha) {
 
                                 <td>${index + 1}&nbsp;</td>
 
-                                <td name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
+                                <td class="noExport" name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
                                 <td>${
                                     data[index].emple_codigo
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -122,15 +122,15 @@ function cargartabla(fecha) {
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                                 if (data[index].perso_sexo != null) {
-                                    tbody += `<td name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="noExport" name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 } else {
-                                    tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="noExport" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 }
 
                                 if (data[index].cargo_descripcion != null) {
-                                    tbody += `<td name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="noExport" name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 } else {
-                                    tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="noExport" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 }
 
 
@@ -323,7 +323,23 @@ function cargartabla(fecha) {
                 var fechaAsisteDH = moment($('#pasandoV').val()).format('DD/MM/YYYY');
 
                 /* ------------------------ */
+                 /* boton adicional */
+              /*    $.fn.dataTable.ext.buttons.alert = {
+                    className: 'buttons-alert',
 
+                    action: function ( e, dt, node, config ) {
+                        alert( this.text() );
+                    }
+                }; */
+                /* -------------------------- */
+                $('.dt-button-collection .buttons-columnVisibility').each(function(){
+                    var $li = $(this),
+                        $cb = $('<input>', {
+                                type:'checkbox',
+                                style:'margin:0 .25em 0 0; vertical-align:middle'}
+                              ).prop('checked', $(this).hasClass('active') );
+                    $li.find('a').prepend( $cb );
+                  });
                 table = $("#tablaReport").DataTable({
                     searching: false,
                     scrollX: true,
@@ -366,6 +382,44 @@ function cargartabla(fecha) {
                     },
                     dom: 'Bfrtip',
                     buttons: [
+                         /* {
+                            extend: 'collection',
+                            text: 'Table control',
+                            className: 'btn btn-sm mt-1',
+                            buttons: [
+                                {
+
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="chec" checked>'+
+                                    '<label class="form-check-label" for="chec">Remember'+
+                                        'me</label>',
+                                    action: function ( e, dt, node, config ) {
+                                        if ($("#chec").val()==1) {
+                                            $("#chec").val("0");
+                                            $('#chec').prop("checked",false);
+                                            $(this).removeClass("borderColor");
+
+                                        }
+                                        else{
+                                            $("#chec").val("1");
+                                            $('#chec').prop("checked",true);
+                                            $("#codigoTarea").addClass("borderColor");
+                                        }
+                                        console.log('m'+$("#chec").val())
+
+
+                                    }
+                                },
+                                {
+                                    text: 'Toggle salary',
+                                    action: function ( e, dt, node, config ) {
+                                        dt.column( -1 ).visible( ! dt.column( -1 ).visible() );
+                                    }
+                                }
+                            ]
+                        }, */
+
+
                         {
                         extend: 'excel',
                         className: 'btn btn-sm mt-1',
@@ -421,7 +475,7 @@ function cargartabla(fecha) {
                         title: 'Asistencia',
                         autoFilter: false,
                         exportOptions: {
-                            columns: ":visible:not(.noExport)",
+                           /*  columns: ":visible:not(.noExport)", */
                             format: {
                                 body: function (data, row, column, node) {
                                     var cont = $.trim($(node).text());
@@ -442,7 +496,7 @@ function cargartabla(fecha) {
                         pageSize: 'A3',
                         title: 'Asistencia',
                         exportOptions: {
-                            columns: ":visible:not(.noExport)"
+                           /*  columns: ":visible:not(.noExport)" */
                         },
                         customize: function (doc) {
                             doc['styles'] = {
