@@ -871,8 +871,9 @@
                                                 <div class="input-group form-control-sm "
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                     <input type="number" value="0" class="form-control form-control-sm"
+                                                        id="toleranciaH" onchange="javascript:e_toleranciasValidacion()"
                                                         oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                        id="toleranciaH" required>
+                                                        required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
                                                             style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -888,8 +889,10 @@
                                                 <div class="input-group form-control-sm "
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                     <input type="number" value="0" class="form-control form-control-sm"
+                                                        id="toleranciaSalida"
+                                                        onchange="javascript:e_toleranciasValidacion()"
                                                         oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                        id="toleranciaSalida" required>
+                                                        required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
                                                             style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">

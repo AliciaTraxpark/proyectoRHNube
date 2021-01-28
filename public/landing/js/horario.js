@@ -5264,6 +5264,22 @@ function eliminarPH(idpausa) {
 
 
 // ********************************** NUEVAS FUNCIONALIDAD ********************************
+// ? FUNCION DE RETORNAR RESTA TIEMPO - MINUTOS TOLERANCIA
+function sustraerMinutosHoras(tiempo, minuto) {
+    var momentTiempo = moment(tiempo, ["HH:mm"]);
+    var restaTolerancia = momentTiempo.subtract(minuto, 'minutes');
+    var resultado = moment(restaTolerancia.toString()).format("HH:mm");
+
+    return resultado;
+}
+// ? FUNCION DE RETORNAR SUMA TIEMPO - MINUTOS TOLERANCIA
+function sumarMinutosHoras(tiempo, minuto) {
+    var momentTiempo = moment(tiempo, ["HH:mm"]);
+    var sumaTolerancia = momentTiempo.add(minuto, 'minutes');
+    var resultado = moment(sumaTolerancia).format("HH:mm");
+
+    return resultado;
+}
 // ! ******************************** FORMULARIO REGISTRAR ********************************
 // : FUNCION DE ABRIR MODAL
 var horasO = $('#horaOblig').flatpickr({
@@ -5928,6 +5944,7 @@ function limpiarHorario() {
 }
 // ! ******************************* FINALIZACION ****************************************
 // ! ******************************* MODAL EDITAR ****************************************
+// : HORA DE INICIO DE PAUSA
 var e_horaInicio = $('#horaI_ed').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -5943,15 +5960,12 @@ var e_horaInicio = $('#horaI_ed').flatpickr({
         if ($('#horaF_ed').val() != "") {
             var validacionPH = e_validarHorasPausaHorario();
             if (!validacionPH) {
-                $('#btnEditarHorario').prop("disabled", true);
                 return false;
             } else {
                 var validacionEP = e_validarHorasEntrePausas();
                 if (!validacionEP) {
-                    $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
-                    $('#btnEditarHorario').prop("disabled", false);
                     $('#fueraRango_ed').hide();
                     $('#errorenPausas_ed').hide();
                     $('#errorenPausasCruzadas_ed').hide();
@@ -5960,6 +5974,7 @@ var e_horaInicio = $('#horaI_ed').flatpickr({
         }
     }
 });
+// : HORA DE FIN DE PAUSA
 var e_horaFin = $('#horaF_ed').flatpickr({
     enableTime: true,
     noCalendar: true,
@@ -5975,15 +5990,12 @@ var e_horaFin = $('#horaF_ed').flatpickr({
         if ($('#horaI_ed').val() != "") {
             var validacionPH = e_validarHorasPausaHorario();
             if (!validacionPH) {
-                $('#btnEditarHorario').prop("disabled", true);
                 return false;
             } else {
                 var validacionEP = e_validarHorasEntrePausas();
                 if (!validacionEP) {
-                    $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
-                    $('#btnEditarHorario').prop("disabled", false);
                     $('#fueraRango_ed').hide();
                     $('#errorenPausas_ed').hide();
                     $('#errorenPausasCruzadas_ed').hide();
@@ -5992,13 +6004,31 @@ var e_horaFin = $('#horaF_ed').flatpickr({
         }
     }
 });
+// : HORAS OBLIGADAS
 var e_horaOb = $('#horaOblig_ed').flatpickr({
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
     time_24hr: true
 });
-
+// : FUNCION DE OINPUT DE TOLERANCIA
+function e_toleranciasValidacion() {
+    if ($('#horaF_ed').val() != "" && $('#horaI_ed').val() != "") {
+        var validacionPH = e_validarHorasPausaHorario();
+        if (!validacionPH) {
+            return false;
+        } else {
+            var validacionEP = e_validarHorasEntrePausas();
+            if (!validacionEP) {
+                return false;
+            } else {
+                $('#fueraRango_ed').hide();
+                $('#errorenPausas_ed').hide();
+                $('#errorenPausasCruzadas_ed').hide();
+            }
+        }
+    }
+}
 var e_cont = 0;
 function modalEditar(id) {
     e_cont = 0;
@@ -6061,8 +6091,8 @@ function modalEditar(id) {
                                     </div>
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" 
-                                               value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
+                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}" 
+                                               oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                     min.
@@ -6076,8 +6106,8 @@ function modalEditar(id) {
                                     </div>
                                     <div class="col-md-2">
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" 
-                                               value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
+                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}" 
+                                               oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                                     min.
@@ -6146,6 +6176,7 @@ function modalEditar(id) {
 }
 // : FUNCION DE INICIALIZAR TIEMPO EN EDITAR
 function e_inicializarHorasPausas(id) {
+    // ***************************************** INICIO DE PAUSA ********************************
     $('#e_InicioPausa' + id).flatpickr({
         enableTime: true,
         noCalendar: true,
@@ -6162,15 +6193,12 @@ function e_inicializarHorasPausas(id) {
             if ($('#horaF_ed').val() != "" || $('#e_FinPausa' + id).val()) {
                 var validacionPH = e_validarHorasPausaHorario();
                 if (!validacionPH) {
-                    $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
                     var validacionEP = e_validarHorasEntrePausas();
                     if (!validacionEP) {
-                        $('#btnEditarHorario').prop("disabled", true);
                         return false;
                     } else {
-                        $('#btnEditarHorario').prop("disabled", false);
                         $('#fueraRango_ed').hide();
                         $('#errorenPausas_ed').hide();
                         $('#errorenPausasCruzadas_ed').hide();
@@ -6186,15 +6214,12 @@ function e_inicializarHorasPausas(id) {
             if ($('#horaF_ed').val() != "" || $('#e_FinPausa' + id).val()) {
                 var validacionPH = e_validarHorasPausaHorario();
                 if (!validacionPH) {
-                    $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
                     var validacionEP = e_validarHorasEntrePausas();
                     if (!validacionEP) {
-                        $('#btnEditarHorario').prop("disabled", true);
                         return false;
                     } else {
-                        $('#btnEditarHorario').prop("disabled", false);
                         $('#fueraRango_ed').hide();
                         $('#errorenPausas_ed').hide();
                         $('#errorenPausasCruzadas_ed').hide();
@@ -6203,6 +6228,7 @@ function e_inicializarHorasPausas(id) {
             }
         }
     });
+    // ***************************************************** FIN DE PAUSA ***********************************
     $('#e_FinPausa' + id).flatpickr({
         enableTime: true,
         noCalendar: true,
@@ -6219,15 +6245,12 @@ function e_inicializarHorasPausas(id) {
             if ($('#horaF_ed').val() != "" || $('#e_InicioPausa' + id).val()) {
                 var validacionPH = e_validarHorasPausaHorario();
                 if (!validacionPH) {
-                    $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
                     var validacionEP = e_validarHorasEntrePausas();
                     if (!validacionEP) {
-                        $('#btnEditarHorario').prop("disabled", true);
                         return false;
                     } else {
-                        $('#btnEditarHorario').prop("disabled", false);
                         $('#fueraRango_ed').hide();
                         $('#errorenPausas_ed').hide();
                         $('#errorenPausasCruzadas_ed').hide();
@@ -6243,15 +6266,12 @@ function e_inicializarHorasPausas(id) {
             if ($('#horaF_ed').val() != "" || $('#e_InicioPausa' + id).val()) {
                 var validacionPH = e_validarHorasPausaHorario();
                 if (!validacionPH) {
-                    $('#btnEditarHorario').prop("disabled", true);
                     return false;
                 } else {
                     var validacionEP = e_validarHorasEntrePausas();
                     if (!validacionEP) {
-                        $('#btnEditarHorario').prop("disabled", true);
                         return false;
                     } else {
-                        $('#btnEditarHorario').prop("disabled", false);
                         $('#fueraRango_ed').hide();
                         $('#errorenPausas_ed').hide();
                         $('#errorenPausasCruzadas_ed').hide();
@@ -6316,7 +6336,8 @@ function e_contenidoInput(id) {
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
+                                    onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                         min.
@@ -6331,8 +6352,9 @@ function e_contenidoInput(id) {
                         <div class="col-md-2">
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
-                                <div class="input-group-prepend  ">
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
+                                    onchange="javascript:e_toleranciasValidacion()">
+                                <div class="input-group-prepend">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
                                         min.
                                     </div>
@@ -6359,38 +6381,28 @@ function e_contenidoInput(id) {
     e_inicializarHorasPausas('New' + e_cont);
     e_cont++;
 }
-// : FUNCION DE RETORNAR RESTA TIEMPO - MINUTOS TOLERANCIA
-function sustraerMinutosHoras(tiempo, minuto) {
-    var momentTiempo = moment(tiempo, ["HH:mm"]);
-    var restaTolerancia = momentTiempo.subtract(minuto, 'minutes');
-    var resultado = moment(restaTolerancia.toString()).format("HH:mm");
-
-    return resultado;
-}
-// : FUNCION DE RETORNAR SUMA TIEMPO - MINUTOS TOLERANCIA
-function sumarMinutosHoras(tiempo, minuto) {
-    var momentTiempo = moment(tiempo, ["HH:mm"]);
-    var sumaTolerancia = momentTiempo.add(minuto, 'minutes');
-    var resultado = moment(sumaTolerancia).format("HH:mm");
-
-    return resultado;
-}
 // : FUNCION DE VALIDAR HORAS DE PAUSAS CON HORAS DEL HORARIO
 function e_validarHorasPausaHorario() {
     var estado = true;
     $('.e_rowInputs').each(function () {
         var idI = $(this).val();
         if ($('#e_descPausa' + idI).val() != "" && $('#e_InicioPausa' + idI).val() != "" && $('#e_FinPausa' + idI).val() != "") {
-            // ? -> ******************************************** TIEMPOS DE INPUTS ********************************************
+            // * -> ******************************************** TIEMPOS DE INPUTS ********************************************
+            // : INICIO DE PAUSA MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO
             var resultadoResta = sustraerMinutosHoras($('#e_InicioPausa' + idI).val(), parseInt($('#e_toleranciaIP' + idI).val()));
             var horaI = moment(resultadoResta, ["HH:mm"]);
+            // : FIN DE PAUSA MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN
             var resultadoSuma = sumarMinutosHoras($('#e_FinPausa' + idI).val(), parseInt($('#e_ToleranciaFP' + idI).val()));
             var horaF = moment(resultadoSuma, ["HH:mm"]);
             console.log(horaI, horaF);
-            // ? -> ********************************************** TIEMPOS DE HORARIO ******************************************
-            var momentInicio = moment($('#horaI_ed').val(), ["HH:mm"]);
-            var momentFin = moment($('#horaF_ed').val(), ["HH:mm"]);
-            // * VALIDACION CON TIEMPOS DE HORARIO
+            // * -> ********************************************** TIEMPOS DE HORARIO ******************************************
+            // : INICIO DE HORARIO MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO DE HORARIO
+            var resultadoRestaHorario = sustraerMinutosHoras($('#horaI_ed').val(), parseInt($('#toleranciaH_ed').val()));
+            var momentInicio = moment(resultadoRestaHorario, ["HH:mm"]);
+            // : FIN DE HORARIO MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN DE HORARIO
+            var resultadoSumaHorario = sumarMinutosHoras($('#horaF_ed').val(), parseInt($('#toleranciaSalida_ed').val()));
+            var momentFin = moment(resultadoSumaHorario, ["HH:mm"]);
+            // ************************************************** VALIDACION CON TIEMPOS DE HORARIO ****************************
             if (momentFin.isSameOrBefore(momentInicio)) {    //: -> <=
                 // ! NUEVA FECHA DE HORA INICIO DE PAUSA
                 var nuevoInicio;
@@ -6436,7 +6448,6 @@ function e_validarHorasEntrePausas() {
             // ? -> TIEMPOS DE INPUTS
             var horaI = moment($('#e_InicioPausa' + idI).val(), ["HH:mm"]);
             var horaF = moment($('#e_FinPausa' + idI).val(), ["HH:mm"]);
-            console.log($('#e_toleranciaIP' + idI).val(), $('#e_ToleranciaFP' + idI).val(), horaF, horaI);
             // ? -> TIEMPOS DE HORARIO
             var momentInicio = moment($('#horaI_ed').val(), ["HH:mm"]);
             var momentFin = moment($('#horaF_ed').val(), ["HH:mm"]);
@@ -6689,7 +6700,7 @@ $('#SwitchPausa_ed').on("change.bootstrapSwitch", function (event) {
         e_cont = 0;
     }
 });
-// * OBTENER PAUSAS
+// : OBTENER PAUSAS
 function e_obtenerPausas() {
     var resultado = [];
     $('.e_rowInputs').each(function () {
@@ -6719,6 +6730,7 @@ function e_obtenerPausas() {
 
     return resultado;
 }
+// : GUARDAR CAMBIOS DE EDITAR
 async function editarHorarioDatos() {
     var id = $('#idhorario_ed').val();
     var descripcion = $('#descripcionCa_ed').val();
