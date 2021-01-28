@@ -5858,12 +5858,15 @@ function eliminarContenido(id) {
         $('#errorenPausasCruzadas').hide();
     }
     var resp = true;
+    var ultimoVisible = undefined;
     $('.rowInputs').each(function () {
         var id = $(this).val();
         if ($('#rowP' + id).is(":visible")) {
             resp = false;
+            ultimoVisible = id;
         }
     });
+    if (ultimoVisible != undefined) $('#agregar' + ultimoVisible).show();
     if (resp) {
         contenidoInput(r_cont);
     }
