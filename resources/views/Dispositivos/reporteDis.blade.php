@@ -267,7 +267,6 @@
                             </label>
                         </div>
                     </div>
-
                     <div class="col-md-12 pb-2">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="switPausas"

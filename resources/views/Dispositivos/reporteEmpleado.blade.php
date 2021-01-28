@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-md-12">
+                    <div class="col-md-12 pb-2">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
                                 onclick="javascript:cambiartabla()">
@@ -197,139 +197,35 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-md-12 pb-2">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="switPausas"
+                                onclick="javascript:togglePausas()">
+                            <label class="custom-control-label" for="switPausas" style="font-weight: bold">
+                                Mostrar pausas
+                            </label>
+                        </div>
+                    </div>
                     {{-- GIF DE ESPERA --}}
                     <div id="espera" class="text-center" style="display: none">
                         <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                     </div>
-
-                    {{-- <div class="col-md-12">
-                        <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga" style="display: none">
-                            <button class="btn btn-secondary   btn-sm mt-1" type="button" onclick="doexcel()">
-                                <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
-                            </button>
-                            <button class="btn btn-secondary  btn-sm mt-1" type="button" onclick="generatePDF()">
-                                <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
-                            </button>
-                        </div>
-                    </div> --}}
-                    <style>
-                        .tableHi {
-                            border: 1px solid rgb(20, 19, 19) !important;
-                            border-collapse: collapse !important;
-                        }
-                    </style>
-                    {{--  TABLAS OCULTA --}}
-                    <div id="tableZoomI" class="col-md-12" style="display: none">
-                        <table id="Encabezado" class="table" style="font-size: 12.8px;border-collapse: collapse;">
-                            <thead>
-
-                                <tr>
-
-                                    <th style=" font-weight: 600;text-align: center " colspan="3">
-                                        CONTROL DE REGISTRO DE ASISTENCIA</th>
-                                </tr>
-                                <tr>
-
-
-                                    <th id="RangoFechas"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr>
-
-                                    <td>Razon social:</td>
-                                    <td>{{$organizacion}}</td>
-                                </tr>
-                                <tr>
-
-                                    <td>Direccion:</td>
-                                    <td>{{$direccion}}</td>
-                                </tr>
-                                <tr>
-
-                                    <td>Numero de Ruc:</td>
-                                    <td>{{$ruc}}</td>
-                                </tr>
-
-                                <tr>
-
-                                    <td>DNI:</td>
-                                    <td id="ponerDNI" colspan="1"> </td>
-                                </tr>
-                                <tr>
-
-                                    <td>Apellidos y nombres:</td>
-                                    <td id="ponerApe" colspan="1"> </td>
-                                </tr>
-                                <tr>
-
-                                    <td>Area:</td>
-                                    <td id="ponerArea" colspan="1"> </td>
-                                </tr>
-                                <tr>
-
-                                    <td>cargo:</td>
-                                    <td id="ponerCarg" colspan="1"> </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <br>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <table id="tablaReportI" border=1 class=" "
-                            style="font-size: 12.8px;border-collapse: collapse;">
-
-                            <thead id="theadDI">
-
-                                <tr>
-                                    <th>CC</th>
-                                    <th>Fecha</th>
-                                    {{-- <th>Horario</th>
-
-                    <th>Cargo</th> --}}
-                                    <th colspan="2">Horario</th>
-
-                                    <th colspan="2" id="hEntradaI">Hora de entrada</th>
-                                    <th colspan="2" id="hSalidaI">Hora de salida</th>
-                                    <th colspan="2" id="tSitioI">Tiempo en sitio</th>
-                                    <th colspan="2">Tardanza T.</th>
-                                    <th colspan="2">Faltas T.</th>
-                                    <th colspan="2">Incidencias T.</th>
-
-                                </tr>
-                            </thead>
-                            <tbody class="" id="tbodyIDI">
-                            </tbody>
-                        </table>
-
-                    </div>
-                    {{--  --}}
                     <div id="tableZoom" class="col-md-12">
                         <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                             <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                                 <tr>
                                     <th>CC</th>
                                     <th>Fecha</th>
-                                    {{-- <th>Horario</th>
-
-                        <th>Cargo</th> --}}
                                     <th>Horario</th>
-
                                     <th id="hEntrada">Hora de entrada</th>
                                     <th id="hSalida">Hora de salida</th>
                                     <th id="tSitio">Tiempo en sitio</th>
                                     <th>Tardanza T.</th>
                                     <th>Faltas T.</th>
                                     <th>Incidencias T.</th>
-
                                 </tr>
                             </thead>
-                            <tbody id="tbodyD">
-                            </tbody>
+                            <tbody id="tbodyD"></tbody>
                         </table>
 
                     </div>
@@ -365,8 +261,7 @@
 <script src="{{asset('admin/assets/libs/combodate-1.0.7/es.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
-<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')
-    }}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
 
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
