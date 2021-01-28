@@ -1,5 +1,6 @@
 $.fn.select2.defaults.set('language', 'es');
 var table;
+var sent = false;
 function tablaActividades() {
     table = $("#actividades").DataTable({
         scrollX: true,
@@ -45,109 +46,6 @@ function tablaActividades() {
             }
         }
     });
-}
-function limpiarModo() {
-    //* FORMULARIO REGISTRAR
-    $('#nombreTarea').val("");
-    $('#codigoTarea').val("");
-    $('#customCR').prop("checked", false);
-    $('#customCRT').prop("checked", false);
-    $('#customMT').prop("checked", false);
-    $('#customAP').prop("checked", false);
-    $('.rowEmpleados').hide();
-    $('#customAE').prop("checked", false);
-    $('#customAA').prop("checked", false);
-    //* FORMULARIO EDITAR
-    $('#e_nombreTarea').val("");
-    $('#e_codigoTarea').val("");
-    $('#e_customCR').prop("checked", false);
-    $('#e_customCRT').prop("checked", false);
-    $('#e_customAP').prop("checked", false);
-    $('#e_customMT').prop("checked", false);
-}
-function eliminarActividad(id) {
-    alertify
-        .confirm("¿Desea eliminar actividad?", function (
-            e
-        ) {
-            if (e) {
-                $.ajax({
-                    type: "GET",
-                    url: "/estadoActividad",
-                    data: {
-                        id: id
-                    },
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    statusCode: {
-                        401: function () {
-                            location.reload();
-                        },
-                        /*419: function () {
-                            location.reload();
-                        }*/
-                    },
-                    success: function (data) {
-                        if (data == 1) {
-                            $.notifyClose();
-                            $.notify({
-                                message: '\nActividad en uso, no se puede eliminar.',
-                                icon: '/landing/images/alert1.svg',
-                            }, {
-                                icon_type: 'image',
-                                allow_dismiss: true,
-                                newest_on_top: true,
-                                delay: 6000,
-                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        } else {
-                            actividadesOrganizacion();
-                            $.notifyClose();
-                            $.notify({
-                                message: '\nActividad eliminada',
-                                icon: 'landing/images/bell.svg',
-                            }, {
-                                icon_type: 'image',
-                                allow_dismiss: true,
-                                newest_on_top: true,
-                                delay: 6000,
-                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                    '<span data-notify="title">{1}</span> ' +
-                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                                    '</div>',
-                                spacing: 35
-                            });
-                        }
-                    },
-                    error: function () { },
-                });
-            }
-        })
-        .setting({
-            title: "Eliminar actividad",
-            labels: {
-                ok: "Aceptar",
-                cancel: "Cancelar",
-            },
-            modal: true,
-            startMaximized: false,
-            reverseButtons: true,
-            resizable: false,
-            closable: false,
-            transition: "zoom",
-            oncancel: function (closeEvent) {
-                actividadesOrganizacion();
-            },
-        });
 }
 function actividadesOrganizacion() {
     if ($.fn.DataTable.isDataTable("#actividades")) {
@@ -290,7 +188,7 @@ function actividadesOrganizacion() {
                     }
                     if (data[index].modoTareo == 1) {
 
-                        if(data[index].padreSubactividad == 1){
+                        if (data[index].padreSubactividad == 1) {
                             tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvMT"+ data[index].Activi_id + "\" checked disabled>\
@@ -299,7 +197,7 @@ function actividadesOrganizacion() {
                                 <img  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'" + "\"\
                                 title='Tiene asignado subactividades' style=\"cursor: pointer\" src='landing/images/info.svg' height='14'></div> </td>";
                         }
-                        else{
+                        else {
                             tr += "<td class=\"\"><div class=\"custom-control custom-switch mb-2\">\
                             <input type=\"checkbox\" class=\"custom-control-input\"\
                                 id=\"switchActvMT"+ data[index].Activi_id + "\" checked >\
@@ -321,11 +219,11 @@ function actividadesOrganizacion() {
                     } else {
                         tr += "<td class=\"text-center\" style=\"font-size:12px\"><img src=\"/admin/images/borrarH.svg\" height=\"11\" class=\"mr-2\">" + data[index].respuesta + "</td>";
                     }
-                    if(data[index].padreSubactividad == 1){
+                    if (data[index].padreSubactividad == 1) {
                         tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
                                 </a>&nbsp;&nbsp;&nbsp;</td>";
-                    } else{
+                    } else {
                         tr += "<td class=\"text-center\"><a name=\"aedit\" onclick=\"javascript:editarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
                                  <img src=\"/admin/images/edit.svg\" height=\"15\">\
                                 </a>&nbsp;&nbsp;&nbsp;<a name=\"deletePermiso\" onclick=\"javascript:eliminarActividad(" + data[index].Activi_id + ")\" style=\"cursor: pointer\">\
@@ -338,6 +236,10 @@ function actividadesOrganizacion() {
             }
             $('#actividOrga').html(tr);
             tablaActividades();
+            $(window).on('resize', function () {
+                $("#actividades").css('width', '100%');
+                table.draw(true);
+            });
             $('[data-toggle="tooltip"]').tooltip();
         },
         error: function () {
@@ -356,7 +258,7 @@ function actividadesOrganizacion() {
 
 }
 actividadesOrganizacion();
-
+// ! ****************************************** CAMBIAR ESTADO DE SWICTH EN TABLA PRINCIPAL **********************
 function cambiarEstadoParaControles(id, valor, control) {
     $.ajax({
         type: "POST",
@@ -404,7 +306,6 @@ function cambiarEstadoParaControles(id, valor, control) {
         error: function () { },
     });
 }
-
 function cambiarEstadoActividad(id) {
 
     $("#switchActvCR" + id).on("change.bootstrapSwitch", function (event) {
@@ -541,11 +442,8 @@ function cambiarEstadoActividad(id) {
     });
     /* ------------------ */
 }
-$("#actividades").on('shown.bs.collapse', function () {
-    $($.fn.dataTable.tables(true)).DataTable()
-        .columns.adjust();
-});
-//REMOVER CLASES
+// ! ***************************************** FINALIZACION *****************************************************
+// **********REMOVER CLASES
 $("#nombreTarea").keyup(function () {
     $(this).removeClass("borderColor");
 });
@@ -558,7 +456,6 @@ $("#e_codigoTarea").keyup(function () {
 $("#areaAsignarEditar").select2({
     tags: "true"
 });
-//* ****************************************
 // * BUSCAR PERSONALIZADO
 function filterGlobal() {
     $("#actividades").DataTable().search(
@@ -569,15 +466,19 @@ function filterGlobal() {
 $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
-// **********************************
+// * INICIALIZAR PLUGIN
 $("#areaAsignar").select2({
     tags: "true"
 });
 $("#empleAsignar").select2({
     tags: "true"
 });
-
-//* ************************** FORMULARIO EDITAR ********************** *//
+// ! ********************************************************** FORMULARIO EDITAR ***************************************
+// :INICIALIZAR PLUGIN DE EMPLEADOS
+$("#empleados").select2({
+    placeholder: 'Seleccionar Empleados',
+    tags: "true"
+});
 //: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
 $('#e_customCR').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
@@ -594,7 +495,6 @@ $('#e_customCR').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: ***********************************************
 //: FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
 $('#e_customCRT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
@@ -611,7 +511,6 @@ $('#e_customCRT').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: ***********************************************
 //: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
 $('#e_customAP').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
@@ -634,7 +533,6 @@ $('#e_customAP').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-
 //: FUNCIONALIDAD DEL SWITCH MODO TAREO
 $('#e_customMT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
@@ -657,68 +555,7 @@ $('#e_customMT').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: ***********************************************
-$('#FormEditarActividadTarea').attr('novalidate', true);
-$('#FormEditarActividadTarea').submit(function (e) {
-    e.preventDefault();
-    if ($('#e_customAA').is(":checked")) {
-        if ($('#areaAsignarEditar').val().length == 0) {
-            $.notifyClose();
-            $.notify({
-                message: '\nSeleccionar Actividad',
-                icon: 'landing/images/bell.svg',
-            }, {
-                element: $("#editactividadTarea"),
-                position: "fixed",
-                icon_type: 'image',
-                placement: {
-                    from: "top",
-                    align: "center",
-                },
-                allow_dismiss: true,
-                newest_on_top: true,
-                delay: 6000,
-                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                    '</div>',
-                spacing: 35
-            });
-            return;
-        }
-    }
-    if ($('#e_customAE').is(":checked")) {
-        if ($('#empleados').val().length == 0) {
-            $.notifyClose();
-            $.notify({
-                message: '\nSeleccionar Empleado',
-                icon: 'landing/images/bell.svg',
-            }, {
-                element: $("#editactividadTarea"),
-                position: "fixed",
-                icon_type: 'image',
-                placement: {
-                    from: "top",
-                    align: "center",
-                },
-                allow_dismiss: true,
-                newest_on_top: true,
-                delay: 6000,
-                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                    '</div>',
-                spacing: 35
-            });
-            return;
-        }
-    }
-    this.submit();
-});
+// : MODAL DE EDITAR
 var EmpleadosDeActividadEditar;
 var ActividadDeActividadEditar;
 function editarActividad(id) {
@@ -766,10 +603,10 @@ function editarActividad(id) {
             }
             if (data.modoTareo === 1) {
                 $('#e_customMT').prop("checked", true);
-                if(data.padreSubactividad === 1){
+                if (data.padreSubactividad === 1) {
                     $('#svgInfo').show();
                     $('#e_customMT').prop("disabled", true);
-                } else{
+                } else {
                     $('#svgInfo').hide();
                     $('#e_customMT').prop("disabled", false);
                 }
@@ -808,7 +645,9 @@ function editarActividad(id) {
     });
     $.notifyClose();
     $('#editactividadTarea').modal();
+    sent = false;
 }
+// : GUARDAR CAMBIOS DE ACTIVIDAD
 function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
     var idA = $('#idActiv').val();
@@ -957,13 +796,72 @@ function editarActividadTarea() {
         error: function () { },
     });
 }
-// TODO INICIALIZAR PLUGIN DE EMPLEADOS
-$("#empleados").select2({
-    placeholder: 'Seleccionar Empleados',
-    tags: "true"
+//: VALIDACION DE FORMULARIO
+$('#FormEditarActividadTarea').attr('novalidate', true);
+$('#FormEditarActividadTarea').submit(function (e) {
+    e.preventDefault();
+    if ($('#e_customAA').is(":checked")) {
+        if ($('#areaAsignarEditar').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Actividad',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#editactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if ($('#e_customAE').is(":checked")) {
+        if ($('#empleados').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#editactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
 });
-// TODO ********************************
-//? TODOS LOS EMPLEADOS EN EDITAR
+//: TODOS LOS EMPLEADOS EN EDITAR
 $('#checkboxEmpleadosEditar').click(function () {
     if ($(this).is(':checked')) {
         $("#empleados > option").prop("selected", "selected");
@@ -972,7 +870,7 @@ $('#checkboxEmpleadosEditar').click(function () {
         $('#empleados').val(EmpleadosDeActividadEditar).trigger('change');
     }
 });
-//? TODAS LAS AREAS EN EDITAR
+//: TODAS LAS AREAS EN EDITAR
 $('#checkboxAreasEditar').click(function () {
     if ($(this).is(':checked')) {
         $("#areaAsignarEditar > option").prop("selected", "selected");
@@ -981,7 +879,7 @@ $('#checkboxAreasEditar').click(function () {
         $('#areaAsignarEditar').val(ActividadDeActividadEditar).trigger('change');
     }
 });
-//: Funcion para mostrar empleados por áreas
+//: FUNCION PARA MOSTRAR EMPLEADOS POR AREAS
 $("#areaAsignarEditar").on("change", function () {
     var empleados = EmpleadosDeActividadEditar;
     var areas = $("#areaAsignarEditar").val();
@@ -1029,6 +927,7 @@ $("#areaAsignarEditar").on("change", function () {
         error: function () { },
     });
 });
+// : SWITCH POR ASIGNACION POR AREA
 $('#e_customAA').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#e_customAE').prop("checked", false);
@@ -1043,6 +942,7 @@ $('#e_customAA').on("change.bootstrapSwitch", function (event) {
         limpiarAsignacionPorArea();
     }
 });
+// : SWITCH POR ASIGNACION POR EMPLEADO
 $('#e_customAE').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#e_customAA').prop("checked", false);
@@ -1198,6 +1098,7 @@ $('#areaAsignarEditar').on("change", function (e) {
         $('#checkboxAreasEditar').prop("checked", false);
     }
 });
+// : SELECCIONAR TODOS LOS EMPLEADOS
 $('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $("#empleados > option").prop("selected", "selected");
@@ -1208,68 +1109,8 @@ $('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event)
         $('.aNuevosE').show();
     }
 });
-//* ************************** FORMULARIO REGISTRAR ********************** *//
-$('#FormRegistrarActividadTarea').attr('novalidate', true);
-$('#FormRegistrarActividadTarea').submit(function (e) {
-    e.preventDefault();
-    if ($('#customAA').is(":checked")) {
-        if ($('#areaAsignarReg').val().length == 0) {
-            $.notifyClose();
-            $.notify({
-                message: '\nSeleccionar Actividad',
-                icon: 'landing/images/bell.svg',
-            }, {
-                element: $("#regactividadTarea"),
-                position: "fixed",
-                icon_type: 'image',
-                placement: {
-                    from: "top",
-                    align: "center",
-                },
-                allow_dismiss: true,
-                newest_on_top: true,
-                delay: 6000,
-                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                    '</div>',
-                spacing: 35
-            });
-            return;
-        }
-    }
-    if ($('#customAE').is(":checked")) {
-        if ($('#reg_empleados').val().length == 0) {
-            $.notifyClose();
-            $.notify({
-                message: '\nSeleccionar Empleado',
-                icon: 'landing/images/bell.svg',
-            }, {
-                element: $("#regactividadTarea"),
-                position: "fixed",
-                icon_type: 'image',
-                placement: {
-                    from: "top",
-                    align: "center",
-                },
-                allow_dismiss: true,
-                newest_on_top: true,
-                delay: 6000,
-                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                    '</div>',
-                spacing: 35
-            });
-            return;
-        }
-    }
-    this.submit();
-});
+//! ****************************************** FORMULARIO REGISTRAR ***********************************
+// * INICIALIZAR PLUGIN
 $("#areaAsignarReg").select2({
     tags: "true"
 });
@@ -1277,7 +1118,12 @@ $("#reg_empleados").select2({
     placeholder: 'Seleccionar Empleados',
     tags: "true"
 });
-//: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
+// * MODAL DE REGISTRAR NUEVA ACTIVIDAD
+function modalRegistrar() {
+    $('#regactividadTarea').modal()
+    sent = false;
+}
+//* FUNCIONALIDAD DEL SWITCH EN CONTROL REMOTO
 $('#customCR').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $('.rowEmpleados').show();
@@ -1293,8 +1139,7 @@ $('#customCR').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: *****************************************
-//: FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
+//* FUNCIONALIDAD DEL SWITCH EN CONTROL RUTA
 $('#customCRT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         $('.rowEmpleados').show();
@@ -1310,8 +1155,7 @@ $('#customCRT').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: ***********************************************
-//: FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
+//* FUNCIONALIDAD DEL SWITCH ASISTENCIA EN PUERTA
 $('#customAP').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
@@ -1333,7 +1177,7 @@ $('#customAP').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: FUNCIONALIDAD DEL SWITCH MODO tareo
+//* FUNCIONALIDAD DEL SWITCH MODO TAREO
 $('#customMT').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked == true) {
         if ($('#customCR').is(":checked") || $('#customCRT').is(":checked")) {
@@ -1355,7 +1199,7 @@ $('#customMT').on("change.bootstrapSwitch", function (event) {
         }
     }
 });
-//: FUNCTION ESTADOS SWITCH
+//* FUNCTION ESTADOS SWITCH
 function estadoAsignacionesReg() {
     if (!$('#customAE').is(":checked")) {
         $('#porEmpleadosReg').hide();
@@ -1368,20 +1212,20 @@ function estadoAsignacionesReg() {
     }
     $.notifyClose();
 }
-//: LIMPIAR EN ASIGNACION POR EMPLEADO EN REGISTRAR
+//* LIMPIAR EN ASIGNACION POR EMPLEADO EN REGISTRAR
 function limpiarAsignacionPorEmpleadoReg() {
     $('#checkboxEmpleadosTodosReg').prop("checked", false);
     $('#checkboxEmpleadosReg').prop("checked", false);
     $('#reg_empleados').empty();
     $('#customAE').prop("checked", false);
 }
-//: LIMPIAR EN ASIGNACION POR AREAS EN REGISTRAR
+//* LIMPIAR EN ASIGNACION POR AREAS EN REGISTRAR
 function limpiarAsignacionPorAreaReg() {
     $('#areaAsignarReg').empty();
     $('#checkboxAreasTodosReg').prop("checked", false);
     $('#customAA').prop("checked", false);
 }
-//: Función para obtener las áreas
+// * FUNCION PARA OBTENER LAS AREAS
 function listaAreas() {
     $("#areaAsignarReg").empty();
     var container = $("#areaAsignarReg");
@@ -1410,7 +1254,6 @@ function listaAreas() {
         error: function () { },
     });
 }
-//: **********************************************************
 //* SELECT DE EMPLEADOS EN FORMULARIO AGREGAR
 function empleadoListaReg() {
     $("#reg_empleados").empty();
@@ -1440,6 +1283,7 @@ function empleadoListaReg() {
         error: function () { },
     });
 }
+// * SWITCH POR ASIGNACION POR AREA
 $('#customAA').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#customAE').prop("checked", false);
@@ -1453,6 +1297,7 @@ $('#customAA').on("change.bootstrapSwitch", function (event) {
         limpiarAsignacionPorAreaReg();
     }
 });
+//  * SWITCH POR ASIGNACION POR EMPLEADO
 $('#customAE').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#customAA').prop("checked", false);
@@ -1467,7 +1312,7 @@ $('#customAE').on("change.bootstrapSwitch", function (event) {
         limpiarAsignacionPorAreaReg();
     }
 });
-//: REGISTRAR NUEVA ACTIVIDAD
+//* REGISTRAR NUEVA ACTIVIDAD
 function registrarActividadTarea() {
     var nombre = $("#nombreTarea").val();
     var codigo = $("#codigoTarea").val();
@@ -1699,7 +1544,72 @@ function registrarActividadTarea() {
         error: function () { },
     });
 }
-//: RECUPERAR ACTIVIDAD
+// * VALIDACION DE FORMULARIO
+$('#FormRegistrarActividadTarea').attr('novalidate', true);
+$('#FormRegistrarActividadTarea').submit(function (e) {
+    e.preventDefault();
+    if ($('#customAA').is(":checked")) {
+        if ($('#areaAsignarReg').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Actividad',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#regactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if ($('#customAE').is(":checked")) {
+        if ($('#reg_empleados').val().length == 0) {
+            $.notifyClose();
+            $.notify({
+                message: '\nSeleccionar Empleado',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#regactividadTarea"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            return;
+        }
+    }
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
+});
+// * RECUPERAR ACTIVIDAD
 function recuperarActividad(id) {
     $.ajax({
         type: "GET",
@@ -1728,7 +1638,7 @@ function recuperarActividad(id) {
     });
 
 }
-// TODO LOS EMPLEADOS EN REGISTRAR
+// * TODO LOS EMPLEADOS EN REGISTRAR
 $('#checkboxEmpleadosReg').click(function () {
     if ($(this).is(':checked')) {
         $("#reg_empleados > option").prop("selected", "selected");
@@ -1737,7 +1647,7 @@ $('#checkboxEmpleadosReg').click(function () {
         $('#reg_empleados').val('').trigger('change');
     }
 });
-// TODO LAS AREAS EN REGISTRAR
+// * TODO LAS AREAS EN REGISTRAR
 $('#checkboxAreasReg').click(function () {
     if ($(this).is(':checked')) {
         $("#areaAsignarReg > option").prop("selected", "selected");
@@ -1746,7 +1656,7 @@ $('#checkboxAreasReg').click(function () {
         $('#areaAsignarReg').val('').trigger('change');
     }
 });
-//: SELECT DE EMPLEADOS EN REGISTRAR
+// * SELECT DE EMPLEADOS EN REGISTRAR
 $("#reg_empleados").on("change", function (e) {
     if ($("#reg_empleados").select2('data').length === $("#reg_empleados >option").length) {
         $('#checkboxEmpleadosReg').prop("checked", true);
@@ -1754,7 +1664,7 @@ $("#reg_empleados").on("change", function (e) {
         $('#checkboxEmpleadosReg').prop("checked", false);
     }
 });
-//: SELECT DE AREAS EN REGISTRAR
+// * SELECT DE AREAS EN REGISTRAR
 $('#areaAsignarReg').on("change", function (e) {
     if ($("#areaAsignarReg").select2('data').length === $("#areaAsignarReg >option").length) {
         $('#checkboxAreasReg').prop("checked", true);
@@ -1762,6 +1672,7 @@ $('#areaAsignarReg').on("change", function (e) {
         $('#checkboxAreasReg').prop("checked", false);
     }
 });
+// * SELECT DE TODOS LOS EMPLEADOS
 $('#checkboxEmpleadosTodosReg').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#checkboxAreasReg').prop("checked", true);
@@ -1774,14 +1685,13 @@ $('#checkboxEmpleadosTodosReg').on("change.bootstrapSwitch", function (event) {
         $('.aNuevosR').show();
     }
 });
-//* ******************************************************************** *//
-//* ************************ FORMULARIO ASIGNAR ************************ *//
+// ! ************************************************ FORMULARIO ASIGNAR ******************************************
 //? INICIALIZAR PLUGIN
 $("#actividadesAsignar").select2({
     placeholder: 'Seleccionar actividad',
     matcher: matchStart
 });
-//? Funcion para listar actividades
+//? FUNCIONN PARA LISTAR ACTIVIDADES
 function listaActividades() {
     $("#actividadesAsignar").empty();
     var container = $("#actividadesAsignar");
@@ -1810,17 +1720,18 @@ function listaActividades() {
         error: function () { },
     });
 }
-// ? ******************************
+// ? ABRIR MODAL DE ASIGNACION
 function asignarActividadMasiso() {
     $('#asignarPorArea').modal();
     $("#empleAsignar").empty();
     $("#areaAsignar").empty();
     listaActividades();
+    sent = false;
 }
 var EmpleadosDeActividad;
-//: funcion de change
+//? FUNCION DE CHANGE DE ACTIVIDADES
 $("#actividadesAsignar").on("change", function () {
-    //: ACTIVAR FORMULARIO
+    //: *********** ACTIVAR FORMULARIO ***********
     $('#a_customAA').attr("disabled", false);
     $('#a_customAE').attr("disabled", false);
     //: ******************************************
@@ -1865,7 +1776,7 @@ $("#actividadesAsignar").on("change", function () {
 });
 var EmpleadosAsig;
 var AreaAsig;
-//: OBTENER DATOS DE ACTIVIDAD SELECCIONADA
+//? OBTENER DATOS DE ACTIVIDAD SELECCIONADA
 function datosAsignacionPorEmpleado_Asignacion(id) {
     $("#empleAsignar").empty();
     var container = $("#empleAsignar");
@@ -1915,7 +1826,7 @@ function datosAsignacionPorEmpleado_Asignacion(id) {
         error: function () { },
     });
 }
-//: OBTENER DATOS DE ASIGNACION POR AREA
+//? OBTENER DATOS DE ASIGNACION POR AREA
 function datosAsignacionPorArea_Asignacion(id) {
     $('#areaAsignar').empty();
     var container = $('#areaAsignar');
@@ -1964,7 +1875,7 @@ function datosAsignacionPorArea_Asignacion(id) {
         error: function () { },
     });
 }
-//: LIMPIAR EN ASIGNACION POR EMPLEADO
+//? LIMPIAR EN ASIGNACION POR EMPLEADO
 function limpiarAE() {
     $('#a_customAE').prop("checked", false);
     $('#checkboxEmpleadosTodos').prop("checked", false);
@@ -1973,7 +1884,7 @@ function limpiarAE() {
     $('.aNuevos').show();
     $('.aEmpleado').hide();
 }
-//: LIMPIAR EN ASIGNACION POR AREAS
+//? LIMPIAR EN ASIGNACION POR AREAS
 function limpiarAA() {
     $('#a_customAA').prop("checked", false);
     $('#checkboxAreasTodos').prop("checked", false);
@@ -1981,13 +1892,14 @@ function limpiarAA() {
     $('#areaAsignar').empty();
     $('.aArea').hide();
 }
+// ? FUNCION DE LIMPIAR ASIGNACION
 function limpiarAsignacion() {
     limpiarAE();
     limpiarAA();
     $('#a_customAE').prop("disabled", true);
     $('#a_customAA').prop("disabled", true);
 }
-// TODO LOS EMPLEADOS EN ASIGNAR
+// ? TODO LOS EMPLEADOS EN ASIGNAR
 $('#checkboxEmpleados').click(function () {
     if ($(this).is(':checked')) {
         $("#empleAsignar > option").prop("selected", "selected");
@@ -1996,7 +1908,7 @@ $('#checkboxEmpleados').click(function () {
         $('#empleAsignar').val(EmpleadosAsig).trigger('change');
     }
 });
-// TODO LAS AREAS EN ASIGNAR
+// ? TODO LAS AREAS EN ASIGNAR
 $('#checkboxAreas').click(function () {
     if ($(this).is(':checked')) {
         $("#areaAsignar > option").prop("selected", "selected");
@@ -2005,7 +1917,7 @@ $('#checkboxAreas').click(function () {
         $('#areaAsignar').val(AreaAsig).trigger('change');
     }
 });
-//: SELECT DE EMPLEADOS
+// ? SELECT DE EMPLEADOS
 $("#empleAsignar").on("change", function (e) {
     if ($("#empleAsignar").select2('data').length === $("#empleAsignar >option").length) {
         $('#checkboxEmpleados').prop("checked", true);
@@ -2013,7 +1925,7 @@ $("#empleAsignar").on("change", function (e) {
         $('#checkboxEmpleados').prop("checked", false);
     }
 });
-//: SELECT DE AREAS
+// ? SELECT DE AREAS
 $('#areaAsignar').on("change", function (e) {
     if ($("#areaAsignar").select2('data').length === $("#areaAsignar >option").length) {
         $('#checkboxAreas').prop("checked", true);
@@ -2021,6 +1933,7 @@ $('#areaAsignar').on("change", function (e) {
         $('#checkboxAreas').prop("checked", false);
     }
 });
+// ? SWITCH DE ASIGNACION POR AREA
 $('#a_customAA').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         limpiarAE();
@@ -2031,6 +1944,7 @@ $('#a_customAA').on("change.bootstrapSwitch", function (event) {
         limpiarAA();
     }
 });
+// ? SWITCH DE ASIGNACION POR EMPLEADO
 $('#a_customAE').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         limpiarAA();
@@ -2041,7 +1955,89 @@ $('#a_customAE').on("change.bootstrapSwitch", function (event) {
         limpiarAA();
     }
 });
-//* VALIDACION DE FORMULARIO
+// ?  GUARDAR ASIGNACION
+function asignarActividadEmpleado() {
+    var empleados = $("#empleAsignar").val();
+    var actividad = $("#actividadesAsignar").val();
+    var areas = $('#areaAsignar').val();
+    var globalEmpleado;
+    var globalArea;
+    var porEmpleados;
+    var porAreas;
+    if ($('#checkboxEmpleadosTodos').is(":checked") == true) {
+        globalEmpleado = 1;
+    } else {
+        globalEmpleado = 0;
+    }
+    if ($('#checkboxAreasTodos').is(":checked") == true) {
+        globalArea = 1;
+    } else {
+        globalArea = 0;
+    }
+    if ($('#a_customAE').is(":checked") == true) {
+        porEmpleados = 1;
+    } else {
+        porEmpleados = 0;
+    }
+    if ($('#a_customAA').is(":checked") == true) {
+        porAreas = 1;
+    } else {
+        porAreas = 0;
+    }
+    $.ajax({
+        async: false,
+        url: "/asignacionActividadE",
+        method: "POST",
+        data: {
+            empleados: empleados,
+            idActividad: actividad,
+            areas: areas,
+            globalEmpleado: globalEmpleado,
+            globalArea: globalArea,
+            asignacionArea: porAreas,
+            asignacionEmpleado: porEmpleados
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            $('#asignarPorArea').modal('toggle');
+            limpiarAsignacion();
+            //: ************************************************
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nAsignación exitosa.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () { },
+    });
+}
+//  ? VALIDACION DE FORMULARIO
 $('#FormAsignarActividadEmpleado').attr('novalidate', true);
 $('#FormAsignarActividadEmpleado').submit(function (e) {
     e.preventDefault();
@@ -2127,89 +2123,12 @@ $('#FormAsignarActividadEmpleado').submit(function (e) {
             return;
         }
     }
-    this.submit();
+    if (!sent) {
+        sent = true;
+        this.submit();
+    }
 });
-function asignarActividadEmpleado() {
-    var empleados = $("#empleAsignar").val();
-    var actividad = $("#actividadesAsignar").val();
-    var areas = $('#areaAsignar').val();
-    var globalEmpleado;
-    var globalArea;
-    var porEmpleados;
-    var porAreas;
-    if ($('#checkboxEmpleadosTodos').is(":checked") == true) {
-        globalEmpleado = 1;
-    } else {
-        globalEmpleado = 0;
-    }
-    if ($('#checkboxAreasTodos').is(":checked") == true) {
-        globalArea = 1;
-    } else {
-        globalArea = 0;
-    }
-    if ($('#a_customAE').is(":checked") == true) {
-        porEmpleados = 1;
-    } else {
-        porEmpleados = 0;
-    }
-    if ($('#a_customAA').is(":checked") == true) {
-        porAreas = 1;
-    } else {
-        porAreas = 0;
-    }
-    $.ajax({
-        async: false,
-        url: "/asignacionActividadE",
-        method: "POST",
-        data: {
-            empleados: empleados,
-            idActividad: actividad,
-            areas: areas,
-            globalEmpleado: globalEmpleado,
-            globalArea: globalArea,
-            asignacionArea: porAreas,
-            asignacionEmpleado: porEmpleados
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            $('#asignarPorArea').modal('toggle');
-            limpiarAsignacion();
-            //: ************************************************
-            $.notifyClose();
-            $.notify(
-                {
-                    message: "\nAsignación exitosa.",
-                    icon: "admin/images/checked.svg",
-                },
-                {
-                    position: "fixed",
-                    icon_type: "image",
-                    newest_on_top: true,
-                    delay: 5000,
-                    template:
-                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                        "</div>",
-                    spacing: 35,
-                }
-            );
-        },
-        error: function () { },
-    });
-}
+// ? TODOS LOS EMPLEADOS
 $('#checkboxEmpleadosTodos').on("change.bootstrapSwitch", function (event) {
     if (event.target.checked) {
         $('#checkboxEmpleados').prop("checked", true);
@@ -2227,13 +2146,116 @@ $(function () {
         table.draw(true);
     });
 });
-//* ************************ FINALIZACION ****************************** *//
-
-/* AGREGANDO TOOLTIP PORQUE CUANDO DE PAGINACION DESAPARECE */
+// ! ****************************** LIMPIAR DE ACTIVIDADES *************************************
+function limpiarModo() {
+    //* FORMULARIO REGISTRAR
+    $('#nombreTarea').val("");
+    $('#codigoTarea').val("");
+    $('#customCR').prop("checked", false);
+    $('#customCRT').prop("checked", false);
+    $('#customMT').prop("checked", false);
+    $('#customAP').prop("checked", false);
+    $('.rowEmpleados').hide();
+    $('#customAE').prop("checked", false);
+    $('#customAA').prop("checked", false);
+    //* FORMULARIO EDITAR
+    $('#e_nombreTarea').val("");
+    $('#e_codigoTarea').val("");
+    $('#e_customCR').prop("checked", false);
+    $('#e_customCRT').prop("checked", false);
+    $('#e_customAP').prop("checked", false);
+    $('#e_customMT').prop("checked", false);
+}
+// ! ***************************** ELIMINAR ACTIVIDAD **********************************************
+function eliminarActividad(id) {
+    alertify
+        .confirm("¿Desea eliminar actividad?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    type: "GET",
+                    url: "/estadoActividad",
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    statusCode: {
+                        401: function () {
+                            location.reload();
+                        },
+                        /*419: function () {
+                            location.reload();
+                        }*/
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            $.notifyClose();
+                            $.notify({
+                                message: '\nActividad en uso, no se puede eliminar.',
+                                icon: '/landing/images/alert1.svg',
+                            }, {
+                                icon_type: 'image',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        } else {
+                            actividadesOrganizacion();
+                            $.notifyClose();
+                            $.notify({
+                                message: '\nActividad eliminada',
+                                icon: 'landing/images/bell.svg',
+                            }, {
+                                icon_type: 'image',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                                    '</div>',
+                                spacing: 35
+                            });
+                        }
+                    },
+                    error: function () { },
+                });
+            }
+        })
+        .setting({
+            title: "Eliminar actividad",
+            labels: {
+                ok: "Aceptar",
+                cancel: "Cancelar",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+                actividadesOrganizacion();
+            },
+        });
+}
+// ! ***************************** AGREGANDO TOOLTIP POR PAGINACION DESAPARECE *********************
 $('#actividades tbody').on('mouseover', 'tr', function () {
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'hover',
         html: true
     });
 });
-/* ----------------------------------------------------------- */
+// ! ********************************* FINALIZACION ********************************************************

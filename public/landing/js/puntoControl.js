@@ -1,5 +1,6 @@
 $.fn.select2.defaults.set('language', 'es');
 var table = {};
+var sent = false;
 //* INICIALIZACION DE TABLA
 function tablaPuntos() {
     table = $("#puntosC").DataTable({
@@ -49,7 +50,7 @@ function tablaPuntos() {
         table.draw(true);
     });
 }
-//* CARGAR DATOS DE TABLA
+// ! *************************************************** CARGAR DATOS DE TABLA ****************************************************
 function puntosControlOrganizacion() {
     if ($.fn.DataTable.isDataTable("#puntosC")) {
         $('#puntosC').DataTable().destroy();
@@ -154,7 +155,7 @@ function puntosControlOrganizacion() {
     });
 }
 puntosControlOrganizacion();
-// ! ******************* FORMULARIO DE EDITAR **********************
+// ! ************************************************* FORMULARIO DE EDITAR *******************************************************
 var empleadosSelectEdit;
 var areasSelectEdit;
 $('#e_empleadosPunto').select2({
@@ -360,6 +361,7 @@ function editarPunto(id) {
     });
     $('#modaleditarPuntoControl').modal();
     contenido();
+    sent = false;
 }
 //* CHANGE DE SWITCH DE CONTROLES
 $('#e_puntoCRT').on("change.bootstrapSwitch", function (event) {
@@ -481,8 +483,8 @@ function editarPuntoControl() {
     } else {
         asistenciaPuerta = 0;
     }
-     //* MODO TAREO
-     if ($('#e_modoT').is(":checked")) {
+    //* MODO TAREO
+    if ($('#e_modoT').is(":checked")) {
         modoTareo = 1;
     } else {
         modoTareo = 0;
@@ -521,7 +523,7 @@ function editarPuntoControl() {
             puntosGeo: puntosGeo,
             verificacion: verificacion,
             descripciones: descripciones,
-            modoTareo:modoTareo
+            modoTareo: modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -560,7 +562,9 @@ function editarPuntoControl() {
                     }
                 );
                 $('#modaleditarPuntoControl').modal("toggle");
+                $('button[type="submit"]').attr("disabled", false);
             } else {
+                $('button[type="submit"]').attr("disabled", false);
                 $("#e_codigoPunto").addClass("borderColor");
                 $.notifyClose();
                 $.notify(
@@ -659,6 +663,7 @@ $('#FormEditarPuntoControl').submit(function (e) {
     e.preventDefault();
     if ($('#e_puntosPorE').is(":checked")) {
         if ($('#e_empleadosPunto').val().length == 0) {
+            sent = false;
             $.notifyClose();
             $.notify({
                 message: '\nSeleccionar empleados.',
@@ -682,11 +687,13 @@ $('#FormEditarPuntoControl').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
     if ($('#e_puntosPorA').is(":checked")) {
         if ($('#e_areasPunto').val().length == 0) {
+            sent = false;
             $.notifyClose();
             $.notify({
                 message: '\nSeleccionar áreas.',
@@ -710,10 +717,15 @@ $('#FormEditarPuntoControl').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 //* CHECKBOX DE TODOS LOS EMPLEADOS
 $('#e_todosEmpleados').click(function () {
@@ -1313,8 +1325,8 @@ function e_eliminarI(id) {
         $('#e_agregarD').hide();
     }
 }
-// ! ****************** FINALIZACION *****************************
-// ! ****************** FORMULARIO DE ASIGNAR ********************
+// ! ************************************************************** FINALIZACION **********************************************
+// ! ************************************************************** FORMULARIO DE ASIGNAR *************************************
 var a_empleadosSelectEdit;
 var a_areasSelectEdit;
 $('#a_punto').select2({
@@ -1375,6 +1387,7 @@ function asignacionPunto() {
     $('#a_puntosPorE').attr("disabled", true);
     $('#a_puntosPorA').attr("disabled", true);
     listaPuntos();
+    sent = false;
 }
 //: POR EMPLEADOS
 function a_empleadosPuntos(id) {
@@ -1538,6 +1551,33 @@ function limpiarAsignacion() {
 $('#FormAsignarPuntoControl').attr('novalidate', true);
 $('#FormAsignarPuntoControl').submit(function (e) {
     e.preventDefault();
+    if ($('#a_punto').val() == "" || $('#a_punto').val() == null) {
+        $.notifyClose();
+        $.notify({
+            message: '\nSeleccionar punto control.',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#modalAsignacionPunto"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
     if ($('#a_puntosPorE').is(":checked")) {
         if ($('#a_empleadosPunto').val().length == 0) {
             $.notifyClose();
@@ -1563,6 +1603,7 @@ $('#FormAsignarPuntoControl').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
@@ -1591,10 +1632,15 @@ $('#FormAsignarPuntoControl').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 function asignarPunto() {
     var empleados = $('#a_empleadosPunto').val();
@@ -1636,6 +1682,7 @@ function asignarPunto() {
         },
         success: function (data) {
             $('#modalAsignacionPunto').modal('toggle');
+            $('button[type="submit"]').attr("disabled", false);
             limpiarAsignacion();
             //: ************************************************
             $.notifyClose();
@@ -1697,8 +1744,8 @@ $('#a_areasPunto').on("change", function (e) {
         $('#a_todasAreas').prop("checked", false);
     }
 });
-// ! ****************** FINALIZACION *****************************
-// ! ****************** FORMULARIO REGISTRAR *********************
+// ! *********************************************************** FINALIZACION *************************************************
+// ! *********************************************************** FORMULARIO REGISTRAR *****************************************
 $('#r_empleadosPunto').select2({
     tags: "true"
 });
@@ -1711,9 +1758,10 @@ var map = {};
 function modalRegistrar() {
     $('#modalRegistrarPunto').modal();
     r_limpiarxEmpleado();
-    a_limpiarxArea();
+    r_limpiarxArea();
     $('#r_cardEA').hide();
     r_inicialiarMap();
+    sent = false;
 }
 function r_inicialiarMap() {
     if (map.options != undefined) {
@@ -2465,7 +2513,7 @@ function registrarPunto() {
             verificacion: verificacion,
             puntosGeo: puntosGeo,
             descripciones: descripciones,
-            modoTareo:modoTareo
+            modoTareo: modoTareo
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -2480,6 +2528,7 @@ function registrarPunto() {
         },
         success: function (data) {
             if (data.estado === 1) {
+                $('button[type="submit"]').attr("disabled", false);
                 if (data.punto.estado == 0) {
                     alertify
                         .confirm("Ya existe un punto de control inactivo con este nombre. ¿Desea recuperarla si o no?", function (
@@ -2537,6 +2586,7 @@ function registrarPunto() {
                 }
             } else {
                 if (data.estado === 0) {
+                    $('button[type="submit"]').attr("disabled", false);
                     if (data.punto.estado == 0) {
                         alertify
                             .confirm("Ya existe un punto control inactivo con este código. ¿Desea recuperarla si o no?", function (
@@ -2596,6 +2646,7 @@ function registrarPunto() {
                     limpiarPunto();
                     puntosControlOrganizacion();
                     $('#modalRegistrarPunto').modal('toggle');
+                    $('button[type="submit"]').attr("disabled", false);
                     $.notifyClose();
                     $.notify(
                         {
@@ -2656,6 +2707,33 @@ function recuperarPunto(id) {
 $('#FormPuntoControl').attr('novalidate', true);
 $('#FormPuntoControl').submit(function (e) {
     e.preventDefault();
+    if ($('#r_descripcionPunto').val() == "" || $('#r_descripcionPunto').val() == null) {
+        $.notifyClose();
+        $.notify({
+            message: '\nIngresar punto control.',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#modalRegistrarPunto"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
     if ($('#r_puntosPorE').is(":checked")) {
         if ($('#r_empleadosPunto').val().length == 0) {
             $.notifyClose();
@@ -2681,6 +2759,7 @@ $('#FormPuntoControl').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
@@ -2709,10 +2788,15 @@ $('#FormPuntoControl').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            $('button[type="submit"]').attr("disabled", false);
             return;
         }
     }
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 function limpiarPunto() {
     $('#r_descripcionPunto').val("");
