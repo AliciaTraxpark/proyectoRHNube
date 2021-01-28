@@ -104,17 +104,19 @@
         text-transform: none;
     }
 
-    @media (max-width: 767.98px){
+    @media (max-width: 767.98px) {
         .btnPResponsive {
             text-align: center !important;
             display: flex !important;
             justify-content: space-between !important;
         }
     }
-    #puntosC_previous{
+
+    #puntosC_previous {
         font-size: 15px;
     }
-    #puntosC_next{
+
+    #puntosC_next {
         font-size: 15px;
     }
 
@@ -352,7 +354,7 @@
                                 onclick="javascript:limpiarPuntoEnEditar()">
                                 Cancelar
                             </button>
-                            <button type="submit" name="" style="background-color: #163552;" class="btn btn-sm">
+                            <button type="submit" style="background-color: #163552;" class="btn btn-sm">
                                 Guardar
                             </button>
                             </form>
@@ -557,7 +559,8 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarPunto()" id="FormPuntoControl">
+                        <form action="javascript:registrarPunto()" id="FormPuntoControl"
+                            onsubmit="javascript:validarFormulario()">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -821,22 +824,6 @@
     </div><!-- /.modal-dialog -->
 </div>
 {{-- FINALIZACION --}}
-@if (Auth::user())
-<script>
-    $(function() {
-    setInterval(function checkSession() {
-      $.get('/check-session', function(data) {
-        // if session was expired
-        if (data.guest==false) {
-            $('.modal').modal('hide');
-           $('#modal-error').modal('show');
-
-        }
-      });
-    },7202000);
-  });
-</script>
-@endif
 @endsection
 @section('script')
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
@@ -863,4 +850,20 @@
 <script src="{{asset('js/select2search.js')}}"></script>
 <script src="{{asset('landing/js/puntoControl.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+@if (Auth::user())
+<script>
+    $(function() {
+    setInterval(function checkSession() {
+      $.get('/check-session', function(data) {
+        // if session was expired
+        if (data.guest==false) {
+            $('.modal').modal('hide');
+           $('#modal-error').modal('show');
+
+        }
+      });
+    },7202000);
+  });
+</script>
+@endif
 @endsection
