@@ -559,8 +559,7 @@
             <div class="modal-body" style="font-size:12px!important">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="javascript:registrarPunto()" id="FormPuntoControl"
-                            onsubmit="javascript:validarFormulario()">
+                        <form action="javascript:registrarPunto()" id="FormPuntoControl">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

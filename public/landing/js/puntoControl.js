@@ -1387,6 +1387,7 @@ function asignacionPunto() {
     $('#a_puntosPorE').attr("disabled", true);
     $('#a_puntosPorA').attr("disabled", true);
     listaPuntos();
+    sent = false;
 }
 //: POR EMPLEADOS
 function a_empleadosPuntos(id) {
@@ -1635,8 +1636,11 @@ $('#FormAsignarPuntoControl').submit(function (e) {
             return;
         }
     }
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 function asignarPunto() {
     var empleados = $('#a_empleadosPunto').val();
@@ -1757,6 +1761,7 @@ function modalRegistrar() {
     r_limpiarxArea();
     $('#r_cardEA').hide();
     r_inicialiarMap();
+    sent = false;
 }
 function r_inicialiarMap() {
     if (map.options != undefined) {
@@ -2787,8 +2792,11 @@ $('#FormPuntoControl').submit(function (e) {
             return;
         }
     }
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 function limpiarPunto() {
     $('#r_descripcionPunto').val("");
