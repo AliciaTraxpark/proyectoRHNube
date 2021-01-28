@@ -5485,19 +5485,24 @@ function contenidoInput(id) {
     $('#agregar' + id).hide();
     $('#validP').hide();
     var cInputs =
-        `<div class="row pb-3" id="rowP${r_cont}">
+        `<div class="row pb-3" id="rowP${r_cont}" style="border-top:1px dashed #aaaaaa!important;">
                 <input type="hidden" class="rowInputs" value="${r_cont}">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
+                            <label>Descripción de pausa</label>
                             <input type="text"  class="form-control form-control-sm descP" id="descPausa${r_cont}"
                               onkeyup="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
+                    </div>
+                    <div class="row pt-2">
                         <div class="col-md-2">
+                            <label>Inicio pausa(24h)</label>
                             <input type="text"  class="form-control form-control-sm inicioP" id="InicioPausa${r_cont}" name="inicioP"
                                 onchange="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
+                            <label>Tolerancia inicio</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="toleranciaIP${r_cont}" value="0"
                                     oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
@@ -5510,10 +5515,12 @@ function contenidoInput(id) {
                             </div>
                         </div>
                         <div class="col-md-2">
+                            <label>Fin pausa(24h)</label>
                             <input type="text"  class="form-control form-control-sm finP" id="FinPausa${r_cont}" name="finP"
                                 onchange="javascript:$(this).removeClass('borderColor');$('#btnGuardaHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
+                            <label>Tolerancia salida</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="ToleranciaFP${r_cont}" value="0"
                                     oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
@@ -5525,11 +5532,15 @@ function contenidoInput(id) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <input type="checkbox" id="inactivarPausa${r_cont}" class="mt-2 ml-2">
+                        <div class="col-md-2">
+                            <label>Inactivar</label>
+                            <br>
+                            <input type="checkbox" id="inactivarPausa${r_cont}" class="text-center mt-2 ml-3">
                         </div>
-                        <div class="col-md-1">
-                            <a style="cursor: pointer" onclick="javascript:eliminarContenido(${r_cont})">
+                        <div class="col-md-2">
+                            <label>Eliminar</label>
+                            <br>
+                            <a style="cursor: pointer" onclick="javascript:eliminarContenido(${r_cont})" class="ml-3">
                                 <img src="/admin/images/delete.svg" height="15">
                             </a>
                         </div>
@@ -5887,6 +5898,7 @@ function obtenerPausas() {
 
     return resultado;
 }
+// * REGISTRAR NUEVO HORARIO
 function registrarNuevoHorario() {
     var descripcion = $('#descripcionCa').val();
     var horaInicio = $('#horaI').val();

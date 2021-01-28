@@ -811,8 +811,8 @@
         {{-- REGISTRAR NUEVO HORARIO --}}
         <div id="horarioAgregar" class="modal fade" role="dialog" aria-labelledby="horarioAgregar" aria-hidden="true"
             data-backdrop="static">
-            <div class="modal-dialog  modal-lg d-flex justify-content-center" style="width: 850px;">
-                <input type="hidden" id="idPausaMayor">
+            <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable"
+                style="width: 850px;">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#163552;">
                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -946,33 +946,10 @@
                                         </div>
                                         <div id="divPausa" class="col-md-12" style="display: none">
                                             <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-2">
-                                                        <label for="" style="font-weight:600">Descripción</label>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label for="" style="font-weight:600">Inicio pausa(24h)</label>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label for="" style="font-weight:600">Tolerancia(Min)</label>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label for="" style="font-weight:600">Fin pausa(24h)</label>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label for="" style="font-weight:600">Tolerancia(Min)</label>
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        <label for="" style="font-weight:600">Inactivar</label>
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        <label for="" style="font-weight:600">&nbsp;</label>
-                                                    </div>
-                                                </div>
+                                                <span id="validP" style="color: red;display:none">
+                                                    *Campos Obligatorios
+                                                </span>
                                             </div>
-                                            <span id="validP" style="color: red;display:none">
-                                                *Campos Obligatorios
-                                            </span>
                                             <div id="inputPausa"></div>
                                         </div>
                                     </div>
