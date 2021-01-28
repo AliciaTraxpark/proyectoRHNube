@@ -96,7 +96,7 @@ use App\User;
 
         @media(min-width: 1025px){
             body{
-                padding-bottom: 15px !important; 
+                padding-bottom: 15px !important;
             }
         }
 
@@ -121,7 +121,7 @@ use App\User;
                 </div>
 
                 <div class="col-sm-3 col-md-2 col-xl-2 text-center">
-                    <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B" class="btn btn-sm  btn-primary "> 
+                    <a href="{{'/export'}}"> <button id="export" style="background-color: #155E5B;border-color: #155E5B" class="btn btn-sm  btn-primary ">
                         <img src="{{asset('admin/images/excel.svg')}}" height="25">Descargar plantilla</button>
                     </a>
                 </div>
@@ -223,7 +223,7 @@ use App\User;
                                                 <button class="btn btn-sm btn_rh" type="submit" style="background-color: #e1eae5; color: #61886c;"><img src="{{ URL::asset('admin/assets/images/users/importar.png') }}" height="20" class=" " alt="" />Importar empleados
                                             </button>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -243,6 +243,7 @@ use App\User;
                             <tr>
                                 <th>Tipo de Doc.</th>
                                 <th>Nro de documento</th>
+                                <th>Código</th>
                                 <th>Nombres</th>
                                 <th>Ap. Paterno</th>
                                 <th>Ap. Materno</th>
@@ -274,6 +275,7 @@ use App\User;
                                     <tr>
                                         <td>{{$item[0]}}</td>
                                         <td>{{$item[1]}}</td>
+                                        <td>{{$item[25]}}</td>
                                         <td>{{$item[2]}}</td>
                                         <td>{{$item[3]}}</td>
                                         <td>{{$item[4]}}</td>

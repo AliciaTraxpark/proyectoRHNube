@@ -32,6 +32,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
         return [
             'tipo_documento',
             'numero_documento',
+            'codigo',
             'nombres',
             'apellido_paterno',
             'apellido_materno',
@@ -78,19 +79,22 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 ];
 
                 // * CAMPOS OBLIGATORIOS
-                $event->sheet->getStyle('A1:U1')->applyFromArray($styleArray);
-                $event->sheet->getStyle('A1:F1')->getFill()
+                $event->sheet->getStyle('A1:V1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:B1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
-                $event->sheet->getStyle('H1:I1')->getFill()
+                $event->sheet->getStyle('D1:G1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
-                $event->sheet->getStyle('M1:N1')->getFill()
+                $event->sheet->getStyle('I1:J1')->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setRGB('C00000');
+                $event->sheet->getStyle('N1:O1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
                 // * ***************************************************************
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'U') as $columnID) {
+                foreach (range('A', 'V') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
@@ -107,20 +111,20 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $condicion_pago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
 
                 $drop_columnD = 'A';
-                $drop_columnC = 'M';
-                $drop_columnCargo = 'Q';
-                $drop_columnArea = 'R';
-                $drop_columnCentro = 'S';
-                $drop_columnLocal = 'O';
-                $drop_columnNivel = 'P';
-                $drop_columnGenero = 'H';
+                $drop_columnC = 'N';
+                $drop_columnCargo = 'R';
+                $drop_columnArea = 'S';
+                $drop_columnCentro = 'T';
+                $drop_columnLocal = 'P';
+                $drop_columnNivel = 'Q';
+                $drop_columnGenero = 'I';
 
-                $drop_columnFecha = 'I';
-                $drop_columnCondicionP = 'T';
+                $drop_columnFecha = 'J';
+                $drop_columnCondicionP = 'U';
 
-                $drop_columnDisritoN = 'J';
-                $drop_columnDisritoVive = 'L';
-                $drop_columnFechaInicioC = 'N';
+                $drop_columnDisritoN = 'K';
+                $drop_columnDisritoVive = 'M';
+                $drop_columnFechaInicioC = 'O';
 
                 $rowD = 1;
                 $rowC = 1;
@@ -181,8 +185,8 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationC->setShowErrorMessage(true);
                 $validationC->setShowDropDown(true);
                 $validationC->setErrorTitle('Error');
-                $validationC->setError('tipo de Contrato no se encuentra en la lista.');
-                $validationC->setPromptTitle('Tipo de Documento');
+                $validationC->setError('tipo de Contrato no se encuentra en la lista, aceptar para registrar nuevo.');
+                $validationC->setPromptTitle('Tipo de Contrato');
                 $validationC->setPrompt('Elegir una opción o agregar nuevo');
                 $validationC->setFormula1('Empleado!$BJ$1:$BJ$5');
 
@@ -304,7 +308,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationCondiP->setShowErrorMessage(true);
                 $validationCondiP->setShowDropDown(true);
                 $validationCondiP->setErrorTitle('Error');
-                $validationCondiP->setError('Condicion no se encuentra en la lista.');
+                $validationCondiP->setError('Condicion no se encuentra en la lista, aceptar para registrar nuevo.');
                 $validationCondiP->setPromptTitle('CondicionPago');
                 $validationCondiP->setPrompt('Elegir una opción o agregar nuevo');
                 $validationCondiP->setFormula1('Empleado!$CD$1:$CD$10');

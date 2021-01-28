@@ -295,7 +295,7 @@ class excelEmpleadoController extends Controller
                         $condicion_pagorow = new condicion_pago();
                         $condicion_pagorow->condicion = $emp[22];
                         $condicion_pagorow->user_id = Auth::user()->id;
-                        $condicion_pago->organi_id = session('sesionidorg');
+                        $condicion_pagorow->organi_id = session('sesionidorg');
                         $condicion_pagorow->save();
                         $row['idcondicion_pago'] = $condicion_pagorow->id;
                     }
@@ -328,6 +328,7 @@ class excelEmpleadoController extends Controller
                     'emple_persona'    => $personaId->perso_id,
                     'emple_tipoDoc'    =>  $row['tipo_doc'],
                     'emple_nDoc'       => $emp[1],
+                    'emple_codigo'       => $emp[25],
                     'emple_Correo' => $emp[5],
                     'emple_celular' => $numcelular,
 
