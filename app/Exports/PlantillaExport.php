@@ -32,7 +32,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
         return [
             'tipo_documento',
             'numero_documento',
-            'Código',
+            'codigo',
             'nombres',
             'apellido_paterno',
             'apellido_materno',
@@ -185,7 +185,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationC->setShowErrorMessage(true);
                 $validationC->setShowDropDown(true);
                 $validationC->setErrorTitle('Error');
-                $validationC->setError('tipo de Contrato no se encuentra en la lista.');
+                $validationC->setError('tipo de Contrato no se encuentra en la lista, aceptar para registrar nuevo.');
                 $validationC->setPromptTitle('Tipo de Contrato');
                 $validationC->setPrompt('Elegir una opción o agregar nuevo');
                 $validationC->setFormula1('Empleado!$BJ$1:$BJ$5');
@@ -308,7 +308,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationCondiP->setShowErrorMessage(true);
                 $validationCondiP->setShowDropDown(true);
                 $validationCondiP->setErrorTitle('Error');
-                $validationCondiP->setError('Condicion no se encuentra en la lista.');
+                $validationCondiP->setError('Condicion no se encuentra en la lista, aceptar para registrar nuevo.');
                 $validationCondiP->setPromptTitle('CondicionPago');
                 $validationCondiP->setPrompt('Elegir una opción o agregar nuevo');
                 $validationCondiP->setFormula1('Empleado!$CD$1:$CD$10');
