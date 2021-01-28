@@ -238,13 +238,15 @@ use Carbon\Carbon;
             color: #fff;
             font-size: 15px !important;
         }
-        @media (max-width: 767px){
+
+        @media (max-width: 767px) {
             .colResp {
                 justify-content: center !important;
                 padding: 10px 0px !important;
             }
         }
-        .colResp{
+
+        .colResp {
             padding-left: 40px;
         }
     </style>
@@ -945,8 +947,8 @@ use Carbon\Carbon;
             {{-- REGISTRAR NUEVO HORARIO --}}
             <div id="horarioAgregar" class="modal fade" role="dialog" aria-labelledby="horarioAgregar"
                 aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center" style="max-width: 850px;">
-                    <input type="hidden" id="idPausaMayor">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable"
+                    style="width: 850px;">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#163552;">
                             <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
@@ -1005,9 +1007,9 @@ use Carbon\Carbon;
                                                     <div class="input-group form-control-sm "
                                                         style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                         <input type="number" value="0"
-                                                            class="form-control form-control-sm"
+                                                            class="form-control form-control-sm" id="toleranciaH"
                                                             oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                            id="toleranciaH" required>
+                                                            onchange="javascript:toleranciasValidacion()" required>
                                                         <div class="input-group-prepend  ">
                                                             <div class="input-group-text form-control-sm "
                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -1023,9 +1025,9 @@ use Carbon\Carbon;
                                                     <div class="input-group form-control-sm "
                                                         style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                         <input type="number" value="0"
-                                                            class="form-control form-control-sm"
+                                                            class="form-control form-control-sm" id="toleranciaSalida"
                                                             oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                            id="toleranciaSalida" required>
+                                                            onchange="javascript:toleranciasValidacion()" required>
                                                         <div class="input-group-prepend  ">
                                                             <div class="input-group-text form-control-sm "
                                                                 style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -1083,34 +1085,183 @@ use Carbon\Carbon;
                                             </div>
                                             <div id="divPausa" class="col-md-12" style="display: none">
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Descripción</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Inicio pausa(24h)</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Tolerancia(Min)</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Fin pausa(24h)</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Tolerancia(Min)</label>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <label for="" style="font-weight:600">Inactivar</label>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <label for="" style="font-weight:600">&nbsp;</label>
+                                                    <span id="validP" style="color: red;display:none">
+                                                        *Campos Obligatorios
+                                                    </span>
+                                                </div>
+                                                <div id="inputPausa"></div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                                            onclick="javascript:limpiarHorario();">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" id="btnGuardaHorario" style="background-color: #163552;"
+                                            class="btn btn-sm">
+                                            Guardar
+                                        </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- FINALIZAR --}}
+            {{-- EDITAR HORARIO --}}
+            <div id="horarioEditar" class="modal fade" role="dialog" aria-labelledby="horarioEditar" aria-hidden="true"
+                data-backdrop="static">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#163552;">
+                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
+                                Editar horario
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="font-size:12px!important">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="idhorario_ed">
+                                    <form id="frmHorEditar" action="javascript:editarHorarioDatos()">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="">Descripción del horario:</label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="descripcionCa_ed" maxlength="40" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Hora de inicio(24h):</label>
+                                                    <input type="text" id="horaI_ed"
+                                                        class="form-control form-control-sm" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Hora de fin(24h):</label>
+                                                    <input type="text" id="horaF_ed"
+                                                        class="form-control form-control-sm" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Horas obligadas:</label>
+                                                    <div class="input-group form-control-sm"
+                                                        style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="horaOblig_ed" required>
+                                                        <div class="input-group-prepend ">
+                                                            <div class="input-group-text form-control-sm"
+                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                Horas
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <span id="validP" style="color: red;display:none">
-                                                    *Campos Obligatorios
-                                                </span>
-                                                <div id="inputPausa"></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Tolerancia al ingreso(Min):</label>
+                                                    <div class="input-group form-control-sm "
+                                                        style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
+                                                        <input type="number" class="form-control form-control-sm"
+                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                                            onchange="javascript:e_toleranciasValidacion()"
+                                                            id="toleranciaH_ed" required>
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text form-control-sm"
+                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                Minutos
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Tolerancia a la salida(Min):</label>
+                                                    <div class="input-group form-control-sm"
+                                                        style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
+                                                        <input type="number" class="form-control form-control-sm"
+                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                                            onchange="javascript:e_toleranciasValidacion()"
+                                                            id="toleranciaSalida_ed" required>
+                                                        <div class="input-group-prepend  ">
+                                                            <div class="input-group-text form-control-sm "
+                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
+                                                                Minutos
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" id="divOtrodia_ed" style="display: none">
+                                                <label for=""><br></label>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="smsCheck_ed"
+                                                        checked disabled>
+                                                    <label class="form-check-label" for="smsCheck_ed"
+                                                        style="margin-top: 2px;font-weight: 700">
+                                                        La hora fin de este horario pertenece al siguiente día.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="SwitchTardanza_ed">
+                                                    <label class="custom-control-label" for="SwitchTardanza_ed"
+                                                        style="font-weight: bold;padding-top: 1px">
+                                                        Controlar tardanza
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="SwitchPausa_ed">
+                                                    <label class="custom-control-label" for="SwitchPausa_ed"
+                                                        style="font-weight: bold;padding-top: 1px">
+                                                        Pausas en el horario
+                                                    </label>
+                                                    &nbsp;
+                                                    <span id="fueraRango_ed" style="color: #80211e;display: none">
+                                                        Hora no esta dentro de rango de horario
+                                                    </span>
+                                                    <span id="errorenPausas_ed" style="color: #80211e;display: none">
+                                                        - Fin de pausa debe ser mayor a inicio pausa
+                                                    </span>
+                                                    <span id="errorenPausasCruzadas_ed"
+                                                        style="color: #80211e;display: none">
+                                                        - Los rangos de pausas no pueden cruzarse, revísalo e inténtalo
+                                                        nuevamente.
+                                                    </span>
+                                                    &nbsp;
+                                                    <span id="vacioHoraF_ed" style="color: #80211e;display: none">
+                                                        Agregar Hora de inicio o Hora de fin
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div id="pausas_edit" style="display: none" class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <span id="validP_ed" style="color: red;display:none">
+                                                        *Campos Obligatorios
+                                                    </span>
+                                                </div>
+                                                <div id="PausasHorar_ed"></div>
                                             </div>
                                         </div>
                                 </div>
@@ -1123,8 +1274,8 @@ use Carbon\Carbon;
                                         <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
                                             Cancelar
                                         </button>
-                                        <button type="submit" id="btnGuardaHorario" style="background-color: #163552;"
-                                            class="btn btn-sm">
+                                        <button type="submit" style="background-color: #163552;" class="btn btn-sm"
+                                            id="btnEditarHorario">
                                             Guardar
                                         </button>
                                         </form>
@@ -1278,216 +1429,21 @@ use Carbon\Carbon;
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            {{-- EDITAR HORARIO --}}
-            <div id="horarioEditar" class="modal fade" role="dialog" aria-labelledby="horarioEditar" aria-hidden="true"
-                data-backdrop="static">
-                <div class="modal-dialog  modal-lg d-flex justify-content-center" style="width: 850px;">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color:#163552;">
-                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                                Editar horario
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" style="font-size:12px!important">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="hidden" id="idhorario_ed">
-                                    <form id="frmHorEditar" action="javascript:editarHorarioDatos()">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="">Descripción del horario:</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcionCa_ed" maxlength="40" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Hora de inicio(24h):</label>
-                                                    <input type="text" id="horaI_ed"
-                                                        class="form-control form-control-sm" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Hora de fin(24h):</label>
-                                                    <input type="text" id="horaF_ed"
-                                                        class="form-control form-control-sm" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Horas obligadas:</label>
-                                                    <div class="input-group form-control-sm"
-                                                        style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="horaOblig_ed" required>
-                                                        <div class="input-group-prepend ">
-                                                            <div class="input-group-text form-control-sm"
-                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                Horas
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Tolerancia al ingreso(Min):</label>
-                                                    <div class="input-group form-control-sm "
-                                                        style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
-                                                        <input type="number" class="form-control form-control-sm"
-                                                            min="0"
-                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                            id="toleranciaH_ed" required>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text form-control-sm"
-                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                Minutos
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Tolerancia a la salida(Min):</label>
-                                                    <div class="input-group form-control-sm"
-                                                        style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
-                                                        <input type="number" class="form-control form-control-sm"
-                                                            min="0"
-                                                            oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                            id="toleranciaSalida_ed" required>
-                                                        <div class="input-group-prepend  ">
-                                                            <div class="input-group-text form-control-sm "
-                                                                style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
-                                                                Minutos
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4" id="divOtrodia_ed" style="display: none">
-                                                <label for=""><br></label>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="smsCheck_ed"
-                                                        checked disabled>
-                                                    <label class="form-check-label" for="smsCheck_ed"
-                                                        style="margin-top: 2px;font-weight: 700">
-                                                        La hora fin de este horario pertenece al siguiente día.
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="custom-control custom-switch mb-2">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="SwitchTardanza_ed">
-                                                    <label class="custom-control-label" for="SwitchTardanza_ed"
-                                                        style="font-weight: bold;padding-top: 1px">
-                                                        Controlar tardanza
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="custom-control custom-switch mb-2">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="SwitchPausa_ed">
-                                                    <label class="custom-control-label" for="SwitchPausa_ed"
-                                                        style="font-weight: bold;padding-top: 1px">
-                                                        Pausas en el horario
-                                                    </label>
-                                                    &nbsp;
-                                                    <span id="fueraRango_ed" style="color: #80211e;display: none">
-                                                        Hora no esta dentro de rango de horario
-                                                    </span>
-                                                    <span id="errorenPausas_ed" style="color: #80211e;display: none">
-                                                        - Fin de pausa debe ser mayor a inicio pausa
-                                                    </span>
-                                                    <span id="errorenPausasCruzadas_ed"
-                                                        style="color: #80211e;display: none">
-                                                        - Los rangos de pausas no pueden cruzarse, revísalo e inténtalo
-                                                        nuevamente.
-                                                    </span>
-                                                    &nbsp;
-                                                    <span id="vacioHoraF_ed" style="color: #80211e;display: none">
-                                                        Agregar Hora de inicio o Hora de fin
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div id="pausas_edit" style="display: none" class="col-md-12">
-                                                {{-- <label for="">Pausas de horario:</label> --}}
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Descripción</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Inicio
-                                                                pausa(24h)</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for=""
-                                                                style="font-weight:600">Tolerancia(Min)</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="" style="font-weight:600">Fin pausa(24h)</label>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for=""
-                                                                style="font-weight:600">Tolerancia(Min)</label>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <label for="" style="font-weight:600">Inactivar</label>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <label for="" style="font-weight:600">&nbsp;</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <span id="validP_ed" style="color: red;display:none">
-                                                    *Campos Obligatorios
-                                                </span>
-                                                <div id="PausasHorar_ed"></div>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
-                                            Cancelar
-                                        </button>
-                                        <button type="submit" style="background-color: #163552;" class="btn btn-sm"
-                                            id="btnEditarHorario">
-                                            Guardar
-                                        </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- FINALIZAR --}}
         </div>
     </div>
 
     </div>
     </div>
-    <footer class="border-top" style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">
-        <div class="col-md-12 text-center" style="margin-top: 10px; border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+    <footer class="border-top"
+        style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px; border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
             <span style="color: #faf3f3;font-size: 12px!important">
                 © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
             </span>
             <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
-            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 |
+                info@rhnube.com.pe</span>
         </div>
     </footer>
 
