@@ -871,9 +871,9 @@
                                                 <div class="input-group form-control-sm "
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                     <input type="number" value="0" class="form-control form-control-sm"
-                                                        id="toleranciaH" onchange="javascript:e_toleranciasValidacion()"
+                                                        id="toleranciaH"
                                                         oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                        required>
+                                                        onchange="javascript:toleranciasValidacion()" required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
                                                             style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -890,9 +890,8 @@
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
                                                     <input type="number" value="0" class="form-control form-control-sm"
                                                         id="toleranciaSalida"
-                                                        onchange="javascript:e_toleranciasValidacion()"
                                                         oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
-                                                        required>
+                                                        onchange="javascript:toleranciasValidacion()" required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
                                                             style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -1188,8 +1187,9 @@
                                                 <label for="">Tolerancia al ingreso(Min):</label>
                                                 <div class="input-group form-control-sm "
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
-                                                    <input type="number" class="form-control form-control-sm" min="0"
-                                                        oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                    <input type="number" class="form-control form-control-sm"
+                                                        oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                                        onchange="javascript:e_toleranciasValidacion()"
                                                         id="toleranciaH_ed" required>
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text form-control-sm"
@@ -1205,8 +1205,9 @@
                                                 <label for="">Tolerancia a la salida(Min):</label>
                                                 <div class="input-group form-control-sm"
                                                     style="bottom: 4px;padding-left: 0px; padding-right: 0px;">
-                                                    <input type="number" class="form-control form-control-sm" min="0"
-                                                        oninput="javascript: if (this.value >= 60) this.value = 59;"
+                                                    <input type="number" class="form-control form-control-sm"
+                                                        oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
+                                                        onchange="javascript:e_toleranciasValidacion()"
                                                         id="toleranciaSalida_ed" required>
                                                     <div class="input-group-prepend  ">
                                                         <div class="input-group-text form-control-sm "
