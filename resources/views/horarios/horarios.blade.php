@@ -289,10 +289,10 @@ use Carbon\Carbon;
                                         horarios</button>
                                 </div>
                                 <div class="col-6 col-sm-6 col-md-6 text-right">
-                                    <button class="btn btn-sm btn-primary" onclick="abrirHorario()" id="btnNuevoHorario"
-                                        style="background-color: #183b5d;border-color:#62778c">+ Nuevo Horario</button>
-
-                                    {{--  <button class="btn btn-sm btn-primary" id="btnasignarIncidencia" style="background-color: #183b5d;border-color:#62778c">Asignar incidencias</button> --}}
+                                    <button class="btn btn-sm btn-primary" onclick="modalRegistrar()"
+                                        id="btnNuevoHorario" style="background-color: #183b5d;border-color:#62778c">
+                                        + Nuevo Horario
+                                    </button>
                                 </div>
                             </div>
                             <div id="tabladiv"> <br>
