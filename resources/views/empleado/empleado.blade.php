@@ -3472,9 +3472,9 @@ use Carbon\Carbon;
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <label for="sw-default">Num. Documento</label>
+                                                    <label for="sw-default">Núm. Documento</label>
                                                     <span id="validNumDocumento" style="color: red;">*Campo Obligatorio</span>
-                                                    <span id="numR" style="color: red;">*Num. registrado</span>
+                                                    <span id="numR" style="color: red;">*Núm. registrado</span>
                                                     <input type="text" class="form-control" name="numDocumento" id="numDocumento" onkeypress="return isNumeric(event)"
                                                         oninput="maxLengthCheck(this)" tabindex="2" required>
                                                 </div>
