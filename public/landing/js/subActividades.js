@@ -651,10 +651,10 @@ function editarSubactividad(id) {
             $("#actividadesAsignar_ed").val(data.Activi_id);
             if (data.uso == 1) {
                 $("#actividadesAsignar_ed").prop("disabled", true);
-                $("#divNAct").hide();
+                $("#divNAct_ed").hide();
             } else {
                 $("#actividadesAsignar_ed").prop("disabled", false);
-                $("#divNAct").show();
+                $("#divNAct_ed").show();
             }
 
             if (data.modoTareo === 1) {
