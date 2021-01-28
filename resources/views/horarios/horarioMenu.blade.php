@@ -983,7 +983,8 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                                        onclick="javascript:limpiarHorario();">
                                         Cancelar
                                     </button>
                                     <button type="submit" id="btnGuardaHorario" style="background-color: #163552;"

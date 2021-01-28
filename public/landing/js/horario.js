@@ -5713,22 +5713,32 @@ function validarHorasEntrePausas() {
     $('.rowInputs').each(function () {
         var idI = $(this).val();
         if ($('#descPausa' + idI).val() != "" && $('#InicioPausa' + idI).val() != "" && $('#FinPausa' + idI).val() != "") {
-            // ? -> TIEMPOS DE INPUTS
-            var horaI = moment($('#InicioPausa' + idI).val(), ["HH:mm"]);
-            var horaF = moment($('#FinPausa' + idI).val(), ["HH:mm"]);
-            // ? -> TIEMPOS DE HORARIO
-            var momentInicio = moment($('#horaI').val(), ["HH:mm"]);
-            var momentFin = moment($('#horaF').val(), ["HH:mm"]);
-            // * VALIDACION CON TIEMPOS DE HORARIO
+            // * -> ******************************************** TIEMPOS DE INPUTS ********************************************
+            // : INICIO DE PAUSA MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO
+            var resultadoResta = sustraerMinutosHoras($('#InicioPausa' + idI).val(), parseInt($('#toleranciaIP' + idI).val()));
+            var horaI = moment(resultadoResta, ["HH:mm"]);
+            // : FIN DE PAUSA MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN
+            var resultadoSuma = sumarMinutosHoras($('#FinPausa' + idI).val(), parseInt($('#ToleranciaFP' + idI).val()));
+            var horaF = moment(resultadoSuma, ["HH:mm"]);
+            // * -> ********************************************** TIEMPOS DE HORARIO ******************************************
+            // : INICIO DE HORARIO MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO DE HORARIO
+            var resultadoRestaHorario = sustraerMinutosHoras($('#horaI').val(), parseInt($('#toleranciaH').val()));
+            var momentInicio = moment(resultadoRestaHorario, ["HH:mm"]);
+            // : FIN DE HORARIO MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN DE HORARIO
+            var resultadoSumaHorario = sumarMinutosHoras($('#horaF').val(), parseInt($('#toleranciaSalida').val()));
+            var momentFin = moment(resultadoSumaHorario, ["HH:mm"]);
             // * VALIDACION ENTRE PAUSAS
             $('.rowInputs').each(function () {
                 var idC = $(this).val();
                 if (idI != idC) {
                     if ($('#descPausa' + idC).val() != "" && $('#InicioPausa' + idC).val() != "" && $('#FinPausa' + idC).val() != "") {
-                        var horaCompararI = moment($('#InicioPausa' + idC).val(), ["HH:mm"]);
-                        var horaCompararF = moment($('#FinPausa' + idC).val(), ["HH:mm"]);
+                        // : INICIO DE PAUSA MENOS LA TOLERANCIA DE INICIO PARA ENCONTRAR EL MINIMO DE INICIO
+                        var resultadoRestaNuevo = sustraerMinutosHoras($('#InicioPausa' + idC).val(), parseInt($('#toleranciaIP' + idC).val()));
+                        var horaCompararI = moment(resultadoRestaNuevo, ["HH:mm"]);
+                        // : FIN DE PAUSA MAS LA TOLERANCIA DE FIN PARA ENCONTRAR EL MAXIMO DE FIN
+                        var resultadoSumaNuevo = sumarMinutosHoras($('#FinPausa' + idC).val(), parseInt($('#ToleranciaFP' + idC).val()));
+                        var horaCompararF = moment(resultadoSumaNuevo, ["HH:mm"]);
                         if (momentFin.isSameOrBefore(momentInicio)) {   //: -> <=
-                            var nuevoF = momentFin.add(1, 'day');    //: -> NUEVA FECHA
                             // ! NUEVA FECHA DE HORA INICIO DE PAUSA
                             var nuevoInicioC;
                             if (horaCompararI.isBefore(momentInicio)) {        //: -> <
