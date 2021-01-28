@@ -6359,16 +6359,35 @@ function e_contenidoInput(id) {
     e_inicializarHorasPausas('New' + e_cont);
     e_cont++;
 }
+// : FUNCION DE RETORNAR RESTA TIEMPO - MINUTOS TOLERANCIA
+function sustraerMinutosHoras(tiempo, minuto) {
+    var momentTiempo = moment(tiempo, ["HH:mm"]);
+    var restaTolerancia = momentTiempo.subtract(minuto, 'minutes');
+    var resultado = moment(restaTolerancia.toString()).format("HH:mm");
+
+    return resultado;
+}
+// : FUNCION DE RETORNAR SUMA TIEMPO - MINUTOS TOLERANCIA
+function sumarMinutosHoras(tiempo, minuto) {
+    var momentTiempo = moment(tiempo, ["HH:mm"]);
+    var sumaTolerancia = momentTiempo.add(minuto, 'minutes');
+    var resultado = moment(sumaTolerancia).format("HH:mm");
+
+    return resultado;
+}
 // : FUNCION DE VALIDAR HORAS DE PAUSAS CON HORAS DEL HORARIO
 function e_validarHorasPausaHorario() {
     var estado = true;
     $('.e_rowInputs').each(function () {
         var idI = $(this).val();
         if ($('#e_descPausa' + idI).val() != "" && $('#e_InicioPausa' + idI).val() != "" && $('#e_FinPausa' + idI).val() != "") {
-            // ? -> TIEMPOS DE INPUTS
-            var horaI = moment($('#e_InicioPausa' + idI).val(), ["HH:mm"]);
-            var horaF = moment($('#e_FinPausa' + idI).val(), ["HH:mm"]);
-            // ? -> TIEMPOS DE HORARIO
+            // ? -> ******************************************** TIEMPOS DE INPUTS ********************************************
+            var resultadoResta = sustraerMinutosHoras($('#e_InicioPausa' + idI).val(), parseInt($('#e_toleranciaIP' + idI).val()));
+            var horaI = moment(resultadoResta, ["HH:mm"]);
+            var resultadoSuma = sumarMinutosHoras($('#e_FinPausa' + idI).val(), parseInt($('#e_ToleranciaFP' + idI).val()));
+            var horaF = moment(resultadoSuma, ["HH:mm"]);
+            console.log(horaI, horaF);
+            // ? -> ********************************************** TIEMPOS DE HORARIO ******************************************
             var momentInicio = moment($('#horaI_ed').val(), ["HH:mm"]);
             var momentFin = moment($('#horaF_ed').val(), ["HH:mm"]);
             // * VALIDACION CON TIEMPOS DE HORARIO
@@ -6417,6 +6436,7 @@ function e_validarHorasEntrePausas() {
             // ? -> TIEMPOS DE INPUTS
             var horaI = moment($('#e_InicioPausa' + idI).val(), ["HH:mm"]);
             var horaF = moment($('#e_FinPausa' + idI).val(), ["HH:mm"]);
+            console.log($('#e_toleranciaIP' + idI).val(), $('#e_ToleranciaFP' + idI).val(), horaF, horaI);
             // ? -> TIEMPOS DE HORARIO
             var momentInicio = moment($('#horaI_ed').val(), ["HH:mm"]);
             var momentFin = moment($('#horaF_ed').val(), ["HH:mm"]);
@@ -6468,7 +6488,6 @@ function e_validarHorasEntrePausas() {
                                 }
                             }
                         } else {
-                            console.log(horaCompararI.isAfter(horaI) && horaCompararI.isBefore(horaF));
                             if (horaCompararI.isSameOrAfter(horaI) && horaCompararI.isSameOrBefore(horaF)) {
                                 $('#errorenPausasCruzadas_ed').show();
                                 estado = false;
