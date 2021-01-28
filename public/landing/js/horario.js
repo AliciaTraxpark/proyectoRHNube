@@ -6090,7 +6090,6 @@ function modalEditar(id) {
             $('#errorenPausas_ed').hide();
             $('#errorenPausasCruzadas_ed').hide();
             $('#vacioHoraF_ed').hide();
-            console.log(data);
             $('#idhorario_ed').val(data.horario[0].horario_id);
             $('#descripcionCa_ed').val(data.horario[0].horario_descripcion);
             e_horaInicio.setDate(data.horario[0].horaI);
@@ -6098,13 +6097,13 @@ function modalEditar(id) {
             e_horaOb.setDate(data.horario[0].horasObliga);
             $('#toleranciaH_ed').val(data.horario[0].horario_tolerancia);
             $('#toleranciaSalida_ed').val(data.horario[0].horario_toleranciaF);
-            // * TARDANZA
+            // ************************************* TARDANZA *******************
             if (data.horario[0].hora_contTardanza == 1) {
                 $('#SwitchTardanza_ed').prop("checked", true);
             } else {
                 $('#SwitchTardanza_ed').prop("checked", false);
             }
-            // * PAUSAS
+            // ************************************** PAUSAS ***********************
             if (data.pausas.length != 0) {
                 $('#SwitchPausa_ed').prop("checked", true);
                 $('#PausasHorar_ed').empty();
@@ -6113,19 +6112,24 @@ function modalEditar(id) {
                     var pausa = data.pausas[index];
                     console.log(pausa);
                     contenido +=
-                        `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}">
+                        `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}" style="border-top:1px dashed #aaaaaa!important;">
                             <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
+                                        <label>Descripción de pausa</label>
                                         <input type="text"  class="form-control form-control-sm descP" id="e_descPausa${pausa.idpausas_horario}"
                                           value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
+                                </div>
+                                <div class="row pt-2">
                                     <div class="col-md-2">
+                                        <label>Inicio pausa(24h)</label>
                                         <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausa${pausa.idpausas_horario}" name="inicioP"
                                           value="${pausa.pausH_Inicio}"  onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
                                     <div class="col-md-2">
+                                        <label>Tolerancia inicio</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                             <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}" 
                                                oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
@@ -6137,10 +6141,12 @@ function modalEditar(id) {
                                         </div>
                                     </div>
                                     <div class="col-md-2">
+                                        <label>Fin pausa(24h)</label>
                                         <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP"
                                            value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                                     </div>
                                     <div class="col-md-2">
+                                        <label>Tolerancia salida</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                             <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}" 
                                                oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
@@ -6153,18 +6159,23 @@ function modalEditar(id) {
                                     </div>`;
                     if (pausa.inactivar == 0) {
                         contenido += `
-                                    <div class="col-md-1">
-                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2">
+                                    <div class="col-md-2">
+                                        <label>Inactivar</label>
+                                        <br>
+                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-3">
                                     </div>`;
                     } else {
-                        contenido += `
-                                    <div class="col-md-1">
-                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2" checked>
+                        contenido += `<div class="col-md-2">
+                                        <label>Inactivar</label>
+                                        <br>
+                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-3" checked>
                                     </div>`;
                     }
                     contenido += `
-                                    <div class="col-md-1">
-                                        <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})">
+                                    <div class="col-md-2">
+                                        <label>Eliminar</label>
+                                        <br>
+                                        <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})" class="ml-3">
                                             <img src="/admin/images/delete.svg" height="15">
                                         </a>
                                     </div>
@@ -6357,19 +6368,24 @@ function e_contenidoInput(id) {
     $('#e_agregar' + id).hide();
     $('#validP_ed').hide();
     var cInputs =
-        `<div class="row pb-3" id="e_rowPNew${e_cont}">
+        `<div class="row pb-3" id="e_rowPNew${e_cont}" style="border-top:1px dashed #aaaaaa!important;">
                 <input type="hidden" class="e_rowInputs" value="New${e_cont}">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
+                            <label>Descripción de pausa</label>
                             <input type="text"  class="form-control form-control-sm descP" id="e_descPausaNew${e_cont}"
                               onkeyup="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-2">
+                            <label>Inicio pausa(24h)</label>
                             <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausaNew${e_cont}" name="inicioP"
                                 onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
+                            <label>Tolerancia inicio</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
                                     oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
@@ -6382,10 +6398,12 @@ function e_contenidoInput(id) {
                             </div>
                         </div>
                         <div class="col-md-2">
+                            <label>Fin pausa(24h)</label>
                             <input type="text"  class="form-control form-control-sm finP" id="e_FinPausaNew${e_cont}" name="finP"
                                 onchange="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
                         </div>
                         <div class="col-md-2">
+                            <label>Tolerancia salida</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
                                     oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
@@ -6397,11 +6415,15 @@ function e_contenidoInput(id) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <input type="checkbox" id="e_inactivarPausaNew${e_cont}" class="mt-2 ml-2">
+                        <div class="col-md-2">
+                            <label>Inactivar</label>
+                            <br>
+                            <input type="checkbox" id="e_inactivarPausaNew${e_cont}" class="text-center mt-2 ml-3">
                         </div>
                         <div class="col-md-1">
-                            <a style="cursor: pointer" onclick="javascript:e_eliminarContenido('New${e_cont}')">
+                            <label>Eliminar</label>
+                            <br>
+                            <a style="cursor: pointer" onclick="javascript:e_eliminarContenido('New${e_cont}')" class="ml-3">
                                 <img src="/admin/images/delete.svg" height="15">
                             </a>
                         </div>
