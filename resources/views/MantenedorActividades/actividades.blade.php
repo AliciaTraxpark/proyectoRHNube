@@ -144,7 +144,7 @@
     </div>
     <div class="col-md-6 text-right colResponsive">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="$('#regactividadTarea').modal();javascript:empleadoListaReg()">+ Nueva
+            onclick="javascript:modalRegistrar();javascript:empleadoListaReg()">+ Nueva
             Actividad
         </button>
     </div>
@@ -161,7 +161,7 @@
     </div>
     <div class="col-md-6 text-right colResponsive">
         <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
-            onclick="$('#regactividadTarea').modal();javascript:estadoAsignacionesReg()">+ Nueva
+            onclick="javascript:modalRegistrar();javascript:estadoAsignacionesReg()">+ Nueva
             Actividad
         </button>
     </div>
@@ -438,8 +438,10 @@
                                             &nbsp;&nbsp;
                                             Modo tareo
                                         </label>
-                                        <img id="svgInfo"  data-toggle='tooltip' data-original-title='Tiene asignado subactividades' data-placement='right'
-                                         style="cursor: pointer;display:none" src='landing/images/info.svg' height='14'>
+                                        <img id="svgInfo" data-toggle='tooltip'
+                                            data-original-title='Tiene asignado subactividades' data-placement='right'
+                                            style="cursor: pointer;display:none" src='landing/images/info.svg'
+                                            height='14'>
                                     </div>
                                 </div>
                             </div>
@@ -706,22 +708,6 @@
 @else
 <input type="hidden" id="bajaActI" value="1">
 @endif
-@if (Auth::user())
-<script>
-    $(function() {
-    setInterval(function checkSession() {
-      $.get('/check-session', function(data) {
-        // if session was expired
-        if (data.guest==false) {
-            $('.modal').modal('hide');
-           $('#modal-error').modal('show');
-
-        }
-      });
-    },7202000);
-  });
-</script>
-@endif
 @endsection
 @section('script')
 <script src="{{asset('landing/js/actualizarPDatos.js')}}"></script>
@@ -740,4 +726,20 @@
 <script src="{{asset('js/select2search.js')}}"></script>
 <script src="{{asset('landing/js/actividades.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
+@if (Auth::user())
+<script>
+    $(function() {
+    setInterval(function checkSession() {
+      $.get('/check-session', function(data) {
+        // if session was expired
+        if (data.guest==false) {
+            $('.modal').modal('hide');
+           $('#modal-error').modal('show');
+
+        }
+      });
+    },7202000);
+  });
+</script>
+@endif
 @endsection
