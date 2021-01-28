@@ -231,7 +231,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-12" id="MostarDetalles" style="display: none">
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
                     onclick="javascript:cambiartabla()">

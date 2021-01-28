@@ -58,8 +58,9 @@ function cargartabla(fecha) {
                     $("#tablaReport").DataTable().destroy();
                 }
                 // ! *********** CABEZERA DE TABLA**********
+                $("#MostarDetalles").show();
                 $("#theadD").empty();
-                $("#btnsDescarga").show();
+
                 //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
                 var cantidadColumnasHoras = 0;
                 for (let i = 0; i < data.length; i++) {
@@ -607,7 +608,7 @@ function cargartabla(fecha) {
                     }, 200);
                 }
             } else {
-                $("#btnsDescarga").hide();
+                $("#MostarDetalles").hide();
                 $("#tbodyD").empty();
                 $("#tbodyD").append(
                     '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
