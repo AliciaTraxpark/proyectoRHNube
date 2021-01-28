@@ -365,8 +365,7 @@ function cargartabla(fecha) {
                 theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;">Marcación T.</th> 
                                 <th>Tardanza T.</th>
                                 <th>Faltas T.</th>
-                                <th>Incidencias T.</th>
-                                <th style="border-left:2px solid #f05454!important;">Tiempo T.</th>`;
+                                <th>Incidencias T.</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -399,7 +398,6 @@ function cargartabla(fecha) {
                     var grupoHorario = "";
                     //* ARMAR Y ORDENAR MARCACIONES
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
-                    var tiempoTotal = moment("00:00:00", "HH:mm:ss");       //: SUMAS DE TIEMPOS Y RESTA DE PAUSAS
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         if (data[index].data[m] != undefined) {
@@ -738,7 +736,6 @@ function cargartabla(fecha) {
                                                 segundosTiempo = '0' + segundosTiempo;
                                             }
                                             sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                            tiempoTotal = tiempoTotal.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
                                             if (marcacionData.idH != 0) {
                                                 // ****************************************** PAUSAS ****************************************
                                                 for (let indice = 0; indice < data[index].data[m].pausas.length; indice++) {
@@ -791,14 +788,6 @@ function cargartabla(fecha) {
                                                                         if (tiempoSegundoPausa < 10) {
                                                                             tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                                         }
-                                                                        // * RESTAR EL TIEMPO DE PAUSA
-                                                                        tiempoTotal = tiempoTotal.add(
-                                                                            {
-                                                                                "hours": -tiempoHoraPausa,
-                                                                                "minutes": -tiempoMinutoPausa,
-                                                                                "seconds": -tiempoSegundoPausa
-                                                                            }
-                                                                        );
                                                                         // * VERIFICAR TIEMPO DE EXCESO
                                                                         var clonarPausaI = pausaI.clone();
                                                                         var clonarPausaF = pausaF.clone();
@@ -843,12 +832,6 @@ function cargartabla(fecha) {
                                                                     if (tiempoSegundoPausa < 10) {
                                                                         tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                                     }
-                                                                    // ************************* RESTAR LA PAUSA ******************************
-                                                                    tiempoTotal = tiempoTotal.add({
-                                                                        "hours": -tiempoHoraPausa,
-                                                                        "minutes": -tiempoMinutoPausa,
-                                                                        "seconds": -tiempoSegundoPausa
-                                                                    });
                                                                     idPausas.push(contenidoP.id);
                                                                 }
                                                             }
@@ -1113,11 +1096,7 @@ function cargartabla(fecha) {
                                 </a>
                             </td>
                             <td class="text-center">--</td>
-                            <td class="text-center">--</td>
-                            <td style="border-left:2px solid #f05454!important;" data-toggle="tooltip" data-placement="right" title="Marcación total - (Tiempo pausa)"
-                            data-original-title="">
-                                ${tiempoTotal.format("HH:mm:ss")}
-                            </td>`;
+                            <td class="text-center">--</td>`;
                     tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
