@@ -980,8 +980,7 @@
         {{-- EDITAR HORARIO --}}
         <div id="horarioEditar" class="modal fade" role="dialog" aria-labelledby="horarioEditar" aria-hidden="true"
             data-backdrop="static">
-            <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable"
-                style="width: 850px;">
+            <div class="modal-dialog  modal-lg d-flex justify-content-center modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#163552;">
                         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">

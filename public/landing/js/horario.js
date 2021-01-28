@@ -6636,12 +6636,15 @@ function e_eliminarContenido(id) {
         $('#errorenPausasCruzadas_ed').hide();
     }
     var resp = true;
+    var ultimoVisible = undefined;
     $('.e_rowInputs').each(function () {
         var id = $(this).val();
         if ($('#e_rowP' + id).is(":visible")) {
             resp = false;
+            ultimoVisible = id;
         }
     });
+    if (ultimoVisible != undefined) $('#e_agregar' + ultimoVisible).show();
     if (resp) {
         e_contenidoInput(e_cont);
     }
