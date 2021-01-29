@@ -340,22 +340,22 @@ function cargartabla(fecha) {
                 for (let m = 0; m < cantidadGruposHorario; m++) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
-                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;">
+                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;" name="descripcionHorario">
                                         Descripción del horario
                                     </th>
-                                    <th class="text-center">Horario</th>
+                                    <th class="text-center" name="horarioHorario">Horario</th>
                                     <th>Tolerancia en el ingreso</th>
                                     <th>Tolerancia en la salida</th>
                                     <th>Faltas</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
-                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center">
+                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">
                                             <span>
                                                 Entrada <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
                                         </th>
-                                        <th class="text-center">
+                                        <th class="text-center" name="colMarcaciones">
                                             <span>
                                                 Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
@@ -368,7 +368,7 @@ function cargartabla(fecha) {
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
                     for (let p = 0; p < cantidadColumnasP; p++) {
                         theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">Pausa</th>
-                                        <th name="horarioPausa">Horario de pausas</th>
+                                        <th name="horarioPausa">Horario de pausa</th>
                                         <th name="tiempoPausa">Tiempo de pausa</th>
                                         <th name="excesoPausa">Exceso de pausa</th>`;
                     }
@@ -418,7 +418,7 @@ function cargartabla(fecha) {
                             if (permisoModificar == 1) {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -443,14 +443,14 @@ function cargartabla(fecha) {
                                                                 </ul>
                                                             </div>
                                                         </td>
-                                                        <td>
+                                                        <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center">${horarioData.toleranciaF} min.</td>
                                                         <td>---</td>`;
                                     } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -476,7 +476,7 @@ function cargartabla(fecha) {
                                                                 </ul>
                                                             </div>
                                                         </td>
-                                                        <td>
+                                                        <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center">${horarioData.toleranciaI} min.</td>
@@ -484,7 +484,7 @@ function cargartabla(fecha) {
                                                         <td>---</td>`;
                                     }
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -509,7 +509,7 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">---</td>
+                                                    <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center">---</td>
                                                     <td>---</td>
                                                     <td>---</td>`;
@@ -517,28 +517,28 @@ function cargartabla(fecha) {
                             } else {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                 <span class="badge badge-soft-primary mr-2" class="text-center">
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
                                                         </td>
-                                                        <td>
+                                                        <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center">${horarioData.toleranciaF} min.</td>
                                                         <td>---</td>`;
                                     } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
                                                         </td>
-                                                        <td>
+                                                        <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center">${horarioData.toleranciaI} min.</td>
@@ -546,14 +546,14 @@ function cargartabla(fecha) {
                                                         <td>---</td>`;
                                     }
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                  Sin horario
                                                             </span>
                                                         </a>
                                                     </td>
-                                                    <td class="text-center">---</td>
+                                                    <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center">---</td>
                                                     <td>---</td>
                                                     <td>---</td>`;
@@ -585,7 +585,7 @@ function cargartabla(fecha) {
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important">
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
                                                                     <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                         <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -643,7 +643,7 @@ function cargartabla(fecha) {
                                                             </ul></div></td>`;
                                     }
                                     else {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                                         </td>`;
@@ -679,7 +679,7 @@ function cargartabla(fecha) {
                                     }
                                     if (marcacionData.salida != 0) {
                                         if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" 
                                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -736,7 +736,7 @@ function cargartabla(fecha) {
                                                                         </div>
                                                                     </td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                     </td>`;
@@ -882,7 +882,7 @@ function cargartabla(fecha) {
                                                                 <td name="colIncidencia">--</td>`;
                                     } else {
                                         if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <div class="dropdown noExport">
                                                                             <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
                                                                                 aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -910,7 +910,7 @@ function cargartabla(fecha) {
                                                                     </td>`;
                                         }
                                         else {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                             No tiene salida
                                                                         </span>
@@ -937,7 +937,7 @@ function cargartabla(fecha) {
                                     if (marcacionData.salida != 0) {
                                         //* COLUMNA DE ENTRADA
                                         if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
+                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
                                                                         <div class=" dropdown">
                                                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
                                                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -965,7 +965,7 @@ function cargartabla(fecha) {
                                                                     </td>`;
                                         }
                                         else {
-                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
+                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
                                                                                 <span class="badge badge-soft-warning noExport">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                                                     No tiene entrada
@@ -976,7 +976,7 @@ function cargartabla(fecha) {
                                         //* COLUMNA DE SALIDA
                                         var permisoModificarCE2 = $('#modifReporte').val();
                                         if (permisoModificarCE2 == 1) {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                                 <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                                     <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
                                                                                         style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -1017,7 +1017,7 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                             </td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                     </td>`;
@@ -1042,8 +1042,8 @@ function cargartabla(fecha) {
                                 }
                             }
                             for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                                        <td class="text-center">---</td>
+                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                        <td class="text-center" name="colMarcaciones">---</td>
                                                         <td name="colTiempoS" class="text-center">---</td>
                                                         <td name="colTardanza" class="text-center">--</td>
                                                         <td name="colIncidencia" class="text-center">--</td>`;
@@ -1076,18 +1076,18 @@ function cargartabla(fecha) {
                             }
                             grupoHorario += tbodyPausas;
                         } else {
-                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                 ----
                                             </td>
-                                            <td class="text-center">---</td>
+                                            <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center">---</td>
                                             <td>---</td>
                                             <td>---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                                        <td class="text-center">---</td>
+                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                        <td class="text-center" name="colMarcaciones">---</td>
                                                         <td name="colTiempoS" class="text-center">---</td>
                                                         <td name="colTardanza" class="text-center">--</td>
                                                         <td name="colIncidencia" class="text-center">--</td>`;
@@ -1134,10 +1134,10 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td></td><td></td><td></td><td></td><td></td>';
+                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td></td><td></td><td></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                            tbodyTR += '<td><br></td><td></td><td name="colTiempoS"></td><td name="colTardanza"></td><td name="colIncidencia"></td>';
+                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td><td name="colIncidencia"></td>';
                         }
                         // ! PAUSAS
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
@@ -2615,7 +2615,48 @@ $('#colCargo').change(function (event) {
     } else {
         $('[name="colCargo"]').hide();
     }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+});
+// : ************************************ COLUMNA DE MARCACIONES ************************************************
+$('#colMarcaciones').change(function (event) {
+    if (event.target.checked) {
+        $('[name="colMarcaciones"]').show();
+    } else {
+        $('[name="colMarcaciones"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+});
+// : *********************************** COLUMNA DE HORARIOS ***************************************************
+function toggleH() {
+    $('#contenidoHorarios').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DE HORARIO
+$('.horarioHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.horarioPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.horarioPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.horarioPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.horarioPadre input[type=checkbox]').change(function () {
+    $(this).closest('.horarioPadre').next('ul').find('.horarioHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
 });
 // : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
@@ -2670,5 +2711,24 @@ function toggleColumnas() {
     } else {
         $('[name="colCargo"]').hide();
     }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
+    // * **************** COLUMNA MARCACION ***************************
+    if ($('#colMarcaciones').is(":checked")) {
+        $('[name="colMarcaciones"]').show();
+    } else {
+        $('[name="colMarcaciones"]').hide();
+    }
+    // * *************** COLUMNA HORARIOS *****************************
+    // ? DESCRIPCION DE HORARIO
+    if ($('#descripcionHorario').is(":checked")) {
+        $('[name="descripcionHorario"]').show();
+    } else {
+        $('[name="descripcionHorario"]').hide();
+    }
+    // ? HORARIO
+    if ($('#horarioHorario').is(":checked")) {
+        $('[name="horarioHorario"]').show();
+    } else {
+        $('[name="horarioHorario"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
 }
