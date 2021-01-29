@@ -35,7 +35,6 @@
 </div>
 <div class="row page-title">
     <div class="col-md-12">
-        {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
         <h4 class="header-title mt-0 "></i>Detalle de asistencia</h4>
     </div>
 </div>
@@ -189,7 +188,7 @@
         position: absolute;
     }
 
-    .dropdown-item {
+    .dropdown-itemM {
         padding: 0.1rem 0.1rem !important;
         color: #6c757d !important;
     }
@@ -201,6 +200,20 @@
 
     .form-control:disabled {
         background-color: #fcfcfc;
+    }
+
+    .ulHijo {
+        list-style: none;
+        padding-left: 1rem;
+    }
+
+    .liContenido {
+        list-style: none;
+    }
+
+    .dropdown-itemSelector {
+        padding: 0rem 1rem !important;
+        margin: 0rem;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -260,20 +273,67 @@
                 <div class="row justify-content-left">
                     <div class="col-md-12 pb-2">
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                                onclick="javascript:cambiartabla()">
-                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">
-                                Mostrar detalles
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12 pb-2">
-                        <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="switPausas"
                                 onclick="javascript:togglePausas()">
                             <label class="custom-control-label" for="switPausas" style="font-weight: bold">
                                 Mostrar pausas
                             </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Selector de columnas
+                        </button>
+                        <div class="dropdown-menu allow-focus">
+                            <ul class="dropdown-itemSelector">
+                                <li class="liContenido detallePadre">
+                                    <input type="checkbox" name="detallePadre[]">
+                                    <label for="">Detalles</label>
+                                    <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                        height="10" style="cursor: pointer;" onclick="javascript:toggleD()">
+                                </li>
+                                <ul class="ulHijo" style="display: none" id="contenidoDetalle">
+                                    <li class="liContenido detalleHijo">
+                                        <input type="checkbox" id="colTiempoSitio">
+                                        <label for="">Tiempo en sitio</label>
+                                    </li>
+                                    <li class="liContenido detalleHijo">
+                                        <input type="checkbox" id="colTardanza">
+                                        <label for="">Tardanza</label>
+                                    </li>
+                                    <li class="liContenido detalleHijo">
+                                        <input type="checkbox" id="colIncidencia">
+                                        <label for="">Incidencias</label>
+                                    </li>
+                                </ul>
+                            </ul>
+                            <ul class="dropdown-itemSelector">
+                                <li class="liContenido">
+                                    <input type="checkbox">
+                                    <label for="">Pausas</label>
+                                    <img class="float-right" src="{{asset('landing/images/chevron-arrow-down.svg')}}"
+                                        height="10" style="cursor: pointer;" onclick="javascript:r_toggleG()">
+                                    <ul class="ulHijo" style="display: none">
+                                        <li class="liContenido">
+                                            <input type="checkbox">
+                                            <label for="">Pausa</label>
+                                        </li>
+                                        <li class="liContenido">
+                                            <input type="checkbox">
+                                            <label for="">Horario de pausa</label>
+                                        </li>
+                                        <li class="liContenido">
+                                            <input type="checkbox">
+                                            <label for="">Tiempo de pausa</label>
+                                        </li>
+                                        <li class="liContenido">
+                                            <input type="checkbox">
+                                            <label for="">Exceso de pausa</label>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     {{-- GIF DE ESPERA --}}
@@ -299,309 +359,7 @@
                                     <th>Incidencias T.</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyD">
-                                <tr>
-                                    <th class="noExport">Agregar</th>
-                                    <th>CC&nbsp;</th>
-                                    <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th class="text-center" style="border-left: 2px solid #383e56!important;">
-                                        Descripción del horario
-                                    </th>
-                                    <th class="text-center">Horario</th>
-                                    <th>Tolerancia en el ingreso</th>
-                                    <th>Tolerancia en la salida</th>
-                                    <th>Faltas</th>
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(2,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>1&nbsp;</td>
-                                    <td>80517256&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>Doris Maza Lopez&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(1,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>2&nbsp;</td>
-                                    <td>77137872&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>Gabriela Sanchez Maza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
-                                        class="text-center">----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">------</td>
-                                    <td id="TiempoTotal1" style="border-left:1px dashed #aaaaaa!important;">
-                                        <a class="badge badge-soft-primary mr-2">
-                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="badge badge-soft-danger mr-2">
-                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td class="text-center">--</td>
-                                    <td class="text-center">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(4,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>3&nbsp;</td>
-                                    <td>77137871&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>Hilda Sanchez Maza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
-                                        class="text-center">----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">------</td>
-                                    <td id="TiempoTotal4" style="border-left:1px dashed #aaaaaa!important;">
-                                        <a class="badge badge-soft-primary mr-2">
-                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="badge badge-soft-danger mr-2">
-                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td class="text-center">--</td>
-                                    <td class="text-center">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(5,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>4&nbsp;</td>
-                                    <td>77137879&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>Matias Sanchez Coronado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
-                                        class="text-center">----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">------</td>
-                                    <td id="TiempoTotal5" style="border-left:1px dashed #aaaaaa!important;">
-                                        <a class="badge badge-soft-primary mr-2">
-                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="badge badge-soft-danger mr-2">
-                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td class="text-center">--</td>
-                                    <td class="text-center">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(9,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>5&nbsp;</td>
-                                    <td>58727532&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>prueba prueba prueba&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
-                                        class="text-center">----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">------</td>
-                                    <td id="TiempoTotal9" style="border-left:1px dashed #aaaaaa!important;">
-                                        <a class="badge badge-soft-primary mr-2">
-                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="badge badge-soft-danger mr-2">
-                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td class="text-center">--</td>
-                                    <td class="text-center">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(12,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>6&nbsp;</td>
-                                    <td>21525632&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>PruebaM PruebaM PruebaM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
-                                        class="text-center">----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">------</td>
-                                    <td id="TiempoTotal12" style="border-left:1px dashed #aaaaaa!important;">
-                                        <a class="badge badge-soft-primary mr-2">
-                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="badge badge-soft-danger mr-2">
-                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td class="text-center">--</td>
-                                    <td class="text-center">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(3,'2021-01-28')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>7&nbsp;</td>
-                                    <td>77137875&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td>Rosmeri Sanchez Maza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                        ----
-                                    </td>
-                                    <td class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td>---</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                    <td class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">---</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td name="tiempoSitHi" class="text-center">--</td>
-                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
-                                        class="text-center">----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">-----</td>
-                                    <td name="datosPausa" class="text-center">------</td>
-                                    <td id="TiempoTotal3" style="border-left:1px dashed #aaaaaa!important;">
-                                        <a class="badge badge-soft-primary mr-2">
-                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="badge badge-soft-danger mr-2">
-                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                            00:00:00
-                                        </a>
-                                    </td>
-                                    <td class="text-center">--</td>
-                                    <td class="text-center">--</td>
-                                </tr>
-                            </tbody>
+                            <tbody id="tbodyD"></tbody>
                         </table>
 
                     </div>
