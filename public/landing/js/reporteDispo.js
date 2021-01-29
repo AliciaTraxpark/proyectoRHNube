@@ -165,8 +165,8 @@ function inicializarTabla() {
                     tableHeader: {
                         bold: true,
                         fontSize: 11,
-                        color: '#6c757d',
-                        fillColor: '#ffffff',
+                        color: '#ffffff',
+                        fillColor: '#14274e',
                         alignment: 'left'
                     },
                     defaultStyle: {
@@ -351,14 +351,14 @@ function cargartabla(fecha) {
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
                         theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center">
-                                            Entrada
-                                            &nbsp;
-                                            <span class="badge badge-pill badge-info" style="font-size: 10px !important;background-color: #383e56;">${j + 1}</span>
+                                            <span>
+                                                Entrada <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                            </span>
                                         </th>
                                         <th class="text-center">
-                                            Salida
-                                            &nbsp;
-                                            <span class="badge badge-pill badge-info" style="font-size: 10px !important;background-color: #383e56;">${j + 1}</span>
+                                            <span>
+                                                Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                            </span>
                                         </th>
                                         <th id="tSitio" name="colTiempoS">Tiempo en sitio</th>
                                         <th name="colTardanza">Tardanza</th>
@@ -2558,15 +2558,15 @@ function limpiarAtributos() {
     $('#r_horarioXE').empty();
 }
 // ! ********************************* SELECTOR DE COLUMNAS ****************************************************
-// * TOGGLE DE DETALLES
-function toggleD() {
-    $('#contenidoDetalle').toggle();
-}
 // * FUNCION PARA QUE NO SE CIERRE DROPDOWN
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
 });
 // : ************************************** COLUMNAS DE DETALLES ***********************************************
+// * TOGGLE DE DETALLES
+function toggleD() {
+    $('#contenidoDetalle').toggle();
+}
 // * FUNCION DE CHECKBOX HIJOS DETALLES
 $('.detalleHijo input[type=checkbox]').change(function () {
     var contenido = $(this).closest('ul');
@@ -2595,7 +2595,39 @@ $('.detallePadre input[type=checkbox]').change(function () {
     $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
-
+// : ************************************** COLUMNAS DE PAUSAS ***********************************************
+function toggleP() {
+    $('#contenidoPausas').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS PAUSAS
+$('.pausaHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.pausaPadre input[type=checkbox]').change(function () {
+    $(this).closest('.pausaPadre').next('ul').find('.pausaHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
+// : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
     // * ***************** COLUMNAS DE DETALLES ****************
@@ -2616,6 +2648,11 @@ function toggleColumnas() {
         $('[name="colIncidencia"]').show();
     } else {
         $('[name="colIncidencia"]').hide();
+    }
+    // * ****************** COLUMNAS DE PAUSAS *********************
+    // ? DESCRION PAUSA
+    if ($('#descripcionPausa').is("checked")) {
+        $('[name="descripcionPausa"]').show();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
 }
