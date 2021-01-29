@@ -367,13 +367,13 @@ function cargartabla(fecha) {
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
                     for (let p = 0; p < cantidadColumnasP; p++) {
-                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="datosPausa">Pausa</th>
-                                        <th name="datosPausa">Horario de pausas</th>
-                                        <th name="datosPausa">Tiempo de pausa</th>
-                                        <th name="datosPausa">Exceso de pausa</th>`;
+                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">Pausa</th>
+                                        <th name="horarioPausa">Horario de pausas</th>
+                                        <th name="tiempoPausa">Tiempo de pausa</th>
+                                        <th name="excesoPausa">Exceso de pausa</th>`;
                     }
                 }
-                theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;">Marcación T.</th> 
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;">Marcación T.</th> 
                                 <th>Tardanza T.</th>
                                 <th>Faltas T.</th>
                                 <th>Incidencias T.</th>`;
@@ -1053,15 +1053,15 @@ function cargartabla(fecha) {
                             var tbodyPausas = "";
                             for (let p = 0; p < data[index].data[m].pausas.length; p++) {
                                 var pausaData = data[index].data[m].pausas[p];
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="datosPausa">${pausaData.descripcion}</td>
-                                        <td name="datosPausa">${pausaData.inicio} - ${pausaData.fin}</td>
-                                        <td name="datosPausa">
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
+                                        <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>
+                                        <td name="tiempoPausa">
                                             <a class="badge badge-soft-primary mr-2">
                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                 ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
                                             </a>
                                         </td>
-                                        <td name="datosPausa">
+                                        <td name="tiempoPausa">
                                             <a class="badge badge-soft-danger mr-2">
                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                 ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
@@ -1069,10 +1069,10 @@ function cargartabla(fecha) {
                                         </td>`;
                             }
                             for (let cp = data[index].data[m].pausas.length; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa" class="text-center">----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">------</td>`;
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
+                                                <td name="horarioPausa" class="text-center">-----</td>
+                                                <td name="tiempoPausa" class="text-center">-----</td>
+                                                <td name="excesoPausa" class="text-center">------</td>`;
                             }
                             grupoHorario += tbodyPausas;
                         } else {
@@ -1096,17 +1096,17 @@ function cargartabla(fecha) {
                             // ! PAUSAS
                             var tbodyPausas = "";
                             for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa" class="text-center">----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">------</td>`;
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
+                                                <td name="horarioPausa" class="text-center">-----</td>
+                                                <td name="tiempoPausa" class="text-center">-----</td>
+                                                <td name="excesoPausa" class="text-center">------</td>`;
                             }
                             grupoHorario += tbodyPausas;
                         }
                     }
                     tbody += grupoHorario;
                     // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
-                    tbody += `<td id="TiempoTotal${data[index].emple_id}" style="border-left:1px dashed #aaaaaa!important;">
+                    tbody += `<td id="TiempoTotal${data[index].emple_id}" style="border-left: 2px solid #383e56!important;">
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
@@ -1141,10 +1141,10 @@ function cargartabla(fecha) {
                         }
                         // ! PAUSAS
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                            tbodyTR += `<td name="datosPausa"></td>
-                                    <td name="datosPausa"></td>
-                                    <td name="datosPausa"></td>
-                                    <td name="datosPausa"></td>`;
+                            tbodyTR += `<td name="descripcionPausa"></td>
+                                    <td name="horarioPausa"></td>
+                                    <td name="tiempoPausa"></td>
+                                    <td name="excesoPausa"></td>`;
                         }
                     }
                     tbodyTR += '<td><br><br></td><td></td><td></td><td></td></tr>';
@@ -1157,14 +1157,6 @@ function cargartabla(fecha) {
                 });
                 // * SWITCH DE MOSTRAR DETALLES
                 toggleColumnas();
-                // * SWITCH DE PAUSAS
-                if ($('#switPausas').is(':checked')) {
-                    $('[name="datosPausa"]').show();
-                    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-                } else {
-                    $('[name="datosPausa"]').hide();
-                    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-                }
             } else {
                 $('#customSwitDetalles').prop("disabled", true);
                 $('#switPausas').prop("disabled", true);
@@ -1182,17 +1174,6 @@ function cambiarF() {
     cargartabla(f2);
     setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
 }
-// * FUNCION DE SWITCH DE MOSTRAR PAUSAS
-function togglePausas() {
-    if ($('#switPausas').is(':checked')) {
-        $('[name="datosPausa"]').show();
-        setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-    } else {
-        $('[name="datosPausa"]').hide();
-        setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-    }
-}
-
 // TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // ! *********************************** NUEVA MARCACION ********************************************
 // * FUNCION DE AGREGAR MARCACION
@@ -2651,8 +2632,28 @@ function toggleColumnas() {
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
-    if ($('#descripcionPausa').is("checked")) {
+    if ($('#descripcionPausa').is(":checked")) {
         $('[name="descripcionPausa"]').show();
+    } else {
+        $('[name="descripcionPausa"]').hide();
+    }
+    // ? HORARIO PAUSA
+    if ($('#horarioPausa').is(":checked")) {
+        $('[name="horarioPausa"]').show();
+    } else {
+        $('[name="horarioPausa"]').hide();
+    }
+    // ? TIEMPO DE PAUSA
+    if ($('#tiempoPausa').is(":checked")) {
+        $('[name="tiempoPausa"]').show();
+    } else {
+        $('[name="tiempoPausa"]').hide();
+    }
+    // ? EXCESO DE PAUSA
+    if ($('#excesoPausa').is(":checked")) {
+        $('[name="excesoPausa"]').show();
+    } else {
+        $('[name="excesoPausa"]').hide();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
 }
