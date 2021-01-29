@@ -346,7 +346,7 @@ function cargartabla(fecha) {
                                     <th class="text-center" name="horarioHorario">Horario</th>
                                     <th name="toleranciaIHorario">Tolerancia en el ingreso</th>
                                     <th name="toleranciaFHorario">Tolerancia en la salida</th>
-                                    <th>Falta</th>`;
+                                    <th name="faltaHorario">Falta</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
@@ -448,7 +448,7 @@ function cargartabla(fecha) {
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td>---</td>`;
+                                                        <td class="text-center" name="faltaHorario">---</td>`;
                                     } else {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
@@ -481,7 +481,7 @@ function cargartabla(fecha) {
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td>---</td>`;
+                                                        <td class="text-center" name="faltaHorario">---</td>`;
                                     }
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
@@ -512,7 +512,7 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td>---</td>`;
+                                                    <td class="text-center" name="faltaHorario">---</td>`;
                                 }
                             } else {
                                 if (horarioData.horario != null) {
@@ -529,7 +529,7 @@ function cargartabla(fecha) {
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td>---</td>`;
+                                                        <td class="text-center" name="faltaHorario">---</td>`;
                                     } else {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -543,7 +543,7 @@ function cargartabla(fecha) {
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td>---</td>`;
+                                                        <td class="text-center" name="faltaHorario">---</td>`;
                                     }
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
@@ -556,7 +556,7 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td>---</td>`;
+                                                    <td class="text-center" name="faltaHorario">---</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -1082,7 +1082,7 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td class="text-center" name="toleranciaFHorario">---</td>
-                                            <td>---</td>`;
+                                            <td class="text-center" name="faltaHorario">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
@@ -1134,7 +1134,7 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td></td>';
+                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="faltaHorario"></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td><td name="colIncidencia"></td>';
@@ -2741,6 +2741,12 @@ function toggleColumnas() {
         $('[name="toleranciaFHorario"]').show();
     } else {
         $('[name="toleranciaFHorario"]').hide();
+    }
+    // ? FALTA
+    if ($('#faltaHorario').is(":checked")) {
+        $('[name="faltaHorario"]').show();
+    } else {
+        $('[name="faltaHorario"]').hide();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
 }
