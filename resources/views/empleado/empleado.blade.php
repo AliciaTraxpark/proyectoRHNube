@@ -3524,17 +3524,17 @@ use Carbon\Carbon;
                                                 <div class="col-sm-4">
                                                     <label for="sw-default">Apellido Paterno</label>
                                                     <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                                    <input type="text" class="form-control soloLetras" name="apPaterno" id="apPaterno" tabindex="4" required>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="sw-default">Apellido Materno</label>
                                                     <span id="validApMaterno" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control" name="apMaterno" id="apMaterno" tabindex="5" required>
+                                                    <input type="text" class="form-control soloLetras" name="apMaterno" id="apMaterno" tabindex="5" required>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="sw-default">Nombres</label>
                                                     <span id="validNombres" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control" name="nombres" id="nombres" tabindex="6" required>
+                                                    <input type="text" class="form-control soloLetras" name="nombres" id="nombres" tabindex="6" required>
                                                 </div>
                                                 <div class="col-sm-4">
                                                      <label for="sw-default">Correo Electrónico</label>

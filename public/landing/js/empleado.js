@@ -6358,3 +6358,15 @@ $(function () {
         });
     });
 }(document, window, 0));
+
+
+/*----------- VALIDACION SOLO LETRA NO ACEPTAR NUMEROS------------------------- */
+$(".soloLetras").bind('keypress', function(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+      event.preventDefault();
+      return false;
+    }
+  });
+/*  -----------------------------FIN VALIDACION----------------------------------*/
