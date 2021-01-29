@@ -299,7 +299,309 @@
                                     <th>Incidencias T.</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyD"></tbody>
+                            <tbody id="tbodyD">
+                                <tr>
+                                    <th class="noExport">Agregar</th>
+                                    <th>CC&nbsp;</th>
+                                    <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th class="text-center" style="border-left: 2px solid #383e56!important;">
+                                        Descripción del horario
+                                    </th>
+                                    <th class="text-center">Horario</th>
+                                    <th>Tolerancia en el ingreso</th>
+                                    <th>Tolerancia en la salida</th>
+                                    <th>Faltas</th>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(2,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>1&nbsp;</td>
+                                    <td>80517256&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Doris Maza Lopez&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(1,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>2&nbsp;</td>
+                                    <td>77137872&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Gabriela Sanchez Maza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
+                                        class="text-center">----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">------</td>
+                                    <td id="TiempoTotal1" style="border-left:1px dashed #aaaaaa!important;">
+                                        <a class="badge badge-soft-primary mr-2">
+                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td class="text-center">--</td>
+                                    <td class="text-center">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(4,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>3&nbsp;</td>
+                                    <td>77137871&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Hilda Sanchez Maza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
+                                        class="text-center">----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">------</td>
+                                    <td id="TiempoTotal4" style="border-left:1px dashed #aaaaaa!important;">
+                                        <a class="badge badge-soft-primary mr-2">
+                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td class="text-center">--</td>
+                                    <td class="text-center">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(5,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>4&nbsp;</td>
+                                    <td>77137879&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Matias Sanchez Coronado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
+                                        class="text-center">----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">------</td>
+                                    <td id="TiempoTotal5" style="border-left:1px dashed #aaaaaa!important;">
+                                        <a class="badge badge-soft-primary mr-2">
+                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td class="text-center">--</td>
+                                    <td class="text-center">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(9,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>5&nbsp;</td>
+                                    <td>58727532&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>prueba prueba prueba&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
+                                        class="text-center">----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">------</td>
+                                    <td id="TiempoTotal9" style="border-left:1px dashed #aaaaaa!important;">
+                                        <a class="badge badge-soft-primary mr-2">
+                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td class="text-center">--</td>
+                                    <td class="text-center">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(12,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>6&nbsp;</td>
+                                    <td>21525632&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>PruebaM PruebaM PruebaM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
+                                        class="text-center">----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">------</td>
+                                    <td id="TiempoTotal12" style="border-left:1px dashed #aaaaaa!important;">
+                                        <a class="badge badge-soft-primary mr-2">
+                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td class="text-center">--</td>
+                                    <td class="text-center">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(3,'2021-01-28')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>7&nbsp;</td>
+                                    <td>77137875&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Rosmeri Sanchez Maza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        ----
+                                    </td>
+                                    <td class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td>---</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
+                                    <td class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">---</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td name="tiempoSitHi" class="text-center">--</td>
+                                    <td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa"
+                                        class="text-center">----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">-----</td>
+                                    <td name="datosPausa" class="text-center">------</td>
+                                    <td id="TiempoTotal3" style="border-left:1px dashed #aaaaaa!important;">
+                                        <a class="badge badge-soft-primary mr-2">
+                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-soft-danger mr-2">
+                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                            00:00:00
+                                        </a>
+                                    </td>
+                                    <td class="text-center">--</td>
+                                    <td class="text-center">--</td>
+                                </tr>
+                            </tbody>
                         </table>
 
                     </div>

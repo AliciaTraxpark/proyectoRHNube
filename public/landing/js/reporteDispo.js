@@ -341,25 +341,36 @@ function cargartabla(fecha) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
                     theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;">
-                                        Horario
+                                        Descripción del horario
                                     </th>
-                                    <th class="text-center">Tiempo horario</th>
-                                    <th>Tolerancia</th>`;
+                                    <th class="text-center">Horario</th>
+                                    <th>Tolerancia en el ingreso</th>
+                                    <th>Tolerancia en la salida</th>
+                                    <th>Faltas</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
-                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;">Marca de entrada</th>
-                                        <th>Marca de salida</th>
-                                        <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
-                                        <th name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
+                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center">
+                                            Entrada
+                                            &nbsp;
+                                            <span class="badge badge-pill badge-info" style="font-size: 10px !important;background-color: #383e56;">${j + 1}</span>
+                                        </th>
+                                        <th class="text-center">
+                                            Salida
+                                            &nbsp;
+                                            <span class="badge badge-pill badge-info" style="font-size: 10px !important;background-color: #383e56;">${j + 1}</span>
+                                        </th>
+                                        <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th>
+                                        <th name="tiempoSitHi">Tardanza</th>
+                                        <th name="tiempoSitHi">Incidencias</th>`;
                     }
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
                     for (let p = 0; p < cantidadColumnasP; p++) {
                         theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="datosPausa">Pausa</th>
-                                        <th name="datosPausa">Horario pausa</th>
-                                        <th name="datosPausa">Tiempo pausa</th>
-                                        <th name="datosPausa">Exceso pausa</th>`;
+                                        <th name="datosPausa">Horario de pausas</th>
+                                        <th name="datosPausa">Tiempo de pausa</th>
+                                        <th name="datosPausa">Exceso de pausa</th>`;
                     }
                 }
                 theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;">Marcación T.</th> 
@@ -408,54 +419,89 @@ function cargartabla(fecha) {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                        <div class="dropdown">
-                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-primary mr-2" class="text-center">
-                                                                    ${horarioData.horario}
-                                                                </span>
-                                                            </a>
-                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                    Opciones
-                                                                </h6>
-                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                <div class="dropdown-item">
-                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                            Actualizar horario
-                                                                        </a>
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                        ${horarioData.horario}
+                                                                    </span>
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center">${horarioData.toleranciaF} min.</td>
+                                                        <td>---</td>`;
                                     } else {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario">
+                                                                        <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                        ${horarioData.horario}
+                                                                    </span>
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item noExport">
+                                                                        <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center">${horarioData.toleranciaF} min.</td>
+                                                        <td>---</td>`;
+                                    }
+                                } else {
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario">
-                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
-                                                                    ${horarioData.horario}
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Sin horario
                                                                 </span>
                                                             </a>
-                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                            <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
                                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                     Opciones
                                                                 </h6>
                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                                 <div class="dropdown-item noExport">
-                                                                    <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
                                                                             Actualizar horario
                                                                         </a>
                                                                     </div>
@@ -463,38 +509,10 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
-                                    }
-                                } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                    <div class="dropdown">
-                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                Sin horario
-                                                            </span>
-                                                        </a>
-                                                        <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                Opciones
-                                                            </h6>
-                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                            <div class="dropdown-item noExport">
-                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
-                                                                        Actualizar horario
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">---</td><td class="text-center">---</td>`;
+                                                    <td class="text-center">---</td>
+                                                    <td class="text-center">---</td>
+                                                    <td>---</td>
+                                                    <td>---</td>`;
                                 }
                             } else {
                                 if (horarioData.horario != null) {
@@ -505,11 +523,13 @@ function cargartabla(fecha) {
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                        </td>
+                                                        <td>
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center">${horarioData.toleranciaF} min.</td>
+                                                        <td>---</td>`;
                                     } else {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -517,11 +537,13 @@ function cargartabla(fecha) {
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                        </td>
+                                                        <td>
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center">${horarioData.toleranciaF} min.</td>
+                                                        <td>---</td>`;
                                     }
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
@@ -530,8 +552,11 @@ function cargartabla(fecha) {
                                                                  Sin horario
                                                             </span>
                                                         </a>
-                                                </td>
-                                                <td class="text-center">---</td><td class="text-center">---</td>`;
+                                                    </td>
+                                                    <td class="text-center">---</td>
+                                                    <td class="text-center">---</td>
+                                                    <td>---</td>
+                                                    <td>---</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -854,7 +879,6 @@ function cargartabla(fecha) {
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
                                                                 </td>
-                                                                <td name="tiempoSitHi">--</td>
                                                                 <td name="tiempoSitHi">--</td>`;
                                     } else {
                                         if (permisoModificar == 1) {
@@ -906,7 +930,6 @@ function cargartabla(fecha) {
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
                                                                 </td>
-                                                                <td name="tiempoSitHi">--</td>
                                                                 <td name="tiempoSitHi">--</td>`;
                                     }
 
@@ -1013,8 +1036,7 @@ function cargartabla(fecha) {
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
                                                                 </td>
-                                                                <td name="tiempoSitHi" class="text-center">--</td>
-                                                                <td name="tiempoSitHi" class="text-center">--</td>`;
+                                                                <td name="tiempoSitHi">--</td>`;
 
                                     }
                                 }
@@ -1023,7 +1045,6 @@ function cargartabla(fecha) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
                                                         <td class="text-center">---</td>
                                                         <td name="tiempoSitHi" class="text-center">---</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>
                                                         <td name="tiempoSitHi" class="text-center">--</td>
                                                         <td name="tiempoSitHi" class="text-center">--</td>`;
                             }
@@ -1056,16 +1077,18 @@ function cargartabla(fecha) {
                             grupoHorario += tbodyPausas;
                         } else {
                             grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                            ----
-                                        </td>
-                                        <td class="text-center">---</td><td class="text-center">---</td>`;
+                                                ----
+                                            </td>
+                                            <td class="text-center">---</td>
+                                            <td class="text-center">---</td>
+                                            <td>---</td>
+                                            <td>---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
                                                         <td class="text-center">---</td>
                                                         <td name="tiempoSitHi" class="text-center">---</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>
                                                         <td name="tiempoSitHi" class="text-center">--</td>
                                                         <td name="tiempoSitHi" class="text-center">--</td>`;
                             }
@@ -1111,10 +1134,10 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td></td><td></td><td></td>';
+                        tbodyTR += '<td></td><td></td><td></td><td></td><td></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                            tbodyTR += '<td><br></td><td></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td>';
+                            tbodyTR += '<td><br></td><td></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td>';
                         }
                         // ! PAUSAS
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
@@ -1124,7 +1147,7 @@ function cargartabla(fecha) {
                                     <td name="datosPausa"></td>`;
                         }
                     }
-                    tbodyTR += '<td><br><br></td><td></td><td></td><td></td><td></td></tr>';
+                    tbodyTR += '<td><br><br></td><td></td><td></td><td></td></tr>';
                     $('#tbodyD').append(tbodyTR);
                 }
                 inicializarTabla();
@@ -1164,7 +1187,7 @@ function cambiarF() {
     f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
     cargartabla(f2);
-
+    setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
 }
 // * FUNCION DE SWITCH DE MOSTRAR DETALLES
 function cambiartabla() {

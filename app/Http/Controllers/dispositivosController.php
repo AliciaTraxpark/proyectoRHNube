@@ -402,7 +402,8 @@ class dispositivosController extends Controller
                         "horarioIni" => $empleado->horarioIni,
                         "horarioFin" => $empleado->horarioFin,
                         "idHorario" => $empleado->idHorario,
-                        "tolerancia" => $empleado->tolerancia,
+                        "toleranciaI" => $empleado->toleranciaI,
+                        "toleranciaF" => $empleado->toleranciaF,
                         "idHorarioE" => $empleado->idHorarioE,
                         "estado" => $empleado->estado
                     );
@@ -652,7 +653,8 @@ class dispositivosController extends Controller
                 DB::raw('IF(mp.marcaMov_fecha is null, 0 , mp.marcaMov_fecha) as entrada'),
                 DB::raw('IF(mp.marcaMov_salida is null, 0 , mp.marcaMov_salida) as salida'),
                 DB::raw('IF(hoe.horarioEmp_id is null, 0 , hoe.horarioEmp_id) as idHorarioE'),
-                'hor.horario_tolerancia as tolerancia',
+                'hor.horario_tolerancia as toleranciaI',
+                'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
                 DB::raw("IF(td.dispositivo_descripcion is null, 'MANUAL' , td.dispositivo_descripcion) as dispositivo"),
                 'hoe.estado'
