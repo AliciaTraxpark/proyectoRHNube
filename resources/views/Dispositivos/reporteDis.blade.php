@@ -213,7 +213,7 @@
 
     .dropdown-itemSelector {
         padding: 0.1rem 1rem !important;
-        margin: 0.5rem 0 !important;
+        margin: 0.1rem 0 !important;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -272,21 +272,18 @@
 
                 <div class="row justify-content-left">
                     <div class="col-md-12 pb-2">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="switPausas"
-                                onclick="javascript:togglePausas()">
-                            <label class="custom-control-label" for="switPausas" style="font-weight: bold">
-                                Mostrar pausas
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
                         <div class="dropdown">
                             <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Selector de columnas
                             </button>
                             <div class="dropdown-menu allow-focus">
+                                <ul class="dropdown-item dropdown-itemSelector">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="colCargo">
+                                        <label for="">Cargo</label>
+                                    </li>
+                                </ul>
                                 <ul class="dropdown-item dropdown-itemSelector">
                                     <li class="liContenido detallePadre">
                                         <input type="checkbox" name="detallePadre[]">
@@ -309,6 +306,18 @@
                                             <label for="">Incidencias</label>
                                         </li>
                                     </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked disabled>
+                                        <label for="">DNI</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked disabled>
+                                        <label for="">Nombre</label>
+                                    </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector">
                                     <li class="liContenido pausaPadre">

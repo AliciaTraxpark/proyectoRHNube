@@ -335,7 +335,7 @@ function cargartabla(fecha) {
                 theadTabla += `<th>CC&nbsp;</th>
                                 <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                <th name="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 //* GRUPO DE HORARIOS
                 for (let m = 0; m < cantidadGruposHorario; m++) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
@@ -401,9 +401,9 @@ function cargartabla(fecha) {
                             <td>${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     if (data[index].cargo_descripcion != null) {
-                        tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
-                        tbody += `<td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        tbody += `<td class="text-center" name="colCargo">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     }
                     // * ARMAR GRUPO DE HORARIOS
                     var grupoHorario = "";
@@ -1132,7 +1132,7 @@ function cargartabla(fecha) {
                     if (permisoModificar == 1) {
                         tbodyTR += `<td></td>`;
                     }
-                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td></td>';
+                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         tbodyTR += '<td></td><td></td><td></td><td></td><td></td>';
                         // ! MARCACIONES
@@ -2608,6 +2608,15 @@ $('.pausaPadre input[type=checkbox]').change(function () {
     $(this).closest('.pausaPadre').next('ul').find('.pausaHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ************************************** COLUMNA DE CARGO ***************************************************
+$('#colCargo').change(function (event) {
+    if (event.target.checked) {
+        $('[name="colCargo"]').show();
+    } else {
+        $('[name="colCargo"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
+});
 // : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
@@ -2654,6 +2663,12 @@ function toggleColumnas() {
         $('[name="excesoPausa"]').show();
     } else {
         $('[name="excesoPausa"]').hide();
+    }
+    // * *************** COLUMNA CARGO ******************************
+    if ($('#colCargo').is(":checked")) {
+        $('[name="colCargo"]').show();
+    } else {
+        $('[name="colCargo"]').hide();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
 }
