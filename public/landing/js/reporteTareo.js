@@ -9,6 +9,11 @@ var fechaValue = $("#fechaSelec").flatpickr({
     wrap: true,
     allowInput: true,
 });
+// * HORAS PARA INSERTAR ENTRADA Y SALIDA
+var horasE = {};
+var horasS = {};
+// * ESTADO DE HORARIO EMPLEADO
+var contenidoHorario = [];
 $(function () {
     $("#idempleado").select2({
         placeholder: "Seleccionar",
@@ -53,6 +58,8 @@ function cargartabla(fecha) {
             },
         },
         success: function (data) {
+            fechaGlobal = fecha;
+            contenidoHorario.length = 0;
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
@@ -85,6 +92,7 @@ function cargartabla(fecha) {
                                     <th>Código –</th>
                                     <th>Subactividad</th>
                                     <th>Hora de entrada</th>
+                                    <th>&nbsp; &nbsp; &nbsp; &nbsp;</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
@@ -181,6 +189,7 @@ function cargartabla(fecha) {
 
                                     /* SI  TENGO SALIDA */
                                     if (marcacionData.salida != 0) {
+                                        tbodyEntradaySalida += `<td></td>`;
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
                                             marcacionData.salida
                                         ).format("HH:mm:ss")}</td>`;
@@ -235,8 +244,33 @@ function cargartabla(fecha) {
                                             ).add(horasTiempo, "hours");
                                         }
                                     } else {
+                                        tbodyEntradaySalida += `<td>
+                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
+                                        </td>`;
                                         /* SI NO TENGO SALIDA */
-                                        tbodyEntradaySalida += `<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
+                                        tbodyEntradaySalida += `<td>
+                                        <div class="dropdown noExport">
+                                        <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                            <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                No tiene salida
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+
+                                            <div class="dropdown-item noExport">
+                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                    <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})"
+                                                     style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                        Insertar salida
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                        </td>`;
 
                                         tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
@@ -281,8 +315,33 @@ function cargartabla(fecha) {
                                         }
 
                                          //* COLUMNA DE ENTRADA
-                                        tbodyEntradaySalida += `<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td>`;
+                                         tbodyEntradaySalida += `<td >
+                                         <div class=" dropdown">
+                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
+                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                 <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                     <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                     No tiene entrada
+                                                 </span>
+                                             </a>
+                                             <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
 
+                                                 <div class="dropdown-item">
+                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                         <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                             Insertar entrada
+                                                         </a>
+                                                     </div>
+                                                 </div>
+                                             </ul>
+                                         </div>
+                                     </td>`;
+
+                                        tbodyEntradaySalida += `<td>
+                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})">
+                                        <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
+                                        </td>`;
                                         //* COLUMNA DE SALIDA
 
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
@@ -315,7 +374,7 @@ function cargartabla(fecha) {
                     /* ----------------------------------------- ------------------*/
                 }
                 $("#tbodyD").html(tbody);
-
+                $('[data-toggle="tooltip"]').tooltip();
                 /* DATOS PARA EXPORTAR TABLA */
                 var razonSocial=$('#nameOrganizacion').val();
                 var direccion=$('#direccionO').val();
@@ -670,44 +729,342 @@ function cambiartabla() {
     }
 }
 
-///////////////////
-function s2ab(s) {
-    var buf = new ArrayBuffer(s.length);
-    var view = new Uint8Array(buf);
-    for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
-    return buf;
-}
-function toExcel() {
-    let file = new Blob([$("#tableZoomI").html()], {
-        type: "application/vnd.ms-excel",
-    });
-    let url = URL.createObjectURL(file);
-    let a = $("<a />", {
-        href: url,
-        download: "Asistencia.xls",
-    })
-        .appendTo("body")
-        .get(0)
-        .click();
-    /*  e.preventDefault(); */
-    /*  var cuerpoexcel=$('#tableZoomI').html();
- atob(cuerpoexcel);
- var blob = new Blob([ s2ab(atob()), {type:"application/vnd.ms-excel"}]
-  );
-  const link = document.createElement("a");
-  link.href = window.URL.createObjectURL(blob);
-  link.download = `report_${new Date().getTime()}.xlsx`;
-  link.click(); */
-}
-function generatePDF() {
-    var element = $("#tableZoomI").html();
-    var opt = {
-        margin: 0.5,
-        filename: "Asistencia.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "legal", orientation: "landscape" },
-    };
 
-    html2pdf().from(element).set(opt).save();
+/* --------------INTERCAMBIAR  ENTRADA Y SALIDA--------------------------------- */
+function intercambiarMar(id) {
+
+    alertify
+        .confirm("¿Desea intercambiar entrada y salida?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/intercambiarTareo",
+                    data: {
+                        id: id,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+
+                        $('#btnRecargaTabla').click();
+                        $.notifyClose();
+                        $.notify({
+                            message: data,
+                            icon: 'admin/images/checked.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { }
+                });
+            }
+        })
+        .setting({
+            title: "Intercambiar Marcación",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+}
+/* ------------------------------------ */
+///////////////////
+// * VARIABLES DE MARCACIONES
+var newEntrada = {};
+var newSalida = {};
+/* ---------FUNCION INSERTAR SALIDA.------- */
+// * MODAL DE INSERTAR SALIDA
+function insertarSalidaModal(hora, id, idH) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idH) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
+    $('#idMarcacionIS').val(id);
+    $('#i_hora').text(hora);
+    $('#idHorarioIS').val(idH);
+    $('#insertarSalida').modal();
+    horasS = $('#horaSalidaNueva').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
+}
+
+// * INSERTAR SALIDA
+function insertarSalida() {
+    var id = $('#idMarcacionIS').val();
+    var salida = $('#horaSalidaNueva').val();
+    var horario = $('#idHorarioIS').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarNSalida",
+        data: {
+            id: id,
+            salida: salida,
+            horario: horario
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta != undefined) {
+                $('#i_validS').empty();
+                $('#i_validS').append(data.respuesta);
+                $('#i_validS').show();
+                $('button[type="submit"]').attr("disabled", false);
+            } else {
+                $('#i_validS').empty();
+                $('#i_validS').hide();
+                $('#insertarSalida').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+                fechaValue.setDate(fechaGlobal);
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {
+        },
+    });
+}
+// * VALIDACION
+$('#formInsertarSalida').attr('novalidate', true);
+$('#formInsertarSalida').submit(function (e) {
+    e.preventDefault();
+    if ($("#horaSalidaNueva").val() == "00:00:00" || $("#horaSalidaNueva").val() == "00:00:0") {
+        $('#i_validS').empty();
+        $('#i_validS').append("Ingresar salida.");
+        $('#i_validS').show();
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
+    $('#i_validS').empty();
+    $('#i_validS').hide();
+    $('button[type="submit"]').attr("disabled", true);
+    this.submit();
+});
+/* ---------------------------------------- */
+
+/* -------------------FUNCIONES INSERTAR ENTRADA----------- */
+function insertarEntradaModal(hora, id, idH) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idH) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
+    $('#idMarcacionIE').val(id);
+    $('#ie_hora').text(hora);
+    $('#idHorarioIE').val(idH);
+    $('#insertarEntrada').modal();
+    horasE = $('#horasEntradaNueva').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
+}
+// * INSERTAR ENTRADA
+function insertarEntrada() {
+    var id = $('#idMarcacionIE').val();
+    var entrada = $('#horasEntradaNueva').val();
+    var horario = $('#idHorarioIE').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarNEntrada",
+        data: {
+            id: id,
+            entrada: entrada,
+            horario: horario
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta != undefined) {
+                $('#i_validE').empty();
+                $('#i_validE').append(data.respuesta);
+                $('#i_validE').show();
+                $('button[type="submit"]').attr("disabled", false);
+            } else {
+                $('#i_validE').empty();
+                $('#i_validE').hide();
+                $('#insertarEntrada').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+                fechaValue.setDate(fechaGlobal);
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {
+        },
+    });
+}
+// * VALIDACION
+$('#formInsertarEntrada').attr('novalidate', true);
+$('#formInsertarEntrada').submit(function (e) {
+    e.preventDefault();
+    if ($("#horasEntradaNueva").val() == "00:00:00" || $("#horasEntradaNueva").val() == "00:00:0") {
+        $('#i_validE').empty();
+        $('#i_validE').append("Ingresar entrada.");
+        $('#i_validE').show();
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
+    $('#i_validE').empty();
+    $('#i_validE').hide();
+    $('button[type="submit"]').attr("disabled", true);
+    this.submit();
+});
+/* -------------------------------------------------------- */
+// * LIMPIEZA DE CAMPOS
+function limpiarAtributos() {
+    // ? MODAL DE CAMBIAR ENTRADA
+    $('#entradaM').empty();
+    $('#e_valid').empty();
+    $('#e_valid').hide();
+    $('#c_horaE').empty();
+    // ? MODAL DE CAMBIAR SALIDA
+    $('#salidaM').empty();
+    $('#s_valid').empty();
+    $('#s_valid').hide();
+    $('#c_horaS').empty();
+    // ? MODAL DE ASIGNACION A NUEVA MARCACIÓN
+    $('#a_valid').empty();
+    $('#a_valid').hide();
+    $('#horarioM').empty();
+    $('#a_hora').empty();
+    // ? MODAL DE INSERTAR SALIDA
+    $('#i_validS').empty();
+    $('#i_validS').hide();
+    if (horasS.config != undefined) {
+        horasS.setDate("00:00:00");
+    }
+    // ? MODAL DE INSERTAR ENTRADA
+    $('#i_validE').empty();
+    $('#i_validE').hide();
+    if (horasE.config != undefined) {
+        horasE.setDate("00:00:00");
+    }
+    // ? MODAL DE CAMBIAR HORARIO
+    $('#ch_valid').empty();
+    $('#ch_valid').hide();
+    $('#horarioXE').empty();
+    $('#detalleHorarios').empty();
+    $('#detalleHorarios').hide();
+    // ? MODAL DE NUEVA MARCACION
+    $('#v_entrada').prop("checked", false);
+    $('#v_salida').prop("checked", false);
+    $('#nuevaEntrada').prop("disabled", false);
+    $('#nuevaSalida').prop("disabled", false);
+    if (newSalida.config != undefined) {
+        newSalida.setDate("00:00:00");
+    }
+    if (newEntrada.config != undefined) {
+        newEntrada.setDate("00:00:00");
+    }
+    $('#rowDatosM').hide();
+    $('#r_horarioXE').empty();
 }
