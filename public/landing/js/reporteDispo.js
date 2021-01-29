@@ -344,9 +344,9 @@ function cargartabla(fecha) {
                                         Descripción del horario
                                     </th>
                                     <th class="text-center" name="horarioHorario">Horario</th>
-                                    <th>Tolerancia en el ingreso</th>
+                                    <th name="toleranciaIHorario">Tolerancia en el ingreso</th>
                                     <th>Tolerancia en la salida</th>
-                                    <th>Faltas</th>`;
+                                    <th>Falta</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
@@ -446,7 +446,7 @@ function cargartabla(fecha) {
                                                         <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
-                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center">${horarioData.toleranciaF} min.</td>
                                                         <td>---</td>`;
                                     } else {
@@ -479,7 +479,7 @@ function cargartabla(fecha) {
                                                         <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
-                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center">${horarioData.toleranciaF} min.</td>
                                                         <td>---</td>`;
                                     }
@@ -510,7 +510,7 @@ function cargartabla(fecha) {
                                                         </div>
                                                     </td>
                                                     <td class="text-center" name="horarioHorario">---</td>
-                                                    <td class="text-center">---</td>
+                                                    <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td>---</td>
                                                     <td>---</td>`;
                                 }
@@ -527,7 +527,7 @@ function cargartabla(fecha) {
                                                         <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
-                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center">${horarioData.toleranciaF} min.</td>
                                                         <td>---</td>`;
                                     } else {
@@ -541,7 +541,7 @@ function cargartabla(fecha) {
                                                         <td name="horarioHorario">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
-                                                        <td class="text-center">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center">${horarioData.toleranciaF} min.</td>
                                                         <td>---</td>`;
                                     }
@@ -554,7 +554,7 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>
                                                     <td class="text-center" name="horarioHorario">---</td>
-                                                    <td class="text-center">---</td>
+                                                    <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td>---</td>
                                                     <td>---</td>`;
                                 }
@@ -1080,7 +1080,7 @@ function cargartabla(fecha) {
                                                 ----
                                             </td>
                                             <td class="text-center" name="horarioHorario">---</td>
-                                            <td class="text-center">---</td>
+                                            <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td>---</td>
                                             <td>---</td>`;
                             // ! MARCACIONES
@@ -1134,7 +1134,7 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td></td><td></td><td></td>';
+                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td></td><td></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td><td name="colIncidencia"></td>';
@@ -2729,6 +2729,12 @@ function toggleColumnas() {
         $('[name="horarioHorario"]').show();
     } else {
         $('[name="horarioHorario"]').hide();
+    }
+    // ? TOLERANCIA INICIO
+    if ($('#toleranciaIHorario').is(":checked")) {
+        $('[name="toleranciaIHorario"]').show();
+    } else {
+        $('[name="toleranciaIHorario"]').hide();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
 }

@@ -351,6 +351,10 @@
                                             <input type="checkbox" id="toleranciaFHorario" checked>
                                             <label for="">Tolerancia en la salida</label>
                                         </li>
+                                        <li class="liContenido horarioHijo">
+                                            <input type="checkbox" id="faltaHorario" checked>
+                                            <label for="">Falta</label>
+                                        </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
