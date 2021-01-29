@@ -2850,7 +2850,7 @@ class apiBiometricoController extends Controller
                     'id' => $plantilla_empleadobioVali->id,
                     'idempleado' => $idempleado,
                     'error' => 'Empleado con biometria duplicada',
-                    'exitoso' => false);
+                    'estado' => false);
 
                 /* ---------------------------- */
             } else {
@@ -2879,13 +2879,13 @@ class apiBiometricoController extends Controller
                                 'idempleado' => $idempleado,
                                 'posicion_huella' => $posicion_huella,
                                 'tipo_registro' => $tipo_registro,
-                                'exitoso' => true);
+                                'estado' => true);
 
                         } else {
                             $plantilla_empleadobioArray = array(
                                 'idempleado' => $idempleado,
                                 'error' => 'Tipo de registro no encontrado',
-                                'exitoso' => false);
+                                'estado' => false);
                         }
 
                     }
@@ -2895,7 +2895,7 @@ class apiBiometricoController extends Controller
                         $plantilla_empleadobioArray = array(
                             'idempleado' => $idempleado,
                             'error' => 'Posicion de huella incorrecta',
-                            'exitoso' => false);
+                            'estado' => false);
                     }
 
                 }
@@ -2905,7 +2905,7 @@ class apiBiometricoController extends Controller
                     $plantilla_empleadobioArray = array(
                         'idempleado' => $idempleado,
                         'error' => 'No se encontro empleados con este id',
-                        'exitoso' => false);
+                        'estado' => false);
 
                 }
             }
@@ -3018,7 +3018,7 @@ class apiBiometricoController extends Controller
 
             $datos = ['idDisposi' => $req['idDisposi'], 'idEmpleado' => $req['idEmpleado'],
                 'fechaMarcacion' => $req['fechaMarcacion'],
-                'idHoraEmp' => $req['idHoraEmp'],
+                'idHoraEmp' => $req['idHoraEmp'], 'id' => $req['id'],
             ];
 
             $contents->push($datos);
@@ -3032,6 +3032,8 @@ class apiBiometricoController extends Controller
         /*---------------------------------------------------------------------------------------------------  */
 
         /*------------------- RECORREMOS ARRAY ORDENADO------------------------------------------------------- */
+        $arrayDatos = new Collection();
+
         foreach ($arrayOrdenado as $req) {
 
             /* --------------------------------------------------------------- */
@@ -3292,242 +3294,240 @@ class apiBiometricoController extends Controller
             /* ---------------------------------- */
             /* --------------------------------------------------------------- */
 
-            /*CUADNO ES MARCACION DE ENTRADA */
-
-            if ($tipoMarcacion == 1) {
-                $marcacion_biometrico = new marcacion_puerta();
-
-                /* VALIDANDO FECHA  */
-                if (Carbon::create($req['fechaMarcacion'])->gt(Carbon::create($horaActual))) {
-                    return response()->json(array('status' => 500, 'title' => 'No se pudo validar fecha',
-                        'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                } else {
-                    $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
-                }
-                /* -------------------- */
-
-                $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
-
+            /* PRIMERO VALIDAMOS FECHA */
+            if (Carbon::create($req['fechaMarcacion'])->gt(Carbon::create($horaActual))) {
+                $respuestaMarcacion = array(
+                    'id' => $req['id'],
+                    'error' => 'Fecha invalida',
+                    'estado' => false);
+            } else {
                 /* VALIDANDO EMPLEADOIIIII */
                 $empleados = DB::table('empleado as e')
                     ->join('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
                     ->where('e.emple_id', '=', $req['idEmpleado'])
                     ->get()->first();
+
                 if ($empleados) {
-                    $marcacion_biometrico->organi_id = $empleados->organi_id;
-
-                    if (empty($req['idHoraEmp'])) {} else {
-                        $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
-                    }
-
+                    /*CUADNO ES MARCACION DE ENTRADA SIN HORARIO */
                     if ($tipoMarcacion == 1) {
-                        $marcacion_biometrico->tipoMarcacionB = 1;
-                    } else {
+                        $marcacion_biometrico = new marcacion_puerta();
 
-                    }
+                        $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
+                        /* -------------------- */
 
-                    $marcacion_biometrico->save();
-                } else {
-                    return response()->json(array('status' => 500, 'title' => 'No se pudo encontrar empleado',
-                        'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                }
-                /* --------------------------------------------------------------- */
-            }
-            /* CUADNO ES TIPO 0 O 3 QUE SON SALIDA DE MARCACION Y FIN DE PAUSA  */
-            else {
+                        $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                        $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
 
-                /* VALIDAMOS QUE LA HORA Y FECHA NO SEA MAYOR QUE LA DEL SERVIDOR */
-                if (Carbon::create($req['fechaMarcacion'])->gt(Carbon::create($horaActual))) {
-                    return response()->json(array('status' => 500, 'title' => 'No se pudo validar fecha',
-                        'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                } else {
-                    /* AQUI VALIDAREMOS PARA INSERTAR LA SALIDA */
+                        $marcacion_biometrico->organi_id = $empleados->organi_id;
 
-                    if ($tipoMarcacion == 0) {
-
-                        /* CUADNO ES SALIDA DE HORARIO */
-
-                        /* CONVERTIMOS LA FECHA DE MARCACION EN DATE */
-                        $fecha1 = Carbon::create($req['fechaMarcacion'])->toDateString();
-
-                        /* VERIFICAMOS  PARA EMPAREJAR  */
-                        $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
-                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                            ->where('mv.marcaMov_salida', '=', null)
-                            ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
-                            ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                            ->where('mv.tipoMarcacionB', '=', 1)
-                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
-                            ->whereNull('mv.horarioEmp_id')
-                            ->orderby('marcaMov_fecha', 'ASC')
-                            ->get()->last();
-
-                        if ($marcacion_puerta1) {
-                            $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
-                            $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
-                            $marcacion_biometrico->save();
+                        if (empty($req['idHoraEmp'])) {} else {
+                            $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
                         }
 
-                    } else {
+                        $marcacion_biometrico->tipoMarcacionB = 1;
 
-                        /* CUANDO TEENGA HORARIO */
-                        if ($tipoMarcacion == 2 || $tipoMarcacion == 3) {
-                            if ($tipoMarcacion == 2) {
-                                /*  entrada */
-                                $marcacion_biometrico = new marcacion_puerta();
+                        $marcacion_biometrico->save();
 
-                                /* VALIDANDO FECHA  */
-                                if (Carbon::create($req['fechaMarcacion'])->gt(Carbon::create($horaActual))) {
-                                    return response()->json(array('status' => 500, 'title' => 'No se pudo validar fecha',
-                                        'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                                } else {
-                                    $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
-                                }
-                                /* -------------------- */
+                        $respuestaMarcacion = array(
+                            'id' => $req['id'],
+                            'estado' => true);
 
-                                $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                        /* --------------------------------------------------------------- */
+                    }
+                    /* CUADNO ES TIPO 0  SON SALIDA DE MARCACION Y FIN DE PAUSA  */
+                    else {
 
-                                /* VALIDANDO EMPLEADOIIIII */
-                                $empleados = DB::table('empleado as e')
-                                    ->join('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
-                                    ->where('e.emple_id', '=', $req['idEmpleado'])
-                                    ->get()->first();
-                                if ($empleados) {
-                                    $marcacion_biometrico->organi_id = $empleados->organi_id;
 
-                                    if (empty($req['idHoraEmp'])) {} else {
-                                        $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
-                                    }
+                            /* AQUI VALIDAREMOS PARA INSERTAR LA SALIDA */
 
-                                    $marcacion_biometrico->tipoMarcacionB = 1;
+                            if ($tipoMarcacion == 0) {
 
-                                    $marcacion_biometrico->save();
-                                } else {
-                                    return response()->json(array('status' => 500, 'title' => 'No se pudo encontrar empleado',
-                                        'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                                }
-                                /* --------------------------------------------------------------- */
-                            } else {
-                                /* SALIDA */
                                 /* CUADNO ES SALIDA DE HORARIO */
 
                                 /* CONVERTIMOS LA FECHA DE MARCACION EN DATE */
                                 $fecha1 = Carbon::create($req['fechaMarcacion'])->toDateString();
 
-                                /* CONSULTAMOS SI HAY UNA MARCACION DE ANTERIOR QUE ESTE LLENA */
-                                $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
+                                /* VERIFICAMOS  PARA EMPAREJAR  */
+                                $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
                                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                                    ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1)
-                                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                    ->where('mv.marcaMov_salida', '=', null)
+                                    ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
+                                    ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                     ->where('mv.tipoMarcacionB', '=', 1)
+                                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                    ->whereNull('mv.horarioEmp_id')
                                     ->orderby('marcaMov_fecha', 'ASC')
-                                    ->where('mv.horarioEmp_id', '!=', null)
                                     ->get()->last();
 
-                                /* SI EXISTE ENTONCES COMPARRAREMOS */
-                                if ($marcacion_puerta00) {
-                                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
-                                        $marcacion_biometrico = new marcacion_puerta();
-                                        $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
-                                        $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                        $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                if ($marcacion_puerta1) {
+                                    $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
+                                    $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                    $marcacion_biometrico->save();
 
-                                        /* VALIDANDO EMPLEADOIIIII */
-                                        $empleados = DB::table('empleado as e')
-                                            ->join('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
-                                            ->where('e.emple_id', '=', $req['idEmpleado'])
-                                            ->get()->first();
-                                        if ($empleados) {
-                                            $marcacion_biometrico->organi_id = $empleados->organi_id;
-
-                                            if (empty($req['idHoraEmp'])) {} else {
-                                                $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
-                                            }
-
-                                            $marcacion_biometrico->tipoMarcacionB = 1;
-
-                                            $marcacion_biometrico->save();
-                                        } else {
-                                            return response()->json(array('status' => 500, 'title' => 'No se pudo encontrar empleado',
-                                                'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                                        }
-                                    } else {
-                                        $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
-                                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                                            ->where('mv.marcaMov_salida', '=', null)
-                                            ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
-                                            ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
-                                            ->where('mv.horarioEmp_id', '!=', null)
-                                            ->orderby('marcaMov_fecha', 'ASC')
-                                            ->get()->first();
-                                        if ($marcacion_puertaVerif2) {
-                                            $marcacion_biometrico = marcacion_puerta::find($marcacion_puertaVerif2->marcaMov_id);
-                                            $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
-                                            $marcacion_biometrico->save();
-                                        }
-                                        else{
-                                            $marcacion_biometrico = new marcacion_puerta();
-                                        $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
-                                        $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                        $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
-
-                                        /* VALIDANDO EMPLEADOIIIII */
-                                        $empleados = DB::table('empleado as e')
-                                            ->join('organizacion as or', 'e.organi_id', '=', 'or.organi_id')
-                                            ->where('e.emple_id', '=', $req['idEmpleado'])
-                                            ->get()->first();
-                                        if ($empleados) {
-                                            $marcacion_biometrico->organi_id = $empleados->organi_id;
-
-                                            if (empty($req['idHoraEmp'])) {} else {
-                                                $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
-                                            }
-
-                                            $marcacion_biometrico->tipoMarcacionB = 1;
-
-                                            $marcacion_biometrico->save();
-                                        } else {
-                                            return response()->json(array('status' => 500, 'title' => 'No se pudo encontrar empleado',
-                                                'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 500);
-                                        }
-                                        }
-                                    }
-
-                                } else {
-                                    $fecha2V = Carbon::create($req['fechaMarcacion'])->toDateString();
-                                    $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
-                                        ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
-                                        ->where('mv.marcaMov_salida', '=', null)
-                                        ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
-                                        ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                        ->where('mv.tipoMarcacionB', '=', 1)
-                                        ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
-                                        ->where('mv.horarioEmp_id', '!=', null)
-                                        ->orderby('marcaMov_fecha', 'ASC')
-                                        ->get()->last();
-                                    if ($marcacion_puerta1) {
-                                        $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
-                                        $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
-                                        $marcacion_biometrico->save();
-                                    }
+                                    $respuestaMarcacion = array(
+                                        'id' => $req['id'],
+                                        'estado' => true);
 
                                 }
 
+                            } else {
+
+                                /* CUANDO TEENGA HORARIO */
+                                if ($tipoMarcacion == 2 || $tipoMarcacion == 3) {
+                                    if ($tipoMarcacion == 2) {
+                                        /*  entrada */
+
+                                        $marcacion_biometrico = new marcacion_puerta();
+                                        $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
+                                        $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                                        $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                        $marcacion_biometrico->organi_id = $empleados->organi_id;
+
+                                            if (empty($req['idHoraEmp'])) {} else {
+                                                $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
+                                            }
+
+                                            $marcacion_biometrico->tipoMarcacionB = 1;
+
+                                            $marcacion_biometrico->save();
+                                            $respuestaMarcacion = array(
+                                                'id' => $req['id'],
+                                                'estado' => true);
+
+
+                                        /* --------------------------------------------------------------- */
+                                    } else {
+                                        /* SALIDA */
+                                        /* CUADNO ES SALIDA DE HORARIO */
+
+                                        /* CONVERTIMOS LA FECHA DE MARCACION EN DATE */
+                                        $fecha1 = Carbon::create($req['fechaMarcacion'])->toDateString();
+
+                                        /* CONSULTAMOS SI HAY UNA MARCACION DE ANTERIOR QUE ESTE LLENA */
+                                        $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
+                                            ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                            ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1)
+                                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                            ->where('mv.tipoMarcacionB', '=', 1)
+                                            ->orderby('marcaMov_fecha', 'ASC')
+                                            ->where('mv.horarioEmp_id', '!=', null)
+                                            ->get()->last();
+
+                                        /* SI EXISTE ENTONCES COMPARRAREMOS */
+                                        if ($marcacion_puerta00) {
+                                            if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+                                                $marcacion_biometrico = new marcacion_puerta();
+                                                $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                                $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                                                $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+
+
+                                                    $marcacion_biometrico->organi_id = $empleados->organi_id;
+
+                                                    if (empty($req['idHoraEmp'])) {} else {
+                                                        $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
+                                                    }
+
+                                                    $marcacion_biometrico->tipoMarcacionB = 1;
+
+                                                    $marcacion_biometrico->save();
+                                                    $respuestaMarcacion = array(
+                                                        'id' => $req['id'],
+                                                        'estado' => true);
+
+
+                                            } else {
+                                                $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
+                                                    ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                                    ->where('mv.marcaMov_salida', '=', null)
+                                                    ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
+                                                    ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
+                                                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                                    ->where('mv.horarioEmp_id', '!=', null)
+                                                    ->orderby('marcaMov_fecha', 'ASC')
+                                                    ->get()->first();
+                                                if ($marcacion_puertaVerif2) {
+                                                    $marcacion_biometrico = marcacion_puerta::find($marcacion_puertaVerif2->marcaMov_id);
+                                                    $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                                    $marcacion_biometrico->save();
+                                                    $respuestaMarcacion = array(
+                                                        'id' => $req['id'],
+                                                        'estado' => true);
+
+                                                } else {
+                                                    $marcacion_biometrico = new marcacion_puerta();
+                                                    $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                                    $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                                                    $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+
+
+                                                        $marcacion_biometrico->organi_id = $empleados->organi_id;
+
+                                                        if (empty($req['idHoraEmp'])) {} else {
+                                                            $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
+                                                        }
+
+                                                        $marcacion_biometrico->tipoMarcacionB = 1;
+
+                                                        $marcacion_biometrico->save();
+                                                        $respuestaMarcacion = array(
+                                                            'id' => $req['id'],
+                                                            'estado' => true);
+
+
+                                                }
+                                            }
+
+                                        } else {
+                                            $fecha2V = Carbon::create($req['fechaMarcacion'])->toDateString();
+
+                                            /* VERIFICAMOS SI LA ULTIMA MARCACION SIN SALIDA EXSITE E INSERTAMOS */
+                                            $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
+                                                ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                                                ->where('mv.marcaMov_salida', '=', null)
+                                                ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
+                                                ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
+                                                ->where('mv.tipoMarcacionB', '=', 1)
+                                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                                ->where('mv.horarioEmp_id', '!=', null)
+                                                ->orderby('marcaMov_fecha', 'ASC')
+                                                ->get()->last();
+                                            if ($marcacion_puerta1) {
+                                                $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
+                                                $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                                $marcacion_biometrico->save();
+                                                $respuestaMarcacion = array(
+                                                    'id' => $req['id'],
+                                                    'estado' => true);
+
+                                            }
+
+                                        }
+
+                                    }
+                                }
+
                             }
-                        }
 
                     }
+
+                } else {
+                    $respuestaMarcacion = array(
+                        'id' => $req['id'],
+                        'error' => 'Empleado no existe',
+                        'estado' => false);
                 }
+
             }
+             /* INSERTAMO A AARRAY  */
+             $arrayDatos->push($respuestaMarcacion);
+             /* ---------------------------- */
 
         }
 
-        if ($marcacion_biometrico) {
-            return response()->json(array('status' => 200, 'title' => 'Marcacion registrada correctamente',
-                'detail' => 'Marcacion registrada correctamente en la base de datos'), 200);
+        if ($arrayDatos != null) {
+
+            return response()->json($arrayDatos);
         } else {
             return response()->json(array('status' => 400, 'title' => 'No se pudo registrar marcacion',
                 'detail' => 'No se pudo registrar marcacion, compruebe que los datos sean validos'), 400);
