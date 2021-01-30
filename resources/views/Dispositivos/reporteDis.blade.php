@@ -273,7 +273,7 @@
                 <div class="row justify-content-left">
                     <div class="col-md-12 pb-2">
                         <div class="dropdown">
-                            <button class="btn btn-sm dropdown-toggle" style="background-color:#383e56;"
+                            <button class="btn btn-sm dropdown-toggle" style="background-color:#1e2139;"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Selector de columnas
                             </button>

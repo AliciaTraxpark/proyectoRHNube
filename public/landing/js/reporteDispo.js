@@ -142,7 +142,8 @@ function inicializarTabla() {
                         cambiar = cambiar.replace('Actualizar horario', '');
                         cambiar = cambiar.replace('Insertar salida', '');
                         cambiar = cambiar.replace('Insertar entrada', '');
-
+                        cambiar = cambiar.split("/");
+                        cambiar = cambiar.map(s => s.trim()).join("/")
                         return $.trim(cambiar);
                     }
                 }
