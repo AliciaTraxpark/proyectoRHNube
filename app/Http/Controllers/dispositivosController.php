@@ -380,7 +380,7 @@ class dispositivosController extends Controller
     {
         $fechaR = $request->fecha;
         $idemp = $request->idemp;
-        $fecha = Carbon::create($fechaR);
+        $fecha = Carbon::create($fechaR)->format('Y-m-d');
 
         function agruparEmpleadosMarcaciones($array)
         {
@@ -705,6 +705,38 @@ class dispositivosController extends Controller
                     "data" => array()
                 );
                 array_push($marcaciones, $arrayNuevo);
+            }
+        }
+        // * AGREGAR HORARIOS EMPLEADO ASIGNADO POR DIA PARA FALTAS
+        foreach ($marcaciones as $m) {
+            // * HORARIO EMPLEADO
+            $m->data = array_values($m->data);
+            $arrayHorarioE = [];
+            foreach ($m->data as $key => $horario) {
+                if ($horario["horario"]->idHorarioE != 0) {
+                    array_push($arrayHorarioE, $horario["horario"]->idHorarioE);
+                }
+            }
+            $horarioEmpleado = DB::table('horario_empleado as he')
+                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+                ->select(
+                    'h.horario_descripcion as horario',
+                    DB::raw('CONCAT("' . $fecha . '" , " ",h.horaI) as horarioIni'),
+                    DB::raw('CONCAT("' . $fecha . '" , " ",h.horaF) as horarioFin'),
+                    'h.horario_id  as idHorario',
+                    'h.horario_tolerancia as toleranciaI',
+                    'h.horario_toleranciaF as toleranciaF',
+                    'he.estado as estado'
+                )
+                ->whereNotIn('he.horarioEmp_id', $arrayHorarioE)
+                ->where('empleado_emple_id', '=', $m->emple_id)
+                ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+                ->where('he.estado', '=', 1)
+                ->get();
+
+            foreach ($horarioEmpleado as $he) {
+                array_push($m->data, array("horario" => $he, "pausas" => array(), "marcaciones" => array()));
             }
         }
         // * AGREGAR ATRIBUTOS DE HORARIO Y PAUSAS EN CADA HORARIO
