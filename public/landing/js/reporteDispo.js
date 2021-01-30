@@ -158,39 +158,6 @@ function inicializarTabla() {
                 columns: ":visible:not(.noExport)"
             },
             customize: function (doc) {
-                doc['styles'] = {
-                    table: {
-                        width: '100%'
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 11,
-                        color: '#ffffff',
-                        fillColor: '#14274e',
-                        alignment: 'left'
-                    },
-                    defaultStyle: {
-                        fontSize: 10,
-                        alignment: 'center'
-                    }
-                };
-                doc.pageMargins = [20, 120, 20, 30];
-                doc.content[1].margin = [30, 0, 30, 0];
-                var colCount = new Array();
-                var tr = $('#tablaReport tbody tr:first-child');
-                var trWidth = $(tr).width();
-                $('#tablaReport').find('tbody tr:first-child td').each(function () {
-                    var tdWidth = $(this).width();
-                    var widthFinal = parseFloat(tdWidth * 130);
-                    widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
-                    if ($(this).attr('colspan')) {
-                        for (var i = 1; i <= $(this).attr('colspan'); $i++) {
-                            colCount.push('*');
-                        }
-                    } else {
-                        colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
-                    }
-                });
                 var bodyCompleto = [];
                 doc.content[1].table.body.forEach(function (line, i) {
                     var bodyNuevo = [];
@@ -209,11 +176,46 @@ function inicializarTabla() {
                             cambiar = cambiar.replace('Insertar salida', '');
                             cambiar = cambiar.replace('Insertar entrada', '');
                             cambiar = $.trim(cambiar);
+                            cambiar = cambiar.split("/");
+                            cambiar = cambiar.map(s => s.trim()).join("/")
                             bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
                         });
                         bodyCompleto.push(bodyNuevo);
                     } else {
                         bodyCompleto.push(line);
+                    }
+                });
+                doc['styles'] = {
+                    table: {
+                        width: '100%'
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 11,
+                        color: '#ffffff',
+                        fillColor: '#14274e',
+                        alignment: 'left'
+                    },
+                    defaultStyle: {
+                        fontSize: 10,
+                        alignment: 'left'
+                    }
+                };
+                doc.pageMargins = [20, 120, 20, 30];
+                doc.content[1].margin = [30, 0, 30, 0];
+                var colCount = new Array();
+                var tr = $('#tablaReport tbody tr:first-child');
+                var trWidth = $(tr).width();
+                $('#tablaReport').find('tbody tr:first-child td').each(function () {
+                    var tdWidth = $(this).width();
+                    var widthFinal = parseFloat(tdWidth * 130);
+                    widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
+                    if ($(this).attr('colspan')) {
+                        for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                            colCount.push('*');
+                        }
+                    } else {
+                        colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
                     }
                 });
                 doc.content.splice(0, 1);
@@ -410,6 +412,8 @@ function cargartabla(fecha) {
                     //* ARMAR Y ORDENAR MARCACIONES
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
+                    // * CANTIDAD DE FALTAS
+                    var sumaFaltas = 0;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         if (data[index].data[m] != undefined) {
                             // ! HORARIO
@@ -447,8 +451,17 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td class="text-center" name="faltaHorario">---</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     } else {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
@@ -480,8 +493,17 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td class="text-center" name="faltaHorario">---</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     }
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
@@ -528,8 +550,17 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td class="text-center" name="faltaHorario">---</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     } else {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -542,8 +573,17 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td class="text-center" name="faltaHorario">---</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     }
                                 } else {
                                     grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
@@ -1117,9 +1157,28 @@ function cargartabla(fecha) {
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                     ${sumaTardanzas.format("HH:mm:ss")}
                                 </a>
-                            </td>
-                            <td class="text-center">--</td>
-                            <td class="text-center">--</td>`;
+                            </td>`;
+                    // ******************************* CANTIDAD DE FALTAS **************************
+                    console.log(sumaFaltas);
+                    if (sumaFaltas != 0) {
+                        tbody += `<td class="text-center">`;
+                        for (let f = 0; f < sumaFaltas; f++) {
+                            if (f == 0) {
+                                tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
+                                            Falta
+                                        </span>`;
+                            } else {
+                                tbody += `<b>/</b><span class="badge badge-soft-danger ml-1" class="text-center">
+                                            Falta
+                                        </span>`;
+                            }
+                        }
+                        tbody += `</td>`;
+                    } else {
+                        tbody += `<td class="text-center">--</td>`;
+                    }
+                    // * ********************** FINALIZACION *************************************
+                    tbody += `<td class="text-center">--</td>`;
                     tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
