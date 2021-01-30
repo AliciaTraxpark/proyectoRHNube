@@ -1534,6 +1534,20 @@ class EmpleadoController extends Controller
     }
     public function storeCalendarioTem(Request $request)
     {
+        $fechaRecibida= Carbon::create($request->get('start'))->toDateString();
+        $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
+        ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
+        ->where('evt.users_id', '=', Auth::user()->id)
+        ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
+        ->where('evt.organi_id', '=', session('sesionidorg'))
+        ->whereDate('evt.start', '=', $fechaRecibida)
+        ->where('tipo_ev','!=',5 )
+        ->get();
+
+        if($eventos_empleado_temp->isNotEmpty()){
+            return "Ya existe ".$eventos_empleado_temp[0]->title;
+        }
+        else{
         $eventos_empleado_tempSave = new eventos_empleado_temp();
         $eventos_empleado_tempSave->users_id = Auth::user()->id;
         $eventos_empleado_tempSave->title = $request->get('title');
@@ -1545,17 +1559,9 @@ class EmpleadoController extends Controller
         $eventos_empleado_tempSave->calendario_calen_id = $request->get('id_calendario');
         $eventos_empleado_tempSave->organi_id = session('sesionidorg');
         $eventos_empleado_tempSave->save();
+        return 1;
+        }
 
-
-
-        $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
-            ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id'])
-            ->where('evt.users_id', '=', Auth::user()->id)
-            ->where('evt.calendario_calen_id', '=', $request->get('id_calendario'))
-            ->where('evt.organi_id', '=', session('sesionidorg'))
-            ->get();
-
-        return $eventos_empleado_temp;
     }
 
     public function storeIncidTem(Request $request)
@@ -1876,37 +1882,75 @@ class EmpleadoController extends Controller
         $ev1 = eventos_empleado::where('id_empleado', '=', $request->get('idempleado'))
             ->first();
 
-        $eventos_empleado = new eventos_empleado();
+        /* BUSCAR SI YA ESTA REGISTRADO EL EVENTO  */
+        $fechaRecibida= Carbon::create($request->get('start'))->toDateString();
+       $buscarEvento=DB::table('eventos_empleado as eve')
+       ->where('id_empleado','=',$request->get('idempleado'))
+       ->whereDate('start','=',$fechaRecibida)
+       ->where('id_calendario','=',$ev1->id_calendario)
+       ->get();
 
-        $eventos_empleado->title = $request->get('title');
-        $eventos_empleado->color = $request->get('color');
-        $eventos_empleado->textColor = $request->get('textColor');
-        $eventos_empleado->start = $request->get('start');
-        $eventos_empleado->end = $request->get('end');
-        $eventos_empleado->tipo_ev = $request->get('tipo');
-        $eventos_empleado->id_empleado = $request->get('idempleado');
-        $eventos_empleado->id_calendario = $ev1->id_calendario;
-        $eventos_empleado->laborable = 0;
-        $eventos_empleado->save();
+
+        /* --------------------------------------- */
+
+
+        /* VERIFICAR SI EXISTE */
+        if($buscarEvento->isNotEmpty()){
+            return "Ya existe ".$buscarEvento[0]->title;
+        }
+        else{
+            //*REGISTRAMOS
+            $eventos_empleado = new eventos_empleado();
+            $eventos_empleado->title = $request->get('title');
+            $eventos_empleado->color = $request->get('color');
+            $eventos_empleado->textColor = $request->get('textColor');
+            $eventos_empleado->start = $request->get('start');
+            $eventos_empleado->end = $request->get('end');
+            $eventos_empleado->tipo_ev = $request->get('tipo');
+            $eventos_empleado->id_empleado = $request->get('idempleado');
+            $eventos_empleado->id_calendario = $ev1->id_calendario;
+            $eventos_empleado->laborable = 0;
+            $eventos_empleado->save();
+            return 1;
+        }
+
     }
     public function storeIncidempleado(Request $request)
     {
+        /* BUSCAR SI YA ESTA REGISTRADO EL EVENTO  */
+        $fechaRecibida= Carbon::create($request->get('start'))->toDateString();
+       $buscarEvento=DB::table('eventos_empleado as eve')
+       ->where('id_empleado','=',$request->get('idempleado'))
+       ->whereDate('start','=',$fechaRecibida)
+       ->get();
 
-        $incidencia = new incidencias();
-        $incidencia->inciden_descripcion =  $request->get('title');
-        $incidencia->inciden_descuento = $request->get('descuentoI');
-        $incidencia->inciden_hora =  $request->get('horaIn');
-        $incidencia->users_id = Auth::user()->id;
-        $incidencia->organi_id = session('sesionidorg');
-        $incidencia->save();
 
-        $incidencia_dias = new incidencia_dias();
-        $incidencia_dias->id_incidencia = $incidencia->inciden_id;
-        $incidencia_dias->inciden_dias_fechaI = $request->get('start');
-        $incidencia_dias->inciden_dias_fechaF = $request->get('end');
-        $incidencia_dias->id_empleado = $request->get('idempleado');
+        /* --------------------------------------- */
 
-        $incidencia_dias->save();
+        /* VERIFICAR SI EXISTE */
+        if($buscarEvento->isNotEmpty()){
+            return "Ya existe ".$buscarEvento[0]->title;
+        }
+        else{
+            $incidencia = new incidencias();
+            $incidencia->inciden_descripcion =  $request->get('title');
+            $incidencia->inciden_descuento = $request->get('descuentoI');
+            $incidencia->inciden_hora =  $request->get('horaIn');
+            $incidencia->users_id = Auth::user()->id;
+            $incidencia->organi_id = session('sesionidorg');
+            $incidencia->save();
+
+            $incidencia_dias = new incidencia_dias();
+            $incidencia_dias->id_incidencia = $incidencia->inciden_id;
+            $incidencia_dias->inciden_dias_fechaI = $request->get('start');
+            $incidencia_dias->inciden_dias_fechaF = $request->get('end');
+            $incidencia_dias->id_empleado = $request->get('idempleado');
+
+            $incidencia_dias->save();
+            return 1;
+        }
+
+
     }
 
     public function guardarhorarioempleado(Request $request)
