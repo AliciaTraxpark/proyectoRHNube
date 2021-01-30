@@ -272,9 +272,10 @@
 
                 <div class="row justify-content-left">
                     <div class="col-md-12 pb-2">
-                        <div class="dropdown">
+                        <div class="dropdown" id="dropSelector">
                             <button class="btn btn-sm dropdown-toggle" style="background-color:#1e2139;"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{asset('landing/images/insert.svg')}}" height="20">
                                 Selector de columnas
                             </button>
                             <div class="dropdown-menu allow-focus" style="padding: 0rem 0;">

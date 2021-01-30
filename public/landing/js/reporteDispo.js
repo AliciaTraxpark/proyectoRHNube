@@ -2600,6 +2600,11 @@ function limpiarAtributos() {
 }
 // ! ********************************* SELECTOR DE COLUMNAS ****************************************************
 // * FUNCION PARA QUE NO SE CIERRE DROPDOWN
+$('#dropSelector').on('hidden.bs.dropdown', function () {
+    $('#contenidoDetalle').hide();
+    $('#contenidoPausas').hide();
+    $('#contenidoHorarios').hide();
+});
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
 });
