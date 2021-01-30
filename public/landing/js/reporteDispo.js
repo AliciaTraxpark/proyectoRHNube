@@ -924,15 +924,15 @@ function cargartabla(fecha) {
                                     } else {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td name="colMarcaciones">
-                                                                        <div class="dropdown noExport">
-                                                                            <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
-                                                                                aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                                        <div class="dropdown noExport" id="dropSalida${marcacionData.idMarcacion}">
+                                                                            <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
+                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                                 <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                                     No tiene salida
                                                                                 </span>
                                                                             </a>
-                                                                            <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                            <ul class="dropdown-menu"  style="padding: 0rem 0rem;">
                                                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                                     Opciones
