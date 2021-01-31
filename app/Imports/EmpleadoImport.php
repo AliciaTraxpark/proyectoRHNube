@@ -13,6 +13,8 @@ use App\tipo_documento;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_districts;
 use App\ubigeo_peru_provinces;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -336,7 +338,15 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 ///
 
                 if ($row['fecha_nacimiento'] != null || $row['fecha_nacimiento'] != '') {
-                    $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
+                    if( is_numeric($row['fecha_nacimiento'])==true){
+                        $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
+                    }
+                    else{
+                        $crearformat= DateTime::createFromFormat('d/m/Y',$row['fecha_nacimiento'])->format('Y/m/d');
+                    $formatoFN= Carbon::create($crearformat);
+                    $fechaNacimieB= date_format($formatoFN, 'Y-m-d');
+                    }
+                   
                 } else {
                     $fechaNacimieB = '';
                 }
@@ -366,7 +376,23 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 //fechaIContrato
 
                 if ($row['inicio_contrato'] != null || $row['inicio_contrato'] != '') {
-                    $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
+                    if( is_numeric($row['inicio_contrato'])==true){
+                        $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
+                    }
+                    else{
+                        $crearformat= DateTime::createFromFormat('d/m/Y',$row['inicio_contrato'])->format('Y/m/d');
+                    $formatoFc= Carbon::create($crearformat);
+                    $fechaInicioC = date_format($formatoFc, 'Y-m-d');
+                    }
+
+
+
+
+                    /*  if($formatoFc == false){
+                        return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                    } */
+
+
                 } else {
                     return redirect()->back()->with('alert', 'Debe especificar inicio de contrato' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
 
