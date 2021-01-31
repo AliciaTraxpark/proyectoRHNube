@@ -9,6 +9,11 @@ var fechaValue = $("#fechaSelec").flatpickr({
     wrap: true,
     allowInput: true,
 });
+// * HORAS PARA INSERTAR ENTRADA Y SALIDA
+var horasE = {};
+var horasS = {};
+// * ESTADO DE HORARIO EMPLEADO
+var contenidoHorario = [];
 $(function () {
     $("#idempleado").select2({
         placeholder: "Seleccionar",
@@ -53,13 +58,16 @@ function cargartabla(fecha) {
             },
         },
         success: function (data) {
+            fechaGlobal = fecha;
+            contenidoHorario.length = 0;
             if (data.length != 0) {
                 if ($.fn.DataTable.isDataTable("#tablaReport")) {
                     $("#tablaReport").DataTable().destroy();
                 }
                 // ! *********** CABEZERA DE TABLA**********
+                $("#MostarDetalles").show();
                 $("#theadD").empty();
-                $("#btnsDescarga").show();
+
                 //* CANTIDAD MININO VALOR DE COLUMNAS PARA HORAS
                 var cantidadColumnasHoras = 0;
                 for (let i = 0; i < data.length; i++) {
@@ -71,26 +79,27 @@ function cargartabla(fecha) {
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
                                     <th>CC&nbsp;</th>
-                                    <th name="tiempoSitHi">Fecha</th>
-                                    <th>Código</th>
-                                    <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th name="tiempoSitHi">Sexo</th>
-                                    <th name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                    <th class="fechaHid" name="tiempoSitHi">Fecha</th>
+                                    <th class="codigoHid">Código</th>
+                                    <th class="numdocHid">Número de documento </th>
+                                    <th>Nombres y Apellidos</th>
+                                    <th class="sexoHid" name="tiempoSitHi">Sexo</th>
+                                    <th class="cargoHid"  name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
 
-                    theadTabla += `<th>Cod.</th>
+                    theadTabla += `<th>Código –</th>
                                     <th>Actividad</th>
-                                    <th>Cod.</th>
+                                    <th>Código –</th>
                                     <th>Subactividad</th>
                                     <th>Hora de entrada</th>
+                                    <th class="noExport">&nbsp; &nbsp; &nbsp; &nbsp;</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
 
                 theadTabla += `
-                                   <th>Punto de control</th>
-                                   <th>Controlador</th></tr>`;
+                                   <th class="puntoHid">Punto de control</th>
+                                   <th class="controHid">Controlador</th></tr>`;
 
                 //* DIBUJAMOS CABEZERA
                 $("#theadD").html(theadTabla);
@@ -106,12 +115,12 @@ function cargartabla(fecha) {
 
                                 <td>${index + 1}&nbsp;</td>
 
-                                <td name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
-                                <td>${
+                                <td class="fechaHid"  name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
+                                <td class="codigoHid">${
                                     data[index].emple_codigo
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                                <td>${
+                                <td class="numdocHid">${
                                     data[index].emple_nDoc
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
@@ -122,15 +131,15 @@ function cargartabla(fecha) {
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                                 if (data[index].perso_sexo != null) {
-                                    tbody += `<td name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="sexoHid" name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 } else {
-                                    tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="sexoHid"  name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 }
 
                                 if (data[index].cargo_descripcion != null) {
-                                    tbody += `<td name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td class="cargoHid"  name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 } else {
-                                    tbody += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    tbody += `<td  class="cargoHid" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                 }
 
 
@@ -180,6 +189,7 @@ function cargartabla(fecha) {
 
                                     /* SI  TENGO SALIDA */
                                     if (marcacionData.salida != 0) {
+                                        tbodyEntradaySalida += `<td class="noExport"></td>`;
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
                                             marcacionData.salida
                                         ).format("HH:mm:ss")}</td>`;
@@ -234,8 +244,33 @@ function cargartabla(fecha) {
                                             ).add(horasTiempo, "hours");
                                         }
                                     } else {
+                                        tbodyEntradaySalida += `<td class="noExport">
+                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
+                                        </td>`;
                                         /* SI NO TENGO SALIDA */
-                                        tbodyEntradaySalida += `<td><span class="badge badge-soft-secondary"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>No tiene salida</span></td>`;
+                                        tbodyEntradaySalida += `<td>
+                                        <div class="dropdown noExport">
+                                        <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                            <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
+                                                No tiene salida
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+
+                                            <div class="dropdown-item noExport">
+                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                    <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})"
+                                                     style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                        Insertar salida
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                        </td>`;
 
                                         tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
@@ -280,8 +315,33 @@ function cargartabla(fecha) {
                                         }
 
                                          //* COLUMNA DE ENTRADA
-                                        tbodyEntradaySalida += `<td><span class="badge badge-soft-warning"><img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>No tiene entrada</span></td>`;
+                                         tbodyEntradaySalida += `<td >
+                                         <div class=" dropdown">
+                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
+                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                 <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                     <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                     No tiene entrada
+                                                 </span>
+                                             </a>
+                                             <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
 
+                                                 <div class="dropdown-item">
+                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                         <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                             Insertar entrada
+                                                         </a>
+                                                     </div>
+                                                 </div>
+                                             </ul>
+                                         </div>
+                                     </td>`;
+
+                                        tbodyEntradaySalida += `<td class="noExport">
+                                        <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})">
+                                        <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
+                                        </td>`;
                                         //* COLUMNA DE SALIDA
 
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
@@ -309,12 +369,12 @@ function cargartabla(fecha) {
                     /* -----------PUNTO DE CONTRO Y CONTROLADOR------------- */
                     tbody += `
 
-                              <td> ${marcacionData.puntoControl} </td>
-                                <td>  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
+                              <td class="puntoHid" > ${marcacionData.puntoControl} </td>
+                                <td class="controHid">  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
                     /* ----------------------------------------- ------------------*/
                 }
                 $("#tbodyD").html(tbody);
-
+                $('[data-toggle="tooltip"]').tooltip();
                 /* DATOS PARA EXPORTAR TABLA */
                 var razonSocial=$('#nameOrganizacion').val();
                 var direccion=$('#direccionO').val();
@@ -323,7 +383,23 @@ function cargartabla(fecha) {
                 var fechaAsisteDH = moment($('#pasandoV').val()).format('DD/MM/YYYY');
 
                 /* ------------------------ */
+                 /* boton adicional */
+              /*    $.fn.dataTable.ext.buttons.alert = {
+                    className: 'buttons-alert',
 
+                    action: function ( e, dt, node, config ) {
+                        alert( this.text() );
+                    }
+                }; */
+                /* -------------------------- */
+                $('.dt-button-collection .buttons-columnVisibility').each(function(){
+                    var $li = $(this),
+                        $cb = $('<input>', {
+                                type:'checkbox',
+                                style:'margin:0 .25em 0 0; vertical-align:middle'}
+                              ).prop('checked', $(this).hasClass('active') );
+                    $li.find('a').prepend( $cb );
+                  });
                 table = $("#tablaReport").DataTable({
                     searching: false,
                     scrollX: true,
@@ -366,6 +442,235 @@ function cargartabla(fecha) {
                     },
                     dom: 'Bfrtip',
                     buttons: [
+                          {
+                            extend: 'collection',
+                            text: 'Elegir columnas',
+                            className: 'btn btn-sm mt-1',
+                            buttons: [
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="0"  class="form-check-input" id="chec">'+
+                                    '<label class="form-check-label" for="chec">Fecha'+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#chec").val()==1) {
+                                            $("#chec").val("0");
+                                            $('#chec').prop("checked",false);
+                                            $('.fechaHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#chec").val("1");
+                                            $('#chec').prop("checked",true);
+                                            $('.fechaHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+                                    }
+                                },
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checCodigo" checked>'+
+                                    '<label class="form-check-label" for="checCodigo">Código'+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#checCodigo").val()==1) {
+                                            $("#checCodigo").val("0");
+                                            $('#checCodigo').prop("checked",false);
+                                            $('.codigoHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#checCodigo").val("1");
+                                            $('#checCodigo').prop("checked",true);
+                                            $('.codigoHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+                                    }
+                                },
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checnumdoc" checked>'+
+                                    '<label class="form-check-label" for="checnumdoc">Número de documento'+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#checnumdoc").val()==1) {
+                                            $("#checnumdoc").val("0");
+                                            $('#checnumdoc').prop("checked",false);
+                                            $('.numdocHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#checnumdoc").val("1");
+                                            $('#checnumdoc').prop("checked",true);
+                                            $('.numdocHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+                                    }
+                                },
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="0"  class="form-check-input" id="checSexo">'+
+                                    '<label class="form-check-label" for="checSexo">Sexo'+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#checSexo").val()==1) {
+                                            $("#checSexo").val("0");
+                                            $('#checSexo').prop("checked",false);
+                                            $('.sexoHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#checSexo").val("1");
+                                            $('#checSexo').prop("checked",true);
+                                            $('.sexoHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+
+
+
+                                    }
+                                },
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="0"  class="form-check-input" id="checCargo">'+
+                                    '<label class="form-check-label" for="checCargo">Cargo'+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#checCargo").val()==1) {
+                                            $("#checCargo").val("0");
+                                            $('#checCargo').prop("checked",false);
+                                            $('.cargoHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#checCargo").val("1");
+                                            $('#checCargo').prop("checked",true);
+                                            $('.cargoHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+
+
+
+                                    }
+                                },
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checPuntoc" checked>'+
+                                    '<label class="form-check-label" for="checPuntoc"> Punto de control'+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#checPuntoc").val()==1) {
+                                            $("#checPuntoc").val("0");
+                                            $('#checPuntoc').prop("checked",false);
+                                            $('.puntoHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#checPuntoc").val("1");
+                                            $('#checPuntoc').prop("checked",true);
+                                            $('.puntoHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+
+
+                                    }
+                                },
+                                {
+                                    text:''+
+                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checControl" checked>'+
+                                    '<label class="form-check-label" for="checControl"> Controlador '+
+                                        '</label>',
+                                    action: function ( e, dt, node, config ) {
+
+                                        if ($("#checControl").val()==1) {
+                                            $("#checControl").val("0");
+                                            $('#checControl').prop("checked",false);
+                                            $('.controHid').hide();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+
+                                        }
+                                        else{
+                                            $("#checControl").val("1");
+                                            $('#checControl').prop("checked",true);
+                                            $('.controHid').show();
+                                            setTimeout(function () {
+                                                $("#tablaReport").css("width", "100%");
+                                                $("#tablaReport").DataTable().draw(true);
+                                            }, 200);
+
+                                        }
+
+
+                                    }
+                                }
+                            ]
+                        },
+
+
                         {
                         extend: 'excel',
                         className: 'btn btn-sm mt-1',
@@ -425,8 +730,8 @@ function cargartabla(fecha) {
                             format: {
                                 body: function (data, row, column, node) {
                                     var cont = $.trim($(node).text());
-                                    var cont1 = cont.replace('Cambiar a entrada', '');
-                                    var cont2 = cont1.replace('Cambiar a salida', '');
+                                    var cont1 = cont.replace('Insertar entrada', '');
+                                    var cont2 = cont1.replace('Insertar salida', '');
                                     var cont3 = cont2.replace('No tiene entrada', '---');
                                     var cont4 = cont3.replace('No tiene salida', '---');
 
@@ -439,10 +744,10 @@ function cargartabla(fecha) {
                         className: 'btn btn-sm mt-1',
                         text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                         orientation: 'landscape',
-                        pageSize: 'A3',
+                        pageSize: 'A2',
                         title: 'Asistencia',
                         exportOptions: {
-                            columns: ":visible:not(.noExport)"
+                           columns: ":visible:not(.noExport)"
                         },
                         customize: function (doc) {
                             doc['styles'] = {
@@ -484,8 +789,8 @@ function cargartabla(fecha) {
                                 if (i >= 1) {
                                     line.forEach(element => {
                                         var textOriginal = element.text;
-                                        var cambiar = textOriginal.replace('Cambiar a entrada', '');
-                                        var cambiar2 = cambiar.replace('Cambiar a salida', '');
+                                        var cambiar = textOriginal.replace('Insertar entrada', '');
+                                        var cambiar2 = cambiar.replace('Insertar salida', '');
                                         var cambiar3 = cambiar2.replace('No tiene entrada', '---');
                                         var cambiar4 = cambiar3.replace('No tiene salida', '---');
                                         var cambiar5 = cambiar4.trim();
@@ -553,7 +858,7 @@ function cargartabla(fecha) {
                     }, 200);
                 }
             } else {
-                $("#btnsDescarga").hide();
+                $("#MostarDetalles").hide();
                 $("#tbodyD").empty();
                 $("#tbodyD").append(
                     '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
@@ -615,44 +920,337 @@ function cambiartabla() {
     }
 }
 
-///////////////////
-function s2ab(s) {
-    var buf = new ArrayBuffer(s.length);
-    var view = new Uint8Array(buf);
-    for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
-    return buf;
-}
-function toExcel() {
-    let file = new Blob([$("#tableZoomI").html()], {
-        type: "application/vnd.ms-excel",
-    });
-    let url = URL.createObjectURL(file);
-    let a = $("<a />", {
-        href: url,
-        download: "Asistencia.xls",
-    })
-        .appendTo("body")
-        .get(0)
-        .click();
-    /*  e.preventDefault(); */
-    /*  var cuerpoexcel=$('#tableZoomI').html();
- atob(cuerpoexcel);
- var blob = new Blob([ s2ab(atob()), {type:"application/vnd.ms-excel"}]
-  );
-  const link = document.createElement("a");
-  link.href = window.URL.createObjectURL(blob);
-  link.download = `report_${new Date().getTime()}.xlsx`;
-  link.click(); */
-}
-function generatePDF() {
-    var element = $("#tableZoomI").html();
-    var opt = {
-        margin: 0.5,
-        filename: "Asistencia.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "legal", orientation: "landscape" },
-    };
 
-    html2pdf().from(element).set(opt).save();
+/* --------------INTERCAMBIAR  ENTRADA Y SALIDA--------------------------------- */
+function intercambiarMar(id) {
+
+    alertify
+        .confirm("¿Desea intercambiar entrada y salida?", function (
+            e
+        ) {
+            if (e) {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/intercambiarTareo",
+                    data: {
+                        id: id,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    statusCode: {
+                        /*401: function () {
+                            location.reload();
+                        },*/
+                        419: function () {
+                            location.reload();
+                        }
+                    },
+                    success: function (data) {
+
+                        $('#btnRecargaTabla').click();
+                        $.notifyClose();
+                        $.notify({
+                            message: data,
+                            icon: 'admin/images/checked.svg',
+                        }, {
+                            icon_type: 'image',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            delay: 6000,
+                            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                '</div>',
+                            spacing: 35
+                        });
+                    },
+                    error: function () { }
+                });
+            }
+        })
+        .setting({
+            title: "Intercambiar Marcación",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+}
+/* ------------------------------------ */
+///////////////////
+// * VARIABLES DE MARCACIONES
+var newEntrada = {};
+var newSalida = {};
+/* ---------FUNCION INSERTAR SALIDA.------- */
+// * MODAL DE INSERTAR SALIDA
+function insertarSalidaModal(hora, id, idH) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idH) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
+    $('#idMarcacionIS').val(id);
+    $('#i_hora').text(hora);
+    $('#idHorarioIS').val(idH);
+    $('#insertarSalida').modal();
+    horasS = $('#horaSalidaNueva').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
+}
+
+// * INSERTAR SALIDA
+function insertarSalida() {
+    var id = $('#idMarcacionIS').val();
+    var salida = $('#horaSalidaNueva').val();
+    var horario = $('#idHorarioIS').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarNSalida",
+        data: {
+            id: id,
+            salida: salida,
+            horario: horario
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta != undefined) {
+                $('#i_validS').empty();
+                $('#i_validS').append(data.respuesta);
+                $('#i_validS').show();
+                $('button[type="submit"]').attr("disabled", false);
+            } else {
+                $('#i_validS').empty();
+                $('#i_validS').hide();
+                $('#insertarSalida').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+                fechaValue.setDate(fechaGlobal);
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {
+        },
+    });
+}
+// * VALIDACION
+$('#formInsertarSalida').attr('novalidate', true);
+$('#formInsertarSalida').submit(function (e) {
+    e.preventDefault();
+    if ($("#horaSalidaNueva").val() == "00:00:00" || $("#horaSalidaNueva").val() == "00:00:0") {
+        $('#i_validS').empty();
+        $('#i_validS').append("Ingresar salida.");
+        $('#i_validS').show();
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
+    $('#i_validS').empty();
+    $('#i_validS').hide();
+    $('button[type="submit"]').attr("disabled", true);
+    this.submit();
+});
+/* ---------------------------------------- */
+
+/* -------------------FUNCIONES INSERTAR ENTRADA----------- */
+function insertarEntradaModal(hora, id, idH) {
+    var estadoH = false;
+    contenidoHorario.forEach(element => {
+        if (element.idHorarioE == idH) {
+            if (element.estado == 0) {
+                $('#actualizarH').modal();
+                estadoH = true;
+                return;
+            }
+        }
+    });
+    if (estadoH) return;
+    $('#idMarcacionIE').val(id);
+    $('#ie_hora').text(hora);
+    $('#idHorarioIE').val(idH);
+    $('#insertarEntrada').modal();
+    horasE = $('#horasEntradaNueva').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i:s",
+        defaultDate: "00:00:00",
+        time_24hr: true,
+        enableSeconds: true,
+        static: true
+    });
+}
+// * INSERTAR ENTRADA
+function insertarEntrada() {
+    var id = $('#idMarcacionIE').val();
+    var entrada = $('#horasEntradaNueva').val();
+    var horario = $('#idHorarioIE').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarNEntrada",
+        data: {
+            id: id,
+            entrada: entrada,
+            horario: horario
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            if (data.respuesta != undefined) {
+                $('#i_validE').empty();
+                $('#i_validE').append(data.respuesta);
+                $('#i_validE').show();
+                $('button[type="submit"]').attr("disabled", false);
+            } else {
+                $('#i_validE').empty();
+                $('#i_validE').hide();
+                $('#insertarEntrada').modal('toggle');
+                $('button[type="submit"]').attr("disabled", false);
+                fechaValue.setDate(fechaGlobal);
+                $('#btnRecargaTabla').click();
+                limpiarAtributos();
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nMarcación modificada.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            }
+        },
+        error: function () {
+        },
+    });
+}
+// * VALIDACION
+$('#formInsertarEntrada').attr('novalidate', true);
+$('#formInsertarEntrada').submit(function (e) {
+    e.preventDefault();
+    if ($("#horasEntradaNueva").val() == "00:00:00" || $("#horasEntradaNueva").val() == "00:00:0") {
+        $('#i_validE').empty();
+        $('#i_validE').append("Ingresar entrada.");
+        $('#i_validE').show();
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
+    $('#i_validE').empty();
+    $('#i_validE').hide();
+    $('button[type="submit"]').attr("disabled", true);
+    this.submit();
+});
+/* -------------------------------------------------------- */
+// * LIMPIEZA DE CAMPOS
+function limpiarAtributos() {
+    // ? MODAL DE CAMBIAR ENTRADA
+    $('#entradaM').empty();
+    $('#e_valid').empty();
+    $('#e_valid').hide();
+    $('#c_horaE').empty();
+    // ? MODAL DE CAMBIAR SALIDA
+    $('#salidaM').empty();
+    $('#s_valid').empty();
+    $('#s_valid').hide();
+    $('#c_horaS').empty();
+    // ? MODAL DE ASIGNACION A NUEVA MARCACIÓN
+    $('#a_valid').empty();
+    $('#a_valid').hide();
+    $('#horarioM').empty();
+    $('#a_hora').empty();
+    // ? MODAL DE INSERTAR SALIDA
+    $('#i_validS').empty();
+    $('#i_validS').hide();
+    if (horasS.config != undefined) {
+        horasS.setDate("00:00:00");
+    }
+    // ? MODAL DE INSERTAR ENTRADA
+    $('#i_validE').empty();
+    $('#i_validE').hide();
+    if (horasE.config != undefined) {
+        horasE.setDate("00:00:00");
+    }
+
+    // ? MODAL DE NUEVA MARCACION
+    $('#v_entrada').prop("checked", false);
+    $('#v_salida').prop("checked", false);
+    $('#nuevaEntrada').prop("disabled", false);
+    $('#nuevaSalida').prop("disabled", false);
+    if (newSalida.config != undefined) {
+        newSalida.setDate("00:00:00");
+    }
+    if (newEntrada.config != undefined) {
+        newEntrada.setDate("00:00:00");
+    }
+    $('#rowDatosM').hide();
+    $('#r_horarioXE').empty();
 }

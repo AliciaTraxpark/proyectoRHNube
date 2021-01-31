@@ -558,6 +558,9 @@ Route::post('/controladTarUpdate', 'controladores_tareoController@update');
 //Vista reporte fecha
 Route::get('/reporteTareo', 'marcacionTareoController@index');
 Route::get('/tablaTareo', 'marcacionTareoController@show');
+Route::post('/intercambiarTareo', 'marcacionTareoController@intercambiarTareo');
+Route::post('/TareoregistrarNSalida', 'marcacionTareoController@registrarNSalida');
+Route::post('/TareoregistrarNEntrada', 'marcacionTareoController@registrarNEntrada');
 /* ------------------------------------------------------------------------ */
 
 /*------------------------ SUBACTIVIDADES--------------------------------- */

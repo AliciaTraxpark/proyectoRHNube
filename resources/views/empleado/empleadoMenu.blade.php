@@ -3381,20 +3381,20 @@ use App\proyecto_empleado;
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Apellido Paterno</label>
                                         <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
-                                        <input type="text" class="form-control" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                        <input type="text" class="form-control soloLetras" name="apPaterno" id="apPaterno" tabindex="4" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Apellido Materno</label>
                                         <span id="validApMaterno" style="color: red;">*Campo
                                             Obligatorio</span>
-                                        <input type="text" class="form-control" name="apMaterno" id="apMaterno"
+                                        <input type="text" class="form-control soloLetras" name="apMaterno" id="apMaterno"
                                             tabindex="5" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Nombres</label>
                                         <span id="validNombres" style="color: red;">*Campo
                                             Obligatorio</span>
-                                        <input type="text" class="form-control" name="nombres" id="nombres"
+                                        <input type="text" class="form-control soloLetras" name="nombres" id="nombres"
                                             tabindex="6" required>
                                     </div>
 

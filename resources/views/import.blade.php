@@ -25,9 +25,9 @@
                 Se importaron {{$numRows}} registros.
             </div>
         @endif
- 
+
         <div class="card-body">
-            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+            <form action="api/marcacionBiometrico" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" class="form-control">
                 <br>

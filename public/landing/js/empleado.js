@@ -531,12 +531,37 @@ function laborable_ed() {
                 location.reload();
             },
         },
-        success: function (msg) {
-            //var date = calendar1.getDate();
-            //alert("The current date of the calendar is " + date.toISOString());
+        success: function (data) {
 
+            //* si se registro
+            if(data==1){
             calendarioedit.refetchEvents();
             calendar2_ed.refetchEvents();
+            }
+            else{
+
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+
 
 
         },
@@ -577,12 +602,35 @@ function nolaborable_ed() {
                 location.reload();
             },
         },
-        success: function (msg) {
-            //var date = calendar1.getDate();
-            //alert("The current date of the calendar is " + date.toISOString());
+        success: function (data) {
+            //* si se registro
+            if(data==1){
+                calendarioedit.refetchEvents();
+                calendar2_ed.refetchEvents();
+                }
+                else{
 
-            calendarioedit.refetchEvents();
-            calendar2_ed.refetchEvents();
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
 
 
         },
@@ -624,9 +672,36 @@ function modalIncidencia_ed() {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            calendarioedit.refetchEvents();
-            calendar2_ed.refetchEvents();
+
             $("#modalIncidencia_ed").modal("hide");
+            //* si se registro
+            if(data==1){
+                calendarioedit.refetchEvents();
+                calendar2_ed.refetchEvents();
+                }
+                else{
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -905,12 +980,39 @@ function laborableTem() {
                 location.reload();
             },
         },
-        success: function (msg) {
+        success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
-            calendar.refetchEvents();
-            calendar2.refetchEvents();
+
+            if(data==1){
+                calendar.refetchEvents();
+                calendar2.refetchEvents();
+                }
+                else{
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
+
 
 
         },
@@ -951,10 +1053,35 @@ function diaferiadoTem() {
                 location.reload();
             },
         },
-        success: function (msg) {
+        success: function (data) {
             $("#myModalFeriado").modal("hide");
-            calendar.refetchEvents();
-            calendar2.refetchEvents();
+            if(data==1){
+                calendar.refetchEvents();
+                calendar2.refetchEvents();
+                }
+                else{
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
 
 
         },
@@ -996,12 +1123,37 @@ function nolaborableTem() {
                 location.reload();
             },
         },
-        success: function (msg) {
+        success: function (data) {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
-            calendar.refetchEvents();
-            calendar2.refetchEvents();
+            if(data==1){
+                calendar.refetchEvents();
+                calendar2.refetchEvents();
+                }
+                else{
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
 
 
         },
@@ -4930,10 +5082,36 @@ function diaferiadoRe_ed() {
                 location.reload();
             },
         },
-        success: function (msg) {
+        success: function (data) {
             $("#myModalFeriado_ed").modal("hide");
-            calendarioedit.refetchEvents();
-            calendar2_ed.refetchEvents();
+            //* si se registro
+            if(data==1){
+                calendarioedit.refetchEvents();
+                calendar2_ed.refetchEvents();
+                }
+                else{
+
+                    //*SI NO REGISTRO
+                    $.notifyClose();
+                    $.notify({
+                        message: data,
+                        icon: '/landing/images/alert1.svg',
+                    }, {
+                        element: $('#form-ver'),
+                        position: "fixed",
+                        icon_type: 'image',
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        delay: 6000,
+                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                            '</div>',
+                        spacing: 35
+                    });
+                }
 
 
         },
@@ -6358,3 +6536,15 @@ $(function () {
         });
     });
 }(document, window, 0));
+
+
+/*----------- VALIDACION SOLO LETRA NO ACEPTAR NUMEROS------------------------- */
+$(".soloLetras").bind('keypress', function(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+      event.preventDefault();
+      return false;
+    }
+  });
+/*  -----------------------------FIN VALIDACION----------------------------------*/

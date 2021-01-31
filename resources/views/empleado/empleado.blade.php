@@ -1028,12 +1028,12 @@ use Carbon\Carbon;
                     <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-8 col-xl-8 text-center">
+            <div class="col-sm-6 col-md-6 col-xl-6 text-center">
                 <h5  style="color: #ffffff">Gestión de empleados</h5>
                 <p for="" class="blanco">Tienes 2 minutos para registrar tu primer empleado</p>
             </div>
 
-            <div class="col-sm-3 col-md-2 col-xl-2 text-center">
+            <div class="col-sm-3 col-md-4 col-xl-4 text-center">
                 <a href="{{('/empleado/cargar')}}">
                     <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c; margin-bottom: 2px;">
                         <img src="{{asset('admin/images/subir.ico')}}" height="25" class="">Carga masiva emp.
@@ -3457,7 +3457,7 @@ use Carbon\Carbon;
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <input type="hidden" name="idEmpleado" id="idEmpleado">
                                                     <label for="sw-default">Tipo Documento</label>
                                                     <span id="validDocumento" style="color: red;">*Campo
@@ -3471,14 +3471,14 @@ use Carbon\Carbon;
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label for="sw-default">Num. Documento</label>
+                                                <div class="col-sm-4 mb-2">
+                                                    <label for="sw-default">Núm. Documento</label>
                                                     <span id="validNumDocumento" style="color: red;">*Campo Obligatorio</span>
-                                                    <span id="numR" style="color: red;">*Num. registrado</span>
+                                                    <span id="numR" style="color: red;">*Núm. registrado</span>
                                                     <input type="text" class="form-control" name="numDocumento" id="numDocumento" onkeypress="return isNumeric(event)"
                                                         oninput="maxLengthCheck(this)" tabindex="2" required>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Fecha Nacimiento</label>
                                                     <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
                                                     <div class="row fechasResponsive">
@@ -3521,28 +3521,28 @@ use Carbon\Carbon;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Apellido Paterno</label>
                                                     <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                                    <input type="text" class="form-control soloLetras" name="apPaterno" id="apPaterno" tabindex="4" required>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Apellido Materno</label>
                                                     <span id="validApMaterno" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control" name="apMaterno" id="apMaterno" tabindex="5" required>
+                                                    <input type="text" class="form-control soloLetras" name="apMaterno" id="apMaterno" tabindex="5" required>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Nombres</label>
                                                     <span id="validNombres" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control" name="nombres" id="nombres" tabindex="6" required>
+                                                    <input type="text" class="form-control soloLetras" name="nombres" id="nombres" tabindex="6" required>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                      <label for="sw-default">Correo Electrónico</label>
                                                     <span id="validCorreo" style="color: red;">*Campo Obligatorio</span>
                                                     <span id="emailR" style="color: red;">*Correo registrado</span>
                                                     <input type="email" class="form-control" id="email" name="email" tabindex="7">
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Celular</label>
                                                     <span id="validCel" style="color: red;">*Número incorrecto.</span>
                                                     <div class="row">
@@ -3557,7 +3557,7 @@ use Carbon\Carbon;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Teléfono</label>
                                                     <div class="row">
                                                         <div class="col-4 pselect">
@@ -3597,15 +3597,12 @@ use Carbon\Carbon;
                                                     </div>
                                                 </div>
 
-
-                                                <div class="col-12">
+                                                <div class="col-12 mb-2">
                                                     <label for="sw-default">Dirección</label>
                                                     <input type="text" class="form-control" name="direccion" id="direccion" tabindex="10" required>
                                                 </div>
 
-
-
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Dirección Domiciliara</label>
                                                     <select class="form-control" placeholder="Departamento"
                                                         name="departamento" id="dep" tabindex="11" required>
@@ -3616,20 +3613,20 @@ use Carbon\Carbon;
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
                                                     <select class="form-control " placeholder="Provincia " name="provincia" id="prov" tabindex="12" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
                                                     <select class="form-control " placeholder="Distrito "
                                                         name="distrito" id="dist" tabindex="13" required>
                                                         <option value="">Distrito</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Lugar Nacimiento</label>
                                                     <select class="form-control" placeholder="Departamento" name="departamento" id="departamento" tabindex="14" required>
                                                         <option value="">Departamento</option>
@@ -3639,20 +3636,20 @@ use Carbon\Carbon;
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
                                                     <select class="form-control " placeholder="Provincia " name="provincia" id="provincia" tabindex="15" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
                                                     <select class="form-control " placeholder="Distrito " name="distrito" id="distrito" tabindex="16" required>
                                                         <option value="">Distrito</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12 mb-2">
                                                     <label for="" class="label_txt">Género</label>
                                                     <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
                                                     <div class="row">
