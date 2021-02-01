@@ -320,7 +320,7 @@ class excelEmpleadoController extends Controller
                     //
                 ]);
                 if ($emp[6] != null || $emp[6] != '') {
-                    $numcelular = '+51' . $emp[6];
+                    $numcelular = $emp[6];
                 } else {
                     $numcelular = '';
                 }

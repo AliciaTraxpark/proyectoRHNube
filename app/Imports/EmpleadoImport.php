@@ -57,6 +57,22 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
 
         foreach ($rows as $row) {
+
+            /* VALIDARMEOS DATOS DE CABECERA */
+            if(isset($row['tipo_documento']) && isset($row['numero_documento']) && isset($row['codigo'])
+            && isset($row['nombres']) && isset($row['apellido_paterno']) && isset($row['apellido_materno'])
+            && isset($row['correo']) && isset($row['prefijo']) && isset($row['celular'])
+            && isset($row['genero']) && isset($row['fecha_nacimiento']) && isset($row['distrito_nacimiento'])
+            && isset($row['direccion']) && isset($row['distrito']) && isset($row['tipo_contrato'])
+            && isset($row['inicio_contrato']) && isset($row['local']) && isset($row['nivel'])
+            && isset($row['cargo']) && isset($row['area']) && isset($row['centro_costo'])
+            && isset($row['condicion_pago']) && isset($row['monto_pago'])){
+
+            }
+            else{
+                return redirect()->back()->with('alert', 'Formato incorrecto, Porfavor descargue la plantilla y actualize sus datos');
+            }
+            /* ----------------------------- */
             if ($row['numero_documento'] != "") {
                 $filaA = $this->numRows;
 
@@ -114,9 +130,19 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     return redirect()->back()->with('alert', 'Debe especificar correo de empleado' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                 }
 
+                //PREFIJO
+                if ($row['prefijo'] != null || $row['prefijo'] != '') {
+
+                } else {
+                    if ($row['celular'] != null || $row['celular'] != '') {
+                    return redirect()->back()->with('alert', 'Debe especificar prefijo de numero celular' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                    }
+                }
+
                 //celular
                 if ($row['celular'] != null || $row['celular'] != '') {
-                    $lengthCelu = Str::length($row['celular']);
+                    if( is_numeric($row['celular'])==true){
+                        $lengthCelu = Str::length($row['celular']);
                     if ($lengthCelu> 16) {
                         return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' debe tenr como maximo 15 digitos' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                     } else {
@@ -124,8 +150,15 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                         if ($qwert != 9) {
                             return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' es invalido' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                         } */
-                        $numeroCelular=Str::studly($row['celular']);
+
+                        $seteo=Str::studly($row['celular']);
+                        $numeroCelular='+' .$row['prefijo'] .$seteo;
                     }
+                    }
+                    else{
+                        return redirect()->back()->with('alert', 'Numero de celular invalido.  El proceso se interrumpio en la fila:' . $filas);
+                    }
+
 
                 }
                 else{
