@@ -702,6 +702,7 @@ use App\proyecto_empleado;
         font-size: 12.2px !important;
         margin: 2px 2px;
         cursor: url("../landing/images/cruz1.svg"), auto !important;
+       /*  cursor: url("../landing/images/configs-m.svg"), auto !important; */
 
     }
 
@@ -6202,7 +6203,62 @@ use App\proyecto_empleado;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+{{-- MODAL CONFIGIRACION HORARIO --}}
+<div id="editarConfigHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva
+                    incidencia
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
 
+                    <div class="col-md-12">
+                        <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Descripcion:</label>
+                                        <input type="text" class="form-control form-control-sm"
+                                            id="descripcionInciCa_ed" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6"><label for=""><br></label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
+                                        <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
+                                            descuento</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{-- ---------------------------- --}}
 {{-- visibilidad de editar --}}
 @if (isset($modifEmp))
 @if ($modifEmp==1)

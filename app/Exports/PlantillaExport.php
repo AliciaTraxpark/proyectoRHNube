@@ -8,13 +8,17 @@ use App\centro_costo;
 use App\local;
 use App\nivel;
 use App\condicion_pago;
+use App\paises;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Sheet;
 use App\tipo_documento;
 use App\tipo_contrato;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
 {
@@ -37,6 +41,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
             'apellido_paterno',
             'apellido_materno',
             'correo',
+            'prefijo',
             'celular',
             'genero',
             'fecha_nacimiento',
@@ -78,23 +83,27 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     ],
                 ];
 
+
+                //*
+                $spreadsheet = new Spreadsheet();
+
                 // * CAMPOS OBLIGATORIOS
-                $event->sheet->getStyle('A1:V1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:W1')->applyFromArray($styleArray);
                 $event->sheet->getStyle('A1:B1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
                 $event->sheet->getStyle('D1:G1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
-                $event->sheet->getStyle('I1:J1')->getFill()
+                $event->sheet->getStyle('J1:K1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
-                $event->sheet->getStyle('N1:O1')->getFill()
+                $event->sheet->getStyle('O1:P1')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('C00000');
                 // * ***************************************************************
                 $event->sheet->getDelegate()->setTitle("Empleado");
-                foreach (range('A', 'V') as $columnID) {
+                foreach (range('A', 'W') as $columnID) {
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(false);
                     $event->sheet->getColumnDimension($columnID)
                         ->setWidth(25);
@@ -109,22 +118,25 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $local = local::where('organi_id', '=', session('sesionidorg'))->get();
                 $nivel = nivel::where('organi_id', '=', session('sesionidorg'))->get();
                 $condicion_pago = condicion_pago::where('organi_id', '=', session('sesionidorg'))->get();
+                $prefijos = paises::all();
+
 
                 $drop_columnD = 'A';
-                $drop_columnC = 'N';
-                $drop_columnCargo = 'R';
-                $drop_columnArea = 'S';
-                $drop_columnCentro = 'T';
-                $drop_columnLocal = 'P';
-                $drop_columnNivel = 'Q';
-                $drop_columnGenero = 'I';
+                $drop_columnC = 'O';
+                $drop_columnCargo = 'S';
+                $drop_columnArea = 'T';
+                $drop_columnCentro = 'U';
+                $drop_columnLocal = 'Q';
+                $drop_columnNivel = 'R';
+                $drop_columnGenero = 'J';
 
-                $drop_columnFecha = 'J';
-                $drop_columnCondicionP = 'U';
+                $drop_columnFecha = 'K';
+                $drop_columnCondicionP = 'V';
 
-                $drop_columnDisritoN = 'K';
-                $drop_columnDisritoVive = 'M';
-                $drop_columnFechaInicioC = 'O';
+                $drop_columnDisritoN = 'L';
+                $drop_columnDisritoVive = 'N';
+                $drop_columnFechaInicioC = 'P';
+                $drop_columnPrefijo = 'H';
 
                 $rowD = 1;
                 $rowC = 1;
@@ -135,6 +147,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $rowNivel = 1;
                 $rowCondP = 1;
                 $rowConDist = 1;
+                $rowPrefijo = 1;
 
                 //* TIPODOCUMENTO
                 foreach ($tipoDocumento as $tipoDocumentos) {
@@ -142,6 +155,7 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 }
 
                 $validationD = $event->sheet->getDelegate()->getCell("{$drop_columnD}2")->getDataValidation();
+
                 $validationD->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
                 $validationD->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
                 $validationD->setAllowBlank(false);
@@ -313,6 +327,28 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $validationCondiP->setPrompt('Elegir una opción o agregar nuevo');
                 $validationCondiP->setFormula1('Empleado!$CD$1:$CD$10');
 
+                //* PREFIJO
+                foreach ($prefijos as $prefijosrow) {
+                    $event->sheet->getDelegate()->setCellValue('CF' . $rowPrefijo++, $prefijosrow->prefijo);
+
+                }
+
+                $validationPre = $event->sheet->getDelegate()->getCell("{$drop_columnPrefijo}2")->getDataValidation();
+
+
+                $validationPre->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
+                $validationPre->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+                $validationPre->setAllowBlank(false);
+                $validationPre->setShowInputMessage(true);
+                $validationPre->setShowErrorMessage(true);
+                $validationPre->setShowDropDown(true);
+                $validationPre->setErrorTitle('Error');
+                $validationPre->setError('Prefijo no se encuentra en la lista.');
+                $validationPre->setPromptTitle('Prefijo');
+                $validationPre->setPrompt('Elegir una opción');
+                $validationPre->setFormula1('Empleado!$CF$1:$CF$240');
+
+
                 for ($i = 2; $i <= $this->total; $i++) {
                     $event->sheet->getCell("{$drop_columnD}{$i}")->setDataValidation(clone $validationD);
                     $event->sheet->getCell("{$drop_columnDisritoN}{$i}")->setDataValidation(clone $validationDist);
@@ -327,6 +363,8 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                     $event->sheet->getStyle("{$drop_columnFecha}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
                     $event->sheet->getStyle("{$drop_columnFechaInicioC}{$i}")->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
                     $event->sheet->getCell("{$drop_columnCondicionP}{$i}")->setDataValidation(clone $validationCondiP);
+                    $event->sheet->getCell("{$drop_columnPrefijo}{$i}")->setDataValidation(clone $validationPre);
+                    $event->sheet->setCellValue("{$drop_columnPrefijo}{$i}", "+51");
                 }
                 $event->sheet->getColumnDimension('BC')->setVisible(false);
                 $event->sheet->getColumnDimension('BA')->setVisible(false);
@@ -339,6 +377,11 @@ class PlantillaExport implements WithHeadings, ShouldAutoSize, WithEvents
                 $event->sheet->getColumnDimension('CC')->setVisible(false);
                 $event->sheet->getColumnDimension('CD')->setVisible(false);
                 $event->sheet->getColumnDimension('CJ')->setVisible(false);
+                $event->sheet->getColumnDimension('CF')->setVisible(false);
+
+
+
+
                 //
 
             }

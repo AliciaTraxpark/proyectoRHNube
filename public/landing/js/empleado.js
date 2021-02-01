@@ -2119,7 +2119,8 @@ function calendario2_ed() {
                 info.event.textColor == "0"
             ) {
                 if (info.event.textColor == "111111") {
-                    bootbox.confirm({
+                   /*  $('#editarConfigHorario').modal('show'); */
+                     bootbox.confirm({
                         title: "Eliminar horario",
                         message:
                             "¿Desea eliminar: " +
@@ -2163,7 +2164,7 @@ function calendario2_ed() {
                                 });
                             }
                         },
-                    });
+                    }); 
                 } else {
                     bootbox.confirm({
                         title: "Eliminar incidencia",

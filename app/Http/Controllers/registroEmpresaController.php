@@ -140,12 +140,12 @@ class registroEmpresaController extends Controller
             /////////////////////////////////
             $comusuario_organizacion = usuario_organizacion::where('user_id', '=', $users->id)->count();
             if ($comusuario_organizacion > 1) {
-                //Mail::to($correoU)->queue(new NuevoUsuarioMail($persona, $organi, $users));
-                //return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitosamente!");
+                Mail::to($correoU)->queue(new NuevoUsuarioMail($persona, $organi, $users));
+                return Redirect::to('/')->with('mensaje', "Nueva organizacion creada exitosamente!");
             } else {
-                //Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
-                //Mail::to($correoU)->queue(new NuevoUsuarioMail($persona, $organi, $users));
-                //return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
+                Mail::to($correo)->queue(new CorreoMail($users, $persona, $organi));
+                Mail::to($correoU)->queue(new NuevoUsuarioMail($persona, $organi, $users));
+                return Redirect::to('/')->with('mensaje', "Bien hecho, estas registrado! Te hemos enviado un correo de verificación.");
             }
             ////////////////////////////
 
