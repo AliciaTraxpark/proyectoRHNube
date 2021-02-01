@@ -66,6 +66,9 @@ $(document).ready(function () {
     },
     403: function () {
         location.reload();
+    },
+    302: function () {
+        location.reload();
     }
 },
 
