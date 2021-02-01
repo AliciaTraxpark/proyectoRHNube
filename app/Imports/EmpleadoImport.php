@@ -128,6 +128,9 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                     }
 
                 }
+                else{
+                    $numeroCelular=null;
+                }
 
                 //dd($arraysimple);
 
