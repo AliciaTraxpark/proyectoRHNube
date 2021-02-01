@@ -326,11 +326,6 @@ function editarPunto(id) {
                         </div>
                         </div>`;
             }
-            if (geo.length >= 4) {
-                $('#e_buttonAgregarGPS').hide();
-            } else {
-                $('#e_buttonAgregarGPS').show();
-            }
             $('#e_rowGeo').append(colGeo);
             // * DETALLES
             var det = data[0].detalles;
@@ -942,19 +937,6 @@ function eliminarGeo(id) {
     $('#e_longitud' + id).val("");
     $('#e_color' + id).val("");
     $('#colEliminar' + id).hide();
-    var contarDisponibles = 0;
-    $('.rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#e_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
-    if (contarDisponibles < 4) {
-        $('#e_buttonAgregarGPS').show();
-    } else {
-        $('#e_buttonAgregarGPS').hide();
-    }
 }
 // * AGREGAR GPS MODAL
 function e_agregarGPS() {
@@ -1047,21 +1029,8 @@ function edit_agregarGPS() {
     container.append(colGeo);
     $('#modalGpsEditar').modal('toggle');
     e_limpiarGPS();
-    var contarDisponibles = 0;
-    $('.rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#e_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
     $('#modaleditarPuntoControl').modal('show');
     $('[data-toggle="tooltip"]').tooltip();
-    if (contarDisponibles < 4) {
-        $('#e_buttonAgregarGPS').show();
-    } else {
-        $('#e_buttonAgregarGPS').hide();
-    }
     var arrayMarkerBounds = [];
     var nuevoLat = parseFloat($('#e_latitudNuevo' + variableU).val()).toFixed(8);
     var nuevoLng = parseFloat($('#e_longitudNuevo' + variableU).val()).toFixed(8);
@@ -1091,66 +1060,44 @@ function edit_agregarGPS() {
     });
     mapId.fitBounds(arrayMarkerBounds);
     mapId.setZoom(1); //: -> ZOOM COMPLETO
-    var contarDisponibles = 0;
-    $('.rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#e_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
-    if (contarDisponibles < 4) {
-        $('#e_buttonAgregarGPS').show();
-    } else {
-        $('#e_buttonAgregarGPS').hide();
-    }
     variableU++;
 }
 // * AGREGAR GPS EN MAPA
 function addMarker(e) {
-    var contarDisponibles = 0;
-    $('.rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#e_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
-    if (contarDisponibles < 4) {
-        alertify
-            .confirm("¿Desea agregar nuevo GPS?", function (
-                event
-            ) {
-                if (event) {
-                    var idNuevo = 'Nuevo' + variableU;
-                    var nuevoLatitud;
-                    var nuevoLongitud;
-                    var nuevoxMapa = new L.editableCircleMarker(e.latlng, 100, {
-                        color: '#FF0000',
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.5,
-                        idCircle: idNuevo,
-                        metric: false,
-                        draggable: true
-                    })
-                        .on('move', function (e) {
-                            $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
-                            $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
-                        });
-                    nuevoLatitud = parseFloat(e.latlng.lat).toFixed(8);
-                    nuevoLongitud = parseFloat(e.latlng.lng).toFixed(8);
-                    layerGroup.addLayer(nuevoxMapa);
-                    layerGroup.addTo(mapId);
-                    var arrayMarkerBounds = [];
-                    layerGroup.eachLayer(function (layer) {
-                        var nuevoLatLng = layer.getLatLng()
-                        var markerBounds = new L.latLngBounds([nuevoLatLng]);
-                        arrayMarkerBounds.push(markerBounds);
+    alertify
+        .confirm("¿Desea agregar nuevo GPS?", function (
+            event
+        ) {
+            if (event) {
+                var idNuevo = 'Nuevo' + variableU;
+                var nuevoLatitud;
+                var nuevoLongitud;
+                var nuevoxMapa = new L.editableCircleMarker(e.latlng, 100, {
+                    color: '#FF0000',
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.5,
+                    idCircle: idNuevo,
+                    metric: false,
+                    draggable: true
+                })
+                    .on('move', function (e) {
+                        $('#e_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+                        $('#e_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
                     });
-                    mapId.fitBounds(arrayMarkerBounds);
-                    mapId.setZoom(1); //: -> ZOOM COMPLETO
-                    var container = $('#e_rowGeo');
-                    colGeo = `<div class="col-lg-12" id="colGeoNuevo${variableU}">
+                nuevoLatitud = parseFloat(e.latlng.lat).toFixed(8);
+                nuevoLongitud = parseFloat(e.latlng.lng).toFixed(8);
+                layerGroup.addLayer(nuevoxMapa);
+                layerGroup.addTo(mapId);
+                var arrayMarkerBounds = [];
+                layerGroup.eachLayer(function (layer) {
+                    var nuevoLatLng = layer.getLatLng()
+                    var markerBounds = new L.latLngBounds([nuevoLatLng]);
+                    arrayMarkerBounds.push(markerBounds);
+                });
+                mapId.fitBounds(arrayMarkerBounds);
+                mapId.setZoom(1); //: -> ZOOM COMPLETO
+                var container = $('#e_rowGeo');
+                colGeo = `<div class="col-lg-12" id="colGeoNuevo${variableU}">
                                 <div class="row">
                                     <input type="hidden" class="rowIdGeo" value="Nuevo${variableU}">
                                     <div class="col-md-12">
@@ -1160,11 +1107,11 @@ function addMarker(e) {
                                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                                 <span style="font-weight: bold;">Datos GPS</span>
                                                 &nbsp;`;
-                    colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip"
+                colGeo += `<a class="mr-1" onclick="javascript:eliminarGeo('Nuevo${variableU}')" style="cursor: pointer" data-toggle="tooltip"
                                     data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                                     <img src="/admin/images/delete.svg" height="13">
                                 </a>`;
-                    colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody('Nuevo${variableU}')"
+                colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="toggleBody('Nuevo${variableU}')"
                                     style="cursor: pointer;">
                                 </div>
                                 <div class="card-body" style="padding:0.3rem" id="bodyGPSNuevo${variableU}">
@@ -1218,39 +1165,26 @@ function addMarker(e) {
                                     </div>
                                     </div>
                                     </div>`;
-                    container.append(colGeo);
-                    var contarDisponibles = 0;
-                    $('.rowIdGeo').each(function () {
-                        var idG = $(this).val();
-                        var latitudG = $('#e_latitud' + idG).val();
-                        if (latitudG != "") {
-                            contarDisponibles = contarDisponibles + 1
-                        }
-                    });
-                    if (contarDisponibles < 4) {
-                        $('#e_buttonAgregarGPS').show();
-                    } else {
-                        $('#e_buttonAgregarGPS').hide();
-                    }
-                    variableU++;
-                }
-            })
-            .setting({
-                title: "Nuevo GPS",
-                labels: {
-                    ok: "Si",
-                    cancel: "No",
-                },
-                modal: true,
-                startMaximized: false,
-                reverseButtons: true,
-                resizable: false,
-                closable: false,
-                transition: "zoom",
-                oncancel: function (closeEvent) {
-                },
-            });
-    }
+                container.append(colGeo);
+                variableU++;
+            }
+        })
+        .setting({
+            title: "Nuevo GPS",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+
 }
 // * TOGGLE BODY
 function toggleBody(id) {
@@ -2115,66 +2049,44 @@ function reg_agregarGPS() {
     });
     map.fitBounds(arrayMarkerBounds);
     map.setZoom(1); //: -> ZOOM COMPLETO
-    var contarDisponibles = 0;
-    $('.r_rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#r_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
-    if (contarDisponibles < 4) {
-        $('#r_buttonAgregarGPS').show();
-    } else {
-        $('#r_buttonAgregarGPS').hide();
-    }
     reg_variableU++;
 }
 // ? AGREGAR GPS EN MAPA
 function r_addMarker(e) {
-    var contarDisponibles = 0;
-    $('.r_rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#r_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
-    if (contarDisponibles < 4) {
-        alertify
-            .confirm("¿Desea agregar nuevo GPS?", function (
-                event
-            ) {
-                if (event) {
-                    var idNuevo = 'Nuevo' + reg_variableU;
-                    var nuevoLatitud;
-                    var nuevoLongitud;
-                    var r_nuevoxMapa = new L.editableCircleMarker(e.latlng, 100, {
-                        color: '#FF0000',
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.5,
-                        idCircle: idNuevo,
-                        metric: false,
-                        draggable: true
-                    })
-                        .on('move', function (e) {
-                            $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
-                            $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
-                        });
-                    nuevoLatitud = parseFloat(e.latlng.lat).toFixed(8);
-                    nuevoLongitud = parseFloat(e.latlng.lng).toFixed(8);
-                    r_layerGroup.addLayer(r_nuevoxMapa);
-                    r_layerGroup.addTo(map);
-                    var arrayMarkerBounds = [];
-                    r_layerGroup.eachLayer(function (layer) {
-                        var nuevoLatLng = layer.getLatLng()
-                        var markerBounds = new L.latLngBounds([nuevoLatLng]);
-                        arrayMarkerBounds.push(markerBounds);
+    alertify
+        .confirm("¿Desea agregar nuevo GPS?", function (
+            event
+        ) {
+            if (event) {
+                var idNuevo = 'Nuevo' + reg_variableU;
+                var nuevoLatitud;
+                var nuevoLongitud;
+                var r_nuevoxMapa = new L.editableCircleMarker(e.latlng, 100, {
+                    color: '#FF0000',
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.5,
+                    idCircle: idNuevo,
+                    metric: false,
+                    draggable: true
+                })
+                    .on('move', function (e) {
+                        $('#r_latitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lat).toFixed(8));
+                        $('#r_longitud' + e.target.options.idCircle).val(parseFloat(e.latlng.lng).toFixed(8));
                     });
-                    map.fitBounds(arrayMarkerBounds);
-                    map.setZoom(1); //: -> ZOOM COMPLETO
-                    var container = $('#r_rowGeo');
-                    colGeo = `<div class="col-lg-12" id="r_colGeoNuevo${reg_variableU}">
+                nuevoLatitud = parseFloat(e.latlng.lat).toFixed(8);
+                nuevoLongitud = parseFloat(e.latlng.lng).toFixed(8);
+                r_layerGroup.addLayer(r_nuevoxMapa);
+                r_layerGroup.addTo(map);
+                var arrayMarkerBounds = [];
+                r_layerGroup.eachLayer(function (layer) {
+                    var nuevoLatLng = layer.getLatLng()
+                    var markerBounds = new L.latLngBounds([nuevoLatLng]);
+                    arrayMarkerBounds.push(markerBounds);
+                });
+                map.fitBounds(arrayMarkerBounds);
+                map.setZoom(1); //: -> ZOOM COMPLETO
+                var container = $('#r_rowGeo');
+                colGeo = `<div class="col-lg-12" id="r_colGeoNuevo${reg_variableU}">
                                 <div class="row">
                                     <input type="hidden" class="r_rowIdGeo" value="Nuevo${reg_variableU}">
                                     <div class="col-md-12">
@@ -2184,11 +2096,11 @@ function r_addMarker(e) {
                                             <div class="card-header" style="padding: 0.25rem 1.25rem;">
                                                 <span style="font-weight: bold;">Datos GPS</span>
                                                 &nbsp;`;
-                    colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip"
+                colGeo += `<a class="mr-1" onclick="javascript:r_eliminarGeo('Nuevo${reg_variableU}')" style="cursor: pointer" data-toggle="tooltip"
                                     data-placement="right" title="Eliminar GPS" data-original-title="Eliminar GPS">
                                     <img src="/admin/images/delete.svg" height="13">
                                 </a>`;
-                    colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="r_toggleBody('Nuevo${reg_variableU}')"
+                colGeo += `<img class="float-right" src="/landing/images/chevron-arrow-down.svg" height="13" onclick="r_toggleBody('Nuevo${reg_variableU}')"
                                     style="cursor: pointer;">
                                 </div>
                                 <div class="card-body" style="padding:0.3rem" id="r_bodyGPSNuevo${reg_variableU}">
@@ -2242,39 +2154,26 @@ function r_addMarker(e) {
                                     </div>
                                     </div>
                                     </div>`;
-                    container.append(colGeo);
-                    var contarDisponibles = 0;
-                    $('.rowIdGeo').each(function () {
-                        var idG = $(this).val();
-                        var latitudG = $('#e_latitud' + idG).val();
-                        if (latitudG != "") {
-                            contarDisponibles = contarDisponibles + 1
-                        }
-                    });
-                    if (contarDisponibles < 4) {
-                        $('#e_buttonAgregarGPS').show();
-                    } else {
-                        $('#e_buttonAgregarGPS').hide();
-                    }
-                    variableU++;
-                }
-            })
-            .setting({
-                title: "Nuevo GPS",
-                labels: {
-                    ok: "Si",
-                    cancel: "No",
-                },
-                modal: true,
-                startMaximized: false,
-                reverseButtons: true,
-                resizable: false,
-                closable: false,
-                transition: "zoom",
-                oncancel: function (closeEvent) {
-                },
-            });
-    }
+                container.append(colGeo);
+                variableU++;
+            }
+        })
+        .setting({
+            title: "Nuevo GPS",
+            labels: {
+                ok: "Si",
+                cancel: "No",
+            },
+            modal: true,
+            startMaximized: false,
+            reverseButtons: true,
+            resizable: false,
+            closable: false,
+            transition: "zoom",
+            oncancel: function (closeEvent) {
+            },
+        });
+
 }
 // ? ELIMINAR DATOS  GPS DE MODAL
 function r_limpiarGPS() {
@@ -2296,19 +2195,6 @@ function r_eliminarGeo(id) {
     $('#r_longitud' + id).val("");
     $('#r_color' + id).val("");
     $('#r_colEliminar' + id).hide();
-    var contarDisponibles = 0;
-    $('.r_rowIdGeo').each(function () {
-        var idG = $(this).val();
-        var latitudG = $('#r_latitud' + idG).val();
-        if (latitudG != "") {
-            contarDisponibles = contarDisponibles + 1
-        }
-    });
-    if (contarDisponibles < 4) {
-        $('#r_buttonAgregarGPS').show();
-    } else {
-        $('#r_buttonAgregarGPS').hide();
-    }
 }
 // ? TOGGLE DE GPS
 function r_toggleBody(id) {
