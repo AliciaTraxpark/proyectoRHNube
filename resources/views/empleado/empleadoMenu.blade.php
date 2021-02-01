@@ -6217,7 +6217,7 @@ use App\proyecto_empleado;
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
+              {{--   <div class="row">
 
                     <div class="col-md-12">
                         <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
@@ -6240,7 +6240,7 @@ use App\proyecto_empleado;
                             </div>
                     </div>
 
-                </div>
+                </div> --}}
 
             </div>
             <div class="modal-footer">
