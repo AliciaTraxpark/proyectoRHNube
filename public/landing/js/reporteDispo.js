@@ -72,132 +72,67 @@ function inicializarTabla() {
 
         },
         dom: 'Bfrtip',
-        buttons: [{
-            extend: 'excel',
-            className: 'btn btn-sm mt-1',
-            text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-            customize: function (xlsx) {
-                var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                var downrows = 5;
-                var clRow = $('row', sheet);
-                clRow[0].children[0].remove();
-                //update Row
-                clRow.each(function () {
-                    var attr = $(this).attr('r');
-                    var ind = parseInt(attr);
-                    ind = ind + downrows;
-                    $(this).attr("r", ind);
-                });
+        buttons: [
+            {
+                extend: 'excel',
+                className: 'btn btn-sm mt-1',
+                text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
 
-                // Update  row > c
-                $('row c ', sheet).each(function () {
-                    var attr = $(this).attr('r');
-                    var pre = attr.substring(0, 1);
-                    var ind = parseInt(attr.substring(1, attr.length));
-                    ind = ind + downrows;
-                    $(this).attr("r", pre + ind);
-                });
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
 
-                function Addrow(index, data) {
-                    msg = '<row r="' + index + '">'
-                    for (i = 0; i < data.length; i++) {
-                        var key = data[i].k;
-                        var value = data[i].v;
-                        var bold = data[i].s;
-                        msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
-                        msg += '<is>';
-                        msg += '<t>' + value + '</t>';
-                        msg += '</is>';
-                        msg += '</c>';
-                    }
-                    msg += '</row>';
-                    return msg;
-                }
-                var now = new Date();
-                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                //insert
-                var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
-                var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
-                var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
-                var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
-                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
-            },
-            sheetName: 'Asistencia',
-            title: 'Asistencia',
-            autoFilter: false,
-            exportOptions: {
-                columns: ":visible:not(.noExport)",
-                format: {
-                    body: function (data, row, column, node) {
-                        var cont = $.trim($(node).text());
-                        var cambiar = cont.replace('Cambiar a entrada', '');
-                        cambiar = cambiar.replace('Cambiar a salida', '');
-                        cambiar = cambiar.replace('No tiene entrada', '---');
-                        cambiar = cambiar.replace('No tiene salida', '---');
-                        cambiar = cambiar.replace('Opciones', '');
-                        cambiar = cambiar.replace('Convertir orden', '');
-                        cambiar = cambiar.replace('Asignar a nueva marc.', '');
-                        cambiar = cambiar.replace('Eliminar marc.', '');
-                        cambiar = cambiar.replace('Actualizar horario', '');
-                        cambiar = cambiar.replace('Insertar salida', '');
-                        cambiar = cambiar.replace('Insertar entrada', '');
-
-                        return $.trim(cambiar);
-                    }
-                }
-            },
-        }, {
-            extend: "pdfHtml5",
-            className: 'btn btn-sm mt-1',
-            text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-            orientation: 'landscape',
-            pageSize: 'A1',
-            title: 'Asistencia',
-            exportOptions: {
-                columns: ":visible:not(.noExport)"
-            },
-            customize: function (doc) {
-                doc['styles'] = {
-                    table: {
-                        width: '100%'
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 11,
-                        color: '#6c757d',
-                        fillColor: '#ffffff',
-                        alignment: 'left'
-                    },
-                    defaultStyle: {
-                        fontSize: 10,
-                        alignment: 'center'
-                    }
-                };
-                doc.pageMargins = [20, 120, 20, 30];
-                doc.content[1].margin = [30, 0, 30, 0];
-                var colCount = new Array();
-                var tr = $('#tablaReport tbody tr:first-child');
-                var trWidth = $(tr).width();
-                $('#tablaReport').find('tbody tr:first-child td').each(function () {
-                    var tdWidth = $(this).width();
-                    var widthFinal = parseFloat(tdWidth * 130);
-                    widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
-                    if ($(this).attr('colspan')) {
-                        for (var i = 1; i <= $(this).attr('colspan'); $i++) {
-                            colCount.push('*');
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
                         }
-                    } else {
-                        colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
+                        msg += '</row>';
+                        return msg;
                     }
-                });
-                var bodyCompleto = [];
-                doc.content[1].table.body.forEach(function (line, i) {
-                    var bodyNuevo = [];
-                    if (i >= 1) {
-                        line.forEach(element => {
-                            var textOriginal = element.text;
-                            var cambiar = textOriginal.replace('Cambiar a entrada', '');
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
+                },
+                sheetName: 'Asistencia',
+                title: 'Asistencia',
+                autoFilter: false,
+                exportOptions: {
+                    columns: ":visible:not(.noExport)",
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            var cambiar = cont.replace('Cambiar a entrada', '');
                             cambiar = cambiar.replace('Cambiar a salida', '');
                             cambiar = cambiar.replace('No tiene entrada', '---');
                             cambiar = cambiar.replace('No tiene salida', '---');
@@ -208,51 +143,120 @@ function inicializarTabla() {
                             cambiar = cambiar.replace('Actualizar horario', '');
                             cambiar = cambiar.replace('Insertar salida', '');
                             cambiar = cambiar.replace('Insertar entrada', '');
-                            cambiar = $.trim(cambiar);
-                            bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
-                        });
-                        bodyCompleto.push(bodyNuevo);
-                    } else {
-                        bodyCompleto.push(line);
+                            cambiar = cambiar.split("/");
+                            cambiar = cambiar.map(s => s.trim()).join("/")
+                            return $.trim(cambiar);
+                        }
                     }
-                });
-                doc.content.splice(0, 1);
-                doc.content[0].table.body = bodyCompleto;
-                var objLayout = {};
-                objLayout['hLineWidth'] = function (i) { return .2; };
-                objLayout['vLineWidth'] = function (i) { return .2; };
-                objLayout['hLineColor'] = function (i) { return '#aaa'; };
-                objLayout['vLineColor'] = function (i) { return '#aaa'; };
-                doc.content[0].layout = objLayout;
-                var now = new Date();
-                var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                doc["header"] = function () {
-                    return {
-                        columns: [
-                            {
-                                alignment: 'left',
-                                italics: false,
-                                text: [
-                                    { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
-                                    { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                    { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                    { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
-                                    { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
-                                ],
-
-                                fontSize: 10,
-                                margin: [30, 0]
-                            },
-                        ],
-                        margin: 20
+                },
+            }, {
+                extend: "pdfHtml5",
+                className: 'btn btn-sm mt-1',
+                text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                orientation: 'landscape',
+                pageSize: 'A1',
+                title: 'Asistencia',
+                exportOptions: {
+                    columns: ":visible:not(.noExport)"
+                },
+                customize: function (doc) {
+                    var bodyCompleto = [];
+                    doc.content[1].table.body.forEach(function (line, i) {
+                        var bodyNuevo = [];
+                        if (i >= 1) {
+                            line.forEach(element => {
+                                var textOriginal = element.text;
+                                var cambiar = textOriginal.replace('Cambiar a entrada', '');
+                                cambiar = cambiar.replace('Cambiar a salida', '');
+                                cambiar = cambiar.replace('No tiene entrada', '---');
+                                cambiar = cambiar.replace('No tiene salida', '---');
+                                cambiar = cambiar.replace('Opciones', '');
+                                cambiar = cambiar.replace('Convertir orden', '');
+                                cambiar = cambiar.replace('Asignar a nueva marc.', '');
+                                cambiar = cambiar.replace('Eliminar marc.', '');
+                                cambiar = cambiar.replace('Actualizar horario', '');
+                                cambiar = cambiar.replace('Insertar salida', '');
+                                cambiar = cambiar.replace('Insertar entrada', '');
+                                cambiar = $.trim(cambiar);
+                                cambiar = cambiar.split("/");
+                                cambiar = cambiar.map(s => s.trim()).join("/")
+                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                            });
+                            bodyCompleto.push(bodyNuevo);
+                        } else {
+                            bodyCompleto.push(line);
+                        }
+                    });
+                    doc['styles'] = {
+                        table: {
+                            width: '100%'
+                        },
+                        tableHeader: {
+                            bold: true,
+                            fontSize: 11,
+                            color: '#ffffff',
+                            fillColor: '#14274e',
+                            alignment: 'left'
+                        },
+                        defaultStyle: {
+                            fontSize: 10,
+                            alignment: 'left'
+                        }
                     };
-                };
-            }
-        }],
+                    doc.pageMargins = [20, 120, 20, 30];
+                    doc.content[1].margin = [30, 0, 30, 0];
+                    var colCount = new Array();
+                    var tr = $('#tablaReport tbody tr:first-child');
+                    var trWidth = $(tr).width();
+                    $('#tablaReport').find('tbody tr:first-child td').each(function () {
+                        var tdWidth = $(this).width();
+                        var widthFinal = parseFloat(tdWidth * 130);
+                        widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
+                        if ($(this).attr('colspan')) {
+                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
+                                colCount.push('*');
+                            }
+                        } else {
+                            colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
+                        }
+                    });
+                    doc.content.splice(0, 1);
+                    doc.content[0].table.body = bodyCompleto;
+                    var objLayout = {};
+                    objLayout['hLineWidth'] = function (i) { return .2; };
+                    objLayout['vLineWidth'] = function (i) { return .2; };
+                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                    doc.content[0].layout = objLayout;
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    doc["header"] = function () {
+                        return {
+                            columns: [
+                                {
+                                    alignment: 'left',
+                                    italics: false,
+                                    text: [
+                                        { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
+                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    ],
+
+                                    fontSize: 10,
+                                    margin: [30, 0]
+                                },
+                            ],
+                            margin: 20
+                        };
+                    };
+                }
+            }],
         paging: true,
         initComplete: function () {
             setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
-        },
+        }
     });
 }
 // * VARIABLES PARA EXCEL Y PDF
@@ -335,38 +339,47 @@ function cargartabla(fecha) {
                 theadTabla += `<th>CC&nbsp;</th>
                                 <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th>Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                <th name="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 //* GRUPO DE HORARIOS
                 for (let m = 0; m < cantidadGruposHorario; m++) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
-                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;">
-                                        Horario
+                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;" name="descripcionHorario">
+                                        Descripción del horario
                                     </th>
-                                    <th class="text-center">Tiempo horario</th>
-                                    <th>Tolerancia</th>`;
+                                    <th class="text-center" name="horarioHorario">Horario</th>
+                                    <th name="toleranciaIHorario">Tolerancia en el ingreso</th>
+                                    <th name="toleranciaFHorario">Tolerancia en la salida</th>
+                                    <th name="faltaHorario">Falta</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
-                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;">Marca de entrada</th>
-                                        <th>Marca de salida</th>
-                                        <th id="tSitio" name="tiempoSitHi">Tiempo en sitio</th><th  name="tiempoSitHi">Tardanza</th>
-                                        <th name="tiempoSitHi">Faltas</th><th  name="tiempoSitHi">Incidencias</th>`;
+                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">
+                                            <span>
+                                                Entrada <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                            </span>
+                                        </th>
+                                        <th class="text-center" name="colMarcaciones">
+                                            <span>
+                                                Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                            </span>
+                                        </th>
+                                        <th id="tSitio" name="colTiempoS">Tiempo en sitio</th>
+                                        <th name="colTardanza">Tardanza</th>`;
                     }
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
                     for (let p = 0; p < cantidadColumnasP; p++) {
-                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="datosPausa">Pausa</th>
-                                        <th name="datosPausa">Horario pausa</th>
-                                        <th name="datosPausa">Tiempo pausa</th>
-                                        <th name="datosPausa">Exceso pausa</th>`;
+                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">Pausa</th>
+                                        <th name="horarioPausa">Horario de pausa</th>
+                                        <th name="tiempoPausa">Tiempo de pausa</th>
+                                        <th name="excesoPausa">Exceso de pausa</th>`;
                     }
                 }
-                theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;">Marcación T.</th> 
-                                <th>Tardanza T.</th>
-                                <th>Faltas T.</th>
-                                <th>Incidencias T.</th>
-                                <th style="border-left:2px solid #f05454!important;">Tiempo T.</th>`;
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;">Marcación T.</th> 
+                                <th style="border-left: 1px dashed #aaaaaa!important">Tardanza T.</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Faltas T.</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Incidencias T.</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -391,16 +404,17 @@ function cargartabla(fecha) {
                             <td>${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     if (data[index].cargo_descripcion != null) {
-                        tbody += `<td>${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     } else {
-                        tbody += `<td class="text-center">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        tbody += `<td class="text-center" name="colCargo">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     }
                     // * ARMAR GRUPO DE HORARIOS
                     var grupoHorario = "";
                     //* ARMAR Y ORDENAR MARCACIONES
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
-                    var tiempoTotal = moment("00:00:00", "HH:mm:ss");       //: SUMAS DE TIEMPOS Y RESTA DE PAUSAS
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
+                    // * CANTIDAD DE FALTAS
+                    var sumaFaltas = 0;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         if (data[index].data[m] != undefined) {
                             // ! HORARIO
@@ -409,131 +423,181 @@ function cargartabla(fecha) {
                             if (permisoModificar == 1) {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                        <div class="dropdown">
-                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-primary mr-2" class="text-center">
-                                                                    ${horarioData.horario}
-                                                                </span>
-                                                            </a>
-                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                    Opciones
-                                                                </h6>
-                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                <div class="dropdown-item">
-                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                            Actualizar horario
-                                                                        </a>
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <span class="badge badge-soft-primary mr-2" class="text-center">
+                                                                        ${horarioData.horario}
+                                                                    </span>
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td name="horarioHorario">
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                        <div class="dropdown">
-                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario">
-                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
-                                                                    ${horarioData.horario}
-                                                                </span>
-                                                            </a>
-                                                            <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                    Opciones
-                                                                </h6>
-                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                <div class="dropdown-item noExport">
-                                                                    <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
-                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                            <img src="landing/images/calendarioAD.svg" height="15" />
-                                                                            Actualizar horario
-                                                                        </a>
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario">
+                                                                        <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                        ${horarioData.horario}
+                                                                    </span>
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
+                                                                        <div class="form-group noExport pl-3 mt-1" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td name="horarioHorario">
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     }
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                                    <div class="dropdown">
-                                                        <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
-                                                            style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                            <span class="badge badge-soft-danger mr-2" class="text-center">
-                                                                Sin horario
-                                                            </span>
-                                                        </a>
-                                                        <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
-                                                            <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
-                                                                <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
-                                                                Opciones
-                                                            </h6>
-                                                            <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                            <div class="dropdown-item noExport">
-                                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                                    <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
-                                                                        <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
-                                                                        Actualizar horario
-                                                                    </a>
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Sin horario
+                                                                </span>
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                            Actualizar horario
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">---</td><td class="text-center">---</td>`;
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" name="horarioHorario">---</td>
+                                                    <td class="text-center" name="toleranciaIHorario">---</td>
+                                                    <td class="text-center" name="toleranciaFHorario">---</td>
+                                                    <td class="text-center" name="faltaHorario">---</td>`;
                                 }
                             } else {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                 <span class="badge badge-soft-primary mr-2" class="text-center">
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                        </td>
+                                                        <td name="horarioHorario">
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
-                                                    </td>
-                                                    <td>
-                                                        ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
-                                                    </td>
-                                                    <td class="text-center">${horarioData.tolerancia} min.</td>`;
+                                                        </td>
+                                                        <td name="horarioHorario">
+                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                        </td>
+                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                        if (data[index].data[m].marcaciones.length == 0) {
+                                            sumaFaltas++;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Falta
+                                                                </span>
+                                                            </td>`;
+                                        } else {
+                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                        }
                                     }
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                  Sin horario
                                                             </span>
                                                         </a>
-                                                </td>
-                                                <td class="text-center">---</td><td class="text-center">---</td>`;
+                                                    </td>
+                                                    <td class="text-center" name="horarioHorario">---</td>
+                                                    <td class="text-center" name="toleranciaIHorario">---</td>
+                                                    <td class="text-center" name="toleranciaFHorario">---</td>
+                                                    <td class="text-center" name="faltaHorario">---</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -562,7 +626,7 @@ function cargartabla(fecha) {
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important">
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
                                                                     <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                         <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -575,7 +639,7 @@ function cargartabla(fecha) {
                                                                                 Opciones
                                                                             </h6>
                                                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                            <div class="dropdown-item noExport">
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
                                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                     <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
@@ -583,7 +647,7 @@ function cargartabla(fecha) {
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="dropdown-item noExport">
+                                                                            <div class="dropdown-item dropdown-itemM noExport">
                                                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                     <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
@@ -592,7 +656,7 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                             </div>`;
                                         if (marcacionData.salida != 0) {
-                                            tbodyEntradaySalida += `<div class="dropdown-item noExport">
+                                            tbodyEntradaySalida += `<div class=" dropdown-item dropdown-itemM noExport">
                                                                         <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                             <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
@@ -600,7 +664,7 @@ function cargartabla(fecha) {
                                                                             </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="dropdown-item noExport">
+                                                                    <div class="dropdown-item dropdown-itemM noExport">
                                                                         <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                             <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.entrada).format("HH:mm:ss")}',1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                 <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -609,7 +673,7 @@ function cargartabla(fecha) {
                                                                         </div>
                                                                     </div>`;
                                         }
-                                        tbodyEntradaySalida += ` <div class="dropdown-item noExport">
+                                        tbodyEntradaySalida += ` <div class="dropdown-item dropdown-itemM noExport">
                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                         <a onclick="eliminarM(${marcacionData.idMarcacion},1,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
@@ -620,7 +684,7 @@ function cargartabla(fecha) {
                                                             </ul></div></td>`;
                                     }
                                     else {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                                         </td>`;
@@ -656,7 +720,7 @@ function cargartabla(fecha) {
                                     }
                                     if (marcacionData.salida != 0) {
                                         if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false" 
                                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -669,7 +733,7 @@ function cargartabla(fecha) {
                                                                                     Opciones
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdown-item noExport">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
@@ -677,7 +741,7 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdown-item noExport">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
@@ -685,7 +749,7 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdown-item noExport">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="convertirOrden(${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/flechasD.svg"  height="12" />
@@ -693,7 +757,7 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdown-item noExport">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="asignarNuevaM(${marcacionData.idMarcacion},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -701,7 +765,7 @@ function cargartabla(fecha) {
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="dropdown-item noExport">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
@@ -713,7 +777,7 @@ function cargartabla(fecha) {
                                                                         </div>
                                                                     </td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                     </td>`;
@@ -738,7 +802,6 @@ function cargartabla(fecha) {
                                                 segundosTiempo = '0' + segundosTiempo;
                                             }
                                             sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                            tiempoTotal = tiempoTotal.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
                                             if (marcacionData.idH != 0) {
                                                 // ****************************************** PAUSAS ****************************************
                                                 for (let indice = 0; indice < data[index].data[m].pausas.length; indice++) {
@@ -791,14 +854,6 @@ function cargartabla(fecha) {
                                                                         if (tiempoSegundoPausa < 10) {
                                                                             tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                                         }
-                                                                        // * RESTAR EL TIEMPO DE PAUSA
-                                                                        tiempoTotal = tiempoTotal.add(
-                                                                            {
-                                                                                "hours": -tiempoHoraPausa,
-                                                                                "minutes": -tiempoMinutoPausa,
-                                                                                "seconds": -tiempoSegundoPausa
-                                                                            }
-                                                                        );
                                                                         // * VERIFICAR TIEMPO DE EXCESO
                                                                         var clonarPausaI = pausaI.clone();
                                                                         var clonarPausaF = pausaF.clone();
@@ -843,12 +898,6 @@ function cargartabla(fecha) {
                                                                     if (tiempoSegundoPausa < 10) {
                                                                         tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                                     }
-                                                                    // ************************* RESTAR LA PAUSA ******************************
-                                                                    tiempoTotal = tiempoTotal.add({
-                                                                        "hours": -tiempoHoraPausa,
-                                                                        "minutes": -tiempoMinutoPausa,
-                                                                        "seconds": -tiempoSegundoPausa
-                                                                    });
                                                                     idPausas.push(contenidoP.id);
                                                                 }
                                                             }
@@ -858,39 +907,37 @@ function cargartabla(fecha) {
                                             }
                                         }
                                         // * FINALIZACION
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                        tbodyEntradaySalida += `<td name="colTiempoS">
                                                                     <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                     <a class="badge badge-soft-primary mr-2">
                                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
                                                                 </td>
-                                                                <td name="tiempoSitHi">
+                                                                <td name="colTardanza">
                                                                     <a class="badge badge-soft-danger mr-2">
                                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
-                                                                </td>
-                                                                <td name="tiempoSitHi">--</td>
-                                                                <td name="tiempoSitHi">--</td>`;
+                                                                </td>`;
                                     } else {
                                         if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td>
-                                                                        <div class="dropdown noExport">
-                                                                            <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
-                                                                                aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
+                                                                        <div class="dropdown noExport" id="dropSalida${marcacionData.idMarcacion}">
+                                                                            <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
+                                                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                                                 <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                                     No tiene salida
                                                                                 </span>
                                                                             </a>
-                                                                            <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                                                            <ul class="dropdown-menu"  style="padding: 0rem 0rem;">
                                                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
                                                                                     Opciones
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdown-item noExport">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -903,35 +950,33 @@ function cargartabla(fecha) {
                                                                     </td>`;
                                         }
                                         else {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <span class="badge badge-soft-secondary noExport"><img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                             No tiene salida
                                                                         </span>
                                                                     </td>`;
                                         }
 
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                        tbodyEntradaySalida += `<td name="colTiempoS">
                                                                     <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                     <a class="badge badge-soft-primary mr-2">
                                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
                                                                 </td>
-                                                                <td name="tiempoSitHi">
+                                                                <td name="colTardanza">
                                                                     <a class="badge badge-soft-danger mr-2">
                                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
-                                                                </td>
-                                                                <td name="tiempoSitHi">--</td>
-                                                                <td name="tiempoSitHi">--</td>`;
+                                                                </td>`;
                                     }
 
                                 } else {
                                     if (marcacionData.salida != 0) {
                                         //* COLUMNA DE ENTRADA
                                         if (permisoModificar == 1) {
-                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
+                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
                                                                         <div class=" dropdown">
                                                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
                                                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -946,7 +991,7 @@ function cargartabla(fecha) {
                                                                                     Opciones
                                                                                 </h6>
                                                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                <div class="dropdown-item">
+                                                                                <div class="dropdown-item dropdown-itemM noExport">
                                                                                     <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                         <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                             <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -959,7 +1004,7 @@ function cargartabla(fecha) {
                                                                     </td>`;
                                         }
                                         else {
-                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;">
+                                            tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones">
                                                                                 <span class="badge badge-soft-warning noExport">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                                                     No tiene entrada
@@ -970,7 +1015,7 @@ function cargartabla(fecha) {
                                         //* COLUMNA DE SALIDA
                                         var permisoModificarCE2 = $('#modifReporte').val();
                                         if (permisoModificarCE2 == 1) {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                                 <div class="dropdown" data-toggle="tooltip" data-placement="left" title="${marcacionData.dispositivo}">
                                                                                     <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownSalida${marcacionData.idMarcacion}" aria-haspopup="true" aria-expanded="false"
                                                                                         style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -983,7 +1028,7 @@ function cargartabla(fecha) {
                                                                                             Opciones
                                                                                         </h6>
                                                                                         <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                                                        <div class="dropdown-item noExport">
+                                                                                        <div class="dropdown-item dropdown-itemM noExport">
                                                                                             <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                                 <a onclick="listaSalida(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" height="12" />
@@ -991,7 +1036,7 @@ function cargartabla(fecha) {
                                                                                                 </a>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="dropdown-item noExport">
+                                                                                        <div class="dropdown-item dropdown-itemM noExport">
                                                                                             <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                                 <a onclick="listaEntrada(${marcacionData.idMarcacion},'${fecha}',${data[index].emple_id},'${moment(marcacionData.salida).format("HH:mm:ss")}',2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                 <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg"  height="12" />
@@ -999,7 +1044,7 @@ function cargartabla(fecha) {
                                                                                                 </a>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="dropdown-item noExport">
+                                                                                        <div class="dropdown-item dropdown-itemM noExport">
                                                                                             <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                                                                 <a onclick="eliminarM(${marcacionData.idMarcacion},2,${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                                                                     <img style="margin-bottom: 3px;" src="landing/images/borrarD.svg"  height="12" />
@@ -1011,53 +1056,49 @@ function cargartabla(fecha) {
                                                                                 </div>
                                                                             </td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>
+                                            tbodyEntradaySalida += `<td name="colMarcaciones">
                                                                         <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
                                                                         ${moment(marcacionData.salida).format("HH:mm:ss")}
                                                                     </td>`;
                                         }
 
-                                        tbodyEntradaySalida += `<td name="tiempoSitHi">
+                                        tbodyEntradaySalida += `<td name="colTiempoS">
                                                                     <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                     <a class="badge badge-soft-primary mr-2">
                                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
                                                                 </td>
-                                                                <td name="tiempoSitHi">
+                                                                <td name="colTardanza">
                                                                     <a class="badge badge-soft-danger mr-2">
                                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
-                                                                </td>
-                                                                <td name="tiempoSitHi" class="text-center">--</td>
-                                                                <td name="tiempoSitHi" class="text-center">--</td>`;
+                                                                </td>`;
 
                                     }
                                 }
                             }
                             for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                                        <td class="text-center">---</td>
-                                                        <td name="tiempoSitHi" class="text-center">---</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>`;
+                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                        <td class="text-center" name="colMarcaciones">---</td>
+                                                        <td name="colTiempoS" class="text-center">---</td>
+                                                        <td name="colTardanza" class="text-center">--</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
                             var tbodyPausas = "";
                             for (let p = 0; p < data[index].data[m].pausas.length; p++) {
                                 var pausaData = data[index].data[m].pausas[p];
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="datosPausa">${pausaData.descripcion}</td>
-                                        <td name="datosPausa">${pausaData.inicio} - ${pausaData.fin}</td>
-                                        <td name="datosPausa">
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
+                                        <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>
+                                        <td name="tiempoPausa">
                                             <a class="badge badge-soft-primary mr-2">
                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                 ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
                                             </a>
                                         </td>
-                                        <td name="datosPausa">
+                                        <td name="tiempoPausa">
                                             <a class="badge badge-soft-danger mr-2">
                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                 ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
@@ -1065,59 +1106,88 @@ function cargartabla(fecha) {
                                         </td>`;
                             }
                             for (let cp = data[index].data[m].pausas.length; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa" class="text-center">----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">------</td>`;
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
+                                                <td name="horarioPausa" class="text-center">-----</td>
+                                                <td name="tiempoPausa" class="text-center">-----</td>
+                                                <td name="excesoPausa" class="text-center">------</td>`;
                             }
                             grupoHorario += tbodyPausas;
                         } else {
-                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center">
-                                            ----
-                                        </td>
-                                        <td class="text-center">---</td><td class="text-center">---</td>`;
+                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                                ----
+                                            </td>
+                                            <td class="text-center" name="horarioHorario">---</td>
+                                            <td class="text-center" name="toleranciaIHorario">---</td>
+                                            <td class="text-center" name="toleranciaFHorario">---</td>
+                                            <td class="text-center" name="faltaHorario">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center">---</td>
-                                                        <td class="text-center">---</td>
-                                                        <td name="tiempoSitHi" class="text-center">---</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>
-                                                        <td name="tiempoSitHi" class="text-center">--</td>`;
+                                tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
+                                                        <td class="text-center" name="colMarcaciones">---</td>
+                                                        <td name="colTiempoS" class="text-center">---</td>
+                                                        <td name="colTardanza" class="text-center">--</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
                             var tbodyPausas = "";
                             for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="datosPausa" class="text-center">----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">-----</td>
-                                                <td name="datosPausa" class="text-center">------</td>`;
+                                tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important" name="descripcionPausa" class="text-center">----</td>
+                                                <td name="horarioPausa" class="text-center">-----</td>
+                                                <td name="tiempoPausa" class="text-center">-----</td>
+                                                <td name="excesoPausa" class="text-center">------</td>`;
                             }
                             grupoHorario += tbodyPausas;
                         }
                     }
                     tbody += grupoHorario;
                     // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
-                    tbody += `<td id="TiempoTotal${data[index].emple_id}" style="border-left:1px dashed #aaaaaa!important;">
+                    tbody += `<td id="TiempoTotal${data[index].emple_id}" style="border-left: 2px solid #383e56!important;">
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
                             </td>
-                            <td>
+                            <td style="border-left: 1px dashed #aaaaaa!important">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                     ${sumaTardanzas.format("HH:mm:ss")}
                                 </a>
-                            </td>
-                            <td class="text-center">--</td>
-                            <td class="text-center">--</td>
-                            <td style="border-left:2px solid #f05454!important;" data-toggle="tooltip" data-placement="right" title="Marcación total - (Tiempo pausa)"
-                            data-original-title="">
-                                ${tiempoTotal.format("HH:mm:ss")}
                             </td>`;
+                    // ******************************* CANTIDAD DE FALTAS **************************
+                    console.log(sumaFaltas);
+                    if (sumaFaltas != 0) {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">`;
+                        for (let f = 0; f < sumaFaltas; f++) {
+                            if (f == 0) {
+                                tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
+                                            Falta
+                                        </span>`;
+                            } else {
+                                tbody += `<b>/</b><span class="badge badge-soft-danger ml-1" class="text-center">
+                                            Falta
+                                        </span>`;
+                            }
+                        }
+                        tbody += `</td>`;
+                    } else {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                    }
+                    // * ********************** FINALIZACION *************************************
+                    if (data[index].incidencias.length == 0) {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                    } else {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;">`;
+                        for (let item = 0; item < data[index].incidencias.length; item++) {
+                            var dataIncidencia = data[index].incidencias[item];
+                            if (item == 0) {
+                                tbody += `<span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            } else {
+                                tbody += `<b>/</b><span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            }
+                        }
+                        tbody += `</td>`;
+                    }
                     tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
@@ -1130,22 +1200,22 @@ function cargartabla(fecha) {
                     if (permisoModificar == 1) {
                         tbodyTR += `<td></td>`;
                     }
-                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td></td>';
+                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td></td><td></td><td></td>';
+                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="faltaHorario"></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                            tbodyTR += '<td><br></td><td></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td><td name="tiempoSitHi"></td>';
+                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td>';
                         }
                         // ! PAUSAS
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
-                            tbodyTR += `<td name="datosPausa"></td>
-                                    <td name="datosPausa"></td>
-                                    <td name="datosPausa"></td>
-                                    <td name="datosPausa"></td>`;
+                            tbodyTR += `<td name="descripcionPausa"></td>
+                                    <td name="horarioPausa"></td>
+                                    <td name="tiempoPausa"></td>
+                                    <td name="excesoPausa"></td>`;
                         }
                     }
-                    tbodyTR += '<td><br><br></td><td></td><td></td><td></td><td></td></tr>';
+                    tbodyTR += '<td><br><br></td><td></td><td></td><td></td></tr>';
                     $('#tbodyD').append(tbodyTR);
                 }
                 inicializarTabla();
@@ -1154,22 +1224,7 @@ function cargartabla(fecha) {
                     table.draw(true);
                 });
                 // * SWITCH DE MOSTRAR DETALLES
-                if ($('#customSwitDetalles').is(':checked')) {
-                    $('[name="tiempoSitHi"]').show();
-                    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-                }
-                else {
-                    $('[name="tiempoSitHi"]').hide();
-                    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-                }
-                // * SWITCH DE PAUSAS
-                if ($('#switPausas').is(':checked')) {
-                    $('[name="datosPausa"]').show();
-                    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-                } else {
-                    $('[name="datosPausa"]').hide();
-                    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-                }
+                toggleColumnas();
             } else {
                 $('#customSwitDetalles').prop("disabled", true);
                 $('#switPausas').prop("disabled", true);
@@ -1185,30 +1240,8 @@ function cambiarF() {
     f2 = moment(f1).format("YYYY-MM-DD");
     $('#pasandoV').val(f2);
     cargartabla(f2);
-
+    setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
 }
-// * FUNCION DE SWITCH DE MOSTRAR DETALLES
-function cambiartabla() {
-    if ($('#customSwitDetalles').is(':checked')) {
-        $('[name="tiempoSitHi"]').show();
-        setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-    }
-    else {
-        $('[name="tiempoSitHi"]').hide();
-        setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-    }
-}
-// * FUNCION DE SWITCH DE MOSTRAR PAUSAS
-function togglePausas() {
-    if ($('#switPausas').is(':checked')) {
-        $('[name="datosPausa"]').show();
-        setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-    } else {
-        $('[name="datosPausa"]').hide();
-        setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 200);
-    }
-}
-
 // TODO *********************************** FUNCIONALIDAD PARA MARCACIONES *******************************
 // ! *********************************** NUEVA MARCACION ********************************************
 // * FUNCION DE AGREGAR MARCACION
@@ -2573,3 +2606,218 @@ function limpiarAtributos() {
     $('#rowDatosM').hide();
     $('#r_horarioXE').empty();
 }
+// ! ********************************* SELECTOR DE COLUMNAS ****************************************************
+// * FUNCION PARA QUE NO SE CIERRE DROPDOWN
+$('#dropSelector').on('hidden.bs.dropdown', function () {
+    $('#contenidoDetalle').hide();
+    $('#contenidoPausas').hide();
+    $('#contenidoHorarios').hide();
+});
+$(document).on('click', '.allow-focus', function (e) {
+    e.stopPropagation();
+});
+// : ************************************** COLUMNAS DE DETALLES ***********************************************
+// * TOGGLE DE DETALLES
+function toggleD() {
+    $('#contenidoDetalle').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DETALLES
+$('.detalleHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.detallePadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.detallePadre input[type=checkbox]').change(function () {
+    $(this).closest('.detallePadre').next('ul').find('.detalleHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
+// : ************************************** COLUMNAS DE PAUSAS ***********************************************
+function toggleP() {
+    $('#contenidoPausas').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS PAUSAS
+$('.pausaHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.pausaPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.pausaPadre input[type=checkbox]').change(function () {
+    $(this).closest('.pausaPadre').next('ul').find('.pausaHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
+// : ************************************** COLUMNA DE CARGO ***************************************************
+$('#colCargo').change(function (event) {
+    if (event.target.checked) {
+        $('[name="colCargo"]').show();
+    } else {
+        $('[name="colCargo"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+});
+// : ************************************ COLUMNA DE MARCACIONES ************************************************
+$('#colMarcaciones').change(function (event) {
+    if (event.target.checked) {
+        $('[name="colMarcaciones"]').show();
+    } else {
+        $('[name="colMarcaciones"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+});
+// : *********************************** COLUMNA DE HORARIOS ***************************************************
+function toggleH() {
+    $('#contenidoHorarios').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DE HORARIO
+$('.horarioHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.horarioPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.horarioPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.horarioPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.horarioPadre input[type=checkbox]').change(function () {
+    $(this).closest('.horarioPadre').next('ul').find('.horarioHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
+// : ********************************* FINALIZACION *************************************************************
+// * FUNCION DE MOSTRAR COLUMNAS
+function toggleColumnas() {
+    // * ***************** COLUMNAS DE DETALLES ****************
+    // ? TIEMPO EN SITIO
+    if ($('#colTiempoSitio').is(":checked")) {
+        $('[name="colTiempoS"]').show();
+    } else {
+        $('[name="colTiempoS"]').hide();
+    }
+    // ? TARDANZA
+    if ($('#colTardanza').is(":checked")) {
+        $('[name="colTardanza"]').show();
+    } else {
+        $('[name="colTardanza"]').hide();
+    }
+    // * ****************** COLUMNAS DE PAUSAS *********************
+    // ? DESCRION PAUSA
+    if ($('#descripcionPausa').is(":checked")) {
+        $('[name="descripcionPausa"]').show();
+    } else {
+        $('[name="descripcionPausa"]').hide();
+    }
+    // ? HORARIO PAUSA
+    if ($('#horarioPausa').is(":checked")) {
+        $('[name="horarioPausa"]').show();
+    } else {
+        $('[name="horarioPausa"]').hide();
+    }
+    // ? TIEMPO DE PAUSA
+    if ($('#tiempoPausa').is(":checked")) {
+        $('[name="tiempoPausa"]').show();
+    } else {
+        $('[name="tiempoPausa"]').hide();
+    }
+    // ? EXCESO DE PAUSA
+    if ($('#excesoPausa').is(":checked")) {
+        $('[name="excesoPausa"]').show();
+    } else {
+        $('[name="excesoPausa"]').hide();
+    }
+    // * *************** COLUMNA CARGO ******************************
+    if ($('#colCargo').is(":checked")) {
+        $('[name="colCargo"]').show();
+    } else {
+        $('[name="colCargo"]').hide();
+    }
+    // * **************** COLUMNA MARCACION ***************************
+    if ($('#colMarcaciones').is(":checked")) {
+        $('[name="colMarcaciones"]').show();
+    } else {
+        $('[name="colMarcaciones"]').hide();
+    }
+    // * *************** COLUMNA HORARIOS *****************************
+    // ? DESCRIPCION DE HORARIO
+    if ($('#descripcionHorario').is(":checked")) {
+        $('[name="descripcionHorario"]').show();
+    } else {
+        $('[name="descripcionHorario"]').hide();
+    }
+    // ? HORARIO
+    if ($('#horarioHorario').is(":checked")) {
+        $('[name="horarioHorario"]').show();
+    } else {
+        $('[name="horarioHorario"]').hide();
+    }
+    // ? TOLERANCIA INICIO
+    if ($('#toleranciaIHorario').is(":checked")) {
+        $('[name="toleranciaIHorario"]').show();
+    } else {
+        $('[name="toleranciaIHorario"]').hide();
+    }
+    // ? TOLERANCIA FIN
+    if ($('#toleranciaFHorario').is(":checked")) {
+        $('[name="toleranciaFHorario"]').show();
+    } else {
+        $('[name="toleranciaFHorario"]').hide();
+    }
+    // ? FALTA
+    if ($('#faltaHorario').is(":checked")) {
+        $('[name="faltaHorario"]').show();
+    } else {
+        $('[name="faltaHorario"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+}
+$("#tablaReport").on('page', function () {
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); table.columns.adjust().draw(false); }, 1);
+    $('[data-toggle="tooltip"]').tooltip();
+});

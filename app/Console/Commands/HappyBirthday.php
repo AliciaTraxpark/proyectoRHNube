@@ -60,7 +60,13 @@ class HappyBirthday extends Command
                     ->get();
 
             $admins = DB::table('usuario_organizacion')
-                    ->where('organi_id', $organizacion->organi_id)
+                    ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
+                    ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
+                    ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
+                    ->where(function ($query) {
+                        $query->where('invitado.gestionHb', '<>', 0)
+                              ->orWhereNull('invitado.gestionHb');
+                    })
                     ->select('usuario_organizacion.user_id')
                     ->get();
 

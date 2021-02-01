@@ -22,6 +22,8 @@ class invitado extends Model
         'verTodosEmps',
         'modoCR',
         'gestionActiv',
+        'gestionHb',
+        'gestionContract',
         'asistePuerta',
         'reporteAsisten',
         'ControlRuta',

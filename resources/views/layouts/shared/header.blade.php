@@ -70,7 +70,9 @@ use App\persona;
             ->where('o.organi_id','!=',session('sesionidorg'))
             ->get();
         @endphp
-
+        <div id="content123" class="alert alert-success" role="alert" style="display: none;font-size:12px;color: #163552;position: fixed; right: 0; top: 70px; height: 40px;">
+          <strong>Tienes nuevas notificaciones</strong>
+        </div>
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu
             float-right mb-0">
 

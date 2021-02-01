@@ -46,7 +46,7 @@ class BirthdayUsers extends Command
     {
         $this->info('Enviar alerta de cumpleaños.');
         $organizaciones = organizacion::all('organi_id');
-        $todayNow = carbon::now()->subHours(5);
+        $todayNow = carbon::now();
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
 
         foreach ($organizaciones as $organizacion) {
@@ -60,17 +60,24 @@ class BirthdayUsers extends Command
 
             //COLECCIÓN DE ADMINISTRADORES POR ORGANIZACIÓN
             $admins = DB::table('usuario_organizacion')
-                    ->where('organi_id', $organizacion->organi_id)
+                    ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
+                    ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
+                    ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
+                    ->where(function ($query) {
+                        $query->where('invitado.gestionHb', '<>', 0)
+                              ->orWhereNull('invitado.gestionHb');
+                    })
                     ->select('usuario_organizacion.user_id')
                     ->get();
 
             foreach ($empleados as $persona) {
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
                 if($persona->perso_fechaNacimiento != NULL){
-                    $hb = carbon::parse($persona->perso_fechaNacimiento);                    
-                    $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
+                    $hb = carbon::parse($persona->perso_fechaNacimiento);  // 31 de diciembre del 2020    ->  01 de enero 2021  
+
+                    $tomorrow = carbon::tomorrow();
+                    $fHb = carbon::create($tomorrow->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
                     $diff = $today->diffInDays($fHb);
-                    $edad = $today->year - $hb->year;
 
                     if($diff == 1 && $today < $fHb){
                         $mensaje =  [

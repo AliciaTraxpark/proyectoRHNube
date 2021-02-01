@@ -1896,7 +1896,7 @@ use Carbon\Carbon;
                                                         style="padding-left: 5px;padding-right: 5px;" name="m_ano_fecha"
                                                         id="m_ano_fecha" required>
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                             value="{{$i}}">{{$i}}
                                                             </option>
                                                             @endfor
@@ -2124,7 +2124,7 @@ use Carbon\Carbon;
                                                         style="padding-left: 5px;padding-right: 5px;"
                                                         name="m_ano_fechaD" id="m_ano_fechaD" required>
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                             value="{{$i}}">{{$i}}
                                                             </option>
                                                             @endfor
@@ -2676,7 +2676,7 @@ use Carbon\Carbon;
                                                         padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
                                                                 required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                     value="{{$i}}">
                                                                     {{$i}}
                                                                     </option>
@@ -2760,7 +2760,7 @@ use Carbon\Carbon;
                                                             padding-right: 5px;" name="m_ano_fechaFE"
                                                                     id="m_ano_fechaFE">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                    @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                         value="{{$i}}">
                                                                         {{$i}}
                                                                         </option>
@@ -2903,7 +2903,7 @@ use Carbon\Carbon;
                                                         padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
                                                                 required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                     value="{{$i}}">
                                                                     {{$i}}
                                                                     </option>
@@ -2986,7 +2986,7 @@ use Carbon\Carbon;
                                                             padding-right: 5px;" name="m_ano_fechaFEN"
                                                                     id="m_ano_fechaFEN">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                    @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                         value="{{$i}}">
                                                                         {{$i}}
                                                                         </option>
@@ -3133,7 +3133,7 @@ use Carbon\Carbon;
                                                                 style="padding-left: 5px;padding-right: 5px;"
                                                                 name="m_ano_fechaIEND" id="m_ano_fechaIEND" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                     value="{{$i}}">
                                                                     {{$i}}
                                                                     </option>
@@ -3216,7 +3216,7 @@ use Carbon\Carbon;
                                                                     style="padding-left: 5px;padding-right: 5px;"
                                                                     name="m_ano_fechaFEND" id="m_ano_fechaFEND">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                                    @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                         value="{{$i}}">
                                                                         {{$i}}
                                                                         </option>
@@ -3334,7 +3334,7 @@ use Carbon\Carbon;
                                                         style="padding-left: 5px;padding-right: 5px;"
                                                         name="m_ano_fechaIEV" id="m_ano_fechaIEV" disabled>
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                             value="{{$i}}">
                                                             {{$i}}
                                                             </option>
@@ -3384,7 +3384,7 @@ use Carbon\Carbon;
                                                             style="padding-left: 5px;padding-right: 5px;"
                                                             name="m_ano_fechaFEV" id="m_ano_fechaFEV" disabled>
                                                             <option value="0">Año</option>
-                                                            @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                            @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                                 value="{{$i}}">{{$i}}
                                                                 </option>
                                                                 @endfor

@@ -62,7 +62,13 @@ class FinContrato extends Command
                     ->get();
 
             $admins = DB::table('usuario_organizacion')
-                    ->where('organi_id', $organizacion->organi_id)
+                    ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
+                    ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
+                    ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
+                    ->where(function ($query) {
+                        $query->where('invitado.gestionContract', '<>', 0)
+                              ->orWhereNull('invitado.gestionContract');
+                        })
                     ->select('usuario_organizacion.user_id')
                     ->get();
 
@@ -70,10 +76,9 @@ class FinContrato extends Command
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
                 if ($persona->fechaFinal != NULL) {
                     $fc = carbon::parse($persona->fechaFinal);
-                    $F_fc = carbon::create($today->year, $fc->month, $fc->day, 0, 0, 0, 'GMT');
-                    $diff = $today->diffInDays($F_fc);
+                    $diff = $today->diffInDays($fc);
                     $edad = $today->year - $fc->year;
-                    if($diff < $persona->notiTiempo && $today <= $F_fc){
+                    if($diff <= $persona->notiTiempo && $today <= $fc){
                         $datos = $datos."<div class=''><strong>• ".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</strong>, su contrato finaliza el <strong>".$persona->fechaFinal."</strong> le quedan ".$diff." días. </div><br>";
                         $mensaje =  [
                                         "idOrgani" => $organizacion->organi_id,
@@ -87,7 +92,7 @@ class FinContrato extends Command
                                         "asunto" => "contract"
                                     ];
 
-                        if($admins){
+                        if(isset($admins)){
                             foreach ($admins as $admin){
                                 $recipient = User::find($admin->user_id);
                                 $recipient->notify(new NuevaNotification($mensaje)); 

@@ -152,7 +152,7 @@
                 <div class="row justify-content-center">
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 col-lg-5 col-sm-6 col-12">
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label">Rango de fechas:</label>
                             <input type="hidden" id="ID_START">
@@ -171,13 +171,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-5 col-sm-6">
+                    <div class="col-xl-5 col-lg-6 col-sm-5 col-10">
                         <div class="form-group   row">
                             <label class="col-lg-3 col-form-label">Empleado</label>
                             <div class="col-lg-9">
                                 <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
                                     class="form-control form-control-sm" data-placeholder="Seleccione empleado">
-                                    <option value="0" selected></option>
+                                    <option value="0" selected>Todos los empleados</option>
                                     @foreach ($empleado as $empleados)
                                     <option value="{{$empleados->emple_id}}">{{$empleados->perso_nombre}}
                                         {{$empleados->perso_apPaterno}} {{$empleados->perso_apMaterno}}</option>
@@ -187,9 +187,9 @@
 
                         </div>
                     </div>
-                    <div class="col-xl-1 text-left btnR" style="padding-left: 0%">
+                    <div class="col-xl-1 col-lg-2 col-sm-1 col-2 text-left btnR" style="padding-left: 0%">
                         <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarF()"> <img
+                            style="background-color: #163552;" onclick="javascript:cambiarFCR()"> <img
                                 src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
                     </div>
 
@@ -212,9 +212,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
+                <!--<input type="checkbox" class="custom-control-input" id="customSwitDetalles"
                     onclick="javascript:cambiartabla()">
-                <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar detalles</label>
+                <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar detalles</label>-->
             </div>
         </div>
 
@@ -224,14 +224,7 @@
         </div>
 
         <div class="col-md-12">
-            <div class="dt-buttons btn-group flex-wrap" id="btnsDescarga" style="display: none">
-                <button class="btn btn-secondary   btn-sm mt-1"   type="button" onclick="doexcel()">
-                    <span><i><img src="admin/images/excel.svg" height="20"></i> Descargar</span>
-                </button>
-                 <button class="btn btn-secondary  btn-sm mt-1"  type="button" onclick="generatePDF()">
-                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
-                 </button>
-            </div>
+            
         </div>
         <style>
             .tableHi{
@@ -242,62 +235,35 @@
        <div id="tableZoomI" class="col-md-12" style="display: none" >
         <table id="Encabezado" class="table" style="font-size: 12.8px;border-collapse: collapse;">
             <thead>
-
                 <tr>
-
-                    <th  style=" font-weight: 600;text-align: center " colspan="3">
-                        CONTROL DE REGISTRO DE ASISTENCIA</th>
+                    <th  style=" font-weight: 600;text-align: center " colspan="6">
+                        REPORTE DE TARDANZAS</th>
                 </tr>
                 <tr>
-
-
-                    <th  id="RangoFechas"></th>
+                    <th  id="RangoFechas" colspan="6"></th>
                 </tr>
             </thead>
             <tbody>
-
                 <tr>
-
                     <td  >Razon social:</td>
                     <td >{{$organizacion}}</td>
                 </tr>
                 <tr>
-
                     <td >Direccion:</td>
                     <td >{{$direccion}}</td>
                 </tr>
                 <tr>
-
                     <td >Numero de Ruc:</td>
                     <td >{{$ruc}}</td>
                 </tr>
-
                 <tr>
-
-                    <td >DNI:</td>
-                    <td  id="ponerDNI" colspan="1" > </td>
-                </tr>
-                <tr>
-
-                    <td >Apellidos y nombres:</td>
-                    <td id="ponerApe" colspan="1" > </td>
-                </tr>
-                <tr>
-
-                    <td >Area:</td>
-                    <td  id="ponerArea" colspan="1" > </td>
-                </tr>
-                <tr>
-
-                    <td >cargo:</td>
-                    <td   id="ponerCarg" colspan="1" > </td>
+                    <td>Fecha: {{ now()->format('d-m-Y H:i:s') }}</td>
                 </tr>
                 <tr>
                    <td>
                        <br>
                    </td>
                 </tr>
-
             </tbody>
         </table>
         <table id="tablaReportI"  border=1  class=" " style="font-size: 12.8px;border-collapse: collapse;">
@@ -305,23 +271,22 @@
             <thead id="theadDI" >
 
                 <tr>
-                    <th>CC</th>
-                    <th>Fecha</th>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Documento</th>
                     {{-- <th>Horario</th>
 
                     <th>Cargo</th> --}}
-                    <th colspan="2">Horario</th>
+                    <th colspan="2">Nombres</th>
 
-                    <th colspan="2" id="hEntradaI">Hora de entrada</th>
-                    <th colspan="2" id="hSalidaI">Hora de salida</th>
-                    <th colspan="2" id="tSitioI">Tiempo en sitio</th>
-                    <th colspan="2" >Tardanza T.</th>
-                    <th colspan="2">Faltas T.</th>
-                    <th colspan="2">Incidencias T.</th>
+                    <th colspan="2" id="hEntradaI">Cargo</th>
+                    <th colspan="2" id="hSalidaI">Área</th>
+                    <th colspan="2" id="tSitioI">Tardanza tiempo</th>
 
                 </tr>
             </thead>
             <tbody class="" id="tbodyIDI">
+                
             </tbody>
         </table>
 
@@ -331,20 +296,23 @@
             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                     <tr>
-                        <th>CC</th>
-                        <th>Fecha</th>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Documento</th>
+                        <th>Nombres</th>
+                        <th>Cargo</th>
+                        <th>Área</th>
+                        <th>Tardanza tiempo</th>
                         {{-- <th>Horario</th>
 
                         <th>Cargo</th> --}}
-                        <th>Horario</th>
+
+                        {{-- <th>Horario</th>
 
                         <th id="hEntrada">Hora de entrada</th>
-                        <th id="hSalida">Hora de salida</th>
-                        <th id="tSitio">Tiempo en sitio</th>
-                        <th >Tardanza T.</th>
-                        <th>Faltas T.</th>
-                        <th>Incidencias T.</th>
-
+                        <th id="hSalida">Hora de marcación</th>
+                        <th id="tSitio">Tiempo en tandanza</th> --}}
+                    
                     </tr>
                 </thead>
                 <tbody id="tbodyD">

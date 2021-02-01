@@ -427,7 +427,7 @@
                     </table>
                 </td>
             </tr> --}}
-            <tr style="border-collapse:collapse">
+            <!-- <tr style="border-collapse:collapse">
                 <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                     <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"
                         style="border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
@@ -455,7 +455,7 @@
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr> -->
             <tr style="border-collapse:collapse">
                 <td style="padding:0;Margin:0;background-color:#FAFAFA" bgcolor="#fafafa" align="center">
                     <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"
@@ -466,8 +466,7 @@
                                 <span style="font-size: 14px; color: #ffffff; line-height: 120%;"><span>©
                                         2020 RH nube
                                         Corp - USA | Todos los derechos reservados.</span></span>
-                                <span
-                                    style="font-size: 14px; color: #333333; line-height: 120%;"><span>www.rhnube.com.pe</span></span>
+                                <!-- <span style="font-size: 14px; color: #333333; line-height: 120%;"><span>www.rhnube.com.pe</span></span> -->
                             </td>
                         </tr>
                     </table>

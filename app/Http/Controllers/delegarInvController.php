@@ -106,12 +106,13 @@ class delegarInvController extends Controller
     }
 
     public function registrarInvitado(Request $request){
-
         $emailInv=$request->emailInv;
         $idEmpleado=$request->idEmpleado;
         $dash=$request->dash;
         $permisoEmp=$request->permisoEmp;
         $switchActividades=$request->switchActividades;
+        $switchHb=$request->switchHb;
+        $switchContract=$request->switchContract;
         $switchasisPuerta=$request->switchasisPuerta;
         $switchCRemo=$request->switchCRemo;
         $switchCRuta=$request->switchCRuta;
@@ -125,6 +126,10 @@ class delegarInvController extends Controller
         $modifEmp=$request->modifEmp;
         $bajaEmp=$request->bajaEmp;
         $gActiEmp=$request->gActiEmp;
+        $agregarHb=$request->agregarHb;
+        $modifHb=$request->modifHb;
+        $agregarContract=$request->agregarContract;
+        $modifContract=$request->modifContract;
         $agregarActi=$request->agregarActi;
         $modifActi=$request->modifActi;
         $bajaActi=$request->bajaActi;
@@ -147,6 +152,8 @@ class delegarInvController extends Controller
         $invitado->extractorRH=$switchExtractor;
         $invitado->gestCalendario=$switchCalendar;
         $invitado->gestionActiv=$switchActividades;
+        $invitado->gestionHb=$switchHb;
+        $invitado->gestionContract=$switchContract;
         $invitado->asistePuerta=$switchasisPuerta;
         $invitado->verTodosEmps=$checkTodoEmp;
         $invitado->reporteAsisten=$swReporteAsis;
@@ -187,6 +194,22 @@ class delegarInvController extends Controller
         $permiso_invitado->bajaActi=0;
         }
 
+        if($switchHb==1){
+        $permiso_invitado->agregarHb=$agregarHb;
+        $permiso_invitado->modifHb=$modifHb;
+        } else{
+        $permiso_invitado->agregarHb=0;
+        $permiso_invitado->modifHb=0;
+        }
+
+        if($switchContract==1){
+        $permiso_invitado->agregarContract=$agregarContract;
+        $permiso_invitado->modifContract=$modifContract;
+        } else{
+        $permiso_invitado->agregarContract=0;
+        $permiso_invitado->modifContract=0;
+        }
+
         if($switchasisPuerta==1){
             $permiso_invitado->verPuerta=$verPuerta;
             $permiso_invitado->agregarPuerta=$agregPuerta;
@@ -206,7 +229,6 @@ class delegarInvController extends Controller
 
         $emailInv=$request->emailInv;
 
-
         $organi = organizacion::find(session('sesionidorg'));
         $invitado = new invitado();
         $invitado->organi_id =  session('sesionidorg');
@@ -218,7 +240,27 @@ class delegarInvController extends Controller
         $invitado->estado_condic=1;
         $invitado->empleado=0;
         $invitado->area=0;
+        $invitado->gestionHb = $request->switchHb;
+        $invitado->gestionContract = $request->switchContract;
         $invitado->save();
+
+        $permiso_invitado= new permiso_invitado();
+        $permiso_invitado->idinvitado =$invitado->idinvitado;
+        if($request->switchHb==1){
+            $permiso_invitado->agregarHb=$request->agregarHb;
+            $permiso_invitado->modifHb=$request->modifHb;
+        } else{
+            $permiso_invitado->agregarHb=0;
+            $permiso_invitado->modifHb=0;
+        }
+        if($request->switchContract==1){
+            $permiso_invitado->agregarContract=$request->agregarContract;
+            $permiso_invitado->modifContract=$request->modifContract;
+        } else{
+            $permiso_invitado->agregarContract=0;
+            $permiso_invitado->modifContract=0;
+        }
+        $permiso_invitado->save();
 
         Mail::to($emailInv)->queue(new CorreoInvitado($organi,$invitado));
 
@@ -409,7 +451,9 @@ class delegarInvController extends Controller
 
         /* DATOS DE INVITADO ADMIN */
         $invitado2=DB::table('invitado as i')
+        ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
         ->where('i.idinvitado','=', $idinvitado)
+        ->select('i.*', 'pi.agregarHb', 'pi.modifHb', 'pi.agregarContract', 'pi.modifContract')
         ->get();
         /* -------------------------- */
 
@@ -436,10 +480,10 @@ class delegarInvController extends Controller
 
     public function editarInviAdm(Request $request){
         $idinvitado=$request->idinvitado;
-
         $invitado = invitado::find( $idinvitado);
         if($invitado->rol_id==1){
-
+            invitado::where('idinvitado', '=', $request->idinvitado)->update(['gestionHb' => $request->switchHb, 'gestionContract' => $request->switchContract]);
+            permiso_invitado::where('idinvitado', '=', $invitado->idinvitado)->update(['agregarHb' => $request->agregarHb, 'modifHb' => $request->modifHb, 'agregarContract' => $request->agregarContract, 'modifContract' => $request->modifContract]);
         }
         else{
             /* COMO ANTES ERA INVITADO PERSONALIZADO ELIMINADOS Y ACTUALIZAMOS SUS PERMISOA */
@@ -452,14 +496,11 @@ class delegarInvController extends Controller
             ->where('idinvitado', '=',  $idinvitado)
                ->update(['rol_id' => 1,'users_id'=>Auth::user()->id,'dashboard'=> 1,'empleado'=>0, 'area'=>0]);
 
-
-
                $usuario_organizacion =DB::table('usuario_organizacion')
                ->where('user_id', '=', $invitado->user_Invitado )
                ->where('organi_id', '=', session('sesionidorg'))
                ->update(['rol_id' => 1]);
         }
-
     }
 
    public function editarInviI(Request $request ){
@@ -471,6 +512,8 @@ class delegarInvController extends Controller
     $permisoEmp_ed=$request->permisoEmp_ed;
 
     $switchActividades_ed=$request->switchActividades_ed;
+    $switchHb_ed=$request->switchHb_ed;
+    $switchContract_ed = $request->switchContract_ed;
     $switchasisPuerta_ed=$request->switchasisPuerta_ed;
     $switchCRemo_ed=$request->switchCRemo_ed;
     $switchCRuta_ed=$request->switchCRuta_ed;
@@ -484,6 +527,10 @@ class delegarInvController extends Controller
     $modifEmp_ed=$request->modifEmp_ed;
     $bajaEmp_ed=$request->bajaEmp_ed;
     $gActiEmp_ed=$request->gActiEmp_ed;
+    $agregarHb_ed=$request->agregarHb_ed;
+    $modifHb_ed=$request->modifHb_ed;
+    $agregarContract_ed=$request->agregarContract_ed;
+    $modifContract_ed=$request->modifContract_ed;
     $agregarActi_ed=$request->agregarActi_ed;
     $modifActi_ed=$request->modifActi_ed;
     $bajaActi_ed=$request->bajaActi_ed;
@@ -522,7 +569,7 @@ class delegarInvController extends Controller
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['users_id'=>Auth::user()->id,'dashboard'=> $dash_ed,'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed, 'gestCalendario'=> $switchCalend_ed,
-           'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+           'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed, 'gestionHb'=>$switchHb_ed, 'gestionContract'=>$switchContract_ed, 'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed, 'empleado'=>1, 'area'=>0,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed ]);
         /* ------------------------------------------------------------------------------------------------------- */
@@ -533,7 +580,7 @@ class delegarInvController extends Controller
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['agregarEmp'=>$agregarEmp_ed,'modifEmp'=> $modifEmp_ed,'bajaEmp'=>$bajaEmp_ed,
            'GestActEmp'=>$gActiEmp_ed,'agregarActi'=>$agregarActi_ed,'modifActi'=> $modifActi_ed,
-           'bajaActi'=>$bajaActi_ed,
+           'bajaActi'=>$bajaActi_ed,'agregarHb'=>$agregarHb_ed,'modifHb'=> $modifHb_ed, 'agregarContract'=>$agregarContract_ed,'modifContract'=> $modifContract_ed,
            'verPuerta'=> $verPuerta_ed, 'agregarPuerta'=> $agregPuerta_ed, 'modifPuerta'=> $ModifPuerta_ed ]);
            /* ------------------------------------------------------------------------------------------------------ */
     }
@@ -559,7 +606,7 @@ class delegarInvController extends Controller
         ->where('idinvitado', '=',  $idinvitado)
            ->update(['rol_id' => 3,'users_id'=>Auth::user()->id,'dashboard'=> $dash_ed, 'permiso_Emp'=>$permisoEmp_ed,
            'modoCR'=> $switchCRemo_ed,'ControlRuta'=>$switchCRuta_ed,'gestCalendario'=> $switchCalend_ed,
-            'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'asistePuerta'=> $switchasisPuerta_ed,
+            'extractorRH'=>$switchExtractor_ed,'gestionActiv'=>$switchActividades_ed,'gestionHb'=>$switchHb_ed, 'gestionContract'=>$switchContract_ed, 'asistePuerta'=> $switchasisPuerta_ed,
            'verTodosEmps'=>$checkTodoEmp_ed,'empleado'=>1, 'area'=>0,
            'reporteAsisten'=> $swReporteAsis_ed, 'ModificarReportePuerta'=> $swMoReporteAsis_ed]);
         /* --------------------------------------------------------------------------------------------------- */
@@ -595,6 +642,22 @@ class delegarInvController extends Controller
         $permiso_invitado->agregarActi=0;
         $permiso_invitado->modifActi=0;
         $permiso_invitado->bajaActi=0;
+        }
+
+        if($switchHb_ed==1){
+        $permiso_invitado->agregarHb=$agregarHb_ed;
+        $permiso_invitado->modifHb=$modifHb_ed;
+        } else{
+        $permiso_invitado->agregarHb=0;
+        $permiso_invitado->modifHb=0;
+        }
+
+        if($switchContract_ed==1){
+        $permiso_invitado->agregarContract=$agregarContract_ed;
+        $permiso_invitado->modifContract=$modifContract_ed;
+        } else{
+        $permiso_invitado->agregarContract=0;
+        $permiso_invitado->modifContract=0;
         }
 
         if($switchasisPuerta_ed==1){

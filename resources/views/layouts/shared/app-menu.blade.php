@@ -169,8 +169,8 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                     <li>
                         <a href="/reporteSemanal">Tiempos por semana</a>
                         <a href="/reporteMensual">Tiempos por mes</a>
-                        {{-- <a href="/reporteTardanzas">Tardanzas</a>
-                        <a href="#">Matríz de tardanzas</a> --}}
+                        <a href="/reporteTardanzas">Tardanzas</a>
+                        <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
                     </li>
                 </ul>
             </li>
@@ -357,8 +357,21 @@ $usuario_organizacion=DB::table('usuario_organizacion')
             <li>
                 <a href="/controlRemoto">Dashboard</a>
                 <a href="/tareas">Detalle Diario</a>
-                <a href="/reporteSemanal">Reporte Semanal</a>
-                <a href="/reporteMensual">Reporte Mensual</a>
+            </li>
+            <li>
+                <a href="javascript: void(0);">
+                    <span>Reportes</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul class="nav-third-level" aria-expanded="false">
+                    <li>
+                        <a href="/reporteSemanal">Tiempos por semana</a>
+                        <a href="/reporteMensual">Tiempos por mes</a>
+                        <a href="/reporteTardanzas">Tardanzas</a>
+                        <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>
