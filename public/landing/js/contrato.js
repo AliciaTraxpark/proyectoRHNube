@@ -725,8 +725,8 @@ function modalNuevaAlta() {
     $('#nueva_alta_again').prop('disabled', false);
 }
 //* VALIDATE
-function validate(e){
-    if(e.isTrusted == true){
+function validate(e) {
+    if (e.isTrusted == true) {
         $('#reg_guardarAlta').prop('disabled', true);
         $('#reg_guardarAlta_editar').prop('disabled', true);
         $('#edit_guardarAlta').prop('disabled', true);
@@ -1315,6 +1315,8 @@ function historialEmpReg() {
                     container.append(trReg);
                 }
                 mostrarBotonReg();
+            } else {
+                $('#reg_nuevaAlta').show();
             }
         },
         error: function () { }

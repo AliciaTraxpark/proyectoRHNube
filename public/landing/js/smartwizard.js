@@ -657,7 +657,6 @@ $(document).ready(function () {
         if (
             stepNumber == 0 ||
             stepNumber == 1 ||
-            stepNumber == 2 ||
             stepNumber == 3 ||
             stepNumber == 4 ||
             stepNumber == 5
@@ -666,7 +665,14 @@ $(document).ready(function () {
             $("button.sw-btn-next").show();
             $("#FinalizarEmpleado").hide();
         }
-
+        if (
+            stepNumber == 2
+        ) {
+            $("button.sw-btn-prev").show();
+            $("button.sw-btn-next").show();
+            $("#FinalizarEmpleado").hide();
+            historialEmpReg();
+        }
         if (stepNumber == 6) {
             $("button.sw-btn-prev").show();
             $("button.sw-btn-next").show();

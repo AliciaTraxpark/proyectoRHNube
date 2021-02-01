@@ -38,7 +38,8 @@ function inicializarTabla() {
         "autoWidth": false,
         "bInfo": false,
         "bLengthChange": false,
-        fixedHeader: true,
+        stateSave: true,
+        fixedHeader: false,
         language: {
             sProcessing: "Procesando...",
             sLengthMenu: "Mostrar _MENU_ registros",
@@ -255,7 +256,9 @@ function inicializarTabla() {
             }],
         paging: true,
         initComplete: function () {
-            setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
+            setTimeout(function () {
+                $("#tablaReport").DataTable().draw();
+            }, 200);
         }
     });
 }
@@ -2688,7 +2691,7 @@ $('#colCargo').change(function (event) {
     } else {
         $('[name="colCargo"]').hide();
     }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
 // : ************************************ COLUMNA DE MARCACIONES ************************************************
 $('#colMarcaciones').change(function (event) {
@@ -2697,7 +2700,7 @@ $('#colMarcaciones').change(function (event) {
     } else {
         $('[name="colMarcaciones"]').hide();
     }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
 // : *********************************** COLUMNA DE HORARIOS ***************************************************
 function toggleH() {
@@ -2815,9 +2818,10 @@ function toggleColumnas() {
     } else {
         $('[name="faltaHorario"]').hide();
     }
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
-$("#tablaReport").on('page', function () {
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); table.columns.adjust().draw(false); }, 1);
+$("#tablaReport").on('page.dt', function (e, settings, json) {
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+    toggleColumnas();
     $('[data-toggle="tooltip"]').tooltip();
 });
