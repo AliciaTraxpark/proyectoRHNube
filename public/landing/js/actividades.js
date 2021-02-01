@@ -580,8 +580,15 @@ function editarActividad(id) {
         success: function (data) {
             $('#idActiv').val(data.Activi_id);
             $('#e_nombreTarea').val(data.Activi_Nombre);
+            // ****************** ESTADO DE USO *********
+            if (data.respuesta == 1) {
+                $('#e_nombreTarea').attr("disabled", true);
+            } else {
+                $('#e_nombreTarea').attr("disabled", false);
+            }
+            // * *****************************************
             $('#e_codigoTarea').val(data.codigoActividad);
-            if (data.codigoActividad === null) {
+            if (data.codigoActividad === null || data.respuesta == 0) {
                 $('#e_codigoTarea').attr("disabled", false);
             } else {
                 $('#e_codigoTarea').attr("disabled", true);
