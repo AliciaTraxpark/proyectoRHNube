@@ -13,6 +13,8 @@ use App\tipo_documento;
 use App\ubigeo_peru_departments;
 use App\ubigeo_peru_districts;
 use App\ubigeo_peru_provinces;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -45,7 +47,14 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 [$char . $char, $char . '%', $char . '_'],
                 $value
             );
+
+            //*VALIDAR FECHA
+        }function validateDate($date, $format = 'Y-m-d H:i:s')
+        {
+            $d = DateTime::createFromFormat($format, $date);
+            return $d && $d->format($format) == $date;
         }
+
 
         foreach ($rows as $row) {
             if ($row['numero_documento'] != "") {
@@ -108,13 +117,14 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 //celular
                 if ($row['celular'] != null || $row['celular'] != '') {
                     $lengthCelu = Str::length($row['celular']);
-                    if ($lengthCelu != 9) {
-                        return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' debe tenr 9 digitos' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
+                    if ($lengthCelu> 16) {
+                        return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' debe tenr como maximo 15 digitos' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
                     } else {
-                        $qwert = Str::substr($row['celular'], 0, 1);
+                       /*  $qwert = Str::substr($row['celular'], 0, 1);
                         if ($qwert != 9) {
                             return redirect()->back()->with('alert', 'el numero de celular: ' . $row['celular'] . ' es invalido' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
-                        }
+                        } */
+                        $numeroCelular=Str::studly($row['celular']);
                     }
 
                 }
@@ -336,7 +346,23 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 ///
 
                 if ($row['fecha_nacimiento'] != null || $row['fecha_nacimiento'] != '') {
-                    $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
+                    if( is_numeric($row['fecha_nacimiento'])==true){
+                        $fechaNacimieB = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_nacimiento']), 'Y-m-d');
+                    }
+                    else{
+                        $sincomilla=str_replace("'","",$row['fecha_nacimiento']);
+                        $crearformat= DateTime::createFromFormat('d/m/Y',$sincomilla)->format('Y/m/d');
+                        $validacion=validateDate($crearformat, 'Y/m/d');
+                        if($validacion==true){
+                            $formatoFN= Carbon::create($crearformat);
+                            $fechaNacimieB= date_format($formatoFN, 'Y-m-d');
+                         }
+                         else{
+                            return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                         }
+
+                    }
+
                 } else {
                     $fechaNacimieB = '';
                 }
@@ -366,7 +392,36 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
                 //fechaIContrato
 
                 if ($row['inicio_contrato'] != null || $row['inicio_contrato'] != '') {
-                    $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
+                    if( is_numeric($row['inicio_contrato'])==true){
+                        $fechaInicioC = date_format(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['inicio_contrato']), 'Y-m-d');
+                    }
+                    else{
+                        $sincomilla=str_replace("'","",$row['inicio_contrato']);
+                        $crearformat= DateTime::createFromFormat('d/m/Y',$sincomilla)->format('Y/m/d');
+
+                            $validacion=validateDate($crearformat, 'Y/m/d');
+
+
+                         if($validacion==true){
+                            $formatoFc= Carbon::create($crearformat);
+                            $fechaInicioC = date_format($formatoFc, 'Y-m-d');
+                         }
+                         else{
+                            return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                         }
+
+
+
+                    }
+
+
+
+
+                    /*  if($formatoFc == false){
+                        return redirect()->back()->with('alert', 'Formato de fecha de contrato incorrecta.  El proceso se interrumpio en la fila:' . $filas);
+                    } */
+
+
                 } else {
                     return redirect()->back()->with('alert', 'Debe especificar inicio de contrato' . ' El proceso se interrumpio en la fila: ' . $filas . ' de excel');
 
@@ -382,7 +437,7 @@ class EmpleadoImport implements ToCollection, WithHeadingRow, WithValidation, Wi
 
                 /*   dd(date_format( $fechaNacimieB, 'Y-m-d')); */
                 //////////MANDA DATOS A VISTA
-                $din = [$row['tipo_docArray'], $row['numero_documento'], $row['nombres'], $row['apellido_paterno'], $row['apellido_materno'], $row['correo'], $row['celular'],
+                $din = [$row['tipo_docArray'], $row['numero_documento'], $row['nombres'], $row['apellido_paterno'], $row['apellido_materno'], $row['correo'], $numeroCelular,
                     $row['genero'], $fechaNacimieB, $row['name_depNArray'], $row['provNArray'],
                     $row['distNArray'], $row['direccion'], $row['name_depArray'], $row['provArray'], $row['distArray'], $row['tipo_contratoArray'], $row['localArray'], $row['nivelArray'],
                     $row['cargoArray'], $row['areaArray'], $row['centro_costoArray'], $row['condicionArray'], $row['monto_pago'], $fechaInicioC, $row['codigo']];
