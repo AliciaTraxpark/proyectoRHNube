@@ -2818,6 +2818,6 @@ function toggleColumnas() {
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
 }
 $("#tablaReport").on('page.dt', function () {
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); table.columns.adjust().draw(false); }, 1);
     $('[data-toggle="tooltip"]').tooltip();
 });
