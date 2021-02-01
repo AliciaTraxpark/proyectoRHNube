@@ -157,9 +157,9 @@
                                     <td id="colTable6">
                                         <div class="row">
                                             <div class="col-md-2 col-2 colResp mr-1">
-                                                <a id="" onclick="editarInv({{ $invitados->idinvitado }})"
-                                                    style="cursor: pointer"><img
-                                                        src="{{ asset('admin/images/edit.svg') }}" height="15"></a>
+                                                <a id="" onclick="editarInv({{ $invitados->idinvitado }})" style="cursor: pointer">
+                                                    <img src="{{ asset('admin/images/edit.svg') }}" height="15">
+                                                </a>
                                             </div>
                                             <div class="custom-control custom-switch mb-2">
                                                 @if ($invitados->estado_condic==0)
@@ -333,6 +333,8 @@
 
                                     </div>
                                 </div>
+                                
+
                                 <div class="col-md-8 " id="divControlRe"  style="padding-top: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck">
@@ -407,13 +409,83 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-8 " id="divExtractor"  style="padding-top: 10px;">
+                                <div class="col-md-12 " id="divExtractor"  style="padding-bottom: 10px; padding-top: 20px; border-bottom: 1.5px solid #dedede;bottom: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ExtractorCheck">
                                         <label class="custom-control-label" for="ExtractorCheck"
                                             style="margin-top: 2px;"><i data-feather="server" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Extractor RHnube</label><br>
                                     </div>
                                 </div>
+
+                                {{-- INICIO CUMPLEAÑOS --}}
+                                <label class="pl-2 pt-2"><strong>Notificaciones:</strong></label>
+                                <div class="col-md-12 " id="divGestHb" style="padding-top: 5px;" >
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="gestHbCheck">
+                                        <label class="custom-control-label" for="gestHbCheck"
+                                            style="margin-top: 2px;"><i data-feather="gift" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de cumpleaños</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="opcionesHb" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                    <div class="row">
+                                        <div class="col-md-1 col-xl-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="verCheckHb" checked disabled>
+                                                <label class="form-check-label" for="verCheckHb"
+                                                    style="margin-top: 2px;">Ver</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="AgregarCheckHb">
+                                                <label class="form-check-label" for="AgregarCheckHb"
+                                                    style="margin-top: 2px;">Agregar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ModifCheckHb">
+                                                <label class="form-check-label" for="ModifCheckHb"
+                                                    style="margin-top: 2px;">Modificar</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- FIN DE CUMPLEAÑOS --}}
+                                {{-- INICIO CONTRATO --}}
+                                <div class="col-md-8 " id="divGestContract" style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="gestContractCheck">
+                                        <label class="custom-control-label" for="gestContractCheck"
+                                            style="margin-top: 2px;"><i data-feather="clipboard" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de contratos</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="opcionesContract" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                    <div class="row">
+                                        <div class="col-md-1 col-xl-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="verCheckContract" checked disabled>
+                                                <label class="form-check-label" for="verCheckContract"
+                                                    style="margin-top: 2px;">Ver</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="AgregarCheckContract">
+                                                <label class="form-check-label" for="AgregarCheckContract"
+                                                    style="margin-top: 2px;">Agregar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ModifCheckContract">
+                                                <label class="form-check-label" for="ModifCheckContract"
+                                                    style="margin-top: 2px;">Modificar</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- FIN DE CONTRATO --}}
 
 
                                 <div id="divInvitado" class="col-md-12" style="padding-left: 0px;padding-right: 0px;padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
@@ -546,7 +618,7 @@
                                             id="emailInvi_edit" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="adminCheck_edit">
                                         <label class="form-check-label" for="adminCheck_edit"
@@ -663,6 +735,7 @@
 
                                     </div>
                                 </div>
+
                                 <div class="col-md-8 " id="divControlRe_edit"  style="padding-top: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ControlReCheck_edit">
@@ -739,14 +812,82 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-8 " id="divExtractor_edit"  style="padding-top: 10px;">
+                                <div class="col-md-12 " id="divExtractor_edit"  style="padding-bottom: 10px; padding-top: 20px; border-bottom: 1.5px solid #dedede;bottom: 10px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="ExtractorCheck_edit">
-                                        <label class="custom-control-label" for="ExtractorCheck_edit"
-                                            style="margin-top: 2px;"><i data-feather="server" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Extractor RHnube</label><br>
+                                        <label class="custom-control-label" for="ExtractorCheck_edit" style="margin-top: 2px;"><i data-feather="server" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Extractor RHnube</label><br>
                                     </div>
                                 </div>
 
+                                {{-- INICIO CUMPLEAÑOS --}}
+                                <label class="pt-2 pl-2"><strong>Notificaciones: </strong></label>
+                                <div class="col-md-12 " id="divGestHb_edit" style="padding-top: 5px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="gestHbCheck_edit">
+                                        <label class="custom-control-label" for="gestHbCheck_edit"
+                                            style="margin-top: 2px;"><i data-feather="gift" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de cumpleaños</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="opcionesHb_edit" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                    <div class="row">
+                                        <div class="col-md-1 col-xl-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="verCheckHb_edit" checked disabled>
+                                                <label class="form-check-label" for="verCheckHb_edit"
+                                                    style="margin-top: 2px;">Ver</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="AgregarCheckHb_edit">
+                                                <label class="form-check-label" for="AgregarCheckHb_edit"
+                                                    style="margin-top: 2px;">Agregar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ModifCheckHb_edit">
+                                                <label class="form-check-label" for="ModifCheckHb_edit"
+                                                    style="margin-top: 2px;">Modificar</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- FIN DE CUMPLEAÑOS --}}
+                                {{-- INICIO CONTRATO --}}
+                                <div class="col-md-8 " id="divGestContract_edit" style="padding-top: 10px;">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="gestContractCheck_edit">
+                                        <label class="custom-control-label" for="gestContractCheck_edit"
+                                            style="margin-top: 2px;"><i data-feather="clipboard" style="height: 15px !important;width: 15px !important;color:#53575a !important;margin-bottom: 2px;"></i> &nbsp; Gestión de contrato</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="opcionesContract_edit" style="padding-top: 10px; font-style: oblique;    padding-bottom: 15px;" >
+                                    <div class="row">
+                                        <div class="col-md-1 col-xl-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="verCheckContract_edit" checked disabled>
+                                                <label class="form-check-label" for="verCheckContract_edit"
+                                                    style="margin-top: 2px;">Ver</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="AgregarCheckContract_edit">
+                                                <label class="form-check-label" for="AgregarCheckContract_edit"
+                                                    style="margin-top: 2px;">Agregar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" >
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="ModifCheckContract_edit">
+                                                <label class="form-check-label" for="ModifCheckContract_edit"
+                                                    style="margin-top: 2px;">Modificar</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- FIN DE CONTRATO --}}
 
                                 <div id="divInvitado_edit" class="col-md-12"
                                     style="padding-left: 0px;padding-right: 0px; padding-top: 10px;border-top: 1.5px solid #dedede;top: 10px;">
@@ -843,9 +984,9 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12 text-right" style="padding-right: 6px;">
-                    <button type="button" class="btn btn-light  " data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
                     <button type="submit" id="btnGu_edit" style="background-color: #163552;"
-                        class="btn  ">Guardar</button>
+                        class="btn btn-sm ">Guardar</button>
                     </form>
                 </div>
             </div>

@@ -38,6 +38,15 @@ function showNotificaciones() {
                         month = data[i].created_at[5]+data[i].created_at[6];
                     
                     if (data[i].read_at == null) {
+                        $(document).ready(function() {
+                            setTimeout(function() {
+                                document.getElementById("content123").style.display="block";
+                                $("#content123").fadeIn(1000);
+                            },1000);
+                            setTimeout(function() {
+                                $("#content123").fadeOut(6500);
+                            },3000);
+                        }); 
                         contador++;
                         if(data[i].data[0].mensaje=='Empleado no tiene registrado un correo electrónico.'){
                            a = `<a class="dropdown-item notify-item border-bottom" style="background: #f1f2f3;">
@@ -52,7 +61,7 @@ function showNotificaciones() {
                                     </div>
                                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]}</small>
                                     </p>
                                 </a>`;
                         } else{
@@ -69,7 +78,7 @@ function showNotificaciones() {
                                     </div>
                                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]}</small>
                                     </p>
                                 </a>`;
                             } else {
@@ -86,7 +95,7 @@ function showNotificaciones() {
                                         </div>
                                         <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                             <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]}</small>
                                         </p>
                                     </a>`;
                                 } else {
@@ -102,7 +111,7 @@ function showNotificaciones() {
                                         </div>
                                         <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                             <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]}</small>
                                         </p>
                                     </a>`;
                                 }
@@ -120,7 +129,7 @@ function showNotificaciones() {
                                     </div>
                                     <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                         <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                        <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]}</small>
                                     </p>
                                 </a>`;
                             } else {
@@ -133,7 +142,7 @@ function showNotificaciones() {
                                         </div>
                                         <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                             <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]}</small>
                                         </p>
                                     </a>`;
                                 } else {
@@ -143,7 +152,7 @@ function showNotificaciones() {
                                         </div>
                                         <p class="notify-details mb-1 mt-0" style="font-weight:bold;color:#85a2b6">${data[i].data[0].empleado[0]} ${data[i].data[0].empleado[1]} ${data[i].data[0].empleado[2]}
                                             <span style="font-weight:200;color:#28292f">${data[i].data[0].mensaje}</span>
-                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[6]}</small>
+                                            <small>${data[i].created_at[8]}${data[i].created_at[9]} de `+months[month-1]+` del ${data[i].created_at[0]}${data[i].created_at[1]}${data[i].created_at[2]}${data[i].created_at[3]} </small>
                                         </p>
                                     </a>`;
                                 }

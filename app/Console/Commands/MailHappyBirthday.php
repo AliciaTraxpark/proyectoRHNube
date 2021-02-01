@@ -62,7 +62,13 @@ class MailHappyBirthday extends Command
                 ->get();
 
             $admins = DB::table('usuario_organizacion')
-                    ->where('organi_id', $organizacion->organi_id)
+                    ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
+                    ->leftjoin('invitado', 'invitado.user_Invitado', '=', 'users.id')
+                    ->where('usuario_organizacion.organi_id', $organizacion->organi_id)
+                    ->where(function ($query) {
+                        $query->where('invitado.gestionHb', '<>', 0)
+                              ->orWhereNull('invitado.gestionHb');
+                    })
                     ->select('usuario_organizacion.user_id')
                     ->get();
 
@@ -70,9 +76,17 @@ class MailHappyBirthday extends Command
                 // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
                 if($persona->perso_fechaNacimiento != NULL){
                     $hb = carbon::parse($persona->perso_fechaNacimiento);
-                    $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
-                    $diff = $today->diffInDays($fHb);
-                    $edad = $today->year - $hb->year;
+                    
+                    if($hb->day == 1 && $hb->month == 1){
+                        $fHb = carbon::create($today->year+1, $hb->month, $hb->day, 0, 0, 0, 'GMT');
+                        $diff = $today->diffInDays($fHb);
+                        $edad = ($today->year - $hb->year)+1;
+                    }else{
+                        $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
+                        $diff = $today->diffInDays($fHb);
+                        $edad = $today->year - $hb->year;
+                    }
+                    
                     if($diff <= 7 && $today <= $fHb){
                         $datos = $datos."<div class=''> • <strong>".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</strong>&nbsp;&nbsp;&nbsp;".$hb->day." de ".$meses[($hb->month)-1]." &nbsp;&nbsp;&nbsp; (".$edad." años)"."</div><br>";
                     }

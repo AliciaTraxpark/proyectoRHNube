@@ -26,6 +26,8 @@ function abrirRegist() {
     $("#divAdminPersona").show();
     $("#opcionesGE").hide();
     $("#opcionesActiv").hide();
+    $("#opcionesHb").hide();
+    $("#opcionesContract").hide();
     $("#opcionesAPuerta").hide();
     $("#verCheckPuerta").prop("required", false);
     $("#divAsisPu").show();
@@ -179,11 +181,62 @@ function registrarInvit() {
 
                     /* SI ES ADMIN SERA MAS SENCILLO SOLO GUARDAMOS SU EMAIL */
                     $("#btnGu").prop("disabled", true);
+                    let agregarHb;
+                    let modifHb;
+                    let switchHb;
+                    let agregarContract;
+                    let modifContract;
+                    let switchContract;
+
+                    if ($("#gestHbCheck").is(":checked")) {
+                        switchHb = 1;
+                    } else {
+                        switchHb = 0;
+                    }
+                    //AGEGAR CUMPLE
+                    if ($("#AgregarCheckHb").is(":checked")) {
+                        agregarHb = 1;
+                    } else {
+                        agregarHb = 0;
+                    }
+
+                    //MODIF CUMPLE
+                    if ($("#ModifCheckHb").is(":checked")) {
+                        modifHb = 1;
+                    } else {
+                        modifHb = 0;
+                    }
+
+                    if ($("#gestContractCheck").is(":checked")) {
+                        switchContract = 1;
+                    } else {
+                        switchContract = 0;
+                    }
+                    //AGEGAR CONTRATO
+                    if ($("#AgregarCheckContract").is(":checked")) {
+                        agregarContract = 1;
+                    } else {
+                        agregarContract = 0;
+                    }
+
+                    //MODIF CONTRATO
+                    if ($("#ModifCheckContract").is(":checked")) {
+                        modifContract = 1;
+                    } else {
+                        modifHContract = 0;
+                    }
+
                     $.ajax({
                         type: "post",
                         url: "/registrarInvitadoAdm",
                         data: {
                             emailInv,
+                            agregarHb,
+                            modifHb,
+                            switchHb,
+                            agregarContract,
+                            modifContract,
+                            switchContract
                         },
                         statusCode: {
                             419: function () {
@@ -242,6 +295,22 @@ function registrarInvit() {
                         switchActividades = 1;
                     } else {
                         switchActividades = 0;
+                    }
+
+                    /* PERMISO A GESTION DE CUMPLEAÑOS */
+                    var switchHb;
+                    if ($("#gestHbCheck").is(":checked")) {
+                        switchHb = 1;
+                    } else {
+                        switchHb = 0;
+                    }
+
+                    /* PERMISO A GESTION DE CONTRATO */
+                    var switchContract;
+                    if ($("#gestContractCheck").is(":checked")) {
+                        switchContract = 1;
+                    } else {
+                        switchContract = 0;
                     }
 
                     /* PERMISO A ASISTENCIA EN PUERTA */
@@ -314,6 +383,10 @@ function registrarInvit() {
                     var gActiEmp;
                     var agregarActi;
                     var modifActi;
+                    var agregarHb;
+                    var modifHb;
+                    var agregarContract;
+                    var modifContract;
                     var bajaActi;
                     var verPuerta;
                     var agregPuerta;
@@ -348,6 +421,42 @@ function registrarInvit() {
                         gActiEmp = 1;
                     } else {
                         gActiEmp = 0;
+                    }
+
+                    /* ---------------------------------------- */
+
+                    /* PERMISOS PARA SUBOPCION DE GESTION
+                    DE CUMPLEAÑOS -------------------------- */
+
+                    //AGEGAR CUMPLEAÑOS
+                    if ($("#AgregarCheckHb").is(":checked")) {
+                        agregarHb = 1;
+                    } else {
+                        agregarHb = 0;
+                    }
+
+                    //MODIF CUMPLEAÑOS
+                    if ($("#ModifCheckHb").is(":checked")) {
+                        modifHb = 1;
+                    } else {
+                        modifHb = 0;
+                    }
+
+                    /* PERMISOS PARA SUBOPCION DE GESTION
+                    DE CONTRATOS -------------------------- */
+
+                    //AGEGAR CONTRATOS
+                    if ($("#AgregarCheckContract").is(":checked")) {
+                        agregarContract = 1;
+                    } else {
+                        agregarContract = 0;
+                    }
+
+                    //MODIF CONTRATOS
+                    if ($("#ModifCheckContract").is(":checked")) {
+                        modifContract = 1;
+                    } else {
+                        modifContract = 0;
                     }
 
                     /* ---------------------------------------- */
@@ -420,10 +529,16 @@ function registrarInvit() {
                                 agregarActi,
                                 modifActi,
                                 bajaActi,
+                                agregarHb,
+                                modifHb,
+                                agregarContract,
+                                modifContract,
                                 verPuerta,
                                 agregPuerta,
                                 ModifPuerta,
                                 switchActividades,
+                                switchHb,
+                                switchContract,
                                 switchasisPuerta,
                                 switchCRemo,
                                 switchCRuta,
@@ -484,6 +599,7 @@ function registrarInvit() {
                                 agregPuerta,
                                 ModifPuerta,
                                 switchActividades,
+                                switchHb,
                                 switchasisPuerta,
                                 switchCRemo,
                                 switchCRuta,
@@ -561,6 +677,8 @@ $("#adminCheck").click(function () {
         $("#divDash").show();
         $("#AlcaAdminCheck").prop("checked", false);
         $("#gestActiCheck").prop("checked", false);
+        $("#gestHbCheck").prop("checked", false);
+        $("#gestContractCheck").prop("checked", false);
         $("#asistPuertaCheck").prop("checked", false);
         $("#divAdminPersona").show();
 
@@ -757,6 +875,56 @@ function editarInv(idi) {
             }
 
             //////////////////////////////
+
+            ////////PERMISO GESTION CONTRATO
+            if (data[0].gestionContract == 1) {
+                $("#gestContractCheck_edit").prop("checked", true);
+                $("#opcionesContract_edit").show();
+
+                //agregar contrato permiso
+                if (data[0].agregarContract == 1) {
+                    $("#AgregarCheckContract_edit").prop("checked", true);
+                } else {
+                    $("#AgregarCheckContract_edit").prop("checked", false);
+                }
+
+                //modificar contrato permiso
+                if (data[0].modifContract == 1) {
+                    $("#ModifCheckContract_edit").prop("checked", true);
+                } else {
+                    $("#ModifCheckContract_edit").prop("checked", false);
+                }
+            } else {
+                $("#gestContractCheck_edit").prop("checked", false);
+                $("#opcionesContract_edit").hide();
+            }
+
+            //////////////////////////////////
+
+            ////////PERMISO GESTION CUMPLEAÑOS
+            if (data[0].gestionHb == 1) {
+                $("#gestHbCheck_edit").prop("checked", true);
+                $("#opcionesHb_edit").show();
+
+                //agregar cumple permiso
+                if (data[0].agregarHb == 1) {
+                    $("#AgregarCheckHb_edit").prop("checked", true);
+                } else {
+                    $("#AgregarCheckHb_edit").prop("checked", false);
+                }
+
+                //modificar cumple permiso
+                if (data[0].modifHb == 1) {
+                    $("#ModifCheckHb_edit").prop("checked", true);
+                } else {
+                    $("#ModifCheckHb_edit").prop("checked", false);
+                }
+            } else {
+                $("#gestHbCheck_edit").prop("checked", false);
+                $("#opcionesHb_edit").hide();
+            }
+
+
             ////////PERMISO GESTION ACTIV
             if (data[0].gestionActiv == 1) {
                 $("#gestActiCheck_edit").prop("checked", true);
@@ -904,6 +1072,20 @@ $("#adminCheck_edit").click(function () {
             $("#opcionesGE_edit").hide();
         }
 
+        //gest contract
+        if ($("#gestContractCheck_edit").is(":checked")) {
+            $("#opcionesContract_edit").show();
+        } else {
+            $("#opcionesContract_edit").hide();
+        }
+
+        //gest cumple
+        if ($("#gestHbCheck_edit").is(":checked")) {
+            $("#opcionesHb_edit").show();
+        } else {
+            $("#opcionesHb_edit").hide();
+        }
+
         //gest act
         if ($("#gestActiCheck_edit").is(":checked")) {
             $("#opcionesActiv_edit").show();
@@ -1040,12 +1222,61 @@ function registrarInvit_edit() {
     //////////////////////////////////////////7
     var idinvitado = $("#idInv").val();
     var idEmpleado = $("#nombreEmpleado_edit").val();
+    let agregarHb;
+    let modifHb;
+    let switchHb;
+    let agregarContract;
+    let modifContract;
+    let switchContract;
+
+    if ($("#gestHbCheck_edit").is(":checked")) {
+        switchHb = 1;
+    } else {
+        switchHb = 0;
+    }
+    //AGEGAR CUMP
+    if ($("#AgregarCheckHb_edit").is(":checked")) {
+        agregarHb = 1;
+    } else {
+        agregarHb = 0;
+    }
+    //MODIF CUMP
+    if ($("#ModifCheckHb_edit").is(":checked")) {
+        modifHb = 1;
+    } else {
+        modifHb = 0;
+    }
+
+    if ($("#gestContractCheck_edit").is(":checked")) {
+        switchContract = 1;
+    } else {
+        switchContract = 0;
+    }
+    //AGEGAR CONTRACT
+    if ($("#AgregarCheckContract_edit").is(":checked")) {
+        agregarContract = 1;
+    } else {
+        agregarContract = 0;
+    }
+    //MODIF CONTRACT
+    if ($("#ModifCheckContract_edit").is(":checked")) {
+        modifContract = 1;
+    } else {
+        modifContract = 0;
+    }
+
     if ($("#adminCheck_edit").is(":checked")) {
         $.ajax({
             type: "post",
             url: "/editarInviAdm",
             data: {
                 idinvitado,
+                agregarHb,
+                modifHb,
+                switchHb,
+                agregarContract,
+                modifContract,
+                switchContract
             },
             statusCode: {
                 419: function () {
@@ -1090,6 +1321,20 @@ function registrarInvit_edit() {
             switchActividades_ed = 1;
         } else {
             switchActividades_ed = 0;
+        }
+
+        var switchHb_ed;
+        if ($("#gestHbCheck_edit").is(":checked")) {
+            switchHb_ed = 1;
+        } else {
+            switchHb_ed = 0;
+        }
+
+        var switchContract_ed;
+        if ($("#gestContractCheck_edit").is(":checked")) {
+            switchContract_ed = 1;
+        } else {
+            switchContract_ed = 0;
         }
 
         var switchasisPuerta_ed;
@@ -1151,6 +1396,10 @@ function registrarInvit_edit() {
         var modifEmp_ed;
         var bajaEmp_ed;
         var gActiEmp_ed;
+        var agregarHb_ed;
+        var modifHb_ed;
+        var agregarContract_ed;
+        var modifContract_ed;
         var agregarActi_ed;
         var modifActi_ed;
         var bajaActi_ed;
@@ -1180,6 +1429,30 @@ function registrarInvit_edit() {
             gActiEmp_ed = 1;
         } else {
             gActiEmp_ed = 0;
+        }
+
+        if ($("#AgregarCheckHb_edit").is(":checked")) {
+            agregarHb_ed = 1;
+        } else {
+            agregarHb_ed = 0;
+        }
+
+        if ($("#ModifCheckHb_edit").is(":checked")) {
+            modifHb_ed = 1;
+        } else {
+            modifHb_ed = 0;
+        }
+
+        if ($("#AgregarCheckContract_edit").is(":checked")) {
+            agregarContract_ed = 1;
+        } else {
+            agregarContract_ed = 0;
+        }
+
+        if ($("#ModifCheckContract_edit").is(":checked")) {
+            modifContract_ed = 1;
+        } else {
+            modifContract_ed = 0;
         }
 
         if ($("#AgregarCheckActiv_edit").is(":checked")) {
@@ -1229,6 +1502,8 @@ function registrarInvit_edit() {
                     dash_ed,
                     permisoEmp_ed,
                     switchActividades_ed,
+                    switchHb_ed,
+                    switchContract_ed,
                     switchasisPuerta_ed,
                     switchCRemo_ed,
                     switchCRuta_ed,
@@ -1240,6 +1515,10 @@ function registrarInvit_edit() {
                     modifEmp_ed,
                     bajaEmp_ed,
                     gActiEmp_ed,
+                    agregarHb_ed,
+                    modifHb_ed,
+                    agregarContract_ed,
+                    modifContract_ed,
                     agregarActi_ed,
                     modifActi_ed,
                     bajaActi_ed,
@@ -1285,6 +1564,7 @@ function registrarInvit_edit() {
                         dash_ed,
                         permisoEmp_ed,
                         switchActividades_ed,
+                        switchHb_ed,
                         switchasisPuerta_ed,
                         switchCRemo_ed,
                         switchCRuta_ed,
@@ -1363,11 +1643,11 @@ function cambioswitch(idinvitado) {
             buttons: {
                 confirm: {
                     label: "Enviar",
-                    className: "btn-success",
+                    className: "btn-success btn-sm",
                 },
                 cancel: {
                     label: "Cancelar",
-                    className: "btn-light",
+                    className: "btn-light btn-sm",
                 },
             },
             callback: function (result) {
@@ -1516,7 +1796,24 @@ $("#AlcaAdminCheck").change(function (event) {
     }
 });
 ////////////////////////////////////////////
-
+////////////////////////////////////////
+$("#gestHbCheck").change(function (event) {
+    if ($("#gestHbCheck").prop("checked")) {
+        $("#opcionesHb").show();
+    } else {
+        $("#opcionesHb").hide();
+    }
+});
+////////////////////////////////////////////
+////////////////////////////////////////
+$("#gestContractCheck").change(function (event) {
+    if ($("#gestContractCheck").prop("checked")) {
+        $("#opcionesContract").show();
+    } else {
+        $("#opcionesContract").hide();
+    }
+});
+////////////////////////////////////////////
 ////////////////////////////////////////
 $("#gestActiCheck").change(function (event) {
     if ($("#gestActiCheck").prop("checked")) {
@@ -1559,6 +1856,24 @@ $("#AlcaAdminCheck_edit").change(function (event) {
     }
 });
 ////////////////////////////////////////////
+////////////////////////////////////////
+$("#gestContractCheck_edit").change(function (event) {
+    if ($("#gestContractCheck_edit").prop("checked")) {
+        $("#opcionesContract_edit").show();
+    } else {
+        $("#opcionesContract_edit").hide();
+    }
+});
+
+////////////////////////////////////////
+////////////////////////////////////////
+$("#gestHbCheck_edit").change(function (event) {
+    if ($("#gestHbCheck_edit").prop("checked")) {
+        $("#opcionesHb_edit").show();
+    } else {
+        $("#opcionesHb_edit").hide();
+    }
+});
 
 ////////////////////////////////////////
 $("#gestActiCheck_edit").change(function (event) {
