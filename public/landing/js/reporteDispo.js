@@ -377,9 +377,9 @@ function cargartabla(fecha) {
                     }
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;">Marcación T.</th> 
-                                <th>Tardanza T.</th>
-                                <th>Faltas T.</th>
-                                <th>Incidencias T.</th>`;
+                                <th style="border-left: 1px dashed #aaaaaa!important">Tardanza T.</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Faltas T.</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Incidencias T.</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -1148,7 +1148,7 @@ function cargartabla(fecha) {
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
                             </td>
-                            <td>
+                            <td style="border-left: 1px dashed #aaaaaa!important">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                     ${sumaTardanzas.format("HH:mm:ss")}
@@ -1157,7 +1157,7 @@ function cargartabla(fecha) {
                     // ******************************* CANTIDAD DE FALTAS **************************
                     console.log(sumaFaltas);
                     if (sumaFaltas != 0) {
-                        tbody += `<td class="text-center">`;
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">`;
                         for (let f = 0; f < sumaFaltas; f++) {
                             if (f == 0) {
                                 tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
@@ -1171,10 +1171,10 @@ function cargartabla(fecha) {
                         }
                         tbody += `</td>`;
                     } else {
-                        tbody += `<td class="text-center">--</td>`;
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
                     }
                     // * ********************** FINALIZACION *************************************
-                    tbody += `<td class="text-center">--</td>`;
+                    tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
                     tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
