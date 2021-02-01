@@ -701,7 +701,8 @@ use App\proyecto_empleado;
         /*  background-color: #d1c3c3; */
         font-size: 12.2px !important;
         margin: 2px 2px;
-        cursor: url("../landing/images/configs-m.svg"), auto !important;
+        cursor: url("../landing/images/cruz1.svg"), auto !important;
+       /*  cursor: url("../landing/images/configs-m.svg"), auto !important; */
 
     }
 
