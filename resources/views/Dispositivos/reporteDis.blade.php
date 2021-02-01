@@ -317,10 +317,6 @@
                                             <input type="checkbox" id="colTardanza">
                                             <label for="">Tardanza</label>
                                         </li>
-                                        <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colIncidencia">
-                                            <label for="">Incidencias</label>
-                                        </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">

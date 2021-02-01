@@ -6,7 +6,7 @@ use App\dispositivo_area;
 use App\dispositivo_controlador;
 use App\dispositivo_empleado;
 use App\dispositivos;
-use App\horario;
+use App\eventos_empleado;
 use App\horario_empleado;
 use App\marcacion_puerta;
 use App\pausas_horario;
@@ -411,6 +411,9 @@ class dispositivosController extends Controller
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorario]["pausas"])) {
                     $resultado[$empleado->emple_id]->data[$empleado->idHorario]["pausas"] = array();
                 }
+                if (!isset($resultado[$empleado->emple_id]->incidencias)) {
+                    $resultado[$empleado->emple_id]->incidencias = array();
+                }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorario]["marcaciones"])) {
                     $resultado[$empleado->emple_id]->data[$empleado->idHorario]["marcaciones"] = array();
                 }
@@ -684,7 +687,8 @@ class dispositivosController extends Controller
                         "organi_direccion" =>  $empleados[$index]->organi_direccion,
                         "organi_ruc" => $empleados[$index]->organi_ruc,
                         "emple_estado" => $empleados[$index]->emple_estado,
-                        "data" => $data[$element]->data
+                        "data" => $data[$element]->data,
+                        "incidencias" => array()
                     );
                     array_push($marcaciones, $arrayNuevo);
                 }
@@ -702,7 +706,8 @@ class dispositivosController extends Controller
                     "organi_direccion" =>  $empleados[$index]->organi_direccion,
                     "organi_ruc" => $empleados[$index]->organi_ruc,
                     "emple_estado" => $empleados[$index]->emple_estado,
-                    "data" => array()
+                    "data" => array(),
+                    "incidencias" => array()
                 );
                 array_push($marcaciones, $arrayNuevo);
             }
@@ -740,8 +745,9 @@ class dispositivosController extends Controller
             }
         }
         // * AGREGAR ATRIBUTOS DE HORARIO Y PAUSAS EN CADA HORARIO
-        foreach ($marcaciones as $m) {
+        foreach ($marcaciones as  $m) {
             $m->data = array_values($m->data);
+            // * ********************* PAUSAS ********************
             foreach ($m->data as $key => $d) {
                 if ($d["horario"]->idHorario != 0) {
                     // * AÑADIR PAUSAS DEL HORARIO
@@ -759,6 +765,26 @@ class dispositivosController extends Controller
                         array_push($m->data[$key]["pausas"], $p);
                     }
                 }
+            }
+            // * ******************* INCIDENCIAS *********************
+            $idEmpleado = $m->emple_id;
+            // * TABLA EVENTOS EMPLEADO
+            $eventos = eventos_empleado::select('title as descripcion')
+                ->where(DB::raw('DATE(start)'), '=', $fecha)
+                ->where('id_empleado', '=', $idEmpleado)
+                ->get();
+            foreach ($eventos as $e) {
+                array_push($m->incidencias, $e);
+            }
+            // * TABLA INCIDENCIAS DIA
+            $incidencias = DB::table('incidencia_dias as id')
+                ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                ->select('i.inciden_descripcion as descripcion')
+                ->where(DB::raw('DATE(id.inciden_dias_fechaI)'), '=', $fecha)
+                ->where('id.id_empleado', '=', $idEmpleado)
+                ->get();
+            foreach ($incidencias as $i) {
+                array_push($m->incidencias, $i);
             }
         }
 

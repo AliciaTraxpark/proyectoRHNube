@@ -365,8 +365,7 @@ function cargartabla(fecha) {
                                             </span>
                                         </th>
                                         <th id="tSitio" name="colTiempoS">Tiempo en sitio</th>
-                                        <th name="colTardanza">Tardanza</th>
-                                        <th name="colIncidencia">Incidencias</th>`;
+                                        <th name="colTardanza">Tardanza</th>`;
                     }
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
@@ -378,9 +377,9 @@ function cargartabla(fecha) {
                     }
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;">Marcación T.</th> 
-                                <th>Tardanza T.</th>
-                                <th>Faltas T.</th>
-                                <th>Incidencias T.</th>`;
+                                <th style="border-left: 1px dashed #aaaaaa!important">Tardanza T.</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Faltas T.</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Incidencias T.</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -920,8 +919,7 @@ function cargartabla(fecha) {
                                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
-                                                                </td>
-                                                                <td name="colIncidencia">--</td>`;
+                                                                </td>`;
                                     } else {
                                         if (permisoModificar == 1) {
                                             tbodyEntradaySalida += `<td name="colMarcaciones">
@@ -971,8 +969,7 @@ function cargartabla(fecha) {
                                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
-                                                                </td>
-                                                                <td name="colIncidencia">--</td>`;
+                                                                </td>`;
                                     }
 
                                 } else {
@@ -1077,8 +1074,7 @@ function cargartabla(fecha) {
                                                                         <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                         ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
-                                                                </td>
-                                                                <td name="colIncidencia">--</td>`;
+                                                                </td>`;
 
                                     }
                                 }
@@ -1087,8 +1083,7 @@ function cargartabla(fecha) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
                                                         <td class="text-center" name="colMarcaciones">---</td>
                                                         <td name="colTiempoS" class="text-center">---</td>
-                                                        <td name="colTardanza" class="text-center">--</td>
-                                                        <td name="colIncidencia" class="text-center">--</td>`;
+                                                        <td name="colTardanza" class="text-center">--</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
@@ -1131,8 +1126,7 @@ function cargartabla(fecha) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
                                                         <td class="text-center" name="colMarcaciones">---</td>
                                                         <td name="colTiempoS" class="text-center">---</td>
-                                                        <td name="colTardanza" class="text-center">--</td>
-                                                        <td name="colIncidencia" class="text-center">--</td>`;
+                                                        <td name="colTardanza" class="text-center">--</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
@@ -1154,7 +1148,7 @@ function cargartabla(fecha) {
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
                             </td>
-                            <td>
+                            <td style="border-left: 1px dashed #aaaaaa!important">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                     ${sumaTardanzas.format("HH:mm:ss")}
@@ -1163,7 +1157,7 @@ function cargartabla(fecha) {
                     // ******************************* CANTIDAD DE FALTAS **************************
                     console.log(sumaFaltas);
                     if (sumaFaltas != 0) {
-                        tbody += `<td class="text-center">`;
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">`;
                         for (let f = 0; f < sumaFaltas; f++) {
                             if (f == 0) {
                                 tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
@@ -1177,10 +1171,23 @@ function cargartabla(fecha) {
                         }
                         tbody += `</td>`;
                     } else {
-                        tbody += `<td class="text-center">--</td>`;
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
                     }
                     // * ********************** FINALIZACION *************************************
-                    tbody += `<td class="text-center">--</td>`;
+                    if (data[index].incidencias.length == 0) {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                    } else {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;">`;
+                        for (let item = 0; item < data[index].incidencias.length; item++) {
+                            var dataIncidencia = data[index].incidencias[item];
+                            if (item == 0) {
+                                tbody += `<span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            } else {
+                                tbody += `<b>/</b><span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            }
+                        }
+                        tbody += `</td>`;
+                    }
                     tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
@@ -1198,7 +1205,7 @@ function cargartabla(fecha) {
                         tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="faltaHorario"></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td><td name="colIncidencia"></td>';
+                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td>';
                         }
                         // ! PAUSAS
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
@@ -2740,12 +2747,6 @@ function toggleColumnas() {
     } else {
         $('[name="colTardanza"]').hide();
     }
-    // ? INCIDENCIA
-    if ($('#colIncidencia').is(":checked")) {
-        $('[name="colIncidencia"]').show();
-    } else {
-        $('[name="colIncidencia"]').hide();
-    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
@@ -2816,3 +2817,7 @@ function toggleColumnas() {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(true); }, 1);
 }
+$("#tablaReport").on('page', function () {
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); table.columns.adjust().draw(false); }, 1);
+    $('[data-toggle="tooltip"]').tooltip();
+});
