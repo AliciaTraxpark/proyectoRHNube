@@ -1174,7 +1174,20 @@ function cargartabla(fecha) {
                         tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
                     }
                     // * ********************** FINALIZACION *************************************
-                    tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                    if (data[index].incidencias.length == 0) {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                    } else {
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;">`;
+                        for (let item = 0; item < data[index].incidencias.length; item++) {
+                            var dataIncidencia = data[index].incidencias[item];
+                            if (item == 0) {
+                                tbody += `<span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            } else {
+                                tbody += `<b>/</b><span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            }
+                        }
+                        tbody += `</td>`;
+                    }
                     tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
