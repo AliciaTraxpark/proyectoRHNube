@@ -1,3 +1,4 @@
+var sent = false;
 //? ********************FORMULARIO EDITAR ********************* *//
 var modalA;
 //* FUNCION ABRIR DE MODAL
@@ -41,96 +42,6 @@ function modalCPEdit() {
 }
 var altaEmpleado = true;
 var BajaEmp = true;
-//: FUNCION MOSTRAR DETALLES DE CONTRATO
-function mostrarDetallesContrato(id) {
-    $.ajax({
-        async: false,
-        type: "GET",
-        url: "/detalleC",
-        data: {
-            id: id
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            }
-        },
-        success: function (data) {
-            $('#edit_guardarAlta').prop('disabled', false);
-            console.log("edit_guardarAlta -> NORMAL");
-            if (data.estado == 0) {
-                $('.ocultarFechaIE').hide();
-            } else {
-                $('.ocultarFechaIE').show();
-            }
-            if (data.fechaBaja !== null) {
-                BajaEmp = false;
-            } else {
-                BajaEmp = true;
-            }
-            $('#alertErrorFecha').hide();
-            $('#fileDetalleE').val(null);
-            $('.iborrainputfile').text('Adjuntar archivo');
-            $('#v_contrato').val(data.tipoContrato);
-            $('#v_condicion').val(data.condPago);
-            $('#v_idContrato').val(data.idC);
-            $('#v_monto').val(data.monto);
-            $('#noti_dia_fecha_editar').val(data.notiTiempo);
-            $('#idContratoD').val(data.idC);
-            var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
-            var VFechaDiaIE = new Date(moment(VFechaDaIE));
-            $('#m_dia_fechaIE').val(VFechaDiaIE.getDate());
-            $('#m_mes_fechaIE').val(moment(VFechaDaIE).month() + 1);
-            $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
-            $("#checkboxFechaIE").prop('checked', false);
-            $('#ocultarFechaE').show();
-            if (data.fechaFinal == null || data.fechaFinal == "0000-00-00") {
-                $("#checkboxFechaIE").prop('checked', true);
-                $('#ocultarFechaE').hide();
-            }
-            var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
-            var VFechaDiaFE = new Date(moment(VFechaDaFE));
-            $('#m_dia_fechaFE').val(VFechaDiaFE.getDate());
-            $('#m_mes_fechaFE').val(moment(VFechaDaFE).month() + 1);
-            $('#m_ano_fechaFE').val(moment(VFechaDaFE).year());
-            $('#documentosxDetalle').empty();
-            if (data.rutaDocumento != null) {
-                var dataD = data.rutaDocumento.split(',');
-                var itemsD = "";
-                $.each(dataD, function (index, value) {
-                    var mostrarC = value.substr(13, value.length);
-                    itemsD += `<div class="dropdown-item">
-                                    <div class="col-xl-12" style="padding-left: 0px;">
-                                        <div class="float-left mt-1">
-                                            <a href="documEmpleado/${value}" target="_blank" class="p-2">
-                                                <i class="uil-download-alt font-size-18"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
-                                                <span class="d-inline-block text-truncate" style="max-width: 100px;font-size:12px">${mostrarC}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>`;
-                });
-                $('#documentosxDetalle').append(itemsD);
-            } else {
-                itemsVacio = `<span class="p-2" style="font-size:12px">
-                                <img src="landing/images/doc.svg" height="25"> &nbsp;
-                                No hay documentos
-                            </span>`;
-                $('#documentosxDetalle').append(itemsVacio);
-            }
-            $('#form-ver').modal('hide');
-            $('#contratoDetallesmodalE').modal();
-
-        },
-        error: function () { }
-    });
-}
 //: CARGAR DATA EN TABLA CONTRATO
 function historialEmp() {
     var value = $('#v_id').val();
@@ -267,6 +178,96 @@ function mostrarBoton() {
     } else {
         $('#nuevaAltaEdit').hide();
     }
+}
+//: FUNCION MOSTRAR DETALLES DE CONTRATO
+function mostrarDetallesContrato(id) {
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/detalleC",
+        data: {
+            id: id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            }
+        },
+        success: function (data) {
+            $('#edit_guardarAlta').prop('disabled', false);
+            if (data.estado == 0) {
+                $('.ocultarFechaIE').hide();
+            } else {
+                $('.ocultarFechaIE').show();
+            }
+            if (data.fechaBaja !== null) {
+                BajaEmp = false;
+            } else {
+                BajaEmp = true;
+            }
+            $('#alertErrorFecha').hide();
+            $('#fileDetalleE').val(null);
+            $('.iborrainputfile').text('Adjuntar archivo');
+            $('#v_contrato').val(data.tipoContrato);
+            $('#v_condicion').val(data.condPago);
+            $('#v_idContrato').val(data.idC);
+            $('#v_monto').val(data.monto);
+            $('#noti_dia_fecha_editar').val(data.notiTiempo);
+            $('#idContratoD').val(data.idC);
+            var VFechaDaIE = moment(data.fechaInicio).format('YYYY-MM-DD');
+            var VFechaDiaIE = new Date(moment(VFechaDaIE));
+            $('#m_dia_fechaIE').val(VFechaDiaIE.getDate());
+            $('#m_mes_fechaIE').val(moment(VFechaDaIE).month() + 1);
+            $('#m_ano_fechaIE').val(moment(VFechaDaIE).year());
+            $("#checkboxFechaIE").prop('checked', false);
+            $('#ocultarFechaE').show();
+            if (data.fechaFinal == null || data.fechaFinal == "0000-00-00") {
+                $("#checkboxFechaIE").prop('checked', true);
+                $('#ocultarFechaE').hide();
+            }
+            var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
+            var VFechaDiaFE = new Date(moment(VFechaDaFE));
+            $('#m_dia_fechaFE').val(VFechaDiaFE.getDate());
+            $('#m_mes_fechaFE').val(moment(VFechaDaFE).month() + 1);
+            $('#m_ano_fechaFE').val(moment(VFechaDaFE).year());
+            $('#documentosxDetalle').empty();
+            if (data.rutaDocumento != null) {
+                var dataD = data.rutaDocumento.split(',');
+                var itemsD = "";
+                $.each(dataD, function (index, value) {
+                    var mostrarC = value.substr(13, value.length);
+                    itemsD += `<div class="dropdown-item">
+                                    <div class="col-xl-12" style="padding-left: 0px;">
+                                        <div class="float-left mt-1">
+                                            <a href="documEmpleado/${value}" target="_blank" class="p-2">
+                                                <i class="uil-download-alt font-size-18"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a href="documEmpleado/${value}" target="_blank" class="d-inline-block mt-2" style="color:#000000">
+                                                <span class="d-inline-block text-truncate" style="max-width: 100px;font-size:12px">${mostrarC}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>`;
+                });
+                $('#documentosxDetalle').append(itemsD);
+            } else {
+                itemsVacio = `<span class="p-2" style="font-size:12px">
+                                <img src="landing/images/doc.svg" height="25"> &nbsp;
+                                No hay documentos
+                            </span>`;
+                $('#documentosxDetalle').append(itemsVacio);
+            }
+            $('#form-ver').modal('hide');
+            $('#contratoDetallesmodalE').modal();
+
+        },
+        error: function () { }
+    });
+    sent = false;
 }
 //: CHECKBOX EN EDITAR DETALLES DE CONTROL
 $("#checkboxFechaIE").on("click", function () {
@@ -1682,7 +1683,6 @@ async function nuevaAltaReg() {
             $('#form-registrar').modal('show');
             $('#reg_guardarAlta').prop('disabled', false);
             $('#edit_guardarAlta').prop('disabled', false);
-            console.log("FALSE");
             historialEmpReg();
             $.notifyClose();
             $.notify(
