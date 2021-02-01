@@ -170,7 +170,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                         <a href="/reporteSemanal">Tiempos por semana</a>
                         <a href="/reporteMensual">Tiempos por mes</a>
                         <a href="/reporteTardanzas">Tardanzas</a>
-                        <a href="/reporteMatrizTardanzas">Matríz de tardanzas</a>
+                        <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
                     </li>
                 </ul>
             </li>
@@ -369,7 +369,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
                         <a href="/reporteSemanal">Tiempos por semana</a>
                         <a href="/reporteMensual">Tiempos por mes</a>
                         <a href="/reporteTardanzas">Tardanzas</a>
-                        <a href="/reporteMatrizTardanzas">Matríz de tardanzas</a>
+                        <a href="/reporteMatrizTardanzas">Matriz de tardanzas</a>
                     </li>
                 </ul>
             </li>
