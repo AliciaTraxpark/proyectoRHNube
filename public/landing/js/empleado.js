@@ -1,37 +1,5 @@
 
-$("#horaI").flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-});
-$("#horaF").flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-});
-
-$("#horaI_ed").flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-});
-$("#horaF_ed").flatpickr({
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-});
-$(document).ready(function () {
-    $(".flatpickr-input[readonly]").on("focus", function () {
-        $(this).blur();
-    });
-    $(".flatpickr-input[readonly]").prop("readonly", false);
-
-});
-
+/*CALENDARIO DISABLED EN REGISTRAR  */
 function calendarioInv() {
     var calendarElInv = document.getElementById("calendarInv");
     calendarElInv.innerHTML = "";
@@ -67,7 +35,9 @@ function calendarioInv() {
     calendarInv.render();
 }
 document.addEventListener("DOMContentLoaded", calendarioInv);
+/* ----------------------------------------------------------- */
 
+/*  CALENDARIO DE EVENTOS EN REGISTRAR  */
 function calendario() {
     var calendarEl = document.getElementById("calendar");
     calendarEl.innerHTML = "";
@@ -217,7 +187,9 @@ function calendario() {
     calendar.render();
 }
 document.addEventListener("DOMContentLoaded", calendario);
-///calendario e n edit
+/* ------------------------------------------------ */
+
+/* CALENDARIO DE EVENTOS EN EDITAR  */
 function calendario_edit() {
     var calendarEl = document.getElementById("calendar_ed");
     calendarEl.innerHTML = "";
@@ -515,7 +487,12 @@ function calendario_edit() {
 
     calendarioedit.render();
 }
-/* document.addEventListener("DOMContentLoaded", calendario_edit); */ ///////////
+/* ------------------------------------ */
+
+
+/* FUNCIONES PARA AGREGAR EVENTOS EN CALENDARIO EDITAR EMPLEADO */
+
+//* REGISTRAR DESCANSO
 function laborable_ed() {
     $("#calendarioAsignar_ed").modal("hide");
     title = "Descanso";
@@ -586,7 +563,8 @@ function laborable_ed() {
         error: function () { },
     });
 }
-/////////////
+
+//* REGISTRAR NO LABORABLE
 function nolaborable_ed() {
     $("#calendarioAsignar_ed").modal("hide");
     title = "No laborable";
@@ -655,13 +633,86 @@ function nolaborable_ed() {
         error: function () { },
     });
 }
-//////////////////
+
+//*FERIADO
+function diaferiadoRe_ed() {
+    $("#calendarioAsignar_ed").modal("hide");
+    (title = $("#nombreFeriado_ed").val()),
+        (color = "#e6bdbd"),
+        (textColor = "#775555"),
+        (start = $("#pruebaStar_ed").val());
+    end = $("#pruebaEnd_ed").val();
+    tipo = 2;
+    var idempleado = $("#idempleado").val();
+    //$('#myModal').modal('show');
+    $.ajax({
+        type: "POST",
+        url: "/empleado/storeCalendarioempleado",
+        data: {
+            title,
+            color,
+            textColor,
+            start,
+            end,
+            tipo,
+            idempleado,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            /*401: function () {
+                location.reload();
+            },*/
+            419: function () {
+                location.reload();
+            },
+        },
+        success: function (data) {
+            $("#myModalFeriado_ed").modal("hide");
+            //* si se registro
+            if (data == 1) {
+                calendarioedit.refetchEvents();
+                calendar2_ed.refetchEvents();
+            }
+            else {
+
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
+
+
+        },
+        error: function () { },
+    });
+}
+
+//* ABRIR INCIDENCIA
 function agregarinciden_ed() {
     $("#calendarioAsignar_ed").modal("hide");
     $("#frmIncidenciaCa_ed")[0].reset();
     $("#modalIncidencia_ed").modal("show");
 }
-//////////////////
+
+//*REGISTRAR INCIDENCIA
 function modalIncidencia_ed() {
     var idempleado = $("#idempleado").val();
     descripcionI = $("#descripcionInciCa_ed").val();
@@ -726,7 +777,11 @@ function modalIncidencia_ed() {
         },
     });
 }
-//////////////////////////
+
+/* ------------------------------------------------------------------------- */
+
+
+/* ASIGNACION DE HORARIO A DIA EN EDITAR EMPLEADO */
 function agregarHorarioSe() {
     var H1 = $("#pruebaStar_ed").val();
     var H2 = $("#pruebaEnd_ed").val();
@@ -853,117 +908,12 @@ function agregarHorarioSe() {
         // },
     });
 };
+/* ---------------------------------------------------------- */
 
-////////////////////////////
-function abrirHorario_ed() {
-    $('#errorenPausas_ed').hide();
-    $('#divOtrodia_ed').hide();
-    $('#divPausa_ed').hide();
-    $('#inputPausa_ed').empty();
-    $('#horaOblig_ed').prop("disabled", "disabled");
-    $('#inputPausa_ed').append('<div id="divEd_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
-        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa_ed[]" id="descPausa_ed" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa_ed[]"  id="InicioPausa_ed" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa_ed[]"  id="FinPausa_ed" disabled >' +
-        '&nbsp; <button class="btn btn-sm bt_ed" id="100" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
-        '</div>');
-    $('.flatpickr-input[readonly]').on('focus', function () {
-        $(this).blur()
-    })
-    $('.flatpickr-input[readonly]').prop('readonly', false)
-    $(".bt_ed").each(function (el) {
-        $(this).bind("click", addField);
-    });
-    $('#InicioPausa_ed').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultHour: null
-    });
 
-    $('input[name="descPausa_ed[]"]').prop('required', false);
-    $('input[name="InicioPausa_ed[]"]').prop('required', false);
-    $('input[name="FinPausa_ed[]"]').prop('required', false);
-    $("#frmHor_ed")[0].reset();
-    $("#horarioAgregar_ed").modal("show");
-}
+/* FUNCIONES PARA AGREGAR EVENTOS EN CALENDARIO REGISTRAR EMPLEADO */
 
-function registrarHorario_ed() {
-
-    var descripcion = $("#descripcionCa_ed").val();
-    var toleranciaH = $("#toleranciaH_ed").val();
-    var inicio = $("#horaI_ed").val();
-    var fin = $("#horaF_ed").val();
-    toleranciaF = $('#toleranciaSalida_ed').val();
-    horaOblig = $('#horaOblig_ed').val();
-    var tardanza;
-    if ($('#SwitchTardanza_ed').is(":checked")) {
-        tardanza = 1;
-    } else {
-        tardanza = 0;
-    }
-    if ($('#SwitchPausa_ed').is(":checked")) {
-        var descPausa = [];
-        var pausaInicio = [];
-        var finPausa = [];
-        $('input[name="descPausa_ed[]"]').each(function () {
-            descPausa.push($(this).val());
-        });
-        $('input[name="InicioPausa_ed[]"]').each(function () {
-            pausaInicio.push($(this).val());
-        });
-        $('input[name="FinPausa_ed[]"]').each(function () {
-            finPausa.push($(this).val());
-        });
-    }
-
-    $.ajax({
-        type: "post",
-        url: "/empleado/registrarHorario",
-        data: {
-            descripcion,
-            toleranciaH,
-            inicio,
-            fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-
-            idhorar = data.horario_id;
-
-            $("#selectHorario_ed").append(
-                $("<option>", {
-                    //agrego los valores que obtengo de una base de datos
-                    value: data.horario_id,
-                    text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
-                    selected: true,
-                })
-            );
-            $("#horarioAgregar_ed").modal("hide");
-
-            $("#selectHorario_ed").trigger("change");
-            /* $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.horario_id,
-                text: data.horario_descripcion
-
-            })); */
-        },
-        error: function () {
-            alert("Hay un error");
-        },
-    });
-}
-
-////////////////////7
+//*DESCANSO
 function laborableTem() {
     $("#calendarioAsignar").modal("hide");
 
@@ -1037,7 +987,8 @@ function laborableTem() {
         error: function () { },
     });
 }
-/////////////////////////////////
+
+//*FERIADO
 function diaferiadoTem() {
     $("#calendarioAsignar").modal("hide");
     (title = $("#nombreFeriado").val()),
@@ -1106,7 +1057,8 @@ function diaferiadoTem() {
         error: function () { },
     });
 }
-/////////////////////////////////
+
+//*NO LABORABLE
 function nolaborableTem() {
     $("#calendarioAsignar").modal("hide");
 
@@ -1179,12 +1131,14 @@ function nolaborableTem() {
     });
 }
 
+//*ABRIR MODAL INCIDENCIA
 function agregarinciden() {
     $("#calendarioAsignar").modal("hide");
     $("#frmIncidenciaCa")[0].reset();
     $("#modalIncidencia").modal("show");
 }
 
+//*REGISTRAR INCIDENCIA
 function modalIncidencia() {
     var id_calendario = $("#selectCalendario").val();
     descripcionI = $("#descripcionInciCa").val();
@@ -1222,7 +1176,9 @@ function modalIncidencia() {
         },
     });
 }
+/* ------------------------------------------------------ */
 
+/* EVENTO CUANDO CAMBIO CALENDARIO EN REGISTRAR EMPLEADO */
 $("#selectCalendario").change(function () {
     var idempleado = $("#idEmpleado").val();
 
@@ -1287,8 +1243,9 @@ $("#selectCalendario").change(function () {
         dialog.modal("hide");
     }, 1400);
 });
+/* --------------------------------------------------- */
 
-///edit select
+/* EVENTO CUANDO CAMBIO CALENDARIO EN EDITAR EMPLEADO */
 $("#selectCalendario_ed").change(function () {
     $("#detallehorario_ed").empty();
     var idempleado = $("#idempleado").val();
@@ -1333,7 +1290,10 @@ $("#selectCalendario_ed").change(function () {
         dialog.modal("hide");
     }, 1400);
 });
-///////////////////
+/* --------------------------------------------------- */
+
+
+/* ----------ELIMINAR HORARIOS EN CALENDARIO HORARIO REGISTRAR EMPLEADO ---------------------------*/
 function eliminarhorariosTem() {
     fmes = calendar2.getDate();
     mescale = fmes.getMonth() + 1;
@@ -1382,7 +1342,9 @@ function eliminarhorariosTem() {
         },
     });
 }
-////////
+/* --------------------------- */
+
+/* CALENDARIO HORARIO EN REGISTRAR EMPLEADO */
 function calendario2() {
     var calendarEl = document.getElementById("calendar2");
     calendarEl.innerHTML = "";
@@ -1540,116 +1502,10 @@ function calendario2() {
     calendar2.render();
 }
 document.addEventListener("DOMContentLoaded", calendario2);
-
-function abrirHorario() {
-    $('#errorenPausas').hide();
-    $('#divOtrodia').hide();
-    $('#divPausa').hide();
-    $('#inputPausa').empty();
-    $('#horaOblig').prop("disabled", "disabled");
-    $('#inputPausa').append('<div id="div_100" class="row col-md-12" style=" margin-bottom: 8px;">' +
-        '<input type="text"  class="form-control form-control-sm col-sm-5" name="descPausa[]" id="descPausa" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="InicioPausa[]"  id="InicioPausa" >' +
-        '<input type="text"  class="form-control form-control-sm col-sm-3" name="FinPausa[]"  id="FinPausa" disabled >' +
-        '&nbsp; <button class="btn btn-sm bt_re" id="400" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;padding-top: 0px;' +
-        ' padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px; margin-top: 5px;margin-left: 20px">+</button>' +
-        '</div>');
-    $('.flatpickr-input[readonly]').on('focus', function () {
-        $(this).blur()
-    })
-    $('.flatpickr-input[readonly]').prop('readonly', false)
-    $(".bt_re").each(function (el) {
-        $(this).bind("click", addFieldRe);
-    });
-    $('#InicioPausa').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultHour: null
-    });
-
-    $('input[name="descPausa[]"]').prop('required', false);
-    $('input[name="InicioPausa[]"]').prop('required', false);
-    $('input[name="FinPausa[]"]').prop('required', false);
-    $("#frmHor")[0].reset();
-    $("#horarioAgregar").modal("show");
-}
-
-function registrarHorario() {
-
-    var descripcion = $("#descripcionCa").val();
-    var toleranciaH = $("#toleranciaH").val();
-    var inicio = $("#horaI").val();
-    var fin = $("#horaF").val();
-    toleranciaF = $('#toleranciaSalida').val();
-    horaOblig = $('#horaOblig').val();
-    var tardanza;
-    if ($('#SwitchTardanza').is(":checked")) {
-        tardanza = 1;
-    } else {
-        tardanza = 0;
-    }
-    if ($('#SwitchPausa').is(":checked")) {
-        var descPausa = [];
-        var pausaInicio = [];
-        var finPausa = [];
-        $('input[name="descPausa[]"]').each(function () {
-            descPausa.push($(this).val());
-        });
-        $('input[name="InicioPausa[]"]').each(function () {
-            pausaInicio.push($(this).val());
-        });
-        $('input[name="FinPausa[]"]').each(function () {
-            finPausa.push($(this).val());
-        });
-    }
-
-    $.ajax({
-        type: "post",
-        url: "/empleado/registrarHorario",
-        data: {
-            descripcion,
-            toleranciaH,
-            inicio,
-            fin, descPausa, pausaInicio, finPausa, toleranciaF, horaOblig, tardanza
-        },
-        statusCode: {
-            419: function () {
-                location.reload();
-            },
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-
-            idhorar = data.horario_id;
+/* ----------------------------------------------------------- */
 
 
-
-            $("#selectHorario").append(
-                $("<option>", {
-                    //agrego los valores que obtengo de una base de datos
-                    value: data.horario_id,
-                    text: data.horario_descripcion + ' (' + data.horaI + '-' + data.horaF + ')',
-                    selected: true,
-                })
-            );
-
-            $("#selectHorario").trigger("change");
-            /* $('#selectHorarioen').append($('<option>', { //agrego los valores que obtengo de una base de datos
-                value: data.horario_id,
-                text: data.horario_descripcion
-
-            })); */
-            $("#horarioAgregar").modal("hide");
-        },
-        error: function () {
-            alert("Hay un error");
-        },
-    });
-}
+/* ASIGNACION DE HORARIO A DIA EN REGISTRAR EMPLEADO */
 function agregarHorarioSe_regis() {
     var H1 = $("#pruebaStar").val();
     var H2 = $("#pruebaEnd").val();
@@ -1751,9 +1607,10 @@ function agregarHorarioSe_regis() {
         // },
     });
 };
+/* ----------------------------------------------- */
 
-//vercal
 
+/* CALENDARIO DE EVENTOS EN VER EMPLEADO */
 function calendario3() {
     var calendarEl = document.getElementById("calendar3");
     calendarEl.innerHTML = "";
@@ -1894,7 +1751,9 @@ function calendario3() {
     calendar3.render();
 }
 /* document.addEventListener("DOMContentLoaded", calendario3); */
-////////////////
+/* ---------------------------------------------------------- */
+
+/* CALENDARIO DE HORARIOS EN VER EMPLEADO */
 function calendario4() {
     var calendarEl = document.getElementById("calendar4");
     calendarEl.innerHTML = "";
@@ -2035,9 +1894,9 @@ function calendario4() {
     calendar4.render();
 }
 /* document.addEventListener("DOMContentLoaded", calendario4); */
-/* document.addEventListener("DOMContentLoaded", calendario3); */
+/* ---------------------------------------------------------------- */
 
-///inv
+/* CALENDARIO DISABLED EN EDITAR EMPELADO */
 function calendarioInv_ed() {
     var calendarElInv_ed = document.getElementById("calendarInv_ed");
     calendarElInv_ed.innerHTML = "";
@@ -2073,7 +1932,9 @@ function calendarioInv_ed() {
     calendarInv_ed.render();
 }
 /* document.addEventListener("DOMContentLoaded", calendarioInv_ed); */
-////////////////////////////
+/* ------------------------------------------------------------------------ */
+
+/* CALENDARIO HORARIO EN EDITAR EMPLEADO */
 function calendario2_ed() {
     var calendarEl = document.getElementById("calendar2_ed");
     calendarEl.innerHTML = "";
@@ -2164,7 +2025,7 @@ function calendario2_ed() {
                                 });
                             }
                         },
-                    }); 
+                    });
                 } else {
                     bootbox.confirm({
                         title: "Eliminar incidencia",
@@ -2431,6 +2292,8 @@ function calendario2_ed() {
     calendar2_ed.render();
 }
 /* document.addEventListener("DOMContentLoaded", calendario2_ed); */
+/* --------------------------------------------- */
+
 $("#file").fileinput({
     allowedFileExtensions: ["jpg", "jpeg", "png"],
     uploadAsync: false,
@@ -4183,18 +4046,7 @@ function cargarFile2() {
     });
 }
 //********************** */
-$("#documento").on("change", function () {
-    $("#form-registrar :input").attr("disabled", false);
-    if ($("#documento").val() == 1) {
-        $("#numDocumento").attr("maxlength", "8");
-    }
-    if ($("#documento").val() == 2) {
-        $("#numDocumento").attr("maxlength", "8");
-    }
-    if ($("#documento").val() == 3) {
-        $("#numDocumento").attr("maxlength", "12");
-    }
-});
+
 $("#telefono").attr("maxlength", "6");
 $("#v_telefono").attr("maxlength", "6");
 $("#smartwizardVer :input").attr("disabled", true);
@@ -4203,6 +4055,8 @@ $("#documento").attr("disabled", false);
 $("#cerrarModalEmpleado").attr("disabled", false);
 $("#cerrarE").attr("disabled", false);
 $("#cerrarEd").attr("disabled", false);
+
+/* VALIDACION DE INPUT DOCUMENTO */
 $("#documento").on("change", function () {
     $("#form-registrar :input").attr("disabled", false);
     if ($("#documento").val() == 1) {
@@ -4215,6 +4069,8 @@ $("#documento").on("change", function () {
         $("#numDocumento").attr("maxlength", "12");
     }
 });
+/* --------------------------------------
+ */
 $("#formContrato :input").prop("disabled", true);
 $("#condicion").prop("disabled", false);
 $("#condicion").on("change", function () {
@@ -4885,6 +4741,9 @@ function limpiar() {
     $("#editarCP").val("");
 }
 
+/* ELIMINAR EVENTOS DE CALENDARIO EN REGISTRAR EMPLEADO */
+
+//*VACIAR FERIADOS
 function vaciardFeria() {
     fmes = calendar.getDate();
     mescale = fmes.getMonth() + 1;
@@ -4934,7 +4793,8 @@ function vaciardFeria() {
         },
     });
 }
-/////////////////
+
+//*VACIAR DESCANSOS
 function vaciarddescanso() {
     fmes = calendar.getDate();
     mescale = fmes.getMonth() + 1;
@@ -4984,7 +4844,8 @@ function vaciarddescanso() {
         },
     });
 }
-//////////////
+
+//*VACIAR LABORABLES
 function vaciardlabTem() {
     bootbox.confirm({
         title: "Eliminar dias laborales",
@@ -5011,6 +4872,7 @@ function vaciardlabTem() {
     });
 }
 
+//*VACIAR NO LABORABLES
 function vaciardNlabTem() {
     fmes = calendar.getDate();
     mescale = fmes.getMonth() + 1;
@@ -5061,6 +4923,7 @@ function vaciardNlabTem() {
     });
 }
 
+//*VACIAR INCIDENCIAS
 function vaciardIncidTem() {
     fmes = calendar.getDate();
     mescale = fmes.getMonth() + 1;
@@ -5110,76 +4973,9 @@ function vaciardIncidTem() {
         },
     });
 }
-////////////////////////////////////////////////////////////
-function diaferiadoRe_ed() {
-    $("#calendarioAsignar_ed").modal("hide");
-    (title = $("#nombreFeriado_ed").val()),
-        (color = "#e6bdbd"),
-        (textColor = "#775555"),
-        (start = $("#pruebaStar_ed").val());
-    end = $("#pruebaEnd_ed").val();
-    tipo = 2;
-    var idempleado = $("#idempleado").val();
-    //$('#myModal').modal('show');
-    $.ajax({
-        type: "POST",
-        url: "/empleado/storeCalendarioempleado",
-        data: {
-            title,
-            color,
-            textColor,
-            start,
-            end,
-            tipo,
-            idempleado,
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        statusCode: {
-            /*401: function () {
-                location.reload();
-            },*/
-            419: function () {
-                location.reload();
-            },
-        },
-        success: function (data) {
-            $("#myModalFeriado_ed").modal("hide");
-            //* si se registro
-            if (data == 1) {
-                calendarioedit.refetchEvents();
-                calendar2_ed.refetchEvents();
-            }
-            else {
 
-                //*SI NO REGISTRO
-                $.notifyClose();
-                $.notify({
-                    message: data,
-                    icon: '/landing/images/alert1.svg',
-                }, {
-                    element: $('#form-ver'),
-                    position: "fixed",
-                    icon_type: 'image',
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    delay: 6000,
-                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                        '<span data-notify="title">{1}</span> ' +
-                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                        '</div>',
-                    spacing: 35
-                });
-            }
+/* ---------------------------------------------------------- */
 
-
-        },
-        error: function () { },
-    });
-}
 //////////////////////////////////////////////////////////
 function vaciardFeriaBD() {
     var idempleado = $("#idempleado").val();
@@ -5449,6 +5245,8 @@ function eliminarhorariosBD() {
     });
 }
 ////////////////////////////////
+
+/* EVENTO AL CAMBIAR DE CALENDARIO EN EDITAR */
 $("#selectCalendario_edit3").change(function () {
     var antSe = $("#idselect3").val();
     bootbox.confirm({
@@ -5532,134 +5330,10 @@ $("#selectCalendario_edit3").change(function () {
         },
     });
 });
-$(function () {
-    $(document).on('change', '#horaF_ed', function (event) {
-        let horaF = $('#horaF_ed').val();
-        let horaI = $('#horaI_ed').val();
+/* ----------------------------------------------- */
 
-        if (horaF < horaI) {
-            $('#divOtrodia_ed').show();
-            $('#horaOblig_ed').prop("disabled", false);
-            $('#horaOblig_ed').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true
-            });
-            $('#horaOblig_ed').val('');
-            event.stopPropagation();
-        } else {
-            var dateDesde = newDate(horaI.split(":"));
-            var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde) / 1000 / 60;
-            var horas = Math.floor(minutos / 60);
-            minutos = minutos % 60;
-            /*  console.log(prefijo(horas) + ':' + prefijo(minutos)); */
-            $('#horaOblig_ed').prop("disabled", false);
 
-            if ($('#horaOblig_ed').val() == null || $('#horaOblig_ed').val() == '') {
-                $('#horaOblig_ed').flatpickr({
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    defaultHour: "8"
-                });
-                $('#horaOblig_ed').val("08:00");
-
-            }
-
-            $('#divOtrodia_ed').hide();
-        }
-
-    });
-});
-$(function () {
-    $(document).on('change', '#horaI_ed', function (event) {
-        let horaF = $('#horaF_ed').val();
-        let horaI = $('#horaI_ed').val();
-
-        if (horaF < horaI) {
-            $('#divOtrodia_ed').show();
-            $('#horaOblig_ed').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true
-            });
-            $('#horaOblig_ed').prop("disabled", false);
-            $('#horaOblig_ed').val('');
-            event.stopPropagation();
-        } else {
-            var dateDesde = newDate(horaI.split(":"));
-            var dateHasta = newDate(horaF.split(":"));
-
-            var minutos = (dateHasta - dateDesde) / 1000 / 60;
-            var horas = Math.floor(minutos / 60);
-            minutos = minutos % 60;
-
-            $('#horaOblig_ed').prop("disabled", false);
-            /* $('#horaOblig').val(prefijo(horas)); */
-            if ($('#horaOblig_ed').val() == null || $('#horaOblig_ed').val() == '') {
-                $('#horaOblig_ed').flatpickr({
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    defaultHour: "8"
-                });
-                $('#horaOblig_ed').val("08:00");
-
-            }
-            $('#divOtrodia_ed').hide();
-        }
-
-    });
-});
-$(function () {
-    $(document).on('change', '#horaF', function (event) {
-        let horaF = $('#horaF').val();
-        let horaI = $('#horaI').val();
-
-        if (horaF < horaI) {
-            $('#divOtrodia').show();
-            $('#horaOblig').prop("disabled", false);
-            $('#horaOblig').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true
-            });
-            $('#horaOblig').val('');
-            event.stopPropagation();
-        } else {
-            var dateDesde = newDate(horaI.split(":"));
-            var dateHasta = newDate(horaF.split(":"));
-
-            var minutos = (dateHasta - dateDesde) / 1000 / 60;
-            var horas = Math.floor(minutos / 60);
-            minutos = minutos % 60;
-            console.log(prefijo(horas) + ':' + prefijo(minutos));
-            $('#horaOblig').prop("disabled", false);
-
-            if ($('#horaOblig').val() == null || $('#horaOblig').val() == '') {
-                $('#horaOblig').flatpickr({
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    defaultHour: "8"
-                });
-                $('#horaOblig').val("08:00");
-
-            }
-
-            $('#divOtrodia').hide();
-        }
-
-    });
-});
 function newDate(partes) {
     var date = new Date(0);
     date.setHours(partes[0]);
@@ -5670,423 +5344,15 @@ function newDate(partes) {
 function prefijo(num) {
     return num < 10 ? ("0" + num) : num;
 }
-$(function () {
-    $(document).on('change', '#horaI', function (event) {
-        let horaF = $('#horaF').val();
-        let horaI = $('#horaI').val();
 
-        if (horaF < horaI) {
-            $('#divOtrodia').show();
-            $('#horaOblig').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true
-            });
-            $('#horaOblig').prop("disabled", false);
-            $('#horaOblig').val('');
-            event.stopPropagation();
-        } else {
-            var dateDesde = newDate(horaI.split(":"));
-            var dateHasta = newDate(horaF.split(":"));
 
-            var minutos = (dateHasta - dateDesde) / 1000 / 60;
-            var horas = Math.floor(minutos / 60);
-            minutos = minutos % 60;
-            console.log(prefijo(horas) + ':' + prefijo(minutos));
-            $('#horaOblig').prop("disabled", false);
-            /* $('#horaOblig').val(prefijo(horas)); */
-            if ($('#horaOblig').val() == null || $('#horaOblig').val() == '') {
-                $('#horaOblig').flatpickr({
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    defaultHour: "8"
-                });
-                $('#horaOblig').val("08:00");
-
-            }
-            $('#divOtrodia').hide();
-        }
-
-    });
-});
 $('#selectarea').on("change", function (e) {
     console.log($('#selectarea').val());
     RefreshTablaEmpleadoArea();
 });
 
-///PAUSAS HORARIO EDITAR
-$('#SwitchPausa_ed').change(function (event) {
-    if ($('#SwitchPausa_ed').prop('checked')) {
-        $('input[name="descPausa_ed[]"]').prop('required', true);
-        $('#InicioPausa_ed').prop('required', true);
-        $('#FinPausa_ed').prop('required', true);
-        $('input[name="descPausa_ed[]"]').prop('required', true);
-        $('input[name="InicioPausa_ed[]"]').prop('required', true);
-        $('input[name="FinPausa_ed[]"]').prop('required', true);
-        $('#divPausa_ed').show();
-        $('.flatpickr-input[readonly]').on('focus', function () {
-            $(this).blur()
-        })
-        $('.flatpickr-input[readonly]').prop('readonly', false);
-    }
-    else {
-
-        $('input[name="descPausa_ed[]"]').val('');
-        $('input[name="InicioPausa_ed[]"]').val('');
-        $('input[name="FinPausa_ed[]"]').val('');
-        $('#divPausa_ed').hide();
-        $('input[name="descPausa_ed[]"]').prop('required', false);
-        $('input[name="InicioPausa_ed[]"]').prop('required', false);
-        $('input[name="FinPausa_ed[]"]').prop('required', false);
-    }
-    event.preventDefault();
-});
-function addField() {
-
-    var clickID = parseInt($(this).parent('div').attr('id').replace('divEd_', ''));
-    // Genero el nuevo numero id
-    var newID = (clickID + 1);
-    // Creo un clon del elemento div que contiene los campos de texto
-    $newClone = $('#divEd_' + clickID).clone(true);
-    //Le asigno el nuevo numero id
-    $newClone.attr("id", 'divEd_' + newID);
-    $newClone.children("input").eq(0).attr("id", 'descPausa_ed' + newID).val('');
-    //Borro el valor del segundo campo input(este caso es el campo de cantidad)
-    $newClone.children("input").eq(1).attr("id", 'InicioPausa_ed' + newID).val('').prop('required', true).flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultHour: null
-    });
-    var horafinal = $('#horaF_ed').val();
-    splih = horafinal.split(":");
-    console.log(splih[0]);
-    $newClone.children("input").eq(2).attr("id", 'FinPausa_ed' + newID).val('').prop('required', true).prop("disabled", true).flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultHour: splih[0]
-    });;
-    $(function () {
-        $(document).on('change', '#FinPausa_ed' + newID, function (event) {
-            let horaF = $('#FinPausa_ed' + newID).val();
-            let horaI = $('#InicioPausa_ed' + newID).val();
-
-            if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
-                if (horaF < $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
-                    $('#FinPausa_ed' + newID).val('');
-                    $('#fueraRango_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango_ed').hide();
-                    if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
-                        $('#errorenPausas_ed').show();
-                        $('#FinPausa_ed' + newID).val('');
-                    }
-                    else {
-                        $('#errorenPausas_ed').hide();
-                    }
-                }
-
-                if (horaI > horaF) {
-                    /*  $('#FinPausa').val('');
-                     $('#errorenPausas').show();
-                     event.stopPropagation(); */
-                } else {
-                    $('#errorenPausas_ed').hide();
-                }
-            } else {
-                if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
-                    $('#FinPausa_ed' + newID).val('');
-                    $('#fueraRango_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango_ed').hide();
-                }
-
-                if (horaF <= horaI) {
-                    $('#FinPausa_ed' + newID).val('');
-                    $('#errorenPausas_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas_ed').hide();
-                }
-            }
-
-            ////////////////////////////////
 
 
-        });
-    });
-    $(function () {
-        $(document).on('change', '#InicioPausa_ed' + newID, function (event) {
-            let horaF = $('#FinPausa_ed' + newID).val();
-            let horaI = $('#InicioPausa_ed' + newID).val();
-            $('#FinPausa_ed' + newID).prop("disabled", false);
-            if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
-
-                if (horaI < $('#horaI_ed').val() && horaI > $('#horaF_ed').val()) {
-                    console.log('moostrando fuera rango 11/11');
-                    $('#InicioPausa_ed' + newID).val('');
-                    $('#fueraRango_ed').show();
-
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango_ed').hide();
-                }
-
-            } else {
-                if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
-
-                    $('#InicioPausa_ed' + newID).val('');
-                    $('#fueraRango_ed').show();
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango_ed').hide();
-                }
-            }
-
-
-            if (horaF == null || horaF == '') {
-
-            } else {
-                if ($('#horaI_ed').val() < $('#horaF_ed').val()) {
-                    if (horaF <= horaI) {
-                        $('#InicioPausa_ed' + newID).val('');
-                        $('#errorenPausas_ed').show();
-                        event.stopPropagation();
-                    } else {
-                        $('#errorenPausas_ed').hide();
-                    }
-                } else {
-                    $('#errorenPausas_ed').hide();
-                }
-            }
-
-        });
-    });
-
-
-
-    $newClone.children("button").attr("id", newID)
-    //Inserto el div clonado y modificado despues del div original
-    $newClone.insertAfter($('#divEd_' + clickID));
-    //Cambio el signo "+" por el signo "-" y le quito el evento addfield
-    //$("#"+clickID-1).remove();
-    $("#" + clickID).css("backgroundColor", "#f6cfcf");
-    $("#" + clickID).css("border-Color", "#f6cfcf");
-    $("#" + clickID).css("color", "#d11010");
-    $("#" + clickID).css("height", "22px");
-    $("#" + clickID).css("font-weight", "600");
-    $("#" + clickID).css("margin-top", "5px");
-    $("#" + clickID).css("font-size", "12px");
-    $("#" + clickID).css("width", "19px");
-    $("#" + clickID).css("margin-left", "20-px");
-    $('input[name="descPausa_ed[]"]').prop('required', true);
-    $('input[name="InicioPausa_ed[]"]').prop('required', true);
-    $('input[name="FinPausa_ed[]"]').prop('required', true);
-    $("#" + clickID).html('-').unbind("click", addField);
-    $('.flatpickr-input[readonly]').on('focus', function () {
-        $(this).blur()
-    })
-    $('.flatpickr-input[readonly]').prop('readonly', false)
-    //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
-    $("#" + clickID).bind("click", delRow);
-}
-function delRow() {
-    // Funcion que destruye el elemento actual una vez echo el click
-    $(this).parent('div').remove();
-}
-///PAUSAS HORARIO AGREGAR
-$('#SwitchPausa').change(function (event) {
-    if ($('#SwitchPausa').prop('checked')) {
-        $('input[name="descPausa[]"]').prop('required', true);
-        $('#InicioPausa').prop('required', true);
-        $('#FinPausa').prop('required', true);
-        $('input[name="descPausa[]"]').prop('required', true);
-        $('input[name="InicioPausa[]"]').prop('required', true);
-        $('input[name="FinPausa[]"]').prop('required', true);
-        $('#divPausa').show();
-        $('.flatpickr-input[readonly]').on('focus', function () {
-            $(this).blur()
-        })
-        $('.flatpickr-input[readonly]').prop('readonly', false);
-    }
-    else {
-
-        $('input[name="descPausa[]"]').val('');
-        $('input[name="InicioPausa[]"]').val('');
-        $('input[name="FinPausa[]"]').val('');
-        $('#divPausa').hide();
-        $('input[name="descPausa[]"]').prop('required', false);
-        $('input[name="InicioPausa[]"]').prop('required', false);
-        $('input[name="FinPausa[]"]').prop('required', false);
-    }
-    event.preventDefault();
-});
-function addFieldRe() {
-
-    var clickID = parseInt($(this).parent('div').attr('id').replace('div_', ''));
-    // Genero el nuevo numero id
-    var newID = (clickID + 1);
-    // Creo un clon del elemento div que contiene los campos de texto
-    $newClone = $('#div_' + clickID).clone(true);
-    //Le asigno el nuevo numero id
-    $newClone.attr("id", 'div_' + newID);
-    $newClone.children("input").eq(0).attr("id", 'descPausa' + newID).val('');
-    //Borro el valor del segundo campo input(este caso es el campo de cantidad)
-    $newClone.children("input").eq(1).attr("id", 'InicioPausa' + newID).val('').prop('required', true).flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultHour: null
-    });
-    var horafinal = $('#horaF').val();
-    splih = horafinal.split(":");
-    console.log(splih[0]);
-    $newClone.children("input").eq(2).attr("id", 'FinPausa' + newID).val('').prop('required', true).prop("disabled", true).flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultHour: splih[0]
-    });;
-    $(function () {
-        $(document).on('change', '#FinPausa' + newID, function (event) {
-            let horaF = $('#FinPausa' + newID).val();
-            let horaI = $('#InicioPausa' + newID).val();
-
-
-            if ($('#horaI').val() > $('#horaF').val()) {
-                if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
-                    $('#FinPausa' + newID).val('');
-                    $('#fueraRango').show();
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango').hide();
-                    if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
-                        $('#errorenPausas').show();
-                        $('#FinPausa' + newID).val('');
-                    }
-                    else {
-                        $('#errorenPausas').hide();
-                    }
-                }
-
-                if (horaI > horaF) {
-                    /*  $('#FinPausa').val('');
-                     $('#errorenPausas').show();
-                     event.stopPropagation(); */
-                } else {
-                    $('#errorenPausas').hide();
-                }
-            } else {
-                if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
-                    $('#FinPausa' + newID).val('');
-                    $('#fueraRango').show();
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango').hide();
-                }
-
-                if (horaF <= horaI) {
-                    $('#FinPausa' + newID).val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas').hide();
-                }
-            }
-
-
-
-
-        });
-    });
-    $(function () {
-        $(document).on('change', '#InicioPausa' + newID, function (event) {
-            let horaF = $('#FinPausa' + newID).val();
-            let horaI = $('#InicioPausa' + newID).val();
-            $('#FinPausa' + newID).prop("disabled", false);
-
-            if ($('#horaI').val() > $('#horaF').val()) {
-
-                if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
-                    console.log('moostrando fuera rango 11/11');
-                    $('#InicioPausa' + newID).val('');
-                    $('#fueraRango').show();
-
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango').hide();
-                }
-
-            } else {
-                if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
-
-                    $('#InicioPausa' + newID).val('');
-                    $('#fueraRango').show();
-                    event.stopPropagation();
-                } else {
-                    $('#fueraRango').hide();
-                }
-            }
-
-
-            if (horaF == null || horaF == '') {
-
-            } else {
-                if ($('#horaI').val() < $('#horaF').val()) {
-                    if (horaF <= horaI) {
-                        $('#InicioPausa' + newID).val('');
-                        $('#errorenPausas').show();
-                        event.stopPropagation();
-                    } else {
-                        $('#errorenPausas').hide();
-                    }
-                } else {
-                    $('#errorenPausas').hide();
-                }
-            }
-        });
-    });
-
-
-    $newClone.children("button").attr("id", newID)
-    //Inserto el div clonado y modificado despues del div original
-    $newClone.insertAfter($('#div_' + clickID));
-    //Cambio el signo "+" por el signo "-" y le quito el evento addfield
-    //$("#"+clickID-1).remove();
-    $("#" + clickID).css("backgroundColor", "#f6cfcf");
-    $("#" + clickID).css("border-Color", "#f6cfcf");
-    $("#" + clickID).css("color", "#d11010");
-    $("#" + clickID).css("height", "22px");
-    $("#" + clickID).css("font-weight", "600");
-    $("#" + clickID).css("margin-top", "5px");
-    $("#" + clickID).css("font-size", "12px");
-    $("#" + clickID).css("width", "19px");
-    $("#" + clickID).css("margin-left", "20-px");
-    $('input[name="descPausa[]"]').prop('required', true);
-    $('input[name="InicioPausa[]"]').prop('required', true);
-    $('input[name="FinPausa[]"]').prop('required', true);
-    $("#" + clickID).html('-').unbind("click", addField);
-    $('.flatpickr-input[readonly]').on('focus', function () {
-        $(this).blur()
-    })
-    $('.flatpickr-input[readonly]').prop('readonly', false)
-    //Ahora le asigno el evento delRow para que borre la fial en caso de hacer click
-    $("#" + clickID).bind("click", delRow);
-}
-function delRow() {
-    // Funcion que destruye el elemento actual una vez echo el click
-    $(this).parent('div').remove();
-}
 //? CONTENIDO DE VIDEOS EN MODAL DE EDITAR
 var modalOculto;
 // * DATOS PERSONALES
@@ -6316,237 +5582,8 @@ function stopVideoD() {
         $('#form-ver').modal('show');
     }
 }
-//VALIDACION PAUSAS
-$(function () {
-    $(document).on('change', '#FinPausa', function (event) {
-        let horaF = $('#FinPausa').val();
-        let horaI = $('#InicioPausa').val();
-        if ($('#horaI').val() > $('#horaF').val()) {
-            if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
-                $('#FinPausa').val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
-                if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
-                    $('#errorenPausas').show();
-                    $('#FinPausa').val('');
-                }
-                else {
-                    $('#errorenPausas').hide();
-                }
 
-            }
-
-            if (horaI > horaF) {
-                /*  $('#FinPausa').val('');
-                 $('#errorenPausas').show();
-                 event.stopPropagation(); */
-            } else {
-                $('#errorenPausas').hide();
-            }
-        }
-        else {
-            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
-                $('#FinPausa').val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
-            }
-            if (horaF <= horaI) {
-                $('#FinPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
-            } else {
-                $('#errorenPausas').hide();
-            }
-        }
-
-    });
-});
-$(function () {
-    $(document).on('change', '#InicioPausa', function (event) {
-        let horaF = $('#FinPausa').val();
-        let horaI = $('#InicioPausa').val();
-        $('#FinPausa').prop("disabled", false);
-        if ($('#horaI').val() > $('#horaF').val()) {
-
-            if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
-                console.log('moostrando fuera rango 11/11');
-                $('#InicioPausa').val('');
-                $('#fueraRango').show();
-
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
-            }
-
-        } else {
-            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
-
-                $('#InicioPausa').val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-            } else {
-                $('#fueraRango').hide();
-            }
-        }
-
-        console.log(horaF);
-        if (horaF == null || horaF == '') {
-            var horafinal1 = $('#horaF').val();
-            splih1 = horafinal1.split(":");
-            console.log(splih1[0]);
-            console.log('nada me da');
-            $('#FinPausa').val('').flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                defaultHour: splih1[0]
-            });
-
-        }
-        else {
-            console.log('secumple');
-            if ($('#horaI').val() < $('#horaF').val()) {
-                if (horaF <= horaI) {
-                    $('#InicioPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation();
-                } else {
-                    $('#errorenPausas').hide();
-                }
-            } else {
-                $('#errorenPausas').hide();
-            }
-        }
-
-        $('#FinPausa').on('focus', function () {
-            $(this).blur();
-        })
-        $('#FinPausa').removeAttr("readonly");
-
-    });
-});
-
-//VALIDACIONES PAUSAS EN EDITAR EMPLEADO
-$(function () {
-    $(document).on('change', '#FinPausa_ed', function (event) {
-        let horaF = $('#FinPausa_ed').val();
-        let horaI = $('#InicioPausa_ed').val();
-
-        if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-            if (horaF < $("#horaI_ed").val() && horaF > $("#horaF_ed").val()) {
-                $("#FinPausa_ed").val("");
-                $("#fueraRango_ed").show();
-                event.stopPropagation();
-            } else {
-                $("#fueraRango_ed").hide();
-                if (
-                    horaI >= horaF &&
-                    horaF <= $("#horaI_ed").val() &&
-                    horaF > $("#horaF_ed").val()
-                ) {
-                    $("#errorenPausas_ed").show();
-                    $("#FinPausa_ed").val("");
-                } else {
-                    $("#errorenPausas_ed").hide();
-                }
-            }
-
-            if (horaI > horaF) {
-                /*  $('#FinPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation(); */
-            } else {
-                $("#errorenPausas_ed").hide();
-            }
-        } else {
-            if (horaF < $("#horaI_ed").val() || horaF > $("#horaF_ed").val()) {
-                $("#FinPausa_ed").val("");
-                $("#fueraRango_ed").show();
-                event.stopPropagation();
-            } else {
-                $("#fueraRango_ed").hide();
-            }
-            if (horaF <= horaI) {
-                $("#FinPausa_ed").val("");
-                $("#errorenPausas_ed").show();
-                event.stopPropagation();
-            } else {
-                $("#errorenPausas_ed").hide();
-            }
-        }
-
-
-    });
-});
-$(function () {
-    $(document).on('change', '#InicioPausa_ed', function (event) {
-        let horaF = $('#FinPausa_ed').val();
-        let horaI = $('#InicioPausa_ed').val();
-        $('#FinPausa_ed').prop("disabled", false);
-        if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
-            if (horaI < $("#horaI_ed").val() && horaI > $("#horaF_ed").val()) {
-                console.log("moostrando fuera rango 11/11");
-                $("#InicioPausa_ed").val("");
-                $("#fueraRango_ed").show();
-
-                event.stopPropagation();
-            } else {
-                $("#fueraRango_ed").hide();
-            }
-        } else {
-            if (horaI < $("#horaI_ed").val() || horaI > $("#horaF_ed").val()) {
-                $("#InicioPausa_ed").val("");
-                $("#fueraRango_ed").show();
-                event.stopPropagation();
-            } else {
-                $("#fueraRango_ed").hide();
-            }
-        }
-
-        console.log(horaF);
-        if (horaF == null || horaF == "") {
-            var horafinal1 = $("#horaF_ed").val();
-            splih1 = horafinal1.split(":");
-            console.log(splih1[0]);
-            console.log("nada me da");
-            $("#FinPausa_ed").val("").flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                time_24hr: true,
-                defaultHour: splih1[0],
-            });
-        } else {
-            console.log("secumple");
-            if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
-                if (horaF <= horaI) {
-                    $("#InicioPausa_ed").val("");
-                    $("#errorenPausas_ed").show();
-                    event.stopPropagation();
-                } else {
-                    $("#errorenPausas_ed").hide();
-                }
-            } else {
-                $("#errorenPausas_ed").hide();
-            }
-        }
-
-        $("#FinPausa_ed").on("focus", function () {
-            $(this).blur();
-        });
-        $("#FinPausa_ed").removeAttr("readonly");
-
-
-
-    });
-});
-
-/////////////////cambiar sch
+/* EVENTO CAMBIAR SWITCH EN ASIGNAR HORARIO A DIA EDITAR EMPLEADO  */
 $(function () {
     $(document).on('change', '#horAdicSwitch', function (event) {
         if ($('#horAdicSwitch').prop('checked')) {
@@ -6560,8 +5597,9 @@ $(function () {
 
     });
 });
+/* ------------------------------------------------- */
 
-/////////////////cambiar sch registrar
+/* EVENTO CAMBIAR SWITCH EN ASIGNAR HORARIO A DIA EDITAR EMPLEADO  */
 $(function () {
     $(document).on('change', '#horAdicSwitch_re', function (event) {
         if ($('#horAdicSwitch_re').prop('checked')) {
@@ -6574,6 +5612,8 @@ $(function () {
 
     });
 });
+/* ------------------------------------------------------------------ */
+
 (function (document, window, index) {
     var inputs = document.querySelectorAll('.inputfile');
     Array.prototype.forEach.call(inputs, function (input) {
