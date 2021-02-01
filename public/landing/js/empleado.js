@@ -156,23 +156,29 @@ function calendario() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                        html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                        ' <br> horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' +
-                        '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                        '<br>  Trabaja fuera de horario' });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                ' <br> horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>  Trabaja fuera de horario'
+                        });
                     } else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                        html: true, title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                        '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                         ' <br> Trabaja fuera de horario' });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                ' <br> Trabaja fuera de horario'
+                        });
                     }
 
                 }
                 else {
-                    $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                     html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
-                     info.event.extendedProps.horaF+'<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
+                    $(info.el).tooltip({
+                        template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                        html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' +
+                            info.event.extendedProps.horaF + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                    });
                 }
             }
 
@@ -381,60 +387,72 @@ function calendario_edit() {
         eventRender: function (info) {
             $('.tooltip').remove();
             /* CUANNDO NO ES HORARIO */
-            if (info.event.extendedProps.laborable !=1) {
+            if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                 title: info.event.title });
+                    title: info.event.title
+                });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
-                 if (info.event.extendedProps.pausas!='' ) {
-                    var cadenaPausas=[];
-                    $.each( info.event.extendedProps.pausas, function( index, value2 ){
+                if (info.event.extendedProps.pausas != '') {
+                    var cadenaPausas = [];
+                    $.each(info.event.extendedProps.pausas, function (index, value2) {
 
-                        variableResult1='   <br>   '+value2.pausH_descripcion+':  '+value2.pausH_Inicio+'-'+value2.pausH_Fin+'                                                                                          ';
+                        variableResult1 = '   <br>   ' + value2.pausH_descripcion + ':  ' + value2.pausH_Inicio + '-' + value2.pausH_Fin + '                                                                                          ';
                         cadenaPausas.push(variableResult1);
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas'+
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                               ' <br> Trabaja fuera de horario' +
-                                ' <br> Pausas programadas:    '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    ' <br> Pausas programadas:    ' + cadenaPausas
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario' +
-                              '  <br>   Pausas programadas:     '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    '  <br>   Pausas programadas:     ' + cadenaPausas
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                           html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                           '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                           '<br>   Pausas programadas:     ' +cadenaPausas });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>   Pausas programadas:     ' + cadenaPausas
+                        });
                     }
                 }
-                else{
+                else {
                     /* HORARIO CUANDO NO TIENE PAUSAS */
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                             html: true, title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                             ' <br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' +
-                             '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario'
-                              });
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    ' <br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario'
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true,title: 'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                         html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                         '<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                        });
                     }
                 }
 
@@ -534,11 +552,11 @@ function laborable_ed() {
         success: function (data) {
 
             //* si se registro
-            if(data==1){
-            calendarioedit.refetchEvents();
-            calendar2_ed.refetchEvents();
+            if (data == 1) {
+                calendarioedit.refetchEvents();
+                calendar2_ed.refetchEvents();
             }
-            else{
+            else {
 
                 //*SI NO REGISTRO
                 $.notifyClose();
@@ -604,33 +622,33 @@ function nolaborable_ed() {
         },
         success: function (data) {
             //* si se registro
-            if(data==1){
+            if (data == 1) {
                 calendarioedit.refetchEvents();
                 calendar2_ed.refetchEvents();
-                }
-                else{
+            }
+            else {
 
-                    //*SI NO REGISTRO
-                    $.notifyClose();
-                    $.notify({
-                        message: data,
-                        icon: '/landing/images/alert1.svg',
-                    }, {
-                        element: $('#form-ver'),
-                        position: "fixed",
-                        icon_type: 'image',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        delay: 6000,
-                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                            '</div>',
-                        spacing: 35
-                    });
-                }
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
 
 
         },
@@ -675,33 +693,33 @@ function modalIncidencia_ed() {
 
             $("#modalIncidencia_ed").modal("hide");
             //* si se registro
-            if(data==1){
+            if (data == 1) {
                 calendarioedit.refetchEvents();
                 calendar2_ed.refetchEvents();
-                }
-                else{
+            }
+            else {
 
-                    //*SI NO REGISTRO
-                    $.notifyClose();
-                    $.notify({
-                        message: data,
-                        icon: '/landing/images/alert1.svg',
-                    }, {
-                        element: $('#form-ver'),
-                        position: "fixed",
-                        icon_type: 'image',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        delay: 6000,
-                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                            '</div>',
-                        spacing: 35
-                    });
-                }
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
         },
         error: function (data) {
             alert("Ocurrio un error");
@@ -985,33 +1003,33 @@ function laborableTem() {
             //alert("The current date of the calendar is " + date.toISOString());
 
 
-            if(data==1){
+            if (data == 1) {
                 calendar.refetchEvents();
                 calendar2.refetchEvents();
-                }
-                else{
+            }
+            else {
 
-                    //*SI NO REGISTRO
-                    $.notifyClose();
-                    $.notify({
-                        message: data,
-                        icon: '/landing/images/alert1.svg',
-                    }, {
-                        element: $('#form-ver'),
-                        position: "fixed",
-                        icon_type: 'image',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        delay: 6000,
-                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                            '</div>',
-                        spacing: 35
-                    });
-                }
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
 
 
 
@@ -1055,33 +1073,33 @@ function diaferiadoTem() {
         },
         success: function (data) {
             $("#myModalFeriado").modal("hide");
-            if(data==1){
+            if (data == 1) {
                 calendar.refetchEvents();
                 calendar2.refetchEvents();
-                }
-                else{
+            }
+            else {
 
-                    //*SI NO REGISTRO
-                    $.notifyClose();
-                    $.notify({
-                        message: data,
-                        icon: '/landing/images/alert1.svg',
-                    }, {
-                        element: $('#form-ver'),
-                        position: "fixed",
-                        icon_type: 'image',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        delay: 6000,
-                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                            '</div>',
-                        spacing: 35
-                    });
-                }
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
 
 
         },
@@ -1127,33 +1145,33 @@ function nolaborableTem() {
             //var date = calendar1.getDate();
             //alert("The current date of the calendar is " + date.toISOString());
 
-            if(data==1){
+            if (data == 1) {
                 calendar.refetchEvents();
                 calendar2.refetchEvents();
-                }
-                else{
+            }
+            else {
 
-                    //*SI NO REGISTRO
-                    $.notifyClose();
-                    $.notify({
-                        message: data,
-                        icon: '/landing/images/alert1.svg',
-                    }, {
-                        element: $('#form-ver'),
-                        position: "fixed",
-                        icon_type: 'image',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        delay: 6000,
-                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                            '</div>',
-                        spacing: 35
-                    });
-                }
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
 
 
         },
@@ -1462,23 +1480,29 @@ function calendario2() {
             } else {
                 if (info.event.borderColor == '#5369f8') {
                     if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                        html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                        ' <br> horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' +
-                        '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                        '<br>  Trabaja fuera de horario' });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                ' <br> horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>  Trabaja fuera de horario'
+                        });
                     } else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                        html: true, title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                        '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                         ' <br> Trabaja fuera de horario' });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                ' <br> Trabaja fuera de horario'
+                        });
                     }
 
                 }
                 else {
-                    $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                     html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' +
-                     info.event.extendedProps.horaF+'<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
+                    $(info.el).tooltip({
+                        template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                        html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' +
+                            info.event.extendedProps.horaF + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                    });
                 }
             }
         },
@@ -1764,60 +1788,72 @@ function calendario3() {
         eventRender: function (info) {
             $('.tooltip').remove();
             /* CUANNDO NO ES HORARIO */
-            if (info.event.extendedProps.laborable !=1) {
+            if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                 title: info.event.title });
+                    title: info.event.title
+                });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
-                 if (info.event.extendedProps.pausas!='' ) {
-                    var cadenaPausas=[];
-                    $.each( info.event.extendedProps.pausas, function( index, value2 ){
+                if (info.event.extendedProps.pausas != '') {
+                    var cadenaPausas = [];
+                    $.each(info.event.extendedProps.pausas, function (index, value2) {
 
-                        variableResult1='   <br>   '+value2.pausH_descripcion+':  '+value2.pausH_Inicio+'-'+value2.pausH_Fin+'                                                                                          ';
+                        variableResult1 = '   <br>   ' + value2.pausH_descripcion + ':  ' + value2.pausH_Inicio + '-' + value2.pausH_Fin + '                                                                                          ';
                         cadenaPausas.push(variableResult1);
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas'+
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                               ' <br> Trabaja fuera de horario' +
-                                ' <br> Pausas programadas:    '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    ' <br> Pausas programadas:    ' + cadenaPausas
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario' +
-                              '  <br>  Pausas programadas:     '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    '  <br>  Pausas programadas:     ' + cadenaPausas
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                           html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                           '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                           '<br>    Pausas programadas:     ' +cadenaPausas });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>    Pausas programadas:     ' + cadenaPausas
+                        });
                     }
                 }
-                else{
+                else {
                     /* HORARIO CUANDO NO TIENE PAUSAS */
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                             html: true, title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                             ' <br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' +
-                             '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario'
-                              });
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    ' <br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario'
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true,title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                         html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                         '<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                        });
                     }
                 }
 
@@ -1893,60 +1929,72 @@ function calendario4() {
         eventRender: function (info) {
             $('.tooltip').remove();
             /* CUANNDO NO ES HORARIO */
-            if (info.event.extendedProps.laborable !=1) {
+            if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                 title: info.event.title });
+                    title: info.event.title
+                });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
-                 if (info.event.extendedProps.pausas!='' ) {
-                    var cadenaPausas=[];
-                    $.each( info.event.extendedProps.pausas, function( index, value2 ){
+                if (info.event.extendedProps.pausas != '') {
+                    var cadenaPausas = [];
+                    $.each(info.event.extendedProps.pausas, function (index, value2) {
 
-                        variableResult1='   <br>   '+value2.pausH_descripcion+':  '+value2.pausH_Inicio+'-'+value2.pausH_Fin+'                                                                                          ';
+                        variableResult1 = '   <br>   ' + value2.pausH_descripcion + ':  ' + value2.pausH_Inicio + '-' + value2.pausH_Fin + '                                                                                          ';
                         cadenaPausas.push(variableResult1);
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas'+
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                               ' <br> Trabaja fuera de horario' +
-                                ' <br> Pausas programadas:    '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    ' <br> Pausas programadas:    ' + cadenaPausas
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario' +
-                              '  <br>  Pausas programadas:     '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    '  <br>  Pausas programadas:     ' + cadenaPausas
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                           html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                           '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                           '<br>    Pausas programadas:     ' +cadenaPausas });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>    Pausas programadas:     ' + cadenaPausas
+                        });
                     }
                 }
-                else{
+                else {
                     /* HORARIO CUANDO NO TIENE PAUSAS */
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                             html: true, title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                             ' <br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' +
-                             '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario'
-                              });
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    ' <br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario'
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true,title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                         html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                         '<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                        });
                     }
                 }
 
@@ -2242,60 +2290,72 @@ function calendario2_ed() {
         eventRender: function (info) {
             $('.tooltip').remove();
             /* CUANNDO NO ES HORARIO */
-            if (info.event.extendedProps.laborable !=1) {
+            if (info.event.extendedProps.laborable != 1) {
                 $(info.el).tooltip({
-                 title: info.event.title });
+                    title: info.event.title
+                });
             } else {
                 /* HORARIO  CUANDO TIENE PAUSAS*/
-                 if (info.event.extendedProps.pausas!='' ) {
-                    var cadenaPausas=[];
-                    $.each( info.event.extendedProps.pausas, function( index, value2 ){
+                if (info.event.extendedProps.pausas != '') {
+                    var cadenaPausas = [];
+                    $.each(info.event.extendedProps.pausas, function (index, value2) {
 
-                        variableResult1='   <br>   '+value2.pausH_descripcion+':  '+value2.pausH_Inicio+'-'+value2.pausH_Fin+'                                                                                          ';
+                        variableResult1 = '   <br>   ' + value2.pausH_descripcion + ':  ' + value2.pausH_Inicio + '-' + value2.pausH_Fin + '                                                                                          ';
                         cadenaPausas.push(variableResult1);
                     })
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas'+
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                               ' <br> Trabaja fuera de horario' +
-                                ' <br> Pausas programadas:    '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    ' <br> Pausas programadas:    ' + cadenaPausas
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                              '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario' +
-                              '  <br>  Pausas programadas:     '+cadenaPausas});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    '  <br>  Pausas programadas:     ' + cadenaPausas
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                           html: true, title:'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                           '<br> Horas obligadas: '+info.event.extendedProps.horasObliga +
-                           '<br>   Pausas programadas:     ' +cadenaPausas });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>   Pausas programadas:     ' + cadenaPausas
+                        });
                     }
                 }
-                else{
+                else {
                     /* HORARIO CUANDO NO TIENE PAUSAS */
                     if (info.event.borderColor == '#5369f8') {
                         if (info.event.extendedProps.horaAdic == 1) {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                             html: true, title:'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                             ' <br> Horas adicionales:'+info.event.extendedProps.nHoraAdic+' horas' +
-                             '<br> Horas obligadas: '+info.event.extendedProps.horasObliga+
-                              ' <br> Trabaja fuera de horario'
-                              });
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    ' <br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario'
+                            });
                         } else {
-                            $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                              html: true,title: 'Horario '+info.event.title+' :  '+info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' +'<br> Horas obligadas: '+info.event.extendedProps.horasObliga});
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                            });
                         }
                     }
                     else {
-                        $(info.el).tooltip({template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
-                         html: true, title: 'Horario '+info.event.title+' :  '+ info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
-                         '<br> Horas obligadas: '+info.event.extendedProps.horasObliga });
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                        });
                     }
                 }
 
@@ -3528,6 +3588,7 @@ function enviarEmpleado(accion, objEmpleado) {
         success: function (data) {
             $("#idEmpleado").val(data);
             console.log(data);
+            valorCodigoEmpleado();
             $.notify(
                 {
                     message: "\nDatos Guardados.",
@@ -5085,33 +5146,33 @@ function diaferiadoRe_ed() {
         success: function (data) {
             $("#myModalFeriado_ed").modal("hide");
             //* si se registro
-            if(data==1){
+            if (data == 1) {
                 calendarioedit.refetchEvents();
                 calendar2_ed.refetchEvents();
-                }
-                else{
+            }
+            else {
 
-                    //*SI NO REGISTRO
-                    $.notifyClose();
-                    $.notify({
-                        message: data,
-                        icon: '/landing/images/alert1.svg',
-                    }, {
-                        element: $('#form-ver'),
-                        position: "fixed",
-                        icon_type: 'image',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        delay: 6000,
-                        template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#a94442;" data-notify="message">{2}</span>' +
-                            '</div>',
-                        spacing: 35
-                    });
-                }
+                //*SI NO REGISTRO
+                $.notifyClose();
+                $.notify({
+                    message: data,
+                    icon: '/landing/images/alert1.svg',
+                }, {
+                    element: $('#form-ver'),
+                    position: "fixed",
+                    icon_type: 'image',
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    delay: 6000,
+                    template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                        '</div>',
+                    spacing: 35
+                });
+            }
 
 
         },
@@ -5715,40 +5776,40 @@ function addField() {
             let horaF = $('#FinPausa_ed' + newID).val();
             let horaI = $('#InicioPausa_ed' + newID).val();
 
-            if($('#horaI_ed').val() > $('#horaF_ed').val()){
-                if( horaF<$('#horaI_ed').val() && horaF>$('#horaF_ed').val()){
+            if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
+                if (horaF < $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                     $('#FinPausa_ed' + newID).val('');
                     $('#fueraRango_ed').show();
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango_ed').hide();
-                    if (horaI >= horaF && horaF<=$('#horaI_ed').val() && horaF> $('#horaF_ed').val() ) {
+                    if (horaI >= horaF && horaF <= $('#horaI_ed').val() && horaF > $('#horaF_ed').val()) {
                         $('#errorenPausas_ed').show();
                         $('#FinPausa_ed' + newID).val('');
                     }
-                    else{
+                    else {
                         $('#errorenPausas_ed').hide();
                     }
-                 }
+                }
 
-                 if (horaI > horaF) {
-                   /*  $('#FinPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation(); */
+                if (horaI > horaF) {
+                    /*  $('#FinPausa').val('');
+                     $('#errorenPausas').show();
+                     event.stopPropagation(); */
                 } else {
                     $('#errorenPausas_ed').hide();
                 }
-            } else{
-                if(horaF<$('#horaI_ed').val() ||horaF>$('#horaF_ed').val() ){
-                $('#FinPausa_ed' + newID).val('');
-                $('#fueraRango_ed').show();
-                event.stopPropagation();
-             } else{
-                $('#fueraRango_ed').hide();
-             }
+            } else {
+                if (horaF < $('#horaI_ed').val() || horaF > $('#horaF_ed').val()) {
+                    $('#FinPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango_ed').hide();
+                }
 
                 if (horaF <= horaI) {
-                    $('#FinPausa_ed'+ newID).val('');
+                    $('#FinPausa_ed' + newID).val('');
                     $('#errorenPausas_ed').show();
                     event.stopPropagation();
                 } else {
@@ -5766,45 +5827,44 @@ function addField() {
             let horaF = $('#FinPausa_ed' + newID).val();
             let horaI = $('#InicioPausa_ed' + newID).val();
             $('#FinPausa_ed' + newID).prop("disabled", false);
-            if($('#horaI_ed').val() > $('#horaF_ed').val()){
+            if ($('#horaI_ed').val() > $('#horaF_ed').val()) {
 
-                if( horaI<$('#horaI_ed').val() && horaI>$('#horaF_ed').val()){
-                console.log('moostrando fuera rango 11/11');
-                $('#InicioPausa_ed'+ newID).val('');
+                if (horaI < $('#horaI_ed').val() && horaI > $('#horaF_ed').val()) {
+                    console.log('moostrando fuera rango 11/11');
+                    $('#InicioPausa_ed' + newID).val('');
                     $('#fueraRango_ed').show();
 
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango_ed').hide();
-                 }
+                }
 
-            } else{
-                if(horaI<$('#horaI_ed').val() ||horaI>$('#horaF_ed').val() ){
-
-                    $('#InicioPausa_ed'+ newID).val('');
-                    $('#fueraRango_ed').show();
-                    event.stopPropagation();
-                 } else{
-                    $('#fueraRango_ed').hide();
-                 }
-            }
-
-
-            if(horaF==null || horaF==''){
-
-            } else{
-                if($('#horaI_ed').val() < $('#horaF_ed').val()){
-            if (horaF <= horaI) {
-                $('#InicioPausa_ed'+ newID).val('');
-                $('#errorenPausas_ed').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas_ed').hide();
+                if (horaI < $('#horaI_ed').val() || horaI > $('#horaF_ed').val()) {
+
+                    $('#InicioPausa_ed' + newID).val('');
+                    $('#fueraRango_ed').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango_ed').hide();
+                }
             }
-            } else
-            {
-            $('#errorenPausas_ed').hide();
-            }
+
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if ($('#horaI_ed').val() < $('#horaF_ed').val()) {
+                    if (horaF <= horaI) {
+                        $('#InicioPausa_ed' + newID).val('');
+                        $('#errorenPausas_ed').show();
+                        event.stopPropagation();
+                    } else {
+                        $('#errorenPausas_ed').hide();
+                    }
+                } else {
+                    $('#errorenPausas_ed').hide();
+                }
             }
 
         });
@@ -5902,40 +5962,40 @@ function addFieldRe() {
             let horaI = $('#InicioPausa' + newID).val();
 
 
-            if($('#horaI').val() > $('#horaF').val()){
-                if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+            if ($('#horaI').val() > $('#horaF').val()) {
+                if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#FinPausa' + newID).val('');
                     $('#fueraRango').show();
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango').hide();
-                    if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                    if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                         $('#errorenPausas').show();
                         $('#FinPausa' + newID).val('');
                     }
-                    else{
+                    else {
                         $('#errorenPausas').hide();
                     }
-                 }
+                }
 
-                 if (horaI > horaF) {
-                   /*  $('#FinPausa').val('');
-                    $('#errorenPausas').show();
-                    event.stopPropagation(); */
+                if (horaI > horaF) {
+                    /*  $('#FinPausa').val('');
+                     $('#errorenPausas').show();
+                     event.stopPropagation(); */
                 } else {
                     $('#errorenPausas').hide();
                 }
-            } else{
-                if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
-                $('#FinPausa' + newID).val('');
-                $('#fueraRango').show();
-                event.stopPropagation();
-             } else{
-                $('#fueraRango').hide();
-             }
+            } else {
+                if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+                    $('#FinPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                }
 
                 if (horaF <= horaI) {
-                    $('#FinPausa'+ newID).val('');
+                    $('#FinPausa' + newID).val('');
                     $('#errorenPausas').show();
                     event.stopPropagation();
                 } else {
@@ -5954,46 +6014,45 @@ function addFieldRe() {
             let horaI = $('#InicioPausa' + newID).val();
             $('#FinPausa' + newID).prop("disabled", false);
 
-            if($('#horaI').val() > $('#horaF').val()){
+            if ($('#horaI').val() > $('#horaF').val()) {
 
-                if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
-                console.log('moostrando fuera rango 11/11');
-                $('#InicioPausa'+ newID).val('');
+                if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
+                    console.log('moostrando fuera rango 11/11');
+                    $('#InicioPausa' + newID).val('');
                     $('#fueraRango').show();
 
                     event.stopPropagation();
-                 } else{
+                } else {
                     $('#fueraRango').hide();
-                 }
+                }
 
-            } else{
-                if(horaI<$('#horaI').val() ||horaI>$('#horaF').val() ){
-
-                    $('#InicioPausa'+ newID).val('');
-                    $('#fueraRango').show();
-                    event.stopPropagation();
-                 } else{
-                    $('#fueraRango').hide();
-                 }
-            }
-
-
-            if(horaF==null || horaF==''){
-
-            } else{
-                if($('#horaI').val() < $('#horaF').val()){
-            if (horaF <= horaI) {
-                $('#InicioPausa'+ newID).val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
             } else {
-                $('#errorenPausas').hide();
+                if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
+
+                    $('#InicioPausa' + newID).val('');
+                    $('#fueraRango').show();
+                    event.stopPropagation();
+                } else {
+                    $('#fueraRango').hide();
+                }
             }
-        } else
-        {
-            $('#errorenPausas').hide();
-        }
-        }
+
+
+            if (horaF == null || horaF == '') {
+
+            } else {
+                if ($('#horaI').val() < $('#horaF').val()) {
+                    if (horaF <= horaI) {
+                        $('#InicioPausa' + newID).val('');
+                        $('#errorenPausas').show();
+                        event.stopPropagation();
+                    } else {
+                        $('#errorenPausas').hide();
+                    }
+                } else {
+                    $('#errorenPausas').hide();
+                }
+            }
         });
     });
 
@@ -6261,46 +6320,46 @@ $(function () {
     $(document).on('change', '#FinPausa', function (event) {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
-        if($('#horaI').val() > $('#horaF').val()){
-            if( horaF<$('#horaI').val() && horaF>$('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
+            if (horaF < $('#horaI').val() && horaF > $('#horaF').val()) {
                 $('#FinPausa').val('');
                 $('#fueraRango').show();
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-                if (horaI >= horaF && horaF<=$('#horaI').val() && horaF> $('#horaF').val() ) {
+                if (horaI >= horaF && horaF <= $('#horaI').val() && horaF > $('#horaF').val()) {
                     $('#errorenPausas').show();
                     $('#FinPausa').val('');
                 }
-                else{
+                else {
                     $('#errorenPausas').hide();
                 }
 
-             }
+            }
 
-             if (horaI > horaF) {
-               /*  $('#FinPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation(); */
+            if (horaI > horaF) {
+                /*  $('#FinPausa').val('');
+                 $('#errorenPausas').show();
+                 event.stopPropagation(); */
             } else {
                 $('#errorenPausas').hide();
             }
         }
-        else{
-           if(horaF<$('#horaI').val() ||horaF>$('#horaF').val() ){
-            $('#FinPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
-         if (horaF <= horaI) {
-            $('#FinPausa').val('');
-            $('#errorenPausas').show();
-            event.stopPropagation();
-        } else {
-            $('#errorenPausas').hide();
-        }
+        else {
+            if (horaF < $('#horaI').val() || horaF > $('#horaF').val()) {
+                $('#FinPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
+            if (horaF <= horaI) {
+                $('#FinPausa').val('');
+                $('#errorenPausas').show();
+                event.stopPropagation();
+            } else {
+                $('#errorenPausas').hide();
+            }
         }
 
     });
@@ -6310,34 +6369,33 @@ $(function () {
         let horaF = $('#FinPausa').val();
         let horaI = $('#InicioPausa').val();
         $('#FinPausa').prop("disabled", false);
-        if($('#horaI').val() > $('#horaF').val()){
+        if ($('#horaI').val() > $('#horaF').val()) {
 
-            if( horaI<$('#horaI').val() && horaI>$('#horaF').val()){
-            console.log('moostrando fuera rango 11/11');
+            if (horaI < $('#horaI').val() && horaI > $('#horaF').val()) {
+                console.log('moostrando fuera rango 11/11');
                 $('#InicioPausa').val('');
                 $('#fueraRango').show();
 
                 event.stopPropagation();
-             } else{
+            } else {
                 $('#fueraRango').hide();
-             }
+            }
 
-        } else
-        {
-            if(horaI<$('#horaI').val() || horaI>$('#horaF').val() ){
+        } else {
+            if (horaI < $('#horaI').val() || horaI > $('#horaF').val()) {
 
-            $('#InicioPausa').val('');
-            $('#fueraRango').show();
-            event.stopPropagation();
-         } else{
-            $('#fueraRango').hide();
-         }
+                $('#InicioPausa').val('');
+                $('#fueraRango').show();
+                event.stopPropagation();
+            } else {
+                $('#fueraRango').hide();
+            }
         }
 
-         console.log(horaF);
-         if(horaF==null || horaF==''){
-            var horafinal1=$('#horaF').val();
-            splih1=horafinal1.split(":");
+        console.log(horaF);
+        if (horaF == null || horaF == '') {
+            var horafinal1 = $('#horaF').val();
+            splih1 = horafinal1.split(":");
             console.log(splih1[0]);
             console.log('nada me da');
             $('#FinPausa').val('').flatpickr({
@@ -6345,27 +6403,26 @@ $(function () {
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
-                defaultHour:splih1[0]
+                defaultHour: splih1[0]
             });
 
-         }
-         else{
+        }
+        else {
             console.log('secumple');
-            if($('#horaI').val() < $('#horaF').val()){
-            if (horaF <= horaI) {
-                $('#InicioPausa').val('');
-                $('#errorenPausas').show();
-                event.stopPropagation();
+            if ($('#horaI').val() < $('#horaF').val()) {
+                if (horaF <= horaI) {
+                    $('#InicioPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation();
+                } else {
+                    $('#errorenPausas').hide();
+                }
             } else {
                 $('#errorenPausas').hide();
             }
-        } else
-        {
-            $('#errorenPausas').hide();
         }
-         }
 
-         $('#FinPausa').on('focus', function () {
+        $('#FinPausa').on('focus', function () {
             $(this).blur();
         })
         $('#FinPausa').removeAttr("readonly");
@@ -6381,46 +6438,46 @@ $(function () {
 
         if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
             if (horaF < $("#horaI_ed").val() && horaF > $("#horaF_ed").val()) {
-              $("#FinPausa_ed").val("");
-              $("#fueraRango_ed").show();
-              event.stopPropagation();
-            } else {
-              $("#fueraRango_ed").hide();
-              if (
-                horaI >= horaF &&
-                horaF <= $("#horaI_ed").val() &&
-                horaF > $("#horaF_ed").val()
-              ) {
-                $("#errorenPausas_ed").show();
                 $("#FinPausa_ed").val("");
-              } else {
-                $("#errorenPausas_ed").hide();
-              }
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
+            } else {
+                $("#fueraRango_ed").hide();
+                if (
+                    horaI >= horaF &&
+                    horaF <= $("#horaI_ed").val() &&
+                    horaF > $("#horaF_ed").val()
+                ) {
+                    $("#errorenPausas_ed").show();
+                    $("#FinPausa_ed").val("");
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             }
 
             if (horaI > horaF) {
-              /*  $('#FinPausa').val('');
-                  $('#errorenPausas').show();
-                  event.stopPropagation(); */
+                /*  $('#FinPausa').val('');
+                    $('#errorenPausas').show();
+                    event.stopPropagation(); */
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#errorenPausas_ed").hide();
             }
-          } else {
+        } else {
             if (horaF < $("#horaI_ed").val() || horaF > $("#horaF_ed").val()) {
-              $("#FinPausa_ed").val("");
-              $("#fueraRango_ed").show();
-              event.stopPropagation();
+                $("#FinPausa_ed").val("");
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
             } else {
-              $("#fueraRango_ed").hide();
+                $("#fueraRango_ed").hide();
             }
             if (horaF <= horaI) {
-              $("#FinPausa_ed").val("");
-              $("#errorenPausas_ed").show();
-              event.stopPropagation();
+                $("#FinPausa_ed").val("");
+                $("#errorenPausas_ed").show();
+                event.stopPropagation();
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#errorenPausas_ed").hide();
             }
-          }
+        }
 
 
     });
@@ -6432,56 +6489,56 @@ $(function () {
         $('#FinPausa_ed').prop("disabled", false);
         if ($("#horaI_ed").val() > $("#horaF_ed").val()) {
             if (horaI < $("#horaI_ed").val() && horaI > $("#horaF_ed").val()) {
-              console.log("moostrando fuera rango 11/11");
-              $("#InicioPausa_ed").val("");
-              $("#fueraRango_ed").show();
+                console.log("moostrando fuera rango 11/11");
+                $("#InicioPausa_ed").val("");
+                $("#fueraRango_ed").show();
 
-              event.stopPropagation();
+                event.stopPropagation();
             } else {
-              $("#fueraRango_ed").hide();
+                $("#fueraRango_ed").hide();
             }
-          } else {
+        } else {
             if (horaI < $("#horaI_ed").val() || horaI > $("#horaF_ed").val()) {
-              $("#InicioPausa_ed").val("");
-              $("#fueraRango_ed").show();
-              event.stopPropagation();
+                $("#InicioPausa_ed").val("");
+                $("#fueraRango_ed").show();
+                event.stopPropagation();
             } else {
-              $("#fueraRango_ed").hide();
+                $("#fueraRango_ed").hide();
             }
-          }
+        }
 
-          console.log(horaF);
-          if (horaF == null || horaF == "") {
+        console.log(horaF);
+        if (horaF == null || horaF == "") {
             var horafinal1 = $("#horaF_ed").val();
             splih1 = horafinal1.split(":");
             console.log(splih1[0]);
             console.log("nada me da");
             $("#FinPausa_ed").val("").flatpickr({
-              enableTime: true,
-              noCalendar: true,
-              dateFormat: "H:i",
-              time_24hr: true,
-              defaultHour: splih1[0],
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour: splih1[0],
             });
-          } else {
+        } else {
             console.log("secumple");
             if ($("#horaI_ed").val() < $("#horaF_ed").val()) {
-              if (horaF <= horaI) {
-                $("#InicioPausa_ed").val("");
-                $("#errorenPausas_ed").show();
-                event.stopPropagation();
-              } else {
-                $("#errorenPausas_ed").hide();
-              }
+                if (horaF <= horaI) {
+                    $("#InicioPausa_ed").val("");
+                    $("#errorenPausas_ed").show();
+                    event.stopPropagation();
+                } else {
+                    $("#errorenPausas_ed").hide();
+                }
             } else {
-              $("#errorenPausas_ed").hide();
+                $("#errorenPausas_ed").hide();
             }
-          }
+        }
 
-          $("#FinPausa_ed").on("focus", function () {
+        $("#FinPausa_ed").on("focus", function () {
             $(this).blur();
-          });
-          $("#FinPausa_ed").removeAttr("readonly");
+        });
+        $("#FinPausa_ed").removeAttr("readonly");
 
 
 
@@ -6539,12 +6596,12 @@ $(function () {
 
 
 /*----------- VALIDACION SOLO LETRA NO ACEPTAR NUMEROS------------------------- */
-$(".soloLetras").bind('keypress', function(event) {
+$(".soloLetras").bind('keypress', function (event) {
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
     if (!regex.test(key)) {
-      event.preventDefault();
-      return false;
+        event.preventDefault();
+        return false;
     }
-  });
+});
 /*  -----------------------------FIN VALIDACION----------------------------------*/

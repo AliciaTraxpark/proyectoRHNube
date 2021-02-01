@@ -3583,8 +3583,7 @@ use App\proyecto_empleado;
                                         <div class="form-group">
                                             <label for="sw-default">Codigo Empleado</label>
                                             <input type="text" class="form-control" name="codigoEmpleado"
-                                                id="codigoEmpleado" tabindex="1"
-                                                onfocus="javascript:valorCodigoEmpleado()" data-toggle="tooltip"
+                                                id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
                                                 data-placement="right" maxlength="200"
                                                 title="Número de documento por defecto o Ingrese un código interno"
                                                 data-original-title="Número de documento por defecto o Ingrese un código interno">

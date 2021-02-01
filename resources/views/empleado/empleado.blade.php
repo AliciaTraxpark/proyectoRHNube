@@ -46,10 +46,11 @@ use Carbon\Carbon;
         .form-control:disabled {
             background-color: #f1f0f0;
         }
+
         .large.tooltip-inner {
-    max-width: 185px;
-    width: 185px;
-    }
+            max-width: 185px;
+            width: 185px;
+        }
     </style>
 
 
@@ -772,9 +773,7 @@ use Carbon\Carbon;
         /*   .flatpickr-calendar {
         max-width: 130px!important;
     } */
-        .container {
-
-        }
+        .container {}
 
         tr:first-child>td>.fc-day-grid-event {
             margin-top: 0px;
@@ -993,29 +992,32 @@ use Carbon\Carbon;
         .inputfile-1+label:hover {
             background-color: #e3eaef !important;
         }
-        @media (max-width: 767px){
+
+        @media (max-width: 767px) {
             .colResp {
                 justify-content: center !important;
                 padding: 10px 0px !important;
             }
         }
-        .radio_rsp{
+
+        .radio_rsp {
             padding: 0 10%;
         }
 
         @media (max-width: 447px) {
-            .radio_rsp{
+            .radio_rsp {
                 padding: 0 0 !important;
             }
         }
 
-        @media (max-width: 799px) and (min-width: 447px){
-            .radio_rsp{
+        @media (max-width: 799px) and (min-width: 447px) {
+            .radio_rsp {
                 padding: 0 5% !important;
             }
         }
-        @media(min-width: 386px) and (max-width: 487px){
-            .th_rh{
+
+        @media(min-width: 386px) and (max-width: 487px) {
+            .th_rh {
                 padding: 0 35px !important;
             }
         }
@@ -1025,21 +1027,24 @@ use Carbon\Carbon;
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="col-sm-3 col-md-2 col-xl-2 logo_rh">
                 <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                    <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class="" height="69"></a>
+                    <a href="{{ route('principal') }}"><img src="{{asset('landing/images/NUBE_SOLA.png')}}" class=""
+                            height="69"></a>
                 </div>
             </div>
             <div class="col-sm-6 col-md-6 col-xl-6 text-center">
-                <h5  style="color: #ffffff">Gestión de empleados</h5>
+                <h5 style="color: #ffffff">Gestión de empleados</h5>
                 <p for="" class="blanco">Tienes 2 minutos para registrar tu primer empleado</p>
             </div>
 
             <div class="col-sm-3 col-md-4 col-xl-4 text-center">
                 <a href="{{('/empleado/cargar')}}">
-                    <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c; margin-bottom: 2px;">
+                    <button class="btn btn-sm btn-primary"
+                        style="background-color: #183b5d;border-color:#62778c; margin-bottom: 2px;">
                         <img src="{{asset('admin/images/subir.ico')}}" height="25" class="">Carga masiva emp.
                     </button>
                 </a>
-                <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c" id="cargaMasivaF">
+                <button class="btn btn-sm btn-primary" style="background-color: #183b5d;border-color:#62778c"
+                    id="cargaMasivaF">
                     <img src="{{asset('admin/images/image.ico')}}" height="25" class="">Carga masiva fotos
                 </button>
             </div>
@@ -1982,23 +1987,29 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
+                                                contrato</strong></label>
                                         <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha" required="">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
+                                                gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha"
+                                                required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++)
-                                                <option class="" value="{{$i}}"> {{ $i }} </option>
-                                            @endfor
+                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
+                                                    </option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');" class="btn btn-sm btn-light" data-dismiss="modal">
+                                <button type="button"
+                                    onclick="javascript:limpiarNuevosDatosAlta();$('#form-registrar').modal('show');"
+                                    class="btn btn-sm btn-light" data-dismiss="modal">
                                     Cerrar
                                 </button>
-                                <button type="submit" class="btn btn-sm" style="background-color:#163552;" id="reg_guardarAlta">Guardar</button>
+                                <button type="submit" class="btn btn-sm" style="background-color:#163552;"
+                                    id="reg_guardarAlta">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -2210,14 +2221,17 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
+                                                contrato</strong></label>
                                         <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
+                                                gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha_ver"
+                                                id="noti_dia_fecha_ver" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++)
-                                                <option class="" value="{{$i}}"> {{ $i }} </option>
-                                            @endfor
+                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
+                                                    </option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2227,7 +2241,8 @@ use Carbon\Carbon;
                                     class="btn btn-sm btn-light" data-dismiss="modal">
                                     Cerrar
                                 </button>
-                                <button type="submit" class="btn btn-sm" id="reg_guardarAlta_editar" style="background-color:#163552;">
+                                <button type="submit" class="btn btn-sm" id="reg_guardarAlta_editar"
+                                    style="background-color:#163552;">
                                     Guardar
                                 </button>
                             </div>
@@ -2773,14 +2788,17 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
+                                                contrato</strong></label>
                                         <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
+                                                gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha_editar"
+                                                id="noti_dia_fecha_editar" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++)
-                                                <option class="" value="{{$i}}"> {{ $i }} </option>
-                                            @endfor
+                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
+                                                    </option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2788,7 +2806,8 @@ use Carbon\Carbon;
                             <div class="modal-footer">
                                 <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
                                     class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-sm" id="edit_guardarAlta" style="background-color:#163552;">Guardar</button>
+                                <button type="submit" class="btn btn-sm" id="edit_guardarAlta"
+                                    style="background-color:#163552;">Guardar</button>
                             </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -2999,14 +3018,17 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
+                                                contrato</strong></label>
                                         <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
+                                                gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha_alta"
+                                                id="noti_dia_fecha_alta" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++)
-                                                <option class="" value="{{$i}}"> {{ $i }} </option>
-                                            @endfor
+                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
+                                                    </option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -3394,14 +3416,17 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
+                                                contrato</strong></label>
                                         <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha" required="">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
+                                                gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="ver_noti_dia_fecha"
+                                                id="ver_noti_dia_fecha" required="">
                                                 <option value="0">Día</option>
-                                            @for ($i = 30; $i <61; $i++)
-                                                <option class="" value="{{$i}}"> {{ $i }} </option>
-                                            @endfor
+                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
+                                                    </option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -3473,18 +3498,21 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Núm. Documento</label>
-                                                    <span id="validNumDocumento" style="color: red;">*Campo Obligatorio</span>
+                                                    <span id="validNumDocumento" style="color: red;">*Campo
+                                                        Obligatorio</span>
                                                     <span id="numR" style="color: red;">*Núm. registrado</span>
-                                                    <input type="text" class="form-control" name="numDocumento" id="numDocumento" onkeypress="return isNumeric(event)"
+                                                    <input type="text" class="form-control" name="numDocumento"
+                                                        id="numDocumento" onkeypress="return isNumeric(event)"
                                                         oninput="maxLengthCheck(this)" tabindex="2" required>
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Fecha Nacimiento</label>
-                                                    <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                                    <span id="validFechaC" style="color: red;display: none;">*Fecha
+                                                        incorrecta.</span>
                                                     <div class="row fechasResponsive">
                                                         <div class="col-4 prigth">
-                                                            <select class="form-control" name="dia_fecha"
-                                                                id="dia_fecha" required="">
+                                                            <select class="form-control" name="dia_fecha" id="dia_fecha"
+                                                                required="">
                                                                 <option value="0">Día</option>
                                                                 @for ($i = 1; $i <32; $i++) <option class=""
                                                                     value="{{$i}}">
@@ -3493,8 +3521,8 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-4 prigth pleft">
-                                                            <select class="form-control" name="mes_fecha"
-                                                                id="mes_fecha" required="">
+                                                            <select class="form-control" name="mes_fecha" id="mes_fecha"
+                                                                required="">
                                                                 <option value="0">Mes</option>
                                                                 <option class="" value="1">Ene.</option>
                                                                 <option class="" value="2">Feb.</option>
@@ -3511,11 +3539,13 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-4 pAnio pleft">
-                                                            <select class="form-control" style="padding-left: 5px; padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
+                                                            <select class="form-control"
+                                                                style="padding-left: 5px; padding-right: 5px;"
+                                                                name="ano_fecha" id="ano_fecha" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i <2011; $i++)
-                                                                    <option class="" value="{{$i}}"> {{$i}} </option>
-                                                                @endfor
+                                                                @for ($i = 1950; $i <2011; $i++) <option class=""
+                                                                    value="{{$i}}"> {{$i}} </option>
+                                                                    @endfor
                                                             </select>
 
                                                         </div>
@@ -3523,24 +3553,31 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Apellido Paterno</label>
-                                                    <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control soloLetras" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                                    <span id="validApPaterno" style="color: red;">*Campo
+                                                        Obligatorio</span>
+                                                    <input type="text" class="form-control soloLetras" name="apPaterno"
+                                                        id="apPaterno" tabindex="4" required>
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Apellido Materno</label>
-                                                    <span id="validApMaterno" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control soloLetras" name="apMaterno" id="apMaterno" tabindex="5" required>
+                                                    <span id="validApMaterno" style="color: red;">*Campo
+                                                        Obligatorio</span>
+                                                    <input type="text" class="form-control soloLetras" name="apMaterno"
+                                                        id="apMaterno" tabindex="5" required>
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Nombres</label>
-                                                    <span id="validNombres" style="color: red;">*Campo Obligatorio</span>
-                                                    <input type="text" class="form-control soloLetras" name="nombres" id="nombres" tabindex="6" required>
+                                                    <span id="validNombres" style="color: red;">*Campo
+                                                        Obligatorio</span>
+                                                    <input type="text" class="form-control soloLetras" name="nombres"
+                                                        id="nombres" tabindex="6" required>
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
-                                                     <label for="sw-default">Correo Electrónico</label>
+                                                    <label for="sw-default">Correo Electrónico</label>
                                                     <span id="validCorreo" style="color: red;">*Campo Obligatorio</span>
                                                     <span id="emailR" style="color: red;">*Correo registrado</span>
-                                                    <input type="email" class="form-control" id="email" name="email" tabindex="7">
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        tabindex="7">
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Celular</label>
@@ -3552,8 +3589,11 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-8">
-                                                            <input type="number" class="form-control" name="celular" id="celular" tabindex="8" maxlength="9"
-                                                                onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" pattern="/^9{1}|[0-9]{8,8}+">
+                                                            <input type="number" class="form-control" name="celular"
+                                                                id="celular" tabindex="8" maxlength="9"
+                                                                onkeypress="return isNumeric(event)"
+                                                                oninput="maxLengthCheck(this)"
+                                                                pattern="/^9{1}|[0-9]{8,8}+">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3589,9 +3629,9 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-8">
-                                                            <input type="number" class="form-control"
-                                                                name="telefono" id="telefono" tabindex="9"
-                                                                maxlength="9" onkeypress="return isNumeric(event)"
+                                                            <input type="number" class="form-control" name="telefono"
+                                                                id="telefono" tabindex="9" maxlength="9"
+                                                                onkeypress="return isNumeric(event)"
                                                                 oninput="maxLengthCheck(this)">
                                                         </div>
                                                     </div>
@@ -3599,7 +3639,8 @@ use Carbon\Carbon;
 
                                                 <div class="col-12 mb-2">
                                                     <label for="sw-default">Dirección</label>
-                                                    <input type="text" class="form-control" name="direccion" id="direccion" tabindex="10" required>
+                                                    <input type="text" class="form-control" name="direccion"
+                                                        id="direccion" tabindex="10" required>
                                                 </div>
 
                                                 <div class="col-sm-4 mb-2">
@@ -3615,7 +3656,8 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
-                                                    <select class="form-control " placeholder="Provincia " name="provincia" id="prov" tabindex="12" required>
+                                                    <select class="form-control " placeholder="Provincia "
+                                                        name="provincia" id="prov" tabindex="12" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
@@ -3628,7 +3670,8 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default">Lugar Nacimiento</label>
-                                                    <select class="form-control" placeholder="Departamento" name="departamento" id="departamento" tabindex="14" required>
+                                                    <select class="form-control" placeholder="Departamento"
+                                                        name="departamento" id="departamento" tabindex="14" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
                                                         <option class="" value="{{ $departamentos->id }}">
@@ -3638,13 +3681,15 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
-                                                    <select class="form-control " placeholder="Provincia " name="provincia" id="provincia" tabindex="15" required>
+                                                    <select class="form-control " placeholder="Provincia "
+                                                        name="provincia" id="provincia" tabindex="15" required>
                                                         <option value="">Provincia</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4 mb-2">
                                                     <label for="sw-default"><br></label>
-                                                    <select class="form-control " placeholder="Distrito " name="distrito" id="distrito" tabindex="16" required>
+                                                    <select class="form-control " placeholder="Distrito "
+                                                        name="distrito" id="distrito" tabindex="16" required>
                                                         <option value="">Distrito</option>
                                                     </select>
                                                 </div>
@@ -3655,18 +3700,23 @@ use Carbon\Carbon;
                                                     <div class="row">
                                                         <div class="radio_rsp">
                                                             <label class="custom-control custom-radio">
-                                                                <input type="radio" name="tipo" id="tipo" value="Femenino" required> Femenino
+                                                                <input type="radio" name="tipo" id="tipo"
+                                                                    value="Femenino" required> Femenino
                                                             </label>
                                                         </div>
                                                         <div class="radio_rsp">
                                                             <label class="custom-control custom-radio">
-                                                                <input type="radio" name="tipo" id="tipo" value="Masculino" required>
+                                                                <input type="radio" name="tipo" id="tipo"
+                                                                    value="Masculino" required>
                                                                 Masculino
                                                             </label>
                                                         </div>
                                                         <div class="radio_rsp">
-                                                            <label class="custom-control custom-radio" data-toggle="tooltip" data-placement="right" title="" data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
-                                                                <input type="radio" name="tipo" id="tipo" value="Personalizado" required> Personalizado
+                                                            <label class="custom-control custom-radio"
+                                                                data-toggle="tooltip" data-placement="right" title=""
+                                                                data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
+                                                                <input type="radio" name="tipo" id="tipo"
+                                                                    value="Personalizado" required> Personalizado
                                                             </label>
                                                         </div>
                                                     </div>
@@ -3706,9 +3756,8 @@ use Carbon\Carbon;
                                                     <div class="form-group">
                                                         <label for="sw-default">Codigo Empleado</label>
                                                         <input type="text" class="form-control" name="codigoEmpleado"
-                                                            id="codigoEmpleado" tabindex="1"
-                                                            onfocus="javascript:valorCodigoEmpleado()"
-                                                            data-toggle="tooltip" data-placement="right" maxlength="200"
+                                                            id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
+                                                            data-placement="right" maxlength="200"
                                                             title="Número de documento por defecto o Ingrese un código interno"
                                                             data-original-title="Número de documento por defecto o Ingrese un código interno">
                                                     </div>
@@ -3791,7 +3840,10 @@ use Carbon\Carbon;
                                                 </div>
                                                 {{-- BOTON DE NUEVA ALTA --}}
                                                 <div class="col-xl-2 text-left">
-                                                    <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;" onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()" id="btnAgregarContrato">
+                                                    <button type="button" class="btn btn-sm mt-1"
+                                                        style="background-color: #383e56;"
+                                                        onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()"
+                                                        id="btnAgregarContrato">
                                                         + Nueva alta
                                                     </button>
                                                 </div>
@@ -3982,7 +4034,8 @@ use Carbon\Carbon;
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                                         height="20"> Incidencia</button>
                                                                         --}}
-                                                                        <button style=" width: 20em!important; height: 43px !important;"
+                                                                        <button
+                                                                            style=" width: 20em!important; height: 43px !important;"
                                                                             class="btn btn-secondary btn-sm"
                                                                             onclick="agregarinciden()"><img
                                                                                 src="{{ asset('admin/images/calendarioInc.svg') }}"
@@ -4041,8 +4094,11 @@ use Carbon\Carbon;
                                                             <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-12 text-right">
-                                                                        <button type="button" class="btn btn-light btn-sm" onclick="$('#myModalFeriado').modal('hide');">Cancelar</button>
-                                                                        <button type="submit" class="btn btn-secondary btn-sm">Aceptar</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-light btn-sm"
+                                                                            onclick="$('#myModalFeriado').modal('hide');">Cancelar</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-secondary btn-sm">Aceptar</button>
                                                                         </form>
 
                                                                     </div>
@@ -4083,7 +4139,8 @@ use Carbon\Carbon;
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <span id="errorSel_re"
-                                                                        style="color: #8b3a1e;display:none">Seleccione un horario</span>
+                                                                        style="color: #8b3a1e;display:none">Seleccione
+                                                                        un horario</span>
                                                                     <select data-plugin="customselect"
                                                                         class="form-control custom-select custom-select-sm"
                                                                         name="selectHorario" id="selectHorario">
@@ -4610,7 +4667,8 @@ use Carbon\Carbon;
                                                                                 <th>Nombre</th>
                                                                                 <th>Codigo</th>
                                                                                 <th>Número</th>
-                                                                                <th class="text-center" width="100px">Actividad (%)</th>
+                                                                                <th class="text-center" width="100px">
+                                                                                    Actividad (%)</th>
                                                                                 <th>Enviado</th>
                                                                                 <th>Estado</th>
                                                                                 <th></th>
@@ -6531,13 +6589,16 @@ use Carbon\Carbon;
     </div>
     </div>
     </div>
-    <footer class="border-top" style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">
-        <div class="col-md-12 text-center" style="margin-top: 10px; border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
+    <footer class="border-top"
+        style="background:#163552; position: fixed; width: 100%; display: block; bottom: 0; margin-top: 10px">
+        <div class="col-md-12 text-center"
+            style="margin-top: 10px; border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
             <span style="color: #faf3f3;font-size: 12px!important">
                 © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
             </span>
             <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
-            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 | info@rhnube.com.pe</span>
+            <span style="color: #faf3f3;font-size: 12px!important">Central Perú: 017482415 | +51 914480786 |
+                info@rhnube.com.pe</span>
         </div>
     </footer>
     <script>
