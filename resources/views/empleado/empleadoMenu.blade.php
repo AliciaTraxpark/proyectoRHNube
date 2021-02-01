@@ -1914,12 +1914,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
-                            <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                    se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha"
-                                    required="">
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato1</strong></label>
+                            <div class="row w-100 alertVencimiento">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
                                         @endfor
@@ -2136,12 +2134,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
-                            <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                    se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver"
-                                    required="">
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100 alertVencimiento">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
                                         @endfor
@@ -2664,12 +2660,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
-                            <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                    se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha_editar"
-                                    id="noti_dia_fecha_editar" required="">
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100 alertVencimiento">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
                                         @endfor
@@ -2881,12 +2875,10 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
-                            <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                    se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta"
-                                    required="">
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100 alertVencimiento">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
                                         @endfor
@@ -3256,10 +3248,9 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                             </div>
-                            <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
-                            <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
-                                    se le notifique?</label>
+                            <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                            <div class="row w-100 alertVencimiento">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
                                 <select class="form-control col-3" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                     <option value="0">Día</option>
                                     @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
@@ -3488,14 +3479,14 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="sw-default" class="label_select"><br></label>
+                                        <label for="sw-default" class="label_select label_txt"><br></label>
                                         <select class="form-control " placeholder="Provincia " name="provincia"
                                             id="prov" tabindex="12" required>
                                             <option value="">Provincia</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="sw-default" class="label_select"><br></label>
+                                        <label for="sw-default" class="label_select label_txt"><br></label>
                                         <select class="form-control " placeholder="Distrito " name="distrito" id="dist"
                                             tabindex="13" required>
                                             <option value="">Distrito</option>
@@ -3513,14 +3504,14 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="sw-default" class="label_select"><br></label>
+                                        <label for="sw-default" class="label_select label_txt"><br></label>
                                         <select class="form-control " placeholder="Provincia " name="provincia"
                                             id="provincia" tabindex="15" required>
                                             <option value="">Provincia</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="sw-default" class="label_select"><br></label>
+                                        <label for="sw-default" class="label_select label_txt"><br></label>
                                         <select class="form-control " placeholder="Distrito " name="distrito"
                                             id="distrito" tabindex="16" required>
                                             <option value="">Distrito</option>
@@ -3528,9 +3519,9 @@ use App\proyecto_empleado;
                                     </div>
                                     <div class="col-sm-12">
                                         <label for="" class="label_txt">Género</label>
+                                        <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
                                         <div class="row">
                                             <div class="radio_rsp">
-                                                <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
                                                 <label class="custom-control custom-radio">
                                                     <input type="radio" name="tipo" id="tipo" value="Femenino" required>
                                                     Femenino
@@ -4633,14 +4624,14 @@ use App\proyecto_empleado;
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sw-default"><br></label>
+                                    <label for="sw-default" class="label_txt"><br></label>
                                     <select class="form-control " placeholder="Provincia " name="v_prov" id="v_prov"
                                         tabindex="12" required>
                                         <option value="">Provincia</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sw-default"><br></label>
+                                    <label for="sw-default" class="label_txt"><br></label>
                                     <select class="form-control " placeholder="Distrito " name="v_dist" id="v_dist"
                                         tabindex="13" required>
                                         <option value="">Distrito</option>
@@ -4659,14 +4650,14 @@ use App\proyecto_empleado;
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sw-default"><br></label>
+                                    <label for="sw-default" class="label_txt"><br></label>
                                     <select class="form-control " placeholder="Provincia " name="v_provincia"
                                         id="v_provincia" tabindex="15">
                                         <option value="">Provincia</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sw-default"><br></label>
+                                    <label for="sw-default" class="label_txt"><br></label>
                                     <select class="form-control " placeholder="Distrito " name="v_distrito"
                                         id="v_distrito" tabindex="16">
                                         <option value="">Distrito</option>
@@ -4676,10 +4667,9 @@ use App\proyecto_empleado;
 
                                 <div class="col-sm-12">
                                     <label for="" class="label_txt">Género</label>
+                                    <span id="v_validGenero" style="color: red;">*Campo Obligatorio</span>
                                     <div class="row">
                                         <div class="radio_rsp">
-                                            <span id="v_validGenero" style="color: red;">*Campo
-                                                Obligatorio</span>
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" name="v_tipo" id="v_tipo" value="Femenino">
                                                 Femenino
