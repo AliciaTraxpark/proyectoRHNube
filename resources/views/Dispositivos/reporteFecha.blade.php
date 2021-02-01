@@ -183,22 +183,126 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12 pb-2">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                                onclick="javascript:cambiartabla()">
-                            <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">
-                                Mostrar detalles
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 pb-2">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="switPausas"
-                                onclick="javascript:togglePausas()">
-                            <label class="custom-control-label" for="switPausas" style="font-weight: bold">
-                                Mostrar pausas
-                            </label>
+                        <div class="dropdown" id="dropSelector">
+                            <button class="btn btn-sm dropdown-toggle" style="background-color:#1e2139;"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{asset('landing/images/insert.svg')}}" height="20">
+                                Selector de columnas
+                            </button>
+                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;">
+                                <h6 class="dropdown-header text-left"
+                                    style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                    <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
+                                        height="12" />
+                                    Opciones
+                                </h6>
+                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="colCargo">
+                                        <label for="">Cargo</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido detallePadre">
+                                        <input type="checkbox" name="detallePadre[]">
+                                        <label for="">Detalles de marcación</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleD()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoDetalle">
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colTiempoSitio">
+                                            <label for="">Tiempo en sitio</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colTardanza">
+                                            <label for="">Tardanza</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colIncidencia">
+                                            <label for="">Incidencias</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked disabled>
+                                        <label for="">DNI</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked id="colMarcaciones">
+                                        <label for="">Entradas y Salidas</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido horarioPadre">
+                                        <input type="checkbox" checked>
+                                        <label for="">Horarios</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleH()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoHorarios">
+                                        <li class="liContenido horarioHijo">
+                                            <input type="checkbox" id="descripcionHorario" checked>
+                                            <label for="">Descripcion</label>
+                                        </li>
+                                        <li class="liContenido horarioHijo">
+                                            <input type="checkbox" id="horarioHorario" checked>
+                                            <label for="">Horario</label>
+                                        </li>
+                                        <li class="liContenido horarioHijo">
+                                            <input type="checkbox" id="toleranciaIHorario" checked>
+                                            <label for="">Tolerancia en el ingreso</label>
+                                        </li>
+                                        <li class="liContenido horarioHijo">
+                                            <input type="checkbox" id="toleranciaFHorario" checked>
+                                            <label for="">Tolerancia en la salida</label>
+                                        </li>
+                                        <li class="liContenido horarioHijo">
+                                            <input type="checkbox" id="faltaHorario" checked>
+                                            <label for="">Falta</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked disabled>
+                                        <label for="">Nombre</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido pausaPadre">
+                                        <input type="checkbox">
+                                        <label for="">Pausas</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleP()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoPausas">
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="descripcionPausa">
+                                            <label for="">Pausa</label>
+                                        </li>
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="horarioPausa">
+                                            <label for="">Horario de pausa</label>
+                                        </li>
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="tiempoPausa">
+                                            <label for="">Tiempo de pausa</label>
+                                        </li>
+                                        <li class="liContenido pausaHijo">
+                                            <input type="checkbox" id="excesoPausa">
+                                            <label for="">Exceso de pausa</label>
+                                        </li>
+                                    </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     {{-- GIF DE ESPERA --}}

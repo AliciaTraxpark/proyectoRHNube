@@ -101,8 +101,8 @@ use App\proyecto_empleado;
     }
 
     .large.tooltip-inner {
-    max-width: 185px;
-    width: 185px;
+        max-width: 185px;
+        width: 185px;
     }
 </style>
 
@@ -929,38 +929,38 @@ use App\proyecto_empleado;
     }
 
     @media (max-width: 447px) {
-        .radio_rsp{
+        .radio_rsp {
             padding: 0 0 !important;
         }
     }
 
-    @media (max-width: 799px) and (min-width: 447px){
-        .radio_rsp{
+    @media (max-width: 799px) and (min-width: 447px) {
+        .radio_rsp {
             padding: 0 5% !important;
         }
     }
 
     @media (max-width: 578px) {
-        .label_select{
-        padding: 0px 0px 0px 0px !important;
-    }
+        .label_select {
+            padding: 0px 0px 0px 0px !important;
+        }
     }
 
-    .radio_rsp{
+    .radio_rsp {
         padding: 0 10%;
     }
 
-    .label_txt{
+    .label_txt {
         padding: 10px 0px 0px 0px !important;
         font-weight: 200 !important;
     }
 
-    .label_select{
+    .label_select {
         padding: 10px 0px 0px 0px;
     }
 
-    @media(min-width: 386px) and (max-width: 487px){
-        .th_rh{
+    @media(min-width: 386px) and (max-width: 487px) {
+        .th_rh {
             padding: 0 35px !important;
         }
     }
@@ -1833,7 +1833,7 @@ use App\proyecto_empleado;
                                         <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                             name="m_ano_fecha" id="m_ano_fecha" required>
                                             <option value="0">Año</option>
-                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
+                                            @for ($i = 1900; $i <= 2030; $i++) <option class="" value="{{$i}}">{{$i}}
                                                 </option>
                                                 @endfor
                                         </select>
@@ -1915,12 +1915,13 @@ use App\proyecto_empleado;
                             </div>
                             <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
                             <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha" required="">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha"
+                                    required="">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++)
-                                    <option class="" value="{{$i}}"> {{ $i }} </option>
-                                @endfor
+                                    @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
+                                        @endfor
                                 </select>
                             </div>
                         </div>
@@ -2053,7 +2054,7 @@ use App\proyecto_empleado;
                                         <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                             name="m_ano_fechaD" id="m_ano_fechaD" required>
                                             <option value="0">Año</option>
-                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
+                                            @for ($i = 1900; $i <= 2030; $i++) <option class="" value="{{$i}}">{{$i}}
                                                 </option>
                                                 @endfor
                                         </select>
@@ -2136,14 +2137,15 @@ use App\proyecto_empleado;
                             </div>
                             <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
                             <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                    <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver" required="">
-                                        <option value="0">Día</option>
-                                    @for ($i = 30; $i <61; $i++)
-                                        <option class="" value="{{$i}}"> {{ $i }} </option>
-                                    @endfor
-                                    </select>
-                                </div>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver"
+                                    required="">
+                                    <option value="0">Día</option>
+                                    @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
+                                        @endfor
+                                </select>
+                            </div>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -2151,7 +2153,8 @@ use App\proyecto_empleado;
                         data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="submit" class="btn btn-sm" id="reg_guardarAlta_editar" style="background-color:#163552;">
+                    <button type="submit" class="btn btn-sm" id="reg_guardarAlta_editar"
+                        style="background-color:#163552;">
                         Guardar
                     </button>
                 </div>
@@ -2572,7 +2575,7 @@ use App\proyecto_empleado;
                                                         padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
                                                     required="">
                                                     <option value="0">Año</option>
-                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                    @for ($i = 1900; $i <= 2030; $i++) <option class="" value="{{$i}}">
                                                         {{$i}}
                                                         </option>
                                                         @endfor
@@ -2648,7 +2651,7 @@ use App\proyecto_empleado;
                                                             padding-right: 5px;" name="m_ano_fechaFE"
                                                         id="m_ano_fechaFE">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                             value="{{$i}}">
                                                             {{$i}}
                                                             </option>
@@ -2662,12 +2665,13 @@ use App\proyecto_empleado;
                             </div>
                             <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
                             <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar" required="">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_editar"
+                                    id="noti_dia_fecha_editar" required="">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++)
-                                    <option class="" value="{{$i}}"> {{ $i }} </option>
-                                @endfor
+                                    @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
+                                        @endfor
                                 </select>
                             </div>
                         </div>
@@ -2675,7 +2679,8 @@ use App\proyecto_empleado;
                 <div class="modal-footer">
                     <button type="button" onclick="$('#form-ver').modal('show');javascript:limpiarEditar()"
                         class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-sm" id="edit_guardarAlta" style="background-color:#163552;">Guardar</button>
+                    <button type="submit" class="btn btn-sm" id="edit_guardarAlta"
+                        style="background-color:#163552;">Guardar</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -2787,7 +2792,7 @@ use App\proyecto_empleado;
                                                         padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
                                                     required="">
                                                     <option value="0">Año</option>
-                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                    @for ($i = 1900; $i <= 2030; $i++) <option class="" value="{{$i}}">
                                                         {{$i}}
                                                         </option>
                                                         @endfor
@@ -2862,7 +2867,7 @@ use App\proyecto_empleado;
                                                             padding-right: 5px;" name="m_ano_fechaFEN"
                                                         id="m_ano_fechaFEN">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                             value="{{$i}}">
                                                             {{$i}}
                                                             </option>
@@ -2877,12 +2882,13 @@ use App\proyecto_empleado;
                             </div>
                             <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
                             <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
-                                <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta" required="">
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
+                                <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta"
+                                    required="">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++)
-                                    <option class="" value="{{$i}}"> {{ $i }} </option>
-                                @endfor
+                                    @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
+                                        @endfor
                                 </select>
                             </div>
                         </div>
@@ -3004,7 +3010,7 @@ use App\proyecto_empleado;
                                                         padding-right: 5px;" name="m_ano_fechaIEND"
                                                     id="m_ano_fechaIEND" required="">
                                                     <option value="0">Año</option>
-                                                    @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                                    @for ($i = 1900; $i <= 2030; $i++) <option class="" value="{{$i}}">
                                                         {{$i}}
                                                         </option>
                                                         @endfor
@@ -3079,7 +3085,7 @@ use App\proyecto_empleado;
                                                             padding-right: 5px;" name="m_ano_fechaFEND"
                                                         id="m_ano_fechaFEND">
                                                         <option value="0">Año</option>
-                                                        @for ($i = 2000; $i <2100; $i++) <option class=""
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
                                                             value="{{$i}}">
                                                             {{$i}}
                                                             </option>
@@ -3193,7 +3199,7 @@ use App\proyecto_empleado;
                                                     padding-right: 5px;" name="m_ano_fechaIEV" id="m_ano_fechaIEV"
                                             disabled>
                                             <option value="0">Año</option>
-                                            @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">
+                                            @for ($i = 1900; $i <= 2030; $i++) <option class="" value="{{$i}}">
                                                 {{$i}}
                                                 </option>
                                                 @endfor
@@ -3240,7 +3246,7 @@ use App\proyecto_empleado;
                                             <select class="form-control" style="padding-left: 5px;padding-right: 5px;"
                                                 name="m_ano_fechaFEV" id="m_ano_fechaFEV" disabled>
                                                 <option value="0">Año</option>
-                                                @for ($i = 2000; $i <2100; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                @for ($i = 1900; $i <=2030; $i++) <option class="" value="{{$i}}">{{$i}}
                                                     </option>
                                                     @endfor
                                             </select>
@@ -3251,12 +3257,12 @@ use App\proyecto_empleado;
                             </div>
                             <label class="pt-3 pl-3"><strong>Alerta de vencimiento de contrato</strong></label>
                             <div class="row w-100">
-                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que
+                                    se le notifique?</label>
                                 <select class="form-control col-3" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                     <option value="0">Día</option>
-                                @for ($i = 30; $i <61; $i++)
-                                    <option class="" value="{{$i}}"> {{ $i }} </option>
-                                @endfor
+                                    @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }} </option>
+                                        @endfor
                                 </select>
                             </div>
                         </div>
@@ -3311,7 +3317,7 @@ use App\proyecto_empleado;
                                     </div>
                                     <div class="col-sm-4">
                                         <input type="hidden" name="idEmpleado" id="idEmpleado">
-                                        <label for="sw-default" class="label_txt" >Tipo Documento</label>
+                                        <label for="sw-default" class="label_txt">Tipo Documento</label>
                                         <span id="validDocumento" style="color: red;">*Campo
                                             Obligatorio</span>
                                         <select class="form-control" placeholder="Tipo Documento " name="documento"
@@ -3328,13 +3334,14 @@ use App\proyecto_empleado;
                                         <span id="validNumDocumento" style="color: red;">*Campo
                                             Obligatorio</span>
                                         <span id="numR" style="color: red;">*Núm. registrado</span>
-                                        <input type="text" class="form-control" name="numDocumento"
-                                            id="numDocumento" onkeypress="return isNumeric(event)"
-                                            oninput="maxLengthCheck(this)" tabindex="2" required>
+                                        <input type="text" class="form-control" name="numDocumento" id="numDocumento"
+                                            onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)"
+                                            tabindex="2" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Fecha Nacimiento</label>
-                                        <span id="validFechaC" style="color: red;display: none;">*Fecha incorrecta.</span>
+                                        <span id="validFechaC" style="color: red;display: none;">*Fecha
+                                            incorrecta.</span>
                                         <div class="row fechasResponsive">
                                             <div class="col-md-4 prigth">
                                                 <select class="form-control" name="dia_fecha" id="dia_fecha"
@@ -3367,8 +3374,7 @@ use App\proyecto_empleado;
                                                 <select class="form-control" style="padding-left: 5px;
                                                 padding-right: 5px;" name="ano_fecha" id="ano_fecha" required="">
                                                     <option value="0">Año</option>
-                                                    @for ($i = 1950; $i <2011; $i++) <option class=""
-                                                        value="{{$i}}">
+                                                    @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">
                                                         {{$i}}
                                                         </option>
                                                         @endfor
@@ -3381,14 +3387,15 @@ use App\proyecto_empleado;
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Apellido Paterno</label>
                                         <span id="validApPaterno" style="color: red;">*Campo Obligatorio</span>
-                                        <input type="text" class="form-control soloLetras" name="apPaterno" id="apPaterno" tabindex="4" required>
+                                        <input type="text" class="form-control soloLetras" name="apPaterno"
+                                            id="apPaterno" tabindex="4" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Apellido Materno</label>
                                         <span id="validApMaterno" style="color: red;">*Campo
                                             Obligatorio</span>
-                                        <input type="text" class="form-control soloLetras" name="apMaterno" id="apMaterno"
-                                            tabindex="5" required>
+                                        <input type="text" class="form-control soloLetras" name="apMaterno"
+                                            id="apMaterno" tabindex="5" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Nombres</label>
@@ -3404,8 +3411,7 @@ use App\proyecto_empleado;
                                         <span id="validCorreo" style="color: red;">*Campo
                                             Obligatorio</span>
                                         <span id="emailR" style="color: red;">*Correo registrado</span>
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            tabindex="7">
+                                        <input type="email" class="form-control" id="email" name="email" tabindex="7">
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_txt">Celular</label>
@@ -3418,9 +3424,8 @@ use App\proyecto_empleado;
                                                 </select>
                                             </div>
                                             <div class="col-8">
-                                                <input type="number" class="form-control" name="celular"
-                                                    id="celular" tabindex="8" maxlength="9"
-                                                    onkeypress="return isNumeric(event)"
+                                                <input type="number" class="form-control" name="celular" id="celular"
+                                                    tabindex="8" maxlength="9" onkeypress="return isNumeric(event)"
                                                     oninput="maxLengthCheck(this)" pattern="/^9{1}|[0-9]{8,8}+">
                                             </div>
                                         </div>
@@ -3457,9 +3462,8 @@ use App\proyecto_empleado;
                                                 </select>
                                             </div>
                                             <div class="col-8">
-                                                <input type="number" class="form-control" name="telefono"
-                                                    id="telefono" tabindex="9" maxlength="9"
-                                                    onkeypress="return isNumeric(event)"
+                                                <input type="number" class="form-control" name="telefono" id="telefono"
+                                                    tabindex="9" maxlength="9" onkeypress="return isNumeric(event)"
                                                     oninput="maxLengthCheck(this)">
                                             </div>
                                         </div>
@@ -3491,8 +3495,8 @@ use App\proyecto_empleado;
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="sw-default" class="label_select"><br></label>
-                                        <select class="form-control " placeholder="Distrito " name="distrito"
-                                            id="dist" tabindex="13" required>
+                                        <select class="form-control " placeholder="Distrito " name="distrito" id="dist"
+                                            tabindex="13" required>
                                             <option value="">Distrito</option>
                                         </select>
                                     </div>
@@ -3508,7 +3512,7 @@ use App\proyecto_empleado;
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                       <label for="sw-default" class="label_select"><br></label>
+                                        <label for="sw-default" class="label_select"><br></label>
                                         <select class="form-control " placeholder="Provincia " name="provincia"
                                             id="provincia" tabindex="15" required>
                                             <option value="">Provincia</option>
@@ -3527,19 +3531,24 @@ use App\proyecto_empleado;
                                             <div class="radio_rsp">
                                                 <span id="validGenero" style="color: red;">*Campo Obligatorio</span>
                                                 <label class="custom-control custom-radio">
-                                                    <input type="radio" name="tipo" id="tipo" value="Femenino" required> Femenino
+                                                    <input type="radio" name="tipo" id="tipo" value="Femenino" required>
+                                                    Femenino
                                                 </label>
                                             </div>
                                             <div class="radio_rsp">
                                                 <label class="custom-control custom-radio">
-                                                    <input type="radio" name="tipo" id="tipo" value="Masculino" required> Masculino
+                                                    <input type="radio" name="tipo" id="tipo" value="Masculino"
+                                                        required> Masculino
                                                 </label>
                                             </div>
                                             <div class="radio_rsp">
-                                               <label class="custom-control custom-radio" data-toggle="tooltip" data-placement="right" title="" data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
-                                                <input type="radio" name="tipo" id="tipo" value="Personalizado" required>
-                                                Personalizado
-                                            </label>
+                                                <label class="custom-control custom-radio" data-toggle="tooltip"
+                                                    data-placement="right" title=""
+                                                    data-original-title="Puedes elegir personalizado si no deseas especificar tu género.">
+                                                    <input type="radio" name="tipo" id="tipo" value="Personalizado"
+                                                        required>
+                                                    Personalizado
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -3652,7 +3661,8 @@ use App\proyecto_empleado;
                                     {{-- BOTON DE NUEVA ALTA --}}
                                     <div class="col-xl-2 text-left">
                                         <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                            onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()" id="btnAgregarContrato">
+                                            onclick="$(this).prop('disabled', true);javascript:modalNuevaAltaReg()"
+                                            id="btnAgregarContrato">
                                             + Nueva alta
                                         </button>
                                     </div>
@@ -3799,21 +3809,24 @@ use App\proyecto_empleado;
                                                 <div class="col-md-12">
                                                     <div class="row" style="padding: 0 5px">
                                                         <div class="col-md-3 text-center mt-1 mb-1">
-                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
+                                                            <button type="button"
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="laborableTem()"><img
                                                                     src="{{ asset('admin/images/dormir.svg') }}"
                                                                     height="20"> Descanso</button>
                                                         </div>
                                                         <div class="col-md-3 text-center mt-1 mb-1">
-                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
+                                                            <button type="button"
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="nolaborableTem()"><img
                                                                     src="{{ asset('admin/images/evento.svg') }}"
                                                                     height="20"> Día no laborable</button>
                                                         </div>
                                                         <div class="col-md-3 text-center mt-1 mb-1">
-                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
+                                                            <button type="button"
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="$('#nombreFeriado').val('');$('#calendarioAsignar').modal('hide'); $('#myModalFeriado').modal('show')"><img
                                                                     src="{{ asset('admin/images/calendario.svg') }}"
@@ -3827,7 +3840,8 @@ use App\proyecto_empleado;
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                             height="20"> Incidencia</button>
                                                             --}}
-                                                            <button style=" width: 20em!important; height: 43px !important;"
+                                                            <button
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="agregarinciden()"><img
                                                                     src="{{ asset('admin/images/calendarioInc.svg') }}"
@@ -3881,7 +3895,8 @@ use App\proyecto_empleado;
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-light btn-sm" onclick="$('#myModalFeriado').modal('hide')">Cancelar</button>
+                                                <button type="button" class="btn btn-light btn-sm"
+                                                    onclick="$('#myModalFeriado').modal('hide')">Cancelar</button>
                                                 <button type="submit" class="btn btn-secondary btn-sm">Aceptar</button>
                                                 </form>
                                             </div>
@@ -4458,7 +4473,7 @@ use App\proyecto_empleado;
                                 </div>
                             </div>
                             <div class="row">
-                               <div class="col-sm-4">
+                                <div class="col-sm-4">
                                     <input style="display: none;" name="v_id" id="v_id">
                                     <label for="sw-default" class="label_txt">Tipo Documento</label>
                                     <input type="text" class="form-control" name="v_tipoDoc" id="v_tipoDoc" disabled
@@ -4467,7 +4482,8 @@ use App\proyecto_empleado;
                                 <div class="col-sm-4">
                                     <label for="sw-default" class="label_txt">Núm. Documento</label>
                                     <span id="v_validNumDocumento" style="color: red;">*Campo Obligatorio</span>
-                                    <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento" required disabled style="background-color: #fcfcfc;" tabindex="2">
+                                    <input type="text" class="form-control" name="v_numDocumento" id="v_numDocumento"
+                                        required disabled style="background-color: #fcfcfc;" tabindex="2">
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default" class="label_txt">Fecha Nacimiento</label>
@@ -4503,11 +4519,12 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="col-md-4 pAnio pleft">
-                                            <select class="form-control" style="padding-left: 5px; padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
+                                            <select class="form-control" style="padding-left: 5px; padding-right: 5px;"
+                                                name="v_mes_fecha" id="v_ano_fecha" required="">
                                                 <option value="0">Año</option>
-                                                @for ($i = 1950; $i <2011; $i++)
-                                                    <option class="" value="{{$i}}">{{$i}} </option>
-                                                @endfor
+                                                @for ($i = 1950; $i <2011; $i++) <option class="" value="{{$i}}">{{$i}}
+                                                    </option>
+                                                    @endfor
                                             </select>
                                         </div>
 
@@ -4517,17 +4534,20 @@ use App\proyecto_empleado;
                                 <div class="col-sm-4">
                                     <label for="sw-default" class="label_txt">Apellido Paterno</label>
                                     <span id="v_validApPaterno" style="color: red;">*Campo Obligatorio</span>
-                                    <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno" tabindex="4" required>
+                                    <input type="text" class="form-control" name="v_apPaterno" id="v_apPaterno"
+                                        tabindex="4" required>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default" class="label_txt">Apellido Materno</label>
                                     <span id="v_validApMaterno" style="color: red;">*Campo Obligatorio</span>
-                                    <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno" tabindex="5" required>
+                                    <input type="text" class="form-control" name="v_apMaterno" id="v_apMaterno"
+                                        tabindex="5" required>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default" class="label_txt">Nombres</label>
                                     <span id="v_validNombres" style="color: red;">*Campo Obligatorio</span>
-                                    <input type="text" class="form-control" name="v_nombres" id="v_nombres" tabindex="6" required>
+                                    <input type="text" class="form-control" name="v_nombres" id="v_nombres" tabindex="6"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-4">
@@ -4585,9 +4605,9 @@ use App\proyecto_empleado;
                                             </select>
                                         </div>
                                         <div class="col-8">
-                                            <input type="number" class="form-control" name="telefono"
-                                                id="v_telefono" tabindex="9" maxlength="9"
-                                                onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)">
+                                            <input type="number" class="form-control" name="telefono" id="v_telefono"
+                                                tabindex="9" maxlength="9" onkeypress="return isNumeric(event)"
+                                                oninput="maxLengthCheck(this)">
                                         </div>
                                     </div>
                                 </div>
@@ -4603,7 +4623,8 @@ use App\proyecto_empleado;
 
                                 <div class="col-sm-4">
                                     <label for="sw-default" class="label_txt">Dirección Domiciliara</label>
-                                    <select class="form-control" placeholder="Departamento" name="v_dep" id="v_dep" tabindex="11" required>
+                                    <select class="form-control" placeholder="Departamento" name="v_dep" id="v_dep"
+                                        tabindex="11" required>
                                         <option value="">Departamento</option>
                                         @foreach ($departamento as $departamentos)
                                         <option class="" value="{{ $departamentos->id }}">
@@ -4786,7 +4807,8 @@ use App\proyecto_empleado;
                                 {{-- BOTON DE NUEVA ALTA --}}
                                 <div class="col-xl-2 text-left">
                                     <button type="button" class="btn btn-sm mt-1" style="background-color: #383e56;"
-                                        onclick="$(this).prop('disabled', true);javascript:modalNuevaAlta()" id="nueva_alta_again">
+                                        onclick="$(this).prop('disabled', true);javascript:modalNuevaAlta()"
+                                        id="nueva_alta_again">
                                         + Nueva alta
                                     </button>
                                     <div class="float-md-right" id="gifAlta" style="display: none">
@@ -4942,21 +4964,24 @@ use App\proyecto_empleado;
                                                 <div class="col-md-12">
                                                     <div class="row" style="padding: 0 5px">
                                                         <div class="col-md-3 text-center mt-1 mb-1">
-                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
+                                                            <button type="button"
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="laborable_ed()"><img
                                                                     src="{{ asset('admin/images/dormir.svg') }}"
                                                                     height="20"> Descanso</button>
                                                         </div>
                                                         <div class="col-md-3 text-center mt-1 mb-1">
-                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
+                                                            <button type="button"
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="nolaborable_ed()"><img
                                                                     src="{{ asset('admin/images/evento.svg') }}"
                                                                     height="20"> Día no laborable</button>
                                                         </div>
                                                         <div class="col-md-3 text-center mt-1 mb-1">
-                                                            <button type="button" style=" width: 20em!important; height: 43px !important;"
+                                                            <button type="button"
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="$('#nombreFeriado_ed').val('');$('#calendarioAsignar_ed').modal('hide'); $('#myModalFeriado_ed').modal('show')"><img
                                                                     src="{{ asset('admin/images/calendario.svg') }}"
@@ -4970,7 +4995,8 @@ use App\proyecto_empleado;
                                                                         src="{{ asset('admin/images/calendarioInc.svg') }}"
                                                             height="20"> Incidencia</button>
                                                             --}}
-                                                            <button style=" width: 20em!important; height: 43px !important;"
+                                                            <button
+                                                                style=" width: 20em!important; height: 43px !important;"
                                                                 class="btn btn-secondary btn-sm"
                                                                 onclick="agregarinciden_ed()"><img
                                                                     src="{{ asset('admin/images/calendarioInc.svg') }}"
@@ -5021,7 +5047,8 @@ use App\proyecto_empleado;
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-light btn-sm" onclick="$('#myModalFeriado_ed').modal('hide')">Cancelar</button>
+                                                <button type="button" class="btn btn-light btn-sm"
+                                                    onclick="$('#myModalFeriado_ed').modal('hide')">Cancelar</button>
                                                 <button type="submit" class="btn btn-secondary btn-sm">Aceptar</button>
                                                 </form>
 
@@ -5642,11 +5669,13 @@ use App\proyecto_empleado;
                                 <input style="display: none;" name="v_idV" id="v_idV">
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Tipo Documento</label>
-                                    <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV" style="background-color: #fcfcfc;" disabled>
+                                    <input type="text" class="form-control" name="v_tipoDocV" id="v_tipoDocV"
+                                        style="background-color: #fcfcfc;" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Núm. Documento</label>
-                                        <input type="text" class="form-control" name="v_numDocumentoV" id="v_numDocumentoV" style="background-color: #fcfcfc" disabled>
+                                    <input type="text" class="form-control" name="v_numDocumentoV" id="v_numDocumentoV"
+                                        style="background-color: #fcfcfc" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Fecha Nacimiento</label>
@@ -5693,11 +5722,13 @@ use App\proyecto_empleado;
 
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Apellido Paterno</label>
-                                    <input type="text" class="form-control" name="v_apPaternoV" id="v_apPaternoV" disabled>
+                                    <input type="text" class="form-control" name="v_apPaternoV" id="v_apPaternoV"
+                                        disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Apellido Materno</label>
-                                    <input type="text" class="form-control" name="v_apMaternoV" id="v_apMaternoV" disabled>
+                                    <input type="text" class="form-control" name="v_apMaternoV" id="v_apMaternoV"
+                                        disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Nombres</label>
@@ -5714,7 +5745,8 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Teléfono</label>
-                                    <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV" disabled>
+                                    <input type="text" class="form-control" name="v_telefonoV" id="v_telefonoV"
+                                        disabled>
                                 </div>
 
                                 <div class="col-12">
@@ -5727,28 +5759,34 @@ use App\proyecto_empleado;
 
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Dirección Domiciliara</label>
-                                    <input type="text" class="form-control" placeholder="Departamento" name="v_depV" id="v_depV" disabled>
+                                    <input type="text" class="form-control" placeholder="Departamento" name="v_depV"
+                                        id="v_depV" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default"><br></label>
-                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provV" id="v_provV" disabled>
+                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provV"
+                                        id="v_provV" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default"><br></label>
-                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distV" id="v_distV" disabled>
+                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distV"
+                                        id="v_distV" disabled>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <label class="label_txt" for="sw-default">Lugar Nacimiento</label>
-                                    <input type="text" class="form-control" placeholder="Departamento" name="v_departamentoV" id="v_departamentoV" disabled>
+                                    <input type="text" class="form-control" placeholder="Departamento"
+                                        name="v_departamentoV" id="v_departamentoV" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default"><br></label>
-                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provinciaV" id="v_provinciaV" disabled>
+                                    <input type="text" class="form-control" placeholder="Provincia " name="v_provinciaV"
+                                        id="v_provinciaV" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="sw-default"><br></label>
-                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distritoV" id="v_distritoV" disabled>
+                                    <input type="text" class="form-control" placeholder="Distrito " name="v_distritoV"
+                                        id="v_distritoV" disabled>
                                 </div>
 
                                 <div class="col-12">
@@ -5756,15 +5794,17 @@ use App\proyecto_empleado;
                                     <div class="row">
                                         <div class="radio_rsp">
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino" disabled>
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Femenino"
+                                                    disabled>
                                                 Femenino
                                             </label>
                                         </div>
                                         <div class="radio_rsp">
                                             <label class="custom-control custom-radio">
-                                            <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino" disabled>
-                                            Masculino
-                                        </label>
+                                                <input type="radio" name="v_tipoV" id="v_tipoV" value="Masculino"
+                                                    disabled>
+                                                Masculino
+                                            </label>
                                         </div>
                                         <div class="radio_rsp">
                                             <label class="custom-control custom-radio">
