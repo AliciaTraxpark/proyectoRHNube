@@ -2223,6 +2223,7 @@ function r_addMarker(e) {
                                     </div>
                                     </div>`;
                 container.append(colGeo);
+                $('[data-toggle="tooltip"]').tooltip();
                 variableU++;
             }
         })
@@ -2661,7 +2662,45 @@ function recuperarPunto(id) {
 $('#FormPuntoControl').attr('novalidate', true);
 $('#FormPuntoControl').submit(function (e) {
     e.preventDefault();
+    if ($('#r_verificacion').is(":checked")) {
+        var resultado = true;
+        $('.r_rowIdGeo').each(function () {
+            var idG = $(this).val();
+            if ($('#r_latitud' + idG).val() != "") {
+                resultado = false;
+            }
+        });
+        if (resultado) {
+            sent = false;
+            $.notifyClose();
+            $.notify({
+                message: '\nAgregar una Geolocalización como mínimo.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#modalRegistrarPunto"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            $('button[type="submit"]').attr("disabled", false);
+            return;
+        }
+    }
     if ($('#r_descripcionPunto').val() == "" || $('#r_descripcionPunto').val() == null) {
+        sent = false;
         $.notifyClose();
         $.notify({
             message: '\nIngresar punto control.',
@@ -2690,6 +2729,7 @@ $('#FormPuntoControl').submit(function (e) {
     }
     if ($('#r_puntosPorE').is(":checked")) {
         if ($('#r_empleadosPunto').val().length == 0) {
+            sent = false;
             $.notifyClose();
             $.notify({
                 message: '\nSeleccionar empleados.',
@@ -2719,6 +2759,7 @@ $('#FormPuntoControl').submit(function (e) {
     }
     if ($('#r_puntosPorA').is(":checked")) {
         if ($('#r_areasPunto').val().length == 0) {
+            sent = false;
             $.notifyClose();
             $.notify({
                 message: '\nSeleccionar áreas.',
