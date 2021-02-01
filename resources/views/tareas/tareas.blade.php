@@ -37,6 +37,14 @@
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='403555' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     }
 
+    .close:hover {
+        color: #ffff;
+    }
+
+    .close {
+        color: #ffffff;
+    }
+
     @media (max-width: 767.98px) {
         .colR {
             padding-left: 0% !important;

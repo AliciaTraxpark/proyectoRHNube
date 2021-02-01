@@ -254,7 +254,7 @@ function sinActividadDT() {
         $('#VacioImg').hide();
         var nombre = [];
         var html_tr = "";
-        var html_trD = "<tr><th>#</th><th>Código</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</>";
+        var html_trD = "<tr><th>#</th><th>Código</th><th>Documento</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</>";
         let codigo = 0;
         for (var i = 0; i < datos.length; i++) {
             ruc = datos[i].ruc;
@@ -269,7 +269,7 @@ function sinActividadDT() {
             } else {
                 codigo = datos[i].documento;
             }
-            html_tr += '<tr><td>' + (i + 1) + '</td><td>' + codigo + '</td><td>' + datos[i].nombre + ' ' + datos[i].apPaterno + ' ' + datos[i].apMaterno + '</td>';
+            html_tr += '<tr><td>' + (i + 1) + '</td><td>' + codigo + '</td><td>' + datos[i].documento + '</td><td>' + datos[i].nombre + ' ' + datos[i].apPaterno + ' ' + datos[i].apMaterno + '</td>';
             nombre.push(datos[i].nombre.split('')[0] + datos[i].apPaterno.split('')[0] + datos[i].apMaterno.split('')[0]);
             var total = datos[i].horas.reduce(function (a, b) {
                 return sumarHora(a, b);

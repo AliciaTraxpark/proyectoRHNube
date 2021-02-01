@@ -227,6 +227,7 @@ function mostrarDetallesContrato(id) {
             if (data.fechaFinal == null || data.fechaFinal == "0000-00-00") {
                 $("#checkboxFechaIE").prop('checked', true);
                 $('#ocultarFechaE').hide();
+                $('.alertVencimiento').hide();
             }
             var VFechaDaFE = moment(data.fechaFinal).format('YYYY-MM-DD');
             var VFechaDiaFE = new Date(moment(VFechaDaFE));
@@ -276,8 +277,11 @@ $("#checkboxFechaIE").on("click", function () {
         $('#m_mes_fechaFE').val("0");
         $('#m_ano_fechaFE').val("0");
         $('#ocultarFechaE').hide();
+        $('.alertVencimiento').hide();
+        $('#noti_dia_fecha_editar').val("0");
     } else {
         $('#ocultarFechaE').show();
+        $('.alertVencimiento').show();
     }
 });
 //: VALIDACION DE ARCHIVOS EN EDITAR DETALLES DE CONTROL
@@ -953,8 +957,11 @@ $("#checkboxFechaIEN").on("click", function () {
         $('#m_mes_fechaFEN').val(0);
         $('#m_ano_fechaFEN').val(0);
         $('#ocultarFechaEN').hide();
+        $('#noti_dia_fecha_alta').val(0);
+        $('.alertVencimiento').hide();
     } else {
         $('#ocultarFechaEN').show();
+        $('.alertVencimiento').show();
     }
 });
 //* LIMPIAR FORMULARIO EN NUEVA ALTA
@@ -1474,6 +1481,7 @@ function limpiarNuevosDatosAltaReg() {
     $('#mf_dia_fecha').val(0);
     $('#mf_mes_fecha').val(0);
     $('#mf_ano_fecha').val(0);
+    $('#noti_dia_fecha').val(0);
     $('#ocultarFecha').show();
 }
 //* CHECKBOX DE FECHA INDEFINIDA
@@ -1483,8 +1491,11 @@ $("#checkboxFechaI").on("click", function () {
         $('#mf_mes_fecha').val(0);
         $('#mf_ano_fecha').val(0);
         $('#ocultarFecha').hide();
+        $('#noti_dia_fecha').val(0);
+        $('.alertVencimiento').hide();
     } else {
         $('#ocultarFecha').show();
+        $('.alertVencimiento').show();
     }
 });
 //* CHECKBOX DE FECHA INDEFINIDA EN DETALLES DE CONTRATO
@@ -1494,8 +1505,11 @@ $("#checkboxFechaID").on("click", function () {
         $('#mf_mes_fechaD').val(0);
         $('#mf_ano_fechaD').val(0);
         $('#ocultarFechaD').hide();
+        $('#noti_dia_fecha_ver').val(0);
+        $('.alertVencimiento').hide();
     } else {
         $('#ocultarFechaD').show();
+        $('.alertVencimiento').show();
     }
 });
 //* VALIDACION DE ARCHIVOS EN BAJA

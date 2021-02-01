@@ -60,7 +60,7 @@ class ActividadesController extends Controller
         }
     }
 
-    // VISTAS DE ACTIVIDADES
+    // **************************************** VISTAS DE ACTIVIDADES *********************************
 
     public function actividades()
     {
@@ -100,6 +100,9 @@ class ActividadesController extends Controller
         // DB::enableQueryLog();
         $actividades = DB::table('actividad as a')
             ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
+            ->leftJoin('ubicacion as u', 'u.idActividad', '=', 'a.Activi_id')
+            ->leftJoin('marcacion_puerta as mp', 'mp.marcaIdActivi', '=', 'a.Activi_id')
+            ->leftJoin('marcacion_tareo as mt', 'mt.Activi_id', '=', 'a.Activi_id')
             ->select(
                 'a.Activi_id',
                 'a.Activi_Nombre',
@@ -109,26 +112,32 @@ class ActividadesController extends Controller
                 'a.eliminacion',
                 'a.modoTareo',
                 DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA"),
-                DB::raw("CASE WHEN(cp.idCaptura) IS NULL THEN 'No' ELSE 'Si' END AS respuesta")
+                DB::raw(
+                    '(CASE WHEN(cp.idCaptura) IS NOT NULL THEN "Si"
+                        WHEN (u.id) IS NOT NULL THEN "Si"
+                        WHEN (cp.idCaptura) IS NOT NULL THEN "Si"
+                        WHEN (mp.marcaMov_id) IS NOT NULL THEN "Si"
+                        WHEN (mt.idmarcaciones_tareo ) IS NOT NULL THEN "Si"
+                        ELSE "No" END) AS respuesta'
+                )
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->groupBy('a.Activi_id')
             ->get();
 
-        foreach($actividades as $actividadesT){
+        foreach ($actividades as $actividadesT) {
             $actividad_subactividad = DB::table('actividad_subactividad as asu')
-            ->where('asu.Activi_id', '=', $actividadesT->Activi_id)
-            ->where('asu.estado', '=',1)
-            ->groupBy('asu.Activi_id')
-            ->get();
+                ->where('asu.Activi_id', '=', $actividadesT->Activi_id)
+                ->where('asu.estado', '=', 1)
+                ->groupBy('asu.Activi_id')
+                ->get();
 
             /*  SI ESTA EN USO*/
             if ($actividad_subactividad->isNotEmpty()) {
                 $actividadesT->padreSubactividad = 1;
             }
-            /* SI NO ESTA EN USO */
-            else {
+            /* SI NO ESTA EN USO */ else {
                 $actividadesT->padreSubactividad = 0;
             }
         }
@@ -214,6 +223,9 @@ class ActividadesController extends Controller
         $idA = $request->get('idA');
         $actividades = DB::table('actividad as a')
             ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
+            ->leftJoin('ubicacion as u', 'u.idActividad', '=', 'a.Activi_id')
+            ->leftJoin('marcacion_puerta as mp', 'mp.marcaIdActivi', '=', 'a.Activi_id')
+            ->leftJoin('marcacion_tareo as mt', 'mt.Activi_id', '=', 'a.Activi_id')
             ->select(
                 'a.Activi_id',
                 'a.Activi_Nombre',
@@ -224,29 +236,35 @@ class ActividadesController extends Controller
                 'a.porEmpleados',
                 'a.porAreas',
                 'a.globalEmpleado',
-                'a.modoTareo'
+                'a.modoTareo',
+                DB::raw(
+                    '(CASE WHEN(cp.idCaptura) IS NOT NULL THEN 1
+                        WHEN (u.id) IS NOT NULL THEN 1
+                        WHEN (cp.idCaptura) IS NOT NULL THEN 1
+                        WHEN (mp.marcaMov_id) IS NOT NULL THEN 1
+                        WHEN (mt.idmarcaciones_tareo ) IS NOT NULL THEN 1
+                        ELSE 0 END) AS respuesta'
+                )
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.Activi_id', '=', $idA)
             ->where('a.estado', '=', 1)
-            ->get()
-            ;
-            foreach($actividades as $actividadesT){
-                $actividad_subactividad = DB::table('actividad_subactividad as asu')
+            ->get();
+        foreach ($actividades as $actividadesT) {
+            $actividad_subactividad = DB::table('actividad_subactividad as asu')
                 ->where('asu.Activi_id', '=', $actividadesT->Activi_id)
-                ->where('asu.estado', '=',1)
+                ->where('asu.estado', '=', 1)
                 ->groupBy('asu.Activi_id')
                 ->get();
 
-                /*  SI ESTA EN USO*/
-                if ($actividad_subactividad->isNotEmpty()) {
-                    $actividadesT->padreSubactividad = 1;
-                }
-                /* SI NO ESTA EN USO */
-                else {
-                    $actividadesT->padreSubactividad = 0;
-                }
+            /*  SI ESTA EN USO*/
+            if ($actividad_subactividad->isNotEmpty()) {
+                $actividadesT->padreSubactividad = 1;
             }
+            /* SI NO ESTA EN USO */ else {
+                $actividadesT->padreSubactividad = 0;
+            }
+        }
 
         return response()->json($actividades->first(), 200);
     }
