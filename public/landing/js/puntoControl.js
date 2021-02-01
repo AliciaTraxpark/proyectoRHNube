@@ -455,6 +455,7 @@ function areasPuntos(id) {
 //* EDITAR PUNTO DE CONTROL
 function editarPuntoControl() {
     var idPunto = $('#e_idPuntoC').val();
+    var puntoControl = $('#e_descripcionPunto').val();
     var codigo = $('#e_codigoPunto').val();
     var empleados = $('#e_empleadosPunto').val();
     var areas = $('#e_areasPunto').val();
@@ -508,6 +509,7 @@ function editarPuntoControl() {
         url: "/editPuntoControl",
         data: {
             id: idPunto,
+            puntoControl: puntoControl,
             cr: controlRuta,
             ap: asistenciaPuerta,
             codigo: codigo,
@@ -656,6 +658,34 @@ $('#e_puntosPorA').on("change.bootstrapSwitch", function (event) {
 $('#FormEditarPuntoControl').attr('novalidate', true);
 $('#FormEditarPuntoControl').submit(function (e) {
     e.preventDefault();
+    if ($('#e_descripcionPunto').val() == "") {
+        sent = false;
+        $.notifyClose();
+        $.notify({
+            message: '\nIngresar descripcion Punto control.',
+            icon: 'landing/images/bell.svg',
+        }, {
+            element: $("#modaleditarPuntoControl"),
+            position: "fixed",
+            icon_type: 'image',
+            placement: {
+                from: "top",
+                align: "center",
+            },
+            allow_dismiss: true,
+            newest_on_top: true,
+            delay: 6000,
+            template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                '</div>',
+            spacing: 35
+        });
+        $('button[type="submit"]').attr("disabled", false);
+        return;
+    }
     if ($('#e_puntosPorE').is(":checked")) {
         if ($('#e_empleadosPunto').val().length == 0) {
             sent = false;
@@ -692,6 +722,43 @@ $('#FormEditarPuntoControl').submit(function (e) {
             $.notifyClose();
             $.notify({
                 message: '\nSeleccionar áreas.',
+                icon: 'landing/images/bell.svg',
+            }, {
+                element: $("#modaleditarPuntoControl"),
+                position: "fixed",
+                icon_type: 'image',
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                allow_dismiss: true,
+                newest_on_top: true,
+                delay: 6000,
+                template: '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #f2dede;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#a94442;" data-notify="message">{2}</span>' +
+                    '</div>',
+                spacing: 35
+            });
+            $('button[type="submit"]').attr("disabled", false);
+            return;
+        }
+    }
+    if ($('#e_verificacion').is(":checked")) {
+        var respuesta = true;
+        $('.rowIdGeo').each(function () {
+            var idG = $(this).val();
+            if ($('#e_latitud' + idG).val() != "") {
+                respuesta = false;
+            }
+        });
+        if (respuesta) {
+            sent = false;
+            $.notifyClose();
+            $.notify({
+                message: '\nAgregar una Geolocalización como mínimo.',
                 icon: 'landing/images/bell.svg',
             }, {
                 element: $("#modaleditarPuntoControl"),
@@ -1166,6 +1233,7 @@ function addMarker(e) {
                                     </div>
                                     </div>`;
                 container.append(colGeo);
+                $('[data-toggle="tooltip"]').tooltip();
                 variableU++;
             }
         })
