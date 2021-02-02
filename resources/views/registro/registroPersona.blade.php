@@ -133,6 +133,19 @@
               bottom: 0;
             }
         }
+
+        @media(max-width: 474px) and (min-width: 329px){
+            body{
+                padding-bottom: 40px;
+            }
+        }
+
+        @media(max-width: 329px){
+            body{
+                padding-bottom: 60px;
+            }
+        }
+
     </style>
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
