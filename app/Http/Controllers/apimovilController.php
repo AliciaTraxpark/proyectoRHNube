@@ -351,8 +351,8 @@ class apimovilController extends Controller
                 /* VERIFICAMOS SI EXISTE OTRA MARCACION CON EL MISMO DIA Y EMPLEADO */
                 $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
                 ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
-                ->where('mv.marcaMov_salida', '!=',null )
-                ->where('mv.marcaMov_fecha', '!=',null )
+               /*  ->where('mv.marcaMov_salida', '!=',null )
+                ->where('mv.marcaMov_fecha', '!=',null ) */
                 ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
                 ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
@@ -362,24 +362,39 @@ class apimovilController extends Controller
 
                 /* SI EXISTE MARCACION ANTERIOR */
                 if($marcacion_puerta00){
-                   /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
+                    if ($marcacion_puerta00->marcaMov_fecha != null && $marcacion_puerta00->marcaMov_salida != null) {
+                        /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
                    if($marcacion_puerta00->marcaMov_fecha > $req['fechaMarcacion']){
 
-                       /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
-                       $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
-                       ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
-                       ->where('mv.marcaMov_salida', '=',null )
-                       ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
-                       ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
-                       ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                       ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
-                       ->orderby('marcaMov_fecha','ASC')
-                       ->get()->first();
-                   }
-                   else{
+                    /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
+                    $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                    ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
+                    ->where('mv.marcaMov_salida', '=',null )
+                    ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
+                    ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
+                    ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
+                    ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
+                    ->orderby('marcaMov_fecha','ASC')
+                    ->get()->first();
+                }
+                    else{
                     $marcacion_puerta1=[];
                     $marcacion_puerta1==null;
-                   }
+                    }
+
+                    }
+                    else{
+                        $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                        ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
+                        ->where('mv.marcaMov_salida', '=',null )
+                        ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
+                        ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
+                        ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
+                        ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
+                        ->orderby('marcaMov_fecha','ASC')
+                        ->get()->last();
+                    }
+
 
                 } else{
                     $marcacion_puerta1 =DB::table('marcacion_puerta as mv')

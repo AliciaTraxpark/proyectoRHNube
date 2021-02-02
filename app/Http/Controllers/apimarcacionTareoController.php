@@ -364,18 +364,20 @@ class apimarcacionTareoController extends Controller
                 /* VERIFICAMOS SI EXISTE OTRA MARCACION CON EL MISMO DIA Y EMPLEADO */
                 $marcacion_tareo00 = DB::table('marcacion_tareo as mt')
                     ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
-                    ->where('mt.marcaTareo_salida', '!=', null)
-                    ->where('mt.marcaTareo_entrada', '!=', null)
+                    /* ->where('mt.marcaTareo_salida', '!=', null)
+                    ->where('mt.marcaTareo_entrada', '!=', null) */
                     ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
                     ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
                     ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
                     ->orderby('marcaTareo_entrada', 'ASC')
                     ->get()->last();
+
                 /* ---------------------------------------------------------------- */
 
                 /* SI EXISTE MARCACION ANTERIOR */
-                if ($marcacion_tareo00) {
-                    /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
+                if ($marcacion_tareo00 ) {
+                    if ($marcacion_tareo00->marcaTareo_entrada != null && $marcacion_tareo00->marcaTareo_salida != null) {
+                          /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
                     if ($marcacion_tareo00->marcaTareo_entrada > $req['fechaMarcacion']) {
 
                         /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
@@ -392,6 +394,18 @@ class apimarcacionTareoController extends Controller
                         $marcacion_tareo1 = [];
                         $marcacion_tareo1 == null;
                     }
+                    } else{
+                        $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
+                        ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
+                        ->where('mt.marcaTareo_salida', '=', null)
+                        ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
+                        ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
+                        ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
+                        ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+                        ->orderby('marcaTareo_entrada', 'ASC')
+                        ->get()->last();
+                    }
+
 
                 } else {
                     $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
@@ -403,6 +417,7 @@ class apimarcacionTareoController extends Controller
                         ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
                         ->orderby('marcaTareo_entrada', 'ASC')
                         ->get()->last();
+
                 }
 
                 /* SI NO EXISTE MARCACION SIN SALIDA */
