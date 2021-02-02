@@ -453,6 +453,9 @@ $("#codigoTarea").keyup(function () {
 $("#e_codigoTarea").keyup(function () {
     $(this).removeClass("borderColor");
 });
+$('#e_nombreTarea').keyup(function () {
+    $(this).removeClass("borderColor");
+});
 $("#areaAsignarEditar").select2({
     tags: "true"
 });
@@ -657,6 +660,7 @@ function editarActividad(id) {
 // : GUARDAR CAMBIOS DE ACTIVIDAD
 function editarActividadTarea() {
     var codigo = $("#e_codigoTarea").val();
+    var descripcion = $('#e_nombreTarea').val();
     var idA = $('#idActiv').val();
     var empleados = $('#empleados').val();
     var areas = $('#areaAsignarEditar').val();
@@ -719,6 +723,7 @@ function editarActividadTarea() {
         url: "/registrarEditar",
         data: {
             idA: idA,
+            descripcion: descripcion,
             cr: controlRemoto,
             ap: asistenciaPuerta,
             crt: controlRuta,
@@ -743,7 +748,7 @@ function editarActividadTarea() {
             }*/
         },
         success: function (data) {
-            if (data != 0) {
+            if (data.respuesta == undefined) {
                 limpiarModo();
                 actividadesOrganizacion();
                 $.notifyClose();
@@ -769,35 +774,67 @@ function editarActividadTarea() {
                 );
                 $('#editactividadTarea').modal("toggle");
             } else {
-                $("#e_codigoTarea").addClass("borderColor");
-                $.notifyClose();
-                $.notify(
-                    {
-                        message:
-                            "\nYa existe una actividad con este código.",
-                        icon: "admin/images/warning.svg",
-                    },
-                    {
-                        element: $('#editactividadTarea'),
-                        position: "fixed",
-                        mouse_over: "pause",
-                        placement: {
-                            from: "top",
-                            align: "center",
+                if (data.respuesta == 0) {
+                    sent = false;
+                    $("#e_codigoTarea").addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
                         },
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 2000,
-                        template:
-                            '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
+                        {
+                            element: $('#editactividadTarea'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                } else {
+                    sent = false;
+                    $('#e_nombreTarea').addClass("borderColor");
+                    $.notifyClose();
+                    $.notify(
+                        {
+                            message: data.mensaje,
+                            icon: "admin/images/warning.svg",
+                        },
+                        {
+                            element: $('#editactividadTarea'),
+                            position: "fixed",
+                            mouse_over: "pause",
+                            placement: {
+                                from: "top",
+                                align: "center",
+                            },
+                            icon_type: "image",
+                            newest_on_top: true,
+                            delay: 2000,
+                            template:
+                                '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                                "</div>",
+                            spacing: 35,
+                        }
+                    );
+                }
             }
         },
         error: function () { },
@@ -1408,6 +1445,7 @@ function registrarActividadTarea() {
         },
         success: function (data) {
             if (data.estado === 1) {
+                sent = false;
                 if (data.actividad.estado == 0) {
                     alertify
                         .confirm("Ya existe una actividad inactiva con este nombre. ¿Desea recuperarla si o no?", function (
@@ -1465,6 +1503,7 @@ function registrarActividadTarea() {
                 }
             } else {
                 if (data.estado === 0) {
+                    sent = false;
                     if (data.actividad.estado == 0) {
                         alertify
                             .confirm("Ya existe una actividad inactiva con este código. ¿Desea recuperarla si o no?", function (
