@@ -306,7 +306,7 @@ class biometricoController extends Controller
         $marcaciones = DB::table('marcacion_puerta as map')
             ->leftJoin('horario_empleado as hoeM', 'map.horarioEmp_id', '=', 'hoeM.horarioEmp_id')
             ->leftJoin('horario as horM', 'hoeM.horario_horario_id', '=', 'horM.horario_id')
-            ->join('dispositivos as dis', 'map.dispositivos_idDispositivos', '=', 'dis.idDispositivos')
+            ->join('dispositivos as dis', 'map.dispositivoEntrada', '=', 'dis.idDispositivos')
             ->select(
                 'map.tipoMarcacionB',
 

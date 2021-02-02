@@ -313,7 +313,7 @@ class apimovilController extends Controller
             $marcacion_puerta->marcaMov_fecha= $req['fechaMarcacion'];
             $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
-            $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
+            $marcacion_puerta->dispositivoEntrada=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
             if(empty($req['activ_id'])) {}
             else{
@@ -355,7 +355,7 @@ class apimovilController extends Controller
                 ->where('mv.marcaMov_fecha', '!=',null )
                 ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
                 ->orderby('marcaMov_fecha','ASC')
                 ->get()->last();
                 /* ---------------------------------------------------------------- */
@@ -372,7 +372,7 @@ class apimovilController extends Controller
                        ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                        ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
                        ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                       ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                       ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
                        ->orderby('marcaMov_fecha','ASC')
                        ->get()->first();
                    }
@@ -388,7 +388,7 @@ class apimovilController extends Controller
                     ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                     ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
                     ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                    ->where('mv.dispositivos_idDispositivos', '=',$req['idDisposi'])
+                    ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
                     ->orderby('marcaMov_fecha','ASC')
                     ->get()->last();
                 }
@@ -400,7 +400,7 @@ class apimovilController extends Controller
             $marcacion_puerta->marcaMov_salida= $req['fechaMarcacion'];
             $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
-            $marcacion_puerta->dispositivos_idDispositivos=$req['idDisposi'];
+            $marcacion_puerta->dispositivoEntrada=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
             if(empty($req['activ_id'])) {}
             else{

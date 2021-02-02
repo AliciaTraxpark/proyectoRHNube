@@ -1290,7 +1290,7 @@ class apiBiometricoController extends Controller
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
                     ->orWhereDate('mv.marcaMov_salida', '=', $fecha1V)
-                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                    ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                     ->get();
                 /*  dd($marcacion_puertaVacio); */
                 if ($marcacion_puertaVacio->isEmpty()) {
@@ -1309,7 +1309,7 @@ class apiBiometricoController extends Controller
                     ->where('mv.marcaMov_fecha', '!=', null) */
                         ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
                         ->orWhereDate('mv.marcaMov_salida', '=', $fecha1V)
-                        ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                        ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                         ->orderby('marcaMov_fecha', 'ASC')
                         ->get()->last();
 
@@ -1326,7 +1326,7 @@ class apiBiometricoController extends Controller
                                 ->where('mv.marcaMov_salida', '=', null)
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->first();
                             /* ------------------------------------------------------ */
@@ -1345,7 +1345,7 @@ class apiBiometricoController extends Controller
                 ->where('mv.marcaMov_salida', '=', null)
                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                 ->orderby('marcaMov_fecha', 'ASC')
                 ->get()->first();
 
@@ -1378,7 +1378,7 @@ class apiBiometricoController extends Controller
                 /* -------------------- */
 
                 $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                 /* VALIDANDO EMPLEADOIIIII */
                 $empleados = DB::table('empleado as e')
@@ -1428,7 +1428,7 @@ class apiBiometricoController extends Controller
                             ->where('mv.marcaMov_salida', '!=', null)
                             ->where('mv.marcaMov_fecha', '!=', null)
                             ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
-                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                             ->where('mv.tipoMarcacionB', '=', 1)
                             ->orderby('marcaMov_fecha', 'ASC')
                             ->get()->last();
@@ -1443,7 +1443,7 @@ class apiBiometricoController extends Controller
                                     ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                     ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                     ->where('mv.tipoMarcacionB', '=', 1)
-                                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                    ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                     ->orderby('marcaMov_fecha', 'ASC')
                                     ->get()->first();
                             } else {
@@ -1458,7 +1458,7 @@ class apiBiometricoController extends Controller
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                 ->where('mv.tipoMarcacionB', '=', 1)
-                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->last();
 
@@ -1470,7 +1470,7 @@ class apiBiometricoController extends Controller
                             $marcacion_biometrico = new marcacion_puerta();
                             $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
                             $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                            $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                            $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                             /* VALIDANDO EMPLEADOIIIII */
                             $empleados = DB::table('empleado as e')
@@ -1508,7 +1508,7 @@ class apiBiometricoController extends Controller
                             ->where('mv.marcaMov_salida', '!=', null)
                             ->where('mv.marcaMov_fecha', '!=', null)
                             ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
-                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                             ->where('mv.tipoMarcacionB', '=', 2)
                             ->orderby('marcaMov_fecha', 'ASC')
                             ->get()->last();
@@ -1522,7 +1522,7 @@ class apiBiometricoController extends Controller
                                     ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                     ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                     ->where('mv.tipoMarcacionB', '=', 2)
-                                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                    ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                     ->orderby('marcaMov_fecha', 'ASC')
                                     ->get()->first();
                             } else {
@@ -1537,7 +1537,7 @@ class apiBiometricoController extends Controller
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                 ->where('mv.tipoMarcacionB', '=', 2)
-                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->last();
 
@@ -1549,7 +1549,7 @@ class apiBiometricoController extends Controller
                             $marcacion_biometrico = new marcacion_puerta();
                             $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
                             $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                            $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                            $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                             /* VALIDANDO EMPLEADOIIIII */
                             $empleados = DB::table('empleado as e')
@@ -3054,7 +3054,7 @@ class apiBiometricoController extends Controller
                 $marcacion_puertaVacio = DB::table('marcacion_puerta as mv')
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V)
-                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                    ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                     ->whereNull('mv.horarioEmp_id')
                     ->get();
                 /*  dd($marcacion_puertaVacio); */
@@ -3072,7 +3072,7 @@ class apiBiometricoController extends Controller
                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V)
                         ->whereNull('mv.horarioEmp_id')
-                        ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                        ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                         ->orderby(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), 'ASC')
                         ->get()->last();
 
@@ -3089,7 +3089,7 @@ class apiBiometricoController extends Controller
                                 ->where('mv.marcaMov_salida', '=', null)
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                 ->whereNull('mv.horarioEmp_id')
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->first();
@@ -3197,7 +3197,7 @@ class apiBiometricoController extends Controller
                 $marcacion_puertaVacio2 = DB::table('marcacion_puerta as mv')
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha2V)
-                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                    ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                     ->where('mv.horarioEmp_id', '!=', null)
                     ->get();
 
@@ -3215,7 +3215,7 @@ class apiBiometricoController extends Controller
                     ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
                     ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                     ->where('mv.tipoMarcacionB', '=', 1)
-                    ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                    ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                     ->where('mv.horarioEmp_id', '!=', null)
                     ->orderby('marcaMov_fecha', 'ASC')
                     ->get()->last();
@@ -3324,7 +3324,7 @@ class apiBiometricoController extends Controller
                         /* -------------------- */
 
                         $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                        $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                        $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                         $marcacion_biometrico->organi_id = $empleados->organi_id;
 
@@ -3361,7 +3361,7 @@ class apiBiometricoController extends Controller
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                 ->where('mv.tipoMarcacionB', '=', 1)
-                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                 ->whereNull('mv.horarioEmp_id')
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->last();
@@ -3387,7 +3387,7 @@ class apiBiometricoController extends Controller
                                     $marcacion_biometrico = new marcacion_puerta();
                                     $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
                                     $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                    $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                    $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
                                     $marcacion_biometrico->organi_id = $empleados->organi_id;
 
                                     if (empty($req['idHoraEmp'])) {} else {
@@ -3413,7 +3413,7 @@ class apiBiometricoController extends Controller
                                     $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
                                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                         ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1)
-                                        ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                        ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                         ->where('mv.tipoMarcacionB', '=', 1)
                                         ->orderby('marcaMov_fecha', 'ASC')
                                         ->where('mv.horarioEmp_id', '!=', null)
@@ -3425,7 +3425,7 @@ class apiBiometricoController extends Controller
                                             $marcacion_biometrico = new marcacion_puerta();
                                             $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
                                             $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                            $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                            $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                                             $marcacion_biometrico->organi_id = $empleados->organi_id;
 
@@ -3446,7 +3446,7 @@ class apiBiometricoController extends Controller
                                                 ->where('mv.marcaMov_salida', '=', null)
                                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                                 ->where('mv.horarioEmp_id', '!=', null)
                                                 ->orderby('marcaMov_fecha', 'ASC')
                                                 ->get()->first();
@@ -3462,7 +3462,7 @@ class apiBiometricoController extends Controller
                                                 $marcacion_biometrico = new marcacion_puerta();
                                                 $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
                                                 $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                                $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                                $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                                                 $marcacion_biometrico->organi_id = $empleados->organi_id;
 
@@ -3490,7 +3490,7 @@ class apiBiometricoController extends Controller
                                             ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
                                             ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                             ->where('mv.tipoMarcacionB', '=', 1)
-                                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                             ->where('mv.horarioEmp_id', '!=', null)
                                             ->orderby('marcaMov_fecha', 'ASC')
                                             ->get()->last();
@@ -3589,7 +3589,7 @@ class apiBiometricoController extends Controller
         $marcacion_puertaVacio = DB::table('marcacion_puerta as mv')
             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
             ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha)
-            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
             ->whereNull('mv.horarioEmp_id')
             ->get();
 
@@ -3598,7 +3598,7 @@ class apiBiometricoController extends Controller
             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
             ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha)
             ->whereNull('mv.horarioEmp_id')
-            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
             ->orderby(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), 'ASC')
             ->get()->last();
 
@@ -3608,7 +3608,7 @@ class apiBiometricoController extends Controller
             ->where('mv.marcaMov_salida', '=', null)
             ->whereDate('mv.marcaMov_fecha', '=', $fecha)
             ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
             ->whereNull('mv.horarioEmp_id')
             ->orderby('marcaMov_fecha', 'ASC')
             ->get()->first();
@@ -3621,7 +3621,7 @@ class apiBiometricoController extends Controller
             ->whereDate('mv.marcaMov_fecha', '=', $fecha)
             ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
             ->where('mv.tipoMarcacionB', '=', 1)
-            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
             ->where('mv.horarioEmp_id', '!=', null)
             ->orderby('marcaMov_fecha', 'ASC')
             ->get()->last();
@@ -3855,7 +3855,7 @@ class apiBiometricoController extends Controller
                         /* -------------------- */
 
                         $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                        $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                        $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                         $marcacion_biometrico->organi_id = $empleados->organi_id;
 
@@ -3892,7 +3892,7 @@ class apiBiometricoController extends Controller
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                 ->where('mv.tipoMarcacionB', '=', 1)
-                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                 ->whereNull('mv.horarioEmp_id')
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->last();
@@ -3918,7 +3918,7 @@ class apiBiometricoController extends Controller
                                     $marcacion_biometrico = new marcacion_puerta();
                                     $marcacion_biometrico->marcaMov_fecha = $req['fechaMarcacion'];
                                     $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                    $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                    $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
                                     $marcacion_biometrico->organi_id = $empleados->organi_id;
 
                                     if (empty($req['idHoraEmp'])) {} else {
@@ -3944,7 +3944,7 @@ class apiBiometricoController extends Controller
                                     $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
                                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                         ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1)
-                                        ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                        ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                         ->where('mv.tipoMarcacionB', '=', 1)
                                         ->orderby('marcaMov_fecha', 'ASC')
                                         ->where('mv.horarioEmp_id', '!=', null)
@@ -3956,7 +3956,7 @@ class apiBiometricoController extends Controller
                                             $marcacion_biometrico = new marcacion_puerta();
                                             $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
                                             $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                            $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                            $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                                             $marcacion_biometrico->organi_id = $empleados->organi_id;
 
@@ -3977,7 +3977,7 @@ class apiBiometricoController extends Controller
                                                 ->where('mv.marcaMov_salida', '=', null)
                                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                                ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                                ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                                 ->where('mv.horarioEmp_id', '!=', null)
                                                 ->orderby('marcaMov_fecha', 'ASC')
                                                 ->get()->first();
@@ -3993,7 +3993,7 @@ class apiBiometricoController extends Controller
                                                 $marcacion_biometrico = new marcacion_puerta();
                                                 $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
                                                 $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
-                                                $marcacion_biometrico->dispositivos_idDispositivos = $req['idDisposi'];
+                                                $marcacion_biometrico->dispositivoEntrada = $req['idDisposi'];
 
                                                 $marcacion_biometrico->organi_id = $empleados->organi_id;
 
@@ -4021,7 +4021,7 @@ class apiBiometricoController extends Controller
                                             ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
                                             ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
                                             ->where('mv.tipoMarcacionB', '=', 1)
-                                            ->where('mv.dispositivos_idDispositivos', '=', $req['idDisposi'])
+                                            ->where('mv.dispositivoEntrada', '=', $req['idDisposi'])
                                             ->where('mv.horarioEmp_id', '!=', null)
                                             ->orderby('marcaMov_fecha', 'ASC')
                                             ->get()->last();

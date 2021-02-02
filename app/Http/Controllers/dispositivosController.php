@@ -643,7 +643,7 @@ class dispositivosController extends Controller
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
-            ->leftJoin('dispositivos as d', 'd.idDispositivos', '=', 'mp.dispositivos_idDispositivos')
+            ->leftJoin('dispositivos as d', 'd.idDispositivos', '=', 'mp.dispositivoEntrada')
             ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
             ->select(
                 'e.emple_id',
@@ -693,7 +693,7 @@ class dispositivosController extends Controller
                     array_push($marcaciones, $arrayNuevo);
                 }
             }
-            if ($ingreso && $empleados[$index]->emple_estado == 1) {         //: VALIDAMOS PARA EMPLEADOS QUE NO TIENEN DATA DE ESA FECHA 
+            if ($ingreso && $empleados[$index]->emple_estado == 1) {         //: VALIDAMOS PARA EMPLEADOS QUE NO TIENEN DATA DE ESA FECHA
                 $arrayNuevo = (object) array(
                     "emple_id" => $empleados[$index]->emple_id,
                     "emple_nDoc" => $empleados[$index]->emple_nDoc,
@@ -2596,8 +2596,8 @@ class dispositivosController extends Controller
                 ->get()
                 ->first();
 
-            $fecha = Carbon::parse($horario->fecha);                            // : FECHA 
-            $fechaNext = $fecha->copy()->addDays(1)->isoFormat("YYYY-MM-DD");   // :FECHA SIGUIENTE 
+            $fecha = Carbon::parse($horario->fecha);                            // : FECHA
+            $fechaNext = $fecha->copy()->addDays(1)->isoFormat("YYYY-MM-DD");   // :FECHA SIGUIENTE
             //: HORA DE INICIO DE HORARIO
             $horarioInicio = Carbon::parse($fecha->isoFormat("YYYY-MM-DD") . " " . $horario->horaI)->subMinutes($horario->toleranciaI);
             // : HORA DE INICIO DE MARCACION
