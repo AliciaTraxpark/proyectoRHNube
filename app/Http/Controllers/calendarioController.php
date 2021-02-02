@@ -818,9 +818,11 @@ class calendarioController extends Controller
   }
 
   public function empSeleccionados(Request $request){
+
     $idempleado = $request->ids;
     $arrayeve = collect();
-    foreach($idempleado as $idempleados){
+    if($idempleado){
+        foreach($idempleado as $idempleados){
             $emps=    DB::table('empleado as e')
             ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
             ->leftJoin('eventos_empleado as eve', 'e.emple_id', '=', 'eve.id_empleado')
@@ -841,6 +843,8 @@ class calendarioController extends Controller
             ->get();
             $arrayeve->push($emps);
     }
+    }
+
     return json_encode($arrayeve);
 
   }
