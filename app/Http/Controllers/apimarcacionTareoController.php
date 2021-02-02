@@ -180,7 +180,7 @@ class apimarcacionTareoController extends Controller
 
         foreach ($actividades as $actividadesSub) {
             $Subactividades = DB::table('actividad_subactividad as asu')
-            ->join('subactividad as su','asu.subActividad','=','su.idsubActividad')
+                ->join('subactividad as su', 'asu.subActividad', '=', 'su.idsubActividad')
                 ->select(
                     'asu.Activi_id',
                     'su.idsubActividad',
@@ -190,14 +190,14 @@ class apimarcacionTareoController extends Controller
                     'su.modoTareo',
                     'su.organi_id'
                 )
-                ->where('asu.Activi_id', '=',  $actividadesSub->Activi_id)
+                ->where('asu.Activi_id', '=', $actividadesSub->Activi_id)
                 ->where('su.estado', '=', 1)
                 ->where('asu.estado', '=', 1)
                 ->where('su.modoTareo', '=', 1)
                 ->groupBy('asu.idactividad_subactividad')
                 ->get();
 
-                $actividadesSub->subactividades = $Subactividades;
+            $actividadesSub->subactividades = $Subactividades;
 
         }
 
@@ -308,7 +308,7 @@ class apimarcacionTareoController extends Controller
             /* INSERTAMOS EN COLLECTION */
             $datos = ['tipoMarcacion' => $tipoMarcacion, 'fechaMarcacion' => $fechaMarcacion,
                 'idEmpleado' => $idEmpleado, 'idControlador' => $idControlador,
-                'idDisposi' => $idDisposi, 'organi_id' => $organi_id, 'activ_id' => $activ_id,'idsubActividad' => $idsubActividad,
+                'idDisposi' => $idDisposi, 'organi_id' => $organi_id, 'activ_id' => $activ_id, 'idsubActividad' => $idsubActividad,
                 'idHoraEmp' => $idHoraEmp, 'latitud' => $latitud, 'longitud' => $longitud,
                 'puntoC_id' => $puntoC_id, 'centC_id' => $centC_id,
             ];
@@ -364,8 +364,8 @@ class apimarcacionTareoController extends Controller
                 /* VERIFICAMOS SI EXISTE OTRA MARCACION CON EL MISMO DIA Y EMPLEADO */
                 $marcacion_tareo00 = DB::table('marcacion_tareo as mt')
                     ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
-                    /* ->where('mt.marcaTareo_salida', '!=', null)
-                    ->where('mt.marcaTareo_entrada', '!=', null) */
+                /* ->where('mt.marcaTareo_salida', '!=', null)
+                ->where('mt.marcaTareo_entrada', '!=', null) */
                     ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
                     ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
                     ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
@@ -375,12 +375,26 @@ class apimarcacionTareoController extends Controller
                 /* ---------------------------------------------------------------- */
 
                 /* SI EXISTE MARCACION ANTERIOR */
-                if ($marcacion_tareo00 ) {
+                if ($marcacion_tareo00) {
                     if ($marcacion_tareo00->marcaTareo_entrada != null && $marcacion_tareo00->marcaTareo_salida != null) {
-                          /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
-                    if ($marcacion_tareo00->marcaTareo_entrada > $req['fechaMarcacion']) {
+                        /*  SI LA MARCACION ANTERIOR LA ENTRADA ES MAYOR QUE LA SALIDA QUE RECIBO */
+                        if ($marcacion_tareo00->marcaTareo_entrada > $req['fechaMarcacion']) {
 
-                        /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
+                            /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
+                            $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
+                                ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
+                                ->where('mt.marcaTareo_salida', '=', null)
+                                ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
+                                ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
+                                ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
+                                ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+                                ->orderby('marcaTareo_entrada', 'ASC')
+                                ->get()->first();
+                        } else {
+                            $marcacion_tareo1 = [];
+                            $marcacion_tareo1 == null;
+                        }
+                    } else {
                         $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
                             ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
                             ->where('mt.marcaTareo_salida', '=', null)
@@ -389,23 +403,8 @@ class apimarcacionTareoController extends Controller
                             ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
                             ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
                             ->orderby('marcaTareo_entrada', 'ASC')
-                            ->get()->first();
-                    } else {
-                        $marcacion_tareo1 = [];
-                        $marcacion_tareo1 == null;
+                            ->get()->last();
                     }
-                    } else{
-                        $marcacion_tareo1 = DB::table('marcacion_tareo as mt')
-                        ->where('mt.marcaTareo_idempleado', '=', $req['idEmpleado'])
-                        ->where('mt.marcaTareo_salida', '=', null)
-                        ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
-                        ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
-                        ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
-                        ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
-                        ->orderby('marcaTareo_entrada', 'ASC')
-                        ->get()->last();
-                    }
-
 
                 } else {
                     $marcacion_tareo1 = DB::table('marcacion_tareo as mt')

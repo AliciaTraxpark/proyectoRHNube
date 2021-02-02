@@ -62,7 +62,7 @@ class apiBiometricoController extends Controller
                 foreach ($usuario as $tab) {
                     $organizacion = DB::table('usuario_organizacion as uso')
                         ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
-                        'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
+                            'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                         ->where('user_id', '=', $tab->id)
                         ->join('users as u', 'uso.user_id', '=', 'u.id')
                         ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
@@ -114,8 +114,8 @@ class apiBiometricoController extends Controller
                                     ->get();
 
                                 $organizacion = DB::table('usuario_organizacion as uso')
-                                ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
-                                'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
+                                    ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                                        'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                                     ->where('user_id', '=', Auth::user()->id)
                                     ->join('users as u', 'uso.user_id', '=', 'u.id')
                                     ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
@@ -154,8 +154,8 @@ class apiBiometricoController extends Controller
                                         ->get();
 
                                     $organizacion = DB::table('usuario_organizacion as uso')
-                                    ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
-                                    'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
+                                        ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                                            'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                                         ->where('user_id', '=', Auth::user()->id)
                                         ->join('users as u', 'uso.user_id', '=', 'u.id')
                                         ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
@@ -209,8 +209,8 @@ class apiBiometricoController extends Controller
                             ->get();
 
                         $organizacion = DB::table('usuario_organizacion as uso')
-                        ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
-                        'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
+                            ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                                'uso.rol_id', 'r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial', 'o.organi_ruc', 'o.created_at as fechaRegistro', 'o.organi_tipo', 'o.sinc_Biometrico')
                             ->where('user_id', '=', Auth::user()->id)
                             ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                             ->join('users as u', 'uso.user_id', '=', 'u.id')
@@ -1222,7 +1222,6 @@ class apiBiometricoController extends Controller
                 'detail' => 'No se encontro empleados relacionados con este dispositivo'), 400);
         }
     }
-
 
     public function empleadosHorarioBi(Request $request)
     {
@@ -2684,8 +2683,8 @@ class apiBiometricoController extends Controller
 
                 /* VERIFICO SI NO HAY MARCACIONES ANTES */
                 $marcacion_puertaVacio = DB::table('marcacion_puerta as mv')
-                     ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                     ->where('dis.tipoDispositivo', '=',3)
+                    ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                    ->where('dis.tipoDispositivo', '=', 3)
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V)
 
@@ -2704,7 +2703,7 @@ class apiBiometricoController extends Controller
                     /* BUSCAMOS SI EXISTE UNA ULTIMA MARCACION CON TODO LOS DATOS */
                     $marcacion_puertaVerif = DB::table('marcacion_puerta as mv')
                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                        ->where('dis.tipoDispositivo', '=',3)
+                        ->where('dis.tipoDispositivo', '=', 3)
                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                         ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1V)
                         ->whereNull('mv.horarioEmp_id')
@@ -2721,7 +2720,7 @@ class apiBiometricoController extends Controller
                             /*--------- SI NO TENGO SALIDA ----------------------------*/
                             $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
                                 ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                ->where('dis.tipoDispositivo', '=',3)
+                                ->where('dis.tipoDispositivo', '=', 3)
                                 ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                 ->where('mv.marcaMov_salida', '=', null)
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
@@ -2831,8 +2830,8 @@ class apiBiometricoController extends Controller
                 $fecha2V = Carbon::create($req['fechaMarcacion'])->toDateString();
 
                 $marcacion_puertaVacio2 = DB::table('marcacion_puerta as mv')
-                ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                ->where('dis.tipoDispositivo', '=',3)
+                    ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                    ->where('dis.tipoDispositivo', '=', 3)
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha2V)
 
@@ -2849,7 +2848,7 @@ class apiBiometricoController extends Controller
                 /* ----------------------------------------------------------------- */
                 $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
                     ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                    ->where('dis.tipoDispositivo', '=',3)
+                    ->where('dis.tipoDispositivo', '=', 3)
                     ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                     ->where('mv.marcaMov_salida', '=', null)
                     ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
@@ -2995,8 +2994,8 @@ class apiBiometricoController extends Controller
 
                             /* VERIFICAMOS  PARA EMPAREJAR  */
                             $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
-                                 ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                 ->where('dis.tipoDispositivo', '=',3)
+                                ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                                ->where('dis.tipoDispositivo', '=', 3)
                                 ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                 ->where('mv.marcaMov_salida', '=', null)
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
@@ -3053,7 +3052,7 @@ class apiBiometricoController extends Controller
                                     /* CONSULTAMOS SI HAY UNA MARCACION DE ANTERIOR QUE ESTE LLENA */
                                     $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
                                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                       ->where('dis.tipoDispositivo', '=',3)
+                                        ->where('dis.tipoDispositivo', '=', 3)
                                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                         ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1)
 
@@ -3085,8 +3084,8 @@ class apiBiometricoController extends Controller
 
                                         } else {
                                             $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
-                                                 ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                                 ->where('dis.tipoDispositivo', '=',3)
+                                                ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                                                ->where('dis.tipoDispositivo', '=', 3)
                                                 ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                                 ->where('mv.marcaMov_salida', '=', null)
                                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
@@ -3131,7 +3130,7 @@ class apiBiometricoController extends Controller
                                         /* VERIFICAMOS SI LA ULTIMA MARCACION SIN SALIDA EXSITE E INSERTAMOS */
                                         $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
                                             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                            ->where('dis.tipoDispositivo', '=',3)
+                                            ->where('dis.tipoDispositivo', '=', 3)
                                             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                             ->where('mv.marcaMov_salida', '=', null)
                                             ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
@@ -3235,7 +3234,7 @@ class apiBiometricoController extends Controller
         /* VERIFICO SI NO HAY MARCACIONES ANTES */
         $marcacion_puertaVacio = DB::table('marcacion_puerta as mv')
             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-            ->where('dis.tipoDispositivo', '=',3)
+            ->where('dis.tipoDispositivo', '=', 3)
             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
             ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha)
 
@@ -3244,8 +3243,8 @@ class apiBiometricoController extends Controller
 
         /* VERIFICO  ULTIMA MARCACION */
         $marcacion_puertaVerif = DB::table('marcacion_puerta as mv')
-             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-             ->where('dis.tipoDispositivo', '=',3)
+            ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+            ->where('dis.tipoDispositivo', '=', 3)
             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
             ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha)
             ->whereNull('mv.horarioEmp_id')
@@ -3255,7 +3254,7 @@ class apiBiometricoController extends Controller
         /*--------- SI  TENGO SALIDA ----------------------------*/
         $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-            ->where('dis.tipoDispositivo', '=',3)
+            ->where('dis.tipoDispositivo', '=', 3)
             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
             ->where('mv.marcaMov_salida', '=', null)
             ->whereDate('mv.marcaMov_fecha', '=', $fecha)
@@ -3269,7 +3268,7 @@ class apiBiometricoController extends Controller
         //* SI  TENGO SALIDA CON HORARIO
         $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-            ->where('dis.tipoDispositivo', '=',3)
+            ->where('dis.tipoDispositivo', '=', 3)
             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
             ->where('mv.marcaMov_salida', '=', null)
             ->whereDate('mv.marcaMov_fecha', '=', $fecha)
@@ -3541,8 +3540,8 @@ class apiBiometricoController extends Controller
 
                             /* VERIFICAMOS  PARA EMPAREJAR  */
                             $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
-                              ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                 ->where('dis.tipoDispositivo', '=',3)
+                                ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                                ->where('dis.tipoDispositivo', '=', 3)
                                 ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                 ->where('mv.marcaMov_salida', '=', null)
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
@@ -3600,7 +3599,7 @@ class apiBiometricoController extends Controller
                                     /* CONSULTAMOS SI HAY UNA MARCACION DE ANTERIOR QUE ESTE LLENA */
                                     $marcacion_puerta00 = DB::table('marcacion_puerta as mv')
                                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                        ->where('dis.tipoDispositivo', '=',3)
+                                        ->where('dis.tipoDispositivo', '=', 3)
                                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                         ->whereDate(DB::raw('IF(mv.marcaMov_fecha is null,mv.marcaMov_salida ,mv.marcaMov_fecha)'), '=', $fecha1)
 
@@ -3633,7 +3632,7 @@ class apiBiometricoController extends Controller
                                         } else {
                                             $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
                                                 ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                                ->where('dis.tipoDispositivo', '=',3)
+                                                ->where('dis.tipoDispositivo', '=', 3)
                                                 ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                                 ->where('mv.marcaMov_salida', '=', null)
                                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
@@ -3678,7 +3677,7 @@ class apiBiometricoController extends Controller
                                         /* VERIFICAMOS SI LA ULTIMA MARCACION SIN SALIDA EXSITE E INSERTAMOS */
                                         $marcacion_puerta1 = DB::table('marcacion_puerta as mv')
                                             ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
-                                            ->where('dis.tipoDispositivo', '=',3)
+                                            ->where('dis.tipoDispositivo', '=', 3)
                                             ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
                                             ->where('mv.marcaMov_salida', '=', null)
                                             ->whereDate('mv.marcaMov_fecha', '=', $fecha2V)
