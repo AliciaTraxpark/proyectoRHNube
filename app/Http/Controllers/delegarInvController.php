@@ -451,7 +451,7 @@ class delegarInvController extends Controller
 
         /* DATOS DE INVITADO ADMIN */
         $invitado2=DB::table('invitado as i')
-        ->join('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
+        ->leftjoin('permiso_invitado as pi', 'i.idinvitado','=','pi.idinvitado')
         ->where('i.idinvitado','=', $idinvitado)
         ->select('i.*', 'pi.agregarHb', 'pi.modifHb', 'pi.agregarContract', 'pi.modifContract')
         ->get();
