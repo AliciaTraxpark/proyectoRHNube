@@ -374,7 +374,11 @@ function cargartabla(fecha) {
                                                 Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
                                         </th>
-                                        <th id="tSitio" name="colTiempoS">Tiempo en sitio</th>`;
+                                        <th id="tSitio" name="colTiempoS">
+                                            <span>
+                                                Tiempo total <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                            </span>
+                                        </th>`;
                     }
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
