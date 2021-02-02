@@ -350,12 +350,13 @@ class apimovilController extends Controller
 
                 /* VERIFICAMOS SI EXISTE OTRA MARCACION CON EL MISMO DIA Y EMPLEADO */
                 $marcacion_puerta00 =DB::table('marcacion_puerta as mv')
+                ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                 ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                /*  ->where('mv.marcaMov_salida', '!=',null )
                 ->where('mv.marcaMov_fecha', '!=',null ) */
                 ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                 ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
+                ->where('dis.tipoDispositivo', '=',2)
                 ->orderby('marcaMov_fecha','ASC')
                 ->get()->last();
                 /* ---------------------------------------------------------------- */
@@ -368,12 +369,13 @@ class apimovilController extends Controller
 
                     /* VERIFICAMOS SI EXISTE MARCACION SIN SALIDA */
                     $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                    ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                     ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                     ->where('mv.marcaMov_salida', '=',null )
                     ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                     ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
                     ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                    ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
+                    ->where('dis.tipoDispositivo', '=',2)
                     ->orderby('marcaMov_fecha','ASC')
                     ->get()->first();
                 }
@@ -385,12 +387,13 @@ class apimovilController extends Controller
                     }
                     else{
                         $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                        ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                         ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                         ->where('mv.marcaMov_salida', '=',null )
                         ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                         ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
                         ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                        ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
+                        ->where('dis.tipoDispositivo', '=',2)
                         ->orderby('marcaMov_fecha','ASC')
                         ->get()->last();
                     }
@@ -398,12 +401,13 @@ class apimovilController extends Controller
 
                 } else{
                     $marcacion_puerta1 =DB::table('marcacion_puerta as mv')
+                    ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
                     ->where('mv.marcaMov_emple_id', '=',$req['idEmpleado'] )
                     ->where('mv.marcaMov_salida', '=',null )
                     ->whereDate('mv.marcaMov_fecha', '=',$fecha1 )
                     ->where('mv.marcaMov_fecha', '<=',$req['fechaMarcacion'] )
                     ->where('mv.controladores_idControladores', '=',$req['idControlador'] )
-                    ->where('mv.dispositivoEntrada', '=',$req['idDisposi'])
+                    ->where('dis.tipoDispositivo', '=',2)
                     ->orderby('marcaMov_fecha','ASC')
                     ->get()->last();
                 }
@@ -415,7 +419,7 @@ class apimovilController extends Controller
             $marcacion_puerta->marcaMov_salida= $req['fechaMarcacion'];
             $marcacion_puerta->marcaMov_emple_id=$req['idEmpleado'];
             $marcacion_puerta->controladores_idControladores=$req['idControlador'];
-            $marcacion_puerta->dispositivoEntrada=$req['idDisposi'];
+            $marcacion_puerta->dispositivoSalida=$req['idDisposi'];
             $marcacion_puerta->organi_id=$req['organi_id'];
             if(empty($req['activ_id'])) {}
             else{
@@ -448,6 +452,7 @@ class apimovilController extends Controller
                 /* EMPAREJAMOS CON LA MARCACION SIN SALIDA QUE ENCONTRAMOS */
                 $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
                 $marcacion_puerta->marcaMov_salida=$req['fechaMarcacion'];
+                $marcacion_puerta->dispositivoSalida=$req['idDisposi'];
                 $marcacion_puerta->save();
             }
             }
