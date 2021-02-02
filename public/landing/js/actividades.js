@@ -562,6 +562,7 @@ $('#e_customMT').on("change.bootstrapSwitch", function (event) {
 var EmpleadosDeActividadEditar;
 var ActividadDeActividadEditar;
 function editarActividad(id) {
+    $('[name="aedit"]').css('pointer-events', 'none');
     $.ajax({
         async: false,
         type: "POST",
@@ -655,6 +656,7 @@ function editarActividad(id) {
     });
     $.notifyClose();
     $('#editactividadTarea').modal();
+    $('[name="aedit"]').css('pointer-events', 'auto');
     sent = false;
 }
 // : GUARDAR CAMBIOS DE ACTIVIDAD
