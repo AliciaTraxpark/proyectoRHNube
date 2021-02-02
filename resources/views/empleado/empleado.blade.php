@@ -1987,17 +1987,14 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
-                                                contrato</strong></label>
-                                        <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
-                                                gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha"
-                                                required="">
+                                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <div class="row w-100 alertVencimiento">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha" id="noti_dia_fecha">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
-                                                    </option>
-                                                    @endfor
+                                                @for ($i = 30; $i <61; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2221,17 +2218,14 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
-                                                contrato</strong></label>
-                                        <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
-                                                gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha_ver"
-                                                id="noti_dia_fecha_ver" required="">
+                                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <div class="row w-100 alertVencimiento">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha_ver" id="noti_dia_fecha_ver">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
-                                                    </option>
-                                                    @endfor
+                                                @for ($i = 30; $i <61; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2788,17 +2782,14 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
-                                                contrato</strong></label>
-                                        <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
-                                                gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha_editar"
-                                                id="noti_dia_fecha_editar" required="">
+                                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <div class="row w-100 alertVencimiento">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha_editar" id="noti_dia_fecha_editar">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
-                                                    </option>
-                                                    @endfor
+                                                @for ($i = 30; $i <61; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -3018,17 +3009,14 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
-                                                contrato</strong></label>
-                                        <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
-                                                gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="noti_dia_fecha_alta"
-                                                id="noti_dia_fecha_alta" required="">
+                                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <div class="row w-100 alertVencimiento">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="noti_dia_fecha_alta" id="noti_dia_fecha_alta">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
-                                                    </option>
-                                                    @endfor
+                                                @for ($i = 30; $i <61; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -3416,17 +3404,14 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="pt-3 pl-3"><strong>Alerta de vencimiento de
-                                                contrato</strong></label>
-                                        <div class="row w-100">
-                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le
-                                                gustaría que se le notifique?</label>
-                                            <select class="form-control col-3" name="ver_noti_dia_fecha"
-                                                id="ver_noti_dia_fecha" required="">
+                                        <label class="pt-3 pl-3 alertVencimiento"><strong>Alerta de vencimiento de contrato</strong></label>
+                                        <div class="row w-100 alertVencimiento">
+                                            <label class="col-9 pl-4">¿Cuántos días antes que finalice su contrato, le gustaría que se le notifique?</label>
+                                            <select class="form-control col-3" name="ver_noti_dia_fecha" id="ver_noti_dia_fecha">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i <61; $i++) <option class="" value="{{$i}}"> {{ $i }}
-                                                    </option>
-                                                    @endfor
+                                                @for ($i = 30; $i <61; $i++) 
+                                                <option class="" value="{{$i}}"> {{ $i }}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                     </div>

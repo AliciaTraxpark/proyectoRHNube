@@ -61,9 +61,11 @@ class apiBiometricoController extends Controller
 
                 foreach ($usuario as $tab) {
                     $organizacion = DB::table('usuario_organizacion as uso')
-                        ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial')
+                        ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                        'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
                         ->where('user_id', '=', $tab->id)
                         ->join('users as u', 'uso.user_id', '=', 'u.id')
+                        ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                         ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
                         ->get();
                     $tab->organizacion = $organizacion;
@@ -112,9 +114,11 @@ class apiBiometricoController extends Controller
                                     ->get();
 
                                 $organizacion = DB::table('usuario_organizacion as uso')
-                                    ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial')
+                                ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                                'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
                                     ->where('user_id', '=', Auth::user()->id)
                                     ->join('users as u', 'uso.user_id', '=', 'u.id')
+                                    ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                                     ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
                                     ->get();
 
@@ -150,9 +154,11 @@ class apiBiometricoController extends Controller
                                         ->get();
 
                                     $organizacion = DB::table('usuario_organizacion as uso')
-                                        ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial')
+                                    ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                                    'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
                                         ->where('user_id', '=', Auth::user()->id)
                                         ->join('users as u', 'uso.user_id', '=', 'u.id')
+                                        ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                                         ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
                                         ->get();
 
@@ -203,8 +209,10 @@ class apiBiometricoController extends Controller
                             ->get();
 
                         $organizacion = DB::table('usuario_organizacion as uso')
-                            ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario', 'uso.rol_id', 'o.organi_id', 'o.organi_razonSocial')
+                        ->select('uso.usua_orga_id as idusuario_organizacion', 'uso.user_id as idusuario',
+                        'uso.rol_id','r.rol_nombre', 'o.organi_id', 'o.organi_razonSocial','o.organi_ruc','o.created_at as fechaRegistro','o.organi_tipo')
                             ->where('user_id', '=', Auth::user()->id)
+                            ->join('rol as r', 'uso.rol_id', '=', 'r.rol_id')
                             ->join('users as u', 'uso.user_id', '=', 'u.id')
                             ->join('organizacion as o', 'uso.organi_id', '=', 'o.organi_id')
                             ->get();
