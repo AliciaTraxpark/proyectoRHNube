@@ -209,12 +209,15 @@ use App\invitado;
                     </div>
                     <div class="tab-pane fade" id="tipo-informacion" role="tabpanel" aria-labelledby="v-pills-profile-tab" style="padding-bottom: 50px;">
                         <label for="" style="text-align: justify">
-                            En nuestros sitios web, existen unos apartados específicos donde anotas tus datos en el proceso de registro y a la hora de realizar pagos y/o pedidos. Nosotros te aseguramos que la información que nos facilites será gestionada de forma totalmente confidencial. <br><br>
+                            En nuestros sitios web, existen unos apartados específicos donde anotas tus datos en el proceso de registro y a la hora de realizar pagos y/o pedidos. Nosotros te aseguramos que la información que nos facilites será gestionada de forma totalmente confidencial. 
+                            <br><br>
                             En nuestra plataforma recogemos información para proporcionar las funcionalidades necesarias. <br><br>
 
                             Nuestro sitio web podrá recoger información personal, por ejemplo: nombre, apellidos, información de contacto como su dirección de correo electrónica o número de teléfono e información demográfica. Así mismo cuando sea necesario podrá ser requerida información específica para procesar algún pedido o realizar una entrega o facturación. <br><br>
 
                             Los datos se almacenarán mientras exista previsión de su uso para el fin por el que fueron recabados. La web puede utilizar cookies, consulta nuestra política de cookies. <br><br>
+
+                            Para la aplicación móvil "Modo en ruta": Se obtiene la ubicación GPS en segundo plano cada una cantidad de minutos determinados por el administrador de la plataforma, esta información es almacenada con la finalidad de otorgar la funcionalidad de rastreo contratada por el o los usuarios administradores.
 
                         </label>
                     </div>
