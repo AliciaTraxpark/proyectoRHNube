@@ -123,7 +123,7 @@ class ActividadesController extends Controller
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
-            ->groupBy('a.Activi_id')
+            ->groupBy('a.Activi_id', 'cp.idActividad', 'u.idActividad', 'mp.marcaIdActivi', 'mt.Activi_id')
             ->get();
 
         foreach ($actividades as $actividadesT) {
