@@ -333,7 +333,7 @@
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido horarioPadre">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox">
                                         <label for="">Horarios</label>
                                         <img class="float-right mt-1 ml-2"
                                             src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
@@ -349,11 +349,11 @@
                                             <label for="">Horario</label>
                                         </li>
                                         <li class="liContenido horarioHijo">
-                                            <input type="checkbox" id="toleranciaIHorario" checked>
+                                            <input type="checkbox" id="toleranciaIHorario">
                                             <label for="">Tolerancia en el ingreso</label>
                                         </li>
                                         <li class="liContenido horarioHijo">
-                                            <input type="checkbox" id="toleranciaFHorario" checked>
+                                            <input type="checkbox" id="toleranciaFHorario">
                                             <label for="">Tolerancia en la salida</label>
                                         </li>
                                         <li class="liContenido horarioHijo">
