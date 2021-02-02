@@ -165,7 +165,7 @@ function cargartabla(fecha) {
                                         tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
 
-                                    if (marcacionData.Activi_Nombre != 0) {
+                                    if (marcacionData.Activi_Nombre != null) {
                                         tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
                                     } else {
                                         tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
@@ -177,7 +177,7 @@ function cargartabla(fecha) {
                                         tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
 
-                                    if (marcacionData.subAct_nombre != 0) {
+                                    if (marcacionData.subAct_nombre != null) {
                                         tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
                                     } else {
                                         tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
@@ -296,7 +296,7 @@ function cargartabla(fecha) {
                                             tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
 
-                                        if (marcacionData.Activi_Nombre != 0) {
+                                        if (marcacionData.Activi_Nombre != null) {
                                             tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
                                         } else {
                                             tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
@@ -308,7 +308,7 @@ function cargartabla(fecha) {
                                             tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
 
-                                        if (marcacionData.subAct_nombre != 0) {
+                                        if (marcacionData.subAct_nombre != null) {
                                             tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
                                         } else {
                                             tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
@@ -367,9 +367,16 @@ function cargartabla(fecha) {
                     tbody += tbodyEntradaySalida;
 
                     /* -----------PUNTO DE CONTRO Y CONTROLADOR------------- */
-                    tbody += `
+                    if(marcacionData.puntoControl!=null){
+                        tbody += `
+                        <td class="puntoHid" > ${marcacionData.puntoControl} </td>`;
+                    } else{
+                        tbody += `
+                        <td class="puntoHid" >    ---  </td>`;
 
-                              <td class="puntoHid" > ${marcacionData.puntoControl} </td>
+                    }
+
+                    tbody += `
                                 <td class="controHid">  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
                     /* ----------------------------------------- ------------------*/
                 }
