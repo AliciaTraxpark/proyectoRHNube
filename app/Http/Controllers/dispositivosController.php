@@ -423,8 +423,8 @@ class dispositivosController extends Controller
                     "salida" => $empleado->salida,
                     "idH" => $empleado->idHorario,
                     "idHE" => $empleado->idHorarioE,
-                    "dispositivoEntrada" => $empleado->dispositivoEntrada,
-                    "dispositivoSalida" => $empleado->dispositivoSalida
+                    "dispositivoEntrada" => ucfirst(strtolower($empleado->dispositivoEntrada)),
+                    "dispositivoSalida" => ucfirst(strtolower($empleado->dispositivoSalida))
                 );
                 array_push($resultado[$empleado->emple_id]->data[$empleado->idHorario]["marcaciones"], $arrayMarcacion);
             }
