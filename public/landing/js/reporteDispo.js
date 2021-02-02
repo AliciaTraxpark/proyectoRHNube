@@ -39,12 +39,12 @@ function inicializarTabla() {
     table = $("#tablaReport").DataTable({
         "searching": false,
         "scrollX": true,
+        scrollCollapse: true,
         "ordering": false,
         "autoWidth": false,
         "bInfo": false,
         "bLengthChange": false,
         stateSave: true,
-        fixedHeader: false,
         language: {
             sProcessing: "Procesando...",
             sLengthMenu: "Mostrar _MENU_ registros",
@@ -76,6 +76,10 @@ function inicializarTabla() {
                 colvis: "Visibilidad",
             },
 
+        },
+        fixedColumns: {
+            leftColumns: 5,
+            rightColumns: 0
         },
         dom: 'Bfrtip',
         buttons: [
@@ -265,7 +269,7 @@ function inicializarTabla() {
                 $("#tablaReport").DataTable().draw();
             }, 200);
         }
-    });
+    }).draw();
 }
 // * VARIABLES PARA EXCEL Y PDF
 var razonSocial;

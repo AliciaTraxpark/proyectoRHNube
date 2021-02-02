@@ -121,6 +121,15 @@
         width: 100% !important;
     }
 
+    table.dataTable {
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
+
+    table.DTFC_Cloned tbody {
+        background-color: white;
+    }
+
     /* .dataTables_scrollHeadInner {
             width: 100% !important;
         } */
@@ -132,6 +141,7 @@
     .table td {
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
+        white-space: nowrap;
     }
 
     .borderColor {
@@ -321,12 +331,6 @@
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
-                                        <input type="checkbox" checked disabled>
-                                        <label for="">DNI</label>
-                                    </li>
-                                </ul>
-                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
-                                    <li class="liContenido">
                                         <input type="checkbox" checked id="colMarcaciones">
                                         <label for="">Entradas y Salidas</label>
                                     </li>
@@ -365,7 +369,13 @@
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" checked disabled>
-                                        <label for="">Nombre</label>
+                                        <label for="">Nombres y apellidos</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked disabled>
+                                        <label for="">Número documento</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
@@ -405,7 +415,7 @@
                         </div>
                     </div>
                     <div id="tableZoom" class="col-md-12">
-                        <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
+                        <table id="tablaReport" class="table nowrap order-column" style="font-size: 12.8px;">
                             <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                                 <tr>
                                     <th>CC</th>
@@ -912,6 +922,7 @@
 <script src="{{ URL::asset('admin/assets/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
+<script src="{{ URL::asset('admin/assets/libs/datatables/dataTables.fixedColumns.min.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/js/prettify.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/alertify/alertify.js') }}"></script>
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.min.js')}}"></script>
