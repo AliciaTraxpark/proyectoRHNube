@@ -222,6 +222,7 @@ class PuntosControlController extends Controller
 
         if (!$buscarCodigo) {
             $puntoControl = punto_control::findOrFail($request->get('id'));
+            $puntoControl->descripcion = $request->get('puntoControl');
             $puntoControl->codigoControl = $request->get('codigo');
             $puntoControl->controlRuta = $request->get('cr');
             $puntoControl->asistenciaPuerta = $request->get('ap');
