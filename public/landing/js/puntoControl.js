@@ -562,6 +562,7 @@ function editarPuntoControl() {
                 $('button[type="submit"]').attr("disabled", false);
             } else {
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
                 $("#e_codigoPunto").addClass("borderColor");
                 $.notifyClose();
                 $.notify(
@@ -2483,6 +2484,7 @@ function registrarPunto() {
         },
         success: function (data) {
             if (data.estado === 1) {
+                sent = false;
                 $('button[type="submit"]').attr("disabled", false);
                 if (data.punto.estado == 0) {
                     alertify
@@ -2542,6 +2544,7 @@ function registrarPunto() {
             } else {
                 if (data.estado === 0) {
                     $('button[type="submit"]').attr("disabled", false);
+                    sent = false;
                     if (data.punto.estado == 0) {
                         alertify
                             .confirm("Ya existe un punto control inactivo con este código. ¿Desea recuperarla si o no?", function (
