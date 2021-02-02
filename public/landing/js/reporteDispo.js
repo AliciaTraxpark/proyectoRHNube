@@ -31,8 +31,13 @@ $(function () {
         indeterminate: true,
         checked: false
     });
-     // * CALCULO DE TIEMPOS PADRE
-     $('.detallePadre').find('input[type=checkbox]').prop({
+    // * CALCULO DE TIEMPOS PADRE
+    $('.detallePadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
+    // * INCIDENCIA
+    $('.incidenciaPadre').find('input[type=checkbox]').prop({
         indeterminate: true,
         checked: false
     });
@@ -399,7 +404,7 @@ function cargartabla(fecha) {
                     }
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th> 
-                                <th style="border-left: 1px dashed #aaaaaa!important">Tardanza Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal">Tardanza Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important">Falta Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important">Incidencias</th>`;
                 theadTabla += `</tr>`;
@@ -1165,7 +1170,7 @@ function cargartabla(fecha) {
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
                             </td>
-                            <td style="border-left: 1px dashed #aaaaaa!important">
+                            <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                     ${sumaTardanzas.format("HH:mm:ss")}
@@ -2874,17 +2879,23 @@ function toggleColumnas() {
         $('[name="colCodigo"]').hide();
     }
     // * *************** COLUMNA INCIDENCIAS ******************************
-    // ? TARDANZA
+    // ? TARDANZA ENTRE HORARIOS
     if ($('#colTardanza').is(":checked")) {
         $('[name="colTardanza"]').show();
     } else {
         $('[name="colTardanza"]').hide();
     }
-    // ? FALTA
+    // ? FALTA ENTRE HORARIOS
     if ($('#faltaHorario').is(":checked")) {
         $('[name="faltaHorario"]').show();
     } else {
         $('[name="faltaHorario"]').hide();
+    }
+    // ? TARDANZA TOTAL
+    if ($('#colTardanzaTotal').is(":checked")) {
+        $('[name="colTardanzaTotal"]').show();
+    } else {
+        $('[name="colTardanzaTotal"]').hide();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

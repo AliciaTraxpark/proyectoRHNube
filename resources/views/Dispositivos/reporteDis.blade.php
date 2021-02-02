@@ -382,6 +382,10 @@
                                             <label for="">Tardanza entre horarios</label>
                                         </li>
                                         <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="colTardanzaTotal" checked>
+                                            <label for="">Tardanza Total</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
                                             <input type="checkbox" id="faltaHorario">
                                             <label for="">Falta entre horario</label>
                                         </li>
