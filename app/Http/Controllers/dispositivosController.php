@@ -445,6 +445,7 @@ class dispositivosController extends Controller
                         ->select(
                             'e.emple_id',
                             'e.emple_nDoc',
+                            'e.emple_codigo',
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
@@ -466,6 +467,7 @@ class dispositivosController extends Controller
                         ->select(
                             'e.emple_id',
                             'e.emple_nDoc',
+                            'e.emple_codigo',
                             'p.perso_nombre',
                             'p.perso_apPaterno',
                             'p.perso_apMaterno',
@@ -496,6 +498,7 @@ class dispositivosController extends Controller
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
+                                'e.emple_codigo',
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
@@ -521,6 +524,7 @@ class dispositivosController extends Controller
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
+                                'e.emple_codigo',
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
@@ -549,6 +553,7 @@ class dispositivosController extends Controller
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
+                                'e.emple_codigo',
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
@@ -575,6 +580,7 @@ class dispositivosController extends Controller
                             ->select(
                                 'e.emple_id',
                                 'e.emple_nDoc',
+                                'e.emple_codigo',
                                 'p.perso_nombre',
                                 'p.perso_apPaterno',
                                 'p.perso_apMaterno',
@@ -602,6 +608,7 @@ class dispositivosController extends Controller
                     ->select(
                         'e.emple_id',
                         'e.emple_nDoc',
+                        'e.emple_codigo',
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
@@ -623,6 +630,7 @@ class dispositivosController extends Controller
                     ->select(
                         'e.emple_id',
                         'e.emple_nDoc',
+                        'e.emple_codigo',
                         'p.perso_nombre',
                         'p.perso_apPaterno',
                         'p.perso_apMaterno',
@@ -693,10 +701,11 @@ class dispositivosController extends Controller
                     $arrayNuevo = (object) array(
                         "emple_id" => $empleados[$index]->emple_id,
                         "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                        "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
                         "perso_nombre" => $empleados[$index]->perso_nombre,
                         "perso_apPaterno" => $empleados[$index]->perso_apPaterno,
                         "perso_apMaterno" => $empleados[$index]->perso_apMaterno,
-                        "cargo_descripcion" => $empleados[$index]->cargo_descripcion,
+                        "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
                         "organi_id" => $data[$element]->organi_id,
                         "organi_razonSocial" => $empleados[$index]->organi_razonSocial,
                         "organi_direccion" =>  $empleados[$index]->organi_direccion,
@@ -712,10 +721,11 @@ class dispositivosController extends Controller
                 $arrayNuevo = (object) array(
                     "emple_id" => $empleados[$index]->emple_id,
                     "emple_nDoc" => $empleados[$index]->emple_nDoc,
+                    "emple_codigo" => empty($empleados[$index]->emple_codigo) == true ? "---" : $empleados[$index]->emple_codigo,
                     "perso_nombre" => $empleados[$index]->perso_nombre,
                     "perso_apPaterno" => $empleados[$index]->perso_apPaterno,
                     "perso_apMaterno" => $empleados[$index]->perso_apMaterno,
-                    "cargo_descripcion" => $empleados[$index]->cargo_descripcion,
+                    "cargo_descripcion" => empty($empleados[$index]->cargo_descripcion) == true ? "---" : $empleados[$index]->cargo_descripcion,
                     "organi_id" => $empleados[$index]->organi_id,
                     "organi_razonSocial" => $empleados[$index]->organi_razonSocial,
                     "organi_direccion" =>  $empleados[$index]->organi_direccion,

@@ -340,8 +340,9 @@ function cargartabla(fecha) {
                     theadTabla += `<th class="noExport">Agregar</th>`;
                 }
                 theadTabla += `<th>CC&nbsp;</th>
-                                <th>DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th>Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                <th>Número de documento</th>
+                                <th>Código empleado</th>
+                                <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th name="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 //* GRUPO DE HORARIOS
                 for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -353,6 +354,7 @@ function cargartabla(fecha) {
                                     <th class="text-center" name="horarioHorario">Horario</th>
                                     <th name="toleranciaIHorario">Tolerancia en el ingreso</th>
                                     <th name="toleranciaFHorario">Tolerancia en la salida</th>
+                                    <th name="colTardanza" class="text-center">Tardanza</th>
                                     <th name="faltaHorario">Falta</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
@@ -367,8 +369,7 @@ function cargartabla(fecha) {
                                                 Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
                                         </th>
-                                        <th id="tSitio" name="colTiempoS">Tiempo en sitio</th>
-                                        <th name="colTardanza">Tardanza</th>`;
+                                        <th id="tSitio" name="colTiempoS">Tiempo en sitio</th>`;
                     }
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
@@ -404,13 +405,11 @@ function cargartabla(fecha) {
                                 </td>`;
                     }
                     tbody += `<td>${(index + 1)}&nbsp;</td>
-                            <td>${data[index].emple_nDoc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="text-center">${data[index].emple_nDoc}</td>
+                            <td class="text-center">${data[index].emple_codigo}</td>
                             <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    if (data[index].cargo_descripcion != null) {
-                        tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    } else {
-                        tbody += `<td class="text-center" name="colCargo">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                    }
+                    tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+
                     // * ARMAR GRUPO DE HORARIOS
                     var grupoHorario = "";
                     //* ARMAR Y ORDENAR MARCACIONES
@@ -419,12 +418,50 @@ function cargartabla(fecha) {
                     // * CANTIDAD DE FALTAS
                     var sumaFaltas = 0;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
+                        // : HORARIO
+                        var idHorarioM = [];
+                        // * TARDANZA
+                        var segundosTardanza = "00";
+                        var minutosTardanza = "00";
+                        var horasTardanza = "00";
+
                         if (data[index].data[m] != undefined) {
                             // ! HORARIO
                             var horarioData = data[index].data[m].horario;
                             contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
                             if (permisoModificar == 1) {
                                 if (horarioData.horario != null) {
+                                    if (data[index].data[m].marcaciones[0] != undefined) {
+                                        if (data[index].data[m].marcaciones[0].entrada != 0) {
+                                            // * TARDANZA
+                                            var dataParaTardanza = data[index].data[m].marcaciones[0];
+                                            var horaInicial = moment(dataParaTardanza.entrada);
+                                            // ******************************* TARDANZA ***************************************
+                                            // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
+                                            if (!idHorarioM.includes(dataParaTardanza.idH)) {
+                                                idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
+                                                var horaInicioHorario = moment(horarioData.horarioIni);
+                                                var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
+                                                //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
+                                                if (horaInicial.isAfter(horaConTolerancia)) {
+                                                    var tardanza = horaInicial - horaInicioHorario;
+                                                    segundosTardanza = moment.duration(tardanza).seconds();
+                                                    minutosTardanza = moment.duration(tardanza).minutes();
+                                                    horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
+                                                    if (horasTardanza < 10) {
+                                                        horasTardanza = '0' + horasTardanza;
+                                                    }
+                                                    if (minutosTardanza < 10) {
+                                                        minutosTardanza = '0' + minutosTardanza;
+                                                    }
+                                                    if (segundosTardanza < 10) {
+                                                        segundosTardanza = '0' + segundosTardanza;
+                                                    }
+                                                    sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
+                                                }
+                                            }
+                                        }
+                                    }
                                     if (horarioData.estado == 1) {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
@@ -455,7 +492,13 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTardanza">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                            </a>
+                                                        </td>`;
                                         if (data[index].data[m].marcaciones.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
@@ -497,7 +540,13 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTardanza">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                            </a>
+                                                        </td>`;
                                         if (data[index].data[m].marcaciones.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
@@ -538,6 +587,7 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
+                                                    <td class="text-center" name="colTardanza">---</td>
                                                     <td class="text-center" name="faltaHorario">---</td>`;
                                 }
                             } else {
@@ -605,8 +655,6 @@ function cargartabla(fecha) {
                             }
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
-                            // : HORARIO
-                            var idHorarioM = [];
                             // : PAUSA
                             var idPausas = [];
                             // * PAUSAS
@@ -622,10 +670,6 @@ function cargartabla(fecha) {
                                 var segundosTiempo = "00";
                                 var minutosTiempo = "00";
                                 var horasTiempo = "00";
-                                // * TARDANZA
-                                var segundosTardanza = "00";
-                                var minutosTardanza = "00";
-                                var horasTardanza = "00";
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
@@ -691,35 +735,6 @@ function cargartabla(fecha) {
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
                                                                             ${moment(marcacionData.entrada).format("HH:mm:ss")}
                                                                         </td>`;
-                                    }
-
-                                    // * TARDANZA
-                                    if (marcacionData.idH != 0) {
-                                        var horaInicial = moment(marcacionData.entrada);
-                                        // ******************************* TARDANZA ***************************************
-                                        // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
-                                        if (!idHorarioM.includes(marcacionData.idH)) {
-                                            idHorarioM.push(marcacionData.idH);  // : AGREGAMOS EL ID AL ARRAY
-                                            var horaInicioHorario = moment(horarioData.horarioIni);
-                                            var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
-                                            //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
-                                            if (horaInicial.isAfter(horaConTolerancia)) {
-                                                var tardanza = horaInicial - horaInicioHorario;
-                                                segundosTardanza = moment.duration(tardanza).seconds();
-                                                minutosTardanza = moment.duration(tardanza).minutes();
-                                                horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
-                                                if (horasTardanza < 10) {
-                                                    horasTardanza = '0' + horasTardanza;
-                                                }
-                                                if (minutosTardanza < 10) {
-                                                    minutosTardanza = '0' + minutosTardanza;
-                                                }
-                                                if (segundosTardanza < 10) {
-                                                    segundosTardanza = '0' + segundosTardanza;
-                                                }
-                                            }
-                                        }
-                                        sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                     }
                                     if (marcacionData.salida != 0) {
                                         if (permisoModificar == 1) {
@@ -916,12 +931,6 @@ function cargartabla(fecha) {
                                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
-                                                                </td>
-                                                                <td name="colTardanza">
-                                                                    <a class="badge badge-soft-danger mr-2">
-                                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                                    </a>
                                                                 </td>`;
                                     } else {
                                         if (permisoModificar == 1) {
@@ -965,12 +974,6 @@ function cargartabla(fecha) {
                                                                     <a class="badge badge-soft-primary mr-2">
                                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
-                                                                    </a>
-                                                                </td>
-                                                                <td name="colTardanza">
-                                                                    <a class="badge badge-soft-danger mr-2">
-                                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                                     </a>
                                                                 </td>`;
                                     }
@@ -1071,12 +1074,6 @@ function cargartabla(fecha) {
                                                                         <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
-                                                                </td>
-                                                                <td name="colTardanza">
-                                                                    <a class="badge badge-soft-danger mr-2">
-                                                                        <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
-                                                                        ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
-                                                                    </a>
                                                                 </td>`;
 
                                     }
@@ -1085,8 +1082,7 @@ function cargartabla(fecha) {
                             for (let mr = data[index].data[m].marcaciones.length; mr < arrayHorario[m].split(",")[0]; mr++) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
                                                         <td class="text-center" name="colMarcaciones">---</td>
-                                                        <td name="colTiempoS" class="text-center">---</td>
-                                                        <td name="colTardanza" class="text-center">--</td>`;
+                                                        <td name="colTiempoS" class="text-center">---</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
@@ -1122,14 +1118,14 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td class="text-center" name="toleranciaFHorario">---</td>
+                                            <td name="colTardanza" class="text-center">--</td>
                                             <td class="text-center" name="faltaHorario">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                                 tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">---</td>
                                                         <td class="text-center" name="colMarcaciones">---</td>
-                                                        <td name="colTiempoS" class="text-center">---</td>
-                                                        <td name="colTardanza" class="text-center">--</td>`;
+                                                        <td name="colTiempoS" class="text-center">---</td>`;
                             }
                             grupoHorario += tbodyEntradaySalida;
                             // ! PAUSAS
@@ -1205,10 +1201,10 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="faltaHorario"></td>';
+                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="colTardanza"></td><td name="faltaHorario"></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
-                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td><td name="colTardanza"></td>';
+                            tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
                         }
                         // ! PAUSAS
                         for (let cp = 0; cp < arrayHorario[m].split(",")[1]; cp++) {
