@@ -311,6 +311,12 @@
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colCodigo">
+                                        <label for="">Código</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido detallePadre">
                                         <input type="checkbox" name="detallePadre[]">
                                         <label for="">Detalles de marcación</label>

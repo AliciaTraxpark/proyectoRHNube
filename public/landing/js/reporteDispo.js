@@ -350,7 +350,7 @@ function cargartabla(fecha) {
                 }
                 theadTabla += `<th>CC&nbsp;</th>
                                 <th>Número de documento</th>
-                                <th>Código empleado</th>
+                                <th name="colCodigo">Código</th>
                                 <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th name="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 //* GRUPO DE HORARIOS
@@ -419,7 +419,7 @@ function cargartabla(fecha) {
                     }
                     tbody += `<td>${(index + 1)}&nbsp;</td>
                             <td class="text-center">${data[index].emple_nDoc}</td>
-                            <td class="text-center">${data[index].emple_codigo}</td>
+                            <td class="text-center" name="colCodigo">${data[index].emple_codigo}</td>
                             <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
@@ -1167,7 +1167,6 @@ function cargartabla(fecha) {
                                 </a>
                             </td>`;
                     // ******************************* CANTIDAD DE FALTAS **************************
-                    console.log(sumaFaltas);
                     if (sumaFaltas != 0) {
                         tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">`;
                         for (let f = 0; f < sumaFaltas; f++) {
@@ -1212,7 +1211,7 @@ function cargartabla(fecha) {
                     if (permisoModificar == 1) {
                         tbodyTR += `<td></td>`;
                     }
-                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td></td><td></td><td name="colCargo"></td>';
+                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td name="colCodigo"></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="colTardanza"></td><td name="faltaHorario"></td>';
                         // ! MARCACIONES
@@ -2744,6 +2743,15 @@ $('.horarioPadre input[type=checkbox]').change(function () {
     $(this).closest('.horarioPadre').next('ul').find('.horarioHijo input[type=checkbox]').prop('checked', this.checked);
     toggleColumnas();
 });
+// : ********************************* COLUMNA DE CODIGO ********************************************************
+$('#colCodigo').change(function (event) {
+    if (event.target.checked) {
+        $('[name="colCodigo"]').show();
+    } else {
+        $('[name="colCodigo"]').hide();
+    }
+    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
+});
 // : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
@@ -2828,6 +2836,13 @@ function toggleColumnas() {
     } else {
         $('[name="faltaHorario"]').hide();
     }
+    // * *************** COLUMNA Codigo ******************************
+    if ($('#colCodigo').is(":checked")) {
+        $('[name="colCodigo"]').show();
+    } else {
+        $('[name="colCodigo"]').hide();
+    }
+
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
 $("#tablaReport").on('page.dt', function (e, settings, json) {
