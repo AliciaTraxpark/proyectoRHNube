@@ -423,7 +423,8 @@ class dispositivosController extends Controller
                     "salida" => $empleado->salida,
                     "idH" => $empleado->idHorario,
                     "idHE" => $empleado->idHorarioE,
-                    "dispositivo" => $empleado->dispositivo
+                    "dispositivoEntrada" => ucfirst(strtolower($empleado->dispositivoEntrada)),
+                    "dispositivoSalida" => ucfirst(strtolower($empleado->dispositivoSalida))
                 );
                 array_push($resultado[$empleado->emple_id]->data[$empleado->idHorario]["marcaciones"], $arrayMarcacion);
             }
@@ -638,17 +639,30 @@ class dispositivosController extends Controller
             }
         }
         $marcaciones = [];
+        // DB::enableQueryLog();
+        $tipoDispositivo = DB::table('dispositivos as d')
+            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
+            ->select(
+                'd.idDispositivos',
+                'td.dispositivo_descripcion as dispositivo'
+            );
         $data =  DB::table('empleado as e')
             ->join('marcacion_puerta as mp', 'mp.marcaMov_emple_id', '=', 'e.emple_id')
             ->leftJoin('horario_empleado as hoe', 'mp.horarioEmp_id', '=', 'hoe.horarioEmp_id')
             ->leftJoin('horario as hor', 'hoe.horario_horario_id', '=', 'hor.horario_id')
             ->leftJoin('horario_dias as hd', 'hd.id', '=', 'hoe.horario_dias_id')
-            ->leftJoin('dispositivos as d', 'd.idDispositivos', '=', 'mp.dispositivoEntrada')
-            ->leftJoin('tipo_dispositivo as td', 'td.id', '=', 'd.tipoDispositivo')
+            ->leftJoinSub($tipoDispositivo, 'entrada', function ($join) {
+                $join->on('mp.dispositivoEntrada', '=', 'entrada.idDispositivos');
+            })
+            ->leftJoinSub($tipoDispositivo, 'salida', function ($join) {
+                $join->on('mp.dispositivoSalida', '=', 'salida.idDispositivos');
+            })
             ->select(
                 'e.emple_id',
                 'mp.marcaMov_id',
                 'mp.organi_id',
+                DB::raw("IF(entrada.dispositivo is null, 'MANUAL' , entrada.dispositivo) as dispositivoEntrada"),
+                DB::raw("IF(salida.dispositivo is null, 'MANUAL' , salida.dispositivo) as dispositivoSalida"),
                 DB::raw('IF(hor.horario_id is null, 0 , horario_id) as idHorario'),
                 DB::raw("IF(hor.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', hor.horaI)) as horarioIni"),
                 DB::raw("IF(hor.horaF is null , 0 , IF(hor.horaF > hor.horaI,CONCAT( DATE(hd.start),' ', hor.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', hor.horaF))) as horarioFin"),
@@ -659,13 +673,14 @@ class dispositivosController extends Controller
                 'hor.horario_tolerancia as toleranciaI',
                 'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
-                DB::raw("IF(td.dispositivo_descripcion is null, 'MANUAL' , td.dispositivo_descripcion) as dispositivo"),
                 'hoe.estado'
             )
             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
             ->where('mp.organi_id', '=', session('sesionidorg'))
             ->orderBy(DB::raw('IF(mp.marcaMov_fecha is null, mp.marcaMov_salida , mp.marcaMov_fecha)'), 'ASC', 'p.perso_nombre', 'ASC')
             ->get();
+        // dd(DB::getQueryLog());
+        // dd($data);
         $data = agruparEmpleadosMarcaciones($data);  //: CONVERTIR UN SOLO EMPLEADO CON VARIOS MARCACIONES
 
         // * UNIR EMPLEADOS CON MARCACIONES
@@ -2181,8 +2196,12 @@ class dispositivosController extends Controller
             $newMarcacion = new marcacion_puerta();
             if ($tipo ==  1) {
                 $newMarcacion->marcaMov_fecha = $nuevaMarcacion;
+                $dispositivoE = $marcacion->dispositivoEntrada;
+                $dispositivoS = NULL;
             } else {
                 $newMarcacion->marcaMov_salida = $nuevaMarcacion;
+                $dispositivoS = $marcacion->dispositivoSalida;
+                $dispositivoE = NULL;
             }
             $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
             $newMarcacion->organi_id =  $marcacion->organi_id;
@@ -2192,6 +2211,9 @@ class dispositivosController extends Controller
             $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;
             $newMarcacion->puntoC_id = $marcacion->puntoC_id;
             $newMarcacion->centC_id = $marcacion->centC_id;
+            $newMarcacion->controladores_idControladores = $marcacion->controladores_idControladores;
+            $newMarcacion->dispositivoEntrada = $dispositivoE;
+            $newMarcacion->dispositivoSalida = $dispositivoS;
             $newMarcacion->save();
 
             return response()->json($newMarcacion->marcaMov_id, 200);
@@ -2210,9 +2232,11 @@ class dispositivosController extends Controller
         $marcacion = marcacion_puerta::findOrFail($id);
         if ($tipo == 1) {
             $marcacion->marcaMov_fecha = NULL;
+            $marcacion->dispositivoEntrada = NULL;
             $marcacion->save();
         } else {
             $marcacion->marcaMov_salida = NULL;
+            $marcacion->dispositivoSalida = NULL;
             $marcacion->save();
         }
 
@@ -2307,6 +2331,7 @@ class dispositivosController extends Controller
 
                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                             $marcacion->marcaMov_salida = $salida;
+                            $marcacion->dispositivoSalida = NULL;
                             $marcacion->save();
                             return response()->json($marcacion->marcaMov_id, 200);
                         } else {
@@ -2317,11 +2342,13 @@ class dispositivosController extends Controller
                         }
                     } else {
                         $marcacion->marcaMov_salida = $salida;
+                        $marcacion->dispositivoSalida = NULL;
                         $marcacion->save();
                         return response()->json($marcacion->marcaMov_id, 200);
                     }
                 } else {
                     $marcacion->marcaMov_salida = $salida;
+                    $marcacion->dispositivoSalida = NULL;
                     $marcacion->save();
                     return response()->json($marcacion->marcaMov_id, 200);
                 }
@@ -2416,6 +2443,7 @@ class dispositivosController extends Controller
 
                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                             $marcacion->marcaMov_fecha = $entrada;
+                            $marcacion->dispositivoEntrada = NULL;
                             $marcacion->save();
                             return response()->json($marcacion->marcaMov_id, 200);
                         } else {
@@ -2426,11 +2454,13 @@ class dispositivosController extends Controller
                         }
                     } else {
                         $marcacion->marcaMov_fecha = $entrada;
+                        $marcacion->dispositivoEntrada = NULL;
                         $marcacion->save();
                         return response()->json($marcacion->marcaMov_id, 200);
                     }
                 } else {
                     $marcacion->marcaMov_fecha = $entrada;
+                    $marcacion->dispositivoEntrada = NULL;
                     $marcacion->save();
                     return response()->json($marcacion->marcaMov_id, 200);
                 }
