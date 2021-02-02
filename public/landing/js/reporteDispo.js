@@ -26,6 +26,11 @@ $(function () {
     fechaValue.setDate(f);
     $("#fechaInput").change();
     cambiarF();
+    // * HORARIO PADRE
+    $('.horarioPadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
 });
 
 // * INICIALIZAR TABLA
@@ -2815,7 +2820,6 @@ function toggleColumnas() {
     } else {
         $('[name="faltaHorario"]').hide();
     }
-    $('.horarioHijo input[type=checkbox]').trigger("change");
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
 $("#tablaReport").on('page.dt', function (e, settings, json) {
