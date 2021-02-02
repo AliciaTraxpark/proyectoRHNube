@@ -393,6 +393,10 @@
                                             <input type="checkbox" id="faltaTotal" checked>
                                             <label for="">Falta Total</label>
                                         </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="incidencia" checked>
+                                            <label for="">Incidencias</label>
+                                        </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">

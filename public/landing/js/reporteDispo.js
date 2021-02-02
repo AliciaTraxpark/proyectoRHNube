@@ -406,7 +406,7 @@ function cargartabla(fecha) {
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th> 
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal">Tardanza Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal">Falta Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important">Incidencias</th>`;
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -1196,9 +1196,9 @@ function cargartabla(fecha) {
                     }
                     // * ********************** FINALIZACION *************************************
                     if (data[index].incidencias.length == 0) {
-                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important" name="incidencia">--</td>`;
                     } else {
-                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;">`;
+                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important;" name="incidencia">`;
                         for (let item = 0; item < data[index].incidencias.length; item++) {
                             var dataIncidencia = data[index].incidencias[item];
                             if (item == 0) {
@@ -2904,6 +2904,12 @@ function toggleColumnas() {
     } else {
         $('[name="faltaTotal"]').hide();
     }
+    // ? INCIDENCIAS
+    if ($('#incidencia').is(":checked")) {
+        $('[name="incidencia"]').show();
+    } else {
+        $('[name="incidencia"]').hide();
+    }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
 $("#tablaReport").on('page.dt', function (e, settings, json) {
@@ -2911,13 +2917,3 @@ $("#tablaReport").on('page.dt', function (e, settings, json) {
     toggleColumnas();
     $('[data-toggle="tooltip"]').tooltip();
 });
-function iniEtiqueta() {
-    document.createElement('minu');//creamos el elemento corazon
-    var corazon = document.getElementsByTagName('minu');//llamamos todos los elemento corazon del documento
-    var i;
-    for (i = 0; i < corazon.length; i++) {//ejecuta acciones para esos elementos
-        //creamos estilos para nuetras etiquetas
-        corazon[i].style.textTransform = "capitalize";
-    }
-}
-window.addEventListener('load', iniEtiqueta, false);//ejecuta la funcion ini al cargar el documento
