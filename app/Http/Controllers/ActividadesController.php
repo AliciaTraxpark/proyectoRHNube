@@ -99,10 +99,6 @@ class ActividadesController extends Controller
     {
         // DB::enableQueryLog();
         $actividades = DB::table('actividad as a')
-            ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
-            ->leftJoin('ubicacion as u', 'u.idActividad', '=', 'a.Activi_id')
-            ->leftJoin('marcacion_puerta as mp', 'mp.marcaIdActivi', '=', 'a.Activi_id')
-            ->leftJoin('marcacion_tareo as mt', 'mt.Activi_id', '=', 'a.Activi_id')
             ->select(
                 'a.Activi_id',
                 'a.Activi_Nombre',
@@ -111,21 +107,12 @@ class ActividadesController extends Controller
                 'a.controlRuta',
                 'a.eliminacion',
                 'a.modoTareo',
-                DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA"),
-                DB::raw(
-                    '(CASE WHEN(cp.idCaptura) IS NOT NULL THEN "Si"
-                        WHEN (u.id) IS NOT NULL THEN "Si"
-                        WHEN (cp.idCaptura) IS NOT NULL THEN "Si"
-                        WHEN (mp.marcaMov_id) IS NOT NULL THEN "Si"
-                        WHEN (mt.idmarcaciones_tareo ) IS NOT NULL THEN "Si"
-                        ELSE "No" END) AS respuesta'
-                )
+                DB::raw("CASE WHEN(a.codigoActividad) IS NULL THEN 'No definido' ELSE a.codigoActividad END AS codigoA")
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.estado', '=', 1)
             ->groupBy('a.Activi_id')
             ->get();
-
         foreach ($actividades as $actividadesT) {
             $actividad_subactividad = DB::table('actividad_subactividad as asu')
                 ->where('asu.Activi_id', '=', $actividadesT->Activi_id)
@@ -139,6 +126,48 @@ class ActividadesController extends Controller
             }
             /* SI NO ESTA EN USO */ else {
                 $actividadesT->padreSubactividad = 0;
+            }
+            // ************************************* BUSCAR EN REPORTES ESTA EN USO ********************************
+            // ? MODO CONTORL REMOTO
+            $captura = DB::table('captura as cp')
+                ->select('cp.idCaptura')
+                ->where('cp.idActividad', '=', $actividadesT->Activi_id)
+                ->get()
+                ->first();
+            if ($captura) {
+                $actividadesT->respuesta = 'Si';
+            } else {
+                // ? MODO EN RUTA
+                $ruta = DB::table('ubicacion as u')
+                    ->select('u.id')
+                    ->where('u.idActividad', '=', $actividadesT->Activi_id)
+                    ->get()
+                    ->first();
+                if ($ruta) {
+                    $actividadesT->respuesta = 'Si';
+                } else {
+                    // ? MODO MARCACION EN PUERTA
+                    $puerta = DB::table('marcacion_puerta as mp')
+                        ->select('mp.marcaMov_id')
+                        ->where('mp.marcaIdActivi', '=', $actividadesT->Activi_id)
+                        ->get()
+                        ->first();
+                    if ($puerta) {
+                        $actividadesT->respuesta = 'Si';
+                    } else {
+                        // ? MODO TAREO
+                        $tareo = DB::table('marcacion_tareo as mt')
+                            ->select('mt.idmarcaciones_tareo')
+                            ->where('mt.Activi_id', '=', $actividadesT->Activi_id)
+                            ->get()
+                            ->first();
+                        if ($tareo) {
+                            $actividadesT->respuesta = 'Si';
+                        } else {
+                            $actividadesT->respuesta = 'No';
+                        }
+                    }
+                }
             }
         }
         // dd(DB::getQueryLog());
@@ -222,10 +251,6 @@ class ActividadesController extends Controller
     {
         $idA = $request->get('idA');
         $actividades = DB::table('actividad as a')
-            ->leftJoin('captura as cp', 'cp.idActividad', '=', 'a.Activi_id')
-            ->leftJoin('ubicacion as u', 'u.idActividad', '=', 'a.Activi_id')
-            ->leftJoin('marcacion_puerta as mp', 'mp.marcaIdActivi', '=', 'a.Activi_id')
-            ->leftJoin('marcacion_tareo as mt', 'mt.Activi_id', '=', 'a.Activi_id')
             ->select(
                 'a.Activi_id',
                 'a.Activi_Nombre',
@@ -236,15 +261,7 @@ class ActividadesController extends Controller
                 'a.porEmpleados',
                 'a.porAreas',
                 'a.globalEmpleado',
-                'a.modoTareo',
-                DB::raw(
-                    '(CASE WHEN(cp.idCaptura) IS NOT NULL THEN 1
-                        WHEN (u.id) IS NOT NULL THEN 1
-                        WHEN (cp.idCaptura) IS NOT NULL THEN 1
-                        WHEN (mp.marcaMov_id) IS NOT NULL THEN 1
-                        WHEN (mt.idmarcaciones_tareo ) IS NOT NULL THEN 1
-                        ELSE 0 END) AS respuesta'
-                )
+                'a.modoTareo'
             )
             ->where('a.organi_id', '=', session('sesionidorg'))
             ->where('a.Activi_id', '=', $idA)
@@ -263,6 +280,48 @@ class ActividadesController extends Controller
             }
             /* SI NO ESTA EN USO */ else {
                 $actividadesT->padreSubactividad = 0;
+            }
+            // ************************************* BUSCAR EN REPORTES ESTA EN USO ********************************
+            // ? MODO CONTORL REMOTO
+            $captura = DB::table('captura as cp')
+                ->select('cp.idCaptura')
+                ->where('cp.idActividad', '=', $actividadesT->Activi_id)
+                ->get()
+                ->first();
+            if ($captura) {
+                $actividadesT->respuesta = 1;
+            } else {
+                // ? MODO EN RUTA
+                $ruta = DB::table('ubicacion as u')
+                    ->select('u.id')
+                    ->where('u.idActividad', '=', $actividadesT->Activi_id)
+                    ->get()
+                    ->first();
+                if ($ruta) {
+                    $actividadesT->respuesta = 1;
+                } else {
+                    // ? MODO MARCACION EN PUERTA
+                    $puerta = DB::table('marcacion_puerta as mp')
+                        ->select('mp.marcaMov_id')
+                        ->where('mp.marcaIdActivi', '=', $actividadesT->Activi_id)
+                        ->get()
+                        ->first();
+                    if ($puerta) {
+                        $actividadesT->respuesta = 1;
+                    } else {
+                        // ? MODO TAREO
+                        $tareo = DB::table('marcacion_tareo as mt')
+                            ->select('mt.idmarcaciones_tareo')
+                            ->where('mt.Activi_id', '=', $actividadesT->Activi_id)
+                            ->get()
+                            ->first();
+                        if ($tareo) {
+                            $actividadesT->respuesta = 1;
+                        } else {
+                            $actividadesT->respuesta = 0;
+                        }
+                    }
+                }
             }
         }
 
