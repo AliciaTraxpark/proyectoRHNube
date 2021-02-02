@@ -296,7 +296,7 @@
                                 <img src="{{asset('landing/images/insert.svg')}}" height="20">
                                 Selector de columnas
                             </button>
-                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;">
+                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;">
                                 <h6 class="dropdown-header text-left"
                                     style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                     <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"

@@ -1244,7 +1244,6 @@ function cargartabla(fecha) {
                     $("#tablaReport").css('width', '100%');
                     table.draw(true);
                 });
-                window.addEventListener('load', iniEtiqueta, false);//ejecuta la funcion ini al cargar el documento
                 // * SWITCH DE MOSTRAR DETALLES
                 toggleColumnas();
             } else {
