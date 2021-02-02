@@ -311,15 +311,9 @@
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
-                                    <li class="liContenido">
-                                        <input type="checkbox" id="colCodigo">
-                                        <label for="">Código</label>
-                                    </li>
-                                </ul>
-                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido detallePadre">
-                                        <input type="checkbox" name="detallePadre[]">
-                                        <label for="">Detalles de marcación</label>
+                                        <input type="checkbox" name="detallePadre">
+                                        <label for="">Cálculos de tiempos</label>
                                         <img class="float-right mt-1 ml-2"
                                             src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
                                             style="cursor: pointer;" onclick="javascript:toggleD()">
@@ -327,13 +321,19 @@
                                     <ul class="ulHijo" style="display: none" id="contenidoDetalle">
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoSitio">
-                                            <label for="">Tiempo en sitio</label>
+                                            <label for="">Tiempo entre marcaciónes</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colTardanza">
-                                            <label for="">Tardanza</label>
+                                            <input type="checkbox" id="colTiempoTotal" checked>
+                                            <label for="">Tiempo Total</label>
                                         </li>
                                     </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" id="colCodigo">
+                                        <label for="">Código</label>
+                                    </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
@@ -366,9 +366,24 @@
                                             <input type="checkbox" id="toleranciaFHorario">
                                             <label for="">Tolerancia en la salida</label>
                                         </li>
-                                        <li class="liContenido horarioHijo">
-                                            <input type="checkbox" id="faltaHorario" checked>
-                                            <label for="">Falta</label>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido incidenciaPadre">
+                                        <input type="checkbox">
+                                        <label for="">Incidencias</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleI()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoIncidencias">
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="colTardanza">
+                                            <label for="">Tardanza entre horarios</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="faltaHorario">
+                                            <label for="">Falta entre horario</label>
                                         </li>
                                     </ul>
                                 </ul>

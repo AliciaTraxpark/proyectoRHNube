@@ -31,6 +31,11 @@ $(function () {
         indeterminate: true,
         checked: false
     });
+     // * CALCULO DE TIEMPOS PADRE
+     $('.detallePadre').find('input[type=checkbox]').prop({
+        indeterminate: true,
+        checked: false
+    });
 });
 
 // * INICIALIZAR TABLA
@@ -393,10 +398,10 @@ function cargartabla(fecha) {
                                         <th name="excesoPausa">Exceso de pausa</th>`;
                     }
                 }
-                theadTabla += `<th style="border-left: 2px solid #383e56!important;">Marcación T.</th> 
-                                <th style="border-left: 1px dashed #aaaaaa!important">Tardanza T.</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important">Faltas T.</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important">Incidencias T.</th>`;
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th> 
+                                <th style="border-left: 1px dashed #aaaaaa!important">Tardanza Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Falta Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -1154,7 +1159,7 @@ function cargartabla(fecha) {
                     }
                     tbody += grupoHorario;
                     // * COLUMNAS DE TIEMPO TOTAL TARDANAZA ETC
-                    tbody += `<td id="TiempoTotal${data[index].emple_id}" style="border-left: 2px solid #383e56!important;">
+                    tbody += `<td name="colTiempoTotal" style="border-left: 2px solid #383e56!important;">
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
@@ -1226,7 +1231,7 @@ function cargartabla(fecha) {
                                     <td name="excesoPausa"></td>`;
                         }
                     }
-                    tbodyTR += '<td><br><br></td><td></td><td></td><td></td></tr>';
+                    tbodyTR += '<td name="colTiempoTotal"><br><br></td><td></td><td></td><td></td></tr>';
                     $('#tbodyD').append(tbodyTR);
                 }
                 inicializarTabla();
@@ -2628,7 +2633,7 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
 });
-// : ************************************** COLUMNAS DE DETALLES ***********************************************
+// : ************************************** COLUMNAS DE CALCULOS DE TIEMPO ***********************************************
 // * TOGGLE DE DETALLES
 function toggleD() {
     $('#contenidoDetalle').toggle();
@@ -2752,21 +2757,53 @@ $('#colCodigo').change(function (event) {
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
+// : ********************************* COLUMNA DE INCIDENCIAS ********************************************************
+function toggleI() {
+    $('#contenidoIncidencias').toggle();
+}
+// * FUNCION DE CHECKBOX HIJOS DE HORARIO
+$('.incidenciaHijo input[type=checkbox]').change(function () {
+    var contenido = $(this).closest('ul');
+    if (contenido.find('input[type=checkbox]:checked').length == contenido.find('input[type=checkbox]').length) {
+        contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+            indeterminate: false,
+            checked: true
+        });
+    } else {
+        if (contenido.find('input[type=checkbox]:checked').length != 0) {
+            contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                indeterminate: true,
+                checked: false
+            });
+        } else {
+            contenido.prev('.incidenciaPadre').find('input[type=checkbox]').prop({
+                indeterminate: false,
+                checked: false
+            });
+        }
+    }
+    toggleColumnas();
+});
+// * FUNCIONN DE CHECKBOX DE PADRE DETALLES
+$('.incidenciaPadre input[type=checkbox]').change(function () {
+    $(this).closest('.incidenciaPadre').next('ul').find('.incidenciaHijo input[type=checkbox]').prop('checked', this.checked);
+    toggleColumnas();
+});
 // : ********************************* FINALIZACION *************************************************************
 // * FUNCION DE MOSTRAR COLUMNAS
 function toggleColumnas() {
-    // * ***************** COLUMNAS DE DETALLES ****************
-    // ? TIEMPO EN SITIO
+    // * ***************** COLUMNAS DE CALCULOS DE TIEMPO ****************
+    // ? TIEMPO ENTRE MARCACIONES
     if ($('#colTiempoSitio').is(":checked")) {
         $('[name="colTiempoS"]').show();
     } else {
         $('[name="colTiempoS"]').hide();
     }
-    // ? TARDANZA
-    if ($('#colTardanza').is(":checked")) {
-        $('[name="colTardanza"]').show();
+    // ? TIEMPO TOTAL
+    if ($('#colTiempoTotal').is(":checked")) {
+        $('[name="colTiempoTotal"]').show();
     } else {
-        $('[name="colTardanza"]').hide();
+        $('[name="colTiempoTotal"]').hide();
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
@@ -2830,19 +2867,25 @@ function toggleColumnas() {
     } else {
         $('[name="toleranciaFHorario"]').hide();
     }
+    // * *************** COLUMNA CODIGO ******************************
+    if ($('#colCodigo').is(":checked")) {
+        $('[name="colCodigo"]').show();
+    } else {
+        $('[name="colCodigo"]').hide();
+    }
+    // * *************** COLUMNA INCIDENCIAS ******************************
+    // ? TARDANZA
+    if ($('#colTardanza').is(":checked")) {
+        $('[name="colTardanza"]').show();
+    } else {
+        $('[name="colTardanza"]').hide();
+    }
     // ? FALTA
     if ($('#faltaHorario').is(":checked")) {
         $('[name="faltaHorario"]').show();
     } else {
         $('[name="faltaHorario"]').hide();
     }
-    // * *************** COLUMNA Codigo ******************************
-    if ($('#colCodigo').is(":checked")) {
-        $('[name="colCodigo"]').show();
-    } else {
-        $('[name="colCodigo"]').hide();
-    }
-
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
 $("#tablaReport").on('page.dt', function (e, settings, json) {
