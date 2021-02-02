@@ -2196,8 +2196,12 @@ class dispositivosController extends Controller
             $newMarcacion = new marcacion_puerta();
             if ($tipo ==  1) {
                 $newMarcacion->marcaMov_fecha = $nuevaMarcacion;
+                $dispositivoE = $marcacion->dispositivoEntrada;
+                $dispositivoS = NULL;
             } else {
                 $newMarcacion->marcaMov_salida = $nuevaMarcacion;
+                $dispositivoS = $marcacion->dispositivoSalida;
+                $dispositivoE = NULL;
             }
             $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
             $newMarcacion->organi_id =  $marcacion->organi_id;
@@ -2207,6 +2211,9 @@ class dispositivosController extends Controller
             $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;
             $newMarcacion->puntoC_id = $marcacion->puntoC_id;
             $newMarcacion->centC_id = $marcacion->centC_id;
+            $newMarcacion->controladores_idControladores = $marcacion->controladores_idControladores;
+            $newMarcacion->dispositivoEntrada = $dispositivoE;
+            $newMarcacion->dispositivoSalida = $dispositivoS;
             $newMarcacion->save();
 
             return response()->json($newMarcacion->marcaMov_id, 200);
@@ -2225,9 +2232,11 @@ class dispositivosController extends Controller
         $marcacion = marcacion_puerta::findOrFail($id);
         if ($tipo == 1) {
             $marcacion->marcaMov_fecha = NULL;
+            $marcacion->dispositivoEntrada = NULL;
             $marcacion->save();
         } else {
             $marcacion->marcaMov_salida = NULL;
+            $marcacion->dispositivoSalida = NULL;
             $marcacion->save();
         }
 
@@ -2322,6 +2331,7 @@ class dispositivosController extends Controller
 
                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                             $marcacion->marcaMov_salida = $salida;
+                            $marcacion->dispositivoSalida = NULL;
                             $marcacion->save();
                             return response()->json($marcacion->marcaMov_id, 200);
                         } else {
@@ -2332,11 +2342,13 @@ class dispositivosController extends Controller
                         }
                     } else {
                         $marcacion->marcaMov_salida = $salida;
+                        $marcacion->dispositivoSalida = NULL;
                         $marcacion->save();
                         return response()->json($marcacion->marcaMov_id, 200);
                     }
                 } else {
                     $marcacion->marcaMov_salida = $salida;
+                    $marcacion->dispositivoSalida = NULL;
                     $marcacion->save();
                     return response()->json($marcacion->marcaMov_id, 200);
                 }
@@ -2431,6 +2443,7 @@ class dispositivosController extends Controller
 
                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
                             $marcacion->marcaMov_fecha = $entrada;
+                            $marcacion->dispositivoEntrada = NULL;
                             $marcacion->save();
                             return response()->json($marcacion->marcaMov_id, 200);
                         } else {
@@ -2441,11 +2454,13 @@ class dispositivosController extends Controller
                         }
                     } else {
                         $marcacion->marcaMov_fecha = $entrada;
+                        $marcacion->dispositivoEntrada = NULL;
                         $marcacion->save();
                         return response()->json($marcacion->marcaMov_id, 200);
                     }
                 } else {
                     $marcacion->marcaMov_fecha = $entrada;
+                    $marcacion->dispositivoEntrada = NULL;
                     $marcacion->save();
                     return response()->json($marcacion->marcaMov_id, 200);
                 }
