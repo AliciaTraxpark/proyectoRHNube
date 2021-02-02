@@ -405,7 +405,7 @@ function cargartabla(fecha) {
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th> 
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal">Tardanza Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important">Falta Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal">Falta Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
@@ -1178,7 +1178,7 @@ function cargartabla(fecha) {
                             </td>`;
                     // ******************************* CANTIDAD DE FALTAS **************************
                     if (sumaFaltas != 0) {
-                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">`;
+                        tbody += `<td class="text-center" name="faltaTotal" style="border-left: 1px dashed #aaaaaa!important">`;
                         for (let f = 0; f < sumaFaltas; f++) {
                             if (f == 0) {
                                 tbody += `<span class="badge badge-soft-danger mr-1" class="text-center">
@@ -1192,7 +1192,7 @@ function cargartabla(fecha) {
                         }
                         tbody += `</td>`;
                     } else {
-                        tbody += `<td class="text-center" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
+                        tbody += `<td class="text-center" name="faltaTotal" style="border-left: 1px dashed #aaaaaa!important">--</td>`;
                     }
                     // * ********************** FINALIZACION *************************************
                     if (data[index].incidencias.length == 0) {
@@ -2634,6 +2634,7 @@ $('#dropSelector').on('hidden.bs.dropdown', function () {
     $('#contenidoDetalle').hide();
     $('#contenidoPausas').hide();
     $('#contenidoHorarios').hide();
+    $('#contenidoIncidencias').hide();
 });
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
@@ -2896,6 +2897,12 @@ function toggleColumnas() {
         $('[name="colTardanzaTotal"]').show();
     } else {
         $('[name="colTardanzaTotal"]').hide();
+    }
+    // ? FALTA TOTAL
+    if ($('#faltaTotal').is(":checked")) {
+        $('[name="faltaTotal"]').show();
+    } else {
+        $('[name="faltaTotal"]').hide();
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }

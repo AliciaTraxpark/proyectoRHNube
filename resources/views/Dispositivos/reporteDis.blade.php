@@ -389,6 +389,10 @@
                                             <input type="checkbox" id="faltaHorario">
                                             <label for="">Falta entre horario</label>
                                         </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="faltaTotal" checked>
+                                            <label for="">Falta Total</label>
+                                        </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
