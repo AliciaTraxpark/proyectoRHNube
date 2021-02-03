@@ -189,7 +189,7 @@
                                 <img src="{{asset('landing/images/insert.svg')}}" height="20">
                                 Selector de columnas
                             </button>
-                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;">
+                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;">
                                 <h6 class="dropdown-header text-left"
                                     style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                     <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
@@ -205,8 +205,8 @@
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido detallePadre">
-                                        <input type="checkbox" name="detallePadre[]">
-                                        <label for="">Detalles de marcación</label>
+                                        <input type="checkbox" name="detallePadre">
+                                        <label for="">Cálculos de tiempos</label>
                                         <img class="float-right mt-1 ml-2"
                                             src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
                                             style="cursor: pointer;" onclick="javascript:toggleD()">
@@ -214,22 +214,26 @@
                                     <ul class="ulHijo" style="display: none" id="contenidoDetalle">
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoSitio">
-                                            <label for="">Tiempo en sitio</label>
+                                            <label for="">Tiempo entre marcaciónes</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colTardanza">
-                                            <label for="">Tardanza</label>
+                                            <input type="checkbox" id="colTiempoEntreH">
+                                            <label for="">Tiempo entre horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colIncidencia">
-                                            <label for="">Incidencias</label>
+                                            <input type="checkbox" id="colTiempoTotal" checked>
+                                            <label for="">Tiempo total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colSobreTiempo" checked>
+                                            <label for="">Sobre tiempo entre horario</label>
                                         </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
-                                        <input type="checkbox" checked disabled>
-                                        <label for="">DNI</label>
+                                        <input type="checkbox" id="colCodigo">
+                                        <label for="">Código</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
@@ -240,7 +244,7 @@
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido horarioPadre">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox">
                                         <label for="">Horarios</label>
                                         <img class="float-right mt-1 ml-2"
                                             src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
@@ -256,23 +260,56 @@
                                             <label for="">Horario</label>
                                         </li>
                                         <li class="liContenido horarioHijo">
-                                            <input type="checkbox" id="toleranciaIHorario" checked>
+                                            <input type="checkbox" id="toleranciaIHorario">
                                             <label for="">Tolerancia en el ingreso</label>
                                         </li>
                                         <li class="liContenido horarioHijo">
-                                            <input type="checkbox" id="toleranciaFHorario" checked>
+                                            <input type="checkbox" id="toleranciaFHorario">
                                             <label for="">Tolerancia en la salida</label>
                                         </li>
-                                        <li class="liContenido horarioHijo">
-                                            <input type="checkbox" id="faltaHorario" checked>
-                                            <label for="">Falta</label>
+                                    </ul>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido incidenciaPadre">
+                                        <input type="checkbox">
+                                        <label for="">Incidencias</label>
+                                        <img class="float-right mt-1 ml-2"
+                                            src="{{asset('landing/images/chevron-arrow-down.svg')}}" height="9"
+                                            style="cursor: pointer;" onclick="javascript:toggleI()">
+                                    </li>
+                                    <ul class="ulHijo" style="display: none" id="contenidoIncidencias">
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="colTardanza">
+                                            <label for="">Tardanza entre horarios</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="colTardanzaTotal" checked>
+                                            <label for="">Tardanza Total</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="faltaHorario">
+                                            <label for="">Falta entre horario</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="faltaTotal" checked>
+                                            <label for="">Falta Total</label>
+                                        </li>
+                                        <li class="liContenido incidenciaHijo">
+                                            <input type="checkbox" id="incidencia" checked>
+                                            <label for="">Incidencias</label>
                                         </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" checked disabled>
-                                        <label for="">Nombre</label>
+                                        <label for="">Nombres y apellidos</label>
+                                    </li>
+                                </ul>
+                                <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                    <li class="liContenido">
+                                        <input type="checkbox" checked disabled>
+                                        <label for="">Número documento</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">

@@ -702,6 +702,12 @@ function cargartabla(fecha) {
                                                                 ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                             </a>
                                                         </td>
+                                                        <td name="colTardanza">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                            </a>
+                                                        </td>
                                                         `;
                                         if (data[index].data[m].marcaciones.length == 0) {
                                             sumaFaltas++;
@@ -737,6 +743,12 @@ function cargartabla(fecha) {
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                             </a>
+                                                        </td>
+                                                        <td name="colTardanza">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                            </a>
                                                         </td>`;
                                         if (data[index].data[m].marcaciones.length == 0) {
                                             sumaFaltas++;
@@ -760,9 +772,10 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td class="text-center" name="colTiempoEntreH">---</td>
-                                                    <td class="text-center" name="colSobreTiempo">---</td>
-                                                    <td class="text-center" name="faltaHorario">---</td>`;
+                                                    <td name="colTiempoEntreH" class="text-center">Tiempo Total</td>
+                                                    <td name="colSobreTiempo" class="text-center">Sobre tiempo</td>
+                                                    <td name="colTardanza" class="text-center">Tardanza</td>
+                                                    <td name="faltaHorario">Falta</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -775,7 +788,7 @@ function cargartabla(fecha) {
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
-                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
+                                        tbodyEntradaySalida += `< style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
                                                                     <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
                                                                         <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -830,7 +843,7 @@ function cargartabla(fecha) {
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                            </ul></div></td>`;
+                                                            </ul></div></>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
@@ -1198,7 +1211,7 @@ function cargartabla(fecha) {
                                                 ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
                                             </a>
                                         </td>
-                                        <td name="tiempoPausa">
+                                        <td name="excesoPausa">
                                             <a class="badge badge-soft-danger mr-2">
                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                 ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
@@ -1219,10 +1232,10 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td class="text-center" name="toleranciaFHorario">---</td>
-                                            <td class="text-center" name="colTiempoEntreH">---</td>
-                                            <td class="text-center" name="colSobreTiempo">---</td>
-                                            <td class="text-center" name="colTardanza">--</td>
-                                            <td class="text-center" name="faltaHorario">---</td>`;
+                                            <td name="colTiempoEntreH" class="text-center">Tiempo Total</td>
+                                            <td name="colSobreTiempo" class="text-center">Sobre tiempo</td>
+                                            <td name="colTardanza" class="text-center">Tardanza</td>
+                                            <td name="faltaHorario">Falta</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
