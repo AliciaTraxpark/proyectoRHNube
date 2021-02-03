@@ -75,11 +75,11 @@ function calendario() {
                 buttons: {
                     confirm: {
                         label: "Aceptar",
-                        className: "btn-success btn-sm",
+                        className: "btn-success ",
                     },
                     cancel: {
                         label: "Cancelar",
-                        className: "btn-light btn-sm",
+                        className: "btn-light ",
                     },
                 },
                 callback: function (result) {
@@ -243,11 +243,11 @@ function calendario_edit() {
                         buttons: {
                             confirm: {
                                 label: "Aceptar",
-                                className: "btn-success btn-sm",
+                                className: "btn-success ",
                             },
                             cancel: {
                                 label: "Cancelar",
-                                className: "btn-light btn-sm",
+                                className: "btn-light ",
                             },
                         },
                         callback: function (result) {
@@ -300,11 +300,11 @@ function calendario_edit() {
                     buttons: {
                         confirm: {
                             label: "Aceptar",
-                            className: "btn-success btn-sm",
+                            className: "btn-success ",
                         },
                         cancel: {
                             label: "Cancelar",
-                            className: "btn-light btn-sm",
+                            className: "btn-light ",
                         },
                     },
                     callback: function (result) {
@@ -1304,11 +1304,11 @@ function eliminarhorariosTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -1391,11 +1391,11 @@ function calendario2() {
                 buttons: {
                     confirm: {
                         label: "Aceptar",
-                        className: "btn-success btn-sm",
+                        className: "btn-success ",
                     },
                     cancel: {
                         label: "Cancelar",
-                        className: "btn-light btn-sm",
+                        className: "btn-light ",
                     },
                 },
                 callback: function (result) {
@@ -1602,6 +1602,31 @@ function agregarHorarioSe_regis() {
             $("#selectHorario").val("Seleccionar horario");
             $("#selectHorario").trigger("change");
             $("#horarioAsignar").modal("hide");
+            if (data == 'Cambios guardados') {
+                $.notify(
+                    {
+                        message: data,
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        element: $("#form-ver"),
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+            } else {
+                bootbox.alert(data);
+            }
         },
         // error: function (data) {
         // },
@@ -1979,9 +2004,10 @@ function calendario2_ed() {
                 info.event.textColor == "1" ||
                 info.event.textColor == "0"
             ) {
-                if (info.event.textColor == "111111") {
-                   /*  $('#editarConfigHorario').modal('show'); */
-                     bootbox.confirm({
+                /* UNBIND SOLO UNA VEZ */
+                $('#eliminaHorarioDia').unbind().click(function() {
+                    $('#editarConfigHorario').modal('hide');
+                    bootbox.confirm({
                         title: "Eliminar horario",
                         message:
                             "¿Desea eliminar: " +
@@ -1990,11 +2016,11 @@ function calendario2_ed() {
                         buttons: {
                             confirm: {
                                 label: "Aceptar",
-                                className: "btn-success btn-sm",
+                                className: "btn-success ",
                             },
                             cancel: {
                                 label: "Cancelar",
-                                className: "btn-light btn-sm",
+                                className: "btn-light ",
                             },
                         },
                         callback: function (result) {
@@ -2018,6 +2044,8 @@ function calendario2_ed() {
                                     success: function (data) {
                                         info.event.remove();
                                         calendar2_ed.refetchEvents();
+                                        $('#editarConfigHorario').modal('hide');
+
                                     },
                                     error: function (data) {
                                         alert("Ocurrio un error");
@@ -2026,6 +2054,33 @@ function calendario2_ed() {
                             }
                         },
                     });
+                 });
+                 /* SI ES HORARIO */
+                if (info.event.textColor == "111111") {
+                    $('#idHoraEmpleado').val(info.event.id);
+                    if(info.event.borderColor == '#5369f8'){
+                        $('#fueraHSwitch_Actualizar').prop("checked",true);
+                    }
+                    else{
+                        $('#fueraHSwitch_Actualizar').prop("checked",false);
+                    }
+                    if (info.event.extendedProps.horaAdic == 1) {
+                        $('#horAdicSwitch_Actualizar').prop("checked",true);
+                        $('#nHorasAdic_Actualizar').show();
+
+                        $("#nHorasAdic_Actualizar").val(info.event.extendedProps.nHoraAdic);
+
+
+                    }
+                    else{
+                        $('#horAdicSwitch_Actualizar').prop("checked",false);
+                        $('#nHorasAdic_Actualizar').hide();
+                    }
+
+                     $('#editarConfigHorario').modal('show');
+
+
+
                 } else {
                     bootbox.confirm({
                         title: "Eliminar incidencia",
@@ -2036,11 +2091,11 @@ function calendario2_ed() {
                         buttons: {
                             confirm: {
                                 label: "Aceptar",
-                                className: "btn-success btn-sm",
+                                className: "btn-success ",
                             },
                             cancel: {
                                 label: "Cancelar",
-                                className: "btn-light btn-sm",
+                                className: "btn-light ",
                             },
                         },
                         callback: function (result) {
@@ -2093,11 +2148,11 @@ function calendario2_ed() {
                     buttons: {
                         confirm: {
                             label: "Aceptar",
-                            className: "btn-success btn-sm",
+                            className: "btn-success ",
                         },
                         cancel: {
                             label: "Cancelar",
-                            className: "btn-light btn-sm",
+                            className: "btn-light ",
                         },
                     },
                     callback: function (result) {
@@ -4755,11 +4810,11 @@ function vaciardFeria() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -4806,11 +4861,11 @@ function vaciarddescanso() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -4854,11 +4909,11 @@ function vaciardlabTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -4884,11 +4939,11 @@ function vaciardNlabTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -4935,11 +4990,11 @@ function vaciardIncidTem() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -4989,11 +5044,11 @@ function vaciardFeriaBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -5041,11 +5096,11 @@ function vaciarddescansoBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -5103,11 +5158,11 @@ function vaciarNlabBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -5154,11 +5209,11 @@ function vaciardIncidBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -5205,11 +5260,11 @@ function eliminarhorariosBD() {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -5256,11 +5311,11 @@ $("#selectCalendario_edit3").change(function () {
         buttons: {
             confirm: {
                 label: "Aceptar",
-                className: "btn-success btn-sm",
+                className: "btn-success ",
             },
             cancel: {
                 label: "Cancelar",
-                className: "btn-light btn-sm",
+                className: "btn-light ",
             },
         },
         callback: function (result) {
@@ -5613,6 +5668,20 @@ $(function () {
     });
 });
 /* ------------------------------------------------------------------ */
+/* EVENTO CAMBIAR SWITCH EN ACTUALLIZAR CONFIG HORARIO A DIA EDITAR EMPLEADO  */
+$(function () {
+    $(document).on('change', '#horAdicSwitch_Actualizar', function (event) {
+        if ($('#horAdicSwitch_Actualizar').prop('checked')) {
+            $('#nHorasAdic_Actualizar').show();
+
+        } else {
+            $('#nHorasAdic_Actualizar').hide();
+
+        }
+
+    });
+});
+/* ------------------------------------------------------------------ */
 
 (function (document, window, index) {
     var inputs = document.querySelectorAll('.inputfile');
@@ -5646,3 +5715,54 @@ $(".soloLetras").bind('keypress', function (event) {
     }
 });
 /*  -----------------------------FIN VALIDACION----------------------------------*/
+
+ /* ---------ACTUALIZAR CONFIGURACION DE HORARIO EN EDITAR EMPLEADO------------- */
+ function actualizarConfigHorario(){
+     let idHoraEmp=$('#idHoraEmpleado').val();
+     let fueraHorario;
+     let permiteHadicional;
+     let nHorasAdic;
+
+     //* Fuera de horario
+     if ($("#fueraHSwitch_Actualizar").is(":checked")) {
+        fueraHorario = 1;
+    } else {
+        fueraHorario = 0;
+    }
+
+    //* permitir horas adicionales
+    if ($("#horAdicSwitch_Actualizar").is(":checked")) {
+        permiteHadicional = 1;
+        nHorasAdic=$('#nHorasAdic_Actualizar').val()
+    } else {
+        permiteHadicional = 0;
+        nHorasAdic=null;
+    }
+
+     $.ajax({
+        type: "post",
+        url: "/empleado/actualizarConfigHorario",
+        data: {
+            idHoraEmp, fueraHorario, permiteHadicional,nHorasAdic
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $(
+                'meta[name="csrf-token"]'
+            ).attr("content"),
+        },
+        success: function (data) {
+            calendar2_ed.refetchEvents();
+            calendarioedit.refetchEvents();
+            $('#editarConfigHorario').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
+ }
+ /* ---------------------------------------------------------------------------- */

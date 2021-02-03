@@ -1668,6 +1668,8 @@ class EmpleadoController extends Controller
         $arrayeve = collect();
         $arrayrep = collect();
         $nHoraAdic = $request->nHoraAdic;
+
+        //COMPRAR SI ES EL MISMO
         foreach ($datafecha as $datafechas) {
             $tempre = eventos_empleado_temp::where('users_id', '=', Auth::user()->id)
                 ->where('organi_id', '=', session('sesionidorg'))
@@ -1686,8 +1688,45 @@ class EmpleadoController extends Controller
         //DIFERENCIA ARRAYS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
 
+        //* PARA COMPARAR QUE NO ESTE DENTRO DE HORARIO QUE NO SE CRUCEN
+        $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
+        $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
+        $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
+        $arrayHDentro = collect();
+        //*
+        foreach ($datafecha as $datafechas) {
+            $horarioDentro = eventos_empleado_temp::select([ 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+                ->join('horario as h', 'eventos_empleado_temp.id_horario', '=', 'h.horario_id')
+                ->where('start', '=', $datafechas)
+                 ->where('users_id', '=', Auth::user()->id)
+                ->get();
+            if ($horarioDentro) {
+                foreach ($horarioDentro as $horarioDentros) {
+                    $horaIDentro = Carbon::parse($horarioDentros->horaI);
+                    $horaFDentro = Carbon::parse($horarioDentros->horaF);
+                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+                    } else {
+                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                            $startArreD = carbon::create($horarioDentros->start);
+                            $arrayHDentro->push($startArreD->format('Y-m-d'));
+                        } else {
+                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($startArreD->format('Y-m-d'));
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        foreach ($datafecha2 as $datafechas) {
+        //* SACANDO HORARIOS QUE SE CRUCEN
+        $datosDentroN = Arr::flatten($arrayHDentro);
+        $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
+        //
+        foreach ($datafecha3 as $datafechas) {
             $eventos_empleado_tempSave = new eventos_empleado_temp();
             $eventos_empleado_tempSave->title = $horas;
             $eventos_empleado_tempSave->start = $datafechas;
@@ -1707,6 +1746,14 @@ class EmpleadoController extends Controller
             }
             $eventos_empleado_tempSave->save();
             $arrayeve->push($eventos_empleado_tempSave);
+        }
+
+        $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
+        /* dd($datafechaValida); */
+        if ($datafechaValida != null || $datafechaValida != []) {
+            return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
+        } else {
+            return 'Cambios guardados';
         }
     }
 
@@ -2839,5 +2886,27 @@ class EmpleadoController extends Controller
             $empleado->modoTareo = $request->get('estadoP');
             $empleado->save();
         }
+    }
+
+    public function actualizarConfigHorario(Request $request){
+
+        //*VALOR DE PARAMETROS
+        $idHoraEmp=$request->idHoraEmp;
+        $fueraHorario=$request->fueraHorario;
+        $permiteHadicional=$request->permiteHadicional;
+        $nHorasAdic=$request->nHorasAdic;
+
+        //*ACTUALIZANDO
+        $horario_empleado=horario_empleado::findOrfail($idHoraEmp);
+        if($fueraHorario==1){
+            $horario_empleado->borderColor='#5369f8';
+        } else{
+            $horario_empleado->borderColor=null;
+        }
+        $horario_empleado->fuera_horario=$fueraHorario;
+        $horario_empleado->horaAdic=$permiteHadicional;
+        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->save();
+
     }
 }

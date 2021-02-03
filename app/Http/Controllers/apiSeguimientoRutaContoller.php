@@ -626,4 +626,51 @@ class apiSeguimientoRutaContoller extends Controller
 
         return response()->json(array("mensaje" => "empleado_no_exite"), 400);
     }
+
+    //? API DE PUNTOS DE CONTROL
+    public function puntoControlRuta(Request $request)
+    {
+        /* OBTENEMOS EL ID DE EMPLEADO */
+        $idEmpleado = $request->idEmpleado;
+        /* ------------------------------- */
+
+        /* OBTENEMOS PUNTOS DE CONTROL DE EMPLEADO */
+
+                $punto_control = DB::table('punto_control as pc')
+                ->join('punto_control_empleado as pce','pc.id','=','pce.idPuntoControl')
+                ->select(
+                    'pc.id',
+                    'pc.descripcion',
+                    'pc.codigoControl',
+                    'pc.verificacion',
+                    'pc.estado'
+                )
+                ->where('pce.idEmpleado','=',$idEmpleado)
+                ->where('pce.estado','=',1)
+                ->where('pc.controlRuta', '=', 1)
+                ->where('pc.estado', '=', 1)
+                ->get();
+
+
+                      /* recorremos punto de de geo de cada punto de control */
+                foreach ($punto_control as $tab) {
+                    $punto_control_geo = DB::table('punto_control_geo as pcg')
+                        ->select('pcg.id', 'pcg.latitud', 'pcg.longitud', 'pcg.radio')
+                        ->where('pcg.idPuntoControl', '=', $tab->id)
+                        ->distinct('pcg.id')
+                        ->get();
+
+                    /* INSERTAMOS PUNTOS GEO */
+                    $tab->puntosGeo = $punto_control_geo;
+
+                }
+
+        /* ------------------------------------------------- */
+
+        /* ENVIAMOS DATA */
+                //? SI NO HAY PUNTOS DE CONTROL ENVIA VACIO []
+            return response()->json(array('status' => 200, "puntosControl" => $punto_control));
+
+
+    }
 }
