@@ -401,7 +401,8 @@ function cargartabla(fecha) {
                                         <th name="excesoPausa">Exceso de pausa</th>`;
                     }
                 }
-                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th> 
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal">Sobre Tiempo Total</th> 
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal">Tardanza Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal">Falta Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia">Incidencias</th>`;
@@ -1288,6 +1289,12 @@ function cargartabla(fecha) {
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
                             </td>
+                            <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                                <a class="badge badge-soft-primary mr-2">
+                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                    ${sumaSobreTiempo.format("HH:mm:ss")}
+                                </a>
+                            </td>
                             <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -1362,7 +1369,12 @@ function cargartabla(fecha) {
                                     <td name="excesoPausa"></td>`;
                         }
                     }
-                    tbodyTR += '<td name="colTiempoTotal"><br><br></td><td></td><td></td><td></td></tr>';
+                    tbodyTR += `<td name="colTiempoTotal"><br><br></td>
+                                <td name="colSobreTiempoTotal"></td>
+                                <td name="colTardanzaTotal"></td>
+                                <td name="faltaTotal"></td>
+                                <td name="incidencia"></td>
+                                </tr>`;
                     $('#tbodyD').append(tbodyTR);
                 }
                 inicializarTabla();
@@ -2947,6 +2959,12 @@ function toggleColumnas() {
         $('[name="colSobreTiempo"]').show();
     } else {
         $('[name="colSobreTiempo"]').hide();
+    }
+    // ? SOBRE TIEMPO TOTAL
+    if ($('#colSobreTiempoTotal').is(":checked")) {
+        $('[name="colSobreTiempoTotal"]').show();
+    } else {
+        $('[name="colSobreTiempoTotal"]').hide();
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
