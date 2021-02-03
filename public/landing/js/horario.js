@@ -374,17 +374,71 @@ function calendario() {
             if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
-                if (info.event.borderColor == '#5369f8') {
-                    if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
-                    } else {
-                        $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
-                    }
+                
 
+                if (info.event.extendedProps.pausas != '') {
+                    var cadenaPausas = [];
+                    $.each(info.event.extendedProps.pausas, function (index, value2) {
+
+                        variableResult1 = '   <br>   ' + value2.pausH_descripcion + ':  ' + value2.pausH_Inicio + '-' + value2.pausH_Fin + '                                                                                          ';
+                        cadenaPausas.push(variableResult1);
+                    })
+                    if (info.event.borderColor == '#5369f8') {
+                        if (info.event.extendedProps.horaAdic == 1) {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    ' <br> Pausas programadas:    ' + cadenaPausas
+                            });
+                        } else {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    '  <br>  Pausas programadas:     ' + cadenaPausas
+                            });
+                        }
+                    }
+                    else {
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>   Pausas programadas:     ' + cadenaPausas
+                        });
+                    }
                 }
                 else {
-                    $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    /* HORARIO CUANDO NO TIENE PAUSAS */
+                    if (info.event.borderColor == '#5369f8') {
+                        if (info.event.extendedProps.horaAdic == 1) {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    ' <br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario'
+                            });
+                        } else {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                            });
+                        }
+                    }
+                    else {
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                        });
+                    }
                 }
+
             }
             /*if(info.event.borderColor=='#5369f8'){
              $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.borderColor});
@@ -2940,7 +2994,7 @@ function modalEditar(id) {
                                     <div class="col-md-2">
                                         <label>Tolerancia inicio</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}" 
+                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}"
                                                oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -2957,7 +3011,7 @@ function modalEditar(id) {
                                     <div class="col-md-2">
                                         <label>Tolerancia salida</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}" 
+                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}"
                                                oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3197,7 +3251,7 @@ function e_contenidoInput(id) {
                             <label>Tolerancia inicio</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                     onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3215,7 +3269,7 @@ function e_contenidoInput(id) {
                             <label>Tolerancia salida</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                     onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">

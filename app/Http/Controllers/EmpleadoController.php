@@ -1523,12 +1523,24 @@ class EmpleadoController extends Controller
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
             ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id',
-             'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic','h.horasObliga'])
+             'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic','h.horasObliga','evt.id_horario'])
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
             ->where('evt.organi_id', '=', session('sesionidorg'))
             ->get();
+
+            //*INSERTAMOS PAUSAS
+            foreach ($eventos_empleado_temp as $tab) {
+                $pausas_horario = DB::table('pausas_horario as pauh')
+                    ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                    ->where('pauh.horario_id', '=', $tab->id_horario)
+                    ->distinct('pauh.idpausas_horario')
+                    ->get();
+
+                $tab->pausas = $pausas_horario;
+
+            }
 
         return $eventos_empleado_temp;
     }
