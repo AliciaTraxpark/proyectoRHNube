@@ -332,7 +332,7 @@ class apimovilController extends Controller
                 /*  ->where('mv.marcaMov_salida', '!=',null )
                 ->where('mv.marcaMov_fecha', '!=',null ) */
                     ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
-                    ->where('mv.controladores_idControladores', '=', $req['idControlador'])
+
                     ->where('dis.tipoDispositivo', '=', 2)
                     ->orderby('marcaMov_fecha', 'ASC')
                     ->get()->last();
@@ -351,7 +351,7 @@ class apimovilController extends Controller
                                 ->where('mv.marcaMov_salida', '=', null)
                                 ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                                 ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                                ->where('mv.controladores_idControladores', '=', $req['idControlador'])
+
                                 ->where('dis.tipoDispositivo', '=', 2)
                                 ->orderby('marcaMov_fecha', 'ASC')
                                 ->get()->first();
@@ -367,7 +367,7 @@ class apimovilController extends Controller
                             ->where('mv.marcaMov_salida', '=', null)
                             ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                             ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                            ->where('mv.controladores_idControladores', '=', $req['idControlador'])
+
                             ->where('dis.tipoDispositivo', '=', 2)
                             ->orderby('marcaMov_fecha', 'ASC')
                             ->get()->last();
@@ -380,7 +380,7 @@ class apimovilController extends Controller
                         ->where('mv.marcaMov_salida', '=', null)
                         ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                         ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                        ->where('mv.controladores_idControladores', '=', $req['idControlador'])
+                    
                         ->where('dis.tipoDispositivo', '=', 2)
                         ->orderby('marcaMov_fecha', 'ASC')
                         ->get()->last();
