@@ -114,8 +114,7 @@
     .select2-container .select2-selection--single .select2-selection__rendered {
         line-height: 31px;
     }
-</style>
-<style>
+
     .table {
         width: 100% !important;
     }
@@ -128,6 +127,20 @@
     .table td {
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
+    }
+
+    .ulHijo {
+        list-style: none;
+        padding-left: 1rem;
+    }
+
+    .liContenido {
+        list-style: none;
+    }
+
+    .dropdown-itemSelector {
+        padding: 0.1rem 1rem !important;
+        margin: 0.1rem 0 !important;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
