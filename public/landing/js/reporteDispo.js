@@ -788,7 +788,7 @@ function cargartabla(fecha) {
                                 var marcacionData = data[index].data[m].marcaciones[j];
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
-                                        tbodyEntradaySalida += `< style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
+                                        tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
                                                                     <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
                                                                         <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -843,7 +843,7 @@ function cargartabla(fecha) {
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                            </ul></div></>`;
+                                                            </ul></div></td>`;
                                     }
                                     else {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important;" name="colMarcaciones" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
