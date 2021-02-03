@@ -161,10 +161,22 @@ class horarioController extends Controller
     }
     public function eventos()
     {
-        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI', 'horaF', 'borderColor', 'horaAdic'])
+        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI',
+         'horaF', 'borderColor', 'horaAdic','id_horario','horasObliga','nHoraAdic'])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
             ->get();
+
+            foreach ($temporal_eventos as $tab) {
+                $pausas_horario = DB::table('pausas_horario as pauh')
+                    ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                    ->where('pauh.horario_id', '=', $tab->id_horario)
+                    ->distinct('pauh.idpausas_horario')
+                    ->get();
+
+                $tab->pausas = $pausas_horario;
+
+            }
 
         return response()->json($temporal_eventos);
     }
