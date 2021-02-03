@@ -3041,6 +3041,18 @@ class apiBiometricoController extends Controller
                                     'estado' => true);
 
                             }
+                            else{
+                                /* ESTE CODIGO ES POR SIACASO PARA EN EL FUTURO NO GENERAR ERROR
+                                 PERO EN SI NO CVLA PARA NADAA */
+                                $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
+                                $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                $marcacion_biometrico->dispositivoSalida = $req['idDisposi'];
+                                $marcacion_biometrico->save();
+
+                                $respuestaMarcacion = array(
+                                    'id' => $req['id'],
+                                    'estado' => true);
+                            }
 
                         } else {
 
@@ -3211,7 +3223,7 @@ class apiBiometricoController extends Controller
                 }
 
             }
-            
+
             /* INSERTAMO A AARRAY  */
             $arrayDatos->push($respuestaMarcacion);
             /* ---------------------------- */
