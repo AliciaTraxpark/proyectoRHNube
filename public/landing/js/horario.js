@@ -374,7 +374,7 @@ function calendario() {
             if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
-                
+
 
                 if (info.event.extendedProps.pausas != '') {
                     var cadenaPausas = [];
@@ -588,6 +588,13 @@ function agregarHorarioSe() {
                 var d = mesAg;
                 var fechasM = new Date(d);
                 calendar.refetchEvents();
+
+                if (data == 'Horario asignado') {
+
+                } else {
+                    bootbox.alert(data);
+                }
+
 
 
             },
@@ -949,6 +956,11 @@ function registrarhDias(idhorar) {
         success: function (data) {
 
             calendar.refetchEvents();
+            if (data == 'Horario asignado') {
+
+            } else {
+                bootbox.alert(data);
+            }
 
 
 
@@ -1934,6 +1946,7 @@ $("#selectTodoCheck").click(function () {
         $("#nombreEmpleado").trigger("change");
     }
 });
+
 //////////////////////
 //seleccionar por area, cargo, etc
 $('#selectEmpresarial').change(function (e) {

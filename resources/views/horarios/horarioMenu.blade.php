@@ -299,7 +299,7 @@
                                             </div>
                                         </div>
                                         <div class="row col-md-12">
-                                            <select data-plugin="customselect" multiple id="selectEmpresarial"
+                                            <select data-plugin="customselect"  id="selectEmpresarial"
                                                 name="selectEmpresarial" class="form-control"
                                                 data-placeholder="seleccione">
                                                 <option value=""></option>
