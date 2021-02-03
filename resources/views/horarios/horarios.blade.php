@@ -249,6 +249,10 @@ use Carbon\Carbon;
         .colResp {
             padding-left: 40px;
         }
+        .large.tooltip-inner {
+        max-width: 185px;
+        width: 185px;
+    }
     </style>
     <div id="preloader">
         <div id="status">

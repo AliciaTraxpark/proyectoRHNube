@@ -180,6 +180,10 @@
     .form-control:disabled {
         background-color: #f1f0f0;
     }
+    .large.tooltip-inner {
+        max-width: 185px;
+        width: 185px;
+    }
 </style>
 <style>
     .btnhora {
