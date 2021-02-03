@@ -476,7 +476,35 @@
                                     <th>Incidencias T.</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyD"></tbody>
+                            <tbody id="tbodyD">
+                                <tr>
+                                    <th class="noExport">Agregar</th>
+                                    <th>CC&nbsp;</th>
+                                    <th>Fecha</th>
+                                    <th>Número de documento</th>
+                                    <th name="colCodigo">Código</th>
+                                    <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th name="colCargo">
+                                        Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="noExport text-center">
+                                        <a onclick="javascript:modalAgregarMarcacion(2,'2021-02-03')"
+                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
+                                            style="cursor:pointer">
+                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
+                                                height="17" />
+                                        </a>
+                                    </td>
+                                    <td>1&nbsp;</td>
+                                    <td>2021-02-03</td>
+                                    <td class="text-center">80517256</td>
+                                    <td class="text-center" name="colCodigo">---</td>
+                                    <td>Doris Maza Lopez&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td name="colCargo">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                </tr>
+                            </tbody>
                         </table>
 
                     </div>
