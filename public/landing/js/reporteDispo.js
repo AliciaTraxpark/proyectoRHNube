@@ -355,7 +355,7 @@ function cargartabla(fecha) {
                     theadTabla += `<th class="noExport">Agregar</th>`;
                 }
                 theadTabla += `<th>CC&nbsp;</th>
-                                <th>Fecha</th>
+                                <th class="text-center">Fecha</th>
                                 <th>Número de documento</th>
                                 <th name="colCodigo">Código</th>
                                 <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -577,7 +577,27 @@ function cargartabla(fecha) {
                                                             </div>
                                                         </td>
                                                         <td name="horarioHorario">
-                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
@@ -637,7 +657,28 @@ function cargartabla(fecha) {
                                                             </div>
                                                         </td>
                                                         <td name="horarioHorario">
-                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
