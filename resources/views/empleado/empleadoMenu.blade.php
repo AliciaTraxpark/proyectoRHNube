@@ -3918,6 +3918,13 @@ use App\proyecto_empleado;
                                 <div class="modal-dialog  modal-lg d-flex justify-content-center "
                                     style="max-width: 400px;margin-top: 150px;">
                                     <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #163552;">
+                                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Seleccionar horario
+                                            </h5>
+                                            <button type="button" class="close"  aria-label="Close">
+                                                <span aria-hidden="true"  onclick="$('#horarioAsignar').modal('hide')">&times;</span>
+                                            </button>
+                                        </div>
                                         <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -3950,12 +3957,7 @@ use App\proyecto_empleado;
                                                             <label class="custom-control-label"
                                                                 for="fueraHSwitch_re">Trabajar fuera de horario</label>
                                                         </div>
-                                                        {{--  <div class="custom-control custom-switch mb-2">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="horCompSwitch_re">
-                                                        <label class="custom-control-label"
-                                                            for="horCompSwitch_re">Horario compensable.</label>
-                                                    </div> --}}
+
                                                         <div class="row">
                                                             <div class="custom-control custom-switch mb-2"
                                                                 style="left: 12px;">
@@ -5074,7 +5076,13 @@ use App\proyecto_empleado;
                                     style="max-width: 400px; margin-top: 150px;">
 
                                     <div class="modal-content">
-
+                                        <div class="modal-header" style="background-color: #163552;">
+                                            <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Seleccionar horario
+                                            </h5>
+                                            <button type="button" class="close"  aria-label="Close">
+                                                <span aria-hidden="true"  onclick="$('#horarioAsignar_ed').modal('hide')">&times;</span>
+                                            </button>
+                                        </div>
                                         <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -6193,50 +6201,77 @@ use App\proyecto_empleado;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-{{-- MODAL CONFIGIRACION HORARIO --}}
-<div id="editarConfigHorario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+{{-- MODAL CONFIGIRACION HORARIO  EN EDITAR EMPLEADO--}}
+<div id="editarConfigHorario" class="modal fade"  role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 400px; margin-top: 150px;">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #163552;">
-                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar nueva
-                    incidencia
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar configuración o eliminar horario
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-              {{--   <div class="row">
-
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+               <div class="row">
+                 <input type="hidden" id="idHoraEmpleado">
                     <div class="col-md-12">
-                        <form id="frmIncidenciaCa_ed" action="javascript:modalIncidencia_ed()">
+                        <form  action="javascript:actualizarConfigHorario()">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Descripcion:</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="descripcionInciCa_ed" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6"><label for=""><br></label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="descuentoCheckCa_ed">
-                                        <label class="form-check-label" for="descuentoCheckCa_ed">Aplicar
-                                            descuento</label>
-                                    </div>
+                                <div class="col-md-12"><br>
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input"
+                                        id="fueraHSwitch_Actualizar">
+                                    <label class="custom-control-label"
+                                        for="fueraHSwitch_Actualizar">Trabajar fuera de horario</label>
                                 </div>
 
+                                <div class="row">
+                                    <div class="custom-control custom-switch mb-2"
+                                        style="left: 12px;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="horAdicSwitch_Actualizar">
+                                        <label class="custom-control-label"
+                                            for="horAdicSwitch_Actualizar">Permite marcar horas
+                                            adicionales.</label>
+
+                                    </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <select id="nHorasAdic_Actualizar"
+                                        style="display: none;bottom: 3px;"
+                                        class="form-control form-control-sm col-md-3">
+                                        <option value="0.5">0.5 hora </option>
+                                        <option value="1">1 hora </option>
+                                        <option value="2">2 horas </option>
+                                        <option value="3">3 horas </option>
+                                        <option value="4">4 horas </option>
+                                        <option value="5">5 horas </option>
+                                        <option value="6">6 horas </option>
+                                        <option value="7">7 horas </option>
+                                        <option value="8">8 horas </option>
+                                        <option value="9">9 horas </option>
+                                        <option value="10">10 horas </option>
+                                        <option value="11">11 horas </option>
+                                        <option value="12">12 horas </option>
+                                    </select>
+                                </div>
                             </div>
+
+                         </div>
                     </div>
 
-                </div> --}}
+                </div>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="background: #f1f0f0;">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-6 text-left">
+                            <button type="button" class="btn btn-sm" style="background-color: #ad4145; color:white" id="eliminaHorarioDia">
+                                <i style="height: 15px !important;width: 15px !important;color:#ffffff !important;margin-bottom: 2px;" data-feather="trash-2"></i></button>
+
+                        </div>
+                        <div class="col-md-6 text-right">
                             <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
                             <button type="submit" name="" style="background-color: #163552;"
                                 class="btn btn-sm">Guardar</button>
@@ -6248,6 +6283,90 @@ use App\proyecto_empleado;
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+{{-- MODAL CONFIGIRACION HORARIO  EN REGISTRAR EMPLEADO--}}
+<div id="editarConfigHorario_re" class="modal fade"  role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 400px; margin-top: 150px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #163552;">
+                <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Editar configuración o eliminar horario
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size:12px!important;background: #f3f3f3;">
+               <div class="row">
+                 <input type="hidden" id="idHoraEmpleado_re">
+                    <div class="col-md-12">
+                        <form  action="javascript:actualizarConfigHorario_re()">
+                            <div class="row">
+                                <div class="col-md-12"><br>
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input"
+                                        id="fueraHSwitch_Actualizar_re">
+                                    <label class="custom-control-label"
+                                        for="fueraHSwitch_Actualizar_re">Trabajar fuera de horario</label>
+                                </div>
+
+                                <div class="row">
+                                    <div class="custom-control custom-switch mb-2"
+                                        style="left: 12px;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="horAdicSwitch_Actualizar_re">
+                                        <label class="custom-control-label"
+                                            for="horAdicSwitch_Actualizar_re">Permite marcar horas
+                                            adicionales.</label>
+
+                                    </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <select id="nHorasAdic_Actualizar_re"
+                                        style="display: none;bottom: 3px;"
+                                        class="form-control form-control-sm col-md-3">
+                                        <option value="0.5">0.5 hora </option>
+                                        <option value="1">1 hora </option>
+                                        <option value="2">2 horas </option>
+                                        <option value="3">3 horas </option>
+                                        <option value="4">4 horas </option>
+                                        <option value="5">5 horas </option>
+                                        <option value="6">6 horas </option>
+                                        <option value="7">7 horas </option>
+                                        <option value="8">8 horas </option>
+                                        <option value="9">9 horas </option>
+                                        <option value="10">10 horas </option>
+                                        <option value="11">11 horas </option>
+                                        <option value="12">12 horas </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                         </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer" style="background: #f1f0f0;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 text-left">
+                            <button type="button" class="btn btn-sm" style="background-color: #ad4145; color:white" id="eliminaHorarioDia_re">
+                                <i style="height: 15px !important;width: 15px !important;color:#ffffff !important;margin-bottom: 2px;" data-feather="trash-2"></i></button>
+
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancelar</button>
+                            <button type="submit" name="" style="background-color: #163552;"
+                                class="btn btn-sm">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {{-- ---------------------------- --}}
 {{-- visibilidad de editar --}}
 @if (isset($modifEmp))

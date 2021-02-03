@@ -155,6 +155,8 @@ Route::get('/empleadosdeBaja', 'EmpleadoController@empleadosBaja')->middleware('
 Route::get('tablaempleado/refreshBaja', 'EmpleadoController@refresTablaEmpBaja');
 Route::post('tablaempleado/refreshAreaBaja', 'EmpleadoController@refresTablaAreBaja');
 Route::post('empleado/darAlta', 'EmpleadoController@darAltaEmpleado');
+Route::post('/empleado/actualizarConfigHorario', 'EmpleadoController@actualizarConfigHorario');
+Route::post('/empleado/actualizarConfigHorario_re', 'EmpleadoController@actualizarConfigHorario_re');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
