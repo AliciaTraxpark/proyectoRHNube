@@ -2888,6 +2888,7 @@ class EmpleadoController extends Controller
         }
     }
 
+    //*ACTUALIZAR CONFIGURACION DE HORARIO EN EDITAR EMPLEADO
     public function actualizarConfigHorario(Request $request){
 
         //*VALOR DE PARAMETROS
@@ -2898,6 +2899,29 @@ class EmpleadoController extends Controller
 
         //*ACTUALIZANDO
         $horario_empleado=horario_empleado::findOrfail($idHoraEmp);
+        if($fueraHorario==1){
+            $horario_empleado->borderColor='#5369f8';
+        } else{
+            $horario_empleado->borderColor=null;
+        }
+        $horario_empleado->fuera_horario=$fueraHorario;
+        $horario_empleado->horaAdic=$permiteHadicional;
+        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->save();
+
+    }
+
+    //*ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO
+    public function actualizarConfigHorario_re(Request $request){
+
+        //*VALOR DE PARAMETROS
+        $idHoraEmp=$request->idHoraEmp;
+        $fueraHorario=$request->fueraHorario;
+        $permiteHadicional=$request->permiteHadicional;
+        $nHorasAdic=$request->nHorasAdic;
+
+        //*ACTUALIZANDO
+        $horario_empleado=eventos_empleado_temp::findOrfail($idHoraEmp);
         if($fueraHorario==1){
             $horario_empleado->borderColor='#5369f8';
         } else{
