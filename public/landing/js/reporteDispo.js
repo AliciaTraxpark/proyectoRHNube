@@ -436,6 +436,7 @@ function cargartabla(fecha) {
                     //* ARMAR Y ORDENAR MARCACIONES
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
+                    var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
                     // * CANTIDAD DE FALTAS
                     var sumaFaltas = 0;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -456,6 +457,10 @@ function cargartabla(fecha) {
                         var segundosTardanza = "00";
                         var minutosTardanza = "00";
                         var horasTardanza = "00";
+                        // * SOBRE TIEMPO
+                        var segundosSobreT = "00";
+                        var minutosSobreT = "00";
+                        var horasSobreT = "00";
 
                         if (data[index].data[m] != undefined) {
                             // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
@@ -518,7 +523,27 @@ function cargartabla(fecha) {
                                     sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
-
+                            if (horarioData.horario != null) {
+                                var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
+                                var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
+                                if (tiempoEntreH > horasObligadas) {
+                                    // * SOBRE TIEMPO 
+                                    var tiempoSobreT = tiempoEntreH - horasObligadas;
+                                    segundosSobreT = moment.duration(tiempoSobreT).seconds();
+                                    minutosSobreT = moment.duration(tiempoSobreT).minutes();
+                                    horasSobreT = Math.trunc(moment.duration(tiempoSobreT).asHours());
+                                    if (horasSobreT < 10) {
+                                        horasSobreT = '0' + horasSobreT;
+                                    }
+                                    if (minutosSobreT < 10) {
+                                        minutosSobreT = '0' + minutosSobreT;
+                                    }
+                                    if (segundosSobreT < 10) {
+                                        segundosSobreT = '0' + segundosSobreT;
+                                    }
+                                    sumaSobreTiempo = sumaSobreTiempo.add({ "hours": horasSobreT, "minutes": minutosSobreT, "seconds": segundosSobreT });
+                                }
+                            }
                             if (permisoModificar == 1) {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
@@ -561,7 +586,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -621,7 +646,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -699,7 +724,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -741,7 +766,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -772,10 +797,10 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td name="colTiempoEntreH" class="text-center">Tiempo Total</td>
-                                                    <td name="colSobreTiempo" class="text-center">Sobre tiempo</td>
-                                                    <td name="colTardanza" class="text-center">Tardanza</td>
-                                                    <td name="faltaHorario">Falta</td>`;
+                                                    <td name="colTiempoEntreH" class="text-center">---</td>
+                                                    <td name="colSobreTiempo" class="text-center">---</td>
+                                                    <td name="colTardanza" class="text-center">---</td>
+                                                    <td name="faltaHorario">---</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -1232,10 +1257,10 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td class="text-center" name="toleranciaFHorario">---</td>
-                                            <td name="colTiempoEntreH" class="text-center">Tiempo Total</td>
-                                            <td name="colSobreTiempo" class="text-center">Sobre tiempo</td>
-                                            <td name="colTardanza" class="text-center">Tardanza</td>
-                                            <td name="faltaHorario">Falta</td>`;
+                                            <td name="colTiempoEntreH" class="text-center">---</td>
+                                            <td name="colSobreTiempo" class="text-center">---</td>
+                                            <td name="colTardanza" class="text-center">---</td>
+                                            <td name="faltaHorario">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
