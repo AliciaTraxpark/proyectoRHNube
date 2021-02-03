@@ -241,6 +241,10 @@
                                             <input type="checkbox" id="colSobreTiempo">
                                             <label for="">Sobre tiempo entre horario</label>
                                         </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colSobreTiempoTotal" checked>
+                                            <label for="">Sobre tiempo total</label>
+                                        </li>
                                     </ul>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
