@@ -1318,7 +1318,73 @@ class dispositivosController extends Controller
                 ->get();
             $marcaciones = agruparPorFechayHorario($marcaciones);
         }
+        // * ***************** TODAS LAS FECHAS **********************
+        $period = Carbon::parse($fecha)->toPeriod($fechaF);
+        $dates = [];
+        foreach ($period as $key => $date) {
+            array_push($dates, $date->format('Y-m-d'));
+        }
+        // : RECORREMOS FECHAS
+        foreach ($dates as $d) {
+            // : RECORREMOS MARCACIONES
+            foreach ($marcaciones as $key => $m) {
+                // : BUSCAMOS SI YA EXISTE LA FECHA EN EL ARRAY
+                if (array_key_exists($d, $m->datos)) {
+                    $horarios = array_keys($m->datos[$d]);   // : OBTENEMOS TODOS LOS HORARIOS DE ESA FECHA
+                    $clave = array_search(0, $horarios);     // : BUSCAMOS HORARIOS CON ID 0
+                    if (!is_bool($clave)) {
+                        unset($horarios[$clave]);            // : DESCARTAMOS LOS HORARIOS CON ID 0
+                    }
+                    $horarioEmpleado = DB::table('horario_empleado as he')
+                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                        ->select(
+                            'h.horario_id as idHorario',
+                            'h.horario_descripcion as horario',
+                            DB::raw('DATE(hd.start) as fecha'),
+                            'h.horario_tolerancia as tolerancia',
+                            DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin")
+                        )
+                        ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                        ->where('he.empleado_emple_id', '=', $idemp)
+                        ->whereNotIn('h.horario_id', $horarios)
+                        ->where('he.estado', '=', 1)
+                        ->get();
+                    foreach ($horarioEmpleado as $he) {
+                        // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
+                        $he->marcaciones = array();
+                        $marcaciones[$key]->datos[$d][$he->idHorario] = $he;
+                    }
+                } else {
+                    $horarioEmpleado = DB::table('horario_empleado as he')
+                        ->join('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+                        ->join('horario_dias as hd', 'he.horario_dias_id', '=', 'hd.id')
+                        ->select(
+                            'h.horario_id as idHorario',
+                            'h.horario_descripcion as horario',
+                            DB::raw('DATE(hd.start) as fecha'),
+                            'h.horario_tolerancia as tolerancia',
+                            DB::raw("IF(h.horaI is null , 0 ,CONCAT( DATE(hd.start),' ', h.horaI)) as horarioIni"),
+                            DB::raw("IF(h.horaF is null , 0 , IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF))) as horarioFin")
+                        )
+                        ->where(DB::raw('DATE(hd.start)'), '=', $d)
+                        ->where('he.empleado_emple_id', '=', $idemp)
+                        ->where('he.estado', '=', 1)
+                        ->get();
+                    if (sizeof($horarioEmpleado) != 0) {
+                        $marcaciones[$key]->datos[$d] = array();
+                        foreach ($horarioEmpleado as $he) {
+                            // : AGREGAMOS LOS HORARIOS QUE FALTA EN ESA FECHA
+                            $he->marcaciones = array();
+                            $marcaciones[$key]->datos[$d][$he->idHorario] = $he;
+                        }
+                    }
+                }
+            }
+        }
         foreach ($marcaciones as $m) {
+            ksort($m->datos);
             $m->datos = array_values($m->datos);
             foreach ($m->datos as $key => $datos) {
                 $m->datos[$key] = array_values($m->datos[$key]);
