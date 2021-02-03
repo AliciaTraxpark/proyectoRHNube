@@ -2734,6 +2734,9 @@ class apiBiometricoController extends Controller
 
                                 $tipoMarcacion = 0;
                             }
+                            else{
+                                $tipoMarcacion = 1;
+                            }
                         }
 
                     }
@@ -2754,6 +2757,9 @@ class apiBiometricoController extends Controller
                      if ($marcacion_puertaVerif2) {
 
                          $tipoMarcacion = 0;
+                     }
+                     else{
+                        $tipoMarcacion = 1;
                      }
                     }
                 }
