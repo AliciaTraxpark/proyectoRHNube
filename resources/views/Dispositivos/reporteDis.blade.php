@@ -324,12 +324,16 @@
                                             <label for="">Tiempo entre marcaciónes</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colTiempoEntreH">
+                                            <label for="">Tiempo entre horario</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoTotal" checked>
                                             <label for="">Tiempo total</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
-                                            <input type="checkbox" id="colTiempoEntreH">
-                                            <label for="">Tiempo entre horarios</label>
+                                            <input type="checkbox" id="colSobreTiempo" checked>
+                                            <label for="">Sobre tiempo entre horario</label>
                                         </li>
                                     </ul>
                                 </ul>

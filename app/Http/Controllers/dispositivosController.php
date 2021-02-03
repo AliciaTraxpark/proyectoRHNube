@@ -405,7 +405,8 @@ class dispositivosController extends Controller
                         "toleranciaI" => $empleado->toleranciaI,
                         "toleranciaF" => $empleado->toleranciaF,
                         "idHorarioE" => $empleado->idHorarioE,
-                        "estado" => $empleado->estado
+                        "estado" => $empleado->estado,
+                        "horasObligadas" => $empleado->horasObligadas
                     );
                 }
                 if (!isset($resultado[$empleado->emple_id]->data[$empleado->idHorario]["pausas"])) {
@@ -681,6 +682,7 @@ class dispositivosController extends Controller
                 'hor.horario_tolerancia as toleranciaI',
                 'hor.horario_toleranciaF as toleranciaF',
                 'mp.marcaMov_id as idMarcacion',
+                'hor.horasObliga as horasObligadas',
                 'hoe.estado'
             )
             ->where(DB::raw('IF(mp.marcaMov_fecha is null, DATE(mp.marcaMov_salida), DATE(mp.marcaMov_fecha))'), '=', $fecha)
