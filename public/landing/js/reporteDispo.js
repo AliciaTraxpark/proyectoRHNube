@@ -355,6 +355,7 @@ function cargartabla(fecha) {
                     theadTabla += `<th class="noExport">Agregar</th>`;
                 }
                 theadTabla += `<th>CC&nbsp;</th>
+                                <th class="text-center">Fecha</th>
                                 <th>Número de documento</th>
                                 <th name="colCodigo">Código</th>
                                 <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -401,12 +402,14 @@ function cargartabla(fecha) {
                                         <th name="excesoPausa">Exceso de pausa</th>`;
                     }
                 }
-                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th> 
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal">Sobre Tiempo Total</th> 
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal">Tardanza Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal">Falta Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
+                console.log(theadTabla);
                 $('#theadD').html(theadTabla);
                 // ! ********************************************************* BODY DE TABLA**************************************************
                 $('#tbodyD').empty();
@@ -426,9 +429,10 @@ function cargartabla(fecha) {
                                 </td>`;
                     }
                     tbody += `<td>${(index + 1)}&nbsp;</td>
-                            <td class="text-center">${data[index].emple_nDoc}</td>
-                            <td class="text-center" name="colCodigo">${data[index].emple_codigo}</td>
-                            <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                <td>${fechaGlobal}</td>
+                                <td class="text-center">${data[index].emple_nDoc}</td>
+                                <td class="text-center" name="colCodigo">${data[index].emple_codigo}</td>
+                                <td>${data[index].perso_nombre} ${data[index].perso_apPaterno} ${data[index].perso_apMaterno}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                     tbody += `<td name="colCargo">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
                     // * ARMAR GRUPO DE HORARIOS
@@ -436,6 +440,7 @@ function cargartabla(fecha) {
                     //* ARMAR Y ORDENAR MARCACIONES
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
+                    var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
                     // * CANTIDAD DE FALTAS
                     var sumaFaltas = 0;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -456,6 +461,10 @@ function cargartabla(fecha) {
                         var segundosTardanza = "00";
                         var minutosTardanza = "00";
                         var horasTardanza = "00";
+                        // * SOBRE TIEMPO
+                        var segundosSobreT = "00";
+                        var minutosSobreT = "00";
+                        var horasSobreT = "00";
 
                         if (data[index].data[m] != undefined) {
                             // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
@@ -518,7 +527,27 @@ function cargartabla(fecha) {
                                     sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
-
+                            if (horarioData.horario != null) {
+                                var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
+                                var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
+                                if (tiempoEntreH > horasObligadas) {
+                                    // * SOBRE TIEMPO 
+                                    var tiempoSobreT = tiempoEntreH - horasObligadas;
+                                    segundosSobreT = moment.duration(tiempoSobreT).seconds();
+                                    minutosSobreT = moment.duration(tiempoSobreT).minutes();
+                                    horasSobreT = Math.trunc(moment.duration(tiempoSobreT).asHours());
+                                    if (horasSobreT < 10) {
+                                        horasSobreT = '0' + horasSobreT;
+                                    }
+                                    if (minutosSobreT < 10) {
+                                        minutosSobreT = '0' + minutosSobreT;
+                                    }
+                                    if (segundosSobreT < 10) {
+                                        segundosSobreT = '0' + segundosSobreT;
+                                    }
+                                    sumaSobreTiempo = sumaSobreTiempo.add({ "hours": horasSobreT, "minutes": minutosSobreT, "seconds": segundosSobreT });
+                                }
+                            }
                             if (permisoModificar == 1) {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
@@ -548,7 +577,27 @@ function cargartabla(fecha) {
                                                             </div>
                                                         </td>
                                                         <td name="horarioHorario">
-                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
@@ -561,7 +610,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -570,7 +619,7 @@ function cargartabla(fecha) {
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                             </a>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -608,7 +657,28 @@ function cargartabla(fecha) {
                                                             </div>
                                                         </td>
                                                         <td name="horarioHorario">
-                                                            ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                            <div class="dropdown">
+                                                                <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                    style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                    <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
+                                                                    ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
+                                                                </a>
+                                                                <ul class="dropdown-menu scrollable-menu"  aria-labelledby="dropdownHorarioH${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                    <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                        <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                        Opciones
+                                                                    </h6>
+                                                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                    <div class="dropdown-item dropdown-itemM">
+                                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                            <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                                <img src="landing/images/calendarioAD.svg" height="15" />
+                                                                                Actualizar horario
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
@@ -621,7 +691,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -630,7 +700,7 @@ function cargartabla(fecha) {
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                             </a>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -699,7 +769,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -709,7 +779,7 @@ function cargartabla(fecha) {
                                                             </a>
                                                         </td>
                                                         `;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -741,7 +811,7 @@ function cargartabla(fecha) {
                                                         <td name="colSobreTiempo" class="text-center">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                                ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza">
@@ -750,7 +820,7 @@ function cargartabla(fecha) {
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                             </a>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -772,10 +842,10 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td name="colTiempoEntreH" class="text-center">Tiempo Total</td>
-                                                    <td name="colSobreTiempo" class="text-center">Sobre tiempo</td>
-                                                    <td name="colTardanza" class="text-center">Tardanza</td>
-                                                    <td name="faltaHorario">Falta</td>`;
+                                                    <td name="colTiempoEntreH" class="text-center">---</td>
+                                                    <td name="colSobreTiempo" class="text-center">---</td>
+                                                    <td name="colTardanza" class="text-center">---</td>
+                                                    <td name="faltaHorario">---</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -1232,10 +1302,10 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td class="text-center" name="toleranciaFHorario">---</td>
-                                            <td name="colTiempoEntreH" class="text-center">Tiempo Total</td>
-                                            <td name="colSobreTiempo" class="text-center">Sobre tiempo</td>
-                                            <td name="colTardanza" class="text-center">Tardanza</td>
-                                            <td name="faltaHorario">Falta</td>`;
+                                            <td name="colTiempoEntreH" class="text-center">---</td>
+                                            <td name="colSobreTiempo" class="text-center">---</td>
+                                            <td name="colTardanza" class="text-center">---</td>
+                                            <td name="faltaHorario">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
@@ -1261,6 +1331,12 @@ function cargartabla(fecha) {
                                 <a class="badge badge-soft-primary mr-2">
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
+                                </a>
+                            </td>
+                            <td name="colSobreTiempoTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                                <a class="badge badge-soft-primary mr-2">
+                                    <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                    ${sumaSobreTiempo.format("HH:mm:ss")}
                                 </a>
                             </td>
                             <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
@@ -1304,7 +1380,7 @@ function cargartabla(fecha) {
                     }
                     tbody += `</tr>`;
                 }
-                console.log(tbody);
+                // console.log(tbody);
                 $('#tbodyD').html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
                 $('.dropdown-toggle').dropdown();
@@ -1315,7 +1391,12 @@ function cargartabla(fecha) {
                     if (permisoModificar == 1) {
                         tbodyTR += `<td></td>`;
                     }
-                    tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td name="colCodigo"></td><td></td><td name="colCargo"></td>';
+                    tbodyTR += `<td><br><br><br><br><br><br><br><br><br><br></td>
+                                <td></td>
+                                <td></td>
+                                <td name="colCodigo"></td>
+                                <td></td>
+                                <td name="colCargo"></td>`;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         tbodyTR += `<td name="descripcionHorario"></td>
                                     <td name="horarioHorario"></td>
@@ -1337,7 +1418,12 @@ function cargartabla(fecha) {
                                     <td name="excesoPausa"></td>`;
                         }
                     }
-                    tbodyTR += '<td name="colTiempoTotal"><br><br></td><td></td><td></td><td></td></tr>';
+                    tbodyTR += `<td name="colTiempoTotal"><br><br></td>
+                                <td name="colSobreTiempoTotal"></td>
+                                <td name="colTardanzaTotal"></td>
+                                <td name="faltaTotal"></td>
+                                <td name="incidencia"></td>
+                                </tr>`;
                     $('#tbodyD').append(tbodyTR);
                 }
                 inicializarTabla();
@@ -2922,6 +3008,12 @@ function toggleColumnas() {
         $('[name="colSobreTiempo"]').show();
     } else {
         $('[name="colSobreTiempo"]').hide();
+    }
+    // ? SOBRE TIEMPO TOTAL
+    if ($('#colSobreTiempoTotal').is(":checked")) {
+        $('[name="colSobreTiempoTotal"]').show();
+    } else {
+        $('[name="colSobreTiempoTotal"]').hide();
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
