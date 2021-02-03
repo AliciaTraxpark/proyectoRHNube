@@ -2737,6 +2737,25 @@ class apiBiometricoController extends Controller
                         }
 
                     }
+                    else{
+                         /*--------- SI NO TENGO SALIDA ----------------------------*/
+                         $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
+                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                         ->where('dis.tipoDispositivo', '=', 3)
+                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                         ->where('mv.marcaMov_salida', '=', null)
+                         ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
+                         ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
+                         ->whereNull('mv.horarioEmp_id')
+                         ->orderby('marcaMov_fecha', 'ASC')
+                         ->get()->first();
+                     /* ------------------------------------------------------ */
+
+                     if ($marcacion_puertaVerif2) {
+
+                         $tipoMarcacion = 0;
+                     }
+                    }
                 }
             }
             /* ------------------------------------------------------------------ */
