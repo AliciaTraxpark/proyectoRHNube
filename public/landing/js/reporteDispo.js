@@ -373,6 +373,7 @@ function cargartabla(fecha) {
                                     <th class="text-center" name="horarioHorario">Horario</th>
                                     <th name="toleranciaIHorario">Tolerancia en el ingreso</th>
                                     <th name="toleranciaFHorario">Tolerancia en la salida</th>
+                                    <th name="colTiempoEntreH" class="text-center">Tiempo Total</th>
                                     <th name="colTardanza" class="text-center">Tardanza</th>
                                     <th name="faltaHorario">Falta</th>`;
                     // ! MARCACION
@@ -443,48 +444,86 @@ function cargartabla(fecha) {
                     for (let m = 0; m < cantidadGruposHorario; m++) {
                         // : HORARIO
                         var idHorarioM = [];
+                        // : PAUSA
+                        var idPausas = [];
+                        // * PAUSAS
+                        var tiempoHoraPausa = "00";        //: HORAS TARDANZA
+                        var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
+                        var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
+                        var sumaTiemposEntreHorarios = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
+                        //* EXCESO
+                        var tiempoHoraExceso = "00";
+                        var tiempoMinutoExceso = "00";
+                        var tiempoSegundoExceso = "00";
                         // * TARDANZA
                         var segundosTardanza = "00";
                         var minutosTardanza = "00";
                         var horasTardanza = "00";
 
                         if (data[index].data[m] != undefined) {
-                            // ! HORARIO
+                            // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                             var horarioData = data[index].data[m].horario;
                             contenidoHorario.push({ "idEmpleado": data[index].emple_id, "idHorarioE": horarioData.idHorarioE, "estado": horarioData.estado });
-                            if (permisoModificar == 1) {
-                                if (horarioData.horario != null) {
-                                    if (data[index].data[m].marcaciones[0] != undefined) {
-                                        if (data[index].data[m].marcaciones[0].entrada != 0) {
-                                            // * TARDANZA
-                                            var dataParaTardanza = data[index].data[m].marcaciones[0];
-                                            var horaInicial = moment(dataParaTardanza.entrada);
-                                            // ******************************* TARDANZA ***************************************
-                                            // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
-                                            if (!idHorarioM.includes(dataParaTardanza.idH)) {
-                                                idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
-                                                var horaInicioHorario = moment(horarioData.horarioIni);
-                                                var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
-                                                //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
-                                                if (horaInicial.isAfter(horaConTolerancia)) {
-                                                    var tardanza = horaInicial - horaInicioHorario;
-                                                    segundosTardanza = moment.duration(tardanza).seconds();
-                                                    minutosTardanza = moment.duration(tardanza).minutes();
-                                                    horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
-                                                    if (horasTardanza < 10) {
-                                                        horasTardanza = '0' + horasTardanza;
-                                                    }
-                                                    if (minutosTardanza < 10) {
-                                                        minutosTardanza = '0' + minutosTardanza;
-                                                    }
-                                                    if (segundosTardanza < 10) {
-                                                        segundosTardanza = '0' + segundosTardanza;
-                                                    }
-                                                    sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
-                                                }
+                            // ! ******************************************* CALCULOS ENTRE HORARIOS ***********************************************
+                            // * DATA PARA TARDANZA
+                            if (data[index].data[m].marcaciones[0] != undefined) {
+                                if (data[index].data[m].marcaciones[0].entrada != 0) {
+                                    // * TARDANZA
+                                    var dataParaTardanza = data[index].data[m].marcaciones[0];
+                                    var horaInicial = moment(dataParaTardanza.entrada);
+                                    // ******************************* TARDANZA ***************************************
+                                    // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
+                                    if (!idHorarioM.includes(dataParaTardanza.idH)) {
+                                        idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
+                                        var horaInicioHorario = moment(horarioData.horarioIni);
+                                        var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
+                                        //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
+                                        if (horaInicial.isAfter(horaConTolerancia)) {
+                                            var tardanza = horaInicial - horaInicioHorario;
+                                            segundosTardanza = moment.duration(tardanza).seconds();
+                                            minutosTardanza = moment.duration(tardanza).minutes();
+                                            horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
+                                            if (horasTardanza < 10) {
+                                                horasTardanza = '0' + horasTardanza;
                                             }
+                                            if (minutosTardanza < 10) {
+                                                minutosTardanza = '0' + minutosTardanza;
+                                            }
+                                            if (segundosTardanza < 10) {
+                                                segundosTardanza = '0' + segundosTardanza;
+                                            }
+                                            sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                         }
                                     }
+                                }
+                            }
+                            // * DATA PARA ENTRE HORARIO
+                            for (let res = 0; res < data[index].data[m].marcaciones.length; res++) {
+                                var dataM = data[index].data[m].marcaciones[res];
+                                // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
+                                var horaFinalData = moment(dataM.salida);
+                                var horaInicialData = moment(dataM.entrada);
+                                if (horaFinalData.isSameOrAfter(horaInicialData)) {
+                                    // * TIEMPO TOTAL TRABAJADA
+                                    var tiempoRestanteD = horaFinalData - horaInicialData;
+                                    var segundosTiempoD = moment.duration(tiempoRestanteD).seconds();
+                                    var minutosTiempoD = moment.duration(tiempoRestanteD).minutes();
+                                    var horasTiempoD = Math.trunc(moment.duration(tiempoRestanteD).asHours());
+                                    if (horasTiempoD < 10) {
+                                        horasTiempoD = '0' + horasTiempoD;
+                                    }
+                                    if (minutosTiempo < 10) {
+                                        minutosTiempoD = '0' + minutosTiempoD;
+                                    }
+                                    if (segundosTiempoD < 10) {
+                                        segundosTiempoD = '0' + segundosTiempoD;
+                                    }
+                                    sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
+                                }
+                            }
+
+                            if (permisoModificar == 1) {
+                                if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
                                         grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
@@ -516,6 +555,12 @@ function cargartabla(fecha) {
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center">
+                                                            <a class="badge badge-soft-primary mr-2">
+                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                            </a>
+                                                        </td>
                                                         <td name="colTardanza">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -564,6 +609,12 @@ function cargartabla(fecha) {
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
                                                         <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center">
+                                                            <a class="badge badge-soft-primary mr-2">
+                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                            </a>
+                                                        </td>
                                                         <td name="colTardanza">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -610,6 +661,7 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
+                                                    <td name="colTiempoEntreH" class="text-center">---</td>
                                                     <td class="text-center" name="colTardanza">---</td>
                                                     <td class="text-center" name="faltaHorario">---</td>`;
                                 }
@@ -627,7 +679,13 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center">
+                                                            <a class="badge badge-soft-primary mr-2">
+                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                            </a>
+                                                        </td>`;
                                         if (data[index].data[m].marcaciones.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
@@ -650,7 +708,13 @@ function cargartabla(fecha) {
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
                                                         <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>`;
+                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center">
+                                                            <a class="badge badge-soft-primary mr-2">
+                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                            </a>
+                                                        </td>`;
                                         if (data[index].data[m].marcaciones.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
@@ -673,21 +737,12 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="horarioHorario">---</td>
                                                     <td class="text-center" name="toleranciaIHorario">---</td>
                                                     <td class="text-center" name="toleranciaFHorario">---</td>
+                                                    <td name="colTiempoEntreH" class="text-center">---</td>
                                                     <td class="text-center" name="faltaHorario">---</td>`;
                                 }
                             }
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
-                            // : PAUSA
-                            var idPausas = [];
-                            // * PAUSAS
-                            var tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                            var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                            var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                            //* EXCESO
-                            var tiempoHoraExceso = "00";
-                            var tiempoMinutoExceso = "00";
-                            var tiempoSegundoExceso = "00";
                             for (let j = 0; j < data[index].data[m].marcaciones.length; j++) {
                                 // * TIEMPO EN SITIO
                                 var segundosTiempo = "00";
@@ -881,8 +936,7 @@ function cargartabla(fecha) {
                                                                 if (data[index].data[m].marcaciones[j + 1] != undefined) {
                                                                     if (data[index].data[m].marcaciones[j + 1].entrada != undefined) {
                                                                         var horaEntradaDespues = moment(data[index].data[m].marcaciones[j + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                                                        var restarTiempoMarcacion = horaEntradaDespues - horaFinal;
-                                                                        console.log(restarTiempoMarcacion);                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA
+                                                                        var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
                                                                         tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
                                                                         tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
                                                                         tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
@@ -1141,7 +1195,8 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="horarioHorario">---</td>
                                             <td class="text-center" name="toleranciaIHorario">---</td>
                                             <td class="text-center" name="toleranciaFHorario">---</td>
-                                            <td name="colTardanza" class="text-center">--</td>
+                                            <td class="text-center" name="colTiempoEntreH">---</td>
+                                            <td class="text-center" name="colTardanza">--</td>
                                             <td class="text-center" name="faltaHorario">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
@@ -1223,7 +1278,7 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += '<td><br><br><br><br><br><br><br><br><br><br></td><td name="colCodigo"></td><td></td><td name="colCargo"></td>';
                     for (let m = 0; m < cantidadGruposHorario; m++) {
-                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td name="colTardanza"></td><td name="faltaHorario"></td>';
+                        tbodyTR += '<td name="descripcionHorario"></td><td name="horarioHorario"></td><td name="toleranciaIHorario"></td><td name="toleranciaFHorario"></td><td class="text-center" name="colTiempoEntreH">---</td><td name="colTardanza"></td><td name="faltaHorario"></td>';
                         // ! MARCACIONES
                         for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
                             tbodyTR += '<td name="colMarcaciones"><br></td><td name="colMarcaciones"></td><td name="colTiempoS"></td>';
@@ -2809,6 +2864,12 @@ function toggleColumnas() {
         $('[name="colTiempoTotal"]').show();
     } else {
         $('[name="colTiempoTotal"]').hide();
+    }
+    // ? TIEMPO ENTRE HORARIOS
+    if ($('#colTiempoEntreH').is(":checked")) {
+        $('[name="colTiempoEntreH"]').show();
+    } else {
+        $('[name="colTiempoEntreH"]').hide();
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA

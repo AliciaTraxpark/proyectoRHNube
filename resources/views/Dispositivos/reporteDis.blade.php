@@ -325,7 +325,11 @@
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colTiempoTotal" checked>
-                                            <label for="">Tiempo Total</label>
+                                            <label for="">Tiempo total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colTiempoEntreH">
+                                            <label for="">Tiempo entre horarios</label>
                                         </li>
                                     </ul>
                                 </ul>
