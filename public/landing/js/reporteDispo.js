@@ -596,7 +596,7 @@ function cargartabla(fecha) {
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                             </a>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -656,7 +656,7 @@ function cargartabla(fecha) {
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                             </a>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -735,7 +735,7 @@ function cargartabla(fecha) {
                                                             </a>
                                                         </td>
                                                         `;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
@@ -776,7 +776,7 @@ function cargartabla(fecha) {
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
                                                             </a>
                                                         </td>`;
-                                        if (data[index].data[m].marcaciones.length == 0) {
+                                        if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
                                             grupoHorario += `<td class="text-center" name="faltaHorario">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
