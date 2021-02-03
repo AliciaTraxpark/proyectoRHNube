@@ -1340,4 +1340,27 @@ class horarioController extends Controller
 
         return response()->json($horario, 200);
     }
+
+    //*ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO
+    public function actualizarConfigHorario(Request $request){
+
+        //*VALOR DE PARAMETROS
+        $idHoraEmp=$request->idHoraEmp;
+        $fueraHorario=$request->fueraHorario;
+        $permiteHadicional=$request->permiteHadicional;
+        $nHorasAdic=$request->nHorasAdic;
+
+        //*ACTUALIZANDO
+        $horario_empleado=temporal_eventos::findOrfail($idHoraEmp);
+        if($fueraHorario==1){
+            $horario_empleado->borderColor='#5369f8';
+        } else{
+            $horario_empleado->borderColor=null;
+        }
+        $horario_empleado->fuera_horario=$fueraHorario;
+        $horario_empleado->horaAdic=$permiteHadicional;
+        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->save();
+
+    }
 }

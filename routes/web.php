@@ -297,6 +297,7 @@ Route::post('/eliminarPausaHorario', 'horarioController@eliminarPausaHorario');
 Route::post('/pausasHorario', 'horarioController@pausasHorario');
 Route::post('/editarHorario', 'horarioController@editarHorario');
 Route::get('/obtenerHorarios', 'horarioController@obtenerHorarios');
+Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarConfigHorario');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');

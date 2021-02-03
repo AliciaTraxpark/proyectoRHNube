@@ -315,7 +315,11 @@ function calendario() {
 
             var event = calendar.getEventById(id);
             if (info.event.textColor == '111111') {
-                bootbox.confirm({
+
+                 /* UNBIND SOLO UNA VEZ */
+                 $('#eliminaHorarioDia_re').unbind().click(function() {
+                    $('#editarConfigHorario_re').modal('hide');
+                    bootbox.confirm({
                     title: "Eliminar horario",
                     message: "¿Desea eliminar: " + info.event.title + " del horario?",
                     buttons: {
@@ -356,7 +360,31 @@ function calendario() {
                             });
                         }
                     }
-                });
+                     });
+                 });
+
+                 //*seteando datos amodal
+                 $('#idHoraEmpleado_re').val(info.event.id);
+                 if(info.event.borderColor == '#5369f8'){
+                    $('#fueraHSwitch_Actualizar_re').prop("checked",true);
+                }
+                else{
+                    $('#fueraHSwitch_Actualizar_re').prop("checked",false);
+                }
+                if (info.event.extendedProps.horaAdic == 1) {
+                    $('#horAdicSwitch_Actualizar_re').prop("checked",true);
+                    $('#nHorasAdic_Actualizar_re').show();
+
+                    $("#nHorasAdic_Actualizar_re").val(info.event.extendedProps.nHoraAdic);
+
+
+                }
+                else{
+                    $('#horAdicSwitch_Actualizar_re').prop("checked",false);
+                    $('#nHorasAdic_Actualizar_re').hide();
+                }
+
+                 $('#editarConfigHorario_re').modal('show');
             }
 
 
@@ -3770,3 +3798,67 @@ function obtenerHorarios() {
         error: function () { }
     });
 }
+/* EVENTO CAMBIAR SWITCH EN ACTUALLIZAR CONFIG HORARIO A DIA REGISTRAR EMPLEADO  */
+$(function () {
+    $(document).on('change', '#horAdicSwitch_Actualizar_re', function (event) {
+        if ($('#horAdicSwitch_Actualizar_re').prop('checked')) {
+            $('#nHorasAdic_Actualizar_re').show();
+
+        } else {
+            $('#nHorasAdic_Actualizar_re').hide();
+
+        }
+
+    });
+});
+/* ------------------------------------------------------------------ */
+
+ /* ---------ACTUALIZAR CONFIGURACION DE HORARIO------------- */
+ function actualizarConfigHorario_re(){
+    let idHoraEmp=$('#idHoraEmpleado_re').val();
+    let fueraHorario;
+    let permiteHadicional;
+    let nHorasAdic;
+
+    //* Fuera de horario
+    if ($("#fueraHSwitch_Actualizar_re").is(":checked")) {
+       fueraHorario = 1;
+   } else {
+       fueraHorario = 0;
+   }
+
+   //* permitir horas adicionales
+   if ($("#horAdicSwitch_Actualizar_re").is(":checked")) {
+       permiteHadicional = 1;
+       nHorasAdic=$('#nHorasAdic_Actualizar_re').val()
+   } else {
+       permiteHadicional = 0;
+       nHorasAdic=null;
+   }
+
+    $.ajax({
+       type: "post",
+       url: "/horario/actualizarConfigHorario",
+       data: {
+           idHoraEmp, fueraHorario, permiteHadicional,nHorasAdic
+       },
+       statusCode: {
+           419: function () {
+               location.reload();
+           },
+       },
+       headers: {
+           "X-CSRF-TOKEN": $(
+               'meta[name="csrf-token"]'
+           ).attr("content"),
+       },
+       success: function (data) {
+           calendar.refetchEvents();
+           $('#editarConfigHorario_re').modal('hide');
+       },
+       error: function (data) {
+           alert("Ocurrio un error");
+       },
+   });
+}
+/* ---------------------------------------------------------------------------- */
