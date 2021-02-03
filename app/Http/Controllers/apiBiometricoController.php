@@ -3174,6 +3174,25 @@ class apiBiometricoController extends Controller
                                                 'estado' => true);
 
                                         }
+                                        else{
+                                            $marcacion_biometrico = new marcacion_puerta();
+                                            $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                            $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                                            $marcacion_biometrico->dispositivoSalida = $req['idDisposi'];
+
+                                            $marcacion_biometrico->organi_id = $empleados->organi_id;
+
+                                            if (empty($req['idHoraEmp'])) {} else {
+                                                $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
+                                            }
+
+                                            $marcacion_biometrico->tipoMarcacionB = 1;
+
+                                            $marcacion_biometrico->save();
+                                            $respuestaMarcacion = array(
+                                                'id' => $req['id'],
+                                                'estado' => true);
+                                        }
 
                                     }
 
@@ -3192,6 +3211,7 @@ class apiBiometricoController extends Controller
                 }
 
             }
+            
             /* INSERTAMO A AARRAY  */
             $arrayDatos->push($respuestaMarcacion);
             /* ---------------------------- */
