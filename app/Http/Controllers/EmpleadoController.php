@@ -236,7 +236,7 @@ class EmpleadoController extends Controller
             ->get()->first();
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
-                DB::enableQueryLog();
+               /*  DB::enableQueryLog(); */
                 $tabla_empleado1 = DB::table('empleado as e')
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
