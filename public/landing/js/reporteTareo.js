@@ -390,8 +390,15 @@ function cargartabla(fecha) {
 
                     }
 
-                    tbody += `
+                    if(marcacionData.contrT_nombres!=null){
+                        tbody += `
                                 <td class="controHid">  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
+                    } else
+                    {
+                        tbody += `
+                                <td class="controHid">  --  </td></tr>`;
+                    }
+
                     /* ----------------------------------------- ------------------*/
                 }
                 $("#tbodyD").html(tbody);
