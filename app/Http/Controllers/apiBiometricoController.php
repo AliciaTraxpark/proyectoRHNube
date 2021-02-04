@@ -749,7 +749,9 @@ class apiBiometricoController extends Controller
 
                 $tab1->biometricos = array_values($idUnicos);
 
+                unset($tab1->emple_area);
             }
+
             return $empleado;
         }
         /* ---------------------------------- */
@@ -3239,5 +3241,5 @@ class apiBiometricoController extends Controller
         }
     }
 
-  
+
 }
