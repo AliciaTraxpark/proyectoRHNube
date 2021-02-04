@@ -282,11 +282,6 @@ function inicializarTabla() {
         paging: true,
         initComplete: function (settings, data, dataIndex) {
             dataT = this;
-            // console.log(this.api().columns('datosPausa:name').data());
-            // this.api().columns('.datosPausa').every(function (index) {
-            //     console.log(this.data().index());
-            // });
-            // $("#tablaReport").DataTable().api().columns('.datosPausa').visible(false);
             setTimeout(function () { $("#tablaReport").DataTable().draw(); }, 200);
             vistasDeTabla();
             if (this.api().data().length == 0) {

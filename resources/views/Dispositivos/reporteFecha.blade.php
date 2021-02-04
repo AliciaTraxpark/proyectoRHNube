@@ -199,12 +199,14 @@
                         <div class="dropdown" id="dropSelector">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="cursor: pointer">
-                                <input type="checkbox" class="custom-control-input" id="switchO" checked
-                                    style="cursor: pointer">
-                                <label class="custom-control-label" for="switchO" style="font-weight: bold">
-                                    <img src="{{asset('landing/images/insert.svg')}}" height="18">
-                                    Selector de columnas
-                                </label>
+                                <div class="custom-control custom-switch mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="switchO" checked
+                                        style="cursor: pointer">
+                                    <label class="custom-control-label" for="switchO" style="font-weight: bold">
+                                        <img src="{{asset('landing/images/insert.svg')}}" height="18">
+                                        Selector de columnas
+                                    </label>
+                                </div>
                             </a>
                             <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;">
                                 <h6 class="dropdown-header text-left"

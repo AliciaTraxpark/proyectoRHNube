@@ -10,6 +10,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     allowInput: true,
 });
 var fechaGlobal = {};
+var dataT = {};
 $(function () {
     $('#idempleado').select2({
         placeholder: 'Seleccionar',
@@ -271,9 +272,10 @@ function inicializarTabla() {
             }],
         paging: true,
         initComplete: function () {
+            dataT = this;
             setTimeout(function () {
                 $("#tablaReport").DataTable().draw();
-            }, 200);
+            }, 1);
         }
     }).draw();
 }
@@ -357,37 +359,37 @@ function cargartabla(fecha) {
                 theadTabla += `<th>CC&nbsp;</th>
                                 <th class="text-center">Fecha</th>
                                 <th>Número de documento</th>
-                                <th name="colCodigo">Código</th>
+                                <th name="colCodigo" class="colCodigo">Código</th>
                                 <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th name="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
+                                <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 //* GRUPO DE HORARIOS
                 for (let m = 0; m < cantidadGruposHorario; m++) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
-                    theadTabla += `<th class="text-center" style="border-left: 2px solid #383e56!important;" name="descripcionHorario">
+                    theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;" name="descripcionHorario">
                                         Descripción del horario
                                     </th>
-                                    <th class="text-center" name="horarioHorario">Horario</th>
-                                    <th name="toleranciaIHorario">Tolerancia en el ingreso</th>
-                                    <th name="toleranciaFHorario">Tolerancia en la salida</th>
-                                    <th name="colTiempoEntreH" class="text-center">Tiempo Total</th>
-                                    <th name="colSobreTiempo" class="text-center">Sobre tiempo</th>
-                                    <th name="colTardanza" class="text-center">Tardanza</th>
-                                    <th name="faltaHorario">Falta</th>`;
+                                    <th class="text-center horarioHorario" name="horarioHorario">Horario</th>
+                                    <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
+                                    <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
+                                    <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo Total</th>
+                                    <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobre tiempo</th>
+                                    <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
+                                    <th name="faltaHorario" class="faltaHorario">Falta</th>`;
                     // ! MARCACION
                     var cantidadColumnasM = arrayHorario[m].split(",")[0];
                     for (let j = 0; j < cantidadColumnasM; j++) {
-                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center" name="colMarcaciones">
+                        theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center colMarcaciones" name="colMarcaciones">
                                             <span>
                                                 Entrada <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
                                         </th>
-                                        <th class="text-center" name="colMarcaciones">
+                                        <th class="text-center colMarcaciones" name="colMarcaciones">
                                             <span>
                                                 Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
                                         </th>
-                                        <th id="tSitio" name="colTiempoS">
+                                        <th id="tSitio" name="colTiempoS" class="colTiempoS">
                                             <span>
                                                 Tiempo total <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                             </span>
@@ -396,17 +398,17 @@ function cargartabla(fecha) {
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
                     for (let p = 0; p < cantidadColumnasP; p++) {
-                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">Pausa</th>
-                                        <th name="horarioPausa">Horario de pausa</th>
-                                        <th name="tiempoPausa">Tiempo de pausa</th>
-                                        <th name="excesoPausa">Exceso de pausa</th>`;
+                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa" class="descripcionPausa">Pausa</th>
+                                        <th name="horarioPausa" class="horarioPausa">Horario de pausa</th>
+                                        <th name="tiempoPausa" class="tiempoPausa">Tiempo de pausa</th>
+                                        <th name="excesoPausa" class="excesoPausa">Exceso de pausa</th>`;
                     }
                 }
-                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal">Tiempo Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal">Sobre Tiempo Total</th> 
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal">Tardanza Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal">Falta Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia">Incidencias</th>`;
+                theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobre Tiempo Total</th> 
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia" class="incidencia">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
                 console.log(theadTabla);
@@ -2893,18 +2895,18 @@ $('.pausaPadre input[type=checkbox]').change(function () {
 // : ************************************** COLUMNA DE CARGO ***************************************************
 $('#colCargo').change(function (event) {
     if (event.target.checked) {
-        $('[name="colCargo"]').show();
+        dataT.api().columns('.colCargo').visible(true);
     } else {
-        $('[name="colCargo"]').hide();
+        dataT.api().columns('.colCargo').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
 // : ************************************ COLUMNA DE MARCACIONES ************************************************
 $('#colMarcaciones').change(function (event) {
     if (event.target.checked) {
-        $('[name="colMarcaciones"]').show();
+        dataT.api().columns('.colMarcaciones').visible(true);
     } else {
-        $('[name="colMarcaciones"]').hide();
+        dataT.api().columns('.colMarcaciones').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
@@ -2943,9 +2945,9 @@ $('.horarioPadre input[type=checkbox]').change(function () {
 // : ********************************* COLUMNA DE CODIGO ********************************************************
 $('#colCodigo').change(function (event) {
     if (event.target.checked) {
-        $('[name="colCodigo"]').show();
+        dataT.api().columns('.colCodigo').visible(true);
     } else {
-        $('[name="colCodigo"]').hide();
+        dataT.api().columns('.colCodigo').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 });
@@ -2987,137 +2989,132 @@ function toggleColumnas() {
     // * ***************** COLUMNAS DE CALCULOS DE TIEMPO ****************
     // ? TIEMPO ENTRE MARCACIONES
     if ($('#colTiempoSitio').is(":checked")) {
-        $('[name="colTiempoS"]').show();
+        dataT.api().columns('.colTiempoS').visible(true);
     } else {
-        $('[name="colTiempoS"]').hide();
+        dataT.api().columns('.colTiempoS').visible(false);
     }
     // ? TIEMPO TOTAL
     if ($('#colTiempoTotal').is(":checked")) {
-        $('[name="colTiempoTotal"]').show();
+        dataT.api().columns('.colTiempoTotal').visible(true);
     } else {
-        $('[name="colTiempoTotal"]').hide();
+        dataT.api().columns('.colTiempoTotal').visible(false);
     }
     // ? TIEMPO ENTRE HORARIOS
     if ($('#colTiempoEntreH').is(":checked")) {
-        $('[name="colTiempoEntreH"]').show();
+        dataT.api().columns('.colTiempoEntreH').visible(true);
     } else {
-        $('[name="colTiempoEntreH"]').hide();
+        dataT.api().columns('.colTiempoEntreH').visible(false);
     }
     // ? SOBRE TIEMPO ENTRE HORARIOS
     if ($('#colSobreTiempo').is(":checked")) {
-        $('[name="colSobreTiempo"]').show();
+        dataT.api().columns('.colSobreTiempo').visible(true);
     } else {
-        $('[name="colSobreTiempo"]').hide();
+        dataT.api().columns('.colSobreTiempo').visible(false);
     }
     // ? SOBRE TIEMPO TOTAL
     if ($('#colSobreTiempoTotal').is(":checked")) {
-        $('[name="colSobreTiempoTotal"]').show();
+        dataT.api().columns('.colSobreTiempoTotal').visible(true);
     } else {
-        $('[name="colSobreTiempoTotal"]').hide();
+        dataT.api().columns('.colSobreTiempoTotal').visible(false);
     }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
-        $('[name="descripcionPausa"]').show();
+        dataT.api().columns('.descripcionPausa').visible(true);
     } else {
-        $('[name="descripcionPausa"]').hide();
+        dataT.api().columns('.descripcionPausa').visible(false);
     }
     // ? HORARIO PAUSA
     if ($('#horarioPausa').is(":checked")) {
-        $('[name="horarioPausa"]').show();
+        dataT.api().columns('.horarioPausa').visible(true);
     } else {
-        $('[name="horarioPausa"]').hide();
+        dataT.api().columns('.horarioPausa').visible(false);
     }
     // ? TIEMPO DE PAUSA
     if ($('#tiempoPausa').is(":checked")) {
-        $('[name="tiempoPausa"]').show();
+        dataT.api().columns('.tiempoPausa').visible(true);
     } else {
-        $('[name="tiempoPausa"]').hide();
+        dataT.api().columns('.tiempoPausa').visible(false);
     }
     // ? EXCESO DE PAUSA
     if ($('#excesoPausa').is(":checked")) {
-        $('[name="excesoPausa"]').show();
+        dataT.api().columns('.excesoPausa').visible(true);
     } else {
-        $('[name="excesoPausa"]').hide();
+        dataT.api().columns('.excesoPausa').visible(false);
     }
     // * *************** COLUMNA CARGO ******************************
     if ($('#colCargo').is(":checked")) {
-        $('[name="colCargo"]').show();
+        dataT.api().columns('.colCargo').visible(true);
     } else {
-        $('[name="colCargo"]').hide();
+        dataT.api().columns('.colCargo').visible(false);
     }
     // * **************** COLUMNA MARCACION ***************************
     if ($('#colMarcaciones').is(":checked")) {
-        $('[name="colMarcaciones"]').show();
+        dataT.api().columns('.colMarcaciones').visible(true);
     } else {
-        $('[name="colMarcaciones"]').hide();
+        dataT.api().columns('.colMarcaciones').visible(false);
     }
     // * *************** COLUMNA HORARIOS *****************************
     // ? DESCRIPCION DE HORARIO
     if ($('#descripcionHorario').is(":checked")) {
-        $('[name="descripcionHorario"]').show();
+        dataT.api().columns('.descripcionHorario').visible(true);
     } else {
-        $('[name="descripcionHorario"]').hide();
+        dataT.api().columns('.descripcionHorario').visible(false);
     }
     // ? HORARIO
     if ($('#horarioHorario').is(":checked")) {
-        $('[name="horarioHorario"]').show();
+        dataT.api().columns('.horarioHorario').visible(true);
     } else {
-        $('[name="horarioHorario"]').hide();
+        dataT.api().columns('.horarioHorario').visible(false);
     }
     // ? TOLERANCIA INICIO
     if ($('#toleranciaIHorario').is(":checked")) {
-        $('[name="toleranciaIHorario"]').show();
+        dataT.api().columns('.toleranciaIHorario').visible(true);
     } else {
-        $('[name="toleranciaIHorario"]').hide();
+        dataT.api().columns('.toleranciaIHorario').visible(false);
     }
     // ? TOLERANCIA FIN
     if ($('#toleranciaFHorario').is(":checked")) {
-        $('[name="toleranciaFHorario"]').show();
+        dataT.api().columns('.toleranciaFHorario').visible(true);
     } else {
-        $('[name="toleranciaFHorario"]').hide();
+        dataT.api().columns('.toleranciaFHorario').visible(false);
     }
     // * *************** COLUMNA CODIGO ******************************
     if ($('#colCodigo').is(":checked")) {
-        $('[name="colCodigo"]').show();
+        dataT.api().columns('.colCodigo').visible(true);
     } else {
-        $('[name="colCodigo"]').hide();
+        dataT.api().columns('.colCodigo').visible(false);
     }
     // * *************** COLUMNA INCIDENCIAS ******************************
     // ? TARDANZA ENTRE HORARIOS
     if ($('#colTardanza').is(":checked")) {
-        $('[name="colTardanza"]').show();
+        dataT.api().columns('.colTardanza').visible(true);
     } else {
-        $('[name="colTardanza"]').hide();
+        dataT.api().columns('.colTardanza').visible(false);
     }
     // ? FALTA ENTRE HORARIOS
     if ($('#faltaHorario').is(":checked")) {
-        $('[name="faltaHorario"]').show();
+        dataT.api().columns('.faltaHorario').visible(true);
     } else {
-        $('[name="faltaHorario"]').hide();
+        dataT.api().columns('.faltaHorario').visible(false);
     }
     // ? TARDANZA TOTAL
     if ($('#colTardanzaTotal').is(":checked")) {
-        $('[name="colTardanzaTotal"]').show();
+        dataT.api().columns('.colTardanzaTotal').visible(true);
     } else {
-        $('[name="colTardanzaTotal"]').hide();
+        dataT.api().columns('.colTardanzaTotal').visible(false);
     }
     // ? FALTA TOTAL
     if ($('#faltaTotal').is(":checked")) {
-        $('[name="faltaTotal"]').show();
+        dataT.api().columns('.faltaTotal').visible(true);
     } else {
-        $('[name="faltaTotal"]').hide();
+        dataT.api().columns('.faltaTotal').visible(false);
     }
     // ? INCIDENCIAS
     if ($('#incidencia').is(":checked")) {
-        $('[name="incidencia"]').show();
+        dataT.api().columns('.incidencia').visible(true);
     } else {
-        $('[name="incidencia"]').hide();
+        dataT.api().columns('.incidencia').visible(false);
     }
     setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
 }
-$("#tablaReport").on('page.dt', function (e, settings, json) {
-    setTimeout(function () { $("#tablaReport").css('width', '100%'); $("#tablaReport").DataTable().draw(false); }, 1);
-    toggleColumnas();
-    $('[data-toggle="tooltip"]').tooltip();
-});
