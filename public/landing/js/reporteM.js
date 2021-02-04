@@ -20,12 +20,9 @@ var notify = $.notifyDefaults({
         '<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
         '</div>'
 });
-
-var razonSocial;
-var direccion;
-var ruc;
-var fecha;
-var fechas;
+var razonSocial = {};
+var direccion = {};
+var ruc = {};
 $(function () {
     $("#ReporteMensual").DataTable({
         "searching": false,
@@ -177,366 +174,15 @@ function onSelectFechasMensual() {
             }*/
         },
         success: function (data) {
-            datos = data;
+            razonSocial = data.organizacion.razonSocial;
+            direccion = data.organizacion.direccion;
+            ruc = data.organizacion.ruc;
+            datos = data.respuesta;
             $('#VacioImg').hide();
             tablaEnVista();
         },
         error: function (data) { }
     })
-}
-
-
-function onSelectFechasMensualT() {
-    var fecha = $('#fechaMensual').val();
-    var area = $('#areaT').val();
-    var empleadoL = $('#empleadoLT').val();
-    if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
-        $('#ReporteMensual').DataTable().destroy();
-    }
-    $('#empleadoMensual').empty();
-    $('#diasMensual').empty();
-    $('#VacioImg').empty();
-    $("#myChartMensual").show();
-    if (grafico.config != undefined) grafico.destroy();
-    $.ajax({
-        async: false,
-        url: "reporte/empleadoTardanzas",
-        method: "GET",
-        data: {
-            fecha: fecha,
-            area: area,
-            empleadoL: empleadoL
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            datos = data;
-            $('#VacioImg').hide();
-            tablaEnVistaT();
-        },
-        error: function (data) { }
-    })
-}
-
-function getBase64FromImageUrl(url) {
-    var img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = function () {
-        var canvas = document.createElement("canvas");
-        canvas.width = this.width;
-        canvas.height = this.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(this, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-    };
-    img.src = url;
-}
-function sinActividadDT() {
-    if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
-        $('#ReporteMensual').DataTable().destroy();
-    }
-    $('#empleadoMensual').empty();
-    $('#diasMensual').empty();
-    $('#VacioImg').empty();
-    $("#myChartMensual").show();
-    if (grafico.config != undefined) grafico.destroy();
-    if (datos.length > 0) {
-        $('#VacioImg').hide();
-        var nombre = [];
-        var html_tr = "";
-        var html_trD = "<tr><th>#</th><th>Código</th><th>Documento</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</>";
-        let codigo = 0;
-        for (var i = 0; i < datos.length; i++) {
-            ruc = datos[i].ruc;
-            razonSocial = datos[i].razonSocial;
-            direccion = datos[i].direccion;
-            fecha = datos[i].fecha;
-            fechas = "Desde: "+datos[i].fechaD+" Hasta: "+datos[i].fechaH;
-            let faltasT = 0;
-            let html_tr_temp = "";
-            if (datos[i].codigo > 0) {
-                codigo = datos[i].codigo;
-            } else {
-                codigo = datos[i].documento;
-            }
-            html_tr += '<tr><td>' + (i + 1) + '</td><td>' + codigo + '</td><td>' + datos[i].documento + '</td><td>' + datos[i].nombre + ' ' + datos[i].apPaterno + ' ' + datos[i].apMaterno + '</td>';
-            nombre.push(datos[i].nombre.split('')[0] + datos[i].apPaterno.split('')[0] + datos[i].apMaterno.split('')[0]);
-            var total = datos[i].horas.reduce(function (a, b) {
-                return sumarHora(a, b);
-            });
-            for (let j = 0; j < datos[i].horas.length; j++) {
-                // TABLA DEFAULT
-                if(datos[i].horas[j] == "00:00:00")
-                    html_tr_temp += '<td>' + 0 + '</td>';
-                else {
-                    faltasT += 1;
-                    html_tr_temp += '<td>' + 1 + '</td>';
-                }
-            }
-            
-            // TABLA DEFAULT
-            html_tr = html_tr + '<td>' + faltasT + '</td>' + html_tr_temp;
-            //html_tr += '<td>' + total + '</td>';
-            
-            html_tr += '</tr>';
-        }
-        html_trD += '<th>TOTAL</th>';
-        for (var m = 0; m < datos[0].fechaF.length; m++) {
-            var momentValue = moment(datos[0].fechaF[m]);
-            momentValue.toDate();
-            momentValue.format("ddd DD/MM");
-            // TABLA DEFAULT
-            html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
-        }
-        // TABLA DEFAULT
-        
-        html_trD += '</tr>';
-        // TABLA DEFAULT
-        $("#diasMensual").html(html_trD);
-        $("#empleadoMensual").html(html_tr);
-
-        table = $("#ReporteMensual").DataTable({
-            "searching": false,
-            "scrollX": true,
-            retrieve: true,
-            "ordering": false,
-            "autoWidth": true,
-            language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ ",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": ">",
-                    "sPrevious": "<"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
-            },
-            dom: 'Bfrtip',
-            buttons: [{
-                extend: 'excel',
-                className: 'btn btn-sm mt-1',
-                text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                customize: function (xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var downrows = 5;
-                    var clRow = $('row', sheet);
-                    clRow[0].children[0].remove();
-                    //update Row
-                    clRow.each(function () {
-                        var attr = $(this).attr('r');
-                        var ind = parseInt(attr);
-                        ind = ind + downrows;
-                        $(this).attr("r", ind);
-                    });
-
-                    // Update  row > c
-                    $('row c ', sheet).each(function () {
-                        var attr = $(this).attr('r');
-                        var pre = attr.substring(0, 1);
-                        var ind = parseInt(attr.substring(1, attr.length));
-                        ind = ind + downrows;
-                        $(this).attr("r", pre + ind);
-                    });
-
-                    function Addrow(index, data) {
-                        msg = `<row r="${index}">`;
-                        for (i = 0; i < data.length; i++) {
-                            var key = data[i].k;
-                            var value = data[i].v;
-                            var bold = data[i].s;
-                            msg += `<c t="inlineStr" r="${key} ${index}" s="${bold}" wpx="149">`;
-                            msg += `<is>`;
-                            msg += `<t>${value}</t>`;
-                            msg += `</is>`;
-                            msg += `</c>`;
-                        }
-                        msg += `</row>`;
-                        return msg;
-                    }
-                    
-                    //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'Matriz de Tardanzas', s: 51 }]);
-                    var r2 = Addrow(2, [{ k: 'A', v: fechas, s: 2 }])
-                    var r3 = Addrow(3, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
-                    var r4 = Addrow(4, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
-                    var r5 = Addrow(5, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
-                },
-                sheetName: 'Matriz de Tardanzas',
-                title: 'Matriz de Tardanzas',
-                autoFilter: false,
-                exportOptions: {
-                    columns: ":visible:not(.noExport)",
-                    format: {
-                        body: function (data, row, column, node) {
-                            var cont = $.trim($(node).text());
-                            var cambiar = cont.replace('Cambiar a entrada', '');
-                            cambiar = cambiar.replace('Cambiar a salida', '');
-                            cambiar = cambiar.replace('No tiene entrada', '---');
-                            cambiar = cambiar.replace('No tiene salida', '---');
-                            cambiar = cambiar.replace('Opciones', '');
-                            cambiar = cambiar.replace('Convertir orden', '');
-                            cambiar = cambiar.replace('Asignar a nueva marc.', '');
-                            cambiar = cambiar.replace('Eliminar marc.', '');
-                            cambiar = cambiar.replace('Actualizar horario', '');
-                            cambiar = cambiar.replace('Insertar salida', '');
-                            cambiar = cambiar.replace('Insertar entrada', '');
-
-                            return $.trim(cambiar);
-                        }
-                    }
-                },
-            }, {
-                extend: "pdfHtml5",
-                className: 'btn btn-sm mt-1',
-                text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                orientation: 'landscape',
-                pageSize: 'A1',
-                title: 'Matriz Tardanzas',
-                exportOptions: {
-                    columns: ":visible:not(.noExport)",
-                },
-                customize: function (doc) {
-                    doc['styles'] = {
-                        table: {
-                            width: '100%'
-                        },
-                        tableHeader: {
-                            bold: true,
-                            fontSize: 11,
-                            color: '#ffffff',
-                            fillColor: '#14274e',
-                            alignment: 'left'
-                        },
-                        defaultStyle: {
-                            fontSize: 10,
-                            alignment: 'center'
-                        }
-                    };
-                    doc.pageMargins = [20, 150, 20, 30];
-                    doc.content[1].margin = [30, 0, 30, 0];
-                    var colCount = new Array();
-                    var tr = $('#tablaReport tbody tr:first-child');
-                    var trWidth = $(tr).width();
-                    $('#tablaReport').find('tbody tr:first-child td').each(function () {
-                        var tdWidth = $(this).width();
-                        var widthFinal = parseFloat(tdWidth * 130);
-                        widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
-                        if ($(this).attr('colspan')) {
-                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
-                                colCount.push('*');
-                            }
-                        } else {
-                            colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
-                        }
-                    });
-                    var bodyCompleto = [];
-                    doc.content[1].table.body.forEach(function (line, i) {
-                        var bodyNuevo = [];
-                        if (i >= 1) {
-                            line.forEach(element => {
-                                var textOriginal = element.text;
-                                var cambiar = textOriginal.replace('Cambiar a entrada', '');
-                                cambiar = cambiar.replace('Cambiar a salida', '');
-                                cambiar = cambiar.replace('No tiene entrada', '---');
-                                cambiar = cambiar.replace('No tiene salida', '---');
-                                cambiar = cambiar.replace('Opciones', '');
-                                cambiar = cambiar.replace('Convertir orden', '');
-                                cambiar = cambiar.replace('Asignar a nueva marc.', '');
-                                cambiar = cambiar.replace('Eliminar marc.', '');
-                                cambiar = cambiar.replace('Actualizar horario', '');
-                                cambiar = cambiar.replace('Insertar salida', '');
-                                cambiar = cambiar.replace('Insertar entrada', '');
-                                cambiar = $.trim(cambiar);
-                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
-                            });
-                            bodyCompleto.push(bodyNuevo);
-                        } else {
-                            bodyCompleto.push(line);
-                        }
-                    });
-                    doc.content.splice(0, 1);
-                    doc.content[0].table.body = bodyCompleto;
-                    var objLayout = {};
-                    objLayout['hLineWidth'] = function (i) { return .2; };
-                    objLayout['vLineWidth'] = function (i) { return .2; };
-                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
-                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
-                    doc.content[0].layout = objLayout;
-                    var now = new Date();
-                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                    doc["header"] = function () {
-                        return {
-                            columns: [
-                                {
-                                    alignment: 'left',
-                                    italics: false,
-                                    text: [
-                                        { text: '\nMatriz Tardanzas\n', bold: true },
-                                        { text: fechas, bold: false },
-                                        { text: '\n\nRazón Social :\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDirección:\t\t\t\t\t', bold: false }, { text: direccion, bold: false },
-                                        { text: '\nNúmero de Ruc :\t\t', bold: false }, { text: ruc, bold: false },
-                                        { text: '\nFecha  :\t\t\t\t\t\t', bold: false }, { text: fecha, bold: false },
-                                    ],
-                                    fontSize: 10,
-                                    margin: [30, 10]
-                                },
-                            ],
-                            margin: 20
-                        };
-                    };
-                }
-            }],
-            paging: true
-        });
-        
-    } else {
-        $.notify({
-            message: "No se encontraron datos.",
-            icon: 'admin/images/warning.svg'
-        });
-        var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
-        html_trAD += '<th>LUN.</th>';
-        html_trAD += '<th>MAR.</th>';
-        html_trAD += '<th>MIÉ.</th>';
-        html_trAD += '<th>JUE.</th>';
-        html_trAD += '<th>VIE.</th>';
-        html_trAD += '<th>SÁB.</th>';
-        html_trAD += '<th>TOTAL</th>';
-        html_trD += '<th>TOTAL</th>';
-        html_trD += '<th>ACTIV.</th></tr>';
-        // TABLA DEFAULT
-        $('#diasMensual').html(html_trD);
-    }
 }
 function sinActividadD() {
     if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
@@ -1091,7 +737,106 @@ function conActividadD() {
             $("#actividadDM").css('width', '100%');
             table.draw(true);
         });
-        
+        var options = {
+            series: [{
+                name: 'actividad',
+                data: horas
+            }],
+            chart: {
+                height: 350,
+                type: 'bar',
+                zoom: {
+                    enabled: true
+                }
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    distributed: true
+                }
+            },
+            colors: ['#00005c'],
+            dataLabels: {
+                enabled: false
+            },
+            legend: {
+                show: false
+            },
+            xaxis: {
+                categories: nombre,
+                labels: {
+                    style: {
+                        color: '#000000',
+                        fontSize: '11px'
+                    }
+                },
+                axisBorder: {
+                    show: true,
+                    color: '#000000',
+                    height: 1,
+                    width: '100%',
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                axisTicks: {
+                    show: false
+                },
+                title: {
+                    text: "Empleados",
+                    offsetX: 0,
+                    offsetY: -2,
+                    style: {
+                        color: '#000000',
+                    }
+                },
+                crosshairs: {
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            colorFrom: '#D8E3F0',
+                            colorTo: '#BED1E6',
+                            stops: [0, 100],
+                            opacityFrom: 0.4,
+                            opacityTo: 0.5,
+                        }
+                    }
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Actividad'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " %"
+                    }
+                }
+            },
+            responsive: [
+                {
+                    breakpoint: 767.98,
+                    options: {
+                        chart: {
+                            height: 350,
+                            toolbar: {
+                                show: false
+                            },
+                            zoom: {
+                                enabled: true,
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+
+        grafico = new ApexCharts(document.querySelector("#myChartMensual"), options);
+        grafico.render();
     } else {
         $.notify({
             message: "No se encontraron datos.",
@@ -1120,17 +865,6 @@ function changeFecha() {
     onSelectFechasMensual();
     $('#fechaMensual').val(dato)
 }
-
-function changeFechaT() {
-    dato = $('#fechaMensual').val();
-    value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
-    firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
-    lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
-    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-    onSelectFechasMensualT();
-    $('#fechaMensual').val(dato)
-}
-
 function fechaDefecto() {
     dato = $('#fechaMensual').val();
     value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
@@ -1138,15 +872,6 @@ function fechaDefecto() {
     lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
     $('#fechaMensual').val(firstDate + "   a   " + lastDate);
     onSelectFechasMensual();
-    $('#fechaMensual').val(dato);
-}
-function fechaDefectoT() {
-    dato = $('#fechaMensual').val();
-    value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
-    firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
-    lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
-    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-    onSelectFechasMensualT();
     $('#fechaMensual').val(dato);
 }
 $(function () {
@@ -1194,50 +919,6 @@ $(function () {
     });
 });
 $(function () {
-    $('#areaT').select2({
-        placeholder: 'Seleccionar áreas'
-    });
-    $('#empleadoLT').select2({
-        placeholder: 'Seleccionar empleados',
-        language: "es"
-    });
-    $('#areaT').on("change", function (e) {
-        fechaDefectoT();
-        var area = $(this).val();
-        $('#empleadoLT').empty();
-        $.ajax({
-            async: false,
-            url: "/empleadosRep",
-            method: "GET",
-            data: {
-                area: area,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                    location.reload();
-                }*/
-            },
-            success: function (data) {
-                var select = "";
-                for (let i = 0; i < data.length; i++) {
-                    select += `<option value="${data[i].emple_id}">${data[i].nombre} ${data[i].apPaterno} ${data[i].apMaterno}</option>`
-                }
-                $('#empleadoLT').append(select);
-            },
-            error: function () { }
-        });
-    });
-    $('#empleadoLT').on("change", function (e) {
-        fechaDefectoT();
-    });
-});
-$(function () {
     var hoy = moment().format("MMMM - YYYY");
     $('#fechaMensual').val(hoy);
 });
@@ -1246,13 +927,6 @@ function buscarReporte() {
     $('#busquedaP').show();
     $('#busquedaA').show();
 }
-
-function buscarReporteT() {
-    changeFechaT();
-    $('#busquedaP').show();
-    $('#busquedaA').show();
-}
-
 function mostrarGraficaMensual() {
     $('#VacioImg').toggle();
     $('#graficaReporteMensual').toggle();
@@ -1280,17 +954,6 @@ function tablaEnVista() {
         $('#tablaSinActividadD').hide();
     } else {
         sinActividadD();
-        $('#tablaConActividadD').hide();
-        $('#tablaSinActividadD').show();
-    }
-}
-function tablaEnVistaT() {
-    if ($("#customSwitchD").is(":checked")) {
-        conActividadD();
-        $('#tablaConActividadD').show();
-        $('#tablaSinActividadD').hide();
-    } else {
-        sinActividadDT();
         $('#tablaConActividadD').hide();
         $('#tablaSinActividadD').show();
     }
