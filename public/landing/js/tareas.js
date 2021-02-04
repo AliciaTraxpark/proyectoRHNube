@@ -502,7 +502,14 @@ function zoom(horayJ) {
                     var rspI = imgR.replace(/\//g, "-");
                     var encr = CryptoJS.enc.Utf8.parse(rspI);
                     var base64 = CryptoJS.enc.Base64.stringify(encr);
-                    carusel = `<a href="mostrarMiniatura/${base64}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365"><img src="mostrarMiniatura/${base64}" width="350" height="300" style="padding-right:10px;padding-bottom:10px"></a>`;
+                    carusel = `<div class="col-md-12">
+                                <a href="mostrarMiniatura/${base64}" data-fancybox="images" data-caption="Hora de captura a las ${data[0].hora_fin}" data-width="2048" data-height="1365">
+                                <figure class="figure">
+                                <figcaption class="figure-caption">Hora de captura a las ${data[0].hora_fin}</figcaption>
+                                <img src="mostrarMiniatura/${base64}" width="280" height="250" class="figure-img rounded" style="box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
+                                </figure>
+                                </a>
+                            </div>`;
                     document.getElementById("zoom").innerHTML += carusel;
                 }
             }).fail(function () {
