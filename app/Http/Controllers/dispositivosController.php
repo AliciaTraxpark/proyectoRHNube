@@ -1382,6 +1382,55 @@ class dispositivosController extends Controller
                     }
                 }
             }
+            // : RECORREMOS PARA INCIDENCIA
+            foreach ($marcaciones as $key => $m) {
+                // * *********************** INCIDENCIAS ***********************
+                $idEmpleado = $m->emple_id;
+                // * TABLA EVENTOS EMPLEADO
+                $eventos = eventos_empleado::select('title as descripcion')
+                    ->where(DB::raw('DATE(start)'), '=', $d)
+                    ->where('id_empleado', '=', $idEmpleado)
+                    ->get();
+                // * TABLA INCIDENCIAS DIA
+                $incidencias = DB::table('incidencia_dias as id')
+                    ->join('incidencias as i', 'i.inciden_id', '=', 'id.id_incidencia')
+                    ->select('i.inciden_descripcion as descripcion')
+                    ->where(DB::raw('DATE(id.inciden_dias_fechaI)'), '=', $d)
+                    ->where('id.id_empleado', '=', $idEmpleado)
+                    ->get();
+                if (array_key_exists($d, $m->datos)) {
+                    $horarios = array_keys($m->datos[$d]);
+                    foreach ($horarios as $h) {
+                        $marcaciones[$key]->datos[$d][$h]->incidencias = array();
+                        foreach ($eventos as $e) {
+                            array_push($marcaciones[$key]->datos[$d][$h]->incidencias, $e);
+                        }
+                        foreach ($incidencias as $i) {
+                            array_push($marcaciones[$key]->datos[$d][$h]->incidencias, $i);
+                        }
+                    }
+                } else {
+                    if (sizeof($eventos) != 0 || sizeof($incidencias) != 0) {
+                        $marcaciones[$key]->datos[$d][0] = (object)array(
+                            "idHorario" => 0,
+                            "horario" => 0,
+                            "fecha" => $d,
+                            "tolerancia" => NULL,
+                            "horarioIni" => 0,
+                            "horarioFin" => 0,
+                            "marcaciones" => array(),
+                            "incidencias" => array(),
+                            "pausas" => array()
+                        );
+                        foreach ($eventos as $e) {
+                            array_push($marcaciones[$key]->datos[$d][0]->incidencias, $e);
+                        }
+                        foreach ($incidencias as $i) {
+                            array_push($marcaciones[$key]->datos[$d][0]->incidencias, $i);
+                        }
+                    }
+                }
+            }
         }
         foreach ($marcaciones as $m) {
             ksort($m->datos);
