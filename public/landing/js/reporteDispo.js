@@ -478,29 +478,31 @@ function cargartabla(fecha) {
                                 if (data[index].data[m].marcaciones[0].entrada != 0) {
                                     // * TARDANZA
                                     var dataParaTardanza = data[index].data[m].marcaciones[0];
-                                    var horaInicial = moment(dataParaTardanza.entrada);
-                                    // ******************************* TARDANZA ***************************************
-                                    // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
-                                    if (!idHorarioM.includes(dataParaTardanza.idH)) {
-                                        idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
-                                        var horaInicioHorario = moment(horarioData.horarioIni);
-                                        var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
-                                        //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
-                                        if (horaInicial.isAfter(horaConTolerancia)) {
-                                            var tardanza = horaInicial - horaInicioHorario;
-                                            segundosTardanza = moment.duration(tardanza).seconds();
-                                            minutosTardanza = moment.duration(tardanza).minutes();
-                                            horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
-                                            if (horasTardanza < 10) {
-                                                horasTardanza = '0' + horasTardanza;
+                                    if (dataParaTardanza.idH != 0) {
+                                        var horaInicial = moment(dataParaTardanza.entrada);
+                                        // ******************************* TARDANZA ***************************************
+                                        // ! PARA QUE TOME SOLO TARDANZA EN LA PRIMERA MARCACION
+                                        if (!idHorarioM.includes(dataParaTardanza.idH)) {
+                                            idHorarioM.push(dataParaTardanza.idH);  // : AGREGAMOS EL ID AL ARRAY
+                                            var horaInicioHorario = moment(horarioData.horarioIni);
+                                            var horaConTolerancia = horaInicioHorario.clone().add({ "minutes": horarioData.tolerancia });
+                                            //: COMPARAMOS SI ES MAYOR A LA HORA DE INICIO DEL HORARIO
+                                            if (horaInicial.isAfter(horaConTolerancia)) {
+                                                var tardanza = horaInicial - horaInicioHorario;
+                                                segundosTardanza = moment.duration(tardanza).seconds();
+                                                minutosTardanza = moment.duration(tardanza).minutes();
+                                                horasTardanza = Math.trunc(moment.duration(tardanza).asHours());
+                                                if (horasTardanza < 10) {
+                                                    horasTardanza = '0' + horasTardanza;
+                                                }
+                                                if (minutosTardanza < 10) {
+                                                    minutosTardanza = '0' + minutosTardanza;
+                                                }
+                                                if (segundosTardanza < 10) {
+                                                    segundosTardanza = '0' + segundosTardanza;
+                                                }
+                                                sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                             }
-                                            if (minutosTardanza < 10) {
-                                                minutosTardanza = '0' + minutosTardanza;
-                                            }
-                                            if (segundosTardanza < 10) {
-                                                segundosTardanza = '0' + segundosTardanza;
-                                            }
-                                            sumaTardanzas = sumaTardanzas.add({ "hours": horasTardanza, "minutes": minutosTardanza, "seconds": segundosTardanza });
                                         }
                                     }
                                 }
@@ -529,7 +531,7 @@ function cargartabla(fecha) {
                                     sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
-                            if (horarioData.horario != null) {
+                            if (horarioData.horario != null || horarioData.horario != 0) {
                                 var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
                                 var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
                                 if (tiempoEntreH > horasObligadas) {
