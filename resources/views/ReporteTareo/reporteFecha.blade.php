@@ -579,9 +579,9 @@
                                         <th>Nombres y apellidos</th>
                                         <th name="tiempoSitHi">Sexo</th>
                                         <th name="tiempoSitHi">Cargo</th>
-                                        <th>Código</th>
+                                        <th>Cód. Act.</th>
                                         <th>Actividad</th>
-                                        <th>Código</th>
+                                        <th>Cód. Sub.</th>
                                         <th>Subactividad</th>
                                         <th id="hEntrada">Hora de entrada</th>
                                         <th id="hSalida">Hora de salida</th>

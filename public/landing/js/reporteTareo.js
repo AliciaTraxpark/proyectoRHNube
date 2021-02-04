@@ -101,9 +101,9 @@ function cargartabla(fecha) {
                                     <th class="cargoHid"  name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
 
-                    theadTabla += `<th>Código –</th>
+                    theadTabla += `<th>Cód. Act.</th>
                                     <th>Actividad</th>
-                                    <th>Código –</th>
+                                    <th>Cód. Sub.</th>
                                     <th>Subactividad</th>
                                     <th>Hora de entrada</th>
                                     <th class="noExport">&nbsp; &nbsp; &nbsp; &nbsp;</th>
