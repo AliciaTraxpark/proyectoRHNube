@@ -329,8 +329,8 @@ class apimarcacionTareoController extends Controller
                 $marcacion_tareo = new marcacion_tareo();
                 $marcacion_tareo->marcaTareo_entrada = $req['fechaMarcacion'];
                 $marcacion_tareo->marcaTareo_idempleado = $req['idEmpleado'];
-                $marcacion_tareo->idcontroladores_tareo = $req['idControlador'];
-                $marcacion_tareo->iddispositivos_tareo = $req['idDisposi'];
+                $marcacion_tareo->idcontroladores_entrada = $req['idControlador'];
+                $marcacion_tareo->iddispositivos_entrada = $req['idDisposi'];
                 $marcacion_tareo->organi_id = $req['organi_id'];
                 if (empty($req['activ_id'])) {} else {
                     $marcacion_tareo->Activi_id = $req['activ_id'];
@@ -367,8 +367,7 @@ class apimarcacionTareoController extends Controller
                 /* ->where('mt.marcaTareo_salida', '!=', null)
                 ->where('mt.marcaTareo_entrada', '!=', null) */
                     ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
-                    ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
-                    ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+
                     ->orderby('marcaTareo_entrada', 'ASC')
                     ->get()->last();
 
@@ -386,8 +385,7 @@ class apimarcacionTareoController extends Controller
                                 ->where('mt.marcaTareo_salida', '=', null)
                                 ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
                                 ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
-                                ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
-                                ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+
                                 ->orderby('marcaTareo_entrada', 'ASC')
                                 ->get()->first();
                         } else {
@@ -400,8 +398,7 @@ class apimarcacionTareoController extends Controller
                             ->where('mt.marcaTareo_salida', '=', null)
                             ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
                             ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
-                            ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
-                            ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+
                             ->orderby('marcaTareo_entrada', 'ASC')
                             ->get()->last();
                     }
@@ -412,8 +409,7 @@ class apimarcacionTareoController extends Controller
                         ->where('mt.marcaTareo_salida', '=', null)
                         ->whereDate('mt.marcaTareo_entrada', '=', $fecha1)
                         ->where('mt.marcaTareo_entrada', '<=', $req['fechaMarcacion'])
-                        ->where('mt.idcontroladores_tareo', '=', $req['idControlador'])
-                        ->where('mt.iddispositivos_tareo', '=', $req['idDisposi'])
+
                         ->orderby('marcaTareo_entrada', 'ASC')
                         ->get()->last();
 
@@ -425,8 +421,8 @@ class apimarcacionTareoController extends Controller
                     $marcacion_tareo = new marcacion_tareo();
                     $marcacion_tareo->marcaTareo_salida = $req['fechaMarcacion'];
                     $marcacion_tareo->marcaTareo_idempleado = $req['idEmpleado'];
-                    $marcacion_tareo->idcontroladores_tareo = $req['idControlador'];
-                    $marcacion_tareo->iddispositivos_tareo = $req['idDisposi'];
+                    $marcacion_tareo->idcontroladores_salida = $req['idControlador'];
+                    $marcacion_tareo->iddispositivos_salida = $req['idDisposi'];
                     $marcacion_tareo->organi_id = $req['organi_id'];
                     if (empty($req['activ_id'])) {} else {
                         $marcacion_tareo->Activi_id = $req['activ_id'];
@@ -457,6 +453,8 @@ class apimarcacionTareoController extends Controller
                     /* EMPAREJAMOS CON LA MARCACION SIN SALIDA QUE ENCONTRAMOS */
                     $marcacion_tareo = marcacion_tareo::find($marcacion_tareo1->idmarcaciones_tareo);
                     $marcacion_tareo->marcaTareo_salida = $req['fechaMarcacion'];
+                    $marcacion_tareo->idcontroladores_salida = $req['idControlador'];
+                    $marcacion_tareo->iddispositivos_salida = $req['idDisposi'];
                     $marcacion_tareo->save();
                 }
             }
