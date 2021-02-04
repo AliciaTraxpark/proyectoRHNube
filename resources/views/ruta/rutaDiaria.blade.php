@@ -178,8 +178,8 @@
     <div class="modal-dialog d-flex modal-dialog-centered justify-content-center modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
-                <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
-                    de Imagenes</h5>
+                <h5 class="modal-title" style="color:#ffffff;font-size:15px">
+                    Colección de imágenes</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

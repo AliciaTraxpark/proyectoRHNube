@@ -939,7 +939,7 @@ function zoom(horayJ) {
                         const valor = ubicacion[u].ubicaciones;
                         console.log(ubicacion[u]);
                         valor.forEach(element => {
-                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[u].fecha + " - " + ubicacion[u].hora_ini)
+                            arrayDatos.push(element.latitud_ini + "," + element.longitud_ini + "," + ubicacion[u].hora_ini + "\t\t" + ubicacion[u].fecha)
                         });
                     }
                 }
@@ -970,7 +970,7 @@ function zoom(horayJ) {
                 carusel = `<div class="col-md-12">
                             <a data-fancybox="images" data-type="iframe" data-caption="Hora de ubicación a las ${arrayDatos[u].split(",")[2]}" data-src="https://maps.google.com/?q=${latitud},${longitud}&output=embed" href="javascript:;" data-caption="Hora de captura" data-width="2048" data-height="1365">
                                 <figure class="figure">
-                                    <figcaption class="figure-caption">Hora de ubicacion a las ${arrayDatos[u].split(",")[2]}</figcaption>
+                                    <figcaption class="figure-caption">Hora de ubicación a las ${arrayDatos[u].split(",")[2]}</figcaption>
                                     <img src="landing/images/Estatico.gif" width="280" height="250" class="figure-img rounded" style="box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                 </figure>
                             </a>
@@ -981,7 +981,7 @@ function zoom(horayJ) {
                 carusel = `<div class="col-md-12">
                             <a data-fancybox="images" data-type="iframe" data-caption="Hora de ubicación a las ${arrayDatos[u].split(",")[2]}" data-src="https://maps.google.com/?q=${latitud},${longitud}&output=embed" href="javascript:;" data-caption="Hora de captura" data-width="2048" data-height="1365">
                                 <figure class="figure">
-                                    <figcaption class="figure-caption">Hora de ubicacion a las ${arrayDatos[u].split(",")[2]}</figcaption>
+                                    <figcaption class="figure-caption">Hora de ubicación a las ${arrayDatos[u].split(",")[2]}</figcaption>
                                     <img src="landing/images/Secuencia 01.gif" width="280" height="250" class="figure-img rounded" style="box-shadow: 0 4px 10px 0 rgba(20, 19, 34, 0.03), 0 0 10px 0 rgba(20, 19, 34, 0.02);">
                                 </figure>
                             </a>
