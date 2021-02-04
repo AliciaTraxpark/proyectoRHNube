@@ -625,10 +625,62 @@ function sinActividadesDiarias() {
                 text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    $('c[r=A1] t', sheet).text('RH nube - Reporte Semanal').attr('s', '2');;
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
+
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
+
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
+                        }
+                        msg += '</row>';
+                        return msg;
+                    }
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'TIEMPO POR SEMANA', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'Reporte Semanal',
-                autoFilter: false
+                sheetName: 'TIEMPO POR SEMANA',
+                title: 'TIEMPO POR SEMANA',
+                autoFilter: false,
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            return $.trim(cont);
+                        }
+                    }
+                },
             }, {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
