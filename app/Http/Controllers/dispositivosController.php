@@ -2361,10 +2361,12 @@ class dispositivosController extends Controller
         if ($tipo == 1) {
             $marcacion->marcaMov_fecha = NULL;
             $marcacion->dispositivoEntrada = NULL;
+            $marcacion->controladores_idControladores = NULL;
             $marcacion->save();
         } else {
             $marcacion->marcaMov_salida = NULL;
             $marcacion->dispositivoSalida = NULL;
+            $marcacion->controladores_salida = NULL;
             $marcacion->save();
         }
 
