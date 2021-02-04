@@ -12,6 +12,10 @@ var fechaValue = $("#fechaSelec").flatpickr({
 // * HORAS PARA INSERTAR ENTRADA Y SALIDA
 var horasE = {};
 var horasS = {};
+
+//* variable para table
+var dataT = {};
+
 // * ESTADO DE HORARIO EMPLEADO
 var contenidoHorario = [];
 $(function () {
@@ -37,6 +41,16 @@ $(function () {
 });
 
 function cargartabla(fecha) {
+
+    /* ****INICALIZAR VALORES DE SELECTORES****/
+    $('#fechaSwitch').prop("checked",false);
+    $('#checCodigo').prop("checked",true);
+    $('#checnumdoc').prop("checked",true);
+    $('#checSexo').prop("checked",false);
+    $('#checCargo').prop("checked",false);
+    $('#checPuntoc').prop("checked",true);
+    $('#checControl').prop("checked",true);
+    /* ************************************** */
     var idemp = $("#idempleado").val();
     $.ajax({
         type: "GET",
@@ -449,234 +463,6 @@ function cargartabla(fecha) {
                     },
                     dom: 'Bfrtip',
                     buttons: [
-                          {
-                            extend: 'collection',
-                            text: 'Elegir columnas',
-                            className: 'btn btn-sm mt-1',
-                            buttons: [
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="0"  class="form-check-input" id="chec">'+
-                                    '<label class="form-check-label" for="chec">Fecha'+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#chec").val()==1) {
-                                            $("#chec").val("0");
-                                            $('#chec').prop("checked",false);
-                                            $('.fechaHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#chec").val("1");
-                                            $('#chec').prop("checked",true);
-                                            $('.fechaHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-                                    }
-                                },
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checCodigo" checked>'+
-                                    '<label class="form-check-label" for="checCodigo">Código'+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#checCodigo").val()==1) {
-                                            $("#checCodigo").val("0");
-                                            $('#checCodigo').prop("checked",false);
-                                            $('.codigoHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#checCodigo").val("1");
-                                            $('#checCodigo').prop("checked",true);
-                                            $('.codigoHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-                                    }
-                                },
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checnumdoc" checked>'+
-                                    '<label class="form-check-label" for="checnumdoc">Número de documento'+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#checnumdoc").val()==1) {
-                                            $("#checnumdoc").val("0");
-                                            $('#checnumdoc').prop("checked",false);
-                                            $('.numdocHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#checnumdoc").val("1");
-                                            $('#checnumdoc').prop("checked",true);
-                                            $('.numdocHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-                                    }
-                                },
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="0"  class="form-check-input" id="checSexo">'+
-                                    '<label class="form-check-label" for="checSexo">Sexo'+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#checSexo").val()==1) {
-                                            $("#checSexo").val("0");
-                                            $('#checSexo').prop("checked",false);
-                                            $('.sexoHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#checSexo").val("1");
-                                            $('#checSexo').prop("checked",true);
-                                            $('.sexoHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-
-
-
-                                    }
-                                },
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="0"  class="form-check-input" id="checCargo">'+
-                                    '<label class="form-check-label" for="checCargo">Cargo'+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#checCargo").val()==1) {
-                                            $("#checCargo").val("0");
-                                            $('#checCargo').prop("checked",false);
-                                            $('.cargoHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#checCargo").val("1");
-                                            $('#checCargo').prop("checked",true);
-                                            $('.cargoHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-
-
-
-                                    }
-                                },
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checPuntoc" checked>'+
-                                    '<label class="form-check-label" for="checPuntoc"> Punto de control'+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#checPuntoc").val()==1) {
-                                            $("#checPuntoc").val("0");
-                                            $('#checPuntoc').prop("checked",false);
-                                            $('.puntoHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#checPuntoc").val("1");
-                                            $('#checPuntoc').prop("checked",true);
-                                            $('.puntoHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-
-
-                                    }
-                                },
-                                {
-                                    text:''+
-                                    '<input type="checkbox" type="checkbox" value="1"  class="form-check-input" id="checControl" checked>'+
-                                    '<label class="form-check-label" for="checControl"> Controlador '+
-                                        '</label>',
-                                    action: function ( e, dt, node, config ) {
-
-                                        if ($("#checControl").val()==1) {
-                                            $("#checControl").val("0");
-                                            $('#checControl').prop("checked",false);
-                                            $('.controHid').hide();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-
-                                        }
-                                        else{
-                                            $("#checControl").val("1");
-                                            $('#checControl').prop("checked",true);
-                                            $('.controHid').show();
-                                            setTimeout(function () {
-                                                $("#tablaReport").css("width", "100%");
-                                                $("#tablaReport").DataTable().draw(true);
-                                            }, 200);
-
-                                        }
-
-
-                                    }
-                                }
-                            ]
-                        },
-
 
                         {
                         extend: 'excel',
@@ -842,28 +628,40 @@ function cargartabla(fecha) {
                         }
                     }],
                     initComplete: function () {
+                        dataT = this;
+
+                        //*fecha
+                        if ($('#fechaSwitch').prop('checked')) {
+                            dataT.api().columns('.fechaHid').visible(true);
+                        } else {
+                            dataT.api().columns('.fechaHid').visible(false);
+                        }
+
+                        //*sexo
+                        if ($('#checSexo').prop('checked')) {
+                            dataT.api().columns('.sexoHid').visible(true);
+                        } else {
+                            dataT.api().columns('.sexoHid').visible(false);
+                        }
+
+                        //*cargo
+                        if ($('#checCargo').prop('checked')) {
+                            dataT.api().columns('.cargoHid').visible(true);
+                        } else {
+                            dataT.api().columns('.cargoHid').visible(false);
+                        }
+
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
                         }, 200);
+
                     },
                 });
                 $(window).on("resize", function () {
                     $("#tablaReport").css("width", "100%");
                     table.draw(true);
                 });
-                if ($("#customSwitDetalles").is(":checked")) {
-                    $('[name="tiempoSitHi"]').show();
-                    setTimeout(function () {
-                        $("#tablaReport").css("width", "100%");
-                        $("#tablaReport").DataTable().draw(true);
-                    }, 200);
-                } else {
-                    $('[name="tiempoSitHi"]').hide();
-                    setTimeout(function () {
-                        $("#tablaReport").css("width", "100%");
-                        $("#tablaReport").DataTable().draw(true);
-                    }, 200);
-                }
+
             } else {
                 $("#MostarDetalles").hide();
                 $("#tbodyD").empty();
@@ -910,21 +708,6 @@ function cambiarF() {
     }
 
     cargartabla(f2);
-}
-function cambiartabla() {
-    if ($("#customSwitDetalles").is(":checked")) {
-        $('[name="tiempoSitHi"]').show();
-        setTimeout(function () {
-            $("#tablaReport").css("width", "100%");
-            $("#tablaReport").DataTable().draw(true);
-        }, 200);
-    } else {
-        $('[name="tiempoSitHi"]').hide();
-        setTimeout(function () {
-            $("#tablaReport").css("width", "100%");
-            $("#tablaReport").DataTable().draw(true);
-        }, 200);
-    }
 }
 
 
@@ -1261,3 +1044,107 @@ function limpiarAtributos() {
     $('#rowDatosM').hide();
     $('#r_horarioXE').empty();
 }
+
+/* *************************EVENTOS DE SELECTOR DE COLUMNA ********************************* */
+
+//* FECHA
+$('#fechaSwitch').change(function (event) {
+        if ($('#fechaSwitch').prop('checked')) {
+            dataT.api().columns('.fechaHid').visible(true);
+        } else {
+            dataT.api().columns('.fechaHid').visible(false);
+        }
+        setTimeout(function () {
+            $("#tablaReport").css("width", "100%");
+            $("#tablaReport").DataTable().draw(false);
+        }, 1);
+    });
+
+//* CODIGO
+$('#checCodigo').change(function (event) {
+    if ($('#checCodigo').prop('checked')) {
+        dataT.api().columns('.codigoHid').visible(true);
+
+    } else {
+        dataT.api().columns('.codigoHid').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* NUM DOCUMENTO
+$('#checnumdoc').change(function (event) {
+    if ($('#checnumdoc').prop('checked')) {
+        dataT.api().columns('.numdocHid').visible(true);
+
+    } else {
+        dataT.api().columns('.numdocHid').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* SEXO
+$('#checSexo').change(function (event) {
+    if ($('#checSexo').prop('checked')) {
+        dataT.api().columns('.sexoHid').visible(true);
+    } else {
+        dataT.api().columns('.sexoHid').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* CARGO
+$('#checCargo').change(function (event) {
+    if ($('#checCargo').prop('checked')) {
+        dataT.api().columns('.cargoHid').visible(true);
+
+    } else {
+        dataT.api().columns('.cargoHid').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* PUNTO CONTROL
+$('#checPuntoc').change(function (event) {
+    if ($('#checPuntoc').prop('checked')) {
+        dataT.api().columns('.puntoHid').visible(true);
+
+    } else {
+        dataT.api().columns('.puntoHid').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* CONTROLADOR
+$('#checControl').change(function (event) {
+    if ($('#checControl').prop('checked')) {
+        dataT.api().columns('.controHid').visible(true);
+
+    } else {
+        dataT.api().columns('.controHid').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+/* ------------------------------------------------------------------ */
+
+//*PARA QUE NO CE CIERRO DROPDOWN
+$(document).on('click', '.allow-focus', function (e) {
+    e.stopPropagation();
+});
