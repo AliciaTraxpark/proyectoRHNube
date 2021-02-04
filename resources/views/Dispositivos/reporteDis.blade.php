@@ -233,6 +233,11 @@
     .dt-button {
         padding: 0.15rem 0.15rem !important;
     }
+
+    .celdaTransparente {
+        background: #ffffff !important;
+        border-top: #ffffff !important;
+    }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
@@ -287,9 +292,8 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="row justify-content-left">
-                    <div class="col-md-12 pb-2">
+                    <div class="col-md-4 pb-2">
                         <div class="dropdown" id="dropSelector">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="cursor: pointer">
@@ -351,7 +355,7 @@
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" id="colCodigo">
-                                        <label for="">Código</label>
+                                        <label for="">Código de trabajador</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
@@ -460,6 +464,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row justify-content-left">
                     {{-- GIF DE ESPERA --}}
                     <div id="espera" class="row justify-content-center" style="display: none">
                         <div class="col-md-4">
@@ -483,35 +489,7 @@
                                     <th>Incidencias T.</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyD">
-                                <tr>
-                                    <th class="noExport">Agregar</th>
-                                    <th>CC&nbsp;</th>
-                                    <th>Fecha</th>
-                                    <th>Número de documento</th>
-                                    <th name="colCodigo">Código</th>
-                                    <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th name="colCargo">
-                                        Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-
-                                </tr>
-                                <tr>
-                                    <td class="noExport text-center">
-                                        <a onclick="javascript:modalAgregarMarcacion(2,'2021-02-03')"
-                                            data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                            style="cursor:pointer">
-                                            <img style="margin-bottom: 3px;" src="landing/images/addD.svg"
-                                                height="17" />
-                                        </a>
-                                    </td>
-                                    <td>1&nbsp;</td>
-                                    <td>2021-02-03</td>
-                                    <td class="text-center">80517256</td>
-                                    <td class="text-center" name="colCodigo">---</td>
-                                    <td>Doris Maza Lopez&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td name="colCargo">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                </tr>
-                            </tbody>
+                            <tbody id="tbodyD"></tbody>
                         </table>
 
                     </div>

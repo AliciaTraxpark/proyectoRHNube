@@ -179,6 +179,7 @@ function inicializarTabla() {
                 customize: function (doc) {
                     var bodyCompleto = [];
                     doc.content[1].table.body.forEach(function (line, i) {
+                        console.log(line, i);
                         var bodyNuevo = [];
                         if (i >= 1) {
                             line.forEach(element => {
@@ -350,8 +351,30 @@ function cargartabla(fecha) {
                     }
                     arrayHorario.push(cantidadMarcacionG + "," + cantidadPausaG);
                 }
+                // var theadTablaRow = `<tr>`;
+                // if (permisoModificar == 1) {
+                //     theadTablaRow += `<th class="noExport celdaTransparente"></th>`;
+                // }
+                // theadTablaRow += `<th class="celdaTransparente"></th>
+                //             <th class="text-center celdaTransparente"></th>
+                //             <th class="celdaTransparente"></th>
+                //             <th class="celdaTransparente"></th>
+                //             <th class="celdaTransparente"></th>
+                //             <th class="celdaTransparente"></th>`;
+                // for (let m = 0; m < cantidadGruposHorario; m++) {
+                //     var cantidadColumnas = (parseInt(arrayHorario[m].split(",")[0]) * 3) + (parseInt(arrayHorario[m].split(",")[1]) * 4) + 8;
+                //     theadTablaRow += `<th colspan="${cantidadColumnas}" scope="colgroup" class="text-center" style="background: #fafafa;border-left: 2px solid #383e56!important;">Horario${m + 1}</th>`;
+                // }
+                // theadTablaRow += `<th class="celdaTransparente"></th>
+                //                 <th class="celdaTransparente"></th> 
+                //                 <th class="celdaTransparente"></th>
+                //                 <th class="celdaTransparente"></th>
+                //                 <th class="celdaTransparente"></th>`;
+                // theadTablaRow += `</tr>`;
                 // ? ************************************************* ARMAR CABEZERA **********************************************
                 var theadTabla = `<tr>`;
+                // var theadTabla = theadTablaRow;
+                theadTabla += `<tr>`;
                 // * CONDICIONAL DE PERMISOS
                 if (permisoModificar == 1) {
                     theadTabla += `<th class="noExport">Agregar</th>`;
@@ -359,7 +382,7 @@ function cargartabla(fecha) {
                 theadTabla += `<th>CC&nbsp;</th>
                                 <th class="text-center">Fecha</th>
                                 <th>Número de documento</th>
-                                <th name="colCodigo" class="colCodigo">Código</th>
+                                <th name="colCodigo" class="colCodigo">Código de trabajador</th>
                                 <th>Nombres y apellidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th name="colCargo" class="colCargo">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
                 //* GRUPO DE HORARIOS
@@ -367,13 +390,19 @@ function cargartabla(fecha) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
                     theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;" name="descripcionHorario">
-                                        Descripción del horario
+                                        <span>
+                                            Descripción del horario <b style="font-size: 12px !important;color: #383e56;">${m + 1}</b>
+                                        </span>
                                     </th>
-                                    <th class="text-center horarioHorario" name="horarioHorario">Horario</th>
+                                    <th class="text-center horarioHorario" name="horarioHorario">
+                                        <span>
+                                            Horario <b style="font-size: 12px !important;color: #383e56;">${m + 1}</b>
+                                        </span>
+                                    </th>
                                     <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
                                     <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
                                     <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo Total</th>
-                                    <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobre tiempo</th>
+                                    <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
                                     <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
                                     <th name="faltaHorario" class="faltaHorario">Falta</th>`;
                     // ! MARCACION
@@ -405,13 +434,12 @@ function cargartabla(fecha) {
                     }
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobre Tiempo Total</th> 
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo Total</th> 
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia" class="incidencia">Incidencias</th>`;
                 theadTabla += `</tr>`;
                 //* DIBUJAMOS CABEZERA
-                console.log(theadTabla);
                 $('#theadD').html(theadTabla);
                 // ! ********************************************************* BODY DE TABLA**************************************************
                 $('#tbodyD').empty();
@@ -555,7 +583,7 @@ function cargartabla(fecha) {
                             if (permisoModificar == 1) {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -580,7 +608,7 @@ function cargartabla(fecha) {
                                                                 </ul>
                                                             </div>
                                                         </td>
-                                                        <td name="horarioHorario">
+                                                        <td name="horarioHorario" style="background: #f0f0f0;">
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -603,21 +631,21 @@ function cargartabla(fecha) {
                                                                 </ul>
                                                             </div>
                                                         </td>
-                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center">
+                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                             </a>
                                                         </td>
-                                                        <td name="colSobreTiempo" class="text-center">
+                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
-                                                        <td name="colTardanza">
+                                                        <td name="colTardanza" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -625,16 +653,16 @@ function cargartabla(fecha) {
                                                         </td>`;
                                         if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                     Falta
                                                                 </span>
                                                             </td>`;
                                         } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                         }
                                     } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -660,7 +688,7 @@ function cargartabla(fecha) {
                                                                 </ul>
                                                             </div>
                                                         </td>
-                                                        <td name="horarioHorario">
+                                                        <td name="horarioHorario" style="background: #f0f0f0;">
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorarioH${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -684,21 +712,21 @@ function cargartabla(fecha) {
                                                                 </ul>
                                                             </div>
                                                         </td>
-                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center">
+                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                             </a>
                                                         </td>
-                                                        <td name="colSobreTiempo" class="text-center">
+                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
-                                                        <td name="colTardanza">
+                                                        <td name="colTardanza" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -706,17 +734,17 @@ function cargartabla(fecha) {
                                                         </td>`;
                                         if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                     Falta
                                                                 </span>
                                                             </td>`;
                                         } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                         }
                                     }
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <div class="dropdown">
                                                             <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                 style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
@@ -741,42 +769,81 @@ function cargartabla(fecha) {
                                                             </ul>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center" name="horarioHorario">---</td>
-                                                    <td class="text-center" name="toleranciaIHorario">---</td>
-                                                    <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td class="text-center" name="colTiempoEntreH">---</td>
-                                                    <td class="text-center" name="colSobreTiempo">---</td>
-                                                    <td class="text-center" name="colTardanza">---</td>
-                                                    <td class="text-center" name="faltaHorario">---</td>`;
+                                                    <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">
+                                                        <div class="dropdown">
+                                                            <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
+                                                                style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
+                                                                <span class="badge badge-soft-danger mr-2" class="text-center">
+                                                                    Sin horario
+                                                                </span>
+                                                            </a>
+                                                            <ul class="dropdown-menu scrollable-menu noExport"  aria-labelledby="dropdownHorario${horarioData.idHorario}" style="padding: 0rem 0rem;">
+                                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>    
+                                                                    Opciones
+                                                                </h6>
+                                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                                <div class="dropdown-item dropdown-itemM noExport">
+                                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                                        <a onclick="modalCambiarHorario(${horarioData.idHorarioE},'${fecha}',${data[index].emple_id})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                            <img style="margin-bottom: 3px;" src="landing/images/calendarioAD.svg" height="15" />
+                                                                            Actualizar horario
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
+                                                    <td class="text-center" name="colTiempoEntreH" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center" name="colSobreTiempo" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center" name="colTardanza" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
                             } else {
                                 if (horarioData.horario != null) {
                                     if (horarioData.estado == 1) {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                 <span class="badge badge-soft-primary mr-2" class="text-center">
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
                                                         </td>
-                                                        <td name="horarioHorario">
+                                                        <td name="horarioHorario" style="background: #f0f0f0;">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
-                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center">
+                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                             </a>
                                                         </td>
-                                                        <td name="colSobreTiempo" class="text-center">
+                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
-                                                        <td name="colTardanza">
+                                                        <td name="colTardanza" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -785,40 +852,40 @@ function cargartabla(fecha) {
                                                         `;
                                         if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                     Falta
                                                                 </span>
                                                             </td>`;
                                         } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                         }
                                     } else {
-                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                        grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                             <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                      ${horarioData.horario}
                                                                 </span>
                                                             </a>
                                                         </td>
-                                                        <td name="horarioHorario">
+                                                        <td name="horarioHorario" style="background: #f0f0f0;">
                                                             ${moment(horarioData.horarioIni).format("HH:mm:ss")} - ${moment(horarioData.horarioFin).format("HH:mm:ss")}
                                                         </td>
-                                                        <td class="text-center" name="toleranciaIHorario">${horarioData.toleranciaI} min.</td>
-                                                        <td class="text-center" name="toleranciaFHorario">${horarioData.toleranciaF} min.</td>
-                                                        <td name="colTiempoEntreH" class="text-center">
+                                                        <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">${horarioData.toleranciaI} min.</td>
+                                                        <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">${horarioData.toleranciaF} min.</td>
+                                                        <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${moment(sumaTiemposEntreHorarios).format("HH:mm:ss")}
                                                             </a>
                                                         </td>
-                                                        <td name="colSobreTiempo" class="text-center">
+                                                        <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
-                                                        <td name="colTardanza">
+                                                        <td name="colTardanza" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                                 ${horasTardanza}:${minutosTardanza}:${segundosTardanza}
@@ -826,30 +893,30 @@ function cargartabla(fecha) {
                                                         </td>`;
                                         if (data[index].data[m].marcaciones.length == 0 && data[index].incidencias.length == 0) {
                                             sumaFaltas++;
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">
                                                                 <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                     Falta
                                                                 </span>
                                                             </td>`;
                                         } else {
-                                            grupoHorario += `<td class="text-center" name="faltaHorario">---</td>`;
+                                            grupoHorario += `<td class="text-center" name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                         }
                                     }
                                 } else {
-                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                                    grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                         <a class="btn" type="button" style="padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                             <span class="badge badge-soft-danger mr-2" class="text-center">
                                                                  Sin horario
                                                             </span>
                                                         </a>
                                                     </td>
-                                                    <td class="text-center" name="horarioHorario">---</td>
-                                                    <td class="text-center" name="toleranciaIHorario">---</td>
-                                                    <td class="text-center" name="toleranciaFHorario">---</td>
-                                                    <td name="colTiempoEntreH" class="text-center">---</td>
-                                                    <td name="colSobreTiempo" class="text-center">---</td>
-                                                    <td name="colTardanza" class="text-center">---</td>
-                                                    <td name="faltaHorario">---</td>`;
+                                                    <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
+                                                    <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
+                                                    <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
+                                                    <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
+                                                    <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
+                                                    <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
+                                                    <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
                             }
                             // ! MARCACIONES
@@ -1300,16 +1367,16 @@ function cargartabla(fecha) {
                             }
                             grupoHorario += tbodyPausas;
                         } else {
-                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;" class="text-center" name="descripcionHorario">
+                            grupoHorario += `<td style="border-left: 2px solid #383e56!important;background: #f0f0f0;" class="text-center" name="descripcionHorario">
                                                 ----
                                             </td>
-                                            <td class="text-center" name="horarioHorario">---</td>
-                                            <td class="text-center" name="toleranciaIHorario">---</td>
-                                            <td class="text-center" name="toleranciaFHorario">---</td>
-                                            <td name="colTiempoEntreH" class="text-center">---</td>
-                                            <td name="colSobreTiempo" class="text-center">---</td>
-                                            <td name="colTardanza" class="text-center">---</td>
-                                            <td name="faltaHorario">---</td>`;
+                                            <td class="text-center" name="horarioHorario" style="background: #f0f0f0;">---</td>
+                                            <td class="text-center" name="toleranciaIHorario" style="background: #f0f0f0;">---</td>
+                                            <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
+                                            <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
+                                            <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
+                                            <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
+                                            <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                             // ! MARCACIONES
                             var tbodyEntradaySalida = "";
                             for (let mr = 0; mr < arrayHorario[m].split(",")[0]; mr++) {
