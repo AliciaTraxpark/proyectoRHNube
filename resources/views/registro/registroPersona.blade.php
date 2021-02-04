@@ -218,9 +218,13 @@
                             <div class="modal-header" style="padding-bottom:
                                     3px; padding-top:
                                     10px;background-color:#163552;">
-                                <h5 class="" id="myModalLabel" style="font-size: 14px">
+                                <h5 class="" id="myModalLabel" style="font-size: 14px;color:#ffffff">
                                     Email ya registrado
                                 </h5>
+                                <button type="button" style="color:#ffffff" class="close" onclick="$('#email').val('');"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body">
                                 <form method="POST" action="javascript:confirmarEmail()">
@@ -275,7 +279,7 @@
                                     onclick="javascript:limpiartextSexo()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div> 
+                            </div>
                             <div class="modal-body">
                                 {{ csrf_field() }}
                                 <div class="col-md-12">
@@ -428,7 +432,7 @@
                                                     height="15">
                                             </a>
                                         </div>
-                                    </div>   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -441,7 +445,7 @@
                     </div>
                 </form>
             </section>
-            
+
         </div>
     </div>
 
