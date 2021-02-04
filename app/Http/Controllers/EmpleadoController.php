@@ -236,7 +236,7 @@ class EmpleadoController extends Controller
             ->get()->first();
         if ($invitadod) {
             if ($invitadod->verTodosEmps == 1) {
-                DB::enableQueryLog();
+               /*  DB::enableQueryLog(); */
                 $tabla_empleado1 = DB::table('empleado as e')
                     ->leftJoin('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
@@ -1523,12 +1523,24 @@ class EmpleadoController extends Controller
 
         $eventos_empleado_temp = DB::table('eventos_empleado_temp as evt')
             ->select(['evEmpleadoT_id as id', 'title', 'color', 'textColor', 'start', 'end', 'tipo_ev', 'users_id', 'calendario_calen_id',
-             'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic','h.horasObliga'])
+             'horaI', 'horaF', 'borderColor', 'horaAdic','nHoraAdic','h.horasObliga','evt.id_horario'])
             ->leftJoin('horario as h', 'evt.id_horario', '=', 'h.horario_id')
             ->where('evt.users_id', '=', Auth::user()->id)
             ->where('evt.calendario_calen_id', '=', $idcalendario)
             ->where('evt.organi_id', '=', session('sesionidorg'))
             ->get();
+
+            //*INSERTAMOS PAUSAS
+            foreach ($eventos_empleado_temp as $tab) {
+                $pausas_horario = DB::table('pausas_horario as pauh')
+                    ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                    ->where('pauh.horario_id', '=', $tab->id_horario)
+                    ->distinct('pauh.idpausas_horario')
+                    ->get();
+
+                $tab->pausas = $pausas_horario;
+
+            }
 
         return $eventos_empleado_temp;
     }
@@ -2888,6 +2900,7 @@ class EmpleadoController extends Controller
         }
     }
 
+    //*ACTUALIZAR CONFIGURACION DE HORARIO EN EDITAR EMPLEADO
     public function actualizarConfigHorario(Request $request){
 
         //*VALOR DE PARAMETROS
@@ -2898,6 +2911,29 @@ class EmpleadoController extends Controller
 
         //*ACTUALIZANDO
         $horario_empleado=horario_empleado::findOrfail($idHoraEmp);
+        if($fueraHorario==1){
+            $horario_empleado->borderColor='#5369f8';
+        } else{
+            $horario_empleado->borderColor=null;
+        }
+        $horario_empleado->fuera_horario=$fueraHorario;
+        $horario_empleado->horaAdic=$permiteHadicional;
+        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->save();
+
+    }
+
+    //*ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO
+    public function actualizarConfigHorario_re(Request $request){
+
+        //*VALOR DE PARAMETROS
+        $idHoraEmp=$request->idHoraEmp;
+        $fueraHorario=$request->fueraHorario;
+        $permiteHadicional=$request->permiteHadicional;
+        $nHorasAdic=$request->nHorasAdic;
+
+        //*ACTUALIZANDO
+        $horario_empleado=eventos_empleado_temp::findOrfail($idHoraEmp);
         if($fueraHorario==1){
             $horario_empleado->borderColor='#5369f8';
         } else{

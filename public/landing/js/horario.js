@@ -315,7 +315,11 @@ function calendario() {
 
             var event = calendar.getEventById(id);
             if (info.event.textColor == '111111') {
-                bootbox.confirm({
+
+                 /* UNBIND SOLO UNA VEZ */
+                 $('#eliminaHorarioDia_re').unbind().click(function() {
+                    $('#editarConfigHorario_re').modal('hide');
+                    bootbox.confirm({
                     title: "Eliminar horario",
                     message: "¿Desea eliminar: " + info.event.title + " del horario?",
                     buttons: {
@@ -356,7 +360,31 @@ function calendario() {
                             });
                         }
                     }
-                });
+                     });
+                 });
+
+                 //*seteando datos amodal
+                 $('#idHoraEmpleado_re').val(info.event.id);
+                 if(info.event.borderColor == '#5369f8'){
+                    $('#fueraHSwitch_Actualizar_re').prop("checked",true);
+                }
+                else{
+                    $('#fueraHSwitch_Actualizar_re').prop("checked",false);
+                }
+                if (info.event.extendedProps.horaAdic == 1) {
+                    $('#horAdicSwitch_Actualizar_re').prop("checked",true);
+                    $('#nHorasAdic_Actualizar_re').show();
+
+                    $("#nHorasAdic_Actualizar_re").val(info.event.extendedProps.nHoraAdic);
+
+
+                }
+                else{
+                    $('#horAdicSwitch_Actualizar_re').prop("checked",false);
+                    $('#nHorasAdic_Actualizar_re').hide();
+                }
+
+                 $('#editarConfigHorario_re').modal('show');
             }
 
 
@@ -374,17 +402,71 @@ function calendario() {
             if (info.event.extendedProps.horaI === null) {
                 $(info.el).tooltip({ title: info.event.title });
             } else {
-                if (info.event.borderColor == '#5369f8') {
-                    if (info.event.extendedProps.horaAdic == 1) {
-                        $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' + '     Marca horas adicionales' });
-                    } else {
-                        $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '  Trabaja fuera de horario' });
-                    }
 
+
+                if (info.event.extendedProps.pausas != '') {
+                    var cadenaPausas = [];
+                    $.each(info.event.extendedProps.pausas, function (index, value2) {
+
+                        variableResult1 = '   <br>   ' + value2.pausH_descripcion + ':  ' + value2.pausH_Inicio + '-' + value2.pausH_Fin + '                                                                                          ';
+                        cadenaPausas.push(variableResult1);
+                    })
+                    if (info.event.borderColor == '#5369f8') {
+                        if (info.event.extendedProps.horaAdic == 1) {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    ' <br> Pausas programadas:    ' + cadenaPausas
+                            });
+                        } else {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario' +
+                                    '  <br>  Pausas programadas:     ' + cadenaPausas
+                            });
+                        }
+                    }
+                    else {
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                '<br>   Pausas programadas:     ' + cadenaPausas
+                        });
+                    }
                 }
                 else {
-                    $(info.el).tooltip({ title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF });
+                    /* HORARIO CUANDO NO TIENE PAUSAS */
+                    if (info.event.borderColor == '#5369f8') {
+                        if (info.event.extendedProps.horaAdic == 1) {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                    ' <br> Horas adicionales:' + info.event.extendedProps.nHoraAdic + ' horas' +
+                                    '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga +
+                                    ' <br> Trabaja fuera de horario'
+                            });
+                        } else {
+                            $(info.el).tooltip({
+                                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                                html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF + '<br>  Trabaja fuera de horario' + '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                            });
+                        }
+                    }
+                    else {
+                        $(info.el).tooltip({
+                            template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner large"></div></div>',
+                            html: true, title: 'Horario ' + info.event.title + ' :  ' + info.event.extendedProps.horaI + '-' + info.event.extendedProps.horaF +
+                                '<br> Horas obligadas: ' + info.event.extendedProps.horasObliga
+                        });
+                    }
                 }
+
             }
             /*if(info.event.borderColor=='#5369f8'){
              $(info.el).tooltip({  title: info.event.extendedProps.horaI+'-'+info.event.borderColor});
@@ -534,6 +616,13 @@ function agregarHorarioSe() {
                 var d = mesAg;
                 var fechasM = new Date(d);
                 calendar.refetchEvents();
+
+                if (data == 'Horario asignado') {
+
+                } else {
+                    bootbox.alert(data);
+                }
+
 
 
             },
@@ -895,6 +984,11 @@ function registrarhDias(idhorar) {
         success: function (data) {
 
             calendar.refetchEvents();
+            if (data == 'Horario asignado') {
+
+            } else {
+                bootbox.alert(data);
+            }
 
 
 
@@ -1880,6 +1974,7 @@ $("#selectTodoCheck").click(function () {
         $("#nombreEmpleado").trigger("change");
     }
 });
+
 //////////////////////
 //seleccionar por area, cargo, etc
 $('#selectEmpresarial').change(function (e) {
@@ -2940,7 +3035,7 @@ function modalEditar(id) {
                                     <div class="col-md-2">
                                         <label>Tolerancia inicio</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}" 
+                                            <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="${pausa.tolerancia_inicio}"
                                                oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -2957,7 +3052,7 @@ function modalEditar(id) {
                                     <div class="col-md-2">
                                         <label>Tolerancia salida</label>
                                         <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
-                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}" 
+                                            <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="${pausa.tolerancia_fin}"
                                                oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" onchange="javascript:e_toleranciasValidacion()">
                                             <div class="input-group-prepend  ">
                                                 <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3197,7 +3292,7 @@ function e_contenidoInput(id) {
                             <label>Tolerancia inicio</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_toleranciaIPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                     onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend  ">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3215,7 +3310,7 @@ function e_contenidoInput(id) {
                             <label>Tolerancia salida</label>
                             <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                 <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFPNew${e_cont}" value="0"
-                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;" 
+                                    oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;"
                                     onchange="javascript:e_toleranciasValidacion()">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control-sm" style="height: calc(1.5em + 0.43em + 5.2px)!important; font-size: 12px">
@@ -3703,3 +3798,67 @@ function obtenerHorarios() {
         error: function () { }
     });
 }
+/* EVENTO CAMBIAR SWITCH EN ACTUALLIZAR CONFIG HORARIO A DIA REGISTRAR EMPLEADO  */
+$(function () {
+    $(document).on('change', '#horAdicSwitch_Actualizar_re', function (event) {
+        if ($('#horAdicSwitch_Actualizar_re').prop('checked')) {
+            $('#nHorasAdic_Actualizar_re').show();
+
+        } else {
+            $('#nHorasAdic_Actualizar_re').hide();
+
+        }
+
+    });
+});
+/* ------------------------------------------------------------------ */
+
+ /* ---------ACTUALIZAR CONFIGURACION DE HORARIO------------- */
+ function actualizarConfigHorario_re(){
+    let idHoraEmp=$('#idHoraEmpleado_re').val();
+    let fueraHorario;
+    let permiteHadicional;
+    let nHorasAdic;
+
+    //* Fuera de horario
+    if ($("#fueraHSwitch_Actualizar_re").is(":checked")) {
+       fueraHorario = 1;
+   } else {
+       fueraHorario = 0;
+   }
+
+   //* permitir horas adicionales
+   if ($("#horAdicSwitch_Actualizar_re").is(":checked")) {
+       permiteHadicional = 1;
+       nHorasAdic=$('#nHorasAdic_Actualizar_re').val()
+   } else {
+       permiteHadicional = 0;
+       nHorasAdic=null;
+   }
+
+    $.ajax({
+       type: "post",
+       url: "/horario/actualizarConfigHorario",
+       data: {
+           idHoraEmp, fueraHorario, permiteHadicional,nHorasAdic
+       },
+       statusCode: {
+           419: function () {
+               location.reload();
+           },
+       },
+       headers: {
+           "X-CSRF-TOKEN": $(
+               'meta[name="csrf-token"]'
+           ).attr("content"),
+       },
+       success: function (data) {
+           calendar.refetchEvents();
+           $('#editarConfigHorario_re').modal('hide');
+       },
+       error: function (data) {
+           alert("Ocurrio un error");
+       },
+   });
+}
+/* ---------------------------------------------------------------------------- */

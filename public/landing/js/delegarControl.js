@@ -669,8 +669,10 @@ $("#adminCheck").click(function () {
         $("#opcionesAPuerta").hide();
         $("#verCheckPuerta").prop("required", false);
         $("#divParaSelec").hide();
+        $("#spanChEmple").hide();
     } else {
-
+        $("#divParaSelec").show();
+        $("#spanChEmple").show();
         /* SINO MOSTRAMOS TODAS LAOPCIONES */
         $("#nombreEmpleado").prop("required", true);
         $("#divInvitado").show();
@@ -1064,7 +1066,10 @@ $("#adminCheck_edit").click(function () {
         $("#divReporteAsis_edit").hide();
         $("#opcionesGE_edit").hide();
         $("#divParaSelec_edit").hide();
+        $("#spanChEmple_edit").hide();
     } else {
+        $("#divParaSelec_edit").show();
+        $("#spanChEmple_edit").show();
         //gest emp
         if ($("#AlcaAdminCheck_edit").is(":checked")) {
             $("#opcionesGE_edit").show();

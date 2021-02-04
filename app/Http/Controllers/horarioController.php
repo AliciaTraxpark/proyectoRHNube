@@ -134,7 +134,48 @@ class horarioController extends Controller
         //DIFERENCIA ARRAYS
         $datafecha2 = array_values(array_diff($datafecha, $datos));
 
-        foreach ($datafecha2 as $datafechas) {
+        //* PARA COMPARAR QUE NO ESTE DENTRO DE HORARIO QUE NO SE CRUCEN
+        $horarioEmpleado = horario::where('horario_id', $idhorar)->first();
+        $horaInicialF = Carbon::parse($horarioEmpleado->horaI);
+        $horaFinalF = Carbon::parse($horarioEmpleado->horaF);
+        $arrayHDentro = collect();
+
+        //*
+        foreach ($datafecha as $datafechas) {
+            $horarioDentro = temporal_eventos::select([ 'title', 'color', 'textColor', 'start', 'end', 'horaI', 'horaF', 'borderColor'])
+                ->join('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
+                ->where('start', '=', $datafechas)
+                 ->where('users_id', '=', Auth::user()->id)
+                ->get();
+            if ($horarioDentro) {
+                foreach ($horarioDentro as $horarioDentros) {
+                    $horaIDentro = Carbon::parse($horarioDentros->horaI);
+                    $horaFDentro = Carbon::parse($horarioDentros->horaF);
+                    if ($horaIDentro->gte($horaInicialF) && $horaIDentro->lt($horaFinalF)) {
+                        $startArreD = carbon::create($horarioDentros->start);
+                        $arrayHDentro->push($startArreD->format('Y-m-d'));
+                    } else {
+                        if ($horaFDentro->gte($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                            $startArreD = carbon::create($horarioDentros->start);
+                            $arrayHDentro->push($startArreD->format('Y-m-d'));
+                        } else {
+                            if ($horaFDentro->lt($horaFinalF) && $horaFDentro->gte($horaInicialF)) {
+                                $startArreD = carbon::create($horarioDentros->start);
+                                $arrayHDentro->push($startArreD->format('Y-m-d'));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //* SACANDO HORARIOS QUE SE CRUCEN
+        $datosDentroN = Arr::flatten($arrayHDentro);
+        $datafecha3 = array_values(array_diff($datafecha2, $datosDentroN));
+        //
+
+
+        foreach ($datafecha3 as $datafechas) {
 
 
             $temporal_eventos = new temporal_eventos();
@@ -158,13 +199,31 @@ class horarioController extends Controller
             $temporal_eventos->save();
             $arrayeve->push($temporal_eventos);
         }
+        $datafechaValida = array_values(array_diff($datafecha, $datafecha3));
+        if ($datafechaValida != null || $datafechaValida != []) {
+            return 'Ya existe un horario asignado en este rango de horas, revise y vuelva a intentar.';
+        } else {
+            return 'Horario asignado';
+        }
     }
     public function eventos()
     {
-        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI', 'horaF', 'borderColor', 'horaAdic'])
+        $temporal_eventos = DB::table('temporal_eventos')->select(['id', 'title', 'textColor', 'start', 'end', 'color', 'horaI',
+         'horaF', 'borderColor', 'horaAdic','id_horario','horasObliga','nHoraAdic'])
             ->leftJoin('horario as h', 'temporal_eventos.id_horario', '=', 'h.horario_id')
             ->where('users_id', '=', Auth::user()->id)
             ->get();
+
+            foreach ($temporal_eventos as $tab) {
+                $pausas_horario = DB::table('pausas_horario as pauh')
+                    ->select('idpausas_horario', 'pausH_descripcion', 'pausH_Inicio', 'pausH_Fin', 'pauh.horario_id')
+                    ->where('pauh.horario_id', '=', $tab->id_horario)
+                    ->distinct('pauh.idpausas_horario')
+                    ->get();
+
+                $tab->pausas = $pausas_horario;
+
+            }
 
         return response()->json($temporal_eventos);
     }
@@ -1280,5 +1339,28 @@ class horarioController extends Controller
             ->get();
 
         return response()->json($horario, 200);
+    }
+
+    //*ACTUALIZAR CONFIGURACION DE HORARIO EN REGISTRAR EMPLEADO
+    public function actualizarConfigHorario(Request $request){
+
+        //*VALOR DE PARAMETROS
+        $idHoraEmp=$request->idHoraEmp;
+        $fueraHorario=$request->fueraHorario;
+        $permiteHadicional=$request->permiteHadicional;
+        $nHorasAdic=$request->nHorasAdic;
+
+        //*ACTUALIZANDO
+        $horario_empleado=temporal_eventos::findOrfail($idHoraEmp);
+        if($fueraHorario==1){
+            $horario_empleado->borderColor='#5369f8';
+        } else{
+            $horario_empleado->borderColor=null;
+        }
+        $horario_empleado->fuera_horario=$fueraHorario;
+        $horario_empleado->horaAdic=$permiteHadicional;
+        $horario_empleado->nHoraAdic=$nHorasAdic;
+        $horario_empleado->save();
+
     }
 }

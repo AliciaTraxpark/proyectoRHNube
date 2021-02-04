@@ -156,7 +156,7 @@ Route::get('tablaempleado/refreshBaja', 'EmpleadoController@refresTablaEmpBaja')
 Route::post('tablaempleado/refreshAreaBaja', 'EmpleadoController@refresTablaAreBaja');
 Route::post('empleado/darAlta', 'EmpleadoController@darAltaEmpleado');
 Route::post('/empleado/actualizarConfigHorario', 'EmpleadoController@actualizarConfigHorario');
-
+Route::post('/empleado/actualizarConfigHorario_re', 'EmpleadoController@actualizarConfigHorario_re');
 //AREA
 Route::post('/registrar/area', 'areaController@store');
 
@@ -297,6 +297,7 @@ Route::post('/eliminarPausaHorario', 'horarioController@eliminarPausaHorario');
 Route::post('/pausasHorario', 'horarioController@pausasHorario');
 Route::post('/editarHorario', 'horarioController@editarHorario');
 Route::get('/obtenerHorarios', 'horarioController@obtenerHorarios');
+Route::post('/horario/actualizarConfigHorario', 'horarioController@actualizarConfigHorario');
 //DASHBOARD
 Route::get('/respuestaC', 'dashboardController@respuestaCalendario');
 Route::get('/totalA', 'dashboardController@area');

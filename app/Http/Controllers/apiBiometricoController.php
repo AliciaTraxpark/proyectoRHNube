@@ -2734,8 +2734,33 @@ class apiBiometricoController extends Controller
 
                                 $tipoMarcacion = 0;
                             }
+                            else{
+                                $tipoMarcacion = 1;
+                            }
                         }
 
+                    }
+                    else{
+                         /*--------- SI NO TENGO SALIDA ----------------------------*/
+                         $marcacion_puertaVerif2 = DB::table('marcacion_puerta as mv')
+                         ->leftJoin('dispositivos as dis', 'mv.dispositivoEntrada', '=', 'dis.idDispositivos')
+                         ->where('dis.tipoDispositivo', '=', 3)
+                         ->where('mv.marcaMov_emple_id', '=', $req['idEmpleado'])
+                         ->where('mv.marcaMov_salida', '=', null)
+                         ->whereDate('mv.marcaMov_fecha', '=', $fecha1V)
+                         ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
+                         ->whereNull('mv.horarioEmp_id')
+                         ->orderby('marcaMov_fecha', 'ASC')
+                         ->get()->first();
+                     /* ------------------------------------------------------ */
+
+                     if ($marcacion_puertaVerif2) {
+
+                         $tipoMarcacion = 0;
+                     }
+                     else{
+                        $tipoMarcacion = 1;
+                     }
                     }
                 }
             }
@@ -3016,6 +3041,18 @@ class apiBiometricoController extends Controller
                                     'estado' => true);
 
                             }
+                            else{
+                                /* ESTE CODIGO ES POR SIACASO PARA EN EL FUTURO NO GENERAR ERROR
+                                 PERO EN SI NO CVLA PARA NADAA */
+                                $marcacion_biometrico = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
+                                $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                $marcacion_biometrico->dispositivoSalida = $req['idDisposi'];
+                                $marcacion_biometrico->save();
+
+                                $respuestaMarcacion = array(
+                                    'id' => $req['id'],
+                                    'estado' => true);
+                            }
 
                         } else {
 
@@ -3149,6 +3186,25 @@ class apiBiometricoController extends Controller
                                                 'estado' => true);
 
                                         }
+                                        else{
+                                            $marcacion_biometrico = new marcacion_puerta();
+                                            $marcacion_biometrico->marcaMov_salida = $req['fechaMarcacion'];
+                                            $marcacion_biometrico->marcaMov_emple_id = $req['idEmpleado'];
+                                            $marcacion_biometrico->dispositivoSalida = $req['idDisposi'];
+
+                                            $marcacion_biometrico->organi_id = $empleados->organi_id;
+
+                                            if (empty($req['idHoraEmp'])) {} else {
+                                                $marcacion_biometrico->horarioEmp_id = $req['idHoraEmp'];
+                                            }
+
+                                            $marcacion_biometrico->tipoMarcacionB = 1;
+
+                                            $marcacion_biometrico->save();
+                                            $respuestaMarcacion = array(
+                                                'id' => $req['id'],
+                                                'estado' => true);
+                                        }
 
                                     }
 
@@ -3167,6 +3223,7 @@ class apiBiometricoController extends Controller
                 }
 
             }
+
             /* INSERTAMO A AARRAY  */
             $arrayDatos->push($respuestaMarcacion);
             /* ---------------------------- */
