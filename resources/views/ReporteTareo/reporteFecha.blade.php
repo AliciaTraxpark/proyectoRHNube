@@ -9,16 +9,14 @@
     <link href="{{ URL::asset('admin/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}"
+        rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="{{ asset('admin/assets/js/html2pdf.bundle.min.js') }}"></script>
     <link href="{{ URL::asset('admin/assets/css/zoom.css') }}" rel="stylesheet" type="text/css" />
     {{-- plugin de ALERTIFY --}}
     <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
-    {{--
-    <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    --}}
+    {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
     <!-- Semantic UI theme -->
     <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -162,6 +160,39 @@
             line-height: 31px;
         }
 
+        .dropdown-itemM {
+            padding: 0.1rem 0.1rem !important;
+            color: #6c757d !important;
+        }
+
+        /* SYYLE DE GROUP */
+        .select2-container--default .select2-results__group {
+            color: #62778c;
+        }
+
+
+        .ulHijo {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .liContenido {
+            list-style: none;
+        }
+
+        .dropdown-itemSelector {
+            padding: 0.1rem 1rem !important;
+            margin: 0.1rem 0 !important;
+        }
+
+        .dt-button-collection {
+            min-width: 12rem !important;
+        }
+
+        .dt-button {
+            padding: 0.15rem 0.15rem !important;
+        }
+
     </style>
     <style>
         .table {
@@ -169,8 +200,8 @@
         }
 
         /* .dataTables_scrollHeadInner {
-                    width: 100% !important;
-                } */
+                                    width: 100% !important;
+                                } */
 
         .table th,
         .table td {
@@ -229,8 +260,7 @@
                                 <label class="col-lg-3 col-form-label">Fecha:</label>
                                 <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
                                     id="fechaSelec">
-                                    <input type="text" id="fechaInput" {{--
-                                        onchange="cambiarF()" --}} class="form-control"
+                                    <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
                                         data-input>
                                     <div class="input-group-prepend">
                                         <div class="input-group-text form-control flatpickr">
@@ -284,12 +314,86 @@
 
                     <div class="row justify-content-center">
                         <div class="col-md-12" id="MostarDetalles" style="display: none">
-                            <div class="custom-control custom-switch">
+                            {{-- <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitDetalles"
                                     onclick="javascript:cambiartabla()">
                                 <label class="custom-control-label" for="customSwitDetalles"
                                     style="font-weight: bold">Mostrar
                                     detalles</label>
+                            </div> --}}
+                            <div class="dropdown" id="dropSelector">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="cursor: pointer">
+                                    <div class="custom-control custom-switch mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="switchO" checked
+                                            style="cursor: pointer">
+                                        <label class="custom-control-label" for="switchO" style="font-weight: bold">
+                                            <img src="{{ asset('landing/images/insert.svg') }}" height="18">
+                                            Selector de columnas
+                                        </label>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;">
+                                    <h6 class="dropdown-header text-left"
+                                        style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                        <img src="{{ asset('landing/images/configuracionesD.svg') }}" class="mr-1"
+                                            height="12" />
+                                        Opciones
+                                    </h6>
+                                    <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="fechaSwitch">
+                                            <label class="form-check-label" for="fechaSwitch">Fecha
+                                            </label>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checCodigo" checked>
+                                            <label class="form-check-label" for="checCodigo">Código
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checnumdoc" checked>
+                                            <label class="form-check-label" for="checnumdoc">Número de documento
+                                            </label>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checSexo">
+                                            <label class="form-check-label" for="checSexo">Sexo
+                                            </label>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checCargo">
+                                            <label class="form-check-label" for="checCargo">Cargo
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checPuntoc" checked>
+                                            <label class="form-check-label" for="checPuntoc">Punto de control
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checControl" checked>
+                                            <label class="form-check-label" for="checControl">Controlador
+                                        </li>
+                                    </ul>
+
+                                </div>
                             </div>
                         </div>
 
@@ -306,8 +410,7 @@
                                     <span><i><img src="admin/images/pdf.svg" height="20"></i> Descargar</span>
                                 </button>
                             </div>
-                        </div>
-                        --}}
+                        </div> --}}
                         {{-- MODAL DE INSERTAR SALIDA --}}
                         <div id="insertarSalida" class="modal fade" role="dialog" aria-labelledby="insertarSalida"
                             aria-hidden="true" data-backdrop="static">
@@ -322,11 +425,9 @@
                                         <div class="col-md-12">
                                             <form action="javascript:insertarSalida()" id="formInsertarSalida">
                                                 <div class="row">
-                                                    {{-- ID DE MARCACION
-                                                    --}}
+                                                    {{-- ID DE MARCACION --}}
                                                     <input type="hidden" id="idMarcacionIS">
-                                                    {{-- ID DE HORARIO
-                                                    --}}
+                                                    {{-- ID DE HORARIO --}}
                                                     <input type="hidden" id="idHorarioIS">
                                                     <div class="col-md-12">
                                                         <span style="color:#62778c;font-weight: bold">Agregar salida</span>
@@ -396,11 +497,9 @@
                                         <div class="col-md-12">
                                             <form action="javascript:insertarEntrada()" id="formInsertarEntrada">
                                                 <div class="row">
-                                                    {{-- ID DE MARCACION
-                                                    --}}
+                                                    {{-- ID DE MARCACION --}}
                                                     <input type="hidden" id="idMarcacionIE">
-                                                    {{-- ID DE HORARIO
-                                                    --}}
+                                                    {{-- ID DE HORARIO --}}
                                                     <input type="hidden" id="idHorarioIE">
                                                     <div class="col-md-12">
                                                         <span style="color:#62778c;font-weight: bold">Insertar
@@ -480,9 +579,9 @@
                                         <th>Nombres y apellidos</th>
                                         <th name="tiempoSitHi">Sexo</th>
                                         <th name="tiempoSitHi">Cargo</th>
-                                        <th>Código</th>
+                                        <th>Cód. Act.</th>
                                         <th>Actividad</th>
-                                        <th>Código</th>
+                                        <th>Cód. Sub.</th>
                                         <th>Subactividad</th>
                                         <th id="hEntrada">Hora de entrada</th>
                                         <th id="hSalida">Hora de salida</th>

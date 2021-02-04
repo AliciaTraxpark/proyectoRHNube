@@ -13,6 +13,6 @@ class marcacion_puerta extends Model
     'controladores_idControladores','dispositivoEntrada','organi_id','horarioEmp_id','marcaMov_salida',
     'marca_latitud','marca_longitud','marcaIdActivi',
     'puntoC_id','centC_id',
-    'tipoMarcacionB','dispositivoSalida'];
+    'tipoMarcacionB','dispositivoSalida','controladores_salida'];
     public $timestamps = false;
 }
