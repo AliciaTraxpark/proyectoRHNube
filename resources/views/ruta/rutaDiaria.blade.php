@@ -166,7 +166,6 @@
             </div>
             <div class="modal-body p-0">
                 <div class="col-md-12 col-sm-12 p-0" id="bodyMap">
-                    {{-- <div id="mapRecorrido" class="mapRecorrido"></div> --}}
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -176,7 +175,7 @@
 {{-- MODAL DE ZOOM DE IMAGENES --}}
 <div id="modalZoom" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog d-flex modal-dialog-centered justify-content-center modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#163552;">
                 <h5 class="modal-title" style="color:#ffffff;font-size:15px">Colección
