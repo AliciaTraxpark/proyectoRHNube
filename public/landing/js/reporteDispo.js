@@ -389,14 +389,14 @@ function cargartabla(fecha) {
                 for (let m = 0; m < cantidadGruposHorario; m++) {
                     // ************************************ DATOS DEL GRUPO HORARIO **************************************
                     // !HORARIO
-                    theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;" name="descripcionHorario">
+                    theadTabla += `<th class="text-center descripcionHorario" style="border-left: 2px solid #383e56!important;font-weight: 600 !important" name="descripcionHorario">
                                         <span>
-                                            Descripción del horario <b style="font-size: 12px !important;color: #383e56;">${m + 1}</b>
+                                            Descripción del horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
                                         </span>
                                     </th>
                                     <th class="text-center horarioHorario" name="horarioHorario">
                                         <span>
-                                            Horario <b style="font-size: 12px !important;color: #383e56;">${m + 1}</b>
+                                            Horario <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${m + 1}</b>
                                         </span>
                                     </th>
                                     <th name="toleranciaIHorario" class="toleranciaIHorario">Tolerancia en el ingreso</th>
@@ -410,17 +410,17 @@ function cargartabla(fecha) {
                     for (let j = 0; j < cantidadColumnasM; j++) {
                         theadTabla += `<th style="border-left:1px dashed #aaaaaa!important;" class="text-center colMarcaciones" name="colMarcaciones">
                                             <span>
-                                                Entrada <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                                Entrada <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                             </span>
                                         </th>
                                         <th class="text-center colMarcaciones" name="colMarcaciones">
                                             <span>
-                                                Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                                Salida <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                             </span>
                                         </th>
                                         <th id="tSitio" name="colTiempoS" class="colTiempoS">
                                             <span>
-                                                Tiempo total <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
+                                                Tiempo total <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${j + 1}</b>
                                             </span>
                                         </th>`;
                     }
