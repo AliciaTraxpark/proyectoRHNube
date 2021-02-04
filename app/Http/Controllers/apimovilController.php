@@ -380,7 +380,7 @@ class apimovilController extends Controller
                         ->where('mv.marcaMov_salida', '=', null)
                         ->whereDate('mv.marcaMov_fecha', '=', $fecha1)
                         ->where('mv.marcaMov_fecha', '<=', $req['fechaMarcacion'])
-                    
+
                         ->where('dis.tipoDispositivo', '=', 2)
                         ->orderby('marcaMov_fecha', 'ASC')
                         ->get()->last();
@@ -392,7 +392,7 @@ class apimovilController extends Controller
                     $marcacion_puerta = new marcacion_puerta();
                     $marcacion_puerta->marcaMov_salida = $req['fechaMarcacion'];
                     $marcacion_puerta->marcaMov_emple_id = $req['idEmpleado'];
-                    $marcacion_puerta->controladores_idControladores = $req['idControlador'];
+                    $marcacion_puerta->controladores_salida = $req['idControlador'];
                     $marcacion_puerta->dispositivoSalida = $req['idDisposi'];
                     $marcacion_puerta->organi_id = $req['organi_id'];
                     if (empty($req['activ_id'])) {} else {
@@ -421,6 +421,7 @@ class apimovilController extends Controller
                     $marcacion_puerta = marcacion_puerta::find($marcacion_puerta1->marcaMov_id);
                     $marcacion_puerta->marcaMov_salida = $req['fechaMarcacion'];
                     $marcacion_puerta->dispositivoSalida = $req['idDisposi'];
+                    $marcacion_puerta->controladores_salida = $req['idControlador'];
                     $marcacion_puerta->save();
                 }
             }
