@@ -1410,6 +1410,7 @@ class dispositivosController extends Controller
                         }
                     }
                 } else {
+                    // : REGISTRAMOS LA FECHA SI SOLO TIENE EVENTOS O INCIDENCIAS
                     if (sizeof($eventos) != 0 || sizeof($incidencias) != 0) {
                         $marcaciones[$key]->datos[$d][0] = (object)array(
                             "idHorario" => 0,

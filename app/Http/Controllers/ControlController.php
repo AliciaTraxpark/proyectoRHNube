@@ -774,9 +774,19 @@ class ControlController extends Controller
 
         $respuesta = [];
 
+        $datosOrganizacion = DB::table('organizacion as o')
+            ->select(
+                'o.organi_razonSocial as razonSocial',
+                'o.organi_direccion as direccion',
+                'o.organi_ruc as ruc'
+            )
+            ->where('o.organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
+
         if (sizeof($empleados) > 0) {
             $sql = "IF(h.id is null,if(DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)) >= 0 , DATEDIFF('" . $fechaF[1] . "',DATE(cp.hora_ini)), DAY(DATE(cp.hora_ini)) ),
-        if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
+                if(DATEDIFF('" . $fechaF[1] . "',DATE(h.start)) >= 0,DATEDIFF('" . $fechaF[1] . "',DATE(h.start)), DAY(DATE(h.start)) )) as dia";
             // DB::enableQueryLog();
             $horasTrabajadas = DB::table('empleado as e')
                 ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
@@ -841,7 +851,7 @@ class ControlController extends Controller
                 $respuesta[$j]['sumaRango'] = array_reverse($respuesta[$j]['sumaRango']);
             }
         }
-        return response()->json($respuesta, 200);
+        return response()->json(array("respuesta" => $respuesta, "organizacion" => $datosOrganizacion), 200);
     }
 
     public function empledosReporteSemanalMensual(Request $request)

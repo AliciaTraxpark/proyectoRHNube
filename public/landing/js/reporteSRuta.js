@@ -21,6 +21,9 @@ $(function () {
     f = moment().format("YYYY-MM-DD");
     fechaValue.setDate(f);
 });
+var razonSocial = {};
+var direccion = {};
+var ruc = {};
 var notify = $.notifyDefaults({
     icon_type: 'image',
     newest_on_top: true,
@@ -183,7 +186,10 @@ function onSelectFechas() {
             }*/
         },
         success: function (data) {
-            datos = data;
+            razonSocial = data.organizacion.razonSocial;
+            direccion = data.organizacion.direccion;
+            ruc = data.organizacion.ruc;
+            datos = data.respuesta;
             $('#VacioImg').hide();
             tablaEnVista();
         },
@@ -295,40 +301,133 @@ function conActividadesDiarias() {
                 text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
+
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
+
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
+                        }
+                        msg += '</row>';
+                        return msg;
+                    }
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'REPORTE SEMANAL', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'Exported data',
-                autoFilter: false
+                sheetName: 'REPORTE SEMANAL',
+                title: 'REPORTE SEMANAL',
+                autoFilter: false,
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            return $.trim(cont);
+                        }
+                    }
+                },
             }, {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
-                pageSize: 'LEGAL',
+                pageSize: 'A3',
+                alignment: 'center',
                 title: 'REPORTE SEMANAL',
-                exportOptions: {
-                    columns: ":visible",
-                    orthogonal: 'export'
-                },
                 customize: function (doc) {
+                    var bodyCompleto = [];
+                    doc.content[1].table.body.forEach(function (line, i) {
+                        var bodyNuevo = [];
+                        if (i >= 1) {
+                            line.forEach(element => {
+                                var textOriginal = element.text;
+                                var cambiar = $.trim(textOriginal);
+                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                            });
+                            bodyCompleto.push(bodyNuevo);
+                        } else {
+                            bodyCompleto.push(line);
+                        }
+                    });
                     doc['styles'] = {
                         table: {
                             width: '100%'
                         },
-                        userTable: {
-                            margin: [0, 15, 0, 15]
-                        },
-                        title: {
-                            color: '#163552',
-                            fontSize: '20',
-                            alignment: 'center'
-                        },
                         tableHeader: {
-                            bold: !0,
+                            bold: true,
                             fontSize: 11,
-                            color: '#FFFFFF',
-                            fillColor: '#163552',
-                            alignment: 'center'
+                            color: '#ffffff',
+                            fillColor: '#14274e',
+                            alignment: 'left'
+                        },
+                        defaultStyle: {
+                            fontSize: 10,
+                            alignment: 'left'
                         }
+                    };
+                    doc.pageMargins = [20, 120, 20, 30];
+                    doc.content[1].margin = [60, 0, 60, 0];
+                    doc.content.splice(0, 1);
+                    var objLayout = {};
+                    objLayout['hLineWidth'] = function (i) { return .2; };
+                    objLayout['vLineWidth'] = function (i) { return .2; };
+                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                    doc.content[0].layout = objLayout;
+                    doc.content[0].table.body = bodyCompleto;
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    doc["header"] = function () {
+                        return {
+                            columns: [
+                                {
+                                    alignment: 'left',
+                                    italics: false,
+                                    text: [
+                                        { text: '\nREPORTE SEMANAL', bold: true },
+                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    ],
+
+                                    fontSize: 10,
+                                    margin: [30, 0]
+                                },
+                            ],
+                            margin: 20
+                        };
                     };
                 }
             }],
@@ -560,41 +659,133 @@ function sinActividadesDiarias() {
                 text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
+
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
+
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
+                        }
+                        msg += '</row>';
+                        return msg;
+                    }
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'REPORTE SEMANAL', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'Exported data',
-                autoFilter: false
+                sheetName: 'REPORTE SEMANAL',
+                title: 'REPORTE SEMANAL',
+                autoFilter: false,
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            return $.trim(cont);
+                        }
+                    }
+                },
             }, {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
-                pageSize: 'A4',
+                pageSize: 'A3',
                 alignment: 'center',
                 title: 'REPORTE SEMANAL',
                 customize: function (doc) {
+                    var bodyCompleto = [];
+                    doc.content[1].table.body.forEach(function (line, i) {
+                        var bodyNuevo = [];
+                        if (i >= 1) {
+                            line.forEach(element => {
+                                var textOriginal = element.text;
+                                var cambiar = $.trim(textOriginal);
+                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                            });
+                            bodyCompleto.push(bodyNuevo);
+                        } else {
+                            bodyCompleto.push(line);
+                        }
+                    });
                     doc['styles'] = {
-                        userTable: {
-                            margin: [0, 15, 0, 15],
-                            alignment: 'center'
-                        },
-                        title: {
-                            color: '#163552',
-                            fontSize: '20',
-                            alignment: 'center'
-                        },
-                        athleteTable: {
-                            alignment: 'center'
+                        table: {
+                            width: '100%'
                         },
                         tableHeader: {
-                            bold: !0,
+                            bold: true,
                             fontSize: 11,
-                            color: '#FFFFFF',
-                            fillColor: '#163552',
-                            alignment: 'center'
+                            color: '#ffffff',
+                            fillColor: '#14274e',
+                            alignment: 'left'
                         },
-                        tableMargins: {
-                            margin: [0, 5, 0, 15]
-                        },
+                        defaultStyle: {
+                            fontSize: 10,
+                            alignment: 'left'
+                        }
+                    };
+                    doc.pageMargins = [20, 120, 20, 30];
+                    doc.content[1].margin = [60, 0, 60, 0];
+                    doc.content.splice(0, 1);
+                    var objLayout = {};
+                    objLayout['hLineWidth'] = function (i) { return .2; };
+                    objLayout['vLineWidth'] = function (i) { return .2; };
+                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                    doc.content[0].layout = objLayout;
+                    doc.content[0].table.body = bodyCompleto;
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    doc["header"] = function () {
+                        return {
+                            columns: [
+                                {
+                                    alignment: 'left',
+                                    italics: false,
+                                    text: [
+                                        { text: '\nREPORTE SEMANAL', bold: true },
+                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    ],
+
+                                    fontSize: 10,
+                                    margin: [30, 0]
+                                },
+                            ],
+                            margin: 20
+                        };
                     };
                 }
             }],

@@ -22,7 +22,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         <h4 class="mb-1 mt-0" style="font-weight: bold">
-            Reporte semanal - Búsqueda por fecha
+            Tiempo por semana - Búsqueda por fecha
         </h4>
     </div>
 </div>

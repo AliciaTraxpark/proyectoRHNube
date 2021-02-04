@@ -20,12 +20,9 @@ var notify = $.notifyDefaults({
         '<span style="color:#8a6d3b" data-notify="message">{2}</span>' +
         '</div>'
 });
-
-var razonSocial;
-var direccion;
-var ruc;
-var fecha;
-var fechas;
+var razonSocial = {};
+var direccion = {};
+var ruc = {};
 $(function () {
     $("#ReporteMensual").DataTable({
         "searching": false,
@@ -177,366 +174,15 @@ function onSelectFechasMensual() {
             }*/
         },
         success: function (data) {
-            datos = data;
+            razonSocial = data.organizacion.razonSocial;
+            direccion = data.organizacion.direccion;
+            ruc = data.organizacion.ruc;
+            datos = data.respuesta;
             $('#VacioImg').hide();
             tablaEnVista();
         },
         error: function (data) { }
     })
-}
-
-
-function onSelectFechasMensualT() {
-    var fecha = $('#fechaMensual').val();
-    var area = $('#areaT').val();
-    var empleadoL = $('#empleadoLT').val();
-    if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
-        $('#ReporteMensual').DataTable().destroy();
-    }
-    $('#empleadoMensual').empty();
-    $('#diasMensual').empty();
-    $('#VacioImg').empty();
-    $("#myChartMensual").show();
-    if (grafico.config != undefined) grafico.destroy();
-    $.ajax({
-        async: false,
-        url: "reporte/empleadoTardanzas",
-        method: "GET",
-        data: {
-            fecha: fecha,
-            area: area,
-            empleadoL: empleadoL
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        statusCode: {
-            401: function () {
-                location.reload();
-            },
-            /*419: function () {
-                location.reload();
-            }*/
-        },
-        success: function (data) {
-            datos = data;
-            $('#VacioImg').hide();
-            tablaEnVistaT();
-        },
-        error: function (data) { }
-    })
-}
-
-function getBase64FromImageUrl(url) {
-    var img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = function () {
-        var canvas = document.createElement("canvas");
-        canvas.width = this.width;
-        canvas.height = this.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(this, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-    };
-    img.src = url;
-}
-function sinActividadDT() {
-    if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
-        $('#ReporteMensual').DataTable().destroy();
-    }
-    $('#empleadoMensual').empty();
-    $('#diasMensual').empty();
-    $('#VacioImg').empty();
-    $("#myChartMensual").show();
-    if (grafico.config != undefined) grafico.destroy();
-    if (datos.length > 0) {
-        $('#VacioImg').hide();
-        var nombre = [];
-        var html_tr = "";
-        var html_trD = "<tr><th>#</th><th>Código</th><th>Documento</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</>";
-        let codigo = 0;
-        for (var i = 0; i < datos.length; i++) {
-            ruc = datos[i].ruc;
-            razonSocial = datos[i].razonSocial;
-            direccion = datos[i].direccion;
-            fecha = datos[i].fecha;
-            fechas = "Desde: "+datos[i].fechaD+" Hasta: "+datos[i].fechaH;
-            let faltasT = 0;
-            let html_tr_temp = "";
-            if (datos[i].codigo > 0) {
-                codigo = datos[i].codigo;
-            } else {
-                codigo = datos[i].documento;
-            }
-            html_tr += '<tr><td>' + (i + 1) + '</td><td>' + codigo + '</td><td>' + datos[i].documento + '</td><td>' + datos[i].nombre + ' ' + datos[i].apPaterno + ' ' + datos[i].apMaterno + '</td>';
-            nombre.push(datos[i].nombre.split('')[0] + datos[i].apPaterno.split('')[0] + datos[i].apMaterno.split('')[0]);
-            var total = datos[i].horas.reduce(function (a, b) {
-                return sumarHora(a, b);
-            });
-            for (let j = 0; j < datos[i].horas.length; j++) {
-                // TABLA DEFAULT
-                if(datos[i].horas[j] == "00:00:00")
-                    html_tr_temp += '<td>' + 0 + '</td>';
-                else {
-                    faltasT += 1;
-                    html_tr_temp += '<td>' + 1 + '</td>';
-                }
-            }
-            
-            // TABLA DEFAULT
-            html_tr = html_tr + '<td>' + faltasT + '</td>' + html_tr_temp;
-            //html_tr += '<td>' + total + '</td>';
-            
-            html_tr += '</tr>';
-        }
-        html_trD += '<th>TOTAL</th>';
-        for (var m = 0; m < datos[0].fechaF.length; m++) {
-            var momentValue = moment(datos[0].fechaF[m]);
-            momentValue.toDate();
-            momentValue.format("ddd DD/MM");
-            // TABLA DEFAULT
-            html_trD += '<th>' + momentValue.format("ddd DD/MM") + '</th>';
-        }
-        // TABLA DEFAULT
-        
-        html_trD += '</tr>';
-        // TABLA DEFAULT
-        $("#diasMensual").html(html_trD);
-        $("#empleadoMensual").html(html_tr);
-
-        table = $("#ReporteMensual").DataTable({
-            "searching": false,
-            "scrollX": true,
-            retrieve: true,
-            "ordering": false,
-            "autoWidth": true,
-            language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ ",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": ">",
-                    "sPrevious": "<"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
-            },
-            dom: 'Bfrtip',
-            buttons: [{
-                extend: 'excel',
-                className: 'btn btn-sm mt-1',
-                text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                customize: function (xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var downrows = 5;
-                    var clRow = $('row', sheet);
-                    clRow[0].children[0].remove();
-                    //update Row
-                    clRow.each(function () {
-                        var attr = $(this).attr('r');
-                        var ind = parseInt(attr);
-                        ind = ind + downrows;
-                        $(this).attr("r", ind);
-                    });
-
-                    // Update  row > c
-                    $('row c ', sheet).each(function () {
-                        var attr = $(this).attr('r');
-                        var pre = attr.substring(0, 1);
-                        var ind = parseInt(attr.substring(1, attr.length));
-                        ind = ind + downrows;
-                        $(this).attr("r", pre + ind);
-                    });
-
-                    function Addrow(index, data) {
-                        msg = `<row r="${index}">`;
-                        for (i = 0; i < data.length; i++) {
-                            var key = data[i].k;
-                            var value = data[i].v;
-                            var bold = data[i].s;
-                            msg += `<c t="inlineStr" r="${key} ${index}" s="${bold}" wpx="149">`;
-                            msg += `<is>`;
-                            msg += `<t>${value}</t>`;
-                            msg += `</is>`;
-                            msg += `</c>`;
-                        }
-                        msg += `</row>`;
-                        return msg;
-                    }
-                    
-                    //insert
-                    var r1 = Addrow(1, [{ k: 'A', v: 'Matriz de Tardanzas', s: 51 }]);
-                    var r2 = Addrow(2, [{ k: 'A', v: fechas, s: 2 }])
-                    var r3 = Addrow(3, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
-                    var r4 = Addrow(4, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
-                    var r5 = Addrow(5, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
-                },
-                sheetName: 'Matriz de Tardanzas',
-                title: 'Matriz de Tardanzas',
-                autoFilter: false,
-                exportOptions: {
-                    columns: ":visible:not(.noExport)",
-                    format: {
-                        body: function (data, row, column, node) {
-                            var cont = $.trim($(node).text());
-                            var cambiar = cont.replace('Cambiar a entrada', '');
-                            cambiar = cambiar.replace('Cambiar a salida', '');
-                            cambiar = cambiar.replace('No tiene entrada', '---');
-                            cambiar = cambiar.replace('No tiene salida', '---');
-                            cambiar = cambiar.replace('Opciones', '');
-                            cambiar = cambiar.replace('Convertir orden', '');
-                            cambiar = cambiar.replace('Asignar a nueva marc.', '');
-                            cambiar = cambiar.replace('Eliminar marc.', '');
-                            cambiar = cambiar.replace('Actualizar horario', '');
-                            cambiar = cambiar.replace('Insertar salida', '');
-                            cambiar = cambiar.replace('Insertar entrada', '');
-
-                            return $.trim(cambiar);
-                        }
-                    }
-                },
-            }, {
-                extend: "pdfHtml5",
-                className: 'btn btn-sm mt-1',
-                text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                orientation: 'landscape',
-                pageSize: 'A1',
-                title: 'Matriz Tardanzas',
-                exportOptions: {
-                    columns: ":visible:not(.noExport)",
-                },
-                customize: function (doc) {
-                    doc['styles'] = {
-                        table: {
-                            width: '100%'
-                        },
-                        tableHeader: {
-                            bold: true,
-                            fontSize: 11,
-                            color: '#ffffff',
-                            fillColor: '#14274e',
-                            alignment: 'left'
-                        },
-                        defaultStyle: {
-                            fontSize: 10,
-                            alignment: 'center'
-                        }
-                    };
-                    doc.pageMargins = [20, 150, 20, 30];
-                    doc.content[1].margin = [30, 0, 30, 0];
-                    var colCount = new Array();
-                    var tr = $('#tablaReport tbody tr:first-child');
-                    var trWidth = $(tr).width();
-                    $('#tablaReport').find('tbody tr:first-child td').each(function () {
-                        var tdWidth = $(this).width();
-                        var widthFinal = parseFloat(tdWidth * 130);
-                        widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
-                        if ($(this).attr('colspan')) {
-                            for (var i = 1; i <= $(this).attr('colspan'); $i++) {
-                                colCount.push('*');
-                            }
-                        } else {
-                            colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
-                        }
-                    });
-                    var bodyCompleto = [];
-                    doc.content[1].table.body.forEach(function (line, i) {
-                        var bodyNuevo = [];
-                        if (i >= 1) {
-                            line.forEach(element => {
-                                var textOriginal = element.text;
-                                var cambiar = textOriginal.replace('Cambiar a entrada', '');
-                                cambiar = cambiar.replace('Cambiar a salida', '');
-                                cambiar = cambiar.replace('No tiene entrada', '---');
-                                cambiar = cambiar.replace('No tiene salida', '---');
-                                cambiar = cambiar.replace('Opciones', '');
-                                cambiar = cambiar.replace('Convertir orden', '');
-                                cambiar = cambiar.replace('Asignar a nueva marc.', '');
-                                cambiar = cambiar.replace('Eliminar marc.', '');
-                                cambiar = cambiar.replace('Actualizar horario', '');
-                                cambiar = cambiar.replace('Insertar salida', '');
-                                cambiar = cambiar.replace('Insertar entrada', '');
-                                cambiar = $.trim(cambiar);
-                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
-                            });
-                            bodyCompleto.push(bodyNuevo);
-                        } else {
-                            bodyCompleto.push(line);
-                        }
-                    });
-                    doc.content.splice(0, 1);
-                    doc.content[0].table.body = bodyCompleto;
-                    var objLayout = {};
-                    objLayout['hLineWidth'] = function (i) { return .2; };
-                    objLayout['vLineWidth'] = function (i) { return .2; };
-                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
-                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
-                    doc.content[0].layout = objLayout;
-                    var now = new Date();
-                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                    doc["header"] = function () {
-                        return {
-                            columns: [
-                                {
-                                    alignment: 'left',
-                                    italics: false,
-                                    text: [
-                                        { text: '\nMatriz Tardanzas\n', bold: true },
-                                        { text: fechas, bold: false },
-                                        { text: '\n\nRazón Social :\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                        { text: '\nDirección:\t\t\t\t\t', bold: false }, { text: direccion, bold: false },
-                                        { text: '\nNúmero de Ruc :\t\t', bold: false }, { text: ruc, bold: false },
-                                        { text: '\nFecha  :\t\t\t\t\t\t', bold: false }, { text: fecha, bold: false },
-                                    ],
-                                    fontSize: 10,
-                                    margin: [30, 10]
-                                },
-                            ],
-                            margin: 20
-                        };
-                    };
-                }
-            }],
-            paging: true
-        });
-        
-    } else {
-        $.notify({
-            message: "No se encontraron datos.",
-            icon: 'admin/images/warning.svg'
-        });
-        var html_trD = "<tr><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
-        html_trAD += '<th>LUN.</th>';
-        html_trAD += '<th>MAR.</th>';
-        html_trAD += '<th>MIÉ.</th>';
-        html_trAD += '<th>JUE.</th>';
-        html_trAD += '<th>VIE.</th>';
-        html_trAD += '<th>SÁB.</th>';
-        html_trAD += '<th>TOTAL</th>';
-        html_trD += '<th>TOTAL</th>';
-        html_trD += '<th>ACTIV.</th></tr>';
-        // TABLA DEFAULT
-        $('#diasMensual').html(html_trD);
-    }
 }
 function sinActividadD() {
     if ($.fn.DataTable.isDataTable("#ReporteMensual")) {
@@ -638,37 +284,106 @@ function sinActividadD() {
                 text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
+
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
+
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
+                        }
+                        msg += '</row>';
+                        return msg;
+                    }
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'TIEMPO POR MES', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'Exported data',
-                autoFilter: false
+                sheetName: 'TIEMPO POR MES',
+                title: 'TIEMPO POR MES',
+                autoFilter: false,
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            return $.trim(cont);
+                        }
+                    }
+                },
             }, {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
                 pageSize: 'A1',
-                title: 'REPORTE MENSUAL',
                 exportOptions: {
                     columns: ":visible",
                     orthogonal: 'export'
                 },
+                title: 'TIEMPO POR MES',
                 customize: function (doc) {
+                    var bodyCompleto = [];
+                    doc.content[1].table.body.forEach(function (line, i) {
+                        var bodyNuevo = [];
+                        if (i >= 1) {
+                            line.forEach(element => {
+                                var textOriginal = element.text;
+                                var cambiar = $.trim(textOriginal);
+                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                            });
+                            bodyCompleto.push(bodyNuevo);
+                        } else {
+                            bodyCompleto.push(line);
+                        }
+                    });
                     doc['styles'] = {
                         table: {
                             width: '100%'
                         },
                         tableHeader: {
-                            bold: !0,
-                            fontSize: 10,
+                            bold: true,
+                            fontSize: 11,
                             color: '#ffffff',
                             fillColor: '#14274e',
                             alignment: 'left'
                         },
                         defaultStyle: {
                             fontSize: 10,
-                            alignment: 'center'
+                            alignment: 'left'
                         }
                     };
+                    doc.pageMargins = [20, 120, 20, 30];
+                    doc.content[1].margin = [60, 0, 60, 0];
                     var colCount = new Array();
                     var tr = $('#ReporteMensual tbody tr:first-child');
                     var trWidth = $(tr).width();
@@ -687,61 +402,35 @@ function sinActividadD() {
                         }
                     });
                     doc.content[1].table.widths = colCount;
-                    doc.content[1].table.alignment = 'center';
-                    doc.pageMargins = [20, 60, 20, 30];
-                    //* COLOR DE ROWS
-                    age = table.column().data().toArray();
-                    for (var i = 0; i < age.length; i++) {
-                        if (age[i] % 2 === 0) {
-                            var lengthC = $('#ReporteMensual tbody tr:first-child td').length;
-                            for (var j = 0; j < lengthC; j++) {
-                                doc.content[1].table.body[i + 1][j].fillColor = '#f1f1f1';
-                            }
-                        }
-                    }
-                    //* LOGO
-                    var logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAIAAAAA4vtyAAAACXBIWXMAAEzlAABM5QF1zvCVAAAVJ0lEQVR4nO2dCVQTV9vHZ7JvhBA2WQUUFJAd3K0LWtG6FRVFX9dW61LX0tfq22qtVdsqrVbrXru771h3rX6KFj2yi4IsAgqyhUASyDrzHQiQEDKZyWQCiPkdzxEyd+7c+5/Lc7fnPgFhGAYstDski+QdgkX3joGC+6lyuTInp/BR8tPkzOzMvKLiKkGtTAYAXdZqkUGSPZvl6eQY5OPVN9Q3NNjXyckOBHHmZrR9h1RQ4v20+EMn7j7Lect7Bg6N9uF7I+f9Z7ybq4Ox9xqhu0oF/Xn08vr9f4nkMuML2ZUJ9/TYseFjP19P4nV/8G/GnLXfVdbVve0aIxMV3Gf/9jVWViwsidF1VylVH6+JP34vyZxl7iLQKdQjm+OGDwtHrQ6K7rW1klGxq59XVr7tihrDkvdGbfpikeEu15DuFZXCgVOXV9VJOrISbybjQoN+2/MFiKw9ou61tZKwCYuq6i0GHScTI0IO7/4cSXj98yalUjUydpVFdFM4/yjlm22/ImWgX/eln27LrazqhJV5s9h2KiEpKVNvkfXofi8x9eT9R2+7ZgQRE7dFLle2zUtXd0gFzf88/s2pV2dHJJd9ve1w20Lq6n7izA3L5IhYfrpwtbZWd0zYSncIgtbu+u0NrV6nBQaA+F1/6ZSule4P/s2okUnfdp3MwN6L1xWKVla+le7fHzrxhlewk6KEoHuJadpl0+gulytvP3n2titkNn49eUk7a43u2TmFlp1W83E5OV17ZUCje9Ij/SN8C4SghKDKKqE+3dOyLAqblcIXpS3Za3TPKijuYvXsbBQUlbSUSKN7QaXgbRfGzFRW6rMzUqWiy9W0cyGp18yNLP4zHYNF947BonvHYNG9Y7Do3jFYdO8YLLp3DPj9gU2Hz2R6OTq42PMd+DwOm0WjUiAIlkpl1SJxaWX1q/LKgiqBTKVnc7IL0N66c+mMYQG+wweEDBkY7OXlYjixQqFMTc2592/anUdpSbkFXekdtJ/u/k5OC6aOjZk8ksGgYbyFSqVERPhFRPitAmKFQvGJMzeOX76dWvQSfvO97NtD924czso5092DB0QF8nBnwuNxFs6ftHD+pMT7aZt2/fEwv4DQMrY3Zu9XRwf53zu5a+HsMX1cWdczhRjuQGHQwKArR7fvX7PEhcs1b9HNiRl1BwFw5aSxRw98xec3COTKp/k5s64RIT0AAFOjIxNP/xTdL4yQ3NofM9qZuKnj1sbN1f7EhU8DAXDbtVdDPLk0iqFXnl1eP8Sb68o31BNwuaxDP67re/jc+oNH5JAKS5FAAGTRqAwyRQpBdTJZB/YT5tI99p0BOqKrceZT/R1ZrrZ0DoNs4PYqieJRgdiVz0d90ML5k1yd7Rds2lWPsI5NJ1P6ensNDQ/sH+7fx78Hl8suqVakFUuG+7CysvITk9Kv3X/87/N8FQwZVUET0fhh8/tNJirTIDfXa0fjqVSTXmqZUJFSJMHYFV+6cn/+xh06rd7V2nruuJFzZo6ztdX0BEWV8pzX9SP7WGunzC8o2bHv2PG7/ypUmP5u8LFuRnTcipnqW4m37ywq7cDWOBNFBwDAkUcNdmdfzcDUH4yNGrhpwYyWX/lM5ldzpz3++8Dq5TO0Rc8vk+VXSHVEBwDAy9P5x29X//Pzd2EeHiYWGyPE675iynve3m6EZNWNRw10xSr9gvmTpgyIaHgHIYH3T+7+eHGMzrvPKZWWCuXDfBFHQe5e7ovi1i2fGEUC8B5LxQzB9t2Tz1+5dDqBGTrZUCG4YQA6qg+6wYnftHzw+duz/zO27aWsl/ViqWpQLyukeyUy6FpG9aQw/uSIBT08XON2/aLA1lfjg+D2vjhmHBYL86xE+jBXjDFPFz7N15l1I7MGNaWVFUuv6MkFEqkC6tuTg3SjRAZdzaieEMonkxpa+qwZY5bOnkMGzTjIJjJrPpM1a4aeausgkUFFAqmtFfV5KVYfWFc+rbczE4v0bXnwXMSgkkI92UgJ6uXQlUbRKaQm83I9Uzhv6qiN86bheBxGiNQ9KiKITqeiJmPSSMI65c1sIYVshBl15dN6OjKMnfEm5ohs2VQ/VyZSApkCTkgVTAhpJXpvJ5abHW3JR1PGhgYa9TjsEGnfx44YgCUZCQRi+trBAHAhRWDNIvM5lPp6WV2dVCqVy+QNY3AKhcxiMng8DoXSNMaHIOjVqwoyADDkslN3qvp5tbIYdnY8JpPe9kGJ2SJ7LtXHiYFUErkSvpjWIDq1uQXcyqrxcWS62TbN17ZvWHZ/2nKhtN4YGTBBmO5UMhnLOeUG4/7sxYXLdx8/yXnxuuJlrVgul+mds4AAaEWnHd64esTw8LKy6qApS5Ay3PvpomlTRul8ePtprTuf7uXY9D5UKlXYmIU6aaQwTAKATSA4aVj/L9cteFJc5+3AdLNrEv3Ew8q7xeKhQyPPX72IpV5GQZjuvk7d9DY6bbKyCr7Yduh2VjaWCToMwLUymVSGJwZFg63oxmpRUE1RDaKNEtSKAADobs/gMJoMr1wJy5Tw3BA73zGxiXdvEX72iDDdWTYOeWWGNEo4de6bI2fkSrPvXVxOFwa5sZ1t0HsaHRSqptYgU8IJKYKpEbYMasNrmDJs4L5LN4gtJDG6gwDo4uJMReonYXjN5t1XH9wn5FkGgAHgYkp1Py8rB2s89bJhN3QnUgV0MbV6XLCNWnQAADZ89mHkkPBrtx9eS0ouFBKznmqq7t15vJhRQ2KnRnl074aUZtO3h9tBdLkSvpxePcSby7fCXym16OND+HSKpg3R6dTIERGRIyK+AYBbtx4dPJpwM+Opieto+IvY3cYmbu6U2GmjSQYjT9y4+Wjn2UsGEhDFzlslMSF2Jor+d1r1hBA+jaK/RiAAqF/Akyf5G3/45WbGU9wryXjG72QSacTAdxLP7pk5Pcqw6AqFcs32A1C7hErks6i2Vog2XYmhdb4SKMYHI4qujb+/14lDm/7cuNrVWneJDSNGtw5bJmvvF8vC+odde1ozIYRPMljI3/68WCAw5FZvw2QODfD1dHVi0mk0GpVGo9FplFIx5GzDsuUy6DRqeJgfxoJ9MBgxyJcKgi8ko3v393BEGY/pMCZq4ID+gR/FfXs9w+ijMsbp7s7jHd+1oZePOwAAw3pbH7pbFuzM9ndDjOz0R8ItpEsgAM4b9c7GtQvZbN15TYNMKYJh/jwrg3sjGFGq4LPJgpF+OBumYXg8zrGDm9Zt3LP/8k2jbjRCdwc2+/Ser3r0aHJ64bHIHBop+ZVYAek3I6WvKzNflei91LCC9t7Ir9cvKqyQVcvkOvt5ZBI4IYS/42apA5s6a6A99hK2RQU1iD420IZBIcbWHUuqdLOhc1s3iBnz5+bVKm8k3sGeD1bdGRTK4c1xLaI3Pa+/IVFOP3mE1O30tLP7ct2CxqkK/WqGkAyCTq2H22QSyGdS0srrZmEsnz4gGLiQUj3an8emk1REbCTlvpY+eCV25NIcrHU7kl0bFq9eI7ickoExK6y6/29OzMABxi0S5Ra8RLo0c+zwlrWX0QG8K+lCEsh25LWqzLzBDvgWINVAMHA+WTDC15rLIsBYqUUvq1HsjEbckNq/fc3wmBV5VZji9mAazwzy6bl0odG7r8LGybdeQoN6a38cFchLLhT/k1Vz+2mtCsFqGQUMNIluTZDoz0ulZbUK7W0TFQQnZosKKzRTdA6HGb92Mca9KvT2TiWRt32OuCaFj7ajoIHe3IxiiU83VlphnYG1cgM8Ka6rFDcsQpSLFX88Exwc70Gg6JVixSCfVntV95+LAt3Yd7Jr6VTNWLpXYJ/BAX3+LwPd2qDrHj0grHev7jiKy+MibqqlPckbNChY+xMOg1QmUlSIa4b2wjnw6O3CXPfVvjvJGfUquEoBRZ+iaL9d3FOI7BKpQKIY4K1bl25c2oNckUwJCcStVpwWzZl+Ny4TdT6FojsIgMsW4Nx26enpinTp2OXbixdM1p5ykUng5HBbfA9qyaGopDSnrEz961P8XUMTUgVUWCGvlijbig4AgLcTw8OBTiHrzhv9XHv39fJIQnPfRLHvYZ7d/XxxujYMGhCMZOwyS0p+2HUEX7YGkOmL5IWdokr5jcwa9b8r6cL3j+amvhT399bdlZUqoLOPBWcfC2BYf/WiRw1GfSZKex/3Tl/c1ejWjR/S3f1xYaHeq1uPnIVgePXymYZnvEYhU5iku7sdzV1ryd6OQ+nlrGeD8JVAEeTKVqjg8ykCG6augDIVNGRof3D/n4ZNDYruo0b0M7LwrZgb/e7jHw7qvaSCoS1Hzpy5ce/9yEH+vb0Y+jZmU4ol/br3xRjp+FmJtFhEZLCocC/9/gdejvTbWTUkEJwaoccwqiD4fLLAmsMVig1ZOkO68xhM394m+U/FThu9//jfmSWIs9Zn5eVbj55Fuhrh6fHJrKEYn2XFINlQYMQpA3GAADAcedWBTALfD7fd283+ca4h3Q3Zdy9Hk+bojeNF8KevVrCoWA94aGNFo+/d8onh9U5tXPg0maJThFgAAcDVBsU335Dujnz8xzNaCAjo+WPcQgrJ6AXntbOneHk5G3WLXGFGDy+jYKGdJTJoZziYDCsq0ZOGU6mUld/tr8bsEDHYp+dHC6JhwDhHxTEDQ2tErSI11sqhFyK5F5dGBuCzDx4avl0FwUqEF6eE4Evp1VF9eFZMYuZihnQnU4h5BgAA498bEhriu+GbAxcepSghlD0IGwZzz9ZPQABIyhX3Q3aua8vm9Yt1PkvMEf2WWjEjwA6EIVTdXwsVBRX6e2aFCr5WUOPGo7cdVupFVIfSwgzpLpXKsTwDIy7Odod+XFdUXHb89PUT1+/mIcfy/3rJLFdXB4kMSiuRGKW7DgXlMqUKPhDjpfafQU3vwqe5IJ8wGe5nfftpbVGl3N0Ovbsqr0aZthkyu1U1tagPMBZ3N8fJEyOFEkR3lHFhwbHTRjesiryWPi6T4F4mKyiXFVXJhiJ7XeNgmC/3eVn9SwF6c3xRhvINEYZ0f1lBfChymUwx75MtSJHlXay4OzevBACgWqJ6USXdO8WLjGtalV9GvOhqIv2ts0rqSqsNDZwKC1+XS1C8nQ3pXlAlkEgIDlu76n87MhA2oUgAGL/mIxsbK4FYeSe7ZmIoyuYtEvllsldCs4iu5t0+vLRiSVkNovTXb6F/B40h3Rujq6bgLl9bDv+ecPwuYplmRw5+d1R/gUh593ntxFA+vuUDtehDepn3aGtUIC8pX7z58ssSgUJUr9L5d/EOuu4o6wRX/kka/S4mL19UUlKy1+//C2nVwtvebsv6JQKx8l6uaEIITtHzymQl5hddzdBe3HxBfbFARm7ddEteV93LyUO9HU33pJRtShXF5AGlUCj+YO32OoSjjlQS+acvV9AZtPRc8YQQm7YJ8svRzV1emay0vUQHAMCaRV4ZqWdat/nUSQhD/AqUaWSZRHz81HUTigeod90+XL31RTWiB8vy98eEh/tJ5fqPwmQU1Qnq0GtCIQGD20t0JOrqpH9c+QdLSvTp+95jCSaW5vsfj9xCjrQd4OL82Sdz1OdA2l7NellfL4fCPdBH8d3tjfM6Mgd7D50pl2D6uiv0fb6s0tef7Tg7cuQIfOVMTc3Yduwc0lUGhbJ74woyWY/i93NEVZKGZj4+xKa01NRvYkSbIxNAeYVwzxmsnqCY/DjOXzj36axI7QO4GCkvr171688GDkHHTZsYENBT76UaqWp8iM2VdAL8niEYSEg1exTe1et3VtdjXYDCtExYJhEv+u82YyeOEATNW7X1lQhx0tuvh+eqZTOQrjpZ0y6lVYdhsDAoxYCBc4+rhnib1/Qf/j3hUnI69vRYl2dvZmZt3KJ/5wiJ9V8feJCLOKLi0ul7t8QZWF0P7s4aG2RjzzXJQ1/tvRTpxzPFPxuVpIeZn+/X/eYUwxhRml3nr/KsrTAex5ZIpDY87roZ0UgJQgN9PDwQjyrowOWyDWQVFOCj93P1kUG19xIEw4Zy8Ndv67DwLLtozmffGRvV2rh4HCAALp8YtWzZXAAESM2z+JbTNS2ftMzvW3aLGjpOsNUnBG5n6yX3tTT9pWRYb2s+x4wt/dmzF1M/3mjAlmqjHY/DuDLBALzz/OWL6XnfrlnO4zVZzJZjBS1jBlXzJy2riarmS1Dze264Ys7jCMefVI304JpV9HuJqfM/j8d31A9PsfIKcpbFrf38oxmxMe/iuL19GORjheXkBm527zu5+fdTuEMr4jwnXyoWLY3fP3zKitNnb6lU7RqpCCNMGgnfGrJhBALRmXP/jImNW//LMVPiWZr0Z5hW/HLBNz+t3/17Pz9vHpcDwICi8XgqBEOqxgNFMABDjaamZTmsceu54WeFsumH5gRNqFQqtXVq/A9uNlZwSxYwDCsbJwQQBEONh+qgBksHA82bsXBzMRpSNj+9ybw1P0bR0FjgxtMg6nICUPP5PHVCRUPejQngJtPY+BSAqJBkBJi/UrHo3MNkIgrzFmGJy9wxWHTvGCy6dwwW3TsGi+4dg0X3jkGju9lDJlrQQqM7m9bx+2RdGw5bc3pEo7uHHXoQZAum0M1Bo7BG94AeeA5LWsCOh7vG70Oje3igr0VDs+Lurtnn0ejeL9y/i9WzU0ElkW20Dt9odPf2drMMaczHuIhg7c1kje5UKmVUoKXJm4t501pFTm41b1r1YUxXqGLng0om9+8XoF2sVrpHRPjZsYg5S2ZBm5XRY3V8e1vpTiKRvlv1gUUxYgEBYNki3dgauuszE8a94443Np8FvaybGc3h6MY50PjPtJCRmTf0g/9aNCQEZ45V2rXDbR1v9axHBvTp8fGE0W9KxTo5Z/Zt0uvtrH8d+Mu1H4Z7ttM36nRh4pfO9UH4ah/9upNIpPO/bHXmIAaqsoDK3Mgh82aPR0qFuO/BZNISz+x2skiPi+mD+8c3HsRFwtB+k7U151HCvgBnp85Zt07LZ9Mn7Yn/1HAAFz3jGR0gFbR2456DVzEdl3rL4dBop7//IiICPZY0uu5q0tKfz47bWlxjcpS6rkvMoL4/bF7FZGIKcoRVd/W5mYSLd//7w88VdZiOrL09DPfvvX39Mk/MxyiM010NDAMpKc92/3L6wsMU6M3/fnFTsGexl04ZGzstyt7O6MBURuveAgwD9fXSmlpJjVAsEknq6qVKpGhFXQIQBKhUKpvNtLbm8Kw5VlZsGg2/Vy9+3S2YgsVvqWOw6N4BAADw/48ZL1Z1woUhAAAAAElFTkSuQmCC";
                     doc.content.splice(0, 1);
+                    var objLayout = {};
+                    objLayout['hLineWidth'] = function (i) { return .2; };
+                    objLayout['vLineWidth'] = function (i) { return .2; };
+                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                    doc.content[0].layout = objLayout;
+                    doc.content[0].table.body = bodyCompleto;
                     var now = new Date();
-                    var jsDate = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     doc["header"] = function () {
                         return {
                             columns: [
                                 {
-                                    image: logo,
-                                    width: 25
-                                },
-                                {
-                                    alignment: "left",
+                                    alignment: 'left',
                                     italics: false,
-                                    fontSize: 14,
-                                    text: 'RH nube - Reporte Mensual',
-                                    color: '#14274e',
-                                    bold: !0,
-                                    margin: [0, 5]
+                                    text: [
+                                        { text: '\nTIEMPO POR MES', bold: true },
+                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    ],
+
+                                    fontSize: 10,
+                                    margin: [30, 0]
                                 },
                             ],
                             margin: 20
-                        };
-                    };
-                    doc["footer"] = function (page, pages) {
-                        return {
-                            columns: [
-                                {
-                                    alignment: "left",
-                                    text: ["Fecha: ", { text: jsDate.toString() }]
-                                },
-                                {
-                                    alignment: "right",
-                                    text: [
-                                        "pagina ",
-                                        { text: page.toString() },
-                                        " de ",
-                                        { text: pages.toString() }
-                                    ]
-                                }
-                            ],
-                            margin: 12
                         };
                     };
                 }
@@ -975,44 +664,114 @@ function conActividadD() {
                 text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var downrows = 5;
+                    var clRow = $('row', sheet);
+                    clRow[0].children[0].remove();
+                    //update Row
+                    clRow.each(function () {
+                        var attr = $(this).attr('r');
+                        var ind = parseInt(attr);
+                        ind = ind + downrows;
+                        $(this).attr("r", ind);
+                    });
+
+                    // Update  row > c
+                    $('row c ', sheet).each(function () {
+                        var attr = $(this).attr('r');
+                        var pre = attr.substring(0, 1);
+                        var ind = parseInt(attr.substring(1, attr.length));
+                        ind = ind + downrows;
+                        $(this).attr("r", pre + ind);
+                    });
+
+                    function Addrow(index, data) {
+                        msg = '<row r="' + index + '">'
+                        for (i = 0; i < data.length; i++) {
+                            var key = data[i].k;
+                            var value = data[i].v;
+                            var bold = data[i].s;
+                            msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
+                            msg += '<is>';
+                            msg += '<t>' + value + '</t>';
+                            msg += '</is>';
+                            msg += '</c>';
+                        }
+                        msg += '</row>';
+                        return msg;
+                    }
+                    var now = new Date();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+                    //insert
+                    var r1 = Addrow(1, [{ k: 'A', v: 'TIEMPO POR MES', s: 2 }]);
+                    var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
+                    var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
+                    var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
+                    var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: jsDate, s: 0 }]);
+                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
                 },
-                sheetName: 'Exported data',
-                autoFilter: false
+                sheetName: 'TIEMPO POR MES',
+                title: 'TIEMPO POR MES',
+                autoFilter: false,
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+                            var cont = $.trim($(node).text());
+                            return $.trim(cont);
+                        }
+                    }
+                },
             }, {
                 extend: "pdfHtml5",
                 className: 'btn btn-sm mt-1',
                 text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                 orientation: 'landscape',
                 pageSize: 'A1',
-                title: 'REPORTE MENSUAL',
                 exportOptions: {
                     columns: ":visible",
                     orthogonal: 'export'
                 },
+                title: 'TIEMPO POR MES',
                 customize: function (doc) {
+                    var bodyCompleto = [];
+                    doc.content[1].table.body.forEach(function (line, i) {
+                        var bodyNuevo = [];
+                        if (i >= 1) {
+                            line.forEach(element => {
+                                var textOriginal = element.text;
+                                var cambiar = $.trim(textOriginal);
+                                bodyNuevo.push({ text: cambiar, style: 'defaultStyle' });
+                            });
+                            bodyCompleto.push(bodyNuevo);
+                        } else {
+                            bodyCompleto.push(line);
+                        }
+                    });
                     doc['styles'] = {
                         table: {
                             width: '100%'
                         },
                         tableHeader: {
-                            bold: !0,
-                            fontSize: 10,
+                            bold: true,
+                            fontSize: 11,
                             color: '#ffffff',
                             fillColor: '#14274e',
                             alignment: 'left'
                         },
                         defaultStyle: {
                             fontSize: 10,
-                            alignment: 'center'
+                            alignment: 'left'
                         }
                     };
+                    doc.pageMargins = [20, 120, 20, 30];
+                    doc.content[1].margin = [60, 0, 60, 0];
                     var colCount = new Array();
                     var tr = $('#actividadDM tbody tr:first-child');
                     var trWidth = $(tr).width();
                     //* WIDTH DE COLUMNAS 
-                    $('#actividadDM').find('tbody tr:first-child td').each(function () {
+                    var length = $('#actividadDM tbody tr:first-child td').length;
+                    $("#actividadDM").find('tbody tr:first-child td').each(function () {
                         var tdWidth = $(this).width();
-                        var widthFinal = parseFloat(tdWidth * 136);
+                        var widthFinal = parseFloat(tdWidth * 130);
                         widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
                         if ($(this).attr('colspan')) {
                             for (var i = 1; i <= $(this).attr('colspan'); $i++) {
@@ -1023,61 +782,35 @@ function conActividadD() {
                         }
                     });
                     doc.content[1].table.widths = colCount;
-                    doc.pageMargins = [20, 60, 20, 30];
-                    doc.content[1].margin = [10, 0, 10, 0];
-                    //* COLOR DE ROWS
-                    age = table.column().data().toArray();
-                    for (var i = 0; i < age.length; i++) {
-                        if (age[i] % 2 === 0) {
-                            var lengthC = $('#actividadDM tbody tr:first-child td').length;
-                            for (var j = 0; j < lengthC; j++) {
-                                doc.content[1].table.body[i + 1][j].fillColor = '#f1f1f1';
-                            }
-                        }
-                    }
-                    //* LOGO
-                    var logo = "data:image/png;base64,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";
                     doc.content.splice(0, 1);
+                    var objLayout = {};
+                    objLayout['hLineWidth'] = function (i) { return .2; };
+                    objLayout['vLineWidth'] = function (i) { return .2; };
+                    objLayout['hLineColor'] = function (i) { return '#aaa'; };
+                    objLayout['vLineColor'] = function (i) { return '#aaa'; };
+                    doc.content[0].layout = objLayout;
+                    doc.content[0].table.body = bodyCompleto;
                     var now = new Date();
-                    var jsDate = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear();
+                    var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
                     doc["header"] = function () {
                         return {
                             columns: [
                                 {
-                                    image: logo,
-                                    width: 25
-                                },
-                                {
-                                    alignment: "left",
+                                    alignment: 'left',
                                     italics: false,
-                                    fontSize: 14,
-                                    text: 'RH nube - Reporte Mensual',
-                                    color: '#14274e',
-                                    bold: !0,
-                                    margin: [0, 5]
+                                    text: [
+                                        { text: '\nTIEMPO POR MES', bold: true },
+                                        { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
+                                        { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
+                                        { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
+                                        { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: jsDate, bold: false }
+                                    ],
+
+                                    fontSize: 10,
+                                    margin: [30, 0]
                                 },
                             ],
                             margin: 20
-                        };
-                    };
-                    doc["footer"] = function (page, pages) {
-                        return {
-                            columns: [
-                                {
-                                    alignment: "left",
-                                    text: ["Fecha: ", { text: jsDate.toString() }]
-                                },
-                                {
-                                    alignment: "right",
-                                    text: [
-                                        "pagina ",
-                                        { text: page.toString() },
-                                        " de ",
-                                        { text: pages.toString() }
-                                    ]
-                                }
-                            ],
-                            margin: 12
                         };
                     };
                 }
@@ -1091,7 +824,106 @@ function conActividadD() {
             $("#actividadDM").css('width', '100%');
             table.draw(true);
         });
-        
+        var options = {
+            series: [{
+                name: 'actividad',
+                data: horas
+            }],
+            chart: {
+                height: 350,
+                type: 'bar',
+                zoom: {
+                    enabled: true
+                }
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    distributed: true
+                }
+            },
+            colors: ['#00005c'],
+            dataLabels: {
+                enabled: false
+            },
+            legend: {
+                show: false
+            },
+            xaxis: {
+                categories: nombre,
+                labels: {
+                    style: {
+                        color: '#000000',
+                        fontSize: '11px'
+                    }
+                },
+                axisBorder: {
+                    show: true,
+                    color: '#000000',
+                    height: 1,
+                    width: '100%',
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                axisTicks: {
+                    show: false
+                },
+                title: {
+                    text: "Empleados",
+                    offsetX: 0,
+                    offsetY: -2,
+                    style: {
+                        color: '#000000',
+                    }
+                },
+                crosshairs: {
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            colorFrom: '#D8E3F0',
+                            colorTo: '#BED1E6',
+                            stops: [0, 100],
+                            opacityFrom: 0.4,
+                            opacityTo: 0.5,
+                        }
+                    }
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Actividad'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " %"
+                    }
+                }
+            },
+            responsive: [
+                {
+                    breakpoint: 767.98,
+                    options: {
+                        chart: {
+                            height: 350,
+                            toolbar: {
+                                show: false
+                            },
+                            zoom: {
+                                enabled: true,
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+
+        grafico = new ApexCharts(document.querySelector("#myChartMensual"), options);
+        grafico.render();
     } else {
         $.notify({
             message: "No se encontraron datos.",
@@ -1120,17 +952,6 @@ function changeFecha() {
     onSelectFechasMensual();
     $('#fechaMensual').val(dato)
 }
-
-function changeFechaT() {
-    dato = $('#fechaMensual').val();
-    value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
-    firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
-    lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
-    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-    onSelectFechasMensualT();
-    $('#fechaMensual').val(dato)
-}
-
 function fechaDefecto() {
     dato = $('#fechaMensual').val();
     value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
@@ -1138,15 +959,6 @@ function fechaDefecto() {
     lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
     $('#fechaMensual').val(firstDate + "   a   " + lastDate);
     onSelectFechasMensual();
-    $('#fechaMensual').val(dato);
-}
-function fechaDefectoT() {
-    dato = $('#fechaMensual').val();
-    value = moment(dato, ["MMMM-YYYY", "MMM-YYYY", "MM-YYYY"]).format("MM-YYYY");
-    firstDate = moment(value, 'MM-YYYY').startOf('month').format('YYYY-MM-DD');
-    lastDate = moment(value, 'MM-YYYY').endOf('month').format('YYYY-MM-DD');
-    $('#fechaMensual').val(firstDate + "   a   " + lastDate);
-    onSelectFechasMensualT();
     $('#fechaMensual').val(dato);
 }
 $(function () {
@@ -1194,50 +1006,6 @@ $(function () {
     });
 });
 $(function () {
-    $('#areaT').select2({
-        placeholder: 'Seleccionar áreas'
-    });
-    $('#empleadoLT').select2({
-        placeholder: 'Seleccionar empleados',
-        language: "es"
-    });
-    $('#areaT').on("change", function (e) {
-        fechaDefectoT();
-        var area = $(this).val();
-        $('#empleadoLT').empty();
-        $.ajax({
-            async: false,
-            url: "/empleadosRep",
-            method: "GET",
-            data: {
-                area: area,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                401: function () {
-                    location.reload();
-                },
-                /*419: function () {
-                    location.reload();
-                }*/
-            },
-            success: function (data) {
-                var select = "";
-                for (let i = 0; i < data.length; i++) {
-                    select += `<option value="${data[i].emple_id}">${data[i].nombre} ${data[i].apPaterno} ${data[i].apMaterno}</option>`
-                }
-                $('#empleadoLT').append(select);
-            },
-            error: function () { }
-        });
-    });
-    $('#empleadoLT').on("change", function (e) {
-        fechaDefectoT();
-    });
-});
-$(function () {
     var hoy = moment().format("MMMM - YYYY");
     $('#fechaMensual').val(hoy);
 });
@@ -1246,13 +1014,6 @@ function buscarReporte() {
     $('#busquedaP').show();
     $('#busquedaA').show();
 }
-
-function buscarReporteT() {
-    changeFechaT();
-    $('#busquedaP').show();
-    $('#busquedaA').show();
-}
-
 function mostrarGraficaMensual() {
     $('#VacioImg').toggle();
     $('#graficaReporteMensual').toggle();
@@ -1280,17 +1041,6 @@ function tablaEnVista() {
         $('#tablaSinActividadD').hide();
     } else {
         sinActividadD();
-        $('#tablaConActividadD').hide();
-        $('#tablaSinActividadD').show();
-    }
-}
-function tablaEnVistaT() {
-    if ($("#customSwitchD").is(":checked")) {
-        conActividadD();
-        $('#tablaConActividadD').show();
-        $('#tablaSinActividadD').hide();
-    } else {
-        sinActividadDT();
         $('#tablaConActividadD').hide();
         $('#tablaSinActividadD').show();
     }

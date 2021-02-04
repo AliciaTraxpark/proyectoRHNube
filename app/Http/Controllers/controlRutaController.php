@@ -970,6 +970,15 @@ class controlRutaController extends Controller
                 }
             }
         }
+        $datosOrganizacion = DB::table('organizacion as o')
+            ->select(
+                'o.organi_razonSocial as razonSocial',
+                'o.organi_direccion as direccion',
+                'o.organi_ruc as ruc'
+            )
+            ->where('o.organi_id', '=', session('sesionidorg'))
+            ->get()
+            ->first();
 
         $respuesta = [];
 
@@ -1661,8 +1670,7 @@ class controlRutaController extends Controller
                 $respuesta[$j]["sumaRango"] = array_reverse($respuesta[$j]["sumaRango"]);
             }
         }
-        // dd($capturaUbicacion, $respuesta);
-        return response()->json($respuesta, 200);
+        return response()->json(array("respuesta" => $respuesta, "organizacion" => $datosOrganizacion), 200);
     }
 
     //* *************REPORTE PERSONALIZADO******************
