@@ -119,14 +119,95 @@
         width: 100% !important;
     }
 
+    table.dataTable {
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
+
+    table.DTFC_Cloned tbody {
+        background-color: white;
+    }
+
     /* .dataTables_scrollHeadInner {
             width: 100% !important;
         } */
+    .dataTables_scrollBody {
+        overflow-y: hidden !important;
+    }
 
     .table th,
     .table td {
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
+        white-space: nowrap;
+    }
+
+    .borderColor {
+        border-color: red;
+    }
+
+    /* MODIFICAR ESTILOS DE ALERTIFY */
+    .alertify .ajs-header {
+        font-weight: normal;
+    }
+
+    .ajs-body {
+        padding: 0px !important;
+    }
+
+    .alertify .ajs-footer {
+        background: #ffffff;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button {
+        min-height: 28px;
+        min-width: 75px;
+    }
+
+    .ajs-cancel {
+        font-size: 12px !important;
+    }
+
+    .ajs-ok {
+        font-size: 12px !important;
+    }
+
+    .alertify .ajs-dialog {
+        max-width: 450px;
+    }
+
+    .ajs-footer {
+        padding: 12px !important;
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+        text-transform: none;
+    }
+
+    .alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button {
+        text-transform: none;
+    }
+
+    /* FINALIZACION */
+    .scrollable-menu {
+        height: auto;
+        max-height: 142px;
+        overflow: auto;
+        position: absolute;
+    }
+
+    .dropdown-itemM {
+        padding: 0.1rem 0.1rem !important;
+        color: #6c757d !important;
+    }
+
+    /* SYYLE DE GROUP */
+    .select2-container--default .select2-results__group {
+        color: #62778c;
+    }
+
+    .form-control:disabled {
+        background-color: #fcfcfc;
     }
 
     .ulHijo {
@@ -141,6 +222,14 @@
     .dropdown-itemSelector {
         padding: 0.1rem 1rem !important;
         margin: 0.1rem 0 !important;
+    }
+
+    .dt-button-collection {
+        min-width: 12rem !important;
+    }
+
+    .dt-button {
+        padding: 0.15rem 0.15rem !important;
     }
 </style>
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
@@ -208,7 +297,8 @@
                                     </label>
                                 </div>
                             </a>
-                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;">
+                            <div class="dropdown-menu allow-focus" style="padding: 0rem 0;min-width: 16em!important;height: auto;
+                                max-height: 250px;overflow: auto;position: absolute;">
                                 <h6 class="dropdown-header text-left"
                                     style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                     <img src="{{asset('landing/images/configuracionesD.svg')}}" class="mr-1"
