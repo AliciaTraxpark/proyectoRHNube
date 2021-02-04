@@ -3,7 +3,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     mode: "range",
     dateFormat: "Y-m-d",
     altInput: true,
-    altFormat: "D, j F",
+    altFormat: "j F",
     locale: "es",
     maxDate: "today",
     wrap: true,
@@ -396,8 +396,8 @@ function cargartabla(fecha1, fecha2) {
                                         <th name="datosPausa" class="datosPausa">Exceso pausa</th>`;
                 }
                 theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">Marcación T.</th><th >Tardanza Total.</th>
-                <th >Faltas Total.</th>
-                <th >Incidencias T.</th>
+                <th class="text-center">Faltas Total</th>
+                <th class="text-center">Incidencias Total</th>
                 </tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
@@ -693,12 +693,26 @@ function cargartabla(fecha1, fecha2) {
                                     ${sumaTardanzas.format("HH:mm:ss")}
                                 </a>
                             </td>`;
-                    if (contenidoData.marcaciones.length == 0) {
+                    if (contenidoData.marcaciones.length == 0 && contenidoData.incidencias.length == 0) {
                         tbody += `<td class="text-center"><span class="badge badge-soft-danger mr-1" class="text-center">Falta</span></td>`;
                     } else {
                         tbody += `<td class="text-center">--</td>`;
                     }
-                    tbody += `<td class="text-center">--</td></tr>`;
+                    if (contenidoData.incidencias.length == 0) {
+                        tbody += `<td class="text-center">--</td>`;
+                    } else {
+                        tbody += `<td class="text-center">`;
+                        for (let i = 0; i < contenidoData.incidencias.length; i++) {
+                            var dataIncidencia = contenidoData.incidencias[i];
+                            if (i == 0) {
+                                tbody += `<span class="badge badge-soft-info ml-1 mr-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            } else {
+                                tbody += `<b>/</b><span class="badge badge-soft-info ml-1" class="text-center">${dataIncidencia.descripcion}</span>`;
+                            }
+                        }
+                        tbody += `</td>`;
+                    }
+                    tbody += `</tr>`;
                 }
                 $('#tbodyD').html(tbody);
                 inicializarTabla();
