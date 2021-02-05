@@ -659,10 +659,12 @@ function cargartabla(fecha) {
                                     var cont3 = cont2.replace('No tiene entrada', '---');
                                     var cont4 = cont3.replace('No tiene salida', '---');
                                     var cont5 = cont4.replace('No tiene punto de C.', '---');
-                                    var cont6 = cont5.replace('Agregar', '');
-                                    var cont7  = cont6.replace('Opciones', '');
+                                    var cont6 = cont5.replace('No tiene actividad', '---');
 
-                                    return $.trim(cont7);
+                                    var cont7 = cont6.replace('Agregar', '');
+                                    var cont8  = cont7.replace('Opciones', '');
+
+                                    return $.trim(cont8);
                                 }
                             }
                         },
@@ -721,10 +723,11 @@ function cargartabla(fecha) {
                                         var cambiar3 = cambiar2.replace('No tiene entrada', '---');
                                         var cambiar4 = cambiar3.replace('No tiene salida', '---');
                                         var cambiar5 = cambiar4.replace('No tiene punto de C.', '---');
-                                        var cambiar6 = cambiar5.replace('Agregar', '');
-                                        var cambiar7 = cambiar6.replace('Opciones', '');
-                                        var cambiar8 = cambiar7.trim();
-                                        bodyNuevo.push({ text: cambiar8, style: 'defaultStyle' });
+                                        var cambiar6 = cambiar5.replace('No tiene actividad', '---');
+                                        var cambiar7 = cambiar6.replace('Agregar', '');
+                                        var cambiar8 = cambiar7.replace('Opciones', '');
+                                        var cambiar9 = cambiar8.trim();
+                                        bodyNuevo.push({ text: cambiar9, style: 'defaultStyle' });
                                     });
                                     bodyCompleto.push(bodyNuevo);
                                 } else {
