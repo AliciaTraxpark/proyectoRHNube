@@ -385,7 +385,7 @@ function cargartabla(fecha) {
                                                         Opciones
                                                 </h6>
                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
-                                                 <div class="dropdown-item">
+                                                 <div class="dropdown-item" dropdown-itemM noExport>
                                                      <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                          <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                              <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -579,8 +579,9 @@ function cargartabla(fecha) {
                                     var cont2 = cont1.replace('Insertar salida', '');
                                     var cont3 = cont2.replace('No tiene entrada', '---');
                                     var cont4 = cont3.replace('No tiene salida', '---');
+                                    var cont5  = cont4.replace('Opciones', '');
 
-                                    return $.trim(cont4);
+                                    return $.trim(cont5);
                                 }
                             }
                         },
@@ -638,8 +639,9 @@ function cargartabla(fecha) {
                                         var cambiar2 = cambiar.replace('Insertar salida', '');
                                         var cambiar3 = cambiar2.replace('No tiene entrada', '---');
                                         var cambiar4 = cambiar3.replace('No tiene salida', '---');
-                                        var cambiar5 = cambiar4.trim();
-                                        bodyNuevo.push({ text: cambiar5, style: 'defaultStyle' });
+                                        var cambiar5 = cambiar4.replace('Opciones', '');
+                                        var cambiar6 = cambiar5.trim();
+                                        bodyNuevo.push({ text: cambiar6, style: 'defaultStyle' });
                                     });
                                     bodyCompleto.push(bodyNuevo);
                                 } else {
