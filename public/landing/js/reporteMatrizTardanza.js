@@ -131,7 +131,7 @@ function reporteMatriz() {
     if (datos.length > 0) {
         var nombre = [];
         var html_tr = "";
-        var html_trD = "<tr><th>#</th><th>Código</th><th>Número de documento</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</>";
+        var html_trD = "<tr><th>#</th><th>Código</th><th>Número de documento</th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Nombres y apellidos</>";
         let html_tr_temp = "";
         fecha = datos[0].fecha;
         fechas = "Desde: "+datos[0].fechaD+" Hasta: "+datos[0].fechaH;
@@ -387,7 +387,7 @@ function reporteMatriz() {
             message: "No se encontraron datos.",
             icon: 'admin/images/warning.svg'
         });
-        var html_trD = "<tr><th>#</th><th>Código</th><th>Número de documento</th><th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Miembro</th>";
+        var html_trD = "<tr><th>#</th><th>Código</th><th>Número de documento</th><th><th><img src='admin/assets/images/users/empleado.png' class='mr-2' alt='' />Nombres y apellidos</th>";
         html_trD += '<th>TOTAL</th>';
         html_trD += '<th>LUN.</th>';
         html_trD += '<th>MAR.</th>';

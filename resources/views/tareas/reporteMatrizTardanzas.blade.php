@@ -129,6 +129,12 @@
         }
     }
 
+    @media (min-width: 1200px){
+        .lbl_empleado{
+            padding-left: 95px !important;
+        }
+    }
+
     /* FINALIZACION */
 </style>
 <div class="row justify-content-center pt-5 pr-5 pl-5 pb-2">
@@ -162,11 +168,11 @@
                 <div class="card">
                     <div class="card-header" style="background-color: #ffffff">
                         <div class="row pt-2" id="busquedaP" style="display: none">
-                            <div class="col-xl-4">
+                            <div class="col-xl-5">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Seleccionar por:</label>
-                                    <div class="col-lg-10 pl-0">
-                                        <select id="areaT" data-plugin="customselect" class="form-control" multiple="2">
+                                    <label class="col-lg-4 col-form-label">Seleccionar por:</label>
+                                    <div class="col-lg-8 ">
+                                        <select id="areaT" data-plugin="customselect" class="form-control" multiple="multiple">
                                             @foreach ($areas as $area)
                                             <option value="{{$area->area_id}}">Área :
                                                 {{$area->area_descripcion}}</option>
@@ -183,10 +189,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-8">
+                            <div class="col-xl-7">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Empleado:</label>
-                                    <div class="col-lg-10 pl-0">
+                                    <label class="col-lg-4 col-form-label lbl_empleado">Empleado:</label>
+                                    <div class="col-lg-8">
                                         <select id="empleadoLT" data-plugin="customselect" class="form-control" multiple="multiple">
                                             @foreach ($empleado as $emple)
                                             <option value="{{$emple->emple_id}}">
@@ -215,7 +221,7 @@
                                             <th>Código</th>
                                             <th>Número de documento</th>
                                             <th>
-                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class="mr-2" alt="" />Miembro
+                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class="mr-2" alt="" />Nombres y apellidos
                                             </th>
                                             <th>TOTAL</th>
                                             <th>LUN.</th>

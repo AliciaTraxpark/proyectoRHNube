@@ -138,7 +138,7 @@ function cargartablaCR(fecha1,fecha2) {
                 "ordering": false,
                 "autoWidth": false,
                 "bInfo": false,
-                "bLengthChange": false,
+                "bLengthChange": true,
                 fixedHeader: true,
                 language: {
                     sProcessing: "Procesando...",
@@ -171,10 +171,10 @@ function cargartablaCR(fecha1,fecha2) {
                         colvis: "Visibilidad",
                     },
                 },
-                dom: 'Bfrtip',
+                dom: 'Blfrtip',
                 buttons: [{
                     extend: 'excel',
-                    className: 'btn btn-sm mt-1',
+                    className: 'btn btn-sm mt-1 mb-1',
                     text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
                     customize: function (xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -248,7 +248,7 @@ function cargartablaCR(fecha1,fecha2) {
                     },
                 }, {
                     extend: "pdfHtml5",
-                    className: 'btn btn-sm mt-1',
+                    className: 'btn btn-sm mt-1 mb-1',
                     text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
                     orientation: '',
                     pageSize: 'A1',
