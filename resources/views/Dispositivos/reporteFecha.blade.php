@@ -346,7 +346,7 @@
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                     <li class="liContenido">
                                         <input type="checkbox" id="colCodigo">
-                                        <label for="">Código</label>
+                                        <label for="">Código de trabajador</label>
                                     </li>
                                 </ul>
                                 <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
