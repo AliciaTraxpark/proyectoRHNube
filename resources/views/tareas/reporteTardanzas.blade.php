@@ -41,7 +41,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-        <h4 class="header-title mt-0 "></i>Reporte de tardanzas por empleado</h4>
+        <h4 class="header-title mt-0 ">Tardanzas por empleados</h4>
     </div>
 </div>
 @endsection
@@ -122,45 +122,43 @@
     .select2-container .select2-selection--single .select2-selection__rendered {
         line-height: 31px;
     }
-</style>
-<style>
     .table {
         width: 100% !important;
     }
-
-    /* .dataTables_scrollHeadInner {
-            width: 100% !important;
-        } */
-
     .table th,
     .table td {
         padding: 0.4rem;
         border-top: 1px solid #edf0f1;
     }
+    @media(max-width: 991px){
+        .btnR{
+            display: flex !important;
+            align-items: end !important; 
+            padding-bottom: 5px !important;
+            padding-top: 40px !important;
+        }
+    }
 </style>
+
+
 <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header"
-                style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
+            <div class="card-header" style="border-top-right-radius: 5px; border-top-left-radius: 5px;background: #edf0f1">
                 <div class="row">
                     <h4 class="header-title col-12 mt-0" style="margin-bottom: 0px;">{{$organizacion}}</h4>
                 </div>
             </div>
             <input type="hidden" id="pasandoV">
             <div class="card-body border">
-                <div class="row justify-content-center">
-                </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-2">
                     <div class="col-xl-6 col-lg-5 col-sm-6 col-12">
-                        <div class="form-group row">
+                        <div class="row">
                             <label class="col-lg-4 col-form-label">Rango de fechas:</label>
                             <input type="hidden" id="ID_START">
                             <input type="hidden" id="ID_END">
-                            <div class="input-group col-md-8 text-center" style="padding-left: 0px;padding-right: 0px;"
-                                id="fechaSelec">
-                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control"
-                                    data-input>
+                            <div class="input-group col-md-12 col-lg-8 col-xl-8 text-center" style="padding-bottom: 5px;" id="fechaSelec">
+                                <input type="text" id="fechaInput" {{-- onchange="cambiarF()" --}} class="form-control" data-input>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text form-control flatpickr">
                                         <a class="input-button" data-toggle>
@@ -172,7 +170,7 @@
                         </div>
                     </div>
                     <div class="col-xl-5 col-lg-6 col-sm-5 col-10">
-                        <div class="form-group   row">
+                        <div class="row">
                             <label class="col-lg-3 col-form-label">Empleado</label>
                             <div class="col-lg-9">
                                 <select id="idempleado" style="height: 50px!important" data-plugin="customselect"
@@ -184,146 +182,42 @@
                                     @endforeach
                                 </select>
                             </div>
-
                         </div>
                     </div>
-                    <div class="col-xl-1 col-lg-2 col-sm-1 col-2 text-left btnR" style="padding-left: 0%">
-                        <button type="button" id="btnRecargaTabla" class="btn btn-sm mt-1"
-                            style="background-color: #163552;" onclick="javascript:cambiarFCR()"> <img
-                                src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
+                    <div class="col-xl-1 col-lg-1 col-sm-1 col-2 btnR" >
+                        <button type="button" id="btnRecargaTabla" class="btn btn-sm" style="background-color: #163552; height: 30px!important" onclick="javascript:cambiarFCR()"> 
+                            <img src="{{asset('landing/images/loupe (1).svg')}}" height="15"></button>
                     </div>
-
-                    {{-- <div class="col-xl-6">
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label">Área:</label>
-                            <div class="col-lg-10 colR">
-                                <select id="area" data-plugin="customselect" class="form-control" multiple="multiple">
-                                    @foreach ($areas as $area)
-                                    <option value="{{$area->area_id}}">
-                    {{$area->area_descripcion}}</option>
-                    @endforeach
-                    </select>
                 </div>
 
+                <div class="row justify-content-center">
+                    {{-- GIF DE ESPERA --}}
+                    <div id="espera" class="text-center" style="display: none">
+                        <img src="{{ asset('landing/images/loading.gif') }}" height="100">
+                    </div>
+
+                    <div id="tableZoom" class="col-md-12">
+                        <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
+                            <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Código</th>
+                                    <th>Número de documento</th>
+                                    <th>Nombres y apellidos</th>
+                                    <th>Cargo</th>
+                                    <th>Área</th>
+                                    <th>Tiempos de tardanzas</th>   
+                                    <th>Cantidad de tardanzas</th>                 
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyD">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div> --}}
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="custom-control custom-switch">
-                <!--<input type="checkbox" class="custom-control-input" id="customSwitDetalles"
-                    onclick="javascript:cambiartabla()">
-                <label class="custom-control-label" for="customSwitDetalles" style="font-weight: bold">Mostrar detalles</label>-->
-            </div>
-        </div>
-
-        {{-- GIF DE ESPERA --}}
-        <div id="espera" class="text-center" style="display: none">
-            <img src="{{ asset('landing/images/loading.gif') }}" height="100">
-        </div>
-
-        <div class="col-md-12">
-            
-        </div>
-        <style>
-            .tableHi{
-                    border: 1px solid rgb(20, 19, 19)!important; border-collapse: collapse!important;
-                }
-        </style>
-       {{--  TABLAS OCULTA --}}
-       <div id="tableZoomI" class="col-md-12" style="display: none" >
-        <table id="Encabezado" class="table" style="font-size: 12.8px;border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th  style=" font-weight: 600;text-align: center " colspan="6">
-                        REPORTE DE TARDANZAS</th>
-                </tr>
-                <tr>
-                    <th  id="RangoFechas" colspan="6"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td  >Razon social:</td>
-                    <td >{{$organizacion}}</td>
-                </tr>
-                <tr>
-                    <td >Direccion:</td>
-                    <td >{{$direccion}}</td>
-                </tr>
-                <tr>
-                    <td >Numero de Ruc:</td>
-                    <td >{{$ruc}}</td>
-                </tr>
-                <tr>
-                    <td>Fecha: {{ now()->format('d-m-Y H:i:s') }}</td>
-                </tr>
-                <tr>
-                   <td>
-                       <br>
-                   </td>
-                </tr>
-            </tbody>
-        </table>
-        <table id="tablaReportI"  border=1  class=" " style="font-size: 12.8px;border-collapse: collapse;">
-
-            <thead id="theadDI" >
-
-                <tr>
-                    <th>#</th>
-                    <th>Código</th>
-                    <th>Documento</th>
-                    {{-- <th>Horario</th>
-
-                    <th>Cargo</th> --}}
-                    <th colspan="2">Nombres</th>
-
-                    <th colspan="2" id="hEntradaI">Cargo</th>
-                    <th colspan="2" id="hSalidaI">Área</th>
-                    <th colspan="2" id="tSitioI">Tardanza tiempo</th>
-
-                </tr>
-            </thead>
-            <tbody class="" id="tbodyIDI">
-                
-            </tbody>
-        </table>
-
-    </div>
-       {{--  --}}
-        <div id="tableZoom" class="col-md-12">
-            <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
-                <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
-                    <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Documento</th>
-                        <th>Nombres</th>
-                        <th>Cargo</th>
-                        <th>Área</th>
-                        <th>Tardanza tiempo</th>
-                        {{-- <th>Horario</th>
-
-                        <th>Cargo</th> --}}
-
-                        {{-- <th>Horario</th>
-
-                        <th id="hEntrada">Hora de entrada</th>
-                        <th id="hSalida">Hora de marcación</th>
-                        <th id="tSitio">Tiempo en tandanza</th> --}}
-                    
-                    </tr>
-                </thead>
-                <tbody id="tbodyD">
-                </tbody>
-            </table>
-
         </div>
     </div>
-</div>
-</div>
-</div>
 </div>
     {{-- modificar --}}
     @if (isset($modifReporte))
@@ -359,7 +253,7 @@
 <script src="{{URL::asset('admin/assets/libs/bootstrap-notify-master/bootstrap-notify.js')}}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{ asset('landing/js/reporteDispoEmpleado.js') }}"></script>
+<script src="{{ asset('landing/js/reporteTardanzas.js') }}"></script>
 
 @endsection
 

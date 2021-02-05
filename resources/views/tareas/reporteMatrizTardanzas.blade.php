@@ -23,7 +23,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         <h4 class="mb-1 mt-0" style="font-weight: bold">
-            Reporte matriz de tardanzas - Búsqueda por fecha
+            Matriz de tardanzas - Búsqueda por fecha
         </h4>
     </div>
 </div>
@@ -69,6 +69,10 @@
 
     .page-link{
         font-size: 13px;
+    }
+
+    div#tablaSinActividadD {
+        padding: 0;
     }
 
     /* RESPONSIVE */
@@ -127,7 +131,7 @@
 
     /* FINALIZACION */
 </style>
-<div class="row justify-content-center p-5">
+<div class="row justify-content-center pt-5 pr-5 pl-5 pb-2">
     <div class="col-xl-4" style="padding-left: 2%;padding-right: 0%;">
         <div class="input-group col-xl-12 colR">
             <input type="text" id="fechaMensual" class="form-control text-center">
@@ -135,9 +139,7 @@
                 <div class="input-group-text form-control"><i class="uil uil-calender"></i></div>
             </div>
             <div class="pl-2">
-                <button type="button" class="btn btn-sm" style="background-color: #163552;"
-                    onclick="javascript:buscarReporteT()"> <img src="{{asset('landing/images/loupe (1).svg')}}"
-                        height="18" class="text-center mb-1"></button>
+                <button type="button" class="btn btn-sm" style="background-color: #163552;" onclick="javascript:buscarReporteT()"> <img src="{{asset('landing/images/loupe (1).svg')}}" height="18" class="text-center mb-1"></button>
             </div>
         </div>
     </div>
@@ -149,21 +151,10 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <div class="row" id="VacioImg" style="display: none">
+        <div class="row" id="VacioImg" style="display: block;">
             <div class="col-xl-12">
-                <img style="margin-left:35%" src="{{
-                        URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> <label
-                    for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una
-                    búsqueda para ver Actividad</label>
-            </div>
-        </div>
-        <div class="row" id="graficaReporteMensual" style="display: none">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="myChartMensual"></div>
-                    </div>
-                </div>
+                <img style="margin-left:35%" src="{{URL::asset('admin/images/search-file.svg') }}" class="mr-2 imgR" height="220" /> <br> 
+                <label for="" style="margin-left:35%;color:#7d7d7d" class="imgR">Realize una búsqueda para ver Actividad</label>
             </div>
         </div>
         <div class="row">
@@ -173,25 +164,30 @@
                         <div class="row pt-2" id="busquedaP" style="display: none">
                             <div class="col-xl-4">
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label">Área:</label>
+                                    <label class="col-lg-2 col-form-label">Seleccionar por:</label>
                                     <div class="col-lg-10 pl-0">
-                                        <select id="areaT" data-plugin="customselect" class="form-control"
-                                            multiple="multiple">
+                                        <select id="areaT" data-plugin="customselect" class="form-control" multiple="2">
                                             @foreach ($areas as $area)
-                                            <option value="{{$area->area_id}}">
+                                            <option value="{{$area->area_id}}">Área :
                                                 {{$area->area_descripcion}}</option>
+                                            @endforeach
+                                            @foreach ($cargos as $cargo)
+                                                <option value="{{ $cargo->idcargo }}">Cargo :
+                                                    {{ $cargo->descripcion }}.</option>
+                                            @endforeach
+                                            @foreach ($locales as $local)
+                                                <option value="{{ $local->idlocal }}">Local :
+                                                    {{ $local->descripcion }}.</option>
                                             @endforeach
                                         </select>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-xl-8">
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label">Empleado:</label>
                                     <div class="col-lg-10 pl-0">
-                                        <select id="empleadoLT" data-plugin="customselect" class="form-control"
-                                            multiple="multiple">
+                                        <select id="empleadoLT" data-plugin="customselect" class="form-control" multiple="multiple">
                                             @foreach ($empleado as $emple)
                                             <option value="{{$emple->emple_id}}">
                                                 {{$emple->perso_nombre}} {{$emple->perso_apPaterno}}
@@ -200,11 +196,10 @@
                                             @endforeach
                                         </select>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-                        <div class="row  mt-2" id="busquedaA" style="display: none">
+                        <div class="row" id="busquedaA" style="display: none">
                             <div class="col-md-12">
                                 
                             </div>
@@ -213,16 +208,14 @@
                     <div class="card-body" id="tablaSinActividadD">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width:
-                                        100%;">
+                                <table id="ReporteMensual" class="table nowrap" style="font-size: 13px!important;width: 100%;">
                                     <thead style="background: #fafafa;" id="diasMensual">
                                         <tr>
                                             <th>#</th>
                                             <th>Código</th>
+                                            <th>Número de documento</th>
                                             <th>
-                                                <img src="{{
-                                                        URL::asset('admin/assets/images/users/empleado.png')
-                                                        }}" class="mr-2" alt="" />Miembro
+                                                <img src="{{ URL::asset('admin/assets/images/users/empleado.png') }}" class="mr-2" alt="" />Miembro
                                             </th>
                                             <th>TOTAL</th>
                                             <th>LUN.</th>
@@ -288,6 +281,6 @@
     }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ URL::asset('admin/assets/libs/datatables/vfs_fonts.js') }}"></script>
-<script src="{{asset('landing/js/reporteM.js')}}"></script>
+<script src="{{asset('landing/js/reporteMatrizTardanza.js')}}"></script>
 <script src="{{asset('landing/js/notificacionesUser.js')}}"></script>
 @endsection
