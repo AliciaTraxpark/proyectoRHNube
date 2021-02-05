@@ -14,7 +14,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
     altInput: true,
     altFormat: "j F",
     locale: "es",
-    maxDate: "",
+    maxDate: "today",
     wrap: true,
     allowInput: true,
     conjunction: " a ",

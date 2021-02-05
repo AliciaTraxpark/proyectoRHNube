@@ -41,7 +41,7 @@
 <div class="row page-title">
     <div class="col-md-12">
         {{-- <h4 class="mb-1 mt-0">Horarios</h4> --}}
-        <h4 class="header-title mt-0 ">Tardanzas por empleados</h4>
+        <h4 class="header-title mt-0 ">Reporte de Tardanzas por empleados</h4>
     </div>
 </div>
 @endsection
