@@ -568,6 +568,10 @@ Route::get('/tablaTareo', 'marcacionTareoController@show');
 Route::post('/intercambiarTareo', 'marcacionTareoController@intercambiarTareo');
 Route::post('/TareoregistrarNSalida', 'marcacionTareoController@registrarNSalida');
 Route::post('/TareoregistrarNEntrada', 'marcacionTareoController@registrarNEntrada');
+Route::get('/listPuntoControl', 'marcacionTareoController@listPuntoControl');
+Route::post('/TareoregistrarPunto', 'marcacionTareoController@registrarPunto');
+Route::get('/listActividadTareo', 'marcacionTareoController@listActividadTareo');
+Route::post('/TareoregistrarActiv', 'marcacionTareoController@registrarActiv');
 /* ------------------------------------------------------------------------ */
 
 /*------------------------ SUBACTIVIDADES--------------------------------- */
