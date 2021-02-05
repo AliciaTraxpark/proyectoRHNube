@@ -200,7 +200,7 @@ function cargartabla(fecha) {
                                     }
                                     if(marcacionData.controladorEntrada!=0){
                                         tbodyEntradaySalida += `
-                                                <td class="controHidEn">  ${marcacionData.controladorEntrada}</td>`;
+                                                <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
                                     } else
                                     {
                                         tbodyEntradaySalida += `
@@ -218,7 +218,7 @@ function cargartabla(fecha) {
                                         tbodyEntradaySalida += `<td class="noExport"></td>`;
                                         if(marcacionData.controladorSalida!=0){
                                             tbodyEntradaySalida += `
-                                                    <td class="controHidSa">  ${marcacionData.controladorSalida}</td>`;
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
                                         } else
                                         {
                                             tbodyEntradaySalida += `
@@ -284,7 +284,7 @@ function cargartabla(fecha) {
                                         /* SI NO TENGO SALIDA */
                                         if(marcacionData.controladorSalida!=0){
                                             tbodyEntradaySalida += `
-                                                    <td class="controHidSa">  ${marcacionData.controladorSalida}</td>`;
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
                                         } else
                                         {
                                             tbodyEntradaySalida += `
@@ -362,7 +362,7 @@ function cargartabla(fecha) {
 
                                         if(marcacionData.controladorEntrada!=0){
                                             tbodyEntradaySalida += `
-                                                    <td class="controHidEn">  ${marcacionData.controladorEntrada}</td>`;
+                                                    <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
                                         } else
                                         {
                                             tbodyEntradaySalida += `
@@ -405,7 +405,7 @@ function cargartabla(fecha) {
                                         console.log('salid'+marcacionData.controladorSalida);
                                         if(marcacionData.controladorSalida!=0){
                                             tbodyEntradaySalida += `
-                                                    <td class="controHidSa">  ${marcacionData.controladorSalida}</td>`;
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
                                         } else
                                         {
                                             tbodyEntradaySalida += `

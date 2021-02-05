@@ -149,7 +149,7 @@ class marcacionTareoController extends Controller
         $DispositivosEoS = DB::table('dispositivos_tareo as dist')
         ->select(
             'dist.iddispositivos_tareo',
-            'dis.dispoT_descripUbicacion'
+            'dist.dispoT_descripUbicacion as descripcion'
         );
 
         $invitadod = DB::table('invitado')
@@ -170,6 +170,12 @@ class marcacionTareoController extends Controller
                         ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                             $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                         })
+                        ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                            $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                        })
+                        ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                            $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                        })
                         ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                         ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                         ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -196,7 +202,9 @@ class marcacionTareoController extends Controller
                             'pc.descripcion as puntoControl',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                            DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                            DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
                         )
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
                         ->where('mt.organi_id', '=', session('sesionidorg'))
@@ -214,6 +222,12 @@ class marcacionTareoController extends Controller
                         ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                             $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                         })
+                        ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                            $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                        })
+                        ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                            $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                        })
                         ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                         ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                         ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -240,7 +254,9 @@ class marcacionTareoController extends Controller
                             'pc.descripcion as puntoControl',
                             DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                             DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                            DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                            DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                         )
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -271,6 +287,12 @@ class marcacionTareoController extends Controller
                             ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                                 $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                             })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -297,7 +319,9 @@ class marcacionTareoController extends Controller
                                 'pc.descripcion as puntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -321,6 +345,12 @@ class marcacionTareoController extends Controller
                             ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                                 $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                             })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -347,7 +377,9 @@ class marcacionTareoController extends Controller
                                 'pc.descripcion as puntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -375,6 +407,12 @@ class marcacionTareoController extends Controller
                             ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                                 $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                             })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -401,7 +439,9 @@ class marcacionTareoController extends Controller
                                 'pc.descripcion as puntoControl',
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -425,6 +465,12 @@ class marcacionTareoController extends Controller
                             })
                             ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                                 $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
                             })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
@@ -451,7 +497,9 @@ class marcacionTareoController extends Controller
 
                                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                                 DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -479,6 +527,12 @@ class marcacionTareoController extends Controller
                     ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                         $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                     })
+                    ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                        $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                    })
+                    ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                        $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                    })
                     ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                     ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                     ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -504,7 +558,9 @@ class marcacionTareoController extends Controller
                         'pc.descripcion as puntoControl',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                        DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                        DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -524,6 +580,12 @@ class marcacionTareoController extends Controller
                     ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
                         $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
                     })
+                    ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                        $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                    })
+                    ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                        $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                    })
                     ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                     ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                     ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -550,7 +612,9 @@ class marcacionTareoController extends Controller
                         'pc.descripcion as puntoControl',
                         DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
                         DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
-                        DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida")
+                        DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
