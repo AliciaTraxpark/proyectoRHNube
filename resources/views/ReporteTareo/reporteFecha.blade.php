@@ -381,15 +381,22 @@
 
                                     <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                         <li class="liContenido">
-                                            <input type="checkbox" id="checPuntoc" checked>
+                                            <input type="checkbox" id="checPuntoc" >
                                             <label class="form-check-label" for="checPuntoc">Punto de control
                                         </li>
                                     </ul>
 
                                     <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                         <li class="liContenido">
-                                            <input type="checkbox" id="checControl" checked>
-                                            <label class="form-check-label" for="checControl">Controlador
+                                            <input type="checkbox" id="checControlEn" >
+                                            <label class="form-check-label" for="checControlEn">Controlador de entrada
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checControlSa" >
+                                            <label class="form-check-label" for="checControlSa">Controlador de salida
                                         </li>
                                     </ul>
 

@@ -105,15 +105,17 @@ function cargartabla(fecha) {
                                     <th>Actividad</th>
                                     <th>Cód. Sub.</th>
                                     <th>Subactividad</th>
+                                    <th class="controHidEn">Controlador de entrada</th>
                                     <th>Hora de entrada</th>
                                     <th class="noExport">&nbsp; &nbsp; &nbsp; &nbsp;</th>
+                                    <th class="controHidSa">Controlador de salida</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
 
                 theadTabla += `
                                    <th class="puntoHid">Punto de control</th>
-                                   <th class="controHid">Controlador</th></tr>`;
+                                   </tr>`;
 
                 //* DIBUJAMOS CABEZERA
                 $("#theadD").html(theadTabla);
@@ -196,14 +198,32 @@ function cargartabla(fecha) {
                                     } else {
                                         tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                     }
+                                    if(marcacionData.controladorEntrada!=0){
+                                        tbodyEntradaySalida += `
+                                                <td class="controHidEn">  ${marcacionData.controladorEntrada}</td>`;
+                                    } else
+                                    {
+                                        tbodyEntradaySalida += `
+                                                <td class="controHidEn">  --  </td>`;
+                                    }
 
                                     tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(
                                         marcacionData.entrada
                                     ).format("HH:mm:ss")}</td>`;
 
+
+
                                     /* SI  TENGO SALIDA */
                                     if (marcacionData.salida != 0) {
                                         tbodyEntradaySalida += `<td class="noExport"></td>`;
+                                        if(marcacionData.controladorSalida!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  ${marcacionData.controladorSalida}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  --  </td>`;
+                                        }
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
                                             marcacionData.salida
                                         ).format("HH:mm:ss")}</td>`;
@@ -262,6 +282,14 @@ function cargartabla(fecha) {
                                         <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
                                         </td>`;
                                         /* SI NO TENGO SALIDA */
+                                        if(marcacionData.controladorSalida!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  ${marcacionData.controladorSalida}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  --  </td>`;
+                                        }
                                         tbodyEntradaySalida += `<td>
                                         <div class="dropdown noExport">
                                         <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
@@ -272,9 +300,13 @@ function cargartabla(fecha) {
                                             </span>
                                         </a>
                                         <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-
+                                             <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                 <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                     Opciones
+                                             </h6>
+                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                             <div class="dropdown-item noExport">
-                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;padding-left: 0px!important;">
                                                     <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})"
                                                      style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                         <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -328,6 +360,15 @@ function cargartabla(fecha) {
                                             tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
                                         }
 
+                                        if(marcacionData.controladorEntrada!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidEn">  ${marcacionData.controladorEntrada}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidEn">  --  </td>`;
+                                        }
+
                                          //* COLUMNA DE ENTRADA
                                          tbodyEntradaySalida += `<td >
                                          <div class=" dropdown">
@@ -339,7 +380,11 @@ function cargartabla(fecha) {
                                                  </span>
                                              </a>
                                              <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-
+                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                        Opciones
+                                                </h6>
+                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                  <div class="dropdown-item">
                                                      <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                          <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
@@ -357,6 +402,15 @@ function cargartabla(fecha) {
                                         <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
                                         </td>`;
                                         //* COLUMNA DE SALIDA
+                                        console.log('salid'+marcacionData.controladorSalida);
+                                        if(marcacionData.controladorSalida!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  ${marcacionData.controladorSalida}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  --  </td>`;
+                                        }
 
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
                                             marcacionData.salida
@@ -380,23 +434,14 @@ function cargartabla(fecha) {
 
                     tbody += tbodyEntradaySalida;
 
-                    /* -----------PUNTO DE CONTRO Y CONTROLADOR------------- */
+                    /* -----------PUNTO DE CONTRO ------------ */
                     if(marcacionData.puntoControl!=null){
                         tbody += `
-                        <td class="puntoHid" > ${marcacionData.puntoControl} </td>`;
+                        <td class="puntoHid" > ${marcacionData.puntoControl} </td></tr>`;
                     } else{
                         tbody += `
-                        <td class="puntoHid" >    ---  </td>`;
+                        <td class="puntoHid" >    ---  </td></tr>`;
 
-                    }
-
-                    if(marcacionData.contrT_nombres!=null){
-                        tbody += `
-                                <td class="controHid">  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
-                    } else
-                    {
-                        tbody += `
-                                <td class="controHid">  --  </td></tr>`;
                     }
 
                     /* ----------------------------------------- ------------------*/
@@ -658,6 +703,21 @@ function cargartabla(fecha) {
                             dataT.api().columns('.cargoHid').visible(false);
                         }
 
+                        //*controlador entrada
+                        if ($('#checControlEn').prop('checked')) {
+                            dataT.api().columns('.controHidEn').visible(true);
+
+                        } else {
+                            dataT.api().columns('.controHidEn').visible(false);
+                        }
+
+                        //*controlador salida
+                        if ($('#checControlSa').prop('checked')) {
+                            dataT.api().columns('.controHidSa').visible(true);
+
+                        } else {
+                            dataT.api().columns('.controHidSa').visible(false);
+                        }
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
                         }, 200);
@@ -1136,13 +1196,27 @@ $('#checPuntoc').change(function (event) {
     }, 1);
 });
 
-//* CONTROLADOR
-$('#checControl').change(function (event) {
-    if ($('#checControl').prop('checked')) {
-        dataT.api().columns('.controHid').visible(true);
+//* CONTROLADOR ENTRADA
+$('#checControlEn').change(function (event) {
+    if ($('#checControlEn').prop('checked')) {
+        dataT.api().columns('.controHidEn').visible(true);
 
     } else {
-        dataT.api().columns('.controHid').visible(false);
+        dataT.api().columns('.controHidEn').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* CONTROLADOR SALIDA
+$('#checControlSa').change(function (event) {
+    if ($('#checControlSa').prop('checked')) {
+        dataT.api().columns('.controHidSa').visible(true);
+
+    } else {
+        dataT.api().columns('.controHidSa').visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
