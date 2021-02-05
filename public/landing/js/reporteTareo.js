@@ -92,7 +92,7 @@ function cargartabla(fecha) {
                 }
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
-                                    <th># &nbsp;</th>
+                                    <th># </th>
                                     <th class="fechaHid" name="tiempoSitHi">Fecha</th>
                                     <th class="codigoHid">Código</th>
                                     <th class="numdocHid">Número de documento </th>
@@ -129,7 +129,7 @@ function cargartabla(fecha) {
                 for (let index = 0; index < data.length; index++) {
                     tbody += `<tr>
 
-                                <td>${index + 1}&nbsp;</td>
+                                <td>${index + 1}</td>
 
                                 <td class="fechaHid"  name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
                                 <td class="codigoHid">${
