@@ -558,8 +558,9 @@ function cargartabla(fecha) {
                     ordering: false,
                     autoWidth: false,
                     bInfo: false,
-                    bLengthChange: false,
+                    bLengthChange: true,
                     fixedHeader: true,
+                    pageLength: 25,
                     language: {
                         sProcessing: "Procesando...",
                         sLengthMenu: "Mostrar _MENU_ registros",
@@ -592,7 +593,7 @@ function cargartabla(fecha) {
                             colvis: "Visibilidad",
                         },
                     },
-                    dom: 'Bfrtip',
+                    dom: 'Blfrtip',
                     buttons: [
 
                         {

@@ -240,6 +240,10 @@
             margin-left: 20px;
         }
 
+        .dataTables_length{
+            margin-top: 10px;
+        }
+
     </style>
     <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
         <div class="col-md-12">
