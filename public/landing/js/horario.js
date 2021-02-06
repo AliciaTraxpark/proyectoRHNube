@@ -316,75 +316,75 @@ function calendario() {
             var event = calendar.getEventById(id);
             if (info.event.textColor == '111111') {
 
-                 /* UNBIND SOLO UNA VEZ */
-                 $('#eliminaHorarioDia_re').unbind().click(function() {
+                /* UNBIND SOLO UNA VEZ */
+                $('#eliminaHorarioDia_re').unbind().click(function () {
                     $('#editarConfigHorario_re').modal('hide');
                     bootbox.confirm({
-                    title: "Eliminar horario",
-                    message: "¿Desea eliminar: " + info.event.title + " del horario?",
-                    buttons: {
-                        confirm: {
-                            label: 'Aceptar',
-                            className: 'btn-success'
+                        title: "Eliminar horario",
+                        message: "¿Desea eliminar: " + info.event.title + " del horario?",
+                        buttons: {
+                            confirm: {
+                                label: 'Aceptar',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-light'
+                            }
                         },
-                        cancel: {
-                            label: 'Cancelar',
-                            className: 'btn-light'
-                        }
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                type: "post",
-                                url: "/eliminarHora",
-                                data: {
-                                    idHora: info.event.id
-                                },
-                                statusCode: {
+                        callback: function (result) {
+                            if (result == true) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/eliminarHora",
+                                    data: {
+                                        idHora: info.event.id
+                                    },
+                                    statusCode: {
 
-                                    419: function () {
-                                        location.reload();
+                                        419: function () {
+                                            location.reload();
+                                        }
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (data) {
+                                        info.event.remove();
+                                    },
+                                    error: function (data) {
+                                        alert('Ocurrio un error');
                                     }
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function (data) {
-                                    info.event.remove();
-                                },
-                                error: function (data) {
-                                    alert('Ocurrio un error');
-                                }
 
 
-                            });
+                                });
+                            }
                         }
-                    }
-                     });
-                 });
+                    });
+                });
 
-                 //*seteando datos amodal
-                 $('#idHoraEmpleado_re').val(info.event.id);
-                 if(info.event.borderColor == '#5369f8'){
-                    $('#fueraHSwitch_Actualizar_re').prop("checked",true);
+                //*seteando datos amodal
+                $('#idHoraEmpleado_re').val(info.event.id);
+                if (info.event.borderColor == '#5369f8') {
+                    $('#fueraHSwitch_Actualizar_re').prop("checked", true);
                 }
-                else{
-                    $('#fueraHSwitch_Actualizar_re').prop("checked",false);
+                else {
+                    $('#fueraHSwitch_Actualizar_re').prop("checked", false);
                 }
                 if (info.event.extendedProps.horaAdic == 1) {
-                    $('#horAdicSwitch_Actualizar_re').prop("checked",true);
+                    $('#horAdicSwitch_Actualizar_re').prop("checked", true);
                     $('#nHorasAdic_Actualizar_re').show();
 
                     $("#nHorasAdic_Actualizar_re").val(info.event.extendedProps.nHoraAdic);
 
 
                 }
-                else{
-                    $('#horAdicSwitch_Actualizar_re').prop("checked",false);
+                else {
+                    $('#horAdicSwitch_Actualizar_re').prop("checked", false);
                     $('#nHorasAdic_Actualizar_re').hide();
                 }
 
-                 $('#editarConfigHorario_re').modal('show');
+                $('#editarConfigHorario_re').modal('show');
             }
 
 
@@ -3057,20 +3057,33 @@ function modalEditar(id) {
                                     </div>`;
                     if (pausa.inactivar == 0) {
                         contenido += `
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <label>Inactivar</label>
                                         <br>
                                         <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-3">
                                     </div>`;
                     } else {
-                        contenido += `<div class="col-md-2">
+                        contenido += `<div class="col-md-1">
                                         <label>Inactivar</label>
                                         <br>
                                         <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-3" checked>
                                     </div>`;
                     }
+                    if (pausa.descontar == 0) {
+                        contenido += `<div class="col-md-2 text-center">
+                                        <label>Descontar aut.</label>
+                                        <br>
+                                        <input type="checkbox" id="e_descontarPausa${pausa.idpausas_horario}" class="mt-2">
+                                    </div>`;
+                    } else {
+                        contenido += `<div class="col-md-2 text-center">
+                                        <label>Descontar aut.</label>
+                                        <br>
+                                        <input type="checkbox" id="e_descontarPausa${pausa.idpausas_horario}" class="mt-2" checked>
+                                    </div>`;
+                    }
                     contenido += `
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <label>Eliminar</label>
                                         <br>
                                         <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})" class="ml-3">
@@ -3313,10 +3326,15 @@ function e_contenidoInput(id) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label>Inactivar</label>
                             <br>
                             <input type="checkbox" id="e_inactivarPausaNew${e_cont}" class="text-center mt-2 ml-3">
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <label>Descontar aut.</label>
+                            <br>
+                            <input type="checkbox" id="e_descontarPausa${e_cont}" class="text-center mt-2 ml-3">
                         </div>
                         <div class="col-md-1">
                             <label>Eliminar</label>
@@ -3514,6 +3532,7 @@ function e_eliminarContenido(id) {
     $('#e_toleranciaIP' + id).val("");
     $('#e_ToleranciaFP' + id).val("");
     $('#e_inactivarPausa' + id).prop("checked", false);
+    $('#e_descontarPausa' + id).prop("checked", false);
     $('#e_rowP' + id).hide();
     $('#fueraRango_ed').hide();
     $('#errorenPausas_ed').hide();
@@ -3572,19 +3591,24 @@ function pausasHorario(id) {
                 for (let index = 0; index < data.length; index++) {
                     var pausa = data[index];
                     contenido +=
-                        `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}">
+                        `<div class="row pb-3" id="e_rowP${pausa.idpausas_horario}" style="border-top:1px dashed #aaaaaa!important;">
                         <input type="hidden" class="e_rowInputs" value="${pausa.idpausas_horario}">
                         <div class="col-md-12">
-                            <div class="row">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Descripción de pausa</label>
+                                <input type="text"  class="form-control form-control-sm descP" id="e_descPausa${pausa.idpausas_horario}"
+                                value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');$('#btnEditarHorario').prop('disabled', false);">
+                            </div>
+                        </div>
+                        <div class="row pt-2">
                                 <div class="col-md-2">
-                                    <input type="text"  class="form-control form-control-sm descP" id="e_descPausa${pausa.idpausas_horario}"
-                                      value="${pausa.pausH_descripcion}"onkeyup="javascript:$(this).removeClass('borderColor');">
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  class="form-control form-control-sm inicioP" id="e_InicioPausa${pausa.idpausas_horario}" name="inicioP"
+                                    <label>Inicio pausa(24h)</label>
+                                    <input type="text" class="form-control form-control-sm inicioP" id="e_InicioPausa${pausa.idpausas_horario}" name="inicioP"
                                       value="${pausa.pausH_Inicio}"  onchange="javascript:$(this).removeClass('borderColor');">
                                 </div>
                                 <div class="col-md-2">
+                                    <label>Tolerancia inicio</label>
                                     <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                         <input type="number"  class="form-control form-control-sm" id="e_toleranciaIP${pausa.idpausas_horario}" value="0"
                                            value="${pausa.tolerancia_inicio}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
@@ -3596,10 +3620,12 @@ function pausasHorario(id) {
                                     </div>
                                 </div>
                                 <div class="col-md-2">
+                                    <label>Fin pausa(24h)</label>
                                     <input type="text"  class="form-control form-control-sm finP" id="e_FinPausa${pausa.idpausas_horario}" name="finP"
                                        value="${pausa.pausH_Fin}" onchange="javascript:$(this).removeClass('borderColor');">
                                 </div>
                                 <div class="col-md-2">
+                                    <label>Tolerancia salida</label>
                                     <div class="input-group form-control-sm" style="bottom: 3.8px;padding-left: 0px; padding-right: 0px;">
                                         <input type="number"  class="form-control form-control-sm" id="e_ToleranciaFP${pausa.idpausas_horario}" value="0"
                                            value="${pausa.tolerancia_fin}" oninput="javascript: if (this.value >= 60 || this.value < 0) this.value = 59;">
@@ -3611,30 +3637,54 @@ function pausasHorario(id) {
                                     </div>
                                 </div>`;
                     if (pausa.inactivar == 0) {
-                        contenido += `
-                                <div class="col-md-1">
-                                    <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2">
-                                </div>`;
+                        contenido += `<div class="col-md-1">
+                                        <label>Inactivar</label>
+                                        <br>
+                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-3">
+                                    </div>`;
                     } else {
-                        contenido += `
-                                <div class="col-md-1">
-                                    <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-2" checked>
-                                </div>`;
+                        contenido += `<div class="col-md-1">
+                                        <label>Inactivar</label>
+                                        <br>
+                                        <input type="checkbox" id="e_inactivarPausa${pausa.idpausas_horario}" class="mt-2 ml-3" checked>
+                                    </div>`;
                     }
-                    contenido += `
-                                <div class="col-md-1">
-                                    <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})">
-                                        <img src="/admin/images/delete.svg" height="15">
-                                    </a>
-                                </div>
-                            </div>
-                            <button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
-                                padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
-                                    margin-top: 5px;margin-left: 20px" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
-                                +
-                            </button>
-                        </div>
-                    </div>`;
+                    if (pausa.descontar == 0) {
+                        contenido += `<div class="col-md-2 text-center">
+                                        <label>Descontar aut.</label>
+                                        <br>
+                                        <input type="checkbox" id="e_descontarPausa${pausa.idpausas_horario}" class="mt-2">
+                                    </div>`;
+                    } else {
+                        contenido += `<div class="col-md-2 text-center">
+                                        <label>Descontar aut.</label>
+                                        <br>
+                                        <input type="checkbox" id="e_descontarPausa${pausa.idpausas_horario}" class="mt-2" checked>
+                                    </div>`;
+                    }
+                    contenido += `<div class="col-md-1">
+                                        <label>Eliminar</label>
+                                        <br>
+                                        <a style="cursor: pointer" onclick="javascript:e_eliminarContenido(${pausa.idpausas_horario})" class="ml-3">
+                                            <img src="/admin/images/delete.svg" height="15">
+                                        </a>
+                                    </div>
+                                </div>`;
+                    if (index != (data.length - 1)) {
+                        contenido += `<button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
+                                        margin-top: 5px;margin-left: 20px; display:none" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
+                                        +
+                                    </button>`;
+                    } else {
+                        contenido += `<button class="btn btn-sm bt_plus" type="button" style="background-color:#e2e7f1; color:#546483;font-weight: 600;
+                                        padding-top: 0px;padding-bottom: 0px; font-size: 12px; padding-right: 5px; padding-left: 5px;height: 22px;
+                                        margin-top: 5px;margin-left: 20px;" onclick="javascript:e_contenidoInput(${pausa.idpausas_horario})" id="e_agregar${pausa.idpausas_horario}">
+                                        +
+                                    </button>`;
+                    }
+                    contenido += `</div>
+                                </div>`;
                 }
                 $('#PausasHorar_ed').append(contenido);
                 data.forEach(element => {
@@ -3680,10 +3730,16 @@ function e_obtenerPausas() {
         var finPausa = $('#e_FinPausa' + id).val();
         var toleranciaPF = $('#e_ToleranciaFP' + id).val();
         var inactivarP;
+        var descontarP;
         if ($('#e_inactivarPausa' + id).is(":checked")) {
             inactivarP = 1;
         } else {
             inactivarP = 0;
+        }
+        if ($('#e_descontarPausa' + id).is(":checked")) {
+            descontarP = 1;
+        } else {
+            descontarP = 0;
         }
         var objPausa = {
             "id": $(this).val(),
@@ -3692,7 +3748,8 @@ function e_obtenerPausas() {
             "toleranciaI": toleranciaPI,
             "finPausa": finPausa,
             "toleranciaF": toleranciaPF,
-            "inactivar": inactivarP
+            "inactivar": inactivarP,
+            "descontar": descontarP
         };
         resultado.push(objPausa);
     });
@@ -3807,52 +3864,52 @@ $(function () {
 });
 /* ------------------------------------------------------------------ */
 
- /* ---------ACTUALIZAR CONFIGURACION DE HORARIO------------- */
- function actualizarConfigHorario_re(){
-    let idHoraEmp=$('#idHoraEmpleado_re').val();
+/* ---------ACTUALIZAR CONFIGURACION DE HORARIO------------- */
+function actualizarConfigHorario_re() {
+    let idHoraEmp = $('#idHoraEmpleado_re').val();
     let fueraHorario;
     let permiteHadicional;
     let nHorasAdic;
 
     //* Fuera de horario
     if ($("#fueraHSwitch_Actualizar_re").is(":checked")) {
-       fueraHorario = 1;
-   } else {
-       fueraHorario = 0;
-   }
+        fueraHorario = 1;
+    } else {
+        fueraHorario = 0;
+    }
 
-   //* permitir horas adicionales
-   if ($("#horAdicSwitch_Actualizar_re").is(":checked")) {
-       permiteHadicional = 1;
-       nHorasAdic=$('#nHorasAdic_Actualizar_re').val()
-   } else {
-       permiteHadicional = 0;
-       nHorasAdic=null;
-   }
+    //* permitir horas adicionales
+    if ($("#horAdicSwitch_Actualizar_re").is(":checked")) {
+        permiteHadicional = 1;
+        nHorasAdic = $('#nHorasAdic_Actualizar_re').val()
+    } else {
+        permiteHadicional = 0;
+        nHorasAdic = null;
+    }
 
     $.ajax({
-       type: "post",
-       url: "/horario/actualizarConfigHorario",
-       data: {
-           idHoraEmp, fueraHorario, permiteHadicional,nHorasAdic
-       },
-       statusCode: {
-           419: function () {
-               location.reload();
-           },
-       },
-       headers: {
-           "X-CSRF-TOKEN": $(
-               'meta[name="csrf-token"]'
-           ).attr("content"),
-       },
-       success: function (data) {
-           calendar.refetchEvents();
-           $('#editarConfigHorario_re').modal('hide');
-       },
-       error: function (data) {
-           alert("Ocurrio un error");
-       },
-   });
+        type: "post",
+        url: "/horario/actualizarConfigHorario",
+        data: {
+            idHoraEmp, fueraHorario, permiteHadicional, nHorasAdic
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $(
+                'meta[name="csrf-token"]'
+            ).attr("content"),
+        },
+        success: function (data) {
+            calendar.refetchEvents();
+            $('#editarConfigHorario_re').modal('hide');
+        },
+        error: function (data) {
+            alert("Ocurrio un error");
+        },
+    });
 }
 /* ---------------------------------------------------------------------------- */
