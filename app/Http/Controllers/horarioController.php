@@ -1251,6 +1251,7 @@ class horarioController extends Controller
                     $pausaH->tolerancia_inicio = $pausa["toleranciaI"];
                     $pausaH->tolerancia_fin = $pausa["toleranciaF"];
                     $pausaH->inactivar = $pausa["inactivar"];
+                    $pausaH->descontar = $pausa["descontar"];
                     $pausaH->save();
                 }
             }

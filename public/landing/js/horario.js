@@ -2433,12 +2433,17 @@ function contenidoInput(id) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label>Inactivar</label>
                             <br>
                             <input type="checkbox" id="inactivarPausa${r_cont}" class="text-center mt-2 ml-3">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 text-center">
+                            <label>Descontar aut.</label>
+                            <br>
+                            <input type="checkbox" id="descontarPausa${r_cont}" class="mt-2">
+                        </div>
+                        <div class="col-md-1">
                             <label>Eliminar</label>
                             <br>
                             <a style="cursor: pointer" onclick="javascript:eliminarContenido(${r_cont})" class="ml-3">
@@ -2739,6 +2744,7 @@ function eliminarContenido(id) {
     $('#toleranciaIP' + id).val("");
     $('#ToleranciaFP' + id).val("");
     $('#inactivarPausa' + id).prop("checked", false);
+    $('#descontarPausa' + id).prop("checked", false);
     $('#rowP' + id).hide();
     $('#fueraRango').hide();
     $('#errorenPausas').hide();
@@ -2783,10 +2789,16 @@ function obtenerPausas() {
         var finPausa = $('#FinPausa' + id).val();
         var toleranciaPF = $('#ToleranciaFP' + id).val();
         var inactivarP;
+        var descontarP;
         if ($('#inactivarPausa' + id).is(":checked")) {
             inactivarP = 1;
         } else {
             inactivarP = 0;
+        }
+        if ($('#descontarPausa' + id).is(":checked")) {
+            descontarP = 1;
+        } else {
+            descontarP = 0;
         }
         var objPausa = {
             "id": $(this).val(),
@@ -2795,7 +2807,8 @@ function obtenerPausas() {
             "toleranciaI": toleranciaPI,
             "finPausa": finPausa,
             "toleranciaF": toleranciaPF,
-            "inactivar": inactivarP
+            "inactivar": inactivarP,
+            "descontar": descontarP
         };
         resultado.push(objPausa);
     });
@@ -2810,14 +2823,7 @@ function registrarNuevoHorario() {
     var toleranciaI = $('#toleranciaH').val();
     var toleranciaF = $('#toleranciaSalida').val();
     var horasO = $('#horaOblig').val();
-    var tardanza;
     var pausas = obtenerPausas();
-    console.log(pausas);
-    if ($('#SwitchTardanza').is(":checked")) {
-        tardanza = 1;
-    } else {
-        tardanza = 0;
-    }
     var validarInput = validarInputs();
     if (!validarInput) {
         return false;
@@ -2844,7 +2850,6 @@ function registrarNuevoHorario() {
             horaInicio: horaInicio,
             horaFin: horaFin,
             horasO: horasO,
-            tardanza: tardanza,
             pausas: pausas
         },
         statusCode: {
@@ -2879,7 +2884,6 @@ function limpiarHorario() {
     $('#toleranciaH').val("");
     $('#toleranciaSalida').val("");
     $('#horaOblig').val("");
-    $('#SwitchTardanza').prop("checked", false);
     $('#SwitchPausa').prop("checked", false);
 }
 // ! ******************************* FINALIZACION ****************************************
@@ -3765,13 +3769,7 @@ async function editarHorarioDatos() {
     var toleranciaI = $('#toleranciaH_ed').val();
     var toleranciaF = $('#toleranciaSalida_ed').val();
     var horasO = $('#horaOblig_ed').val();
-    var tardanza;
     var pausas = e_obtenerPausas();
-    if ($('#SwitchTardanza_ed').is(":checked")) {
-        tardanza = 1;
-    } else {
-        tardanza = 0;
-    }
     var validarInput = await e_validarInputs();
     if (!validarInput) {
         return false;
@@ -3799,7 +3797,6 @@ async function editarHorarioDatos() {
             horaInicio: horaInicio,
             horaFin: horaFin,
             horasO: horasO,
-            tardanza: tardanza,
             pausas: pausas
         },
         statusCode: {
@@ -3849,6 +3846,7 @@ function obtenerHorarios() {
         error: function () { }
     });
 }
+// ! ******************************* FINALIZACION ****************************************
 /* EVENTO CAMBIAR SWITCH EN ACTUALLIZAR CONFIG HORARIO A DIA REGISTRAR EMPLEADO  */
 $(function () {
     $(document).on('change', '#horAdicSwitch_Actualizar_re', function (event) {
