@@ -41,15 +41,14 @@ $(function () {
 });
 
 function cargartabla(fecha) {
-
     /* ****INICALIZAR VALORES DE SELECTORES****/
-    $('#fechaSwitch').prop("checked",false);
-    $('#checCodigo').prop("checked",true);
-    $('#checnumdoc').prop("checked",true);
-    $('#checSexo').prop("checked",false);
-    $('#checCargo').prop("checked",false);
-    $('#checPuntoc').prop("checked",true);
-    $('#checControl').prop("checked",true);
+    $("#fechaSwitch").prop("checked", false);
+    $("#checCodigo").prop("checked", true);
+    $("#checnumdoc").prop("checked", true);
+    $("#checSexo").prop("checked", false);
+    $("#checCargo").prop("checked", false);
+    $("#checPuntoc").prop("checked", true);
+    $("#checControl").prop("checked", true);
     /* ************************************** */
     var idemp = $("#idempleado").val();
     $.ajax({
@@ -100,8 +99,7 @@ function cargartabla(fecha) {
                                     <th class="sexoHid" name="tiempoSitHi">Sexo</th>
                                     <th class="cargoHid"  name="tiempoSitHi">Cargo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`;
 
-
-                    theadTabla += `<th>Cód. Act.</th>
+                theadTabla += `<th>Cód. Act.</th>
                                     <th>Actividad</th>
                                     <th>Cód. Sub.</th>
                                     <th>Subactividad</th>
@@ -111,7 +109,6 @@ function cargartabla(fecha) {
                                     <th class="controHidSa">Controlador de salida</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
-
 
                 theadTabla += `
                                    <th class="puntoHid">Punto de control</th>
@@ -131,7 +128,9 @@ function cargartabla(fecha) {
 
                                 <td>${index + 1}</td>
 
-                                <td class="fechaHid"  name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
+                                <td class="fechaHid"  name="tiempoSitHi">${moment(
+                                    $("#pasandoV").val()
+                                ).format("DD/MM/YYYY")}&nbsp;</td>
                                 <td class="codigoHid">${
                                     data[index].emple_codigo
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -141,23 +140,22 @@ function cargartabla(fecha) {
                                 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
                                 <td>${data[index].perso_nombre} ${
-                                    data[index].perso_apPaterno
-                                } ${
-                                    data[index].perso_apMaterno
-                                }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                        data[index].perso_apPaterno
+                    } ${
+                        data[index].perso_apMaterno
+                    }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
 
-                                if (data[index].perso_sexo != null) {
-                                    tbody += `<td class="sexoHid" name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                } else {
-                                    tbody += `<td class="sexoHid"  name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                }
+                    if (data[index].perso_sexo != null) {
+                        tbody += `<td class="sexoHid" name="tiempoSitHi">${data[index].perso_sexo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    } else {
+                        tbody += `<td class="sexoHid"  name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
 
-                                if (data[index].cargo_descripcion != null) {
-                                    tbody += `<td class="cargoHid"  name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                } else {
-                                    tbody += `<td  class="cargoHid" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                }
-
+                    if (data[index].cargo_descripcion != null) {
+                        tbody += `<td class="cargoHid"  name="tiempoSitHi">${data[index].cargo_descripcion}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    } else {
+                        tbody += `<td  class="cargoHid" name="tiempoSitHi">---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                    }
 
                     //* ARMAR Y ORDENAR MARCACIONES
                     var tbodyEntradaySalida = "";
@@ -165,29 +163,25 @@ function cargartabla(fecha) {
                     /* -------------------------------------------- */
                     //: HORA
                     for (let h = 0; h < 24; h++) {
+                        var marcacionData = data[index];
 
-                            var marcacionData = data[index];
-
-                            /* SI TENGO ENTRADA */
-                            if (marcacionData.entrada != 0) {
-                                if (
-                                    h ==
-                                    moment(marcacionData.entrada).format("HH")
-                                ) {
-
-                                    if (marcacionData.codigoActividad != 0) {
-                                        tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td>
+                        /* SI TENGO ENTRADA */
+                        if (marcacionData.entrada != 0) {
+                            if (
+                                h == moment(marcacionData.entrada).format("HH")
+                            ) {
+                                if (marcacionData.codigoActividad != 0) {
+                                    tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
+                                } else {
+                                    tbodyEntradaySalida += `<td>
                                        --
                                     </td>`;
+                                }
 
-                                    }
-
-                                    if (marcacionData.Activi_Nombre != null) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td>
+                                if (marcacionData.Activi_Nombre != null) {
+                                    tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
+                                } else {
+                                    tbodyEntradaySalida += `<td>
                                         <div class=" dropdown">
                                             <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -213,18 +207,18 @@ function cargartabla(fecha) {
                                             </ul>
                                         </div>
                                     </td>`;
-                                    }
+                                }
 
-                                    if (marcacionData.codigoSubactiv != 0) {
-                                        tbodyEntradaySalida += `<td >${marcacionData.codigoSubactiv} </td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                    }
+                                if (marcacionData.codigoSubactiv != 0) {
+                                    tbodyEntradaySalida += `<td >${marcacionData.codigoSubactiv} </td>`;
+                                } else {
+                                    tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                }
 
-                                    if (marcacionData.subAct_nombre != null) {
-                                        tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
-                                    } else {
-                                        tbodyEntradaySalida += `<td>
+                                if (marcacionData.subAct_nombre != null) {
+                                    tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
+                                } else {
+                                    tbodyEntradaySalida += `<td>
                                         <div class=" dropdown">
                                             <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -250,117 +244,183 @@ function cargartabla(fecha) {
                                             </ul>
                                         </div>
                                     </td>`;
-                                    }
-                                    if(marcacionData.controladorEntrada!=0){
-                                        tbodyEntradaySalida += `
+                                }
+                                if (marcacionData.controladorEntrada != 0) {
+                                    tbodyEntradaySalida += `
                                                 <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
-                                    } else
-                                    {
-                                        //*VERIFICAMOS QUE HAYA MARCACION DE ENTRADA
-                                        if(marcacionData.entrada != 0){
-                                            tbodyEntradaySalida += `
-                                            <td class="controHidEn">  --  </td>`;
-                                        }
-                                        else{
-                                            tbodyEntradaySalida += `
-                                            <td class="controHidEn">  --  </td>`;
-                                        }
+                                } else {
+                                    //*VERIFICAMOS QUE HAYA MARCACION DE ENTRADA
+                                    tbodyEntradaySalida += `<td class="controHidEn">
+                                        <div class=" dropdown">
+                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar controlador de entrada">
+                                                    <img style="margin-bottom: 3px;" src="landing/images/contEntrada.svg" class="mr-2" height="12"/>
+                                                    No tiene controlador de Ent.
+                                                </span>
+                                            </a>
+                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                       Opciones
+                                               </h6>
+                                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                <div class="dropdown-item" dropdown-itemM noExport>
+                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                        <a onclick="agregarControE(${marcacionData.idMarcacion},'${marcacionData.entrada}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="14" />
+                                                            Agregar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </td>`;
+                                }
 
+                                tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(
+                                    marcacionData.entrada
+                                ).format("HH:mm:ss")}</td>`;
+
+                                /* SI  TENGO SALIDA */
+                                if (marcacionData.salida != 0) {
+                                    tbodyEntradaySalida += `<td class="noExport"></td>`;
+                                    if (marcacionData.controladorSalida != 0) {
+                                        tbodyEntradaySalida += `
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td class="controHidSa">
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar controlador de salida">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/contSalida.svg" class="mr-2" height="12"/>
+                                                        No tiene controlador de Sal.
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarControSa(${marcacionData.idMarcacion},'${marcacionData.salida}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="14" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
                                     }
-
-                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(
-                                        marcacionData.entrada
+                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
+                                        marcacionData.salida
                                     ).format("HH:mm:ss")}</td>`;
 
-
-
-                                    /* SI  TENGO SALIDA */
-                                    if (marcacionData.salida != 0) {
-                                        tbodyEntradaySalida += `<td class="noExport"></td>`;
-                                        if(marcacionData.controladorSalida!=0){
-                                            tbodyEntradaySalida += `
-                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
-                                        } else
-                                        {
-                                            tbodyEntradaySalida += `
-                                                    <td class="controHidSa">  --  </td>`;
+                                    var horaFinal = moment(
+                                        marcacionData.salida
+                                    );
+                                    var horaInicial = moment(
+                                        marcacionData.entrada
+                                    );
+                                    if (horaFinal.isSameOrAfter(horaInicial)) {
+                                        var tiempoRestante =
+                                            horaFinal - horaInicial;
+                                        var segundosTiempo = moment
+                                            .duration(tiempoRestante)
+                                            .seconds();
+                                        var minutosTiempo = moment
+                                            .duration(tiempoRestante)
+                                            .minutes();
+                                        var horasTiempo = Math.trunc(
+                                            moment
+                                                .duration(tiempoRestante)
+                                                .asHours()
+                                        );
+                                        if (horasTiempo < 10) {
+                                            horasTiempo = "0" + horasTiempo;
                                         }
-                                        tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
-                                            marcacionData.salida
-                                        ).format("HH:mm:ss")}</td>`;
-
-                                        var horaFinal = moment(
-                                            marcacionData.salida
-                                        );
-                                        var horaInicial = moment(
-                                            marcacionData.entrada
-                                        );
-                                        if (
-                                            horaFinal.isSameOrAfter(horaInicial)
-                                        ) {
-                                            var tiempoRestante =
-                                                horaFinal - horaInicial;
-                                            var segundosTiempo = moment
-                                                .duration(tiempoRestante)
-                                                .seconds();
-                                            var minutosTiempo = moment
-                                                .duration(tiempoRestante)
-                                                .minutes();
-                                            var horasTiempo = Math.trunc(
-                                                moment
-                                                    .duration(tiempoRestante)
-                                                    .asHours()
-                                            );
-                                            if (horasTiempo < 10) {
-                                                horasTiempo = "0" + horasTiempo;
-                                            }
-                                            if (minutosTiempo < 10) {
-                                                minutosTiempo =
-                                                    "0" + minutosTiempo;
-                                            }
-                                            if (segundosTiempo < 10) {
-                                                segundosTiempo =
-                                                    "0" + segundosTiempo;
-                                            }
-                                            tbodyEntradaySalida += `<td >
+                                        if (minutosTiempo < 10) {
+                                            minutosTiempo = "0" + minutosTiempo;
+                                        }
+                                        if (segundosTiempo < 10) {
+                                            segundosTiempo =
+                                                "0" + segundosTiempo;
+                                        }
+                                        tbodyEntradaySalida += `<td >
                                                                     <input type="hidden" value= "${horasTiempo}:${minutosTiempo}:${segundosTiempo}" name="tiempoSit${data[index].emple_id}[]" id="tiempoSit${data[index].emple_id}">
                                                                     <a class="badge badge-soft-primary mr-2"><img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                         ${horasTiempo}:${minutosTiempo}:${segundosTiempo}
                                                                     </a>
                                                                 </td>`;
-                                            sumaTiempos = moment(
-                                                sumaTiempos
-                                            ).add(segundosTiempo, "seconds");
-                                            sumaTiempos = moment(
-                                                sumaTiempos
-                                            ).add(minutosTiempo, "minutes");
-                                            sumaTiempos = moment(
-                                                sumaTiempos
-                                            ).add(horasTiempo, "hours");
-                                        }
-                                    } else {
-                                        tbodyEntradaySalida += `<td class="noExport">
+                                        sumaTiempos = moment(sumaTiempos).add(
+                                            segundosTiempo,
+                                            "seconds"
+                                        );
+                                        sumaTiempos = moment(sumaTiempos).add(
+                                            minutosTiempo,
+                                            "minutes"
+                                        );
+                                        sumaTiempos = moment(sumaTiempos).add(
+                                            horasTiempo,
+                                            "hours"
+                                        );
+                                    }
+                                } else {
+                                    tbodyEntradaySalida += `<td class="noExport">
                                         <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
                                         </td>`;
-                                        /* SI NO TENGO SALIDA */
-                                        if(marcacionData.controladorSalida!=0){
-                                            tbodyEntradaySalida += `
+                                    /* SI NO TENGO SALIDA */
+                                    if (marcacionData.controladorSalida != 0) {
+                                        tbodyEntradaySalida += `
                                                     <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
-                                        } else
-                                        {
-                                            tbodyEntradaySalida += `
-                                                    <td class="controHidSa">  --  </td>`;
-                                        }
-                                        tbodyEntradaySalida += `<td>
+                                    } else {
+                                        tbodyEntradaySalida += `<td class="controHidSa">
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar controlador de salida">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/contSalida.svg" class="mr-2" height="12"/>
+                                                        No tiene controlador de Sal.
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarControSa(${marcacionData.idMarcacion},'${marcacionData.salida}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="14" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
+                                    }
+                                    tbodyEntradaySalida += `<td>
                                         <div class="dropdown noExport">
-                                        <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false" data-open-dropdown="dropSalida${marcacionData.idMarcacion}" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                        <a type="button" class="btn dropdown-toggle" id="dropSalida${
+                                            marcacionData.idMarcacion
+                                        }" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" data-open-dropdown="dropSalida${
+                                                marcacionData.idMarcacion
+                                            }" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                             <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                 No tiene salida
                                             </span>
                                         </a>
-                                        <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                        <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${
+                                            marcacionData.idMarcacion
+                                        }" style="padding: 0rem 0rem;">
                                              <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                  <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                      Opciones
@@ -368,7 +428,11 @@ function cargartabla(fecha) {
                                              <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                             <div class="dropdown-item noExport">
                                                 <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;padding-left: 0px!important;">
-                                                    <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})"
+                                                    <a onclick="javascript:insertarSalidaModal('${moment(
+                                                        marcacionData.entrada
+                                                    ).format("HH:mm:ss")}',${
+                                        marcacionData.idMarcacion
+                                    },${marcacionData.idHE})"
                                                      style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                         <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                         Insertar salida
@@ -379,36 +443,33 @@ function cargartabla(fecha) {
                                     </div>
                                         </td>`;
 
-                                        tbodyEntradaySalida += `<td >
+                                    tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                 --:--:--
                                                             </span>
                                                         </td>`;
-                                    }
                                 }
-                            } else {
-                                /* SI NO TENGO ENTRADA Y SI TENGO SALIDA */
-                                if (marcacionData.salida != 0) {
-                                    if (
-                                        h ==
-                                        moment(marcacionData.salida).format(
-                                            "HH"
-                                        )
-                                    ) {
-
-                                        if (marcacionData.codigoActividad != 0) {
-                                            tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td>
+                            }
+                        } else {
+                            /* SI NO TENGO ENTRADA Y SI TENGO SALIDA */
+                            if (marcacionData.salida != 0) {
+                                if (
+                                    h ==
+                                    moment(marcacionData.salida).format("HH")
+                                ) {
+                                    if (marcacionData.codigoActividad != 0) {
+                                        tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td>
                                             --
                                         </td>`;
-                                        }
+                                    }
 
-                                        if (marcacionData.Activi_Nombre != null) {
-                                            tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td>
+                                    if (marcacionData.Activi_Nombre != null) {
+                                        tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td>
                                             <div class=" dropdown">
                                                 <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -434,18 +495,18 @@ function cargartabla(fecha) {
                                                 </ul>
                                             </div>
                                         </td>`;
-                                        }
+                                    }
 
-                                        if (marcacionData.codigoSubactiv != 0) {
-                                            tbodyEntradaySalida += `<td >${marcacionData.codigoSubactiv} </td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
-                                        }
+                                    if (marcacionData.codigoSubactiv != 0) {
+                                        tbodyEntradaySalida += `<td >${marcacionData.codigoSubactiv} </td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                    }
 
-                                        if (marcacionData.subAct_nombre != null) {
-                                            tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
-                                        } else {
-                                            tbodyEntradaySalida += `<td>
+                                    if (marcacionData.subAct_nombre != null) {
+                                        tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
+                                    } else {
+                                        tbodyEntradaySalida += `<td>
                                             <div class=" dropdown">
                                                 <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
@@ -471,28 +532,55 @@ function cargartabla(fecha) {
                                                 </ul>
                                             </div>
                                         </td>`;
-                                        }
+                                    }
 
-                                        if(marcacionData.controladorEntrada!=0){
-                                            tbodyEntradaySalida += `
+                                    if (marcacionData.controladorEntrada != 0) {
+                                        tbodyEntradaySalida += `
                                                     <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
-                                        } else
-                                        {
-                                            tbodyEntradaySalida += `
-                                                    <td class="controHidEn">  --  </td>`;
-                                        }
+                                    } else {
+                                        tbodyEntradaySalida += `<td class="controHidEn">
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar controlador de entrada">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/contEntrada.svg" class="mr-2" height="12"/>
+                                                        No tiene controlador de Ent.
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarControE(${marcacionData.idMarcacion},'${marcacionData.entrada}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="14" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
+                                    }
 
-                                         //* COLUMNA DE ENTRADA
-                                         tbodyEntradaySalida += `<td >
+                                    //* COLUMNA DE ENTRADA
+                                    tbodyEntradaySalida += `<td >
                                          <div class=" dropdown">
-                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
+                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${
+                                                 marcacionData.idMarcacion
+                                             }" data-toggle="dropdown" aria-haspopup="true"
                                                  aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
                                                  <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
                                                      <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                      No tiene entrada
                                                  </span>
                                              </a>
-                                             <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
+                                             <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${
+                                                 marcacionData.idMarcacion
+                                             }" style="padding: 0rem 0rem;">
                                                 <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
                                                     <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
                                                         Opciones
@@ -500,7 +588,15 @@ function cargartabla(fecha) {
                                                 <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                                  <div class="dropdown-item" dropdown-itemM noExport>
                                                      <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
-                                                         <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                         <a onclick="javascript:insertarEntradaModal('${moment(
+                                                             marcacionData.salida
+                                                         ).format(
+                                                             "HH:mm:ss"
+                                                         )}',${
+                                        marcacionData.idMarcacion
+                                    },${
+                                        marcacionData.idHE
+                                    })" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                              <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
                                                              Insertar entrada
                                                          </a>
@@ -510,48 +606,70 @@ function cargartabla(fecha) {
                                          </div>
                                      </td>`;
 
-                                        tbodyEntradaySalida += `<td class="noExport">
+                                    tbodyEntradaySalida += `<td class="noExport">
                                         <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})">
                                         <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
                                         </td>`;
-                                        //* COLUMNA DE SALIDA
-                                        console.log('salid'+marcacionData.controladorSalida);
-                                        if(marcacionData.controladorSalida!=0){
-                                            tbodyEntradaySalida += `
+                                    //* COLUMNA DE SALIDA
+
+                                    if (marcacionData.controladorSalida != 0) {
+                                        tbodyEntradaySalida += `
                                                     <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
-                                        } else
-                                        {
-                                            tbodyEntradaySalida += `
-                                                    <td class="controHidSa">  --  </td>`;
-                                        }
+                                    } else {
+                                        tbodyEntradaySalida += `<td class="controHidSa">
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar controlador de salida">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/contSalida.svg" class="mr-2" height="12"/>
+                                                        No tiene controlador de Sal.
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarControSa(${marcacionData.idMarcacion},'${marcacionData.salida}')" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="14" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
+                                    }
 
-                                        tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
-                                            marcacionData.salida
-                                        ).format("HH:mm:ss")}</td>`;
+                                    tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
+                                        marcacionData.salida
+                                    ).format("HH:mm:ss")}</td>`;
 
-                                        tbodyEntradaySalida += `<td >
+                                    tbodyEntradaySalida += `<td >
                                                             <span class="badge badge-soft-secondary">
                                                                 <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                 --:--:--
                                                             </span>
                                                         </td>`;
-                                    }
                                 }
                             }
-
+                        }
                     }
 
-                        /*------- N DE COLUMNAS DE REPETICION---------------- */
-                       /*  tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`; */
-                        /* --------------------------------------------------- */
+                    /*------- N DE COLUMNAS DE REPETICION---------------- */
+                    /*  tbodyEntradaySalida += `<td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td name="tiempoSitHi">---</td>`; */
+                    /* --------------------------------------------------- */
 
                     tbody += tbodyEntradaySalida;
 
                     /* -----------PUNTO DE CONTRO ------------ */
-                    if(marcacionData.puntoControl!=null){
+                    if (marcacionData.puntoControl != null) {
                         tbody += `
                         <td class="puntoHid" > ${marcacionData.puntoControl} </td></tr>`;
-                    } else{
+                    } else {
                         tbody += `<td class="puntoHid" >
                         <div class=" dropdown">
                             <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
@@ -578,7 +696,6 @@ function cargartabla(fecha) {
                             </ul>
                         </div>
                     </td></tr>`;
-
                     }
 
                     /* ----------------------------------------- ------------------*/
@@ -586,15 +703,17 @@ function cargartabla(fecha) {
                 $("#tbodyD").html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
                 /* DATOS PARA EXPORTAR TABLA */
-                var razonSocial=$('#nameOrganizacion').val();
-                var direccion=$('#direccionO').val();
-                var ruc=$('#rucOrg').val();
+                var razonSocial = $("#nameOrganizacion").val();
+                var direccion = $("#direccionO").val();
+                var ruc = $("#rucOrg").val();
 
-                var fechaAsisteDH = moment($('#pasandoV').val()).format('DD/MM/YYYY');
+                var fechaAsisteDH = moment($("#pasandoV").val()).format(
+                    "DD/MM/YYYY"
+                );
 
                 /* ------------------------ */
-                 /* boton adicional */
-              /*    $.fn.dataTable.ext.buttons.alert = {
+                /* boton adicional */
+                /*    $.fn.dataTable.ext.buttons.alert = {
                     className: 'buttons-alert',
 
                     action: function ( e, dt, node, config ) {
@@ -602,14 +721,17 @@ function cargartabla(fecha) {
                     }
                 }; */
                 /* -------------------------- */
-                $('.dt-button-collection .buttons-columnVisibility').each(function(){
-                    var $li = $(this),
-                        $cb = $('<input>', {
-                                type:'checkbox',
-                                style:'margin:0 .25em 0 0; vertical-align:middle'}
-                              ).prop('checked', $(this).hasClass('active') );
-                    $li.find('a').prepend( $cb );
-                  });
+                $(".dt-button-collection .buttons-columnVisibility").each(
+                    function () {
+                        var $li = $(this),
+                            $cb = $("<input>", {
+                                type: "checkbox",
+                                style:
+                                    "margin:0 .25em 0 0; vertical-align:middle",
+                            }).prop("checked", $(this).hasClass("active"));
+                        $li.find("a").prepend($cb);
+                    }
+                );
                 table = $("#tablaReport").DataTable({
                     searching: false,
                     scrollX: true,
@@ -651,233 +773,389 @@ function cargartabla(fecha) {
                             colvis: "Visibilidad",
                         },
                     },
-                    dom: 'Blfrtip',
+                    dom: "Blfrtip",
                     buttons: [
-
                         {
-                        extend: 'excel',
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
-                        customize: function (xlsx) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                            var downrows = 5;
-                            var clRow = $('row', sheet);
-                            clRow[0].children[0].remove();
-                            //update Row
-                            clRow.each(function () {
-                                var attr = $(this).attr('r');
-                                var ind = parseInt(attr);
-                                ind = ind + downrows;
-                                $(this).attr("r", ind);
-                            });
+                            extend: "excel",
+                            className: "btn btn-sm mt-1",
+                            text:
+                                "<i><img src='admin/images/excel.svg' height='20'></i> Descargar",
+                            customize: function (xlsx) {
+                                var sheet = xlsx.xl.worksheets["sheet1.xml"];
+                                var downrows = 5;
+                                var clRow = $("row", sheet);
+                                clRow[0].children[0].remove();
+                                //update Row
+                                clRow.each(function () {
+                                    var attr = $(this).attr("r");
+                                    var ind = parseInt(attr);
+                                    ind = ind + downrows;
+                                    $(this).attr("r", ind);
+                                });
 
-                            // Update  row > c
-                            $('row c ', sheet).each(function () {
-                                var attr = $(this).attr('r');
-                                var pre = attr.substring(0, 1);
-                                var ind = parseInt(attr.substring(1, attr.length));
-                                ind = ind + downrows;
-                                $(this).attr("r", pre + ind);
-                            });
+                                // Update  row > c
+                                $("row c ", sheet).each(function () {
+                                    var attr = $(this).attr("r");
+                                    var pre = attr.substring(0, 1);
+                                    var ind = parseInt(
+                                        attr.substring(1, attr.length)
+                                    );
+                                    ind = ind + downrows;
+                                    $(this).attr("r", pre + ind);
+                                });
 
-                            function Addrow(index, data) {
-                                msg = '<row r="' + index + '">'
-                                for (i = 0; i < data.length; i++) {
-                                    var key = data[i].k;
-                                    var value = data[i].v;
-                                    var bold = data[i].s;
-                                    msg += '<c t="inlineStr" r="' + key + index + '" s="' + bold + '" >';
-                                    msg += '<is>';
-                                    msg += '<t>' + value + '</t>';
-                                    msg += '</is>';
-                                    msg += '</c>';
-                                }
-                                msg += '</row>';
-                                return msg;
-                            }
-                            var now = new Date();
-                            var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                            //insert
-                            var r1 = Addrow(1, [{ k: 'A', v: 'CONTROL REGISTRO DE ASISTENCIA', s: 2 }]);
-                            var r2 = Addrow(2, [{ k: 'A', v: 'Razón Social:', s: 2 }, { k: 'C', v: razonSocial, s: 0 }]);
-                            var r3 = Addrow(3, [{ k: 'A', v: 'Dirección:', s: 2 }, { k: 'C', v: direccion, s: 0 }]);
-                            var r4 = Addrow(4, [{ k: 'A', v: 'Número de Ruc:', s: 2 }, { k: 'C', v: ruc, s: 0 }]);
-                            var r5 = Addrow(5, [{ k: 'A', v: 'Fecha:', s: 2 }, { k: 'C', v: fechaAsisteDH, s: 0 }]);
-                            sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + r4 + r5 + sheet.childNodes[0].childNodes[1].innerHTML;
-                        },
-                        sheetName: 'Asistencia',
-                        title: 'Asistencia',
-                        autoFilter: false,
-                        exportOptions: {
-                            columns: ":visible:not(.noExport)",
-                            format: {
-                                body: function (data, row, column, node) {
-                                    var cont = $.trim($(node).text());
-                                    var cont1 = cont.replace('Insertar entrada', '');
-                                    var cont2 = cont1.replace('Insertar salida', '');
-                                    var cont3 = cont2.replace('No tiene entrada', '---');
-                                    var cont4 = cont3.replace('No tiene salida', '---');
-                                    var cont5 = cont4.replace('No tiene punto de C.', '---');
-                                    var cont6 = cont5.replace('No tiene actividad', '---');
-                                    var cont7 = cont6.replace('No tiene subactividad', '---');
-
-                                    var cont8 = cont7.replace('Agregar', '');
-                                    var cont9  = cont8.replace('Opciones', '');
-
-                                    return $.trim(cont9);
-                                }
-                            }
-                        },
-                    }, {
-                        extend: "pdfHtml5",
-                        className: 'btn btn-sm mt-1',
-                        text: "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
-                        orientation: 'landscape',
-                        pageSize: 'A2',
-                        title: 'Asistencia',
-                        exportOptions: {
-                           columns: ":visible:not(.noExport)"
-                        },
-                        customize: function (doc) {
-                            doc['styles'] = {
-                                table: {
-                                    width: '100%'
-                                },
-                                tableHeader: {
-                                    bold: true,
-                                    fontSize: 11,
-                                    color: '#ffffff',
-                                    fillColor: '#14274e',
-                                    alignment: 'left'
-                                },
-                                defaultStyle: {
-                                    fontSize: 10,
-                                    alignment: 'center'
-                                }
-                            };
-                            doc.pageMargins = [20, 120, 20, 30];
-                            doc.content[1].margin = [30, 0, 30, 0];
-                            var colCount = new Array();
-                            var tr = $('#tablaReport tbody tr:first-child');
-                            var trWidth = $(tr).width();
-                            $('#tablaReport').find('tbody tr:first-child td').each(function () {
-                                var tdWidth = $(this).width();
-                                var widthFinal = parseFloat(tdWidth * 130);
-                                widthFinal = widthFinal.toFixed(2) / trWidth.toFixed(2);
-                                if ($(this).attr('colspan')) {
-                                    for (var i = 1; i <= $(this).attr('colspan'); $i++) {
-                                        colCount.push('*');
+                                function Addrow(index, data) {
+                                    msg = '<row r="' + index + '">';
+                                    for (i = 0; i < data.length; i++) {
+                                        var key = data[i].k;
+                                        var value = data[i].v;
+                                        var bold = data[i].s;
+                                        msg +=
+                                            '<c t="inlineStr" r="' +
+                                            key +
+                                            index +
+                                            '" s="' +
+                                            bold +
+                                            '" >';
+                                        msg += "<is>";
+                                        msg += "<t>" + value + "</t>";
+                                        msg += "</is>";
+                                        msg += "</c>";
                                     }
-                                } else {
-                                    colCount.push(parseFloat(widthFinal.toFixed(2)) + '%');
+                                    msg += "</row>";
+                                    return msg;
                                 }
-                            });
-                            var bodyCompleto = [];
-                            doc.content[1].table.body.forEach(function (line, i) {
-                                var bodyNuevo = [];
-                                if (i >= 1) {
-                                    line.forEach(element => {
-                                        var textOriginal = element.text;
-                                        var cambiar = textOriginal.replace('Insertar entrada', '');
-                                        var cambiar2 = cambiar.replace('Insertar salida', '');
-                                        var cambiar3 = cambiar2.replace('No tiene entrada', '---');
-                                        var cambiar4 = cambiar3.replace('No tiene salida', '---');
-                                        var cambiar5 = cambiar4.replace('No tiene punto de C.', '---');
-                                        var cambiar6 = cambiar5.replace('No tiene actividad', '---');
-                                        var cambiar7 = cambiar6.replace('No tiene subactividad', '---');
-                                        var cambiar8 = cambiar7.replace('Agregar', '');
-                                        var cambiar9 = cambiar8.replace('Opciones', '');
-                                        var cambiar10 = cambiar9.trim();
-                                        bodyNuevo.push({ text: cambiar10, style: 'defaultStyle' });
-                                    });
-                                    bodyCompleto.push(bodyNuevo);
-                                } else {
-                                    bodyCompleto.push(line);
-                                }
-                            });
-                            doc.content.splice(0, 1);
-                            doc.content[0].table.body = bodyCompleto;
-                            var objLayout = {};
-                            objLayout['hLineWidth'] = function (i) { return .2; };
-                            objLayout['vLineWidth'] = function (i) { return .2; };
-                            objLayout['hLineColor'] = function (i) { return '#aaa'; };
-                            objLayout['vLineColor'] = function (i) { return '#aaa'; };
-                            doc.content[0].layout = objLayout;
-                            var now = new Date();
-                            var jsDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-                            doc["header"] = function () {
-                                return {
-                                    columns: [
-                                        {
-                                            alignment: 'left',
-                                            italics: false,
-                                            text: [
-                                                { text: '\nCONTROL REGISTRO DE ASISTENCIA', bold: true },
-                                                { text: '\n\nRazon Social:\t\t\t\t\t\t', bold: false }, { text: razonSocial, bold: false },
-                                                { text: '\nDireccion:\t\t\t\t\t\t\t', bold: false }, { text: '\t' + direccion, bold: false },
-                                                { text: '\nNumero de Ruc:\t\t\t\t\t', bold: false }, { text: ruc, bold: false },
-                                                { text: '\nFecha:\t\t\t\t\t\t\t\t\t', bold: false }, { text: fechaAsisteDH, bold: false }
-                                            ],
+                                var now = new Date();
+                                var jsDate =
+                                    now.getDate() +
+                                    "/" +
+                                    (now.getMonth() + 1) +
+                                    "/" +
+                                    now.getFullYear();
+                                //insert
+                                var r1 = Addrow(1, [
+                                    {
+                                        k: "A",
+                                        v: "CONTROL REGISTRO DE ASISTENCIA",
+                                        s: 2,
+                                    },
+                                ]);
+                                var r2 = Addrow(2, [
+                                    { k: "A", v: "Razón Social:", s: 2 },
+                                    { k: "C", v: razonSocial, s: 0 },
+                                ]);
+                                var r3 = Addrow(3, [
+                                    { k: "A", v: "Dirección:", s: 2 },
+                                    { k: "C", v: direccion, s: 0 },
+                                ]);
+                                var r4 = Addrow(4, [
+                                    { k: "A", v: "Número de Ruc:", s: 2 },
+                                    { k: "C", v: ruc, s: 0 },
+                                ]);
+                                var r5 = Addrow(5, [
+                                    { k: "A", v: "Fecha:", s: 2 },
+                                    { k: "C", v: fechaAsisteDH, s: 0 },
+                                ]);
+                                sheet.childNodes[0].childNodes[1].innerHTML =
+                                    r1 +
+                                    r2 +
+                                    r3 +
+                                    r4 +
+                                    r5 +
+                                    sheet.childNodes[0].childNodes[1].innerHTML;
+                            },
+                            sheetName: "Asistencia",
+                            title: "Asistencia",
+                            autoFilter: false,
+                            exportOptions: {
+                                columns: ":visible:not(.noExport)",
+                                format: {
+                                    body: function (data, row, column, node) {
+                                        var cont = $.trim($(node).text());
+                                        var cont1 = cont.replace(
+                                            "Insertar entrada",
+                                            ""
+                                        );
+                                        var cont2 = cont1.replace(
+                                            "Insertar salida",
+                                            ""
+                                        );
+                                        var cont3 = cont2.replace(
+                                            "No tiene entrada",
+                                            "---"
+                                        );
+                                        var cont4 = cont3.replace(
+                                            "No tiene salida",
+                                            "---"
+                                        );
+                                        var cont5 = cont4.replace(
+                                            "No tiene punto de C.",
+                                            "---"
+                                        );
+                                        var cont6 = cont5.replace(
+                                            "No tiene actividad",
+                                            "---"
+                                        );
+                                        var cont7 = cont6.replace(
+                                            "No tiene subactividad",
+                                            "---"
+                                        );
 
-                                            fontSize: 10,
-                                            margin: [30, 0]
-                                        },
-                                    ],
-                                    margin: 20
+                                        var cont8 = cont7.replace(
+                                            "Agregar",
+                                            ""
+                                        );
+                                        var cont9 = cont8.replace(
+                                            "Opciones",
+                                            ""
+                                        );
+
+                                        return $.trim(cont9);
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            extend: "pdfHtml5",
+                            className: "btn btn-sm mt-1",
+                            text:
+                                "<i><img src='admin/images/pdf.svg' height='20'></i> Descargar",
+                            orientation: "landscape",
+                            pageSize: "A2",
+                            title: "Asistencia",
+                            exportOptions: {
+                                columns: ":visible:not(.noExport)",
+                            },
+                            customize: function (doc) {
+                                doc["styles"] = {
+                                    table: {
+                                        width: "100%",
+                                    },
+                                    tableHeader: {
+                                        bold: true,
+                                        fontSize: 11,
+                                        color: "#ffffff",
+                                        fillColor: "#14274e",
+                                        alignment: "left",
+                                    },
+                                    defaultStyle: {
+                                        fontSize: 10,
+                                        alignment: "center",
+                                    },
                                 };
-                            };
-                        }
-                    }],
+                                doc.pageMargins = [20, 120, 20, 30];
+                                doc.content[1].margin = [30, 0, 30, 0];
+                                var colCount = new Array();
+                                var tr = $("#tablaReport tbody tr:first-child");
+                                var trWidth = $(tr).width();
+                                $("#tablaReport")
+                                    .find("tbody tr:first-child td")
+                                    .each(function () {
+                                        var tdWidth = $(this).width();
+                                        var widthFinal = parseFloat(
+                                            tdWidth * 130
+                                        );
+                                        widthFinal =
+                                            widthFinal.toFixed(2) /
+                                            trWidth.toFixed(2);
+                                        if ($(this).attr("colspan")) {
+                                            for (
+                                                var i = 1;
+                                                i <= $(this).attr("colspan");
+                                                $i++
+                                            ) {
+                                                colCount.push("*");
+                                            }
+                                        } else {
+                                            colCount.push(
+                                                parseFloat(
+                                                    widthFinal.toFixed(2)
+                                                ) + "%"
+                                            );
+                                        }
+                                    });
+                                var bodyCompleto = [];
+                                doc.content[1].table.body.forEach(function (
+                                    line,
+                                    i
+                                ) {
+                                    var bodyNuevo = [];
+                                    if (i >= 1) {
+                                        line.forEach((element) => {
+                                            var textOriginal = element.text;
+                                            var cambiar = textOriginal.replace(
+                                                "Insertar entrada",
+                                                ""
+                                            );
+                                            var cambiar2 = cambiar.replace(
+                                                "Insertar salida",
+                                                ""
+                                            );
+                                            var cambiar3 = cambiar2.replace(
+                                                "No tiene entrada",
+                                                "---"
+                                            );
+                                            var cambiar4 = cambiar3.replace(
+                                                "No tiene salida",
+                                                "---"
+                                            );
+                                            var cambiar5 = cambiar4.replace(
+                                                "No tiene punto de C.",
+                                                "---"
+                                            );
+                                            var cambiar6 = cambiar5.replace(
+                                                "No tiene actividad",
+                                                "---"
+                                            );
+                                            var cambiar7 = cambiar6.replace(
+                                                "No tiene subactividad",
+                                                "---"
+                                            );
+                                            var cambiar8 = cambiar7.replace(
+                                                "Agregar",
+                                                ""
+                                            );
+                                            var cambiar9 = cambiar8.replace(
+                                                "Opciones",
+                                                ""
+                                            );
+                                            var cambiar10 = cambiar9.trim();
+                                            bodyNuevo.push({
+                                                text: cambiar10,
+                                                style: "defaultStyle",
+                                            });
+                                        });
+                                        bodyCompleto.push(bodyNuevo);
+                                    } else {
+                                        bodyCompleto.push(line);
+                                    }
+                                });
+                                doc.content.splice(0, 1);
+                                doc.content[0].table.body = bodyCompleto;
+                                var objLayout = {};
+                                objLayout["hLineWidth"] = function (i) {
+                                    return 0.2;
+                                };
+                                objLayout["vLineWidth"] = function (i) {
+                                    return 0.2;
+                                };
+                                objLayout["hLineColor"] = function (i) {
+                                    return "#aaa";
+                                };
+                                objLayout["vLineColor"] = function (i) {
+                                    return "#aaa";
+                                };
+                                doc.content[0].layout = objLayout;
+                                var now = new Date();
+                                var jsDate =
+                                    now.getDate() +
+                                    "/" +
+                                    (now.getMonth() + 1) +
+                                    "/" +
+                                    now.getFullYear();
+                                doc["header"] = function () {
+                                    return {
+                                        columns: [
+                                            {
+                                                alignment: "left",
+                                                italics: false,
+                                                text: [
+                                                    {
+                                                        text:
+                                                            "\nCONTROL REGISTRO DE ASISTENCIA",
+                                                        bold: true,
+                                                    },
+                                                    {
+                                                        text:
+                                                            "\n\nRazon Social:\t\t\t\t\t\t",
+                                                        bold: false,
+                                                    },
+                                                    {
+                                                        text: razonSocial,
+                                                        bold: false,
+                                                    },
+                                                    {
+                                                        text:
+                                                            "\nDireccion:\t\t\t\t\t\t\t",
+                                                        bold: false,
+                                                    },
+                                                    {
+                                                        text: "\t" + direccion,
+                                                        bold: false,
+                                                    },
+                                                    {
+                                                        text:
+                                                            "\nNumero de Ruc:\t\t\t\t\t",
+                                                        bold: false,
+                                                    },
+                                                    { text: ruc, bold: false },
+                                                    {
+                                                        text:
+                                                            "\nFecha:\t\t\t\t\t\t\t\t\t",
+                                                        bold: false,
+                                                    },
+                                                    {
+                                                        text: fechaAsisteDH,
+                                                        bold: false,
+                                                    },
+                                                ],
+
+                                                fontSize: 10,
+                                                margin: [30, 0],
+                                            },
+                                        ],
+                                        margin: 20,
+                                    };
+                                };
+                            },
+                        },
+                    ],
                     initComplete: function () {
                         dataT = this;
 
                         //*fecha
-                        if ($('#fechaSwitch').prop('checked')) {
-                            dataT.api().columns('.fechaHid').visible(true);
+                        if ($("#fechaSwitch").prop("checked")) {
+                            dataT.api().columns(".fechaHid").visible(true);
                         } else {
-                            dataT.api().columns('.fechaHid').visible(false);
+                            dataT.api().columns(".fechaHid").visible(false);
                         }
 
                         //*sexo
-                        if ($('#checSexo').prop('checked')) {
-                            dataT.api().columns('.sexoHid').visible(true);
+                        if ($("#checSexo").prop("checked")) {
+                            dataT.api().columns(".sexoHid").visible(true);
                         } else {
-                            dataT.api().columns('.sexoHid').visible(false);
+                            dataT.api().columns(".sexoHid").visible(false);
                         }
 
                         //*cargo
-                        if ($('#checCargo').prop('checked')) {
-                            dataT.api().columns('.cargoHid').visible(true);
+                        if ($("#checCargo").prop("checked")) {
+                            dataT.api().columns(".cargoHid").visible(true);
                         } else {
-                            dataT.api().columns('.cargoHid').visible(false);
+                            dataT.api().columns(".cargoHid").visible(false);
                         }
 
                         //*controlador entrada
-                        if ($('#checControlEn').prop('checked')) {
-                            dataT.api().columns('.controHidEn').visible(true);
-
+                        if ($("#checControlEn").prop("checked")) {
+                            dataT.api().columns(".controHidEn").visible(true);
                         } else {
-                            dataT.api().columns('.controHidEn').visible(false);
+                            dataT.api().columns(".controHidEn").visible(false);
                         }
 
                         //*controlador salida
-                        if ($('#checControlSa').prop('checked')) {
-                            dataT.api().columns('.controHidSa').visible(true);
-
+                        if ($("#checControlSa").prop("checked")) {
+                            dataT.api().columns(".controHidSa").visible(true);
                         } else {
-                            dataT.api().columns('.controHidSa').visible(false);
+                            dataT.api().columns(".controHidSa").visible(false);
                         }
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
                         }, 200);
-
                     },
                 });
                 $(window).on("resize", function () {
                     $("#tablaReport").css("width", "100%");
                     table.draw(true);
                 });
-
             } else {
                 $("#MostarDetalles").hide();
                 $("#tbodyD").empty();
@@ -885,8 +1163,6 @@ function cargartabla(fecha) {
                     '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty text-center"> &nbsp;&nbsp;&nbsp;&nbsp; No hay registros</td></tr>'
                 );
             }
-
-
         },
         error: function () {},
     });
@@ -926,14 +1202,10 @@ function cambiarF() {
     cargartabla(f2);
 }
 
-
 /* --------------INTERCAMBIAR  ENTRADA Y SALIDA--------------------------------- */
 function intercambiarMar(id) {
-
     alertify
-        .confirm("¿Desea intercambiar entrada y salida?", function (
-            e
-        ) {
+        .confirm("¿Desea intercambiar entrada y salida?", function (e) {
             if (e) {
                 $.ajax({
                     async: false,
@@ -943,7 +1215,9 @@ function intercambiarMar(id) {
                         id: id,
                     },
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
                     },
                     statusCode: {
                         /*401: function () {
@@ -951,30 +1225,33 @@ function intercambiarMar(id) {
                         },*/
                         419: function () {
                             location.reload();
-                        }
+                        },
                     },
                     success: function (data) {
-
-                        $('#btnRecargaTabla').click();
+                        $("#btnRecargaTabla").click();
                         $.notifyClose();
-                        $.notify({
-                            message: data,
-                            icon: 'admin/images/checked.svg',
-                        }, {
-                            icon_type: 'image',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            delay: 6000,
-                            template: '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                                '<img data-notify="icon" class="img-circle pull-left" height="15">' +
-                                '<span data-notify="title">{1}</span> ' +
-                                '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                                '</div>',
-                            spacing: 35
-                        });
+                        $.notify(
+                            {
+                                message: data,
+                                icon: "admin/images/checked.svg",
+                            },
+                            {
+                                icon_type: "image",
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                delay: 6000,
+                                template:
+                                    '<div data-notify="container" class="col-xs-8 col-sm-3 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                    '<img data-notify="icon" class="img-circle pull-left" height="15">' +
+                                    '<span data-notify="title">{1}</span> ' +
+                                    '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                                    "</div>",
+                                spacing: 35,
+                            }
+                        );
                     },
-                    error: function () { }
+                    error: function () {},
                 });
             }
         })
@@ -990,8 +1267,7 @@ function intercambiarMar(id) {
             resizable: false,
             closable: false,
             transition: "zoom",
-            oncancel: function (closeEvent) {
-            },
+            oncancel: function (closeEvent) {},
         });
 }
 /* ------------------------------------ */
@@ -1003,36 +1279,36 @@ var newSalida = {};
 // * MODAL DE INSERTAR SALIDA
 function insertarSalidaModal(hora, id, idH) {
     var estadoH = false;
-    contenidoHorario.forEach(element => {
+    contenidoHorario.forEach((element) => {
         if (element.idHorarioE == idH) {
             if (element.estado == 0) {
-                $('#actualizarH').modal();
+                $("#actualizarH").modal();
                 estadoH = true;
                 return;
             }
         }
     });
     if (estadoH) return;
-    $('#idMarcacionIS').val(id);
-    $('#i_hora').text(hora);
-    $('#idHorarioIS').val(idH);
-    $('#insertarSalida').modal();
-    horasS = $('#horaSalidaNueva').flatpickr({
+    $("#idMarcacionIS").val(id);
+    $("#i_hora").text(hora);
+    $("#idHorarioIS").val(idH);
+    $("#insertarSalida").modal();
+    horasS = $("#horaSalidaNueva").flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i:s",
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: true
+        static: true,
     });
 }
 
 // * INSERTAR SALIDA
 function insertarSalida() {
-    var id = $('#idMarcacionIS').val();
-    var salida = $('#horaSalidaNueva').val();
-    var horario = $('#idHorarioIS').val();
+    var id = $("#idMarcacionIS").val();
+    var salida = $("#horaSalidaNueva").val();
+    var horario = $("#idHorarioIS").val();
     $.ajax({
         async: false,
         type: "POST",
@@ -1040,7 +1316,7 @@ function insertarSalida() {
         data: {
             id: id,
             salida: salida,
-            horario: horario
+            horario: horario,
         },
         statusCode: {
             419: function () {
@@ -1052,17 +1328,17 @@ function insertarSalida() {
         },
         success: function (data) {
             if (data.respuesta != undefined) {
-                $('#i_validS').empty();
-                $('#i_validS').append(data.respuesta);
-                $('#i_validS').show();
+                $("#i_validS").empty();
+                $("#i_validS").append(data.respuesta);
+                $("#i_validS").show();
                 $('button[type="submit"]').attr("disabled", false);
             } else {
-                $('#i_validS').empty();
-                $('#i_validS').hide();
-                $('#insertarSalida').modal('toggle');
+                $("#i_validS").empty();
+                $("#i_validS").hide();
+                $("#insertarSalida").modal("toggle");
                 $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
-                $('#btnRecargaTabla').click();
+                $("#btnRecargaTabla").click();
                 limpiarAtributos();
                 $.notifyClose();
                 $.notify(
@@ -1087,23 +1363,25 @@ function insertarSalida() {
                 );
             }
         },
-        error: function () {
-        },
+        error: function () {},
     });
 }
 // * VALIDACION
-$('#formInsertarSalida').attr('novalidate', true);
-$('#formInsertarSalida').submit(function (e) {
+$("#formInsertarSalida").attr("novalidate", true);
+$("#formInsertarSalida").submit(function (e) {
     e.preventDefault();
-    if ($("#horaSalidaNueva").val() == "00:00:00" || $("#horaSalidaNueva").val() == "00:00:0") {
-        $('#i_validS').empty();
-        $('#i_validS').append("Ingresar salida.");
-        $('#i_validS').show();
+    if (
+        $("#horaSalidaNueva").val() == "00:00:00" ||
+        $("#horaSalidaNueva").val() == "00:00:0"
+    ) {
+        $("#i_validS").empty();
+        $("#i_validS").append("Ingresar salida.");
+        $("#i_validS").show();
         $('button[type="submit"]').attr("disabled", false);
         return;
     }
-    $('#i_validS').empty();
-    $('#i_validS').hide();
+    $("#i_validS").empty();
+    $("#i_validS").hide();
     $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
@@ -1112,35 +1390,35 @@ $('#formInsertarSalida').submit(function (e) {
 /* -------------------FUNCIONES INSERTAR ENTRADA----------- */
 function insertarEntradaModal(hora, id, idH) {
     var estadoH = false;
-    contenidoHorario.forEach(element => {
+    contenidoHorario.forEach((element) => {
         if (element.idHorarioE == idH) {
             if (element.estado == 0) {
-                $('#actualizarH').modal();
+                $("#actualizarH").modal();
                 estadoH = true;
                 return;
             }
         }
     });
     if (estadoH) return;
-    $('#idMarcacionIE').val(id);
-    $('#ie_hora').text(hora);
-    $('#idHorarioIE').val(idH);
-    $('#insertarEntrada').modal();
-    horasE = $('#horasEntradaNueva').flatpickr({
+    $("#idMarcacionIE").val(id);
+    $("#ie_hora").text(hora);
+    $("#idHorarioIE").val(idH);
+    $("#insertarEntrada").modal();
+    horasE = $("#horasEntradaNueva").flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i:s",
         defaultDate: "00:00:00",
         time_24hr: true,
         enableSeconds: true,
-        static: true
+        static: true,
     });
 }
 // * INSERTAR ENTRADA
 function insertarEntrada() {
-    var id = $('#idMarcacionIE').val();
-    var entrada = $('#horasEntradaNueva').val();
-    var horario = $('#idHorarioIE').val();
+    var id = $("#idMarcacionIE").val();
+    var entrada = $("#horasEntradaNueva").val();
+    var horario = $("#idHorarioIE").val();
     $.ajax({
         async: false,
         type: "POST",
@@ -1148,7 +1426,7 @@ function insertarEntrada() {
         data: {
             id: id,
             entrada: entrada,
-            horario: horario
+            horario: horario,
         },
         statusCode: {
             419: function () {
@@ -1160,17 +1438,17 @@ function insertarEntrada() {
         },
         success: function (data) {
             if (data.respuesta != undefined) {
-                $('#i_validE').empty();
-                $('#i_validE').append(data.respuesta);
-                $('#i_validE').show();
+                $("#i_validE").empty();
+                $("#i_validE").append(data.respuesta);
+                $("#i_validE").show();
                 $('button[type="submit"]').attr("disabled", false);
             } else {
-                $('#i_validE').empty();
-                $('#i_validE').hide();
-                $('#insertarEntrada').modal('toggle');
+                $("#i_validE").empty();
+                $("#i_validE").hide();
+                $("#insertarEntrada").modal("toggle");
                 $('button[type="submit"]').attr("disabled", false);
                 fechaValue.setDate(fechaGlobal);
-                $('#btnRecargaTabla').click();
+                $("#btnRecargaTabla").click();
                 limpiarAtributos();
                 $.notifyClose();
                 $.notify(
@@ -1195,23 +1473,25 @@ function insertarEntrada() {
                 );
             }
         },
-        error: function () {
-        },
+        error: function () {},
     });
 }
 // * VALIDACION
-$('#formInsertarEntrada').attr('novalidate', true);
-$('#formInsertarEntrada').submit(function (e) {
+$("#formInsertarEntrada").attr("novalidate", true);
+$("#formInsertarEntrada").submit(function (e) {
     e.preventDefault();
-    if ($("#horasEntradaNueva").val() == "00:00:00" || $("#horasEntradaNueva").val() == "00:00:0") {
-        $('#i_validE').empty();
-        $('#i_validE').append("Ingresar entrada.");
-        $('#i_validE').show();
+    if (
+        $("#horasEntradaNueva").val() == "00:00:00" ||
+        $("#horasEntradaNueva").val() == "00:00:0"
+    ) {
+        $("#i_validE").empty();
+        $("#i_validE").append("Ingresar entrada.");
+        $("#i_validE").show();
         $('button[type="submit"]').attr("disabled", false);
         return;
     }
-    $('#i_validE').empty();
-    $('#i_validE').hide();
+    $("#i_validE").empty();
+    $("#i_validE").hide();
     $('button[type="submit"]').attr("disabled", true);
     this.submit();
 });
@@ -1219,70 +1499,69 @@ $('#formInsertarEntrada').submit(function (e) {
 // * LIMPIEZA DE CAMPOS
 function limpiarAtributos() {
     // ? MODAL DE CAMBIAR ENTRADA
-    $('#entradaM').empty();
-    $('#e_valid').empty();
-    $('#e_valid').hide();
-    $('#c_horaE').empty();
+    $("#entradaM").empty();
+    $("#e_valid").empty();
+    $("#e_valid").hide();
+    $("#c_horaE").empty();
     // ? MODAL DE CAMBIAR SALIDA
-    $('#salidaM').empty();
-    $('#s_valid').empty();
-    $('#s_valid').hide();
-    $('#c_horaS').empty();
+    $("#salidaM").empty();
+    $("#s_valid").empty();
+    $("#s_valid").hide();
+    $("#c_horaS").empty();
     // ? MODAL DE ASIGNACION A NUEVA MARCACIÓN
-    $('#a_valid').empty();
-    $('#a_valid').hide();
-    $('#horarioM').empty();
-    $('#a_hora').empty();
+    $("#a_valid").empty();
+    $("#a_valid").hide();
+    $("#horarioM").empty();
+    $("#a_hora").empty();
     // ? MODAL DE INSERTAR SALIDA
-    $('#i_validS').empty();
-    $('#i_validS').hide();
+    $("#i_validS").empty();
+    $("#i_validS").hide();
     if (horasS.config != undefined) {
         horasS.setDate("00:00:00");
     }
     // ? MODAL DE INSERTAR ENTRADA
-    $('#i_validE').empty();
-    $('#i_validE').hide();
+    $("#i_validE").empty();
+    $("#i_validE").hide();
     if (horasE.config != undefined) {
         horasE.setDate("00:00:00");
     }
 
     // ? MODAL DE NUEVA MARCACION
-    $('#v_entrada').prop("checked", false);
-    $('#v_salida').prop("checked", false);
-    $('#nuevaEntrada').prop("disabled", false);
-    $('#nuevaSalida').prop("disabled", false);
+    $("#v_entrada").prop("checked", false);
+    $("#v_salida").prop("checked", false);
+    $("#nuevaEntrada").prop("disabled", false);
+    $("#nuevaSalida").prop("disabled", false);
     if (newSalida.config != undefined) {
         newSalida.setDate("00:00:00");
     }
     if (newEntrada.config != undefined) {
         newEntrada.setDate("00:00:00");
     }
-    $('#rowDatosM').hide();
-    $('#r_horarioXE').empty();
+    $("#rowDatosM").hide();
+    $("#r_horarioXE").empty();
 }
 
 /* *************************EVENTOS DE SELECTOR DE COLUMNA ********************************* */
 
 //* FECHA
-$('#fechaSwitch').change(function (event) {
-        if ($('#fechaSwitch').prop('checked')) {
-            dataT.api().columns('.fechaHid').visible(true);
-        } else {
-            dataT.api().columns('.fechaHid').visible(false);
-        }
-        setTimeout(function () {
-            $("#tablaReport").css("width", "100%");
-            $("#tablaReport").DataTable().draw(false);
-        }, 1);
-    });
+$("#fechaSwitch").change(function (event) {
+    if ($("#fechaSwitch").prop("checked")) {
+        dataT.api().columns(".fechaHid").visible(true);
+    } else {
+        dataT.api().columns(".fechaHid").visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
 
 //* CODIGO
-$('#checCodigo').change(function (event) {
-    if ($('#checCodigo').prop('checked')) {
-        dataT.api().columns('.codigoHid').visible(true);
-
+$("#checCodigo").change(function (event) {
+    if ($("#checCodigo").prop("checked")) {
+        dataT.api().columns(".codigoHid").visible(true);
     } else {
-        dataT.api().columns('.codigoHid').visible(false);
+        dataT.api().columns(".codigoHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1291,12 +1570,11 @@ $('#checCodigo').change(function (event) {
 });
 
 //* NUM DOCUMENTO
-$('#checnumdoc').change(function (event) {
-    if ($('#checnumdoc').prop('checked')) {
-        dataT.api().columns('.numdocHid').visible(true);
-
+$("#checnumdoc").change(function (event) {
+    if ($("#checnumdoc").prop("checked")) {
+        dataT.api().columns(".numdocHid").visible(true);
     } else {
-        dataT.api().columns('.numdocHid').visible(false);
+        dataT.api().columns(".numdocHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1305,11 +1583,11 @@ $('#checnumdoc').change(function (event) {
 });
 
 //* SEXO
-$('#checSexo').change(function (event) {
-    if ($('#checSexo').prop('checked')) {
-        dataT.api().columns('.sexoHid').visible(true);
+$("#checSexo").change(function (event) {
+    if ($("#checSexo").prop("checked")) {
+        dataT.api().columns(".sexoHid").visible(true);
     } else {
-        dataT.api().columns('.sexoHid').visible(false);
+        dataT.api().columns(".sexoHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1318,12 +1596,11 @@ $('#checSexo').change(function (event) {
 });
 
 //* CARGO
-$('#checCargo').change(function (event) {
-    if ($('#checCargo').prop('checked')) {
-        dataT.api().columns('.cargoHid').visible(true);
-
+$("#checCargo").change(function (event) {
+    if ($("#checCargo").prop("checked")) {
+        dataT.api().columns(".cargoHid").visible(true);
     } else {
-        dataT.api().columns('.cargoHid').visible(false);
+        dataT.api().columns(".cargoHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1332,12 +1609,11 @@ $('#checCargo').change(function (event) {
 });
 
 //* PUNTO CONTROL
-$('#checPuntoc').change(function (event) {
-    if ($('#checPuntoc').prop('checked')) {
-        dataT.api().columns('.puntoHid').visible(true);
-
+$("#checPuntoc").change(function (event) {
+    if ($("#checPuntoc").prop("checked")) {
+        dataT.api().columns(".puntoHid").visible(true);
     } else {
-        dataT.api().columns('.puntoHid').visible(false);
+        dataT.api().columns(".puntoHid").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1346,12 +1622,11 @@ $('#checPuntoc').change(function (event) {
 });
 
 //* CONTROLADOR ENTRADA
-$('#checControlEn').change(function (event) {
-    if ($('#checControlEn').prop('checked')) {
-        dataT.api().columns('.controHidEn').visible(true);
-
+$("#checControlEn").change(function (event) {
+    if ($("#checControlEn").prop("checked")) {
+        dataT.api().columns(".controHidEn").visible(true);
     } else {
-        dataT.api().columns('.controHidEn').visible(false);
+        dataT.api().columns(".controHidEn").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1360,12 +1635,11 @@ $('#checControlEn').change(function (event) {
 });
 
 //* CONTROLADOR SALIDA
-$('#checControlSa').change(function (event) {
-    if ($('#checControlSa').prop('checked')) {
-        dataT.api().columns('.controHidSa').visible(true);
-
+$("#checControlSa").change(function (event) {
+    if ($("#checControlSa").prop("checked")) {
+        dataT.api().columns(".controHidSa").visible(true);
     } else {
-        dataT.api().columns('.controHidSa').visible(false);
+        dataT.api().columns(".controHidSa").visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1375,7 +1649,7 @@ $('#checControlSa').change(function (event) {
 /* ------------------------------------------------------------------ */
 
 //*PARA QUE NO SE CIERRE DROPDOWN
-$(document).on('click', '.allow-focus', function (e) {
+$(document).on("click", ".allow-focus", function (e) {
     e.stopPropagation();
 });
 
@@ -1385,14 +1659,12 @@ $(document).on('click', '.allow-focus', function (e) {
 $("#selectPuntoC").select2({
     placeholder: "Seleccione punto de control",
 });
-function agregarPuntoC(idMarcacion){
-
-  $('#idMarcacionPC').val(idMarcacion);
+function agregarPuntoC(idMarcacion) {
+    $("#idMarcacionPC").val(idMarcacion);
 
     /* PARA SELECT DE PUNTO DE CONTROL */
     $("#selectPuntoC").empty();
     var container = $("#selectPuntoC");
-
 
     $.ajax({
         async: false,
@@ -1418,21 +1690,22 @@ function agregarPuntoC(idMarcacion){
             });
             container.append(option);
 
-            $('#insertarPuntoC').modal('show');
+            $("#insertarPuntoC").modal("show");
         },
         error: function () {},
     });
 }
 //*NSERTAR PUNTO DE CONTROL
-function insertarPuntoC(){
-    let idMarcacion= $('#idMarcacionPC').val();
-    let idPunto=$("#selectPuntoC").val();
+function insertarPuntoC() {
+    let idMarcacion = $("#idMarcacionPC").val();
+    let idPunto = $("#selectPuntoC").val();
     $.ajax({
         async: false,
         type: "POST",
         url: "/TareoregistrarPunto",
         data: {
-            idMarcacion,idPunto
+            idMarcacion,
+            idPunto,
         },
         statusCode: {
             419: function () {
@@ -1443,50 +1716,45 @@ function insertarPuntoC(){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (data) {
-            $('#btnRecargaTabla').click();
-            $('#insertarPuntoC').modal('hide');
-                $.notifyClose();
-                $.notify(
-                    {
-                        message: "\nPunto de control agregado.",
-                        icon: "admin/images/checked.svg",
-                    },
-                    {
-                        position: "fixed",
-                        icon_type: "image",
-                        newest_on_top: true,
-                        delay: 5000,
-                        template:
-                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                            "</div>",
-                        spacing: 35,
-                    }
-                );
-
+            $("#btnRecargaTabla").click();
+            $("#insertarPuntoC").modal("hide");
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nPunto de control agregado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
         },
-        error: function () {
-        },
+        error: function () {},
     });
 }
 /* ********************************************* */
 
-
 //******************AGREGAR ACTIVIDAD*********************************** */
-function agregarActiv(idMarcacion){
-    $('#idMarcacionACT').val(idMarcacion);
+function agregarActiv(idMarcacion) {
+    $("#idMarcacionACT").val(idMarcacion);
 
     /* PARA SELECT DE ACTIVIDAD */
     $("#selectActiv").empty();
     var container = $("#selectActiv");
 
-     /* PARA SELECT DE SUBACTIVIDAD */
-     $("#selectSubActiv").empty();
-
-
+    /* PARA SELECT DE SUBACTIVIDAD */
+    $("#selectSubActiv").empty();
 
     $.ajax({
         async: false,
@@ -1506,23 +1774,19 @@ function agregarActiv(idMarcacion){
         success: function (data) {
             var option = `<option value="" disabled selected>Seleccionar actividad</option>`;
 
-
             /* AGREGANDO OPTIONS*/
             data.forEach((element) => {
-                if(element.conSub==1){
+                if (element.conSub == 1) {
                     option += `<option value="${element.Activi_id}">${element.Activi_Nombre} </option>`;
-                }
-                else{
+                } else {
                     option += `<option value="${element.Activi_id}" disabled>${element.Activi_Nombre} (Sin subactividades)</option>`;
                 }
-
-
             });
             container.append(option);
 
-            $("#selectSubActiv").prop("disabled",true);
+            $("#selectSubActiv").prop("disabled", true);
 
-            $('#insertarActivMo').modal('show');
+            $("#insertarActivMo").modal("show");
         },
         error: function () {},
     });
@@ -1530,13 +1794,12 @@ function agregarActiv(idMarcacion){
 //************************************************************************/
 
 //*******************SELECCIONAR SUBACTIVIDADES POR ACTIVIDAD
-$(function(){
-    $('#selectActiv').on('change',function(){
-
+$(function () {
+    $("#selectActiv").on("change", function () {
         $("#selectSubActiv").empty();
         var containerSub = $("#selectSubActiv");
 
-        let valorActiv=$('#selectActiv').val();
+        let valorActiv = $("#selectActiv").val();
         console.log(valorActiv);
         $.ajax({
             async: false,
@@ -1554,55 +1817,53 @@ $(function(){
                 }*/
             },
             success: function (data) {
-
                 var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
 
                 /* AGREGANDO OPTIONS*/
                 data.forEach((element) => {
-
                     //*PONIENDO SUBACTIVIDADES
                     element.subactividades.forEach((element2) => {
-                        if(element2.Activi_id==valorActiv){
+                        if (element2.Activi_id == valorActiv) {
                             option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
                         }
                     });
                 });
 
                 containerSub.append(option2);
-                $("#selectSubActiv").prop("disabled",false);
+                $("#selectSubActiv").prop("disabled", false);
             },
             error: function () {},
         });
     });
-
-  });
+});
 //********************************************************* */
 
 //* INSERTAR ACTIVIDAD
-function insertarActiv(){
+function insertarActiv() {
+    let idMarcacion = $("#idMarcacionACT").val();
+    let idActiv = $("#selectActiv").val();
+    let idSubact = $("#selectSubActiv").val();
 
-   let idMarcacion= $('#idMarcacionACT').val();
-   let idActiv=$('#selectActiv').val();
-   let idSubact=$('#selectSubActiv').val();
-
-   $.ajax({
-    async: false,
-    type: "POST",
-    url: "/TareoregistrarActiv",
-    data: {
-        idMarcacion,idActiv,idSubact
-    },
-    statusCode: {
-        419: function () {
-            location.reload();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarActiv",
+        data: {
+            idMarcacion,
+            idActiv,
+            idSubact,
         },
-    },
-    headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-    },
-    success: function (data) {
-        $('#btnRecargaTabla').click();
-        $('#insertarActivMo').modal('hide');
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $("#btnRecargaTabla").click();
+            $("#insertarActivMo").modal("hide");
             $.notifyClose();
             $.notify(
                 {
@@ -1624,17 +1885,15 @@ function insertarActiv(){
                     spacing: 35,
                 }
             );
-
-    },
-    error: function () {
-    },
-});
+        },
+        error: function () {},
+    });
 }
 //****************************************
 
 //*SUBACTIVIDADES-----------------------------------------
-function agregarSubAct(idMarcacion){
-    $('#idMarcacionSACT').val(idMarcacion);
+function agregarSubAct(idMarcacion) {
+    $("#idMarcacionSACT").val(idMarcacion);
 
     /* PARA SELECT DE ACTIVIDAD */
     $("#selectSubActiv2").empty();
@@ -1660,37 +1919,27 @@ function agregarSubAct(idMarcacion){
         success: function (data) {
             var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
 
-
             /* AGREGANDO OPTIONS*/
             data.forEach((element) => {
-
                 //*PONIENDO SUBACTIVIDADES
                 element.subactividades.forEach((element2) => {
-
                     option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
-
-
-
                 });
-
             });
             container.append(option2);
 
-            $("#selectSubActiv").prop("disabled",true);
+            $("#selectSubActiv").prop("disabled", true);
 
-            $('#insertarSubMo').modal('show');
-
-
+            $("#insertarSubMo").modal("show");
         },
         error: function () {},
     });
 }
 
 //*******************SELECCIONAR SUBACTIVIDADES y mostrar ACTIVIDAD
-$(function(){
-    $('#selectSubActiv2').on('change',function(){
-
-        let valorActiv=$('#selectSubActiv2').val();
+$(function () {
+    $("#selectSubActiv2").on("change", function () {
+        let valorActiv = $("#selectSubActiv2").val();
         console.log(valorActiv);
         $.ajax({
             async: false,
@@ -1708,78 +1957,322 @@ $(function(){
                 }*/
             },
             success: function (data) {
-
                 /* AGREGANDO OPTIONS*/
                 data.forEach((element) => {
-
                     //*PONIENDO SUBACTIVIDADES
                     element.subactividades.forEach((element2) => {
-                        if(element2.idsubActividad==valorActiv){
+                        if (element2.idsubActividad == valorActiv) {
                             $("#idActi").val(element2.Activi_id);
                             $("#actividadSub").text(element.Activi_Nombre);
                         }
                     });
                 });
                 $("#divActi").show();
-
             },
             error: function () {},
         });
     });
-
-  });
-
+});
 
 //* INSERTAR SUBACTIVIDAD
-function insertarSubac(){
-
-    let idMarcacion= $('#idMarcacionSACT').val();
-    let idActiv=$('#idActi').val();
-    let idSubact=$('#selectSubActiv2').val();
+function insertarSubac() {
+    let idMarcacion = $("#idMarcacionSACT").val();
+    let idActiv = $("#idActi").val();
+    let idSubact = $("#selectSubActiv2").val();
 
     $.ajax({
-     async: false,
-     type: "POST",
-     url: "/TareoregistrarActiv",
-     data: {
-         idMarcacion,idActiv,idSubact
-     },
-     statusCode: {
-         419: function () {
-             location.reload();
-         },
-     },
-     headers: {
-         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-     },
-     success: function (data) {
-         $('#btnRecargaTabla').click();
-         $('#insertarSubMo').modal('hide');
-             $.notifyClose();
-             $.notify(
-                 {
-                     message: "\nSubactividad agregada.",
-                     icon: "admin/images/checked.svg",
-                 },
-                 {
-                     position: "fixed",
-                     icon_type: "image",
-                     newest_on_top: true,
-                     delay: 5000,
-                     template:
-                         '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
-                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
-                         '<span data-notify="title">{1}</span> ' +
-                         '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
-                         "</div>",
-                     spacing: 35,
-                 }
-             );
-
-     },
-     error: function () {
-     },
- });
- }
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarActiv",
+        data: {
+            idMarcacion,
+            idActiv,
+            idSubact,
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $("#btnRecargaTabla").click();
+            $("#insertarSubMo").modal("hide");
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nSubactividad agregada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () {},
+    });
+}
 //********************************************************* */
+
+//* AGREGAR CONTROLADOR ENTRADA*****************************
+
+function agregarControE(idMarcacion, entrada) {
+    //verificamos si tiene entrada
+    if (entrada != 0) {
+        let formatEn = moment(entrada).format("HH:mm:ss");
+
+        $("#i_horaContEntrada").text(formatEn);
+
+        $("#idMarcacionContEntrada").val(idMarcacion);
+
+        /* PARA SELECT DE CONTROLADOR */
+        $("#selectContEntrada").empty();
+        var container = $("#selectContEntrada");
+
+        $.ajax({
+            async: false,
+            url: "/listControladores",
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                location.reload();
+            }*/
+            },
+            success: function (data) {
+                var option = `<option value="" disabled selected>Seleccionar controlador</option>`;
+
+                /* AGREGANDO OPTIONS*/
+                data.forEach((element) => {
+                    option += `<option value="${element.idcontroladores_tareo}">${element.nombre} </option>`;
+                });
+                container.append(option);
+
+                $("#insertarContEntradaModal").modal("show");
+            },
+            error: function () {},
+        });
+    } else {
+        $.notifyClose();
+        $.notify(
+            {
+                message: "\nSin marcacion de entrada",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+    }
+}
+//**** */
+
+//*INSERTAR A BD CONTROLADOR DE ENTRADA
+function insertarContEntrada(){
+
+    let idMarcacion=$('#idMarcacionContEntrada').val();
+    let  idControl=$('#selectContEntrada').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarContE",
+        data: {
+            idMarcacion,
+            idControl,
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $("#btnRecargaTabla").click();
+            $("#insertarContEntradaModal").modal("hide");
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nControlador agregado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () {},
+    });
+}
+//************************************************ */
+
+
+//*AGREGAR CONTROLADOR SALIDA**********************************
+function agregarControSa(idMarcacion, salida) {
+    //verificamos si tiene entrada
+    if (salida != 0) {
+        let formatEn = moment(salida).format("HH:mm:ss");
+
+        $("#i_horaContSalida").text(formatEn);
+
+        $("#idMarcacionContSalida").val(idMarcacion);
+
+        /* PARA SELECT DE CONTROLADOR */
+        $("#selectContSalida").empty();
+        var container = $("#selectContSalida");
+
+        $.ajax({
+            async: false,
+            url: "/listControladores",
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                location.reload();
+            }*/
+            },
+            success: function (data) {
+                var option = `<option value="" disabled selected>Seleccionar controlador</option>`;
+
+                /* AGREGANDO OPTIONS*/
+                data.forEach((element) => {
+                    option += `<option value="${element.idcontroladores_tareo}">${element.nombre} </option>`;
+                });
+                container.append(option);
+
+                $("#insertarContSalidaModal").modal("show");
+            },
+            error: function () {},
+        });
+    } else {
+        $.notifyClose();
+        $.notify(
+            {
+                message: "\nSin marcacion de salida",
+                icon: "admin/images/warning.svg",
+            },
+            {
+                position: "fixed",
+                mouse_over: "pause",
+                placement: {
+                    from: "top",
+                    align: "center",
+                },
+                icon_type: "image",
+                newest_on_top: true,
+                delay: 2000,
+                template:
+                    '<div data-notify="container" class="col-xs-12 col-sm-3 text-center alert" style="background-color: #fcf8e3;" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span style="color:#8a6d3b;" data-notify="message">{2}</span>' +
+                    "</div>",
+                spacing: 35,
+            }
+        );
+    }
+}
+
+//*INSERTAR A BD CONTROLADOR DE SALIDA
+function insertarContSalida(){
+
+    let idMarcacion=$('#idMarcacionContSalida').val();
+    let  idControl=$('#selectContSalida').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarContS",
+        data: {
+            idMarcacion,
+            idControl,
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $("#btnRecargaTabla").click();
+            $("#insertarContSalidaModal").modal("hide");
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nControlador agregado.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+        },
+        error: function () {},
+    });
+}
+
+//*********************************************************** */
