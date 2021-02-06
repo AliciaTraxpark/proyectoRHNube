@@ -240,6 +240,10 @@
             margin-left: 20px;
         }
 
+        .dataTables_length{
+            margin-top: 10px;
+        }
+
     </style>
     <div class="row justify-content-center pt-5" style="padding-top: 20px!important;">
         <div class="col-md-12">
@@ -381,15 +385,22 @@
 
                                     <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                         <li class="liContenido">
-                                            <input type="checkbox" id="checPuntoc" checked>
+                                            <input type="checkbox" id="checPuntoc" >
                                             <label class="form-check-label" for="checPuntoc">Punto de control
                                         </li>
                                     </ul>
 
                                     <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
                                         <li class="liContenido">
-                                            <input type="checkbox" id="checControl" checked>
-                                            <label class="form-check-label" for="checControl">Controlador
+                                            <input type="checkbox" id="checControlEn" >
+                                            <label class="form-check-label" for="checControlEn">Controlador de entrada
+                                        </li>
+                                    </ul>
+
+                                    <ul class="dropdown-item dropdown-itemSelector" style="font-size: 12.5px">
+                                        <li class="liContenido">
+                                            <input type="checkbox" id="checControlSa" >
+                                            <label class="form-check-label" for="checControlSa">Controlador de salida
                                         </li>
                                     </ul>
 
@@ -573,7 +584,7 @@
                             <table id="tablaReport" class="table  nowrap" style="font-size: 12.8px;">
                                 <thead id="theadD" style=" background: #edf0f1;color: #6c757d;">
                                     <tr>
-                                        <th>CC</th>
+                                        <th>#</th>
                                         <th>Código</th>
                                         <th>Número de documento </th>
                                         <th>Nombres y apellidos</th>
@@ -601,6 +612,173 @@
             </div>
         </div>
     </div>
+    {{-- MODAL DE INSERTAR PUNTO CONTROL --}}
+    <div id="insertarPuntoC" class="modal fade" role="dialog"
+    aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                    <h6 class="modal-title" style="color:#ffffff;">
+                        Agregar punto de control
+                    </h6>
+                </div>
+                <div class="modal-body" style="font-size:12px!important;">
+                    <div class="col-md-12">
+                        <form action="javascript:insertarPuntoC()" id="formInsertarPuntoC">
+                            <div class="row">
+                                {{-- ID DE MARCACION --}}
+                                <input type="hidden" id="idMarcacionPC">
+
+                                <div class="col-md-12">
+                                    <span style="color:#62778c;font-weight: bold">Seleccione punto
+                                    de control: </span>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <span style="color:#111111;font-weight: bold; font-size: 10px!important">Se visualizará puntos de control con modo tareo </span>
+                                    <select id="selectPuntoC" data-plugin="customselect" class="form-control"
+                                            required >
+                                            <option value="" disabled selected>Seleccione punto de control</option>
+                                        </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                            onclick="javascript:limpiarAtributos()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-sm"
+                            style="background: #183b5d;border-color:#62778c;">
+                            Guardar
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL DE INSERTAR ACTIVIDAD--}}
+    <div id="insertarActivMo" class="modal fade" role="dialog"
+    aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+            <div class="modal-content">
+                <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                    <h6 class="modal-title" style="color:#ffffff;">
+                        Agregar actividad
+                    </h6>
+                </div>
+                <div class="modal-body" style="font-size:12px!important;">
+                    <div class="col-md-12">
+                        <form action="javascript:insertarActiv()" id="formInsertarActi">
+                            <div class="row">
+                                {{-- ID DE MARCACION --}}
+                                <input type="hidden" id="idMarcacionACT">
+
+                                <div class="col-md-12">
+                                    <label style="color:#62778c;font-weight: bold">Seleccione Actividad: </label>
+                                    <span style="font-style: oblique;font-size: 11px">*Se visualizará las actividades con modo tareo.</span>
+                                        <br><br>
+                                    <span style="font-style: oblique;font-size: 11px">*Las actividad sin subactiviades estan
+                                    deshabilitadas.</span>
+                                </div>
+
+                                <div class="col-md-12">
+
+                                    <select id="selectActiv" data-plugin="customselect" class="form-control"
+                                            required >
+                                            <option value="" disabled selected>Seleccione actividad</option>
+                                        </select>
+                                        <br><br>
+                                </div>
+
+
+                                    <div class="col-md-12"><label for="">Seleccione Subactividad</label></div>
+                                    <div class="col-md-12">
+
+                                        <select id="selectSubActiv" data-plugin="customselect" class="form-control"
+                                                required disabled >
+                                                <option value="" disabled selected>Seleccione subactividad</option>
+                                            </select>
+                                    </div>
+
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                    <div class="col-md-12 text-right" style="padding-right: 0px;">
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                            onclick="javascript:limpiarAtributos()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-sm"
+                            style="background: #183b5d;border-color:#62778c;">
+                            Guardar
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       {{-- MODAL DE INSERTAR SUBACTIVIDAD--}}
+       <div id="insertarSubMo" class="modal fade" role="dialog"
+       aria-hidden="true" data-backdrop="static">
+           <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+               <div class="modal-content">
+                   <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                       <h6 class="modal-title" style="color:#ffffff;">
+                           Agregar subactividad
+                       </h6>
+                   </div>
+                   <div class="modal-body" style="font-size:12px!important;">
+                       <div class="col-md-12">
+                           <form action="javascript:insertarSubac()" id="formInsertarSubac">
+                               <div class="row">
+                                   {{-- ID DE MARCACION --}}
+                                   <input type="hidden" id="idMarcacionSACT">
+
+                                       <div class="col-md-12"><label for="">Seleccione Subactividad</label></div>
+                                       <div class="col-md-12">
+
+                                           <select id="selectSubActiv2" data-plugin="customselect" class="form-control"
+                                                   required  >
+                                                   <option value="" disabled selected>Seleccione subactividad</option>
+                                               </select>
+                                               <br><br>
+                                       </div>
+
+                                       <div class="col-md-12" style="display: none" id="divActi">
+                                           <label for="">Actividad:</label>
+                                           <input type="hidden" id="idActi">
+                                           <span id="actividadSub"
+                                             style="color:#62778c;font-weight: bold"></span>
+                                       </div>
+
+                               </div>
+                       </div>
+                   </div>
+                   <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                       <div class="col-md-12 text-right" style="padding-right: 0px;">
+                           <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                               onclick="javascript:limpiarAtributos()">
+                               Cancelar
+                           </button>
+                           <button type="submit" class="btn btn-sm"
+                               style="background: #183b5d;border-color:#62778c;">
+                               Guardar
+                           </button>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
     {{-- modificar --}}
     @if (isset($modifReporte))
         @if ($modifReporte == 1)

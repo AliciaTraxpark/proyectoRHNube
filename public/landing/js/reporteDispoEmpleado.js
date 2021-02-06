@@ -377,7 +377,7 @@ function cargartabla(fecha1, fecha2) {
                                             Entrada <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                         </span>
                                     </th>
-                                    <th> 
+                                    <th>
                                         <span>
                                          Salida <b style="font-size: 12px !important;color: #383e56;">${j + 1}</b>
                                         </span>
@@ -478,7 +478,7 @@ function cargartabla(fecha1, fecha2) {
                             // * SI TIENE TIEMPO DE SALIDA
                             if (contenidoMarcacion.salida != 0) {
                                 tbodyEntradaySalida += `<td>
-                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                             ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                         </td>`;
                                 // * CALCULAR TIEMPO TOTAL , TIEMPO DE PAUSA Y EXCESO DE PAUSAS
@@ -635,7 +635,7 @@ function cargartabla(fecha1, fecha2) {
                                                             </span>
                                                         </td>`;
                                 tbodyEntradaySalida += `<td>
-                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> 
+                                                            <img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/>
                                                             ${moment(contenidoMarcacion.salida).format("HH:mm:ss")}
                                                         </td>`;
                             }
@@ -686,7 +686,7 @@ function cargartabla(fecha1, fecha2) {
                                     <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                     ${sumaTiempos.format("HH:mm:ss")}
                                 </a>
-                            </td> 
+                            </td>
                             <td>
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">

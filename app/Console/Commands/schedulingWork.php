@@ -42,7 +42,7 @@ class schedulingWork extends Command
         // LAS EJECUCIÓN SE DARÁ TODOS LOS DÍAS A LAS 5:00 AM (5Hrs GTM-5)
         while (true) {
             $today = Carbon::now();
-            if ( $today->hour === 13 && $today->minute === 0 && $today->second === 0) {
+            if ( $today->hour === 5 && $today->minute === 0 && $today->second === 0) {
                 $this->call('schedule:run');
             }
 

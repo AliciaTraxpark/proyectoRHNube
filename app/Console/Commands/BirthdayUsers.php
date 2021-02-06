@@ -51,12 +51,13 @@ class BirthdayUsers extends Command
 
         foreach ($organizaciones as $organizacion) {
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-            //SOLAMENTE EMPLEADOS
-            $empleados = DB::table('empleado')
+            //SOLAMENTE EMPLEADOS 
+
+            /*$empleados = DB::table('empleado')
                     ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                     ->where('empleado.organi_id', '=', $organizacion->organi_id)
                     ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno', 'empleado.emple_id')
-                    ->get();
+                    ->get();*/
 
             //COLECCIÓN DE ADMINISTRADORES POR ORGANIZACIÓN
             $admins = DB::table('usuario_organizacion')
@@ -67,41 +68,105 @@ class BirthdayUsers extends Command
                         $query->where('invitado.gestionHb', '<>', 0)
                               ->orWhereNull('invitado.gestionHb');
                     })
-                    ->select('usuario_organizacion.user_id')
+                    ->select('usuario_organizacion.*')
                     ->get();
 
-            foreach ($empleados as $persona) {
-                // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
-                if($persona->perso_fechaNacimiento != NULL){
-                    $hb = carbon::parse($persona->perso_fechaNacimiento);  // 31 de diciembre del 2020    ->  01 de enero 2021  
+            foreach ($admins as $admin) {
+                if ($admin->rol_id == 3) {
+                    $invitado = DB::table('invitado as in')
+                        ->where('rol_id', '=', 3)
+                        ->where('in.user_Invitado', '=', $admin->user_id)
+                        ->get()->first();
+                    if ($invitado->verTodosEmps == 1) {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                            ->where('e.organi_id', '=', session('sesionidorg'))
+                            ->where('e.emple_estado', '=', 1)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                    } else {
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        } else {
+                            $empleados = DB::table('empleado as e')
+                                ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                                ->where('e.organi_id', '=', session('sesionidorg'))
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        }
+                    }
+                } else {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->join('actividad_empleado as ae', 'ae.idEmpleado', '=', 'e.emple_id')
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno')
+                        ->where('e.organi_id', '=', session('sesionidorg'))
+                        ->where('e.emple_estado', '=', 1)
+                        ->groupBy('e.emple_id')
+                        ->get();
+                }
 
-                    $tomorrow = carbon::tomorrow();
-                    $fHb = carbon::create($tomorrow->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
-                    $diff = $today->diffInDays($fHb);
+                var_dump($empleados);
 
-                    if($diff == 1 && $today < $fHb){
-                        $mensaje =  [
-                                        "idOrgani" => $organizacion->organi_id,
-                                        "idEmpleado" => $persona->emple_id,
-                                        "empleado" => [
-                                                $persona->perso_nombre,
-                                                $persona->perso_apPaterno,
-                                                $persona->perso_apMaterno
-                                            ],
-                                        "mensaje" => "Mañana está de cumpleaños.",
-                                        "asunto" => "birthday"
-                                    ];
+                foreach ($empleados as $empleado) {
+                    // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
+                    if($empleado->perso_fechaNacimiento != NULL){
+                        $hb = carbon::parse($empleado->perso_fechaNacimiento);  // 31 de diciembre del 2020    ->  01 de enero 2021  
+                        $tomorrow = carbon::tomorrow();
+                        $fHb = carbon::create($tomorrow->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
+                        $diff = $today->diffInDays($fHb);
 
-                        if($admins){
-                            foreach ($admins as $admin) {
+                        if($diff == 1 && $today < $fHb){
+                            $mensaje =  [
+                                            "idOrgani" => $organizacion->organi_id,
+                                            "idEmpleado" => $empleado->emple_id,
+                                            "empleado" => [
+                                                    $empleado->perso_nombre,
+                                                    $empleado->perso_apPaterno,
+                                                    $empleado->perso_apMaterno
+                                                ],
+                                            "mensaje" => "Mañana está de cumpleaños.",
+                                            "asunto" => "birthday"
+                                        ];
+
+                            if($admins){
                                 $recipient = User::find($admin->user_id);
                                 $recipient->notify(new NuevaNotification($mensaje));
                             }
                         }
                     }
+                    // FIN DE NOTIFICACIÓN
                 }
-                // FIN DE NOTIFICACIÓN
             }
+
+            
+
+            
         }
     }
 }

@@ -137,7 +137,20 @@ class marcacionTareoController extends Controller
         $dia = $fecha->day;
         $ndia = $dia + 1;
 
+        //*RELACION CON CONTROLADORES
+        $ControladorEoS = DB::table('controladores_tareo as cont')
+            ->select(
+                'cont.idcontroladores_tareo',
+                DB::raw('CONCAT(cont.contrT_nombres," ",cont.contrT_ApPaterno," ",cont.contrT_ApMaterno) as nombre')
+            );
 
+        //*RELACION CON DISPOSITIVOS
+
+        $DispositivosEoS = DB::table('dispositivos_tareo as dist')
+            ->select(
+                'dist.iddispositivos_tareo',
+                'dist.dispoT_descripUbicacion as descripcion'
+            );
 
         $invitadod = DB::table('invitado')
             ->where('user_Invitado', '=', Auth::user()->id)
@@ -151,7 +164,18 @@ class marcacionTareoController extends Controller
                         ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                        ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                            $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                        })
+                        ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                            $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                        })
+                        ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                            $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                        })
+                        ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                            $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                        })
                         ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                         ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                         ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -174,11 +198,13 @@ class marcacionTareoController extends Controller
                             DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                             DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                             'mt.idmarcaciones_tareo as idMarcacion',
-                            'cont.contrT_nombres',
-                            'cont.contrT_ApPaterno',
-                            'cont.contrT_ApMaterno',
+
                             'pc.descripcion as puntoControl',
-                            DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                            DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                            DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                            DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
                         )
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
                         ->where('mt.organi_id', '=', session('sesionidorg'))
@@ -190,7 +216,18 @@ class marcacionTareoController extends Controller
                         ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                         ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                         ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                        ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                        ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                            $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                        })
+                        ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                            $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                        })
+                        ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                            $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                        })
+                        ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                            $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                        })
                         ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                         ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                         ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -213,11 +250,13 @@ class marcacionTareoController extends Controller
                             DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                             DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                             'mt.idmarcaciones_tareo as idMarcacion',
-                            'cont.contrT_nombres',
-                            'cont.contrT_ApPaterno',
-                            'cont.contrT_ApMaterno',
+
                             'pc.descripcion as puntoControl',
-                            DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                            DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                            DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                            DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                            DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                            DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                         )
                         ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -242,7 +281,18 @@ class marcacionTareoController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                                $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                                $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -265,11 +315,13 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-                                'cont.contrT_nombres',
-                                'cont.contrT_ApPaterno',
-                                'cont.contrT_ApMaterno',
+
                                 'pc.descripcion as puntoControl',
-                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                                DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -279,7 +331,6 @@ class marcacionTareoController extends Controller
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
 
-
                     } else {
                         $marcaciones = DB::table('marcacion_tareo as mt')
                             ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
@@ -287,7 +338,18 @@ class marcacionTareoController extends Controller
                             ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                                $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                                $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -310,11 +372,13 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-                                'cont.contrT_nombres',
-                                'cont.contrT_ApPaterno',
-                                'cont.contrT_ApMaterno',
+
                                 'pc.descripcion as puntoControl',
-                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                                DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -324,7 +388,6 @@ class marcacionTareoController extends Controller
                             ->where('e.emple_id', $idemp)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-
 
                     }
                 } else {
@@ -336,7 +399,18 @@ class marcacionTareoController extends Controller
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                                $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                                $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -359,11 +433,13 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-                                'cont.contrT_nombres',
-                                'cont.contrT_ApPaterno',
-                                'cont.contrT_ApMaterno',
+
                                 'pc.descripcion as puntoControl',
-                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                                DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -372,7 +448,6 @@ class marcacionTareoController extends Controller
                             ->where('invi.idinvitado', '=', $invitadod->idinvitado)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-
 
                     } else {
                         $marcaciones = DB::table('marcacion_tareo as mt')
@@ -382,7 +457,18 @@ class marcacionTareoController extends Controller
                             ->leftJoin('area as a', 'e.emple_area', '=', 'a.area_id')
                             ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                             ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                            ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                            ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                                $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                                $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                                $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                            })
+                            ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                                $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                            })
                             ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                             ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                             ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -405,11 +491,12 @@ class marcacionTareoController extends Controller
                                 DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                                 DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                                 'mt.idmarcaciones_tareo as idMarcacion',
-                                'cont.contrT_nombres',
-                                'cont.contrT_ApPaterno',
-                                'cont.contrT_ApMaterno',
-                                'pc.descripcion as puntoControl',
-                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+
+                                DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                                DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                                DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                                DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                                DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                             )
                             ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -419,7 +506,6 @@ class marcacionTareoController extends Controller
                             ->where('e.emple_id', $idemp)
                             ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                             ->get();
-
 
                     }
                 }
@@ -431,7 +517,18 @@ class marcacionTareoController extends Controller
                     ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                    ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                        $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                    })
+                    ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                        $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                    })
+                    ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                        $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                    })
+                    ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                        $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                    })
                     ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                     ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                     ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -454,11 +551,12 @@ class marcacionTareoController extends Controller
                         DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                         DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                         'mt.idmarcaciones_tareo as idMarcacion',
-                        'cont.contrT_nombres',
-                        'cont.contrT_ApPaterno',
-                        'cont.contrT_ApMaterno',
                         'pc.descripcion as puntoControl',
-                        DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                        DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                        DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                        DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -466,13 +564,23 @@ class marcacionTareoController extends Controller
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->get();
 
-
             } else {
                 $marcaciones = DB::table('marcacion_tareo as mt')
                     ->join('empleado as e', 'mt.marcaTareo_idempleado', '=', 'e.emple_id')
                     ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
                     ->leftJoin('cargo as c', 'e.emple_cargo', '=', 'c.cargo_id')
-                    ->leftJoin('controladores_tareo as cont', 'mt.idcontroladores_entrada', '=', 'cont.idcontroladores_tareo')
+                    ->leftJoinSub($ControladorEoS, 'entrada', function ($join) {
+                        $join->on('mt.idcontroladores_entrada', '=', 'entrada.idcontroladores_tareo');
+                    })
+                    ->leftJoinSub($ControladorEoS, 'salida', function ($join) {
+                        $join->on('mt.idcontroladores_salida', '=', 'salida.idcontroladores_tareo');
+                    })
+                    ->leftJoinSub($DispositivosEoS, 'entradaD', function ($join) {
+                        $join->on('mt.iddispositivos_entrada', '=', 'entradaD.iddispositivos_tareo');
+                    })
+                    ->leftJoinSub($DispositivosEoS, 'salidaD', function ($join) {
+                        $join->on('mt.iddispositivos_salida', '=', 'salidaD.iddispositivos_tareo');
+                    })
                     ->leftJoin('actividad as act', 'mt.Activi_id', '=', 'act.Activi_id')
                     ->leftJoin('punto_control as pc', 'mt.puntoC_id', '=', 'pc.id')
                     ->leftJoin('centro_costo as centC', 'mt.centroC_id', '=', 'centC.centroC_id')
@@ -495,11 +603,13 @@ class marcacionTareoController extends Controller
                         DB::raw('IF(mt.marcaTareo_entrada is null, 0 , mt.marcaTareo_entrada) as entrada'),
                         DB::raw('IF(mt.marcaTareo_salida is null, 0 , mt.marcaTareo_salida) as salida'),
                         'mt.idmarcaciones_tareo as idMarcacion',
-                        'cont.contrT_nombres',
-                        'cont.contrT_ApPaterno',
-                        'cont.contrT_ApMaterno',
+
                         'pc.descripcion as puntoControl',
-                        DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE')
+                        DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id) as idHE'),
+                        DB::raw("IF(entrada.nombre is null, 0 , entrada.nombre) as controladorEntrada"),
+                        DB::raw("IF(salida.nombre is null, 0 , salida.nombre) as controladorSalida"),
+                        DB::raw("IF(entradaD.descripcion is null,'MANUAL' , entradaD.descripcion) as dispositivoEntrada"),
+                        DB::raw("IF(salidaD.descripcion is null, 'MANUAL' ,salidaD.descripcion) as dispositivoSalida")
 
                     )
                     ->where(DB::raw('IF(mt.marcaTareo_entrada is null, DATE(mt.marcaTareo_salida), DATE(mt.marcaTareo_entrada))'), '=', $fecha)
@@ -507,7 +617,6 @@ class marcacionTareoController extends Controller
                     ->orderBy(DB::raw('IF(mt.marcaTareo_entrada is null, mt.marcaTareo_salida , mt.marcaTareo_entrada)', 'ASC'))
                     ->where('e.emple_id', $idemp)
                     ->get();
-
 
             }
         }
@@ -551,137 +660,143 @@ class marcacionTareoController extends Controller
 
     public function intercambiarTareo(Request $request)
     {
-        $idmarcacion=$request->id;
+        $idmarcacion = $request->id;
         $marcacionesT = DB::table('marcacion_tareo as mt')
-            ->where('mt.idmarcaciones_tareo', '=',$idmarcacion)
+            ->where('mt.idmarcaciones_tareo', '=', $idmarcacion)
             ->get()->first();
 
-        if($marcacionesT->marcaTareo_entrada!=null){
-            $marcacionModi=marcacion_tareo::findOrFail($idmarcacion);
-            $marcacionModi->marcaTareo_salida=$marcacionesT->marcaTareo_entrada;
-            $marcacionModi->marcaTareo_entrada=null;
+        if ($marcacionesT->marcaTareo_entrada != null) {
+            $marcacionModi = marcacion_tareo::findOrFail($idmarcacion);
+            $marcacionModi->marcaTareo_salida = $marcacionesT->marcaTareo_entrada;
+            $marcacionModi->marcaTareo_entrada = null;
+            $marcacionModi->idcontroladores_salida = $marcacionesT->idcontroladores_entrada;
+            $marcacionModi->idcontroladores_entrada = null;
+            $marcacionModi->iddispositivos_salida = $marcacionesT->iddispositivos_entrada;
+            $marcacionModi->iddispositivos_entrada = null;
             $marcacionModi->save();
             return "Salida modificada";
-        }
-        else{
-            $marcacionModi=marcacion_tareo::findOrFail($idmarcacion);
-            $marcacionModi->marcaTareo_entrada=$marcacionesT->marcaTareo_salida;
-            $marcacionModi->marcaTareo_salida=null;
+        } else {
+            $marcacionModi = marcacion_tareo::findOrFail($idmarcacion);
+            $marcacionModi->marcaTareo_entrada = $marcacionesT->marcaTareo_salida;
+            $marcacionModi->marcaTareo_salida = null;
+            $marcacionModi->idcontroladores_entrada = $marcacionesT->idcontroladores_salida;
+            $marcacionModi->idcontroladores_salida = null;
+            $marcacionModi->iddispositivos_entrada = $marcacionesT->iddispositivos_salida;
+            $marcacionModi->iddispositivos_salida = null;
             $marcacionModi->save();
             return "Entrada modificada";
         }
     }
 
-     // * NUEVA SALIDA
-     public function registrarNSalida(Request $request)
-     {
-         $id = $request->get('id');
-         $tiempo = $request->get('salida');
-         $idhorarioE = $request->get('horario');
+    // * NUEVA SALIDA
+    public function registrarNSalida(Request $request)
+    {
+        $id = $request->get('id');
+        $tiempo = $request->get('salida');
+        $idhorarioE = $request->get('horario');
 
-         $marcacion = marcacion_tareo::findOrFail($id);
-         $entrada = Carbon::parse($marcacion->marcaTareo_entrada);
-         // * COMPROBAR SI TIENE HORARIO EMPLEADO
-         if ($idhorarioE != 0) {
-             $horario = DB::table('horario_empleado as he')
-                 ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
-                 ->select(
-                     'h.horario_descripcion as descripcion',
-                     'h.horaI',
-                     'h.horaF',
-                     'h.horario_tolerancia as toleranciaI',
-                     'h.horario_toleranciaF as toleranciaF',
-                     'he.fuera_horario as fueraH',
-                     'he.nHoraAdic as horasA'
-                 )
-                 ->where('he.horarioEmp_id', '=', $idhorarioE)
-                 ->get()
-                 ->first();
-             // * OBTENER TIEMPO DE HORARIOS
-             $horarioInicio = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
-             if ($horario->horaF > $horario->horaI) {
-                 $horarioFin = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaF);
-                 // ? OBTENER TIEMPO DE SALIDA
-                 $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-             } else {
-                 $nuevaFecha = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
-                 $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
-                 if ($tiempo > $entrada->copy()->isoFormat('HH:mm:ss')) {
-                     // ? OBTENER TIEMPO DE SALIDA
-                     $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
-                 } else {
-                     // ? OBTENER TIEMPO DE SALIDA
-                     $nuevoTiempo = $nuevaFecha . " " . $tiempo;
-                 }
-             }
-             $salida = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
-         }
-         $salida = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
-         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
-         if ($salida->gt($entrada)) {
-             // * VALIDACION ENTRE CRUCES DE HORAS
-             $marcacionesValidar = DB::table('marcacion_tareo as m')
-                 ->select(
-                     'm.idmarcaciones_tareo',
-                     DB::raw('IF(m.marcaTareo_entrada is null,0,m.marcaTareo_entrada) AS entrada'),
-                     DB::raw('IF(m.marcaTareo_salida is null,0,m.marcaTareo_salida) AS salida')
-                 )
-                 ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
-                 ->where(DB::raw('IF(m.marcaTareo_entrada is null,DATE(m.marcaTareo_salida),DATE(m.marcaTareo_entrada))'), "=", $entrada->copy()->isoFormat('YYYY-MM-DD'))
-                 ->whereNotIn('m.idmarcaciones_tareo', [$marcacion->idmarcaciones_tareo])
-                 ->get();
-             $respuesta = true;
-             foreach ($marcacionesValidar as $mv) {
-                 if ($mv->entrada != 0) {
-                     $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
-                     if ($respuestaCheck) {
-                         $respuesta = false;
-                     }
-                 }
-                 if ($mv->salida != 0) {
-                     $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
-                     if ($respuestaCheck) {
-                         $respuesta = false;
-                     }
-                 }
-             }
-             // ! SI NO ENCUENTRA CRUCES
-             if ($respuesta) {
-                 // * VALIDAR CON EL HORARIO
-                 if ($idhorarioE != 0) {
-                     if ($horario->fueraH == 0) {
-                         // * VALIDAR SIN FUERA DE HORARIO
-                         $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
-                         $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
+        $marcacion = marcacion_tareo::findOrFail($id);
+        $entrada = Carbon::parse($marcacion->marcaTareo_entrada);
+        // * COMPROBAR SI TIENE HORARIO EMPLEADO
+        if ($idhorarioE != 0) {
+            $horario = DB::table('horario_empleado as he')
+                ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                ->select(
+                    'h.horario_descripcion as descripcion',
+                    'h.horaI',
+                    'h.horaF',
+                    'h.horario_tolerancia as toleranciaI',
+                    'h.horario_toleranciaF as toleranciaF',
+                    'he.fuera_horario as fueraH',
+                    'he.nHoraAdic as horasA'
+                )
+                ->where('he.horarioEmp_id', '=', $idhorarioE)
+                ->get()
+                ->first();
+            // * OBTENER TIEMPO DE HORARIOS
+            $horarioInicio = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
+            if ($horario->horaF > $horario->horaI) {
+                $horarioFin = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaF);
+                // ? OBTENER TIEMPO DE SALIDA
+                $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+            } else {
+                $nuevaFecha = $entrada->copy()->addDays(1)->isoFormat('YYYY-MM-DD'); // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
+                $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
+                if ($tiempo > $entrada->copy()->isoFormat('HH:mm:ss')) {
+                    // ? OBTENER TIEMPO DE SALIDA
+                    $nuevoTiempo = $entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
+                } else {
+                    // ? OBTENER TIEMPO DE SALIDA
+                    $nuevoTiempo = $nuevaFecha . " " . $tiempo;
+                }
+            }
+            $salida = Carbon::parse($nuevoTiempo); //: OBTENEMOS EL TIEMPO DE SALIDA
+        }
+        $salida = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo); //: OBTENEMOS EL TIEMPO DE SALIDA
+        // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
+        if ($salida->gt($entrada)) {
+            // * VALIDACION ENTRE CRUCES DE HORAS
+            $marcacionesValidar = DB::table('marcacion_tareo as m')
+                ->select(
+                    'm.idmarcaciones_tareo',
+                    DB::raw('IF(m.marcaTareo_entrada is null,0,m.marcaTareo_entrada) AS entrada'),
+                    DB::raw('IF(m.marcaTareo_salida is null,0,m.marcaTareo_salida) AS salida')
+                )
+                ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
+                ->where(DB::raw('IF(m.marcaTareo_entrada is null,DATE(m.marcaTareo_salida),DATE(m.marcaTareo_entrada))'), "=", $entrada->copy()->isoFormat('YYYY-MM-DD'))
+                ->whereNotIn('m.idmarcaciones_tareo', [$marcacion->idmarcaciones_tareo])
+                ->get();
+            $respuesta = true;
+            foreach ($marcacionesValidar as $mv) {
+                if ($mv->entrada != 0) {
+                    $respuestaCheck = checkHora($entrada, $salida, $mv->entrada);
+                    if ($respuestaCheck) {
+                        $respuesta = false;
+                    }
+                }
+                if ($mv->salida != 0) {
+                    $respuestaCheck = checkHora($entrada, $salida, $mv->salida);
+                    if ($respuestaCheck) {
+                        $respuesta = false;
+                    }
+                }
+            }
+            // ! SI NO ENCUENTRA CRUCES
+            if ($respuesta) {
+                // * VALIDAR CON EL HORARIO
+                if ($idhorarioE != 0) {
+                    if ($horario->fueraH == 0) {
+                        // * VALIDAR SIN FUERA DE HORARIO
+                        $horarioInicioT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                        $horarioFinT = $horarioFin->copy()->addMinutes($horario->toleranciaF)->addHours($horario->horasA);
 
-                         if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
-                             $marcacion->marcaTareo_salida = $salida;
-                             $marcacion->save();
-                             return response()->json($marcacion->idmarcaciones_tareo, 200);
-                         } else {
-                             return response()->json(
-                                 array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
-                                 200
-                             );
-                         }
-                     } else {
-                         $marcacion->marcaTareo_salida = $salida;
-                         $marcacion->save();
-                         return response()->json($marcacion->idmarcaciones_tareo, 200);
-                     }
-                 } else {
-                     $marcacion->marcaTareo_salida = $salida;
-                     $marcacion->save();
-                     return response()->json($marcacion->idmarcaciones_tareo, 200);
-                 }
-             } else {
-                 return response()->json(array("respuesta" => "Posibilidad de cruce de hora"), 200);
-             }
-         } else {
-             return response()->json(array("respuesta" => "Salida debe ser mayor a entrada."), 200);
-         }
-     }
-
+                        if ($entrada->gte($horarioInicioT) && $salida->lte($horarioFinT)) {
+                            $marcacion->marcaTareo_salida = $salida;
+                            $marcacion->save();
+                            return response()->json($marcacion->idmarcaciones_tareo, 200);
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                200
+                            );
+                        }
+                    } else {
+                        $marcacion->marcaTareo_salida = $salida;
+                        $marcacion->save();
+                        return response()->json($marcacion->idmarcaciones_tareo, 200);
+                    }
+                } else {
+                    $marcacion->marcaTareo_salida = $salida;
+                    $marcacion->save();
+                    return response()->json($marcacion->idmarcaciones_tareo, 200);
+                }
+            } else {
+                return response()->json(array("respuesta" => "Posibilidad de cruce de hora"), 200);
+            }
+        } else {
+            return response()->json(array("respuesta" => "Salida debe ser mayor a entrada."), 200);
+        }
+    }
 
     // * NUEVA ENTRADA
     public function registrarNEntrada(Request $request)
@@ -715,7 +830,7 @@ class marcacionTareoController extends Controller
                 // ? OBTENER TIEMPO DE SALIDA
                 $nuevoTiempo = $salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo;
             } else {
-                $nuevaFecha = $salida->copy()->addDays(1)->isoFormat('YYYY-MM-DD');  // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
+                $nuevaFecha = $salida->copy()->addDays(1)->isoFormat('YYYY-MM-DD'); // : OBTENEMOS LA FECHA DEL DIA SIGUIENTE
                 $horarioFin = Carbon::parse($nuevaFecha . " " . $horario->horaF);
                 if ($tiempo > $salida->copy()->isoFormat('HH:mm:ss')) {
                     // ? OBTENER TIEMPO DE SALIDA
@@ -725,9 +840,9 @@ class marcacionTareoController extends Controller
                     $nuevoTiempo = $nuevaFecha . " " . $tiempo;
                 }
             }
-            $entrada = Carbon::parse($nuevoTiempo);  //: OBTENEMOS EL TIEMPO DE SALIDA
+            $entrada = Carbon::parse($nuevoTiempo); //: OBTENEMOS EL TIEMPO DE SALIDA
         }
-        $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo);   //: OBTENEMOS EL TIEMPO DE SALIDA
+        $entrada = Carbon::parse($salida->copy()->isoFormat('YYYY-MM-DD') . " " . $tiempo); //: OBTENEMOS EL TIEMPO DE SALIDA
         // * VALIDAR QUE SALIDA DEBE SER MAYOR A ENTRADA
         if ($salida->gt($entrada)) {
             // * VALIDACION ENTRE CRUCES DE HORAS
@@ -791,5 +906,90 @@ class marcacionTareoController extends Controller
         } else {
             return response()->json(array("respuesta" => "Entrada debe ser menor a salida."), 200);
         }
+    }
+
+    public function listPuntoControl(Request $request){
+
+        $punto_control = DB::table('punto_control as pc')
+        ->select(
+            'pc.id',
+            'pc.descripcion',
+            'pc.codigoControl',
+            'pc.verificacion',
+            'pc.estado'
+        )
+        ->where('pc.organi_id', '=',  session('sesionidorg'))
+        ->where('pc.ModoTareo', '=', 1)
+        ->where('pc.estado', '=', 1)
+        ->get();
+        return response()->json($punto_control, 200);
+    }
+
+    public function registrarPunto(Request $request){
+
+        $idMarcacion=$request->idMarcacion;
+        $idPunto=$request->idPunto;
+
+        $marcacion_tareo=marcacion_tareo::findOrFail($idMarcacion);
+        $marcacion_tareo->puntoC_id=$idPunto;
+        $marcacion_tareo->save();
+
+    }
+
+    public function listActividadTareo(){
+
+        $actividades = DB::table('actividad as a')
+        ->select(
+            'a.Activi_id',
+            'a.Activi_Nombre',
+            'a.organi_id',
+            'a.codigoActividad'
+        )
+        ->where('a.organi_id', '=', session('sesionidorg'))
+        ->where('a.estado', '=', 1)
+        ->where('a.modoTareo', '=', 1)
+        ->get();
+
+    foreach ($actividades as $actividadesSub) {
+        $Subactividades = DB::table('actividad_subactividad as asu')
+            ->join('subactividad as su', 'asu.subActividad', '=', 'su.idsubActividad')
+            ->select(
+                'asu.Activi_id',
+                'su.idsubActividad',
+                'su.subAct_nombre',
+                'su.subAct_codigo',
+                'su.estado',
+                'su.modoTareo',
+                'su.organi_id'
+            )
+            ->where('asu.Activi_id', '=', $actividadesSub->Activi_id)
+            ->where('su.estado', '=', 1)
+            ->where('asu.estado', '=', 1)
+            ->where('su.modoTareo', '=', 1)
+            ->groupBy('asu.idactividad_subactividad')
+            ->get();
+
+        $actividadesSub->subactividades = $Subactividades;
+        if($Subactividades->isEmpty()){
+            $actividadesSub->conSub = 0;
+        }
+        else{
+            $actividadesSub->conSub = 1;
+        }
+
+    }
+    return response()->json($actividades, 200);
+    }
+
+    public function registrarActiv(Request $request){
+
+        $idMarcacion=$request->idMarcacion;
+        $idActiv=$request->idActiv;
+        $idSubact=$request->idSubact;
+
+        $marcacion_tareo=marcacion_tareo::findOrFail($idMarcacion);
+        $marcacion_tareo->Activi_id=$idActiv;
+        $marcacion_tareo->idsubActividad=$idSubact;
+        $marcacion_tareo->save();
     }
 }

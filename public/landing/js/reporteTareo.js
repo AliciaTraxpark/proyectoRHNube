@@ -92,7 +92,7 @@ function cargartabla(fecha) {
                 }
                 //*---------------------------- ARMAR CABEZERA-----------------------------------------
                 var theadTabla = `<tr>
-                                    <th>CC&nbsp;</th>
+                                    <th># </th>
                                     <th class="fechaHid" name="tiempoSitHi">Fecha</th>
                                     <th class="codigoHid">Código</th>
                                     <th class="numdocHid">Número de documento </th>
@@ -105,15 +105,17 @@ function cargartabla(fecha) {
                                     <th>Actividad</th>
                                     <th>Cód. Sub.</th>
                                     <th>Subactividad</th>
+                                    <th class="controHidEn">Controlador de entrada</th>
                                     <th>Hora de entrada</th>
                                     <th class="noExport">&nbsp; &nbsp; &nbsp; &nbsp;</th>
+                                    <th class="controHidSa">Controlador de salida</th>
                                     <th>Hora de salida</th>
                                     <th >Tiempo en sitio</th>`;
 
 
                 theadTabla += `
                                    <th class="puntoHid">Punto de control</th>
-                                   <th class="controHid">Controlador</th></tr>`;
+                                   </tr>`;
 
                 //* DIBUJAMOS CABEZERA
                 $("#theadD").html(theadTabla);
@@ -127,7 +129,7 @@ function cargartabla(fecha) {
                 for (let index = 0; index < data.length; index++) {
                     tbody += `<tr>
 
-                                <td>${index + 1}&nbsp;</td>
+                                <td>${index + 1}</td>
 
                                 <td class="fechaHid"  name="tiempoSitHi">${moment($('#pasandoV').val()).format('DD/MM/YYYY')}&nbsp;</td>
                                 <td class="codigoHid">${
@@ -176,13 +178,41 @@ function cargartabla(fecha) {
                                     if (marcacionData.codigoActividad != 0) {
                                         tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
                                     } else {
-                                        tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        tbodyEntradaySalida += `<td>
+                                       --
+                                    </td>`;
+
                                     }
 
                                     if (marcacionData.Activi_Nombre != null) {
                                         tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
                                     } else {
-                                        tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        tbodyEntradaySalida += `<td>
+                                        <div class=" dropdown">
+                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar actividad">
+                                                    <img style="margin-bottom: 3px;" src="landing/images/actividad.svg" class="mr-2" height="12"/>
+                                                    No tiene actividad
+                                                </span>
+                                            </a>
+                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                       Opciones
+                                               </h6>
+                                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                <div class="dropdown-item" dropdown-itemM noExport>
+                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                        <a onclick="agregarActiv(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                            Agregar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </td>`;
                                     }
 
                                     if (marcacionData.codigoSubactiv != 0) {
@@ -194,16 +224,67 @@ function cargartabla(fecha) {
                                     if (marcacionData.subAct_nombre != null) {
                                         tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
                                     } else {
-                                        tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        tbodyEntradaySalida += `<td>
+                                        <div class=" dropdown">
+                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
+                                                    <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
+                                                    No tiene subactividad
+                                                </span>
+                                            </a>
+                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                       Opciones
+                                               </h6>
+                                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                <div class="dropdown-item" dropdown-itemM noExport>
+                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                        <a onclick="agregarSubAct(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                            Agregar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </td>`;
+                                    }
+                                    if(marcacionData.controladorEntrada!=0){
+                                        tbodyEntradaySalida += `
+                                                <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
+                                    } else
+                                    {
+                                        //*VERIFICAMOS QUE HAYA MARCACION DE ENTRADA
+                                        if(marcacionData.entrada != 0){
+                                            tbodyEntradaySalida += `
+                                            <td class="controHidEn">  --  </td>`;
+                                        }
+                                        else{
+                                            tbodyEntradaySalida += `
+                                            <td class="controHidEn">  --  </td>`;
+                                        }
+
                                     }
 
                                     tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(
                                         marcacionData.entrada
                                     ).format("HH:mm:ss")}</td>`;
 
+
+
                                     /* SI  TENGO SALIDA */
                                     if (marcacionData.salida != 0) {
                                         tbodyEntradaySalida += `<td class="noExport"></td>`;
+                                        if(marcacionData.controladorSalida!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  --  </td>`;
+                                        }
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
                                             marcacionData.salida
                                         ).format("HH:mm:ss")}</td>`;
@@ -262,6 +343,14 @@ function cargartabla(fecha) {
                                         <a style="cursor:pointer;" data-toggle="tooltip" data-placement="left" title="Intercambiar" onclick="intercambiarMar(${marcacionData.idMarcacion})"><img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
                                         </td>`;
                                         /* SI NO TENGO SALIDA */
+                                        if(marcacionData.controladorSalida!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  --  </td>`;
+                                        }
                                         tbodyEntradaySalida += `<td>
                                         <div class="dropdown noExport">
                                         <a type="button" class="btn dropdown-toggle" id="dropSalida${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true"
@@ -272,9 +361,13 @@ function cargartabla(fecha) {
                                             </span>
                                         </a>
                                         <ul class="dropdown-menu noExport"  aria-labelledby="dropSalida${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-
+                                             <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                 <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                     Opciones
+                                             </h6>
+                                             <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
                                             <div class="dropdown-item noExport">
-                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;padding-left: 0px!important;">
                                                     <a onclick="javascript:insertarSalidaModal('${moment(marcacionData.entrada).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})"
                                                      style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                         <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -307,13 +400,40 @@ function cargartabla(fecha) {
                                         if (marcacionData.codigoActividad != 0) {
                                             tbodyEntradaySalida += `<td >${marcacionData.codigoActividad} </td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td >---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                            tbodyEntradaySalida += `<td>
+                                            --
+                                        </td>`;
                                         }
 
                                         if (marcacionData.Activi_Nombre != null) {
                                             tbodyEntradaySalida += `<td>${marcacionData.Activi_Nombre}</td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                            tbodyEntradaySalida += `<td>
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar actividad">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/actividad.svg" class="mr-2" height="12"/>
+                                                        No tiene actividad
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarActiv(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
                                         }
 
                                         if (marcacionData.codigoSubactiv != 0) {
@@ -325,7 +445,41 @@ function cargartabla(fecha) {
                                         if (marcacionData.subAct_nombre != null) {
                                             tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                            tbodyEntradaySalida += `<td>
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
+                                                        No tiene subactividad
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarSubAct(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
+                                        }
+
+                                        if(marcacionData.controladorEntrada!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidEn">  --  </td>`;
                                         }
 
                                          //* COLUMNA DE ENTRADA
@@ -339,8 +493,12 @@ function cargartabla(fecha) {
                                                  </span>
                                              </a>
                                              <ul class="dropdown-menu noExport" aria-labelledby="dropEntrada${marcacionData.idMarcacion}" style="padding: 0rem 0rem;">
-
-                                                 <div class="dropdown-item">
+                                                <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                    <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                        Opciones
+                                                </h6>
+                                                <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                 <div class="dropdown-item" dropdown-itemM noExport>
                                                      <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
                                                          <a onclick="javascript:insertarEntradaModal('${moment(marcacionData.salida).format("HH:mm:ss")}',${marcacionData.idMarcacion},${marcacionData.idHE})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
                                                              <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
@@ -357,6 +515,15 @@ function cargartabla(fecha) {
                                         <img style="margin-bottom: 3px;margin-top: 4px;" src="landing/images/intercambiar.svg"  height="15"/></a>
                                         </td>`;
                                         //* COLUMNA DE SALIDA
+                                        console.log('salid'+marcacionData.controladorSalida);
+                                        if(marcacionData.controladorSalida!=0){
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoSalida}">  ${marcacionData.controladorSalida}</td>`;
+                                        } else
+                                        {
+                                            tbodyEntradaySalida += `
+                                                    <td class="controHidSa">  --  </td>`;
+                                        }
 
                                         tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/salidaD.svg" class="mr-2" height="12"/> ${moment(
                                             marcacionData.salida
@@ -380,23 +547,38 @@ function cargartabla(fecha) {
 
                     tbody += tbodyEntradaySalida;
 
-                    /* -----------PUNTO DE CONTRO Y CONTROLADOR------------- */
+                    /* -----------PUNTO DE CONTRO ------------ */
                     if(marcacionData.puntoControl!=null){
                         tbody += `
-                        <td class="puntoHid" > ${marcacionData.puntoControl} </td>`;
+                        <td class="puntoHid" > ${marcacionData.puntoControl} </td></tr>`;
                     } else{
-                        tbody += `
-                        <td class="puntoHid" >    ---  </td>`;
+                        tbody += `<td class="puntoHid" >
+                        <div class=" dropdown">
+                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar punto de control">
+                                    <img style="margin-bottom: 3px;" src="landing/images/puntoCo.svg" class="mr-2" height="12"/>
+                                    No tiene punto de C.
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                       Opciones
+                               </h6>
+                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                <div class="dropdown-item" dropdown-itemM noExport>
+                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                        <a onclick="agregarPuntoC(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                            Agregar
+                                        </a>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </td></tr>`;
 
-                    }
-
-                    if(marcacionData.contrT_nombres!=null){
-                        tbody += `
-                                <td class="controHid">  ${marcacionData.contrT_nombres}  ${marcacionData.contrT_ApPaterno}  ${marcacionData.contrT_ApMaterno}</td></tr>`;
-                    } else
-                    {
-                        tbody += `
-                                <td class="controHid">  --  </td></tr>`;
                     }
 
                     /* ----------------------------------------- ------------------*/
@@ -434,8 +616,9 @@ function cargartabla(fecha) {
                     ordering: false,
                     autoWidth: false,
                     bInfo: false,
-                    bLengthChange: false,
+                    bLengthChange: true,
                     fixedHeader: true,
+                    pageLength: 25,
                     language: {
                         sProcessing: "Procesando...",
                         sLengthMenu: "Mostrar _MENU_ registros",
@@ -468,7 +651,7 @@ function cargartabla(fecha) {
                             colvis: "Visibilidad",
                         },
                     },
-                    dom: 'Bfrtip',
+                    dom: 'Blfrtip',
                     buttons: [
 
                         {
@@ -534,8 +717,14 @@ function cargartabla(fecha) {
                                     var cont2 = cont1.replace('Insertar salida', '');
                                     var cont3 = cont2.replace('No tiene entrada', '---');
                                     var cont4 = cont3.replace('No tiene salida', '---');
+                                    var cont5 = cont4.replace('No tiene punto de C.', '---');
+                                    var cont6 = cont5.replace('No tiene actividad', '---');
+                                    var cont7 = cont6.replace('No tiene subactividad', '---');
 
-                                    return $.trim(cont4);
+                                    var cont8 = cont7.replace('Agregar', '');
+                                    var cont9  = cont8.replace('Opciones', '');
+
+                                    return $.trim(cont9);
                                 }
                             }
                         },
@@ -557,8 +746,8 @@ function cargartabla(fecha) {
                                 tableHeader: {
                                     bold: true,
                                     fontSize: 11,
-                                    color: '#6c757d',
-                                    fillColor: '#ffffff',
+                                    color: '#ffffff',
+                                    fillColor: '#14274e',
                                     alignment: 'left'
                                 },
                                 defaultStyle: {
@@ -593,8 +782,13 @@ function cargartabla(fecha) {
                                         var cambiar2 = cambiar.replace('Insertar salida', '');
                                         var cambiar3 = cambiar2.replace('No tiene entrada', '---');
                                         var cambiar4 = cambiar3.replace('No tiene salida', '---');
-                                        var cambiar5 = cambiar4.trim();
-                                        bodyNuevo.push({ text: cambiar5, style: 'defaultStyle' });
+                                        var cambiar5 = cambiar4.replace('No tiene punto de C.', '---');
+                                        var cambiar6 = cambiar5.replace('No tiene actividad', '---');
+                                        var cambiar7 = cambiar6.replace('No tiene subactividad', '---');
+                                        var cambiar8 = cambiar7.replace('Agregar', '');
+                                        var cambiar9 = cambiar8.replace('Opciones', '');
+                                        var cambiar10 = cambiar9.trim();
+                                        bodyNuevo.push({ text: cambiar10, style: 'defaultStyle' });
                                     });
                                     bodyCompleto.push(bodyNuevo);
                                 } else {
@@ -658,6 +852,21 @@ function cargartabla(fecha) {
                             dataT.api().columns('.cargoHid').visible(false);
                         }
 
+                        //*controlador entrada
+                        if ($('#checControlEn').prop('checked')) {
+                            dataT.api().columns('.controHidEn').visible(true);
+
+                        } else {
+                            dataT.api().columns('.controHidEn').visible(false);
+                        }
+
+                        //*controlador salida
+                        if ($('#checControlSa').prop('checked')) {
+                            dataT.api().columns('.controHidSa').visible(true);
+
+                        } else {
+                            dataT.api().columns('.controHidSa').visible(false);
+                        }
                         setTimeout(function () {
                             $("#tablaReport").DataTable().draw();
                         }, 200);
@@ -1136,13 +1345,27 @@ $('#checPuntoc').change(function (event) {
     }, 1);
 });
 
-//* CONTROLADOR
-$('#checControl').change(function (event) {
-    if ($('#checControl').prop('checked')) {
-        dataT.api().columns('.controHid').visible(true);
+//* CONTROLADOR ENTRADA
+$('#checControlEn').change(function (event) {
+    if ($('#checControlEn').prop('checked')) {
+        dataT.api().columns('.controHidEn').visible(true);
 
     } else {
-        dataT.api().columns('.controHid').visible(false);
+        dataT.api().columns('.controHidEn').visible(false);
+    }
+    setTimeout(function () {
+        $("#tablaReport").css("width", "100%");
+        $("#tablaReport").DataTable().draw(false);
+    }, 1);
+});
+
+//* CONTROLADOR SALIDA
+$('#checControlSa').change(function (event) {
+    if ($('#checControlSa').prop('checked')) {
+        dataT.api().columns('.controHidSa').visible(true);
+
+    } else {
+        dataT.api().columns('.controHidSa').visible(false);
     }
     setTimeout(function () {
         $("#tablaReport").css("width", "100%");
@@ -1151,7 +1374,412 @@ $('#checControl').change(function (event) {
 });
 /* ------------------------------------------------------------------ */
 
-//*PARA QUE NO CE CIERRO DROPDOWN
+//*PARA QUE NO SE CIERRE DROPDOWN
 $(document).on('click', '.allow-focus', function (e) {
     e.stopPropagation();
 });
+
+/* ************************************************ */
+
+//*FUNCION AGREGAR PUNTO DE CONTROL***************
+$("#selectPuntoC").select2({
+    placeholder: "Seleccione punto de control",
+});
+function agregarPuntoC(idMarcacion){
+
+  $('#idMarcacionPC').val(idMarcacion);
+
+    /* PARA SELECT DE PUNTO DE CONTROL */
+    $("#selectPuntoC").empty();
+    var container = $("#selectPuntoC");
+
+
+    $.ajax({
+        async: false,
+        url: "/listPuntoControl",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar punto de control</option>`;
+
+            /* AGREGANDO OPTIONS*/
+            data.forEach((element) => {
+                option += `<option value="${element.id}">${element.descripcion} </option>`;
+            });
+            container.append(option);
+
+            $('#insertarPuntoC').modal('show');
+        },
+        error: function () {},
+    });
+}
+//*NSERTAR PUNTO DE CONTROL
+function insertarPuntoC(){
+    let idMarcacion= $('#idMarcacionPC').val();
+    let idPunto=$("#selectPuntoC").val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/TareoregistrarPunto",
+        data: {
+            idMarcacion,idPunto
+        },
+        statusCode: {
+            419: function () {
+                location.reload();
+            },
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (data) {
+            $('#btnRecargaTabla').click();
+            $('#insertarPuntoC').modal('hide');
+                $.notifyClose();
+                $.notify(
+                    {
+                        message: "\nPunto de control agregado.",
+                        icon: "admin/images/checked.svg",
+                    },
+                    {
+                        position: "fixed",
+                        icon_type: "image",
+                        newest_on_top: true,
+                        delay: 5000,
+                        template:
+                            '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                            "</div>",
+                        spacing: 35,
+                    }
+                );
+
+        },
+        error: function () {
+        },
+    });
+}
+/* ********************************************* */
+
+
+//******************AGREGAR ACTIVIDAD*********************************** */
+function agregarActiv(idMarcacion){
+    $('#idMarcacionACT').val(idMarcacion);
+
+    /* PARA SELECT DE ACTIVIDAD */
+    $("#selectActiv").empty();
+    var container = $("#selectActiv");
+
+     /* PARA SELECT DE SUBACTIVIDAD */
+     $("#selectSubActiv").empty();
+
+
+
+    $.ajax({
+        async: false,
+        url: "/listActividadTareo",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option = `<option value="" disabled selected>Seleccionar actividad</option>`;
+
+
+            /* AGREGANDO OPTIONS*/
+            data.forEach((element) => {
+                if(element.conSub==1){
+                    option += `<option value="${element.Activi_id}">${element.Activi_Nombre} </option>`;
+                }
+                else{
+                    option += `<option value="${element.Activi_id}" disabled>${element.Activi_Nombre} (Sin subactividades)</option>`;
+                }
+
+
+            });
+            container.append(option);
+
+            $("#selectSubActiv").prop("disabled",true);
+
+            $('#insertarActivMo').modal('show');
+        },
+        error: function () {},
+    });
+}
+//************************************************************************/
+
+//*******************SELECCIONAR SUBACTIVIDADES POR ACTIVIDAD
+$(function(){
+    $('#selectActiv').on('change',function(){
+
+        $("#selectSubActiv").empty();
+        var containerSub = $("#selectSubActiv");
+
+        let valorActiv=$('#selectActiv').val();
+        console.log(valorActiv);
+        $.ajax({
+            async: false,
+            url: "/listActividadTareo",
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                    location.reload();
+                }*/
+            },
+            success: function (data) {
+
+                var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
+
+                /* AGREGANDO OPTIONS*/
+                data.forEach((element) => {
+
+                    //*PONIENDO SUBACTIVIDADES
+                    element.subactividades.forEach((element2) => {
+                        if(element2.Activi_id==valorActiv){
+                            option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
+                        }
+                    });
+                });
+
+                containerSub.append(option2);
+                $("#selectSubActiv").prop("disabled",false);
+            },
+            error: function () {},
+        });
+    });
+
+  });
+//********************************************************* */
+
+//* INSERTAR ACTIVIDAD
+function insertarActiv(){
+
+   let idMarcacion= $('#idMarcacionACT').val();
+   let idActiv=$('#selectActiv').val();
+   let idSubact=$('#selectSubActiv').val();
+
+   $.ajax({
+    async: false,
+    type: "POST",
+    url: "/TareoregistrarActiv",
+    data: {
+        idMarcacion,idActiv,idSubact
+    },
+    statusCode: {
+        419: function () {
+            location.reload();
+        },
+    },
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+    success: function (data) {
+        $('#btnRecargaTabla').click();
+        $('#insertarActivMo').modal('hide');
+            $.notifyClose();
+            $.notify(
+                {
+                    message: "\nActividad agregada.",
+                    icon: "admin/images/checked.svg",
+                },
+                {
+                    position: "fixed",
+                    icon_type: "image",
+                    newest_on_top: true,
+                    delay: 5000,
+                    template:
+                        '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                        '<span data-notify="title">{1}</span> ' +
+                        '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                        "</div>",
+                    spacing: 35,
+                }
+            );
+
+    },
+    error: function () {
+    },
+});
+}
+//****************************************
+
+//*SUBACTIVIDADES-----------------------------------------
+function agregarSubAct(idMarcacion){
+    $('#idMarcacionSACT').val(idMarcacion);
+
+    /* PARA SELECT DE ACTIVIDAD */
+    $("#selectSubActiv2").empty();
+    var container = $("#selectSubActiv2");
+
+    $("#divActi").hide();
+
+    $.ajax({
+        async: false,
+        url: "/listActividadTareo",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
+
+
+            /* AGREGANDO OPTIONS*/
+            data.forEach((element) => {
+
+                //*PONIENDO SUBACTIVIDADES
+                element.subactividades.forEach((element2) => {
+
+                    option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
+
+
+
+                });
+
+            });
+            container.append(option2);
+
+            $("#selectSubActiv").prop("disabled",true);
+
+            $('#insertarSubMo').modal('show');
+
+
+        },
+        error: function () {},
+    });
+}
+
+//*******************SELECCIONAR SUBACTIVIDADES y mostrar ACTIVIDAD
+$(function(){
+    $('#selectSubActiv2').on('change',function(){
+
+        let valorActiv=$('#selectSubActiv2').val();
+        console.log(valorActiv);
+        $.ajax({
+            async: false,
+            url: "/listActividadTareo",
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                    location.reload();
+                }*/
+            },
+            success: function (data) {
+
+                /* AGREGANDO OPTIONS*/
+                data.forEach((element) => {
+
+                    //*PONIENDO SUBACTIVIDADES
+                    element.subactividades.forEach((element2) => {
+                        if(element2.idsubActividad==valorActiv){
+                            $("#idActi").val(element2.Activi_id);
+                            $("#actividadSub").text(element.Activi_Nombre);
+                        }
+                    });
+                });
+                $("#divActi").show();
+
+            },
+            error: function () {},
+        });
+    });
+
+  });
+
+
+//* INSERTAR SUBACTIVIDAD
+function insertarSubac(){
+
+    let idMarcacion= $('#idMarcacionSACT').val();
+    let idActiv=$('#idActi').val();
+    let idSubact=$('#selectSubActiv2').val();
+
+    $.ajax({
+     async: false,
+     type: "POST",
+     url: "/TareoregistrarActiv",
+     data: {
+         idMarcacion,idActiv,idSubact
+     },
+     statusCode: {
+         419: function () {
+             location.reload();
+         },
+     },
+     headers: {
+         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+     },
+     success: function (data) {
+         $('#btnRecargaTabla').click();
+         $('#insertarSubMo').modal('hide');
+             $.notifyClose();
+             $.notify(
+                 {
+                     message: "\nSubactividad agregada.",
+                     icon: "admin/images/checked.svg",
+                 },
+                 {
+                     position: "fixed",
+                     icon_type: "image",
+                     newest_on_top: true,
+                     delay: 5000,
+                     template:
+                         '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                         '<span data-notify="title">{1}</span> ' +
+                         '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                         "</div>",
+                     spacing: 35,
+                 }
+             );
+
+     },
+     error: function () {
+     },
+ });
+ }
+//********************************************************* */
