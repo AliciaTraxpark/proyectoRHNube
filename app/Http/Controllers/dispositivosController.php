@@ -2060,12 +2060,20 @@ class dispositivosController extends Controller
             $newMarcacion = new marcacion_puerta();
             if ($tipo ==  1) {
                 $newMarcacion->marcaMov_fecha = $nuevaMarcacion;
+                // * DISPOSITIVO
                 $dispositivoE = $marcacion->dispositivoEntrada;
                 $dispositivoS = NULL;
+                // * CONTROLADOR
+                $controladorE = $marcacion->controladores_idControladores;
+                $controladorS = NULL;
             } else {
                 $newMarcacion->marcaMov_salida = $nuevaMarcacion;
+                // * DISPOSITIVO
                 $dispositivoS = $marcacion->dispositivoSalida;
                 $dispositivoE = NULL;
+                // * CONTROLADOR
+                $controladorS = $marcacion->controladores_salida;
+                $controladorE = NULL;
             }
             $newMarcacion->marcaMov_emple_id = $marcacion->marcaMov_emple_id;
             $newMarcacion->organi_id =  $marcacion->organi_id;
@@ -2075,7 +2083,8 @@ class dispositivosController extends Controller
             $newMarcacion->marcaIdActivi  = $marcacion->marcaIdActivi;
             $newMarcacion->puntoC_id = $marcacion->puntoC_id;
             $newMarcacion->centC_id = $marcacion->centC_id;
-            $newMarcacion->controladores_idControladores = $marcacion->controladores_idControladores;
+            $newMarcacion->controladores_idControladores = $controladorE;
+            $newMarcacion->controladores_salida = $controladorS;
             $newMarcacion->dispositivoEntrada = $dispositivoE;
             $newMarcacion->dispositivoSalida = $dispositivoS;
             $newMarcacion->save();
