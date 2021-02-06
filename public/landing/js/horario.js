@@ -3001,12 +3001,6 @@ function modalEditar(id) {
             e_horaOb.setDate(data.horario[0].horasObliga);
             $('#toleranciaH_ed').val(data.horario[0].horario_tolerancia);
             $('#toleranciaSalida_ed').val(data.horario[0].horario_toleranciaF);
-            // ************************************* TARDANZA *******************
-            if (data.horario[0].hora_contTardanza == 1) {
-                $('#SwitchTardanza_ed').prop("checked", true);
-            } else {
-                $('#SwitchTardanza_ed').prop("checked", false);
-            }
             // ************************************** PAUSAS ***********************
             if (data.pausas.length != 0) {
                 $('#SwitchPausa_ed').prop("checked", true);

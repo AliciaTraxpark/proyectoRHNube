@@ -18,8 +18,7 @@ class horario extends Model
         'horaF',
         'organi_id',
         'horario_toleranciaF',
-        'horasObliga',
-        'hora_contTardanza'
+        'horasObliga'
     ];
     public $timestamps = false;
 }

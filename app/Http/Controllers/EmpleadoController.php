@@ -1642,7 +1642,6 @@ class EmpleadoController extends Controller
         $horario->user_id = Auth::user()->id;
         $horario->horario_toleranciaF = $toleranciaF;
         $horario->horasObliga = $horaOblig;
-        $horario->hora_contTardanza = $tardanza;
         $horario->save();
 
         $descPausa = $request->get('descPausa');

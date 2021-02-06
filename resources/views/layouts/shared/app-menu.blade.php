@@ -232,7 +232,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
-    <li>
+    <li style="display: none">
         <a href="javascript: void(0);">
             <i data-feather="dollar-sign"></i>
             <span> Suscripciones </span>
