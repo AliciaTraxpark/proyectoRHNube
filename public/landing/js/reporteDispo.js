@@ -453,7 +453,7 @@ function cargartabla(fecha) {
                     if (permisoModificar == 1) {
                         tbody += `<td class="noExport text-center">
                                     <a onclick="javascript:modalAgregarMarcacion(${data[index].emple_id},'${fecha}')" data-toggle="tooltip" data-placement="left" title="Agregar marcaciones."
-                                        style="cursor:pointer">
+                                        data-html="true" style="cursor:pointer">
                                         <img style="margin-bottom: 3px;" src="landing/images/addD.svg"  height="17" />
                                     </a>
                                 </td>`;
@@ -483,6 +483,7 @@ function cargartabla(fecha) {
                         var tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
                         var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
                         var sumaTiemposEntreHorarios = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
+                        var estadoTiempoHorario = true;
                         //* EXCESO
                         var tiempoHoraExceso = "00";
                         var tiempoMinutoExceso = "00";
@@ -666,7 +667,7 @@ function cargartabla(fecha) {
                                                             <div class="dropdown">
                                                                 <a class="btn dropdown" type="button" data-toggle="dropdown" id="dropdownHorario${horarioData.idHorario}" aria-haspopup="true" aria-expanded="false" 
                                                                     style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
-                                                                    <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario">
+                                                                    <span class="badge badge-soft-danger mr-2" class="text-center" data-toggle="tooltip" data-placement="left" title="Actualizar horario" data-html="true">
                                                                         <img style="margin-bottom: 3px;" src="admin/images/warning.svg" class="mr-2" height="12"/>
                                                                         ${horarioData.horario}
                                                                     </span>
@@ -930,7 +931,7 @@ function cargartabla(fecha) {
                                 if (marcacionData.entrada != 0) {
                                     if (permisoModificar == 1) {
                                         tbodyEntradaySalida += `<td style="border-left: 1px dashed #aaaaaa!important" name="colMarcaciones">
-                                                                    <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}">
+                                                                    <div class="dropdown" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo:${marcacionData.dispositivoEntrada}" data-html="true">
                                                                         <a class="btn dropdown-toggle" type="button" id="dropdownEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                                             style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;color:#6c757d!important">
                                                                             <img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>
@@ -1076,108 +1077,6 @@ function cargartabla(fecha) {
                                                 segundosTiempo = '0' + segundosTiempo;
                                             }
                                             sumaTiempos = sumaTiempos.add({ "hours": horasTiempo, "minutes": minutosTiempo, "seconds": segundosTiempo });
-                                            if (marcacionData.idH != 0) {
-                                                // ****************************************** PAUSAS ****************************************
-                                                for (let indice = 0; indice < data[index].data[m].pausas.length; indice++) {
-                                                    var contenidoP = data[index].data[m].pausas[indice];
-                                                    if (contenidoP.horario_id == marcacionData.idH) {
-                                                        var fechaI = horaInicial.clone().format("YYYY-MM-DD");
-                                                        var fechaF;
-                                                        if (contenidoP.inicio > contenidoP.fin) {
-                                                            fechaF = horaInicial.clone().add(1, 'day').format("YYYY-MM-DD");
-                                                        } else {
-                                                            fechaF = horaInicial.clone().format("YYYY-MM-DD");
-                                                        }
-                                                        var pausaI = moment(fechaI + " " + contenidoP.inicio);
-                                                        var pausaF = moment(fechaF + " " + contenidoP.fin);
-                                                        // ! COMPROBAR SI TIENE SALIDA PARA PAUSA
-                                                        var sumaToleranciaPausa = moment(
-                                                            pausaI.clone().add(
-                                                                { "minutes": contenidoP.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
-                                                            ).toString());
-                                                        var restaToleranciaPausa = moment(
-                                                            pausaI.clone().subtract(
-                                                                { "minutes": contenidoP.tolerancia_inicio }
-                                                            ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
-                                                        if (!idPausas.includes(contenidoP.id)) {
-                                                            // * PAUSAS
-                                                            tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                                                            tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                                                            tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                                                            //* EXCESO
-                                                            tiempoHoraExceso = "00";
-                                                            tiempoMinutoExceso = "00";
-                                                            tiempoSegundoExceso = "00";
-                                                            // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
-                                                            if (horaFinal.isAfter(restaToleranciaPausa) && horaFinal.isBefore(sumaToleranciaPausa)) {
-                                                                // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
-                                                                if (data[index].data[m].marcaciones[j + 1] != undefined) {
-                                                                    if (data[index].data[m].marcaciones[j + 1].entrada != undefined) {
-                                                                        var horaEntradaDespues = moment(data[index].data[m].marcaciones[j + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                                                        var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
-                                                                        tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
-                                                                        tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
-                                                                        tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
-                                                                        if (tiempoHoraPausa < 10) {
-                                                                            tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                                                        }
-                                                                        if (tiempoMinutoPausa < 10) {
-                                                                            tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                                                        }
-                                                                        if (tiempoSegundoPausa < 10) {
-                                                                            tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                                                        }
-                                                                        // * VERIFICAR TIEMPO DE EXCESO
-                                                                        var clonarPausaI = pausaI.clone();
-                                                                        var clonarPausaF = pausaF.clone();
-                                                                        var restaEntrePausa = clonarPausaF - clonarPausaI;
-                                                                        // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
-                                                                        if (restarTiempoMarcacion <= restaEntrePausa) {
-                                                                            tiempoHoraExceso = "00";
-                                                                            tiempoMinutoExceso = "00";
-                                                                            tiempoSegundoExceso = "00";
-                                                                        } else {
-                                                                            var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
-                                                                            tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
-                                                                            tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
-                                                                            tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
-                                                                            if (tiempoHoraExceso < 10) {
-                                                                                tiempoHoraExceso = '0' + tiempoHoraExceso;
-                                                                            }
-                                                                            if (tiempoMinutoExceso < 10) {
-                                                                                tiempoMinutoExceso = '0' + tiempoMinutoExceso;
-                                                                            }
-                                                                            if (tiempoSegundoPausa < 10) {
-                                                                                tiempoSegundoExceso = '0' + tiempoSegundoExceso;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                idPausas.push(contenidoP.id);
-                                                            } else {
-                                                                if (pausaI.isAfter(horaInicial) && pausaI.isBefore(horaFinal)) {
-                                                                    var momentpausainicio = moment(contenidoP.inicio, ["HH:mm"]);
-                                                                    var momentpausafin = moment(contenidoP.fin, ["HH:mm"]);
-                                                                    var restaPausa = momentpausafin - momentpausainicio;
-                                                                    tiempoSegundoPausa = moment.duration(restaPausa).seconds();
-                                                                    tiempoMinutoPausa = moment.duration(restaPausa).minutes();
-                                                                    tiempoHoraPausa = Math.trunc(moment.duration(restaPausa).asHours());
-                                                                    if (tiempoHoraPausa < 10) {
-                                                                        tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                                                    }
-                                                                    if (tiempoMinutoPausa < 10) {
-                                                                        tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                                                    }
-                                                                    if (tiempoSegundoPausa < 10) {
-                                                                        tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                                                    }
-                                                                    idPausas.push(contenidoP.id);
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
                                         }
                                         // * FINALIZACION
                                         tbodyEntradaySalida += `<td name="colTiempoS">
@@ -1193,7 +1092,7 @@ function cargartabla(fecha) {
                                                                         <div class="dropdown noExport" id="dropSalida${marcacionData.idMarcacion}">
                                                                             <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
                                                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar hora" data-html="true">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/wall-clock (1).svg" class="mr-2" height="12"/>
                                                                                     No tiene salida
                                                                                 </span>
@@ -1241,7 +1140,7 @@ function cargartabla(fecha) {
                                                                         <div class=" dropdown">
                                                                             <a class="btn dropdown-toggle" type="button" id="dropEntrada${marcacionData.idMarcacion}" data-toggle="dropdown" aria-haspopup="true" 
                                                                                 aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
-                                                                                <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora">
+                                                                                <span class="badge badge-soft-warning" data-toggle="tooltip" data-placement="left" title="Agregar hora" data-html="true">
                                                                                     <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
                                                                                     No tiene entrada
                                                                                 </span>
@@ -1344,15 +1243,180 @@ function cargartabla(fecha) {
                             var tbodyPausas = "";
                             for (let p = 0; p < data[index].data[m].pausas.length; p++) {
                                 var pausaData = data[index].data[m].pausas[p];
+                                for (let mp = 0; mp < data[index].data[m].marcaciones.length; mp++) {
+                                    var dataMarcacionP = data[index].data[m].marcaciones[mp];
+                                    if (dataMarcacionP.idH != 0 && pausaData.horario_id == dataMarcacionP.idH) {
+                                        var horaInicialM = moment(dataMarcacionP.entrada);
+                                        var horaFinalM = moment(dataMarcacionP.salida);
+                                        // ****************************************** PAUSAS ****************************************
+                                        var fechaI = horaInicialM.clone().format("YYYY-MM-DD");
+                                        var fechaF;
+                                        if (pausaData.inicio > pausaData.fin) {
+                                            fechaF = horaInicialM.clone().add(1, 'day').format("YYYY-MM-DD");
+                                        } else {
+                                            fechaF = horaInicialM.clone().format("YYYY-MM-DD");
+                                        }
+                                        var pausaI = moment(fechaI + " " + pausaData.inicio);
+                                        var pausaF = moment(fechaF + " " + pausaData.fin);
+                                        // ! INICIO DE PAUSA
+                                        var sumaToleranciaPausa = moment(
+                                            pausaI.clone().add(
+                                                { "minutes": pausaData.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
+                                            ).toString());
+                                        var restaToleranciaPausa = moment(
+                                            pausaI.clone().subtract(
+                                                { "minutes": pausaData.tolerancia_inicio }
+                                            ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
+                                        // ! FIN DE PAUSA
+                                        var sumaToleranciaPausaFinal = moment(pausaF.clone().add({ "minutes": pausaData.tolerancia_fin }).toString());
+                                        if (!idPausas.includes(pausaData.id)) {
+                                            // * PAUSAS
+                                            tiempoHoraPausa = "00";        //: HORAS TARDANZA
+                                            tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
+                                            tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
+                                            estadoTiempoHorario = true;
+                                            //* EXCESO
+                                            tiempoHoraExceso = "00";
+                                            tiempoMinutoExceso = "00";
+                                            tiempoSegundoExceso = "00";
+                                            // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
+                                            if (horaFinalM.isAfter(restaToleranciaPausa) && horaFinalM.isBefore(sumaToleranciaPausa)) {
+                                                // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
+                                                if (data[index].data[m].marcaciones[mp + 1] != undefined) {
+                                                    if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
+                                                        var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
+                                                        var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
+                                                        tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
+                                                        tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
+                                                        tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
+                                                        if (tiempoHoraPausa < 10) {
+                                                            tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                        }
+                                                        if (tiempoMinutoPausa < 10) {
+                                                            tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                        }
+                                                        if (tiempoSegundoPausa < 10) {
+                                                            tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                        }
+                                                        // * VERIFICAR TIEMPO DE EXCESO
+                                                        var clonarPausaI = pausaI.clone();
+                                                        var clonarPausaF = pausaF.clone();
+                                                        var restaEntrePausa = clonarPausaF - clonarPausaI;
+                                                        // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
+                                                        if (restarTiempoMarcacion <= restaEntrePausa) {
+                                                            tiempoHoraExceso = "00";
+                                                            tiempoMinutoExceso = "00";
+                                                            tiempoSegundoExceso = "00";
+                                                        } else {
+                                                            var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
+                                                            tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
+                                                            tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
+                                                            tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
+                                                            if (tiempoHoraExceso < 10) {
+                                                                tiempoHoraExceso = '0' + tiempoHoraExceso;
+                                                            }
+                                                            if (tiempoMinutoExceso < 10) {
+                                                                tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                            }
+                                                            if (tiempoSegundoPausa < 10) {
+                                                                tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                idPausas.push(pausaData.id);
+                                            } else {
+                                                if (horaFinalM.isAfter(restaToleranciaPausa) && horaFinalM.isBefore(sumaToleranciaPausaFinal)) {
+                                                    estadoTiempoHorario = false;
+                                                    // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
+                                                    if (data[index].data[m].marcaciones[mp + 1] != undefined) {
+                                                        if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
+                                                            var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
+                                                            var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
+                                                            tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
+                                                            tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
+                                                            tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
+                                                            if (tiempoHoraPausa < 10) {
+                                                                tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                            }
+                                                            if (tiempoMinutoPausa < 10) {
+                                                                tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                            }
+                                                            if (tiempoSegundoPausa < 10) {
+                                                                tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                            }
+                                                            // * VERIFICAR TIEMPO DE EXCESO
+                                                            var clonarPausaI = pausaI.clone();
+                                                            var clonarPausaF = pausaF.clone();
+                                                            var restaEntrePausa = clonarPausaF - clonarPausaI;
+                                                            // * CONDICIONAL QUE DEBE SER MENOR O IGUAL CON EL TIEMPO PAUSA
+                                                            if (restarTiempoMarcacion <= restaEntrePausa) {
+                                                                tiempoHoraExceso = "00";
+                                                                tiempoMinutoExceso = "00";
+                                                                tiempoSegundoExceso = "00";
+                                                            } else {
+                                                                var restaParaExceso = restarTiempoMarcacion - restaEntrePausa;
+                                                                tiempoSegundoExceso = moment.duration(restaParaExceso).seconds();
+                                                                tiempoMinutoExceso = moment.duration(restaParaExceso).minutes();
+                                                                tiempoHoraExceso = Math.trunc(moment.duration(restaParaExceso).asHours());
+                                                                if (tiempoHoraExceso < 10) {
+                                                                    tiempoHoraExceso = '0' + tiempoHoraExceso;
+                                                                }
+                                                                if (tiempoMinutoExceso < 10) {
+                                                                    tiempoMinutoExceso = '0' + tiempoMinutoExceso;
+                                                                }
+                                                                if (tiempoSegundoPausa < 10) {
+                                                                    tiempoSegundoExceso = '0' + tiempoSegundoExceso;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    idPausas.push(pausaData.id);
+                                                } else {
+                                                    if (pausaI.isAfter(horaInicialM) && pausaI.isBefore(horaFinalM)) {
+                                                        var momentpausainicio = moment(contenidoP.inicio, ["HH:mm"]);
+                                                        var momentpausafin = moment(contenidoP.fin, ["HH:mm"]);
+                                                        var restaPausa = momentpausafin - momentpausainicio;
+                                                        tiempoSegundoPausa = moment.duration(restaPausa).seconds();
+                                                        tiempoMinutoPausa = moment.duration(restaPausa).minutes();
+                                                        tiempoHoraPausa = Math.trunc(moment.duration(restaPausa).asHours());
+                                                        if (tiempoHoraPausa < 10) {
+                                                            tiempoHoraPausa = '0' + tiempoHoraPausa;
+                                                        }
+                                                        if (tiempoMinutoPausa < 10) {
+                                                            tiempoMinutoPausa = '0' + tiempoMinutoPausa;
+                                                        }
+                                                        if (tiempoSegundoPausa < 10) {
+                                                            tiempoSegundoPausa = '0' + tiempoSegundoPausa;
+                                                        }
+                                                        idPausas.push(pausaData.id);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                                 tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
-                                        <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>
-                                        <td name="tiempoPausa">
-                                            <a class="badge badge-soft-primary mr-2">
-                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
-                                            </a>
-                                        </td>
-                                        <td name="excesoPausa">
+                                        <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>`;
+                                if (estadoTiempoHorario) {
+                                    tbodyPausas += `<td name="tiempoPausa">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
+                                                        </a>
+                                                    </td>`;
+                                } else {
+                                    tbodyPausas += `<td name="tiempoPausa">
+                                                        <a class="badge badge-soft-warning mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
+                                                            title="El colaborador márco tarde su ${pausaData.descripcion}.\nSalida:${pausaData.inicio}\n
+                                                            Tolerancia ${pausaData.tolerancia_inicio} min.\nRegreso:${pausaData.fin}\nTolerancia ${pausaData.tolerancia_fin} min." 
+                                                            data-html="true">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/warning.svg" class="mr-2" height="12"/>
+                                                            ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
+                                                        </a>
+                                                    </td>`;
+                                }
+                                tbodyPausas += `<td name="excesoPausa">
                                             <a class="badge badge-soft-danger mr-2">
                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                 ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
