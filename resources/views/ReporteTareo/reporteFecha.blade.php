@@ -682,7 +682,7 @@
                                 <div class="col-md-12">
                                     <label style="color:#62778c;font-weight: bold">Seleccione Actividad: </label>
                                     <span style="font-style: oblique;font-size: 11px">*Se visualizará las actividades con modo tareo.</span>
-                                        <br>
+                                        <br><br>
                                     <span style="font-style: oblique;font-size: 11px">*Las actividad sin subactiviades estan
                                     deshabilitadas.</span>
                                 </div>
@@ -725,6 +725,60 @@
             </div>
         </div>
     </div>
+
+       {{-- MODAL DE INSERTAR SUBACTIVIDAD--}}
+       <div id="insertarSubMo" class="modal fade" role="dialog"
+       aria-hidden="true" data-backdrop="static">
+           <div class="modal-dialog d-flex modal-dialog-centered justify-content-center">
+               <div class="modal-content">
+                   <div class="modal-header" style="font-size:12px!important;background-color:#163552;">
+                       <h6 class="modal-title" style="color:#ffffff;">
+                           Agregar subactividad
+                       </h6>
+                   </div>
+                   <div class="modal-body" style="font-size:12px!important;">
+                       <div class="col-md-12">
+                           <form action="javascript:insertarSubac()" id="formInsertarSubac">
+                               <div class="row">
+                                   {{-- ID DE MARCACION --}}
+                                   <input type="hidden" id="idMarcacionSACT">
+
+                                       <div class="col-md-12"><label for="">Seleccione Subactividad</label></div>
+                                       <div class="col-md-12">
+
+                                           <select id="selectSubActiv2" data-plugin="customselect" class="form-control"
+                                                   required  >
+                                                   <option value="" disabled selected>Seleccione subactividad</option>
+                                               </select>
+                                               <br><br>
+                                       </div>
+
+                                       <div class="col-md-12" style="display: none" id="divActi">
+                                           <label for="">Actividad:</label>
+                                           <input type="hidden" id="idActi">
+                                           <span id="actividadSub"
+                                             style="color:#62778c;font-weight: bold"></span>
+                                       </div>
+
+                               </div>
+                       </div>
+                   </div>
+                   <div class="modal-footer" style="padding-top: 5px; padding-bottom: 5px;">
+                       <div class="col-md-12 text-right" style="padding-right: 0px;">
+                           <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"
+                               onclick="javascript:limpiarAtributos()">
+                               Cancelar
+                           </button>
+                           <button type="submit" class="btn btn-sm"
+                               style="background: #183b5d;border-color:#62778c;">
+                               Guardar
+                           </button>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
     {{-- modificar --}}
     @if (isset($modifReporte))
         @if ($modifReporte == 1)

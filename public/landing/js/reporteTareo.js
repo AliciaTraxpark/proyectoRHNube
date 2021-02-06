@@ -224,15 +224,48 @@ function cargartabla(fecha) {
                                     if (marcacionData.subAct_nombre != null) {
                                         tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
                                     } else {
-                                        tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                        tbodyEntradaySalida += `<td>
+                                        <div class=" dropdown">
+                                            <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
+                                                    <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
+                                                    No tiene subactividad
+                                                </span>
+                                            </a>
+                                            <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                               <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                   <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                       Opciones
+                                               </h6>
+                                               <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                <div class="dropdown-item" dropdown-itemM noExport>
+                                                    <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                        <a onclick="agregarSubAct(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                            <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                            Agregar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </td>`;
                                     }
                                     if(marcacionData.controladorEntrada!=0){
                                         tbodyEntradaySalida += `
                                                 <td class="controHidEn" data-toggle="tooltip" data-placement="left" data-html="true" title="Dispositivo: ${marcacionData.dispositivoEntrada}">  ${marcacionData.controladorEntrada}</td>`;
                                     } else
                                     {
-                                        tbodyEntradaySalida += `
-                                                <td class="controHidEn">  --  </td>`;
+                                        //*VERIFICAMOS QUE HAYA MARCACION DE ENTRADA
+                                        if(marcacionData.entrada != 0){
+                                            tbodyEntradaySalida += `
+                                            <td class="controHidEn">  --  </td>`;
+                                        }
+                                        else{
+                                            tbodyEntradaySalida += `
+                                            <td class="controHidEn">  --  </td>`;
+                                        }
+
                                     }
 
                                     tbodyEntradaySalida += `<td><img style="margin-bottom: 3px;" src="landing/images/entradaD.svg" class="mr-2" height="12"/>${moment(
@@ -412,7 +445,32 @@ function cargartabla(fecha) {
                                         if (marcacionData.subAct_nombre != null) {
                                             tbodyEntradaySalida += `<td>${marcacionData.subAct_nombre}</td>`;
                                         } else {
-                                            tbodyEntradaySalida += `<td>---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>`;
+                                            tbodyEntradaySalida += `<td>
+                                            <div class=" dropdown">
+                                                <a class="btn dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" style="cursor: pointer;padding-left: 0px;padding-bottom: 0px;padding-top: 0px;">
+                                                    <span class="badge badge-soft-secondary" data-toggle="tooltip" data-placement="left" title="Agregar subactividad">
+                                                        <img style="margin-bottom: 3px;" src="landing/images/subactividad.svg" class="mr-2" height="12"/>
+                                                        No tiene subactividad
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu noExport"  style="padding: 0rem 0rem;">
+                                                   <h6 class="dropdown-header text-left" style="padding: 0.5rem 0.5rem;margin-top: 0;background: #edf0f1;color: #6c757d;font-weight: bold">
+                                                       <img src="landing/images/configuracionesD.svg" class="mr-1" height="12"/>
+                                                           Opciones
+                                                   </h6>
+                                                   <div class="dropdown-divider" style="margin: 0rem 0rem;"></div>
+                                                    <div class="dropdown-item" dropdown-itemM noExport>
+                                                        <div class="form-group noExport pl-3" style="margin-bottom: 0.5rem;">
+                                                            <a onclick="agregarSubAct(${marcacionData.idMarcacion})" style="cursor:pointer; font-size:12px;padding-top: 2px;">
+                                                                <img style="margin-bottom: 3px;" src="landing/images/plusD.svg"  height="12" />
+                                                                Agregar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </td>`;
                                         }
 
                                         if(marcacionData.controladorEntrada!=0){
@@ -661,11 +719,12 @@ function cargartabla(fecha) {
                                     var cont4 = cont3.replace('No tiene salida', '---');
                                     var cont5 = cont4.replace('No tiene punto de C.', '---');
                                     var cont6 = cont5.replace('No tiene actividad', '---');
+                                    var cont7 = cont6.replace('No tiene subactividad', '---');
 
-                                    var cont7 = cont6.replace('Agregar', '');
-                                    var cont8  = cont7.replace('Opciones', '');
+                                    var cont8 = cont7.replace('Agregar', '');
+                                    var cont9  = cont8.replace('Opciones', '');
 
-                                    return $.trim(cont8);
+                                    return $.trim(cont9);
                                 }
                             }
                         },
@@ -687,8 +746,8 @@ function cargartabla(fecha) {
                                 tableHeader: {
                                     bold: true,
                                     fontSize: 11,
-                                    color: '#6c757d',
-                                    fillColor: '#ffffff',
+                                    color: '#ffffff',
+                                    fillColor: '#14274e',
                                     alignment: 'left'
                                 },
                                 defaultStyle: {
@@ -725,10 +784,11 @@ function cargartabla(fecha) {
                                         var cambiar4 = cambiar3.replace('No tiene salida', '---');
                                         var cambiar5 = cambiar4.replace('No tiene punto de C.', '---');
                                         var cambiar6 = cambiar5.replace('No tiene actividad', '---');
-                                        var cambiar7 = cambiar6.replace('Agregar', '');
-                                        var cambiar8 = cambiar7.replace('Opciones', '');
-                                        var cambiar9 = cambiar8.trim();
-                                        bodyNuevo.push({ text: cambiar9, style: 'defaultStyle' });
+                                        var cambiar7 = cambiar6.replace('No tiene subactividad', '---');
+                                        var cambiar8 = cambiar7.replace('Agregar', '');
+                                        var cambiar9 = cambiar8.replace('Opciones', '');
+                                        var cambiar10 = cambiar9.trim();
+                                        bodyNuevo.push({ text: cambiar10, style: 'defaultStyle' });
                                     });
                                     bodyCompleto.push(bodyNuevo);
                                 } else {
@@ -1518,6 +1578,7 @@ $(function(){
   });
 //********************************************************* */
 
+//* INSERTAR ACTIVIDAD
 function insertarActiv(){
 
    let idMarcacion= $('#idMarcacionACT').val();
@@ -1545,7 +1606,7 @@ function insertarActiv(){
             $.notifyClose();
             $.notify(
                 {
-                    message: "\nActividad aggregada.",
+                    message: "\nActividad agregada.",
                     icon: "admin/images/checked.svg",
                 },
                 {
@@ -1569,3 +1630,156 @@ function insertarActiv(){
     },
 });
 }
+//****************************************
+
+//*SUBACTIVIDADES-----------------------------------------
+function agregarSubAct(idMarcacion){
+    $('#idMarcacionSACT').val(idMarcacion);
+
+    /* PARA SELECT DE ACTIVIDAD */
+    $("#selectSubActiv2").empty();
+    var container = $("#selectSubActiv2");
+
+    $("#divActi").hide();
+
+    $.ajax({
+        async: false,
+        url: "/listActividadTareo",
+        method: "GET",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        statusCode: {
+            401: function () {
+                location.reload();
+            },
+            /*419: function () {
+                location.reload();
+            }*/
+        },
+        success: function (data) {
+            var option2 = `<option value="" disabled selected>Seleccionar subactividad</option>`;
+
+
+            /* AGREGANDO OPTIONS*/
+            data.forEach((element) => {
+
+                //*PONIENDO SUBACTIVIDADES
+                element.subactividades.forEach((element2) => {
+
+                    option2 += `<option value="${element2.idsubActividad}" >${element2.subAct_nombre} </option>`;
+
+
+
+                });
+
+            });
+            container.append(option2);
+
+            $("#selectSubActiv").prop("disabled",true);
+
+            $('#insertarSubMo').modal('show');
+
+
+        },
+        error: function () {},
+    });
+}
+
+//*******************SELECCIONAR SUBACTIVIDADES y mostrar ACTIVIDAD
+$(function(){
+    $('#selectSubActiv2').on('change',function(){
+
+        let valorActiv=$('#selectSubActiv2').val();
+        console.log(valorActiv);
+        $.ajax({
+            async: false,
+            url: "/listActividadTareo",
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            statusCode: {
+                401: function () {
+                    location.reload();
+                },
+                /*419: function () {
+                    location.reload();
+                }*/
+            },
+            success: function (data) {
+
+                /* AGREGANDO OPTIONS*/
+                data.forEach((element) => {
+
+                    //*PONIENDO SUBACTIVIDADES
+                    element.subactividades.forEach((element2) => {
+                        if(element2.idsubActividad==valorActiv){
+                            $("#idActi").val(element2.Activi_id);
+                            $("#actividadSub").text(element.Activi_Nombre);
+                        }
+                    });
+                });
+                $("#divActi").show();
+
+            },
+            error: function () {},
+        });
+    });
+
+  });
+
+
+//* INSERTAR SUBACTIVIDAD
+function insertarSubac(){
+
+    let idMarcacion= $('#idMarcacionSACT').val();
+    let idActiv=$('#idActi').val();
+    let idSubact=$('#selectSubActiv2').val();
+
+    $.ajax({
+     async: false,
+     type: "POST",
+     url: "/TareoregistrarActiv",
+     data: {
+         idMarcacion,idActiv,idSubact
+     },
+     statusCode: {
+         419: function () {
+             location.reload();
+         },
+     },
+     headers: {
+         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+     },
+     success: function (data) {
+         $('#btnRecargaTabla').click();
+         $('#insertarSubMo').modal('hide');
+             $.notifyClose();
+             $.notify(
+                 {
+                     message: "\nSubactividad agregada.",
+                     icon: "admin/images/checked.svg",
+                 },
+                 {
+                     position: "fixed",
+                     icon_type: "image",
+                     newest_on_top: true,
+                     delay: 5000,
+                     template:
+                         '<div data-notify="container" class="col-xs-8 col-sm-2 text-center alert" style="background-color: #dff0d8;" role="alert">' +
+                         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                         '<img data-notify="icon" class="img-circle pull-left" height="20">' +
+                         '<span data-notify="title">{1}</span> ' +
+                         '<span style="color:#3c763d;" data-notify="message">{2}</span>' +
+                         "</div>",
+                     spacing: 35,
+                 }
+             );
+
+     },
+     error: function () {
+     },
+ });
+ }
+//********************************************************* */

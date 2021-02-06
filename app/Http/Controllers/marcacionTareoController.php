@@ -669,12 +669,20 @@ class marcacionTareoController extends Controller
             $marcacionModi = marcacion_tareo::findOrFail($idmarcacion);
             $marcacionModi->marcaTareo_salida = $marcacionesT->marcaTareo_entrada;
             $marcacionModi->marcaTareo_entrada = null;
+            $marcacionModi->idcontroladores_salida = $marcacionesT->idcontroladores_entrada;
+            $marcacionModi->idcontroladores_entrada = null;
+            $marcacionModi->iddispositivos_salida = $marcacionesT->iddispositivos_entrada;
+            $marcacionModi->iddispositivos_entrada = null;
             $marcacionModi->save();
             return "Salida modificada";
         } else {
             $marcacionModi = marcacion_tareo::findOrFail($idmarcacion);
             $marcacionModi->marcaTareo_entrada = $marcacionesT->marcaTareo_salida;
             $marcacionModi->marcaTareo_salida = null;
+            $marcacionModi->idcontroladores_entrada = $marcacionesT->idcontroladores_salida;
+            $marcacionModi->idcontroladores_salida = null;
+            $marcacionModi->iddispositivos_entrada = $marcacionesT->iddispositivos_salida;
+            $marcacionModi->iddispositivos_salida = null;
             $marcacionModi->save();
             return "Entrada modificada";
         }
