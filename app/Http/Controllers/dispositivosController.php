@@ -785,7 +785,8 @@ class dispositivosController extends Controller
                         'pausH_Fin as fin',
                         'tolerancia_inicio',
                         'tolerancia_fin',
-                        'horario_id'
+                        'horario_id',
+                        'descontar'
                     )
                         ->where('horario_id', '=', $d["horario"]->idHorario)->get();
                     foreach ($pausas as $p) {
