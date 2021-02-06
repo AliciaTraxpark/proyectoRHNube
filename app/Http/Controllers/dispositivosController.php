@@ -1497,7 +1497,7 @@ class dispositivosController extends Controller
                 'mp.marcaMov_id as id',
                 'mp.marcaMov_salida as salida',
                 DB::raw('IF(mp.horarioEmp_id is null, 0 , mp.horarioEmp_id ) as idH'),
-                'h.horario_descripcion as horario'
+                DB::raw('IF(h.horario_descripcion is null , "Sin horario",h.horario_descripcion) as horario')
             )
             ->whereNotNull('mp.marcaMov_salida')
             ->whereNull('mp.marcaMov_fecha')
@@ -1603,7 +1603,7 @@ class dispositivosController extends Controller
                 'mp.marcaMov_id as id',
                 'mp.marcaMov_fecha as entrada',
                 DB::raw('IF(mp.horarioEmp_id is null, 0 , mp.horarioEmp_id ) as idH'),
-                'h.horario_descripcion as horario'
+                DB::raw('IF(h.horario_descripcion is null , "Sin horario",h.horario_descripcion) as horario')
             )
             ->whereNotNull('mp.marcaMov_fecha')
             ->whereNull('mp.marcaMov_salida')

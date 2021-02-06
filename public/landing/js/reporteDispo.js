@@ -2020,7 +2020,7 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
         },
         success: function (data) {
             if (data.length != 0) {
-                var container = `<option value="" disabled selected>Seleccionar salida</option>`;
+                var container = `<option value="" disabled selected>Seleccionar entrada</option>`;
                 for (let index = 0; index < data.length; index++) {
                     container += `<optgroup label="Horario ${data[index].horario}">`;
                     data[index].data.forEach(element => {
@@ -2034,11 +2034,12 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
                                 </option>`;
                         }
                     });
-                    container += `</optgroup`;
+                    container += `</optgroup>`;
                 }
             } else {
                 var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
             }
+            console.log(container);
             $('#entradaM').append(container);
             imagenesEntrada();
         },
