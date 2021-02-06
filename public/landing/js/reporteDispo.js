@@ -427,10 +427,18 @@ function cargartabla(fecha) {
                     // ! PAUSAS
                     var cantidadColumnasP = arrayHorario[m].split(",")[1];
                     for (let p = 0; p < cantidadColumnasP; p++) {
-                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa" class="descripcionPausa">Pausa</th>
-                                        <th name="horarioPausa" class="horarioPausa">Horario de pausa</th>
-                                        <th name="tiempoPausa" class="tiempoPausa">Tiempo de pausa</th>
-                                        <th name="excesoPausa" class="excesoPausa">Exceso de pausa</th>`;
+                        theadTabla += `<th style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa" class="descripcionPausa">
+                                            <span>Pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                        </th>
+                                        <th name="horarioPausa" class="horarioPausa">
+                                            <span>Horario de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                        </th>
+                                        <th name="tiempoPausa" class="tiempoPausa">
+                                            <span>Tiempo de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                        </th>
+                                        <th name="excesoPausa" class="excesoPausa">
+                                            <span>Exceso de pausa <b style="font-size: 12px !important;color: #383e56;font-weight: 600 !important">${p + 1}</b></span>
+                                        </th>`;
                     }
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo Total</th>
@@ -1242,45 +1250,47 @@ function cargartabla(fecha) {
                             // ! PAUSAS
                             var tbodyPausas = "";
                             for (let p = 0; p < data[index].data[m].pausas.length; p++) {
+                                // * PAUSAS
+                                tiempoHoraPausa = "00";        //: HORAS TARDANZA
+                                tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
+                                tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
+                                estadoTiempoHorario = true;
+                                //* EXCESO
+                                tiempoHoraExceso = "00";
+                                tiempoMinutoExceso = "00";
+                                tiempoSegundoExceso = "00";
                                 var pausaData = data[index].data[m].pausas[p];
                                 for (let mp = 0; mp < data[index].data[m].marcaciones.length; mp++) {
                                     var dataMarcacionP = data[index].data[m].marcaciones[mp];
                                     if (dataMarcacionP.idH != 0 && pausaData.horario_id == dataMarcacionP.idH) {
-                                        var horaInicialM = moment(dataMarcacionP.entrada);
-                                        var horaFinalM = moment(dataMarcacionP.salida);
-                                        // ****************************************** PAUSAS ****************************************
-                                        var fechaI = horaInicialM.clone().format("YYYY-MM-DD");
-                                        var fechaF;
-                                        if (pausaData.inicio > pausaData.fin) {
-                                            fechaF = horaInicialM.clone().add(1, 'day').format("YYYY-MM-DD");
-                                        } else {
-                                            fechaF = horaInicialM.clone().format("YYYY-MM-DD");
-                                        }
-                                        var pausaI = moment(fechaI + " " + pausaData.inicio);
-                                        var pausaF = moment(fechaF + " " + pausaData.fin);
-                                        // ! INICIO DE PAUSA
-                                        var sumaToleranciaPausa = moment(
-                                            pausaI.clone().add(
-                                                { "minutes": pausaData.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
-                                            ).toString());
-                                        var restaToleranciaPausa = moment(
-                                            pausaI.clone().subtract(
-                                                { "minutes": pausaData.tolerancia_inicio }
-                                            ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
-                                        // ! FIN DE PAUSA
-                                        var sumaToleranciaPausaFinal = moment(pausaF.clone().add({ "minutes": pausaData.tolerancia_fin }).toString());
+                                        console.log(idPausas, !idPausas.includes(pausaData.id));
                                         if (!idPausas.includes(pausaData.id)) {
-                                            // * PAUSAS
-                                            tiempoHoraPausa = "00";        //: HORAS TARDANZA
-                                            tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
-                                            tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
-                                            estadoTiempoHorario = true;
-                                            //* EXCESO
-                                            tiempoHoraExceso = "00";
-                                            tiempoMinutoExceso = "00";
-                                            tiempoSegundoExceso = "00";
+                                            var horaInicialM = moment(dataMarcacionP.entrada);
+                                            var horaFinalM = moment(dataMarcacionP.salida);
+                                            // ****************************************** PAUSAS ****************************************
+                                            var fechaI = horaInicialM.clone().format("YYYY-MM-DD");
+                                            var fechaF;
+                                            if (pausaData.inicio > pausaData.fin) {
+                                                fechaF = horaInicialM.clone().add(1, 'day').format("YYYY-MM-DD");
+                                            } else {
+                                                fechaF = horaInicialM.clone().format("YYYY-MM-DD");
+                                            }
+                                            var pausaI = moment(fechaI + " " + pausaData.inicio);
+                                            var pausaF = moment(fechaF + " " + pausaData.fin);
+                                            // ! INICIO DE PAUSA
+                                            var sumaToleranciaPausa = moment(
+                                                pausaI.clone().add(
+                                                    { "minutes": pausaData.tolerancia_inicio }    // : CLONAMOS EL TIEMPO Y SUMAR CON TOLERANCIA
+                                                ).toString());
+                                            var restaToleranciaPausa = moment(
+                                                pausaI.clone().subtract(
+                                                    { "minutes": pausaData.tolerancia_inicio }
+                                                ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
+                                            // ! FIN DE PAUSA
+                                            var sumaToleranciaPausaFinal = moment(pausaF.clone().add({ "minutes": pausaData.tolerancia_fin }).toString());
+
                                             // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
-                                            if (horaFinalM.isAfter(restaToleranciaPausa) && horaFinalM.isBefore(sumaToleranciaPausa)) {
+                                            if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausa)) {
                                                 // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
                                                 if (data[index].data[m].marcaciones[mp + 1] != undefined) {
                                                     if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
@@ -1326,13 +1336,13 @@ function cargartabla(fecha) {
                                                 }
                                                 idPausas.push(pausaData.id);
                                             } else {
-                                                if (horaFinalM.isAfter(restaToleranciaPausa) && horaFinalM.isBefore(sumaToleranciaPausaFinal)) {
-                                                    estadoTiempoHorario = false;
+                                                if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausaFinal)) {
                                                     // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
                                                     if (data[index].data[m].marcaciones[mp + 1] != undefined) {
                                                         if (data[index].data[m].marcaciones[mp + 1].entrada != undefined) {
+                                                            estadoTiempoHorario = false;
                                                             var horaEntradaDespues = moment(data[index].data[m].marcaciones[mp + 1].entrada);    //: -> OBTENER ENTRADA DE LA MARCACION SIGUIENTE
-                                                            var restarTiempoMarcacion = horaEntradaDespues - horaFinal;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
+                                                            var restarTiempoMarcacion = horaEntradaDespues - horaFinalM;                //: -> RESTAR PARA OBTENER LA CANTIDAD EN PAUSA               
                                                             tiempoSegundoPausa = moment.duration(restarTiempoMarcacion).seconds();      //: -> TIEMPOS EN SEGUNDOS
                                                             tiempoMinutoPausa = moment.duration(restarTiempoMarcacion).minutes();       //: -> TIEMPOS EN MINUTOS
                                                             tiempoHoraPausa = Math.trunc(moment.duration(restarTiempoMarcacion).asHours()); //: -> TIEMPOS EN HORAS
@@ -1345,6 +1355,7 @@ function cargartabla(fecha) {
                                                             if (tiempoSegundoPausa < 10) {
                                                                 tiempoSegundoPausa = '0' + tiempoSegundoPausa;
                                                             }
+                                                            console.log(horaEntradaDespues, horaFinalM);
                                                             // * VERIFICAR TIEMPO DE EXCESO
                                                             var clonarPausaI = pausaI.clone();
                                                             var clonarPausaF = pausaF.clone();
@@ -1373,9 +1384,9 @@ function cargartabla(fecha) {
                                                     }
                                                     idPausas.push(pausaData.id);
                                                 } else {
-                                                    if (pausaI.isAfter(horaInicialM) && pausaI.isBefore(horaFinalM)) {
-                                                        var momentpausainicio = moment(contenidoP.inicio, ["HH:mm"]);
-                                                        var momentpausafin = moment(contenidoP.fin, ["HH:mm"]);
+                                                    if (pausaI.isSameOrAfter(horaInicialM) && pausaI.isSameOrBefore(horaFinalM)) {
+                                                        var momentpausainicio = moment(pausaData.inicio, ["HH:mm"]);
+                                                        var momentpausafin = moment(pausaData.fin, ["HH:mm"]);
                                                         var restaPausa = momentpausafin - momentpausainicio;
                                                         tiempoSegundoPausa = moment.duration(restaPausa).seconds();
                                                         tiempoMinutoPausa = moment.duration(restaPausa).minutes();
@@ -1398,15 +1409,18 @@ function cargartabla(fecha) {
                                 }
                                 tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
                                         <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>`;
+                                console.log(estadoTiempoHorario, pausaData.descripcion);
                                 if (estadoTiempoHorario) {
-                                    tbodyPausas += `<td name="tiempoPausa">
+                                    console.log(tiempoHoraPausa, tiempoMinutoPausa, tiempoSegundoPausa);
+                                    tbodyPausas += `<td name="tiempoPausa" class="text-center">
                                                         <a class="badge badge-soft-primary mr-2">
                                                             <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                             ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
                                                         </a>
                                                     </td>`;
                                 } else {
-                                    tbodyPausas += `<td name="tiempoPausa">
+                                    console.log(tiempoHoraPausa, tiempoMinutoPausa, tiempoSegundoPausa);
+                                    tbodyPausas += `<td name="tiempoPausa" class="text-center">
                                                         <a class="badge badge-soft-warning mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
                                                             title="El colaborador márco tarde su ${pausaData.descripcion}.\nSalida:${pausaData.inicio}\n
                                                             Tolerancia ${pausaData.tolerancia_inicio} min.\nRegreso:${pausaData.fin}\nTolerancia ${pausaData.tolerancia_fin} min." 
@@ -1416,7 +1430,7 @@ function cargartabla(fecha) {
                                                         </a>
                                                     </td>`;
                                 }
-                                tbodyPausas += `<td name="excesoPausa">
+                                tbodyPausas += `<td name="excesoPausa" class="text-center">
                                             <a class="badge badge-soft-danger mr-2">
                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
                                                 ${tiempoHoraExceso}:${tiempoMinutoExceso}:${tiempoSegundoExceso}
