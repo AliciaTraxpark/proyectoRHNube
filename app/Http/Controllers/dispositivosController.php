@@ -1542,14 +1542,23 @@ class dispositivosController extends Controller
                 // dd(DB::getQueryLog());
                 $respuesta = true;
                 foreach ($marcacionesValidar as $mv) {
-                    if ($mv->entrada != 0) {
-                        $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
-                        if ($respuestaCheck) {
-                            $respuesta = false;
+                    if (!($mv->marcaMov_id == $marcacionCambiar->marcaMov_id)) {
+                        if ($mv->entrada != 0) {
+                            $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->entrada);
+                            if ($respuestaCheck) {
+                                $respuesta = false;
+                            }
+                        } else {
+                            if ($mv->salida != 0) {
+                                $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+                                if ($respuestaCheck) {
+                                    $respuesta = false;
+                                }
+                            }
                         }
                     } else {
-                        if ($mv->salida != 0) {
-                            $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $mv->salida);
+                        if ($tipo  == 2 ?  !empty($marcacionCambiar->marcaMov_fecha) : !empty($marcacionCambiar->marcaMov_salida)) {
+                            $respuestaCheck = checkHora($nuevaEntrada, $nuevaSalida, $tipo  == 2 ?  $mv->entrada : $mv->salida);
                             if ($respuestaCheck) {
                                 $respuesta = false;
                             }
@@ -1557,17 +1566,129 @@ class dispositivosController extends Controller
                     }
                 }
                 if ($respuesta) {
-                    // ! MARCACION A CAMBIAR
-                    if ($tipo == 1) {
-                        $marcacionCambiar->marcaMov_fecha = NULL;
+                    if (!empty($marcacion->horarioEmp_id)) {
+                        $entrada = Carbon::parse($nuevaEntrada);
+                        $salida = Carbon::parse($nuevaSalida);
+                        $horario = DB::table('horario_empleado as he')
+                            ->join('horario as h', 'h.horario_id', '=', 'he.horario_horario_id')
+                            ->select(
+                                'h.horario_descripcion as descripcion',
+                                'h.horaI',
+                                'h.horaF',
+                                'h.horario_tolerancia as toleranciaI',
+                                'h.horario_toleranciaF as toleranciaF',
+                                'he.fuera_horario as fueraH',
+                                DB::raw('IF(he.horaAdic is null, 0 ,he.horaAdic) as horasA'),
+                                'h.horasObliga as horasO'
+                            )
+                            ->where('he.horarioEmp_id', '=', $marcacion->horarioEmp_id)
+                            ->get()
+                            ->first();
+                        $horarioInicio = Carbon::parse($entrada->copy()->isoFormat('YYYY-MM-DD') . " " . $horario->horaI);
+                        $horarioIniT = $horarioInicio->copy()->subMinutes($horario->toleranciaI);
+                        // : SUMAR TIEMPOS DE MARCACIONES
+                        $sumaTotalDeHoras = DB::table('marcacion_puerta as m')
+                            ->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(m.marcaMov_salida,m.marcaMov_fecha)))) as totalT'))
+                            ->where('m.marcaMov_emple_id', '=', $marcacion->marcaMov_emple_id)
+                            ->whereNotNull('m.marcaMov_fecha')
+                            ->whereNotNull('m.marcaMov_salida')
+                            ->where(DB::raw('DATE(marcaMov_fecha)'), '=', $entrada->copy()->isoFormat('YYYY-MM-DD'))
+                            ->where('m.horarioEmp_id', '=', $marcacion->horarioEmp_id)
+                            ->where('m.marcaMov_id', '!=', $marcacionCambiar->marcaMov_id)
+                            ->get();
+                        // : CALCULAR TIEMPO
+                        $sumaTotalDeHoras[0]->totalT = $sumaTotalDeHoras[0]->totalT == null ? "00:00:00" : $sumaTotalDeHoras[0]->totalT;
+                        // : TIEMPO DE ENTRADA Y SALIDA
+                        $horaIParse = Carbon::parse($entrada);
+                        $horaFParse = Carbon::parse($salida);
+                        // : CALCULAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                        $totalDuration = $horaFParse->diffInSeconds($horaIParse);
+                        // : TIEMPO TOTAL DE MARCACIONES AGREGAMOS EL TIEMPO ENTRE SALIDA Y ENTRADA
+                        $tiempoTotal = Carbon::parse($sumaTotalDeHoras[0]->totalT)->addSeconds($totalDuration);
+                        // : TIEMPO DE HORAS OBLIGADAS DE HORARIO MAS LAS HORAS ADICIONALES
+                        $tiempoTotalDeHorario = Carbon::parse($horario->horasO)->addHours($horario->horasA);
+                        if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
+                            if ($horario->fueraH == 0) {
+                                if ($horarioIniT->lte($entrada)) {
+                                    // ! MARCACION A REGISTRAR ENTRADA
+                                    $marcacion->marcaMov_fecha = $nuevaEntrada;
+                                    if ($tipo == 2) {
+                                        $marcacion->controladores_idControladores = $marcacionCambiar->controladores_salida;
+                                        $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoSalida;
+                                    } else {
+                                        $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
+                                        $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
+                                    }
+                                    $marcacion->save();
+                                    // ! MARCACION A CAMBIAR
+                                    if ($tipo == 2) {
+                                        $marcacionCambiar->marcaMov_salida = NULL;
+                                        $marcacionCambiar->controladores_salida = NULL;
+                                        $marcacionCambiar->dispositivoSalida = NULL;
+                                    } else {
+                                        $marcacionCambiar->marcaMov_fecha = NULL;
+                                        $marcacionCambiar->controladores_idControladores  = NULL;
+                                        $marcacionCambiar->dispositivoEntrada = NULL;
+                                    }
+                                    $marcacionCambiar->save();
+                                } else {
+                                    return response()->json(
+                                        array("respuesta" => "Marcación fuera de horario." . "<br>" . "Horario " . $horario->descripcion . " (" . $horario->horaI . " - " . $horario->horaF . " )"),
+                                        200
+                                    );
+                                }
+                            } else {
+                                // ! MARCACION A REGISTRAR ENTRADA
+                                $marcacion->marcaMov_fecha = $nuevaEntrada;
+                                if ($tipo == 2) {
+                                    $marcacion->controladores_idControladores = $marcacionCambiar->controladores_salida;
+                                    $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoSalida;
+                                } else {
+                                    $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
+                                    $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
+                                }
+                                $marcacion->save();
+                                // ! MARCACION A CAMBIAR
+                                if ($tipo == 2) {
+                                    $marcacionCambiar->marcaMov_salida = NULL;
+                                    $marcacionCambiar->controladores_salida = NULL;
+                                    $marcacionCambiar->dispositivoSalida = NULL;
+                                } else {
+                                    $marcacionCambiar->marcaMov_fecha = NULL;
+                                    $marcacionCambiar->controladores_idControladores  = NULL;
+                                    $marcacionCambiar->dispositivoEntrada = NULL;
+                                }
+                                $marcacionCambiar->save();
+                            }
+                        } else {
+                            return response()->json(
+                                array("respuesta" => "Sobretiempo en la marcación."),
+                                200
+                            );
+                        }
                     } else {
-                        $marcacionCambiar->marcaMov_salida = NULL;
+                        // ! MARCACION A REGISTRAR ENTRADA
+                        $marcacion->marcaMov_fecha = $nuevaEntrada;
+                        if ($tipo == 2) {
+                            $marcacion->controladores_idControladores = $marcacionCambiar->controladores_salida;
+                            $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoSalida;
+                        } else {
+                            $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
+                            $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
+                        }
+                        $marcacion->save();
+                        // ! MARCACION A CAMBIAR
+                        if ($tipo == 2) {
+                            $marcacionCambiar->marcaMov_salida = NULL;
+                            $marcacionCambiar->controladores_salida = NULL;
+                            $marcacionCambiar->dispositivoSalida = NULL;
+                        } else {
+                            $marcacionCambiar->marcaMov_fecha = NULL;
+                            $marcacionCambiar->controladores_idControladores  = NULL;
+                            $marcacionCambiar->dispositivoEntrada = NULL;
+                        }
+                        $marcacionCambiar->save();
                     }
-                    $marcacionCambiar->save();
-                    // ! MARCACION A REGISTRAR ENTRADA
-                    $marcacion->marcaMov_fecha = $nuevaEntrada;
-                    $marcacion->save();
-
                     // ! BUSCAR SI LA MARCACION A CAMBIAR TIENE LOS CAMPOS VACIOS DE ENTRADA Y SALIDA
                     if (is_null($marcacionCambiar->marcaMov_fecha) && is_null($marcacionCambiar->marcaMov_salida)) {
                         $marcacionCambiar->delete();  // ? ELIMINAR MARCACION
@@ -1712,14 +1833,14 @@ class dispositivosController extends Controller
                         if ($tiempoTotal->lte($tiempoTotalDeHorario)) {
                             if ($horario->fueraH == 0) {
                                 if ($salida->lte($horarioFinT)) {
-                                    // ! MARCACION A REGISTRAR ENTRADA
+                                    // ! MARCACION A REGISTRAR SALIDA
                                     $marcacion->marcaMov_salida = $nuevaSalida;
                                     if ($tipo == 2) {
                                         $marcacion->controladores_salida = $marcacionCambiar->controladores_salida;
                                         $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoSalida;
                                     } else {
-                                        $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
-                                        $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
+                                        $marcacion->controladores_salida  = $marcacionCambiar->controladores_idControladores;
+                                        $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoEntrada;
                                     }
                                     $marcacion->save();
                                     // ! MARCACION A CAMBIAR
@@ -1740,14 +1861,14 @@ class dispositivosController extends Controller
                                     );
                                 }
                             } else {
-                                // ! MARCACION A REGISTRAR ENTRADA
+                                // ! MARCACION A REGISTRAR SALIDA
                                 $marcacion->marcaMov_salida = $nuevaSalida;
                                 if ($tipo == 2) {
                                     $marcacion->controladores_salida = $marcacionCambiar->controladores_salida;
                                     $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoSalida;
                                 } else {
-                                    $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
-                                    $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
+                                    $marcacion->controladores_salida  = $marcacionCambiar->controladores_idControladores;
+                                    $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoEntrada;
                                 }
                                 $marcacion->save();
                                 // ! MARCACION A CAMBIAR
@@ -1769,14 +1890,14 @@ class dispositivosController extends Controller
                             );
                         }
                     } else {
-                        // ! MARCACION A REGISTRAR ENTRADA
+                        // ! MARCACION A REGISTRAR SALIDA
                         $marcacion->marcaMov_salida = $nuevaSalida;
                         if ($tipo == 2) {
                             $marcacion->controladores_salida = $marcacionCambiar->controladores_salida;
                             $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoSalida;
                         } else {
-                            $marcacion->controladores_idControladores  = $marcacionCambiar->controladores_idControladores;
-                            $marcacion->dispositivoEntrada = $marcacionCambiar->dispositivoEntrada;
+                            $marcacion->controladores_salida  = $marcacionCambiar->controladores_idControladores;
+                            $marcacion->dispositivoSalida = $marcacionCambiar->dispositivoEntrada;
                         }
                         $marcacion->save();
                         // ! MARCACION A CAMBIAR

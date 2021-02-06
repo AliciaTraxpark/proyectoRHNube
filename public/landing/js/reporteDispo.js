@@ -1872,7 +1872,7 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
                                 </option>`;
                         }
                     });
-                    container += `</optgroup`;
+                    container += `</optgroup>`;
                 }
             } else {
                 var container = `<option value="" disabled selected>No hay marcaciónes disponibles</option>`;
