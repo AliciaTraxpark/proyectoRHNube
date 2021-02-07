@@ -3212,6 +3212,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colFaltaJornada').visible(false);
     }
+    // ? FALTA JORNADA TOTAL
+    if ($('#colFaltaJornadaTotal').is(":checked")) {
+        dataT.api().columns('.colFaltaJornadaTotal').visible(true);
+    } else {
+        dataT.api().columns('.colFaltaJornadaTotal').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {
