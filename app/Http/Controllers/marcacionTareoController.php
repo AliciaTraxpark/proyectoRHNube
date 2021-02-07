@@ -992,4 +992,68 @@ class marcacionTareoController extends Controller
         $marcacion_tareo->idsubActividad=$idSubact;
         $marcacion_tareo->save();
     }
+
+    // * ELIMINAR MARCACION
+    public function eliminarMarcacion(Request $request)
+    {
+        $id = $request->get('id');
+        $tipo = $request->get('tipo');
+
+        // * BUSCAMOS MARCACION
+        $marcacion = marcacion_tareo::findOrFail($id);
+        if ($tipo == 1) {
+            $marcacion->marcaTareo_entrada = NULL;
+            $marcacion->iddispositivos_entrada = NULL;
+            $marcacion->idcontroladores_entrada = NULL;
+            $marcacion->save();
+        } else {
+            $marcacion->marcaTareo_salida = NULL;
+            $marcacion->iddispositivos_salida = NULL;
+            $marcacion->idcontroladores_salida = NULL;
+            $marcacion->save();
+        }
+
+        if (is_null($marcacion->marcaTareo_entrada) && is_null($marcacion->marcaTareo_salida)) {
+            $marcacion->delete();
+        }
+
+        return response()->json("Marcación eliminada.", 200);
+    }
+
+    //* LISTA DE CONTROLADORES
+    public function listControladores(Request $request){
+
+        $controlador = DB::table('controladores_tareo as ct')
+        ->select(
+            'idcontroladores_tareo',
+            DB::raw('CONCAT(contrT_nombres," ",contrT_ApPaterno," ",contrT_ApMaterno) as nombre'),
+            'contrT_estado',
+            'organi_id'
+
+        )
+        ->where('organi_id', '=',  session('sesionidorg'))
+        ->where('contrT_estado', '=', 1)
+        ->get();
+        return response()->json($controlador, 200);
+    }
+
+    //*REGISTRAR CONTROLADOR DE ENTRADA
+    public function TareoregistrarContE(Request $request){
+        $idMarcacion=$request->idMarcacion;
+        $idControl=$request->idControl;
+
+        $marcacion_tareo=marcacion_tareo::findOrFail($idMarcacion);
+        $marcacion_tareo->idcontroladores_entrada=$idControl;
+        $marcacion_tareo->save();
+    }
+
+    //*REGISTRAR CONTROLADOR DE SALIDA
+    public function TareoregistrarContS(Request $request){
+        $idMarcacion=$request->idMarcacion;
+        $idControl=$request->idControl;
+
+        $marcacion_tareo=marcacion_tareo::findOrFail($idMarcacion);
+        $marcacion_tareo->idcontroladores_salida=$idControl;
+        $marcacion_tareo->save();
+    }
 }

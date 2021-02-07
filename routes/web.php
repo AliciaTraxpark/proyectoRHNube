@@ -200,7 +200,7 @@ Route::get('/reporteMensual', 'ControlController@reporteM');
 Route::get('/reporte/empleado', 'ControlController@EmpleadoReporte');
 Route::get('/empleadosRep', 'ControlController@empledosReporteSemanalMensual');
 Route::get('/mostrarCapturas', 'ControlController@mostrarCapturas');
-// TARDANZAS 
+// TARDANZAS
 Route::get('/reporteTardanzas', 'TardanzasController@mostrarReporteTardanza');
 Route::get('/cargarTablaTardanzas', 'TardanzasController@cargarReporteTardanzas');
 Route::get('/reporteMatrizTardanzas', 'TardanzasController@mostrarMatrizTardanzas');
@@ -574,6 +574,9 @@ Route::get('/listPuntoControl', 'marcacionTareoController@listPuntoControl');
 Route::post('/TareoregistrarPunto', 'marcacionTareoController@registrarPunto');
 Route::get('/listActividadTareo', 'marcacionTareoController@listActividadTareo');
 Route::post('/TareoregistrarActiv', 'marcacionTareoController@registrarActiv');
+Route::get('/listControladores', 'marcacionTareoController@listControladores');
+Route::post('/TareoregistrarContE', 'marcacionTareoController@TareoregistrarContE');
+Route::post('/TareoregistrarContS', 'marcacionTareoController@TareoregistrarContS');
 /* ------------------------------------------------------------------------ */
 
 /*------------------------ SUBACTIVIDADES--------------------------------- */
