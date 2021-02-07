@@ -335,11 +335,19 @@
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colSobreTiempo">
-                                            <label for="">Sobre tiempo entre horario</label>
+                                            <label for="">Sobretiempo entre horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colSobreTiempoTotal" checked>
-                                            <label for="">Sobre tiempo total</label>
+                                            <label for="">Sobretiempo total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colFaltaJornada">
+                                            <label for="">Falta jornada entre horario</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colFaltaJornadaTotal">
+                                            <label for="">Falta jornada total</label>
                                         </li>
                                     </ul>
                                 </ul>
@@ -397,7 +405,7 @@
                                         </li>
                                         <li class="liContenido incidenciaHijo">
                                             <input type="checkbox" id="colTardanzaTotal" checked>
-                                            <label for="">Tardanza Total</label>
+                                            <label for="">Tardanza total</label>
                                         </li>
                                         <li class="liContenido incidenciaHijo">
                                             <input type="checkbox" id="faltaHorario">
@@ -405,7 +413,7 @@
                                         </li>
                                         <li class="liContenido incidenciaHijo">
                                             <input type="checkbox" id="faltaTotal" checked>
-                                            <label for="">Falta Total</label>
+                                            <label for="">Falta total</label>
                                         </li>
                                         <li class="liContenido incidenciaHijo">
                                             <input type="checkbox" id="incidencia" checked>
