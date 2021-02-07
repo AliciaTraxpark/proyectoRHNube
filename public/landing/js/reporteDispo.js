@@ -1427,7 +1427,7 @@ function cargartabla(fecha) {
                                                             <a class="badge badge-soft-info mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
                                                             title="Pausa:${pausaData.descripcion} descuento automático" 
                                                             data-html="true">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                                <img src="landing/images/wall-clock (2).svg" height="12" class="mr-2">
                                                                 ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
                                                             </a>
                                                         </td>`;
