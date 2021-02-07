@@ -11,6 +11,7 @@ var fechaValue = $("#fechaSelec").flatpickr({
 });
 var fechaGlobal = {};
 var dataT = {};
+var sent = false;
 $(function () {
     $('#idempleado').select2({
         placeholder: 'Seleccionar',
@@ -1644,6 +1645,7 @@ function cambiarF() {
 // ! *********************************** NUEVA MARCACION ********************************************
 // * FUNCION DE AGREGAR MARCACION
 function modalAgregarMarcacion(idEmpleado, fecha) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idEmpleado == idEmpleado) {
@@ -1654,7 +1656,7 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $.ajax({
         async: false,
         type: "POST",
@@ -1744,6 +1746,8 @@ function modalAgregarMarcacion(idEmpleado, fecha) {
         error: function () { }
     });
     listaHorariosD(idEmpleado, fecha);
+    $('a').css('pointer-events', 'auto');
+    sent = false;
 }
 //* LISTA DE HORARIOS DISPONIBLES
 function listaHorariosD(idEmpleado, fecha) {
@@ -1912,6 +1916,7 @@ $('#formRegistrarMar').submit(function (e) {
         $('#am_valid').append("Seleccionar horario.");
         $('#am_valid').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
     if (!$('#v_entrada').is(":checked")) {
@@ -1920,6 +1925,7 @@ $('#formRegistrarMar').submit(function (e) {
             $('#am_valid').append("Ingresar entrada.");
             $('#am_valid').show();
             $('button[type="submit"]').attr("disabled", false);
+            sent = false;
             return;
         }
     }
@@ -1929,17 +1935,22 @@ $('#formRegistrarMar').submit(function (e) {
             $('#am_valid').append("Ingresar salida.");
             $('#am_valid').show();
             $('button[type="submit"]').attr("disabled", false);
+            sent = false;
             return;
         }
     }
-    $('#am_valid').empty();
-    $('#am_valid').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#am_valid').empty();
+        $('#am_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! *********************************** CAMBIAR A ENTRADA ********************************************
 // * FUNCION DE LISTA DE SALIDAS CON ENTRADAS NULL
 function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == idHE) {
@@ -1950,7 +1961,7 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $('#salidaM').empty();
     $('#c_horaS').text(hora);
     $('#c_tipoS').val(tipo);
@@ -2001,6 +2012,8 @@ function listaSalida(id, fecha, idEmpleado, hora, tipo, idHE) {
         },
         error: function () { }
     });
+    sent = false;
+    $('a').css('pointer-events', 'auto');
 }
 // * FUNCION DE CAMBIAR ENTRADA
 function cambiarEntradaM() {
@@ -2086,22 +2099,26 @@ function imagenesSalida() {
 $('#formCambiarEntradaM').attr('novalidate', true);
 $('#formCambiarEntradaM').submit(function (e) {
     e.preventDefault();
-    console.log($("#salidaM").val());
     if ($("#salidaM").val() == "" || $("#salidaM").val() == null) {
         $('#s_valid').empty();
         $('#s_valid').append("Seleccionar marcación.");
         $('#s_valid').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
-    $('#s_valid').empty();
-    $('#s_valid').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#s_valid').empty();
+        $('#s_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! *********************************** CAMBIAR A SALIDA ****************************************************
 // * FUNCION DE LISTA DE ENTRADAS CON SALIDAS NULL
 function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == idHE) {
@@ -2112,7 +2129,7 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $('#entradaM').empty();
     $('#c_horaE').text(hora);
     $('#c_tipoE').val(tipo);
@@ -2164,6 +2181,8 @@ function listaEntrada(id, fecha, idEmpleado, hora, tipo, idHE) {
         },
         error: function () { }
     });
+    sent = false;
+    $('a').css('pointer-events', 'auto');
 }
 // * FUNCION DE CAMBIAR SALIDA
 function cambiarSalidaM() {
@@ -2254,12 +2273,16 @@ $('#formCambiarSalidaM').submit(function (e) {
         $('#e_valid').append("Seleccionar marcación.");
         $('#e_valid').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
-    $('#e_valid').empty();
-    $('#e_valid').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#e_valid').empty();
+        $('#e_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! *********************************** CONVERTIR ORDEN ******************************************************
 // * CONVERTIR ORDEN

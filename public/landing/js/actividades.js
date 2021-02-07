@@ -871,6 +871,7 @@ $('#FormEditarActividadTarea').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
@@ -899,6 +900,7 @@ $('#FormEditarActividadTarea').submit(function (e) {
                     '</div>',
                 spacing: 35
             });
+            sent = false;
             return;
         }
     }
