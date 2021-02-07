@@ -403,10 +403,11 @@ function cargartabla(fecha1, fecha2) {
                                         <span>Exceso pausa<b style="font-size: 12px !important;color: #383e56;font-weight: 600">${p + 1}</b></span>
                                     </th>`;
                 }
-                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">Marcación T.</th><th >Tardanza Total.</th>
-                <th class="text-center">Faltas Total</th>
-                <th class="text-center">Incidencias Total</th>
-                </tr>`;
+                theadTabla += `<th style="border-left-color: #c8d4de!important;border-left: 2px solid;">Tiempo total</th>
+                                <th >Tardanza total</th>
+                                <th class="text-center">Faltas total</th>
+                                <th class="text-center">Incidencias total</th>
+                            </tr>`;
                 //* DIBUJAMOS CABEZERA
                 $('#theadD').html(theadTabla);
                 // ! *********** BODY DE TABLA**********
