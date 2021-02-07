@@ -403,6 +403,7 @@ function cargartabla(fecha) {
                                     <th name="toleranciaFHorario" class="toleranciaFHorario">Tolerancia en la salida</th>
                                     <th name="colTiempoEntreH" class="text-center colTiempoEntreH">Tiempo Total</th>
                                     <th name="colSobreTiempo" class="text-center colSobreTiempo">Sobretiempo</th>
+                                    <th name="colFaltaJornada" class="text-center colFaltaJornada">Falta Jornada</th>
                                     <th name="colTardanza" class="text-center colTardanza">Tardanza</th>
                                     <th name="faltaHorario" class="faltaHorario">Falta</th>`;
                     // ! MARCACION
@@ -479,6 +480,7 @@ function cargartabla(fecha) {
                     var sumaTiempos = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS
                     var sumaTardanzas = moment("00:00:00", "HH:mm:ss");     //: SUMANDO TARDANZAS
                     var sumaSobreTiempo = moment("00:00:00", "HH:mm:ss");   //: SUMANDO SOBRE TIEMPO
+                    var sumaFaltaJornada = moment("00:00:00", "HH:mm:ss");  //: SUMANDO FALTA JORNADA
                     // * CANTIDAD DE FALTAS
                     var sumaFaltas = 0;
                     for (let m = 0; m < cantidadGruposHorario; m++) {
@@ -492,7 +494,6 @@ function cargartabla(fecha) {
                         var tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
                         var sumaTiemposEntreHorarios = moment("00:00:00", "HH:mm:ss");       //: SUMANDO LOS TIEMPOS ENTRE HORARIOS
                         var estadoTiempoHorario = true;
-                        var descontarAutomaticoP = true;
                         //* EXCESO
                         var tiempoHoraExceso = "00";
                         var tiempoMinutoExceso = "00";
@@ -505,7 +506,10 @@ function cargartabla(fecha) {
                         var segundosSobreT = "00";
                         var minutosSobreT = "00";
                         var horasSobreT = "00";
-
+                        // * FALTA JORNADA
+                        var segundosFaltaJ = "00";
+                        var minutosFaltaJ = "00";
+                        var horasFaltaJ = "00";
                         if (data[index].data[m] != undefined) {
                             // ! ******************************************* COLUMNAS DE HORARIOS **************************************************
                             var horarioData = data[index].data[m].horario;
@@ -569,9 +573,11 @@ function cargartabla(fecha) {
                                     sumaTiemposEntreHorarios = sumaTiemposEntreHorarios.add({ "hours": horasTiempoD, "minutes": minutosTiempoD, "seconds": segundosTiempoD });
                                 }
                             }
+                            // * SOBRETIEMPO ENTRE HORARIO Y FALTA DE JORNADA
                             if (horarioData.horario != null || horarioData.horario != 0) {
                                 var horasObligadas = moment(horarioData.horasObligadas, ["HH:mm:ss"]);
                                 var tiempoEntreH = moment(sumaTiemposEntreHorarios.format("HH:mm:ss"), ["HH:mm:ss"]);
+                                // * SOBRETIEMPO
                                 if (tiempoEntreH > horasObligadas) {
                                     // * SOBRE TIEMPO 
                                     var tiempoSobreT = tiempoEntreH - horasObligadas;
@@ -588,6 +594,22 @@ function cargartabla(fecha) {
                                         segundosSobreT = '0' + segundosSobreT;
                                     }
                                     sumaSobreTiempo = sumaSobreTiempo.add({ "hours": horasSobreT, "minutes": minutosSobreT, "seconds": segundosSobreT });
+                                } else {
+                                    // * FALTA JORNADA
+                                    var tiempoFaltaJ = horasObligadas - tiempoEntreH;
+                                    segundosFaltaJ = moment.duration(tiempoFaltaJ).seconds();
+                                    minutosFaltaJ = moment.duration(tiempoFaltaJ).minutes();
+                                    horasFaltaJ = Math.trunc(moment.duration(tiempoFaltaJ).asHours());
+                                    if (horasFaltaJ < 10) {
+                                        horasFaltaJ = '0' + horasFaltaJ;
+                                    }
+                                    if (minutosFaltaJ < 10) {
+                                        minutosFaltaJ = '0' + minutosFaltaJ;
+                                    }
+                                    if (segundosFaltaJ < 10) {
+                                        segundosFaltaJ = '0' + segundosFaltaJ;
+                                    }
+                                    sumaFaltaJornada = sumaFaltaJornada.add({ "hours": horasFaltaJ, "minutes": minutosFaltaJ, "seconds": segundosFaltaJ });
                                 }
                             }
                             if (permisoModificar == 1) {
@@ -653,6 +675,12 @@ function cargartabla(fecha) {
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                            </a>
+                                                        </td>
+                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza" style="background: #f0f0f0;">
@@ -734,6 +762,12 @@ function cargartabla(fecha) {
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                            </a>
+                                                        </td>
+                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza" style="background: #f0f0f0;">
@@ -818,6 +852,12 @@ function cargartabla(fecha) {
                                                             ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                         </a>
                                                     </td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                        <a class="badge badge-soft-danger mr-2">
+                                                            <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                            ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
+                                                        </a>
+                                                    </td>
                                                     <td class="text-center" name="colTardanza" style="background: #f0f0f0;">
                                                         <a class="badge badge-soft-danger mr-2">
                                                             <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -851,6 +891,12 @@ function cargartabla(fecha) {
                                                             <a class="badge badge-soft-primary mr-2">
                                                                 <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
+                                                            </a>
+                                                        </td>
+                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
                                                             </a>
                                                         </td>
                                                         <td name="colTardanza" style="background: #f0f0f0;">
@@ -895,6 +941,12 @@ function cargartabla(fecha) {
                                                                 ${horasSobreT}:${minutosSobreT}:${segundosSobreT}
                                                             </a>
                                                         </td>
+                                                        <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">
+                                                            <a class="badge badge-soft-danger mr-2">
+                                                                <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                                                ${horasFaltaJ}:${minutosFaltaJ}:${segundosFaltaJ}
+                                                            </a>
+                                                        </td>
                                                         <td name="colTardanza" style="background: #f0f0f0;">
                                                             <a class="badge badge-soft-danger mr-2">
                                                                 <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -925,6 +977,7 @@ function cargartabla(fecha) {
                                                     <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
                                                     <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
                                                     <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
+                                                    <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">--- </td>
                                                     <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
                                                     <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                                 }
@@ -1256,7 +1309,6 @@ function cargartabla(fecha) {
                                 tiempoMinutoPausa = "00";      //: MINUTOS TARDANZA
                                 tiempoSegundoPausa = "00";     //: SEGUNDOS TARDANZA
                                 estadoTiempoHorario = true;
-                                descontarAutomaticoP = true;
                                 //* EXCESO
                                 tiempoHoraExceso = "00";
                                 tiempoMinutoExceso = "00";
@@ -1290,7 +1342,6 @@ function cargartabla(fecha) {
                                                 ).toString()); //: CLONAMOS EL TIEMPO Y RESTAR CON TOLERANCIA
                                             // ! FIN DE PAUSA
                                             var sumaToleranciaPausaFinal = moment(pausaF.clone().add({ "minutes": pausaData.tolerancia_fin }).toString());
-
                                             // ! CONDICIONALES QUE SI HORA FINAL DE LA MARCACION ESTA ENTRE LA RESTA CON LA TOLERANCIA Y LA SUMA CON LA TOLERANCIA
                                             if (horaFinalM.isSameOrAfter(restaToleranciaPausa) && horaFinalM.isSameOrBefore(sumaToleranciaPausa)) {
                                                 // * VERIFICAR SI YA TENEMOS OTRA MARCACION SIGUIENTE
@@ -1385,28 +1436,6 @@ function cargartabla(fecha) {
                                                         }
                                                     }
                                                     idPausas.push(pausaData.id);
-                                                } else {
-                                                    if (pausaI.isSameOrAfter(horaInicialM) && pausaI.isSameOrBefore(horaFinalM)) {
-                                                        if (pausaData.descontar == 1) {
-                                                            descontarAutomaticoP = false;
-                                                            var momentpausainicio = moment(pausaData.inicio, ["HH:mm"]);
-                                                            var momentpausafin = moment(pausaData.fin, ["HH:mm"]);
-                                                            var restaPausa = momentpausafin - momentpausainicio;
-                                                            tiempoSegundoPausa = moment.duration(restaPausa).seconds();
-                                                            tiempoMinutoPausa = moment.duration(restaPausa).minutes();
-                                                            tiempoHoraPausa = Math.trunc(moment.duration(restaPausa).asHours());
-                                                            if (tiempoHoraPausa < 10) {
-                                                                tiempoHoraPausa = '0' + tiempoHoraPausa;
-                                                            }
-                                                            if (tiempoMinutoPausa < 10) {
-                                                                tiempoMinutoPausa = '0' + tiempoMinutoPausa;
-                                                            }
-                                                            if (tiempoSegundoPausa < 10) {
-                                                                tiempoSegundoPausa = '0' + tiempoSegundoPausa;
-                                                            }
-                                                            idPausas.push(pausaData.id);
-                                                        }
-                                                    }
                                                 }
                                             }
                                         }
@@ -1415,23 +1444,12 @@ function cargartabla(fecha) {
                                 tbodyPausas += `<td style="border-left: 1px dashed #aaaaaa!important;" name="descripcionPausa">${pausaData.descripcion}</td>
                                         <td name="horarioPausa">${pausaData.inicio} - ${pausaData.fin}</td>`;
                                 if (estadoTiempoHorario) {
-                                    if (descontarAutomaticoP) {
-                                        tbodyPausas += `<td name="tiempoPausa" class="text-center">
-                                                            <a class="badge badge-soft-primary mr-2">
-                                                                <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
-                                                                ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
-                                                            </a>
-                                                        </td>`;
-                                    } else {
-                                        tbodyPausas += `<td name="tiempoPausa" class="text-center">
-                                                            <a class="badge badge-soft-info mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
-                                                            title="Pausa:${pausaData.descripcion} descuento automático" 
-                                                            data-html="true">
-                                                                <img src="landing/images/wall-clock (2).svg" height="12" class="mr-2">
-                                                                ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
-                                                            </a>
-                                                        </td>`;
-                                    }
+                                    tbodyPausas += `<td name="tiempoPausa" class="text-center">
+                                                        <a class="badge badge-soft-primary mr-2">
+                                                            <img src="landing/images/wall-clock (1).svg" height="12" class="mr-2">
+                                                            ${tiempoHoraPausa}:${tiempoMinutoPausa}:${tiempoSegundoPausa}
+                                                        </a>
+                                                    </td>`;
                                 } else {
                                     tbodyPausas += `<td name="tiempoPausa" class="text-center">
                                                         <a class="badge badge-soft-warning mr-2" rel="tooltip" data-toggle="tooltip" data-placement="left" 
@@ -1466,6 +1484,7 @@ function cargartabla(fecha) {
                                             <td class="text-center" name="toleranciaFHorario" style="background: #f0f0f0;">---</td>
                                             <td name="colTiempoEntreH" class="text-center" style="background: #f0f0f0;">---</td>
                                             <td name="colSobreTiempo" class="text-center" style="background: #f0f0f0;">---</td>
+                                            <td name="colFaltaJornada" class="text-center" style="background: #f0f0f0;">---</td>
                                             <td name="colTardanza" class="text-center" style="background: #f0f0f0;">---</td>
                                             <td name="faltaHorario" style="background: #f0f0f0;">---</td>`;
                             // ! MARCACIONES
@@ -1566,6 +1585,7 @@ function cargartabla(fecha) {
                                     <td name="toleranciaFHorario"></td>
                                     <td class="text-center" name="colTiempoEntreH"></td>
                                     <td class="text-center" name="colSobreTiempo"></td>
+                                    <td class="text-center" name="colFaltaJornada"></td>
                                     <td name="colTardanza"></td>
                                     <td name="faltaHorario"></td>`;
                         // ! MARCACIONES
