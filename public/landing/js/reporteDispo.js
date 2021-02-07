@@ -443,7 +443,8 @@ function cargartabla(fecha) {
                     }
                 }
                 theadTabla += `<th style="border-left: 2px solid #383e56!important;" name="colTiempoTotal" class="colTiempoTotal">Tiempo Total</th>
-                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo Total</th> 
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colSobreTiempoTotal" class="colSobreTiempoTotal">Sobretiempo Total</th>
+                                <th style="border-left: 1px dashed #aaaaaa!important" name="colFaltaJornadaTotal" class="colFaltaJornadaTotal">Falta Jornada Total</th>  
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="colTardanzaTotal" class="colTardanzaTotal">Tardanza Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="faltaTotal" class="faltaTotal">Falta Total</th>
                                 <th style="border-left: 1px dashed #aaaaaa!important" name="incidencia" class="incidencia">Incidencias</th>`;
@@ -1520,6 +1521,12 @@ function cargartabla(fecha) {
                                     ${sumaSobreTiempo.format("HH:mm:ss")}
                                 </a>
                             </td>
+                            <td name="colFaltaJornadaTotal" class="text-center" style="border-left: 1px dashed #aaaaaa!important">
+                                <a class="badge badge-soft-danger mr-2">
+                                    <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
+                                    ${sumaFaltaJornada.format("HH:mm:ss")}
+                                </a>
+                            </td>
                             <td name="colTardanzaTotal" style="border-left: 1px dashed #aaaaaa!important">
                                 <a class="badge badge-soft-danger mr-2">
                                     <img src="landing/images/tiempo-restante.svg" height="12" class="mr-2">
@@ -1602,6 +1609,7 @@ function cargartabla(fecha) {
                     }
                     tbodyTR += `<td name="colTiempoTotal"><br><br></td>
                                 <td name="colSobreTiempoTotal"></td>
+                                <td name="colFaltaJornadaTotal"></td>
                                 <td name="colTardanzaTotal"></td>
                                 <td name="faltaTotal"></td>
                                 <td name="incidencia"></td>
