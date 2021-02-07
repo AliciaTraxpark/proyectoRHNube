@@ -2840,6 +2840,7 @@ $('#formInsertarEntrada').submit(function (e) {
 var datosHorario = {};
 // * MODAL CON LISTA DE HORARIOS
 function modalCambiarHorario(idHE, fecha, id) {
+    $('a').css('pointer-events', 'none');
     $('#idHorarioECH').val(idHE);
     $('#fechaCH').val(fecha);
     $('#idEmpleadoCH').val(id);
@@ -2873,6 +2874,8 @@ function modalCambiarHorario(idHE, fecha, id) {
         },
         error: function () { }
     });
+    $('a').css('pointer-events', 'auto');
+    sent = false;
 }
 // * MOSTRAR DETALLES DE HORARIO
 $('#horarioXE').on("change", function () {
@@ -2997,12 +3000,16 @@ $('#formCambiarHorarioM').submit(function (e) {
         $('#ch_valid').append("Seleccionar horario.");
         $('#ch_valid').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
-    $('#ch_valid').empty();
-    $('#ch_valid').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#ch_valid').empty();
+        $('#ch_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! ********************************* FINALIZACION *************************************************************
 // * LIMPIEZA DE CAMPOS
