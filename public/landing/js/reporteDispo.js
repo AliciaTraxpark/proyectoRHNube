@@ -3206,6 +3206,12 @@ function toggleColumnas() {
     } else {
         dataT.api().columns('.colSobreTiempoTotal').visible(false);
     }
+    // ? FALTA JORNADA ENTRE HORARIOS
+    if ($('#colFaltaJornada').is(":checked")) {
+        dataT.api().columns('.colFaltaJornada').visible(true);
+    } else {
+        dataT.api().columns('.colFaltaJornada').visible(false);
+    }
     // * ****************** COLUMNAS DE PAUSAS *********************
     // ? DESCRION PAUSA
     if ($('#descripcionPausa').is(":checked")) {

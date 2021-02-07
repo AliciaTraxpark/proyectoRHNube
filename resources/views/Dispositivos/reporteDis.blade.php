@@ -344,11 +344,15 @@
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colSobreTiempo">
-                                            <label for="">Sobre tiempo entre horario</label>
+                                            <label for="">Sobretiempo entre horario</label>
                                         </li>
                                         <li class="liContenido detalleHijo">
                                             <input type="checkbox" id="colSobreTiempoTotal" checked>
-                                            <label for="">Sobre tiempo total</label>
+                                            <label for="">Sobretiempo total</label>
+                                        </li>
+                                        <li class="liContenido detalleHijo">
+                                            <input type="checkbox" id="colFaltaJornada">
+                                            <label for="">Falta jornada entre horario</label>
                                         </li>
                                     </ul>
                                 </ul>
