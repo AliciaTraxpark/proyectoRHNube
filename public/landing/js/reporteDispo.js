@@ -2725,6 +2725,7 @@ $('#formInsertarSalida').submit(function (e) {
 });
 // ! ********************************* INSERTAR ENTRADA ********************************************************
 function insertarEntradaModal(hora, id, idH) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == idH) {
@@ -2735,7 +2736,7 @@ function insertarEntradaModal(hora, id, idH) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $('#idMarcacionIE').val(id);
     $('#ie_hora').text(hora);
     $('#idHorarioIE').val(idH);
@@ -2749,6 +2750,8 @@ function insertarEntradaModal(hora, id, idH) {
         enableSeconds: true,
         static: true
     });
+    $('a').css('pointer-events', 'auto');
+    sent = false;
 }
 // * INSERTAR SALIDA
 function insertarEntrada() {
@@ -2822,12 +2825,16 @@ $('#formInsertarEntrada').submit(function (e) {
         $('#i_validE').append("Ingresar entrada.");
         $('#i_validE').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
-    $('#i_validE').empty();
-    $('#i_validE').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#i_validE').empty();
+        $('#i_validE').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! ****************************** CAMBIAR DE HORARIO ***********************************************************
 var datosHorario = {};
