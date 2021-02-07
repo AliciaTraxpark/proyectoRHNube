@@ -2287,6 +2287,7 @@ $('#formCambiarSalidaM').submit(function (e) {
 // ! *********************************** CONVERTIR ORDEN ******************************************************
 // * CONVERTIR ORDEN
 function convertirOrden(id, idHE) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == idHE) {
@@ -2297,7 +2298,7 @@ function convertirOrden(id, idHE) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     alertify
         .confirm("¿Desea Convertir orden si o no?", function (
             e
@@ -2394,10 +2395,12 @@ function convertirOrden(id, idHE) {
             oncancel: function (closeEvent) {
             },
         });
+    $('a').css('pointer-events', 'auto');
 }
 // ! ********************************** ASIGNAR A NUEVA MARCACIÓN *********************************************
 // * ASIGNAR NUEVA MARCACION
 function asignarNuevaM(id, hora, tipo, horario) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == horario) {
@@ -2408,7 +2411,7 @@ function asignarNuevaM(id, hora, tipo, horario) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $('#idMarcacionA').val(id);
     $('#tipoM').val(tipo);
     $('#a_hora').text(hora);
@@ -2449,6 +2452,8 @@ function asignarNuevaM(id, hora, tipo, horario) {
     });
     $('#asignacionMarcacion').modal();
     $('#asignacionM').val(tipo).trigger('change');
+    $('a').css('pointer-events', 'auto');
+    sent = false;
 }
 // * GUARDAR ASIGNACION
 function guardarAsignacion() {
@@ -2504,6 +2509,7 @@ $('#formGuardarAsignacion').submit(function (e) {
         $('#a_valid').append("Seleccionar horario.");
         $('#a_valid').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
     if ($("#asignacionM").val() == "" || $("#asignacionM").val() == null) {
@@ -2511,16 +2517,21 @@ $('#formGuardarAsignacion').submit(function (e) {
         $('#a_valid').append("Seleccionar marcación.");
         $('#a_valid').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
-    $('#a_valid').empty();
-    $('#a_valid').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#a_valid').empty();
+        $('#a_valid').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! ********************************** ELIMINAR MARCACIÓN *****************************************************
 // * ELIMINAR MARCACION
 function eliminarM(id, tipo, idHE) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == idHE) {
@@ -2531,7 +2542,7 @@ function eliminarM(id, tipo, idHE) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     alertify
         .confirm("¿Desea eliminar marcación si o no?", function (
             e
@@ -2596,10 +2607,12 @@ function eliminarM(id, tipo, idHE) {
             oncancel: function (closeEvent) {
             },
         });
+    $('a').css('pointer-events', 'auto');
 }
 // ! ******************************** INSERTAR SALIDA **********************************************************
 // * MODAL DE INSERTAR SALIDA
 function insertarSalidaModal(hora, id, idH) {
+    $('a').css('pointer-events', 'none');
     var estadoH = false;
     contenidoHorario.forEach(element => {
         if (element.idHorarioE == idH) {
@@ -2610,7 +2623,7 @@ function insertarSalidaModal(hora, id, idH) {
             }
         }
     });
-    if (estadoH) return;
+    if (estadoH) { $('a').css('pointer-events', 'auto'); return };
     $('#idMarcacionIS').val(id);
     $('#i_hora').text(hora);
     $('#idHorarioIS').val(idH);
@@ -2624,6 +2637,8 @@ function insertarSalidaModal(hora, id, idH) {
         enableSeconds: true,
         static: true
     });
+    $('a').css('pointer-events', 'auto');
+    sent = false;
 }
 // * INSERTAR SALIDA
 function insertarSalida() {
@@ -2697,12 +2712,16 @@ $('#formInsertarSalida').submit(function (e) {
         $('#i_validS').append("Ingresar salida.");
         $('#i_validS').show();
         $('button[type="submit"]').attr("disabled", false);
+        sent = false;
         return;
     }
-    $('#i_validS').empty();
-    $('#i_validS').hide();
-    $('button[type="submit"]').attr("disabled", true);
-    this.submit();
+    if (!sent) {
+        sent = true;
+        $('#i_validS').empty();
+        $('#i_validS').hide();
+        $('button[type="submit"]').attr("disabled", true);
+        this.submit();
+    }
 });
 // ! ********************************* INSERTAR ENTRADA ********************************************************
 function insertarEntradaModal(hora, id, idH) {
