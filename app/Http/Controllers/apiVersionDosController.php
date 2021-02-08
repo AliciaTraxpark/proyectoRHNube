@@ -868,4 +868,154 @@ class apiVersionDosController extends Controller
             }
         }
     }
+
+    // * NUEVAS MEJORAS DE API HORARIO
+    function horarioV3(Request $request)
+    {
+        $respuesta = [];
+        // * BUSCAMOS AL EMPLEADO SI SE ENCUENTRA REGISTRADO Y ACTIVO
+        $empleado = DB::table('empleado as e')
+            ->where('e.emple_id', '=', $request->get('idEmpleado'))
+            ->where('e.emple_estado', '=', 1)
+            ->get()
+            ->first();
+        if ($empleado) {
+            // * BUSCAMOS EN LA TABLA HORARIO EMPLEADO
+            $horario_empleado = DB::table('horario_empleado as he')
+                ->select(
+                    'he.horario_dias_id',
+                    'he.horario_horario_id',
+                    'he.horarioComp',
+                    'he.fuera_horario',
+                    'he.horaAdic',
+                    'he.nHoraAdic',
+                    'he.estado'
+                )
+                ->where('he.empleado_emple_id', '=', $request->get('idEmpleado'))
+                ->get();
+            foreach ($horario_empleado as $resp) {
+                // * HORARIO DIAS
+                $horario_dias = DB::table('horario_dias  as hd')
+                    ->select(DB::raw('DATE(hd.start) as start'), 'hd.id')
+                    ->where('hd.id', '=', $resp->horario_dias_id)
+                    ->get()->first();
+                // * HORARIO
+                $horario = DB::table('horario as h')
+                    ->select(
+                        'h.horario_id',
+                        'h.horario_descripcion',
+                        'h.horaI',
+                        'h.horaF',
+                        'h.horasObliga as horasObligadas',
+                        'h.horario_tolerancia as tolerancia_inicio',
+                        'h.horario_toleranciaF as tolerancia_final'
+                    )
+                    ->where('h.horario_id', '=', $resp->horario_horario_id)
+                    ->get()->first();
+                // * PAUSAS
+                $pausas = DB::table('pausas_horario as ph')
+                    ->select(
+                        'ph.idpausas_horario',
+                        'ph.pausH_descripcion as decripcion',
+                        'ph.pausH_Inicio as pausaI',
+                        'ph.pausH_Fin as pausaF'
+                    )
+                    ->where('ph.horario_id', '=', $horario->horario_id)
+                    ->get();
+                $horario->idHorario_dias = $horario_dias->id;
+                $horario->horarioCompensable = $resp->horarioComp;
+                $horario->fueraHorario = $resp->fuera_horario;
+                $horario->horaAdicional = $resp->horaAdic;
+                $horario->numeroHoraAdicional = $resp->nHoraAdic == null ? 0 : $resp->nHoraAdic;
+                $horario->pausas = $pausas;
+                $horario->estado = $resp->estado;
+                $fecha = Carbon::now();
+                $fechaHoy = $fecha->isoFormat('YYYY-MM-DD');
+                $horaActual = $fecha->isoFormat('HH:mm:ss');
+                // * FECHA HORARIO DIAS COINCIDEN CON FECHA ACTUAL
+                if ($horario_dias->start == $fechaHoy) {
+                    // ********************************* TIEMPO TRABAJADO DEL EMPLEADO ******************
+                    // : HORAS TOTAL DE TIEMPO TRABAJADO QUE DEBE REALIZAR
+                    $horasTotal = Carbon::parse($horario->horasObligadas)->addMinutes($horario->numeroHoraAdicional * 60);
+                    // : FUNCION PARA OBTENER DATA DEL SERVIDOR DEL TIEMPO DEL EMPLEADO Y FECHA
+                    $horasRHbox = horasRHbox($request->get('idEmpleado'), $fechaHoy);
+                    // : FUNCION  DE ORDENAR Y AGRUPAR POR HORAS Y MINUTOS
+                    $horasRHbox = horasRemotoRutaJson($horasRHbox);
+                    // : FUNCION PARA OBTENER DATA DEL SERVIDOR DEL TIEMPO DEL EMPLEADO Y FECHA
+                    $horasRuta = horasRHboxMovil($request->get('idEmpleado'), $fechaHoy);
+                    // : FUNCION  DE ORDENAR Y AGRUPAR POR HORAS Y MINUTOS
+                    $horasRuta = horasRemotoRutaJson($horasRuta);
+                    // : RESPUESTA DE LA UNION DE LOS DOS
+                    $resultadoData = unionDeDataRHbox($horasRHbox, $horasRuta);
+                    // : TIEMPO TRABAJADO DEL EMPLEADO
+                    $tiempoTrabajado = Carbon::parse($resultadoData->rango);
+                    // ********************************* FINALIZACION ***********************************
+                    if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
+                        $despues = new Carbon('tomorrow');
+                        $fechaMan = $despues->isoFormat('YYYY-MM-DD');
+                        $horario->horaI = $fechaHoy . " " . $horario->horaI;
+                        $horario->horaF = $fechaMan . " " . $horario->horaF;
+                    } else {
+                        $horario->horaI = $fechaHoy . " " . $horario->horaI;
+                        $horario->horaF = $fechaHoy . " " . $horario->horaF;
+                    }
+                    // : HORA FINAL DE HORARIO DE COMPARAR
+                    $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                    // : TIEMPO TRABAJADO DEBE SER MENOR A LAS HORAS OBLIGADAS MAS LAS HORAS ADICIONALES
+                    if ($tiempoTrabajado->lt($horasTotal)) {
+                        if ($resp->fuera_horario == 1) {
+                            $horario->tiempo = $resultadoData->rango;
+                            array_push($respuesta, $horario);
+                        } else {
+                            if (Carbon::parse($horaActual)->lte($horaComparar)) {
+                                $horario->tiempo = $resultadoData->rango;
+                                array_push($respuesta, $horario);
+                            }
+                        }
+                    }
+                } else {
+                    // * BUSCAMOS HORARIOS CON FECHA DE AYER QUE ACABEN HOY
+                    if (Carbon::parse($horario->horaF)->lt(Carbon::parse($horario->horaI))) {
+                        $fechaAyer = new Carbon('yesterday');
+                        $fechaA = $fechaAyer->isoFormat('YYYY-MM-DD');
+                        if ($horario_dias->start == $fechaA) {
+                            // : HORAS TOTAL DE TIEMPO TRABAJADO QUE DEBE REALIZAR
+                            $horasTotal = Carbon::parse($horario->horasObligadas)->addMinutes($horario->numeroHoraAdicional * 60);
+                            // ********************************* TIEMPO TRABAJADO DEL EMPLEADO ******************
+                            // : FUNCION PARA OBTENER DATA DEL SERVIDOR DEL TIEMPO DEL EMPLEADO Y FECHA
+                            $horasRHbox = horasRHbox($request->get('idEmpleado'), $fechaA);
+                            // : FUNCION  DE ORDENAR Y AGRUPAR POR HORAS Y MINUTOS
+                            $horasRHbox = horasRemotoRutaJson($horasRHbox);
+                            // : FUNCION PARA OBTENER DATA DEL SERVIDOR DEL TIEMPO DEL EMPLEADO Y FECHA
+                            $horasRuta = horasRHboxMovil($request->get('idEmpleado'), $fechaA);
+                            // : FUNCION  DE ORDENAR Y AGRUPAR POR HORAS Y MINUTOS
+                            $horasRuta = horasRemotoRutaJson($horasRuta);
+                            // : RESPUESTA DE LA UNION DE LOS DOS
+                            $resultadoData = unionDeDataRHbox($horasRHbox, $horasRuta);
+                            // : TIEMPO TRABAJADO DEL EMPLEADO
+                            $tiempoTrabajado = Carbon::parse($resultadoData->rango);
+                            // ********************************* FINALIZACION ***********************************
+                            $horario->horaI = $fechaA . " " . $horario->horaI;
+                            $horario->horaF = $fechaHoy . " " . $horario->horaF;
+                            // : HORA FINAL DE HORARIO DE COMPARAR
+                            $horaComparar = Carbon::parse($horario->horaF)->addMinutes($horario->tolerancia_final);
+                            if ($tiempoTrabajado->lt($horasTotal)) {
+                                if ($resp->fuera_horario == 1) {
+                                    $horario->tiempo = $resultadoData->rango;
+                                    array_push($respuesta, $horario);
+                                } else {
+                                    if (Carbon::parse($horaActual)->lte($horaComparar)) {
+                                        $horario->tiempo = $resultadoData->rango;
+                                        array_push($respuesta, $horario);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return response()->json($respuesta, 200);
+        }
+        return response()->json("Empleado no encontrado", 400);
+    }
 }
