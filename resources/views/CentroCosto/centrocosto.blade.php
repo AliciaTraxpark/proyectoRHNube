@@ -146,9 +146,16 @@
         <input type="hidden" id="e_idCentro">
         <form action="javascript:actualizarCentroC()">
           {{ csrf_field() }}
-          <div class="col-md-12">
-            <label for="">Centro de costo</label>
-            <input type="text" class="form-control" id="e_descripcion" required disabled>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="">Centro de costo</label>
+              <input type="text" class="form-control" id="e_descripcion" required disabled>
+            </div>
+            <div class="col-md-6">
+              <label for="">Código</label>
+              <input type="text" class="form-control" id="e_codigo" maxlength="10"
+                oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            </div>
           </div>
           <div class="col-md-12 text-right">
             <div class="form-group mb-0 mt-3">
