@@ -751,7 +751,6 @@ function cambiarFCR(id) {
         /* $('#tablaReport').DataTable().destroy(); */
     }
     
-    console.log("ID: "+id);
     if(id === 2){
         cargartablaRuta(f2,f3); 
     } else {
