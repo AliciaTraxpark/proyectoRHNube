@@ -2337,7 +2337,6 @@ class TardanzasController extends Controller
                 /*  COMPRUEBA SI HAY TARDANZA    */
                 if ($marcacion->greaterThan($horario_tolerancia) == TRUE) {
                     //$datos->push("-------------3-------------");
-                    if(){
                         $horaMin = Carbon::parse($marcacion);
                         $diffS = $marcacion->DiffInSeconds($horario);
                         $tiempoTardanza += $diffS;
@@ -2373,7 +2372,7 @@ class TardanzasController extends Controller
                             'perso_apPaterno' => $empleado->apPaterno,
                             'perso_nombre' => $empleado->nombre
                         );
-                    }
+                    
                 }
                 $i++;
             }
