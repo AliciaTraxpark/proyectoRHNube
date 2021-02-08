@@ -380,7 +380,7 @@ function cargartabla(fecha) {
                 if (permisoModificar == 1) {
                     theadTabla += `<th class="noExport">Agregar</th>`;
                 }
-                theadTabla += `<th>CC&nbsp;</th>
+                theadTabla += `<th>#&nbsp;</th>
                                 <th class="text-center">Fecha</th>
                                 <th>Número de documento</th>
                                 <th name="colCodigo" class="colCodigo">Código de trabajador</th>

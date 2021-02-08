@@ -366,7 +366,7 @@ function cargartabla(fecha1, fecha2) {
                 });
                 //* ARMAR CABEZERA
                 var theadTabla = `<tr>
-                                    <th>CC&nbsp;</th>
+                                    <th>#&nbsp;</th>
                                     <th>Fecha&nbsp;</th>
                                     <th>Horario&nbsp;</th>
                                    `;
