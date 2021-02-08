@@ -191,7 +191,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
         margin-bottom: 55px;
       }
     }
-  
+
     @media(max-width: 767px){
       .logo_rh{
         justify-content: center !important;
@@ -199,14 +199,14 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
     }
     @media(min-width: 768px){
       .content_rh{
-        margin-left: 55px !important; 
+        margin-left: 55px !important;
         margin-right: 55px !important;
       }
       .text_rh{
         font-size: 10px !important;
       }
     }
-    
+
 </style>
 
   <header id="header-section">
@@ -242,7 +242,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
               </div>
             </div>
             <div class="col-md-2 col-6 bg-primary">
-                
+
             </div>
         </div>
     </nav>
@@ -250,7 +250,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
   <div class="content-page content_rh" style="margin-top: 40px; padding: 0px 5px">
     <div class="content">
-      
+
       <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -261,7 +261,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
               </button>
             </div>
             <div class="modal-body">
-              <h5>¿Asignar dias de descanso?</h5>
+              <h5>¿Asignar días de descanso?</h5>
               <input type="hidden" id="fechaDa" name="fechaDa">
               {{-- <label for="start" class="col-sm-4 col-form-label">Fecha Inicial:</label> --}}
               <input type="hidden" name="start" class="form-control" id="start" readonly>
@@ -459,7 +459,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                 <div class="col-md-12">
                   <form id="" action="javascript:agregarcalendario()">
                     <div class="row">
-                      <div class="col-md-12"> 
+                      <div class="col-md-12">
                         <input type="text" class="form-control" id="nombreCalen" placeholder="Nombre nuevo calendario" required><br>
                       </div>
                       <div class="col-md-4 form-check" style="padding-left: 32px; margin-top: 4px;">
@@ -614,7 +614,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
                   <div class="col-md-6 text-right" style="padding-right: 24px;margin-bottom: 10px;"><br>
                     <button type="submit" class="btn  btn-sm" style="background-color: #163552;color: #f9f9f9;">Asignar calendario</button>
                   </div>
-                  <br><br> 
+                  <br><br>
                 </form>
                 <div class="col-md-12">
                   <div class="col-md-12" style="padding-left: 0px;">
@@ -661,13 +661,13 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
               <h1>&nbsp;</h1>
             </div>
             <div class="col-md-6 col-12">
-              <label class="" style="font-size: 12px" for="">Dias no laborales</label>
+              <label class="" style="font-size: 12px" for="">Días no laborales</label>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 col-8 col-sm-4" style="  background: #ffffff;border: 1px solid #d4d4d4; height: 35px;"><h1>&nbsp;</h1></div>
             <div class="col-md-6 col-12">
-              <label class="" style="font-size: 12px" for="">Dias laborables</label>
+              <label class="" style="font-size: 12px" for="">Días laborables</label>
             </div>
           </div>
           <br><br>
@@ -738,7 +738,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
   <footer class="border-top" style="background:#163552;">
     <div class="col-md-12 text-center" style="margin-top: 10px;border-top: 1.5px solid #ded9d9;padding-top: 10px;bottom: 10px;">
-        <span style="color: #faf3f3;font-size: 12px!important"> 
+        <span style="color: #faf3f3;font-size: 12px!important">
           © <?php echo date("Y" ); ?> - RH nube Corp - USA | Todos los derechos reservados &nbsp; |
         </span>
         <a style="font-size: 12px!important; color:#faf3f3;" href="/politicas">Política de privacidad | </a>
@@ -781,7 +781,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.left .hopscotch-bubble-ar
 
           steps:[
           {target:".fc-view-container",
-          title: "Seleccione dia(s)",
+          title: "Seleccione día(s)",
           placement:"left",
           width:161,
           yOffset:30}

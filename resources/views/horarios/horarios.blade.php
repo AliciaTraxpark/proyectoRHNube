@@ -434,7 +434,7 @@ use Carbon\Carbon;
                                                 <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="" style="font-weight: 600">Seleccionar dias de
+                                                <label for="" style="font-weight: 600">Seleccionar días de
                                                     calendario</label>
                                             </div>
 
@@ -668,14 +668,14 @@ use Carbon\Carbon;
                                             height: 25px;">
                                                         <h1>&nbsp;</h1>
                                                     </div>
-                                                    <div class="col-md-3"><label for="" style="font-size: 12px">Dias de
+                                                    <div class="col-md-3"><label for="" style="font-size: 12px">Días de
                                                             Descanso</label></div>
                                                     <div class="col-md-1"><br></div>
                                                     <div class="col-md-1" style="  background: #ffffff;
                                             height: 25px;border: 1px solid #d4d4d4;">
                                                         <h1>&nbsp;</h1>
                                                     </div>
-                                                    <div class="col-md-2"><label for="" style="font-size: 12px">Dias
+                                                    <div class="col-md-2"><label for="" style="font-size: 12px">Días
                                                             laborables</label><br><br></div>
 
                                                     <div class="col-md-12" style="padding-left: 0px;height: 220px;
