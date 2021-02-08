@@ -1838,7 +1838,7 @@ use Carbon\Carbon;
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="sw-default">
-                                                    Condición Pago
+                                                    Condición de pago
                                                     <a onclick="javascript:ModalAbiertoCondicionReg()"
                                                         href="#condicionmodal" data-toggle="modal"
                                                         data-target="#condicionmodal">
@@ -2063,7 +2063,7 @@ use Carbon\Carbon;
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="sw-default">
-                                                    Condición Pago
+                                                    Condición de pago
                                                     <a onclick="javascript:ModalAbiertoCondicionReg()"
                                                         href="#condicionmodal" data-toggle="modal"
                                                         data-target="#condicionmodal">
@@ -2636,7 +2636,7 @@ use Carbon\Carbon;
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="sw-default">
-                                                            Condición Pago
+                                                            Condición de pago
                                                             <a onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
                                                                 data-target="#condicionmodalE"><i
@@ -2871,7 +2871,7 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Condición Pago <a
+                                                        <label for="sw-default">Condición de pago<a
                                                                 onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
                                                                 data-target="#condicionmodalE"><i
@@ -3104,7 +3104,7 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Condición Pago
+                                                        <label for="sw-default">Condición de pago
                                                             <a onclick="javascript:ModalAbiertoCondicion();"
                                                                 href="#condicionmodalE" data-toggle="modal"
                                                                 data-target="#condicionmodalE">
@@ -3315,7 +3315,7 @@ use Carbon\Carbon;
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="sw-default">Condición Pago</label>
+                                                <label for="sw-default">Condición de pago</label>
                                                 <select class="form-control" name="v_condicionV" id="v_condicionV"
                                                     required disabled>
                                                     <option value="">Seleccionar</option>
@@ -3776,7 +3776,7 @@ use Carbon\Carbon;
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="sw-default">Codigo Empleado</label>
+                                                        <label for="sw-default">Código Empleado</label>
                                                         <input type="text" class="form-control" name="codigoEmpleado"
                                                             id="codigoEmpleado" tabindex="1" data-toggle="tooltip"
                                                             data-placement="right" maxlength="200"
@@ -5040,7 +5040,7 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="sw-default">Codigo Empleado</label>
+                                                        <label for="sw-default">Código Empleado</label>
                                                         <input type="text" class="form-control" name="v_codigoEmpleado"
                                                             maxlength="200" id="v_codigoEmpleado" tabindex="1" required>
                                                     </div>
@@ -6232,7 +6232,7 @@ use Carbon\Carbon;
                                                     disabled>
                                             </div>
                                             <div class="form-group">
-                                                <label for="sw-default">Codigo Empleado</label>
+                                                <label for="sw-default">Código Empleado</label>
                                                 <input type="text" class="form-control" name="v_codigoEmpleadoV"
                                                     maxlength="200" id="v_codigoEmpleadoV" disabled>
                                             </div>

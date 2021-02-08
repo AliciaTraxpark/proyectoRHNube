@@ -3711,13 +3711,16 @@ $('#SwitchPausa_ed').on("change.bootstrapSwitch", function (event) {
             $('#PausasHorar_ed').empty();
             var id = $('#idhorario_ed').val();
             pausasHorario(id);
+            $('#btnEditarHorario').prop('disabled', false);
         } else {
             $('#pausas_edit').hide();
             $('#PausasHorar_ed').empty();
             $('#vacioHoraF_ed').show();
             $('#SwitchPausa_ed').prop("checked", false);
+            $('#btnEditarHorario').prop('disabled', false);
         }
     } else {
+        $('#btnEditarHorario').prop('disabled', false);
         $('#pausas_edit').hide();
         $('#PausasHorar_ed').empty();
         e_cont = 0;

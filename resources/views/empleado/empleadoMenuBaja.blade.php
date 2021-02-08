@@ -617,7 +617,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sw-default">Condición Pago</label>
+                                    <label for="sw-default">Condición de pago</label>
                                     <select class="form-control" name="v_condicionV" id="v_condicionV" required>
                                         <option value="">Seleccionar</option>
                                         @foreach ($condicionP as $condicion)
@@ -1036,7 +1036,7 @@
                                         <input type="text" class="form-control" name="v_cargoV" id="v_cargoV" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sw-default">Codigo Empleado</label>
+                                        <label for="sw-default">Código Empleado</label>
                                         <input type="text" class="form-control" name="v_codigoEmpleadoV" maxlength="200"
                                             id="v_codigoEmpleadoV" disabled>
                                     </div>
@@ -1342,7 +1342,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="sw-default">Condición Pago
+                                        <label for="sw-default">Condición de pago
                                             <a onclick="$('#modalAlta').modal('hide');" href="#condicionmodalB"
                                                 data-toggle="modal" data-target="#condicionmodalB">
                                                 <i class="uil uil-plus"></i>
