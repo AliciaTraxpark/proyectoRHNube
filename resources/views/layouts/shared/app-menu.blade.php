@@ -143,7 +143,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
     <li style="display: none">
         <a href="/centroCosto">
             <img src="{{asset('landing/images/bolsa-de-dinero.svg')}}" height="20" style="margin: 0 10px 0 3px;">
-            <span>Centro de costo</span>
+            <span>Centro Costo</span>
         </a>
     </li>
     <li>
@@ -232,7 +232,7 @@ $usuario_organizacion=DB::table('usuario_organizacion')
         </ul>
     </li>
 
-    <li style="display: none">
+    <li>
         <a href="javascript: void(0);">
             <i data-feather="dollar-sign"></i>
             <span> Suscripciones </span>
