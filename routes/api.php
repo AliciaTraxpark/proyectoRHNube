@@ -27,7 +27,6 @@ Route::get('/provincia/{id}/niveles', 'registroEmpresaController@distritos');
 Route::get('/departamento/{id}/niveles', 'EmpleadoController@provincias');
 Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
 //* SEGUNDA VERSION
-Route::post("logueoV2", "apiVersionDosController@verificacion")->middleware('apilogger');
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
 Route::post("capturaArray", "apiVersionDosController@capturaArray")->middleware('token')->middleware('apilogger');
@@ -35,6 +34,7 @@ Route::post("actividad2", "apiVersionDosController@actividad")->middleware('toke
 Route::get("downloadUpdate", "apiVersionDosController@downloadActualizacion")->middleware('apilogger');
 Route::post("horario2", "apiVersionDosController@horario")->middleware('token')->middleware('apilogger');
 Route::post("horario3", "apiVersionDosController@horarioV2")->middleware('token')->middleware('apilogger');
+Route::post("horario4", "apiVersionDosController@horarioV3")->middleware('token')->middleware('apilogger');
 Route::get("logout", "apiVersionDosController@logoutToken")->middleware('token')->middleware('apilogger');
 Route::get("updatex64", "apiVersionDosController@downloadActualizacionx64")->middleware('token')->middleware('apilogger');
 Route::get("updateRHx64", "apiVersionDosController@updteDonwloand64")->middleware('apilogger');
@@ -80,7 +80,7 @@ Route::post("empleadosHorarioBi", "apiBiometricoController@empleadosHorarioBi")-
 Route::post("marcacionBiometrico", "apiBiometricoController@marcacionBiometrico2")->middleware('token')->middleware('apilogger');
 Route::post("historialHorario", "apiBiometricoController@historialHorario")->middleware('token')->middleware('apilogger');
 Route::get("descargarExtractor", "apiBiometricoController@descargarExtractor")->middleware('apilogger');
-   /* ------------- REGISTRO DE HUELLAS */
+/* ------------- REGISTRO DE HUELLAS */
 Route::post("registroHuella", "apiBiometricoController@registroHuella")->middleware('token')->middleware('apilogger');
 Route::post("importar", "apiBiometricoController@importar");
 Route::post("importarJS", "apiBiometricoController@importarJS");
