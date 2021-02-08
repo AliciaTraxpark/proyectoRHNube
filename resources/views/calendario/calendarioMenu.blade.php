@@ -143,12 +143,12 @@ background-color: #ffffff;
         <div class="row">
             <div class="col-md-6" style="  background: #f9e9e9;
             height: 35px;"><h1>&nbsp;</h1></div>
-            <div class="col-md-6"><label style="font-size: 12px" for="">Dias no laborales</label></div>
+            <div class="col-md-6"><label style="font-size: 12px" for="">Días no laborales</label></div>
         </div>
         <div class="row">
             <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
             height: 35px;"><h1>&nbsp;</h1></div>
-              <div class="col-md-6"><label style="font-size: 12px" for="">Dias laborables</label></div>
+              <div class="col-md-6"><label style="font-size: 12px" for="">Días laborables</label></div>
         </div><br><br>
 
 
@@ -194,7 +194,7 @@ background-color: #ffffff;
             <div class="modal-body">
 
 
-                <h5>¿Asignar dias de descanso?</h5>
+                <h5>¿Asignar días de descanso?</h5>
                 <input type="hidden" id="fechaDa" name="fechaDa">
 
                 {{-- <label for="start" class="col-sm-4 col-form-label">Fecha

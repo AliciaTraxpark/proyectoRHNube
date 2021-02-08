@@ -357,7 +357,7 @@
                                     <img src="{{ asset('landing/images/loading.gif') }}" height="100">
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="" style="font-weight: 600">Seleccionar dias de calendario</label>
+                                    <label for="" style="font-weight: 600">Seleccionar días de calendario</label>
                                 </div>
                                 <div class="col-md-12 text-center" id="Datoscalendar" style=" max-width: 100%;">
                                     <div id="calendar"></div>
@@ -546,7 +546,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="" style="font-size: 12px">
-                                                Dias no laborales
+                                                Días no laborales
                                             </label>
                                         </div>
                                         <div class="col-md-1"><br></div>
@@ -556,7 +556,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="" style="font-size: 12px">
-                                                Dias laborables
+                                                Días laborables
                                             </label>
                                             <br><br>
                                         </div>

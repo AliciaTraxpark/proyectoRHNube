@@ -3763,9 +3763,9 @@ use App\proyecto_empleado;
                                                     Borrar <i class="icon"><span
                                                             data-feather="chevron-down"></span></i></button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" onclick="vaciardFeria()">Dias
+                                                    <a class="dropdown-item" onclick="vaciardFeria()">Días
                                                         feriados</a>
-                                                    <a class="dropdown-item" onclick="vaciarddescanso()">Dias
+                                                    <a class="dropdown-item" onclick="vaciarddescanso()">Días
                                                         descanso</a>
                                                     {{-- <a class="dropdown-item"
                                                             onclick="vaciardlabTem()">D.
@@ -4923,9 +4923,9 @@ use App\proyecto_empleado;
                                             Borrar <i class="icon"><span
                                                     data-feather="chevron-down"></span></i></button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" onclick="vaciardFeriaBD()">Dias
+                                            <a class="dropdown-item" onclick="vaciardFeriaBD()">Días
                                                 feriados</a>
-                                            <a class="dropdown-item" onclick="vaciarddescansoBD()">Dias
+                                            <a class="dropdown-item" onclick="vaciarddescansoBD()">Días
                                                 descanso</a>
                                             {{-- <a class="dropdown-item"
                                                     onclick="vaciardlabTem()">D.

@@ -238,12 +238,12 @@ body > div.bootbox.modal.fade.bootbox-alert.show > div > div > div.modal-header{
                                 <div class="row">
                                     <div class="col-md-6" style="  background: #f9e9e9;
                                     height: 35px;"><h1>&nbsp;</h1></div>
-                                    <div class="col-md-6"><label for="">Dias de Descanso</label></div>
+                                    <div class="col-md-6"><label for="">Días de Descanso</label></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6" style="  background: #ffffff;border: 1px solid #d4d4d4;
                                     height: 35px;"><h1>&nbsp;</h1></div>
-                                      <div class="col-md-6"><label for="">Dias laborables</label></div>
+                                      <div class="col-md-6"><label for="">Días laborables</label></div>
                                 </div>
 
                             </div>
