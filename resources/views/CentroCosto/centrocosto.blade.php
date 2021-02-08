@@ -16,7 +16,7 @@
 @section('breadcrumb')
 <div class="row page-title">
   <div class="col-md-12">
-    <h4 class="mb-1 mt-0 pl-3" style="font-weight: bold">Centro Costos</h4>
+    <h4 class="mb-1 mt-0 pl-3" style="font-weight: bold">Centro de costo</h4>
   </div>
 </div>
 @endsection
@@ -96,13 +96,13 @@
     <button type="button" class="btn btn-sm mt-1" style="background-color: #e3eaef;border-color:#e3eaef;color:#37394b"
       onclick="javascript:asignarCentroC()">
       <img src="{{asset('landing/images/calculator.svg')}}" class="mr-1" height="18">
-      Asignar Centro Costo
+      Asignar Centro de costo
     </button>
   </div>
   <div class="col-md-6 text-right">
     <button type="button" class="btn btn-sm mt-1" style="background-color: #163552;"
       onclick="javascript:modalRegistrar()">
-      + Nuevo Centro Costo
+      + Nuevo Centro de costo
     </button>
   </div>
 </div>
@@ -116,7 +116,7 @@
           <thead style="background: #fafafa;" style="width:100%!important">
             <tr>
               <th>#</th>
-              <th>Centro Costo</th>
+              <th>Centro de costo</th>
               <th>N° empleados</th>
               <th>En uso</th>
               <th class="text-center"></th>
@@ -136,7 +136,7 @@
     <div class="modal-content">
       <div class="modal-header" style="background-color:#163552;">
         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-          Editar Centro Costo
+          Editar Centro de costo
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -147,7 +147,7 @@
         <form action="javascript:actualizarCentroC()">
           {{ csrf_field() }}
           <div class="col-md-12">
-            <label for="">Centro Costo</label>
+            <label for="">Centro de costo</label>
             <input type="text" class="form-control" id="e_descripcion" required disabled>
           </div>
           <div class="col-md-12 text-right">
@@ -156,7 +156,7 @@
               <label for="" class="mb-0">Seleccionar todos</label>
               <div class="float-left mb-0">
                 <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro costo
+                  *Se visualizara empleados sin centro de costo
                 </span>
               </div>
             </div>
@@ -182,7 +182,7 @@
     <div class="modal-content">
       <div class="modal-header" style="background-color:#163552;">
         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-          Asignar Centro Costo
+          Asignar Centro de costo
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
           onclick="javascript:limpiarAsignacion()">
@@ -193,7 +193,7 @@
         <form action="javascript:guardarAsignacionCentro()">
           {{ csrf_field() }}
           <div class="col-md-12">
-            <label for="">Centro Costo</label>
+            <label for="">Centro de costo</label>
             <select id="a_centro" data-plugin="customselect" class="form-control" required>
               <option value="" disabled selected>Seleccionar</option>
             </select>
@@ -204,7 +204,7 @@
               <label for="" class="mb-0">Seleccionar todos</label>
               <div class="float-left mb-0">
                 <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro costo
+                  *Se visualizara empleados sin centro de costo
                 </span>
               </div>
             </div>
@@ -231,7 +231,7 @@
     <div class="modal-content">
       <div class="modal-header" style="background-color:#163552;">
         <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-          Registrar Centro Costo
+          Registrar Centro de costo
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
           onclick="javascript:limpiarCentro()">
@@ -242,7 +242,7 @@
         <form action="javascript:registrarCentroC()">
           {{ csrf_field() }}
           <div class="col-md-12">
-            <label for="">Centro Costo</label>
+            <label for="">Centro de costo</label>
             <input type="text" class="form-control" id="r_descripcion" maxlength="100" required>
           </div>
           <div class="col-md-12 text-right">
@@ -251,7 +251,7 @@
               <label for="" class="mb-0">Seleccionar todos</label>
               <div class="float-left mb-0">
                 <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro costo
+                  *Se visualizara empleados sin centro de costo
                 </span>
               </div>
             </div>

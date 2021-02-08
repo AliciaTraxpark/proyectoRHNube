@@ -1055,7 +1055,7 @@
                                 </div> <!-- end col -->
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Centro Costo</label>
+                                        <label for="sw-default">Centro de costo</label>
                                         <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
                                             tabindex="4" disabled>
                                     </div>

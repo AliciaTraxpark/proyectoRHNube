@@ -1506,7 +1506,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">
-                        Agregar centro costo
+                        Agregar centro de costo
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-registrar').modal('show');javascript:limpiar()">
@@ -1519,12 +1519,12 @@ use App\proyecto_empleado;
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label for="">Centro costo</label>
+                                    <label for="">Centro de costo</label>
                                 </div>
                                 <div id="editarCentro" class="col-md-6"></div>
                                 <div class="col-md-3">
                                     <a id="buscarCentro" data-toggle="tooltip" data-placement="right"
-                                        title="editar centro costo" data-original-title="editar centro costo."
+                                        title="editar centro de costo" data-original-title="editar centro de costo."
                                         style="cursor: pointer;">
                                         <img src="{{ asset('landing/images/search.svg') }}" height="18">
                                     </a>
@@ -2249,7 +2249,7 @@ use App\proyecto_empleado;
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#163552;">
                     <h5 class="modal-title" id="myModalLabel" style="color:#ffffff;font-size:15px">Agregar
-                        Centro Costo</h5>
+                        centro de costo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         onclick="$('#form-ver').modal('show');javascript:limpiarEditar()">
                         <span aria-hidden="true">&times;</span>
@@ -2260,12 +2260,12 @@ use App\proyecto_empleado;
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="">Centro Costo</label>
+                                <label for="">Centro de costo</label>
                             </div>
                             <div id="editarCentroA" class="col-md-6"></div>
                             <div class="col-md-3">
                                 <a id="buscarCentroA" data-toggle="tooltip" data-placement="right"
-                                    title="Editar Centro Costo." data-original-title="Editar Centro Costo."
+                                    title="Editar centro de costo." data-original-title="Editar centro de costo."
                                     style="cursor: pointer;"><img src="{{ asset('landing/images/search.svg') }}"
                                         height="18">
                                 </a>
@@ -3611,7 +3611,7 @@ use App\proyecto_empleado;
                                     </div> <!-- end col -->
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="sw-default">Centro Costo <a
+                                            <label for="sw-default">Centro de costo<a
                                                     onclick="$('#form-registrar').modal('hide');" href="#centrocmodal"
                                                     data-toggle="modal" data-target="#centrocmodal"><i
                                                         class="uil uil-plus"></i></a></label>
@@ -4758,7 +4758,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Centro Costo <a
+                                        <label for="sw-default">Centro de costo<a
                                                 onclick="$('#form-ver').modal('hide');$('#centrocmodalE').modal('show');"
                                                 data-toggle="modal"><i class="uil uil-plus"
                                                     style="color: darkblue;cursor: pointer;"></i></a></label>
@@ -5842,7 +5842,7 @@ use App\proyecto_empleado;
                                 </div> <!-- end col -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sw-default">Centro Costo</label>
+                                        <label for="sw-default">Centro de costo</label>
                                         <input type="text" class="form-control" name="v_centrocV" id="v_centrocV"
                                             tabindex="4" disabled>
                                     </div>
