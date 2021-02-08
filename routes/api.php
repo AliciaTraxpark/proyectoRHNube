@@ -27,7 +27,6 @@ Route::get('/provincia/{id}/niveles', 'registroEmpresaController@distritos');
 Route::get('/departamento/{id}/niveles', 'EmpleadoController@provincias');
 Route::get('/provincia/{id}/niveles', 'EmpleadoController@distritos');
 //* SEGUNDA VERSION
-Route::post("logueoV2", "apiVersionDosController@verificacion")->middleware('apilogger');
 Route::post("listaActividad", "apiVersionDosController@selectActividad")->middleware('token')->middleware('apilogger');
 Route::post("captura2", "apiVersionDosController@captura")->middleware('token')->middleware('apilogger');
 Route::post("capturaArray", "apiVersionDosController@capturaArray")->middleware('token')->middleware('apilogger');
