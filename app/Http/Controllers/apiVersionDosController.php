@@ -883,6 +883,7 @@ class apiVersionDosController extends Controller
             // * BUSCAMOS EN LA TABLA HORARIO EMPLEADO
             $horario_empleado = DB::table('horario_empleado as he')
                 ->select(
+                    'he.horarioEmp_id',
                     'he.horario_dias_id',
                     'he.horario_horario_id',
                     'he.horarioComp',
@@ -923,6 +924,7 @@ class apiVersionDosController extends Controller
                     ->where('ph.horario_id', '=', $horario->horario_id)
                     ->get();
                 $horario->idHorario_dias = $horario_dias->id;
+                $horario->idHorario_empleado = $resp->horarioEmp_id;
                 $horario->horarioCompensable = $resp->horarioComp;
                 $horario->fueraHorario = $resp->fuera_horario;
                 $horario->horaAdicional = $resp->horaAdic;
