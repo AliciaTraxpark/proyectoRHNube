@@ -62,6 +62,7 @@ class centrocostoController extends Controller
         return response()->json($centroC, 200);
     }
 
+    // * MOSTRAR CENTRO DE COSTO POR ID
     public function centroCosto(Request $request)
     {
         $id = $request->get('id');
@@ -107,6 +108,7 @@ class centrocostoController extends Controller
         $id = $request->get('id');
         $empleados = $request->get('empleados');
         $codigo = $request->get('codigo');
+        // : BUSCAR CENTRO DE COSTO CON EL MISMO CODIGO
         $buscarCodigoCentro = centro_costo::where('codigo', '=', $codigo)
             ->where('centroC_id', '!=', $id)
             ->whereNotNull('codigo')
@@ -296,23 +298,29 @@ class centrocostoController extends Controller
     // * AGREGAR CENTROS DE COSTOS
     public function agregarCentroC(Request $request)
     {
-        $buscarCentroA = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
-            ->where('estado', '=', 1)
+        // : BUSCAR COINCIDENCIAS CON NOMBRE DE CENTRO DE COSTOS -> ATRIBUTO DESCRIPCION = 1
+        $buscarCentroDescripcion = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
             ->where('organi_id', '=', session('sesionidorg'))
             ->get()
             ->first();
-        if ($buscarCentroA) {
-            return response()->json(array("estado" => 1), 200);
+        if ($buscarCentroDescripcion) {
+            // : ALERTA DE CENTRO DE COSTO ACTIVO CON MISMO NOMBRE
+            if ($buscarCentroDescripcion->estado == 1) {
+                return response()->json(array(
+                    "respuesta" => 1,
+                    "campo" => 1,
+                    "mensaje" => "Ya existe un centro costo con este nombre."
+                ), 200);
+            } else {
+                // : ALERTA DE CENTRO DE COSTO INACTIVO CON MISMO NOMBRE
+                return response()->json(array(
+                    "respuesta" => 0,
+                    "campo" => 1,
+                    "mensaje" => "Ya existe un centro costo inactivo con este nombre. ¿Desea recuperarla si o no?",
+                    "id" => $buscarCentroDescripcion->centroC_id
+                ), 200);
+            }
         }
-        $buscarCentroS = centro_costo::where('centroC_descripcion', '=', $request->get('descripcion'))
-            ->where('estado', '=', 0)
-            ->where('organi_id', '=', session('sesionidorg'))
-            ->get()
-            ->first();
-        if ($buscarCentroS) {
-            return response()->json(array("estado" => 1, "centro" => $buscarCentroS), 200);
-        }
-
         $centro = new centro_costo();
         $centro->centroC_descripcion = $request->get('descripcion');
         $centro->organi_id = session('sesionidorg');

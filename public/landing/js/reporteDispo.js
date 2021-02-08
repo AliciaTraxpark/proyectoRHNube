@@ -1899,6 +1899,7 @@ function registrarMar() {
                     }
                 );
             } else {
+                sent = false;
                 $('button[type="submit"]').attr("disabled", false);
                 $('#am_valid').empty();
                 $('#am_valid').append(data.respuesta);
@@ -2070,6 +2071,7 @@ function cambiarEntradaM() {
                     }
                 );
             } else {
+                sent = false;
                 $('button[type="submit"]').attr("disabled", false);
                 $('#s_valid').append(data.respuesta);
                 $('#s_valid').show();
@@ -2242,6 +2244,7 @@ function cambiarSalidaM() {
                 $('#e_valid').append(data.respuesta);
                 $('#e_valid').show();
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
             }
         },
         error: function () {
@@ -2495,6 +2498,7 @@ function guardarAsignacion() {
                 $('#a_valid').empty();
                 $('#a_valid').append(data.respuesta);
                 $('#a_valid').show();
+                sent = false;
                 $('button[type="submit"]').attr("disabled", false);
             }
         },
@@ -2668,6 +2672,7 @@ function insertarSalida() {
                 $('#i_validS').append(data.respuesta);
                 $('#i_validS').show();
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
             } else {
                 $('#i_validS').empty();
                 $('#i_validS').hide();
@@ -2781,6 +2786,7 @@ function insertarEntrada() {
                 $('#i_validE').append(data.respuesta);
                 $('#i_validE').show();
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
             } else {
                 $('#i_validE').empty();
                 $('#i_validE').hide();
@@ -2986,6 +2992,7 @@ function cambiarHorarioM() {
                 $('#ch_valid').append(data.respuesta);
                 $('#ch_valid').show();
                 $('button[type="submit"]').attr("disabled", false);
+                sent = false;
             }
         },
         error: function () { }

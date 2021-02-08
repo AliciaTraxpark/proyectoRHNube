@@ -157,20 +157,22 @@
                 oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
             </div>
           </div>
-          <div class="col-md-12 text-right">
-            <div class="form-group mb-0 mt-3">
-              <input type="checkbox" id="e_todosEmpleados">
-              <label for="" class="mb-0">Seleccionar todos</label>
-              <div class="float-left mb-0">
-                <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro de costo
-                </span>
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <div class="form-group mb-0 mt-3">
+                <input type="checkbox" id="e_todosEmpleados">
+                <label for="" class="mb-0">Seleccionar todos</label>
+                <div class="float-left mb-0">
+                  <span style="font-size: 11px;">
+                    *Se visualizara empleados sin centro de costo
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-12">
-            <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
-              data-placeholder="Empleados"></select>
+            <div class="col-md-12">
+              <select id="e_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+                data-placeholder="Empleados"></select>
+            </div>
           </div>
       </div>
       <div class="modal-footer">
@@ -248,24 +250,33 @@
       <div class="modal-body" style="font-size:12px!important">
         <form action="javascript:registrarCentroC()">
           {{ csrf_field() }}
-          <div class="col-md-12">
-            <label for="">Centro de costo</label>
-            <input type="text" class="form-control" id="r_descripcion" maxlength="100" required>
-          </div>
-          <div class="col-md-12 text-right">
-            <div class="form-group mb-0 mt-3">
-              <input type="checkbox" id="r_todosEmpleados">
-              <label for="" class="mb-0">Seleccionar todos</label>
-              <div class="float-left mb-0">
-                <span style="font-size: 11px;">
-                  *Se visualizara empleados sin centro de costo
-                </span>
-              </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="">Centro de costo</label>
+              <input type="text" class="form-control" id="r_descripcion" maxlength="100" required>
+            </div>
+            <div class="col-md-6">
+              <label for="">código</label>
+              <input type="text" class="form-control" id="r_codigo" maxlength="20"
+                oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
             </div>
           </div>
-          <div class="col-md-12 pt-2">
-            <select id="r_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
-              data-placeholder="Empleados"></select>
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <div class="form-group mb-0 mt-3">
+                <input type="checkbox" id="r_todosEmpleados">
+                <label for="" class="mb-0">Seleccionar todos</label>
+                <div class="float-left mb-0">
+                  <span style="font-size: 11px;">
+                    *Se visualizara empleados sin centro de costo
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 pt-2">
+              <select id="r_empleadosCentro" data-plugin="customselect" class="form-control" multiple="multiple"
+                data-placeholder="Empleados"></select>
+            </div>
           </div>
       </div>
       <div class="modal-footer">
