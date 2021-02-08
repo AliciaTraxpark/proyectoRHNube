@@ -49,17 +49,19 @@ class MailHappyBirthday extends Command
         $this->info('Enviar correo de cumpleaños.');
         $organizaciones = organizacion::all('organi_id', 'organi_razonSocial', 'organi_tipo');
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        $todayNow = carbon::now()->subHours(5);
+        $todayNow = carbon::now();
         $today = carbon::create($todayNow->year, $todayNow->month, $todayNow->day, 0, 0, 0, 'GMT');
+        // ES EL INTERVALO DE
+        $timeAlert = 8;
         
         foreach ($organizaciones as $organizacion) {
             $datos = "";
            // ENVIAR NOTIFICACIONES A TODOS LOS EMPLEADOS DE CADA ORGANIZACIÓN
-            $empleados = DB::table('empleado')
+            /*$empleados = DB::table('empleado')
                 ->join('persona', 'empleado.emple_persona', '=', 'persona.perso_id')
                 ->where('empleado.organi_id', '=', $organizacion->organi_id)
                 ->select('persona.perso_fechaNacimiento', 'persona.perso_nombre', 'persona.perso_apPaterno', 'persona.perso_apMaterno')
-                ->get();
+                ->get();*/
 
             $admins = DB::table('usuario_organizacion')
                     ->join('users', 'users.id', '=', 'usuario_organizacion.user_id')
@@ -69,36 +71,95 @@ class MailHappyBirthday extends Command
                         $query->where('invitado.gestionHb', '<>', 0)
                               ->orWhereNull('invitado.gestionHb');
                     })
-                    ->select('usuario_organizacion.user_id')
+                    ->select('usuario_organizacion.user_id', 'usuario_organizacion.rol_id')
                     ->get();
 
-            foreach ($empleados as $persona) {
-                // NOTIFICACIÓN POR DÍA DE CUMPLEAÑOS
-                if($persona->perso_fechaNacimiento != NULL){
-                    $hb = carbon::parse($persona->perso_fechaNacimiento);
-                    
-                    if($hb->day == 1 && $hb->month == 1){
-                        $fHb = carbon::create($today->year+1, $hb->month, $hb->day, 0, 0, 0, 'GMT');
-                        $diff = $today->diffInDays($fHb);
-                        $edad = ($today->year - $hb->year)+1;
-                    }else{
-                        $fHb = carbon::create($today->year, $hb->month, $hb->day, 0, 0, 0, 'GMT');
-                        $diff = $today->diffInDays($fHb);
-                        $edad = $today->year - $hb->year;
+            foreach($admins as $admin){
+                if ($admin->rol_id == 3) {
+                    $invitado = DB::table('invitado as in')
+                        ->where('rol_id', '=', 3)
+                        ->where('in.user_Invitado', '=', $admin->user_id)
+                        ->get()->first();
+                    if ($invitado->verTodosEmps == 1) {
+                        $empleados = DB::table('empleado as e')
+                            ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                            ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                            ->where('e.organi_id', '=', $organizacion->organi_id)
+                            ->where('e.emple_estado', '=', 1)
+                            ->groupBy('e.emple_id')
+                            ->get();
+                    } else {
+                        $invitado_empleadoIn = DB::table('invitado_empleado as invem')
+                            ->where('invem.idinvitado', '=',  $invitado->idinvitado)
+                            ->where('invem.area_id', '=', null)
+                            ->where('invem.emple_id', '!=', null)
+                            ->get()->first();
+                        if ($invitado_empleadoIn != null) {
+                            $empleados = DB::table('empleado as e')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_id', '=', 'inve.emple_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                                ->where('e.organi_id', '=', $organizacion->organi_id)
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        } else {
+                            $empleados = DB::table('empleado as e')
+                                ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                                ->join('invitado_empleado as inve', 'e.emple_area', '=', 'inve.area_id')
+                                ->join('invitado as invi', 'inve.idinvitado', '=', 'invi.idinvitado')
+                                ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                                ->where('e.organi_id', '=', $organizacion->organi_id)
+                                ->where('e.emple_estado', '=', 1)
+                                ->where('invi.estado', '=', 1)
+                                ->where('invi.idinvitado', '=', $invitado->idinvitado)
+                                ->groupBy('e.emple_id')
+                                ->get();
+                        }
                     }
-                    
-                    if($diff <= 7 && $today <= $fHb){
-                        $datos = $datos."<div class=''> • <strong>".$persona->perso_nombre." ".$persona->perso_apPaterno." ".$persona->perso_apMaterno."</strong>&nbsp;&nbsp;&nbsp;".$hb->day." de ".$meses[($hb->month)-1]." &nbsp;&nbsp;&nbsp; (".$edad." años)"."</div><br>";
+                } else {
+                    $empleados = DB::table('empleado as e')
+                        ->join('persona as p', 'e.emple_persona', '=', 'p.perso_id')
+                        ->select('e.emple_id', 'p.perso_nombre as nombre', 'p.perso_apPaterno as apPaterno', 'p.perso_apMaterno as apMaterno', 'p.perso_fechaNacimiento')
+                        ->where('e.organi_id', '=', $organizacion->organi_id)
+                        ->where('e.emple_estado', '=', 1)
+                        ->groupBy('e.emple_id')
+                        ->get();
+                }
+
+                $date = Carbon::create($today->year, $today->month, $today->day, 0, 0, 0);
+                // RECORREMOS DESDE EL DÍA ACTUAL HASTA EL DÍA LÍMITE
+                for($i = 0; $i < $timeAlert; $i++){
+                    if($i != 0){
+                        $date->addDays(1);
                     }
-                // FIN DE NOTIFICACIÓN
-                }  
-            }
-            if($datos != "" && isset($admins)){
-                $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
-                foreach ($admins as $admin) {
+                    // RECORRE LA COLECCIÓN DE LOS EMPLEADOS
+                    foreach ($empleados as $empleado) {
+                        if($empleado->perso_fechaNacimiento != NULL){
+                            $hb_temp = Carbon::parse($empleado->perso_fechaNacimiento);
+                            // OBTENEMOS FECHA EN EL FORMATO
+                            $hb = Carbon::create($hb_temp->year, $hb_temp->month, $hb_temp->day, 0, 0, 0);
+                            $fHb = Carbon::create($date->year, $hb->month, $hb->day, 0, 0, 0);
+                            // COMPARA DÍA DE CUMPLEAÑOS CON DÍA ACTUAL
+                            if($date->eq($fHb)){
+                                $edad = $date->diffInYears($hb);
+                                $datos = $datos."<div class=''> • <strong>".$empleado->nombre." ".$empleado->apPaterno." ".$empleado->apMaterno."</strong>&nbsp;&nbsp;&nbsp;".$hb->day." de ".$meses[($hb->month)-1]." &nbsp;&nbsp;&nbsp; (".$edad." años)"."</div><br>";
+                            }
+                        }
+                    }       
+                }
+                // ENVIA CORREO
+                if($datos != ""){
+                    $mail_body = "<h4 style='color: #163552'>".$organizacion->organi_tipo.": ". $organizacion->organi_razonSocial ."</h4><br>".$datos;
                     $email = User::find($admin->user_id)->email;
                     $envio = Mail::to($email)->queue(new correoHappyBirthday($mail_body));
+                    $datos = "";
+                    $mail_body = "";
                 }
+                $datos = "";
             }
         }
     }
