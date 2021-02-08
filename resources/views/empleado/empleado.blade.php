@@ -11,14 +11,14 @@ use Carbon\Carbon;
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{ asset('landing/images/ICONO-LOGO-NUBE-RH.ico') }}">
     @php
-        $fecha = Auth::user()->created_at->toDateTimeString();
-        $dt = Carbon::create($fecha);
-        $dt->isoFormat('YYYY-MM-DD');
-        $actual = Carbon::now();
-        $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
+    $fecha = Auth::user()->created_at->toDateTimeString();
+    $dt = Carbon::create($fecha);
+    $dt->isoFormat('YYYY-MM-DD');
+    $actual = Carbon::now();
+    $actual->modify('-1 months')->isoFormat('YYYY-MM-DD');
     @endphp
     @if ($dt > $actual)
-        <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
+    <script src="//code.jivosite.com/widget/OqxplJ3nCh" async></script>
     @endif
     <style>
         .pace {
@@ -51,7 +51,6 @@ use Carbon\Carbon;
             max-width: 185px;
             width: 185px;
         }
-
     </style>
 
 
@@ -77,8 +76,7 @@ use Carbon\Carbon;
     <link href="{{ asset('admin/assets/libs/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet"
         type="text/css" />
 
-    <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ URL::asset('admin/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Plugin css  CALENDAR-->
     <link href="{{ asset('admin/packages/core/main.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/packages/daygrid/main.css') }}" rel="stylesheet" />
@@ -91,7 +89,8 @@ use Carbon\Carbon;
     <link href="{{ URL::asset('admin/assets/css/notify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/css/prettify.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('admin/assets/libs/alertify/alertify.css') }}" rel="stylesheet" type="text/css" />
-    {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" /> --}}
+    {{-- <link href="{{ URL::asset('admin/assets/libs/alertify/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    --}}
     <!-- Semantic UI theme -->
     <link href="{{ URL::asset('admin/assets/libs/alertify/default.css') }}" rel="stylesheet" type="text/css" />
 </head>
@@ -1022,15 +1021,14 @@ use Carbon\Carbon;
                 padding: 0 35px !important;
             }
         }
-
     </style>
 
     <header id="header-section">
         <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
             <div class="col-sm-3 col-md-2 col-xl-2 logo_rh">
                 <div class="navbar-brand-wrapper d-flex w-100 colResp">
-                    <a href="{{ route('principal') }}"><img src="{{ asset('landing/images/NUBE_SOLA.png') }}"
-                            class="" height="69"></a>
+                    <a href="{{ route('principal') }}"><img src="{{ asset('landing/images/NUBE_SOLA.png') }}" class=""
+                            height="69"></a>
                 </div>
             </div>
             <div class="col-sm-6 col-md-6 col-xl-6 text-center">
@@ -1100,8 +1098,8 @@ use Carbon\Carbon;
                                                 data-placeholder="Seleccionar áreas">
 
                                                 @foreach ($area as $areas)
-                                                    <option class="" value="{{ $areas->area_id }}">
-                                                        {{ $areas->area_descripcion }}</option>
+                                                <option class="" value="{{ $areas->area_id }}">
+                                                    {{ $areas->area_descripcion }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -1118,11 +1116,11 @@ use Carbon\Carbon;
                             <div class="text-right"><br><br>
                                 <a href="{{ '/horario' }}">
                                     @if (count($empleado) > 0)
-                                        <button id="btnContinuar" class="boton btn btn-default mr-1">CONTINUAR</button>
+                                    <button id="btnContinuar" class="boton btn btn-default mr-1">CONTINUAR</button>
                                     @else
-                                        <button id="btnContinuar" disabled
-                                            title="Registre al menos un empleado para poder continuar"
-                                            class="boton btn btn-default mr-1">CONTINUAR</button>
+                                    <button id="btnContinuar" disabled
+                                        title="Registre al menos un empleado para poder continuar"
+                                        class="boton btn btn-default mr-1">CONTINUAR</button>
 
                                     @endif
                                 </a>
@@ -1827,8 +1825,8 @@ use Carbon\Carbon;
                                                     onclick="javascript:validacionNuevaAltaReg()" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($tipo_cont as $tipo_conts)
-                                                        <option value="{{ $tipo_conts->contrato_id }}">
-                                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    <option value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1848,8 +1846,8 @@ use Carbon\Carbon;
                                                 <select class="form-control" name="condicion" id="condicion" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
-                                                        <option class="" value="{{ $condicion->id }}">
-                                                            {{ $condicion->condicion }}</option>
+                                                    <option class="" value="{{ $condicion->id }}">
+                                                        {{ $condicion->condicion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1864,7 +1862,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                            <label for="" style="font-weight: 600">Fecha inicial</label>
                                             <span id="m_validFechaC" style="color: red;display: none;">
                                                 *Fecha incorrecta.
                                             </span>
@@ -1875,10 +1873,9 @@ use Carbon\Carbon;
                                                     <select class="form-control" name="m_dia_fecha" id="m_dia_fecha"
                                                         required="">
                                                         <option value="0">Día</option>
-                                                        @for ($i = 1; $i < 32; $i++)
-                                                            <option class="" value="{{ $i }}">
-                                                                {{ $i }}</option>
-                                                        @endfor
+                                                        @for ($i = 1; $i < 32; $i++) <option class="" value="{{ $i }}">
+                                                            {{ $i }}</option>
+                                                            @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-4">
@@ -1904,11 +1901,11 @@ use Carbon\Carbon;
                                                         style="padding-left: 5px;padding-right: 5px;" name="m_ano_fecha"
                                                         id="m_ano_fecha" required>
                                                         <option value="0">Año</option>
-                                                        @for ($i = 1900; $i <= 2030; $i++)
-                                                            <option class="" value="{{ $i }}">
-                                                                {{ $i }}
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                            value="{{ $i }}">
+                                                            {{ $i }}
                                                             </option>
-                                                        @endfor
+                                                            @endfor
                                                     </select>
                                                 </div>
                                             </div>
@@ -1939,9 +1936,10 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha
-                                                    Final</label>
-                                                <label for="">Fecha Indefinida</label>
+                                                <label class="pb-2" id="labelfechaF" style="font-weight: 600">
+                                                    Fecha final
+                                                </label>
+                                                <label for="">Fecha indefinida</label>
                                                 <input type="checkbox" id="checkboxFechaI" name="checkboxFechaI">
                                             </div>
                                             <div id="ocultarFecha">
@@ -1953,10 +1951,10 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="mf_dia_fecha"
                                                             id="mf_dia_fecha" required="">
                                                             <option value="0">Día</option>
-                                                            @for ($i = 1; $i < 32; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}</option>
-                                                            @endfor
+                                                            @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}</option>
+                                                                @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-4">
@@ -1982,11 +1980,11 @@ use Carbon\Carbon;
                                                             style="padding-left: 5px;padding-right: 5px;"
                                                             name="mf_ano_fecha" id="mf_ano_fecha" required>
                                                             <option value="0">Año</option>
-                                                            @for ($i = 2014; $i < 2100; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}
+                                                            @for ($i = 2014; $i < 2100; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}
                                                                 </option>
-                                                            @endfor
+                                                                @endfor
                                                         </select>
                                                     </div>
 
@@ -2001,10 +1999,10 @@ use Carbon\Carbon;
                                             <select class="form-control col-3" name="noti_dia_fecha"
                                                 id="noti_dia_fecha">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i < 61; $i++)
-                                                    <option class="" value="{{ $i }}"> {{ $i }}
+                                                @for ($i = 30; $i < 61; $i++) <option class="" value="{{ $i }}">
+                                                    {{ $i }}
                                                     </option>
-                                                @endfor
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2052,8 +2050,8 @@ use Carbon\Carbon;
                                                     onclick="javascript:validacionNuevaAltaReg()" required disabled>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($tipo_cont as $tipo_conts)
-                                                        <option value="{{ $tipo_conts->contrato_id }}">
-                                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    <option value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -2073,8 +2071,8 @@ use Carbon\Carbon;
                                                 <select class="form-control" id="condicionD" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
-                                                        <option class="" value="{{ $condicion->id }}">
-                                                            {{ $condicion->condicion }}</option>
+                                                    <option class="" value="{{ $condicion->id }}">
+                                                        {{ $condicion->condicion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -2103,7 +2101,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                            <label for="" style="font-weight: 600">Fecha inicial</label>
                                             <span id="m_validFechaCD" style="color: red;display: none;">
                                                 *Fecha incorrecta.
                                             </span>
@@ -2114,10 +2112,9 @@ use Carbon\Carbon;
                                                     <select class="form-control" name="m_dia_fechaD" id="m_dia_fechaD"
                                                         required>
                                                         <option value="0">Día</option>
-                                                        @for ($i = 1; $i < 32; $i++)
-                                                            <option class="" value="{{ $i }}">
-                                                                {{ $i }}</option>
-                                                        @endfor
+                                                        @for ($i = 1; $i < 32; $i++) <option class="" value="{{ $i }}">
+                                                            {{ $i }}</option>
+                                                            @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-4">
@@ -2143,11 +2140,11 @@ use Carbon\Carbon;
                                                         style="padding-left: 5px;padding-right: 5px;"
                                                         name="m_ano_fechaD" id="m_ano_fechaD" required>
                                                         <option value="0">Año</option>
-                                                        @for ($i = 1900; $i <= 2030; $i++)
-                                                            <option class="" value="{{ $i }}">
-                                                                {{ $i }}
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                            value="{{ $i }}">
+                                                            {{ $i }}
                                                             </option>
-                                                        @endfor
+                                                            @endfor
                                                     </select>
                                                 </div>
                                             </div>
@@ -2178,9 +2175,10 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha
-                                                    Final</label>
-                                                <label class="ocultarFechaD">Fecha Indefinida</label>
+                                                <label class="pb-2" id="labelfechaF" style="font-weight: 600">
+                                                    Fecha final
+                                                </label>
+                                                <label class="ocultarFechaD">Fecha indefinida</label>
                                                 <input type="checkbox" class="ocultarFechaD" id="checkboxFechaID"
                                                     name="checkboxFechaID">
                                             </div>
@@ -2193,10 +2191,10 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="mf_dia_fechaD"
                                                             id="mf_dia_fechaD" required>
                                                             <option value="0">Día</option>
-                                                            @for ($i = 1; $i < 32; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}</option>
-                                                            @endfor
+                                                            @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}</option>
+                                                                @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-4">
@@ -2222,11 +2220,11 @@ use Carbon\Carbon;
                                                             style="padding-left: 5px;padding-right: 5px;"
                                                             name="mf_ano_fechaD" id="mf_ano_fechaD" required>
                                                             <option value="0">Año</option>
-                                                            @for ($i = 2014; $i < 2100; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}
+                                                            @for ($i = 2014; $i < 2100; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}
                                                                 </option>
-                                                            @endfor
+                                                                @endfor
                                                         </select>
                                                     </div>
                                                 </div>
@@ -2240,10 +2238,10 @@ use Carbon\Carbon;
                                             <select class="form-control col-3" name="noti_dia_fecha_ver"
                                                 id="noti_dia_fecha_ver">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i < 61; $i++)
-                                                    <option class="" value="{{ $i }}"> {{ $i }}
+                                                @for ($i = 30; $i < 61; $i++) <option class="" value="{{ $i }}">
+                                                    {{ $i }}
                                                     </option>
-                                                @endfor
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2608,8 +2606,8 @@ use Carbon\Carbon;
                                                     tabindex="5" required disabled>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
-                                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -2647,8 +2645,8 @@ use Carbon\Carbon;
                                                             required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($condicionP as $condicion)
-                                                                <option class="" value="{{ $condicion->id }}">
-                                                                    {{ $condicion->condicion }}</option>
+                                                            <option class="" value="{{ $condicion->id }}">
+                                                                {{ $condicion->condicion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2663,7 +2661,7 @@ use Carbon\Carbon;
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                                    <label for="" style="font-weight: 600">Fecha inicial</label>
                                                     <span id="m_validFechaCIE" style="color: red;display: none;">
                                                         *Fecha incorrecta.
                                                     </span>
@@ -2674,11 +2672,11 @@ use Carbon\Carbon;
                                                             <select class="form-control" name="m_dia_fechaIE"
                                                                 id="m_dia_fechaIE" required="">
                                                                 <option value="0">Día</option>
-                                                                @for ($i = 1; $i < 32; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
@@ -2700,15 +2698,15 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaIE" id="m_ano_fechaIE"
-                                                                required="">
+                                                            <select class="form-control"
+                                                                style="padding-left: 5px;padding-right: 5px;"
+                                                                name="m_ano_fechaIE" id="m_ano_fechaIE" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1900; $i <= 2030; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
 
@@ -2743,10 +2741,12 @@ use Carbon\Carbon;
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="" style="font-weight: 600">Fecha
-                                                            Final</label><br>
-                                                        <label for="" class="ocultarFechaIE">Fecha
-                                                            Indefinida</label>
+                                                        <label for="" style="font-weight: 600">
+                                                            Fecha final
+                                                        </label><br>
+                                                        <label for="" class="ocultarFechaIE">
+                                                            Fecha indefinida
+                                                        </label>
                                                         <input type="checkbox" id="checkboxFechaIE"
                                                             name="checkboxFechaIE" class="ocultarFechaIE">
                                                     </div>
@@ -2759,10 +2759,10 @@ use Carbon\Carbon;
                                                                 <select class="form-control" name="m_dia_fechaFE"
                                                                     id="m_dia_fechaFE">
                                                                     <option value="0">Día</option>
-                                                                    @for ($i = 1; $i < 32; $i++)
-                                                                        <option class="" value="{{ $i }}">
-                                                                            {{ $i }}</option>
-                                                                    @endfor
+                                                                    @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                        value="{{ $i }}">
+                                                                        {{ $i }}</option>
+                                                                        @endfor
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
@@ -2788,11 +2788,11 @@ use Carbon\Carbon;
                                                             padding-right: 5px;" name="m_ano_fechaFE"
                                                                     id="m_ano_fechaFE">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 1900; $i <= 2030; $i++)
-                                                                        <option class="" value="{{ $i }}">
-                                                                            {{ $i }}
+                                                                    @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                        value="{{ $i }}">
+                                                                        {{ $i }}
                                                                         </option>
-                                                                    @endfor
+                                                                        @endfor
                                                                 </select>
                                                             </div>
 
@@ -2809,10 +2809,9 @@ use Carbon\Carbon;
                                             <select class="form-control col-3" name="noti_dia_fecha_editar"
                                                 id="noti_dia_fecha_editar">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i < 61; $i++)
-                                                    <option class="" value="{{ $i }}">
-                                                        {{ $i }}</option>
-                                                @endfor
+                                                @for ($i = 30; $i < 61; $i++) <option class="" value="{{ $i }}">
+                                                    {{ $i }}</option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -2859,8 +2858,8 @@ use Carbon\Carbon;
                                                     tabindex="5" onclick="javascript:validacionNuevaAlta()" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
-                                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -2880,8 +2879,8 @@ use Carbon\Carbon;
                                                             id="v_condicionN" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($condicionP as $condicion)
-                                                                <option class="" value="{{ $condicion->id }}">
-                                                                    {{ $condicion->condicion }}</option>
+                                                            <option class="" value="{{ $condicion->id }}">
+                                                                {{ $condicion->condicion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -2896,7 +2895,7 @@ use Carbon\Carbon;
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                                    <label for="" style="font-weight: 600">Fecha inicial</label>
                                                     <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
                                                         incorrecta.</span>
                                                     <div class="alert alert-danger" role="alert" style="display: none;"
@@ -2906,11 +2905,11 @@ use Carbon\Carbon;
                                                             <select class="form-control" name="m_dia_fechaIEN"
                                                                 id="m_dia_fechaIEN" required="">
                                                                 <option value="0">Día</option>
-                                                                @for ($i = 1; $i < 32; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
@@ -2932,15 +2931,15 @@ use Carbon\Carbon;
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select class="form-control" style="padding-left: 5px;
-                                                        padding-right: 5px;" name="m_ano_fechaIEN" id="m_ano_fechaIEN"
-                                                                required="">
+                                                            <select class="form-control"
+                                                                style="padding-left: 5px;padding-right: 5px;"
+                                                                name="m_ano_fechaIEN" id="m_ano_fechaIEN" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1900; $i <= 2030; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
 
@@ -2975,9 +2974,10 @@ use Carbon\Carbon;
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="" style="font-weight: 600">Fecha
-                                                            Final</label><br>
-                                                        <label for="">Fecha Indefinida</label>
+                                                        <label for="" style="font-weight: 600">
+                                                            Fecha final
+                                                        </label><br>
+                                                        <label for="">Fecha indefinida</label>
                                                         <input type="checkbox" id="checkboxFechaIEN"
                                                             name="checkboxFechaIEN">
                                                     </div>
@@ -2990,10 +2990,10 @@ use Carbon\Carbon;
                                                                 <select class="form-control" name="m_dia_fechaFEN"
                                                                     id="m_dia_fechaFEN">
                                                                     <option value="0">Día</option>
-                                                                    @for ($i = 1; $i < 32; $i++)
-                                                                        <option class="" value="{{ $i }}">
-                                                                            {{ $i }}</option>
-                                                                    @endfor
+                                                                    @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                        value="{{ $i }}">
+                                                                        {{ $i }}</option>
+                                                                        @endfor
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
@@ -3019,11 +3019,11 @@ use Carbon\Carbon;
                                                             padding-right: 5px;" name="m_ano_fechaFEN"
                                                                     id="m_ano_fechaFEN">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 1900; $i <= 2030; $i++)
-                                                                        <option class="" value="{{ $i }}">
-                                                                            {{ $i }}
+                                                                    @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                        value="{{ $i }}">
+                                                                        {{ $i }}
                                                                         </option>
-                                                                    @endfor
+                                                                        @endfor
                                                                 </select>
                                                             </div>
 
@@ -3040,10 +3040,9 @@ use Carbon\Carbon;
                                             <select class="form-control col-3" name="noti_dia_fecha_alta"
                                                 id="noti_dia_fecha_alta">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i < 61; $i++)
-                                                    <option class="" value="{{ $i }}">
-                                                        {{ $i }}</option>
-                                                @endfor
+                                                @for ($i = 30; $i < 61; $i++) <option class="" value="{{ $i }}">
+                                                    {{ $i }}</option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -3092,8 +3091,8 @@ use Carbon\Carbon;
                                                     tabindex="5" onclick="javascript:validacionNuevoDetalle()" required>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
-                                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -3115,8 +3114,8 @@ use Carbon\Carbon;
                                                             id="v_condicionND" required>
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($condicionP as $condicion)
-                                                                <option class="" value="{{ $condicion->id }}">
-                                                                    {{ $condicion->condicion }}</option>
+                                                            <option class="" value="{{ $condicion->id }}">
+                                                                {{ $condicion->condicion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3131,7 +3130,7 @@ use Carbon\Carbon;
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                                    <label for="" style="font-weight: 600">Fecha inicial</label>
                                                     <span id="m_validFechaCIEND"
                                                         style="color: red;display: none;">*Fecha
                                                         incorrecta.</span>
@@ -3140,11 +3139,11 @@ use Carbon\Carbon;
                                                             <select class="form-control" name="m_dia_fechaIEND"
                                                                 id="m_dia_fechaIEND" required>
                                                                 <option value="0">Día</option>
-                                                                @for ($i = 1; $i < 32; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4">
@@ -3170,11 +3169,11 @@ use Carbon\Carbon;
                                                                 style="padding-left: 5px;padding-right: 5px;"
                                                                 name="m_ano_fechaIEND" id="m_ano_fechaIEND" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1900; $i <= 2030; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
 
@@ -3209,9 +3208,10 @@ use Carbon\Carbon;
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="" style="font-weight: 600">Fecha
-                                                            Final</label><br>
-                                                        <label for="">Fecha Indefinida</label>
+                                                        <label for="" style="font-weight: 600">
+                                                            Fecha final
+                                                        </label><br>
+                                                        <label for="">Fecha indefinida</label>
                                                         <input type="checkbox" id="checkboxFechaIEND"
                                                             name="checkboxFechaIEND">
                                                     </div>
@@ -3224,10 +3224,10 @@ use Carbon\Carbon;
                                                                 <select class="form-control" name="m_dia_fechaFEND"
                                                                     id="m_dia_fechaFEND">
                                                                     <option value="0">Día</option>
-                                                                    @for ($i = 1; $i < 32; $i++)
-                                                                        <option class="" value="{{ $i }}">
-                                                                            {{ $i }}</option>
-                                                                    @endfor
+                                                                    @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                        value="{{ $i }}">
+                                                                        {{ $i }}</option>
+                                                                        @endfor
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
@@ -3253,11 +3253,11 @@ use Carbon\Carbon;
                                                                     style="padding-left: 5px;padding-right: 5px;"
                                                                     name="m_ano_fechaFEND" id="m_ano_fechaFEND">
                                                                     <option value="0">Año</option>
-                                                                    @for ($i = 1900; $i <= 2030; $i++)
-                                                                        <option class="" value="{{ $i }}">
-                                                                            {{ $i }}
+                                                                    @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                        value="{{ $i }}">
+                                                                        {{ $i }}
                                                                         </option>
-                                                                    @endfor
+                                                                        @endfor
                                                                 </select>
                                                             </div>
 
@@ -3307,8 +3307,8 @@ use Carbon\Carbon;
                                                     tabindex="5" required disabled>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($tipo_cont as $tipo_conts)
-                                                        <option class="" value="{{ $tipo_conts->contrato_id }}">
-                                                            {{ $tipo_conts->contrato_descripcion }}</option>
+                                                    <option class="" value="{{ $tipo_conts->contrato_id }}">
+                                                        {{ $tipo_conts->contrato_descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -3320,8 +3320,8 @@ use Carbon\Carbon;
                                                     required disabled>
                                                     <option value="">Seleccionar</option>
                                                     @foreach ($condicionP as $condicion)
-                                                        <option class="" value="{{ $condicion->id }}">
-                                                            {{ $condicion->condicion }}</option>
+                                                    <option class="" value="{{ $condicion->id }}">
+                                                        {{ $condicion->condicion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -3336,17 +3336,16 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                            <label for="" style="font-weight: 600">Fecha inicial</label>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="m_dia_fechaIEV"
                                                         id="m_dia_fechaIEV" disabled>
                                                         <option value="0">Día</option>
-                                                        @for ($i = 1; $i < 32; $i++)
-                                                            <option class="" value="{{ $i }}">
-                                                                {{ $i }}
+                                                        @for ($i = 1; $i < 32; $i++) <option class="" value="{{ $i }}">
+                                                            {{ $i }}
                                                             </option>
-                                                        @endfor
+                                                            @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
@@ -3372,19 +3371,19 @@ use Carbon\Carbon;
                                                         style="padding-left: 5px;padding-right: 5px;"
                                                         name="m_ano_fechaIEV" id="m_ano_fechaIEV" disabled>
                                                         <option value="0">Año</option>
-                                                        @for ($i = 1900; $i <= 2030; $i++)
-                                                            <option class="" value="{{ $i }}">
-                                                                {{ $i }}
+                                                        @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                            value="{{ $i }}">
+                                                            {{ $i }}
                                                             </option>
-                                                        @endfor
+                                                            @endfor
                                                     </select>
                                                 </div>
 
                                             </div>
                                             <br>
                                             <div class="form-group">
-                                                <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                                <label class="ocultarFechaIV">Fecha Indefinida</label>
+                                                <label for="" style="font-weight: 600">Fecha final</label><br>
+                                                <label class="ocultarFechaIV">Fecha indefinida</label>
                                                 <input type="checkbox" class="ocultarFechaIV" id="checkboxFechaIEV"
                                                     name="checkboxFechaIEV">
                                             </div>
@@ -3394,10 +3393,10 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="m_dia_fechaFEV"
                                                             id="m_dia_fechaFEV" disabled>
                                                             <option value="0">Día</option>
-                                                            @for ($i = 1; $i < 32; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}</option>
-                                                            @endfor
+                                                            @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}</option>
+                                                                @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
@@ -3423,11 +3422,11 @@ use Carbon\Carbon;
                                                             style="padding-left: 5px;padding-right: 5px;"
                                                             name="m_ano_fechaFEV" id="m_ano_fechaFEV" disabled>
                                                             <option value="0">Año</option>
-                                                            @for ($i = 1900; $i <= 2030; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}
+                                                            @for ($i = 1900; $i <= 2030; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}
                                                                 </option>
-                                                            @endfor
+                                                                @endfor
                                                         </select>
                                                     </div>
 
@@ -3442,10 +3441,9 @@ use Carbon\Carbon;
                                             <select class="form-control col-3" name="ver_noti_dia_fecha"
                                                 id="ver_noti_dia_fecha">
                                                 <option value="0">Día</option>
-                                                @for ($i = 30; $i < 61; $i++)
-                                                    <option class="" value="{{ $i }}">
-                                                        {{ $i }}</option>
-                                                @endfor
+                                                @for ($i = 30; $i < 61; $i++) <option class="" value="{{ $i }}">
+                                                    {{ $i }}</option>
+                                                    @endfor
                                             </select>
                                         </div>
                                     </div>
@@ -3511,8 +3509,8 @@ use Carbon\Carbon;
                                                         name="documento" id="documento" tabindex="1" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($tipo_doc as $tipo_docs)
-                                                            <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
-                                                                {{ $tipo_docs->tipoDoc_descripcion }}</option>
+                                                        <option class="" value="{{ $tipo_docs->tipoDoc_id }}">
+                                                            {{ $tipo_docs->tipoDoc_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3534,10 +3532,10 @@ use Carbon\Carbon;
                                                             <select class="form-control" name="dia_fecha" id="dia_fecha"
                                                                 required="">
                                                                 <option value="0">Día</option>
-                                                                @for ($i = 1; $i < 32; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}</option>
-                                                                @endfor
+                                                                @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}</option>
+                                                                    @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-4 prigth pleft">
@@ -3563,10 +3561,10 @@ use Carbon\Carbon;
                                                                 style="padding-left: 5px; padding-right: 5px;"
                                                                 name="ano_fecha" id="ano_fecha" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i < 2011; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }} </option>
-                                                                @endfor
+                                                                @for ($i = 1950; $i < 2011; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }} </option>
+                                                                    @endfor
                                                             </select>
 
                                                         </div>
@@ -3670,8 +3668,8 @@ use Carbon\Carbon;
                                                         name="departamento" id="dep" tabindex="11" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{ $departamentos->id }}">
-                                                                {{ $departamentos->name }}</option>
+                                                        <option class="" value="{{ $departamentos->id }}">
+                                                            {{ $departamentos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3695,8 +3693,8 @@ use Carbon\Carbon;
                                                         name="departamento" id="departamento" tabindex="14" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{ $departamentos->id }}">
-                                                                {{ $departamentos->name }}</option>
+                                                        <option class="" value="{{ $departamentos->id }}">
+                                                            {{ $departamentos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -3770,8 +3768,8 @@ use Carbon\Carbon;
                                                             tabindex="2">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($cargo as $cargos)
-                                                                <option class="" value="{{ $cargos->cargo_id }}">
-                                                                    {{ $cargos->cargo_descripcion }}</option>
+                                                            <option class="" value="{{ $cargos->cargo_id }}">
+                                                                {{ $cargos->cargo_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3794,8 +3792,8 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="area" id="area" tabindex="3">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($area as $areas)
-                                                                <option class="" value="{{ $areas->area_id }}">
-                                                                    {{ $areas->area_descripcion }}</option>
+                                                            <option class="" value="{{ $areas->area_id }}">
+                                                                {{ $areas->area_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3809,8 +3807,8 @@ use Carbon\Carbon;
                                                             tabindex="6">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($nivel as $niveles)
-                                                                <option class="" value="{{ $niveles->nivel_id }}">
-                                                                    {{ $niveles->nivel_descripcion }}</option>
+                                                            <option class="" value="{{ $niveles->nivel_id }}">
+                                                                {{ $niveles->nivel_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3826,10 +3824,9 @@ use Carbon\Carbon;
                                                             tabindex="4">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($centro_costo as $centro_costos)
-                                                                <option class=""
-                                                                    value="{{ $centro_costos->centroC_id }}">
-                                                                    {{ $centro_costos->centroC_descripcion }}
-                                                                </option>
+                                                            <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                                {{ $centro_costos->centroC_descripcion }}
+                                                            </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3843,8 +3840,8 @@ use Carbon\Carbon;
                                                             tabindex="7">
                                                             <option value="">Seleccionar</option>
                                                             @foreach ($local as $locales)
-                                                                <option class="" value="{{ $locales->local_id }}">
-                                                                    {{ $locales->local_descripcion }}</option>
+                                                            <option class="" value="{{ $locales->local_id }}">
+                                                                {{ $locales->local_descripcion }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -3945,16 +3942,16 @@ use Carbon\Carbon;
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     @if (count($calendario) === 0)
-                                                        <div class="col-md-12 text-center">
-                                                            <h5>No existe calendarios registrados</h5>
+                                                    <div class="col-md-12 text-center">
+                                                        <h5>No existe calendarios registrados</h5>
+                                                    </div>
+                                                    <div style="display: none">
+                                                        <div class="col-md-12" id="calendarInv"
+                                                            style="display: none!important">
                                                         </div>
-                                                        <div style="display: none">
-                                                            <div class="col-md-12" id="calendarInv"
-                                                                style="display: none!important">
-                                                            </div>
-                                                        </div>
+                                                    </div>
                                                 </div>
-                                            @else
+                                                @else
                                                 <div class="form-group row">
                                                     <div class="col-md-1"></div>
                                                     <label style="font-weight: 600;font-size: 14px;"
@@ -3968,9 +3965,8 @@ use Carbon\Carbon;
                                                             style="margin-top: 4px;">
                                                             <option hidden selected>Asignar calendario</option>
                                                             @foreach ($calendario as $calendarios)
-                                                                <option class=""
-                                                                    value="{{ $calendarios->calen_id }}">
-                                                                    {{ $calendarios->calendario_nombre }}</option>
+                                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                                {{ $calendarios->calendario_nombre }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -4173,12 +4169,12 @@ use Carbon\Carbon;
                                                                             horario
                                                                         </option>
                                                                         @foreach ($horario as $horarios)
-                                                                            <option class=""
-                                                                                value="{{ $horarios->horario_id }}">
-                                                                                {{ $horarios->horario_descripcion }}
-                                                                                <span
-                                                                                    style="font-size: 11px;font-style: oblique">({{ $horarios->horaI }}-{{ $horarios->horaF }})</span>
-                                                                            </option>
+                                                                        <option class=""
+                                                                            value="{{ $horarios->horario_id }}">
+                                                                            {{ $horarios->horario_descripcion }}
+                                                                            <span
+                                                                                style="font-size: 11px;font-style: oblique">({{ $horarios->horaI }}-{{ $horarios->horaF }})</span>
+                                                                        </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -4830,11 +4826,11 @@ use Carbon\Carbon;
                                                             <select class="form-control" name="v_dia_fecha"
                                                                 id="v_dia_fecha" required="">
                                                                 <option value="0">Día</option>
-                                                                @for ($i = 1; $i < 32; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
                                                         <div class="col-md-4 prigth pleft">
@@ -4859,11 +4855,11 @@ use Carbon\Carbon;
                                                             <select class="form-control" style="padding-left: 5px;
                                                 padding-right: 5px;" name="v_mes_fecha" id="v_ano_fecha" required="">
                                                                 <option value="0">Año</option>
-                                                                @for ($i = 1950; $i < 2011; $i++)
-                                                                    <option class="" value="{{ $i }}">
-                                                                        {{ $i }}
+                                                                @for ($i = 1950; $i < 2011; $i++) <option class=""
+                                                                    value="{{ $i }}">
+                                                                    {{ $i }}
                                                                     </option>
-                                                                @endfor
+                                                                    @endfor
                                                             </select>
                                                         </div>
 
@@ -4934,8 +4930,8 @@ use Carbon\Carbon;
                                                         id="v_dep" tabindex="11" required>
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{ $departamentos->id }}">
-                                                                {{ $departamentos->name }}</option>
+                                                        <option class="" value="{{ $departamentos->id }}">
+                                                            {{ $departamentos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -4945,8 +4941,8 @@ use Carbon\Carbon;
                                                         name="v_departamento" id="v_departamento" tabindex="14">
                                                         <option value="">Departamento</option>
                                                         @foreach ($departamento as $departamentos)
-                                                            <option class="" value="{{ $departamentos->id }}">
-                                                                {{ $departamentos->name }}</option>
+                                                        <option class="" value="{{ $departamentos->id }}">
+                                                            {{ $departamentos->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -5033,8 +5029,8 @@ use Carbon\Carbon;
                                                         <option value="">Seleccionar</option>
 
                                                         @foreach ($cargo as $cargos)
-                                                            <option class="" value="{{ $cargos->cargo_id }}">
-                                                                {{ $cargos->cargo_descripcion }}</option>
+                                                        <option class="" value="{{ $cargos->cargo_id }}">
+                                                            {{ $cargos->cargo_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -5056,8 +5052,8 @@ use Carbon\Carbon;
                                                         required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($area as $areas)
-                                                            <option class="" value="{{ $areas->area_id }}">
-                                                                {{ $areas->area_descripcion }}</option>
+                                                        <option class="" value="{{ $areas->area_id }}">
+                                                            {{ $areas->area_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -5071,8 +5067,8 @@ use Carbon\Carbon;
                                                         tabindex="6">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($nivel as $niveles)
-                                                            <option class="" value="{{ $niveles->nivel_id }}">
-                                                                {{ $niveles->nivel_descripcion }}</option>
+                                                        <option class="" value="{{ $niveles->nivel_id }}">
+                                                            {{ $niveles->nivel_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -5087,9 +5083,8 @@ use Carbon\Carbon;
                                                         tabindex="4" required>
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($centro_costo as $centro_costos)
-                                                            <option class=""
-                                                                value="{{ $centro_costos->centroC_id }}">
-                                                                {{ $centro_costos->centroC_descripcion }}</option>
+                                                        <option class="" value="{{ $centro_costos->centroC_id }}">
+                                                            {{ $centro_costos->centroC_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -5102,8 +5097,8 @@ use Carbon\Carbon;
                                                         tabindex="7">
                                                         <option value="">Seleccionar</option>
                                                         @foreach ($local as $locales)
-                                                            <option class="" value="{{ $locales->local_id }}">
-                                                                {{ $locales->local_descripcion }}</option>
+                                                        <option class="" value="{{ $locales->local_id }}">
+                                                            {{ $locales->local_descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -5222,9 +5217,8 @@ use Carbon\Carbon;
                                                             style="margin-top: 4px;">
                                                             <option hidden selected>Asignar calendario</option>
                                                             @foreach ($calendario as $calendarios)
-                                                                <option class=""
-                                                                    value="{{ $calendarios->calen_id }}">
-                                                                    {{ $calendarios->calendario_nombre }}</option>
+                                                            <option class="" value="{{ $calendarios->calen_id }}">
+                                                                {{ $calendarios->calendario_nombre }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -5239,8 +5233,8 @@ use Carbon\Carbon;
                                                     style="margin-top: 4px;">
                                                     <option hidden selected>Asignar calendario</option>
                                                     @foreach ($calendario as $calendarios)
-                                                        <option class="" value="{{ $calendarios->calen_id }}">
-                                                            {{ $calendarios->calendario_nombre }}</option>
+                                                    <option class="" value="{{ $calendarios->calen_id }}">
+                                                        {{ $calendarios->calendario_nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -5251,8 +5245,7 @@ use Carbon\Carbon;
                                             background-color: #4a5669;
                                             border-color: #485263;" data-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false"><img
-                                                            src="{{ asset('admin/images/borrador.svg') }}"
-                                                            height="15">
+                                                            src="{{ asset('admin/images/borrador.svg') }}" height="15">
                                                         Borrar <i class="icon"><span
                                                                 data-feather="chevron-down"></span></i></button>
                                                     <div class="dropdown-menu">
@@ -5437,12 +5430,12 @@ use Carbon\Carbon;
                                                                             horario
                                                                         </option>
                                                                         @foreach ($horario as $horarios)
-                                                                            <option class=""
-                                                                                value="{{ $horarios->horario_id }}">
-                                                                                {{ $horarios->horario_descripcion }}
-                                                                                <span
-                                                                                    style="font-size: 11px;font-style: oblique">({{ $horarios->horaI }}-{{ $horarios->horaF }})</span>
-                                                                            </option>
+                                                                        <option class=""
+                                                                            value="{{ $horarios->horario_id }}">
+                                                                            {{ $horarios->horario_descripcion }}
+                                                                            <span
+                                                                                style="font-size: 11px;font-style: oblique">({{ $horarios->horaI }}-{{ $horarios->horaF }})</span>
+                                                                        </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -5756,20 +5749,20 @@ use Carbon\Carbon;
                                                                     </a>
                                                                 </div>
                                                                 @if (isset($GestActEmp))
-                                                                    @if ($GestActEmp == 1)
-                                                                        <button type="button" class="btn btn-sm mt-1"
-                                                                            style="background-color: #383e56;"
-                                                                            onclick="$('#actividadTarea').modal()">+Asignar
-                                                                            actividad
-                                                                        </button>
-                                                                    @else
-                                                                    @endif
+                                                                @if ($GestActEmp == 1)
+                                                                <button type="button" class="btn btn-sm mt-1"
+                                                                    style="background-color: #383e56;"
+                                                                    onclick="$('#actividadTarea').modal()">+Asignar
+                                                                    actividad
+                                                                </button>
                                                                 @else
-                                                                    <button type="button" class="btn btn-sm mt-1"
-                                                                        style="background-color: #383e56;"
-                                                                        onclick="$('#actividadTarea').modal()">+Asignar
-                                                                        actividad
-                                                                    </button>
+                                                                @endif
+                                                                @else
+                                                                <button type="button" class="btn btn-sm mt-1"
+                                                                    style="background-color: #383e56;"
+                                                                    onclick="$('#actividadTarea').modal()">+Asignar
+                                                                    actividad
+                                                                </button>
                                                                 @endif
 
                                                             </div>
@@ -6017,25 +6010,25 @@ use Carbon\Carbon;
                         <button type="button" class="close" id="cerrarEd" data-dismiss="modal" aria-label="Close"
                             onclick="javascript:cerrarVer()">
                             @if (isset($modifEmp))
-                                @if ($modifEmp == 1)
-                                    <span class="badge float-left pr-4 pt-0">
-                                        <a style="color: #f0f0f0"
-                                            onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                            <img src="{{ asset('admin/images/edit.svg') }}" height="15">
-                                            <span style="font-weight: bold">Editar Empleado</span>
-                                        </a>
-                                    </span>
-                                @else
-
-                                @endif
+                            @if ($modifEmp == 1)
+                            <span class="badge float-left pr-4 pt-0">
+                                <a style="color: #f0f0f0"
+                                    onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                                    <img src="{{ asset('admin/images/edit.svg') }}" height="15">
+                                    <span style="font-weight: bold">Editar Empleado</span>
+                                </a>
+                            </span>
                             @else
-                                <span class="badge float-left pr-4 pt-0">
-                                    <a style="color: #f0f0f0"
-                                        onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
-                                        <img src="{{ asset('admin/images/edit.svg') }}" height="15">
-                                        <span style="font-weight: bold">Editar Empleado</span>
-                                    </a>
-                                </span>
+
+                            @endif
+                            @else
+                            <span class="badge float-left pr-4 pt-0">
+                                <a style="color: #f0f0f0"
+                                    onclick="$('#verEmpleadoDetalles').modal('toggle');javascript:editarEmpleado($('#v_idV').val())">
+                                    <img src="{{ asset('admin/images/edit.svg') }}" height="15">
+                                    <span style="font-weight: bold">Editar Empleado</span>
+                                </a>
+                            </span>
                             @endif
 
                             <span aria-hidden="true">&times;</span>
@@ -6100,11 +6093,11 @@ use Carbon\Carbon;
                                                         <select class="form-control" name="v_dia_fechaV"
                                                             id="v_dia_fechaV" required="">
                                                             <option value="0">Día</option>
-                                                            @for ($i = 1; $i < 32; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}
+                                                            @for ($i = 1; $i < 32; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}
                                                                 </option>
-                                                            @endfor
+                                                                @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 prigth">
@@ -6129,11 +6122,11 @@ use Carbon\Carbon;
                                                         <select class="form-control" style="padding-left: 5px;
                                             padding-right: 5px;" name="v_mes_fechaV" id="v_ano_fechaV" required="">
                                                             <option value="0">Año</option>
-                                                            @for ($i = 1950; $i < 2011; $i++)
-                                                                <option class="" value="{{ $i }}">
-                                                                    {{ $i }}
+                                                            @for ($i = 1950; $i < 2011; $i++) <option class=""
+                                                                value="{{ $i }}">
+                                                                {{ $i }}
                                                                 </option>
-                                                            @endfor
+                                                                @endfor
                                                         </select>
                                                     </div>
 
@@ -6321,8 +6314,8 @@ use Carbon\Carbon;
                                                 class="form-control form-control-sm" style="margin-top: 4px;" disabled>
                                                 <option hidden selected>Asignar calendario</option>
                                                 @foreach ($calendario as $calendarios)
-                                                    <option class="" value="{{ $calendarios->calen_id }}">
-                                                        {{ $calendarios->calendario_nombre }}</option>
+                                                <option class="" value="{{ $calendarios->calen_id }}">
+                                                    {{ $calendarios->calendario_nombre }}</option>
                                                 @endforeach
                                             </select><br><br>
                                         </div>
@@ -6870,8 +6863,8 @@ use Carbon\Carbon;
     <script src="{{ asset('landing/js/modosEmpleado.js') }}"></script>
     <script src="{{ asset('landing/js/contrato.js') }}"></script>
     @if (Auth::user())
-        <script>
-            $(function() {
+    <script>
+        $(function() {
                 setInterval(function checkSession() {
                     $.get('/check-session', function(data) {
                         // if session was expired
@@ -6883,7 +6876,7 @@ use Carbon\Carbon;
                 }, 7202000);
             });
 
-        </script>
+    </script>
     @endif
     <script src="{{ URL::asset('admin/assets/js/pages/form-advanced.init.js') }}"></script>
 </body>

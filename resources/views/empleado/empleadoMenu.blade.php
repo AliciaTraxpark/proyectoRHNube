@@ -1798,7 +1798,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <label for="" style="font-weight: 600">Fecha inicial</label>
                                 <span id="m_validFechaC" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
@@ -1866,8 +1866,8 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha Final</label>
-                                    <label for="">Fecha Indefinida</label>
+                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha final</label>
+                                    <label for="">Fecha indefinida</label>
                                     <input type="checkbox" id="checkboxFechaI" name="checkboxFechaI">
                                 </div>
                                 <div id="ocultarFecha">
@@ -2017,7 +2017,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <label for="" style="font-weight: 600">Fecha inicial</label>
                                 <span id="m_validFechaCD" style="color: red;display: none;">
                                     *Fecha incorrecta.
                                 </span>
@@ -2085,8 +2085,8 @@ use App\proyecto_empleado;
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha Final</label>
-                                    <label class="ocultarFechaD">Fecha Indefinida</label>
+                                    <label class="pb-2" id="labelfechaF" style="font-weight: 600">Fecha final</label>
+                                    <label class="ocultarFechaD">Fecha indefinida</label>
                                     <input type="checkbox" class="ocultarFechaD" id="checkboxFechaID"
                                         name="checkboxFechaID">
                                 </div>
@@ -2532,7 +2532,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <label for="" style="font-weight: 600">Fecha inicial</label>
                                         <span id="m_validFechaCIE" style="color: red;display: none;">
                                             *Fecha incorrecta.
                                         </span>
@@ -2607,8 +2607,8 @@ use App\proyecto_empleado;
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="" class="ocultarFechaIE">Fecha Indefinida</label>
+                                            <label for="" style="font-weight: 600">Fecha final</label><br>
+                                            <label for="" class="ocultarFechaIE">Fecha indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIE" name="checkboxFechaIE"
                                                 class="ocultarFechaIE">
                                         </div>
@@ -2748,7 +2748,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <label for="" style="font-weight: 600">Fecha inicial</label>
                                         <span id="m_validFechaCIEN" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="alert alert-danger" role="alert" style="display: none;"
@@ -2822,8 +2822,8 @@ use App\proyecto_empleado;
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="">Fecha Indefinida</label>
+                                            <label for="" style="font-weight: 600">Fecha final</label><br>
+                                            <label for="">Fecha indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIEN" name="checkboxFechaIEN">
                                         </div>
                                         <div id="ocultarFechaEN">
@@ -2966,7 +2966,7 @@ use App\proyecto_empleado;
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                        <label for="" style="font-weight: 600">Fecha inicial</label>
                                         <span id="m_validFechaCIEND" style="color: red;display: none;">*Fecha
                                             incorrecta.</span>
                                         <div class="row">
@@ -3038,8 +3038,8 @@ use App\proyecto_empleado;
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                            <label for="">Fecha Indefinida</label>
+                                            <label for="" style="font-weight: 600">Fecha final</label><br>
+                                            <label for="">Fecha indefinida</label>
                                             <input type="checkbox" id="checkboxFechaIEND" name="checkboxFechaIEND">
                                         </div>
                                         <div id="ocultarFechaEND">
@@ -3159,7 +3159,7 @@ use App\proyecto_empleado;
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                <label for="" style="font-weight: 600">Fecha inicial</label>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select class="form-control" name="m_dia_fechaIEV" id="m_dia_fechaIEV" disabled>
@@ -3201,8 +3201,8 @@ use App\proyecto_empleado;
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                    <label class="ocultarFechaIV">Fecha Indefinida</label>
+                                    <label for="" style="font-weight: 600">Fecha final</label><br>
+                                    <label class="ocultarFechaIV">Fecha indefinida</label>
                                     <input type="checkbox" class="ocultarFechaIV" id="checkboxFechaIEV"
                                         name="checkboxFechaIEV">
                                 </div>

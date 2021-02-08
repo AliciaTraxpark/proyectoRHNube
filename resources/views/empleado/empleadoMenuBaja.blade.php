@@ -636,7 +636,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="">Fecha Inicial</label>
+                                <label for="">Fecha inicial</label>
                                 <span id="m_validFechaCIE" style="color: red;display: none;">*Fecha
                                     incorrecta.</span>
                                 <div class="row">
@@ -683,11 +683,11 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="">Fecha Indefinida</label>
+                                    <label for="">Fecha indefinida</label>
                                     <input type="checkbox" id="checkboxFechaIEV" name="checkboxFechaIEV">
                                 </div>
                                 <div id="ocultarFechaEV">
-                                    <label for="">Fecha Final</label>
+                                    <label for="">Fecha final</label>
                                     <span id="m_validFechaCFE" style="color: red;display: none;">*Fecha
                                         incorrecta.</span>
                                     <div class="row">
@@ -1366,7 +1366,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="" style="font-weight: 600">Fecha Inicial</label>
+                                    <label for="" style="font-weight: 600">Fecha inicial</label>
                                     <span id="validFechaCIB" style="color: red;display: none;">
                                         *Fecha incorrecta.
                                     </span>
@@ -1439,8 +1439,8 @@
                                     </div>
                                     <br>
                                     <div class="form-group">
-                                        <label for="" style="font-weight: 600">Fecha Final</label><br>
-                                        <label for="">Fecha Indefinida</label>
+                                        <label for="" style="font-weight: 600">Fecha final</label><br>
+                                        <label for="">Fecha indefinida</label>
                                         <input type="checkbox" id="checkboxFechaIB" name="checkboxFechaIB">
                                     </div>
                                     <div id="ocultarFechaB">
