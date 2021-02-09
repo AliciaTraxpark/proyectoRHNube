@@ -133,6 +133,18 @@ async function datosCentro(id) {
         success: function (data) {
             $('#e_descripcion').val(data.descripcion);
             $('#e_codigo').val(data.codigo);
+            // : ASISTENCIA EN PUERTA
+            if (data.asistenciaPuerta == 1) {
+                $('#e_switchAP').prop("checked", true);
+            } else {
+                $('#e_switchAP').prop("checked", false);
+            }
+            // : MODO TAREO
+            if (data.modoTareo == 1) {
+                $('#e_switchMT').prop("checked", true);
+            } else {
+                $('#e_switchMT').prop("checked", false);
+            }
             // : ASIGNACION POR EMPLEADO
             if (data.porEmpleado == 1) {
                 $('#switchPorEmpleado').prop("checked", true);
@@ -215,14 +227,27 @@ function actualizarCentroC() {
     var codigo = $('#e_codigo').val();
     var empleados = $('#e_empleadosCentro').val();
     var porEmpleado;
+    var asistenciaPuerta;
+    var modoTareo;
     // : ************************* POR EMPLEADO ****************
     if ($('#switchPorEmpleado').is(":checked")) {
         porEmpleado = 1;
     } else {
         porEmpleado = 0;
     }
+    // : ************************* ASISTENCIA EN PUERTA *********
+    if ($('#e_switchAP').is(":checked")) {
+        asistenciaPuerta = 1;
+    } else {
+        asistenciaPuerta = 0;
+    }
+    // : ************************* MODO DE TAREO ****************
+    if ($('#e_switchMT').is(":checked")) {
+        modoTareo = 1;
+    } else {
+        modoTareo = 0;
+    }
     // : ************************* FINALIZACION *****************
-    console.log(porEmpleado);
     $.ajax({
         async: false,
         url: "/actualizarCentroC",
@@ -231,7 +256,9 @@ function actualizarCentroC() {
             id: id,
             empleados: empleados,
             codigo: codigo,
-            porEmpleado: porEmpleado
+            porEmpleado: porEmpleado,
+            asistenciaPuerta: asistenciaPuerta,
+            modoTareo: modoTareo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
