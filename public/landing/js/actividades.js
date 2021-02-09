@@ -456,10 +456,6 @@ $("#e_codigoTarea").keyup(function () {
 $('#e_nombreTarea').keyup(function () {
     $(this).removeClass("borderColor");
 });
-$("#areaAsignarEditar").select2({
-    minimumResultsForSearch: 5,
-    allowClear: false
-});
 // * BUSCAR PERSONALIZADO
 function filterGlobal() {
     $("#actividades").DataTable().search(
@@ -470,20 +466,17 @@ function filterGlobal() {
 $('input.global_filter').on('keyup click change clear', function () {
     filterGlobal();
 });
-// * INICIALIZAR PLUGIN
-$("#areaAsignar").select2({
-    minimumResultsForSearch: 5,
-    allowClear: false,
-});
-$("#empleAsignar").select2({
-    minimumResultsForSearch: 5,
-    allowClear: false
-});
 // ! ********************************************************** FORMULARIO EDITAR ***************************************
 // :INICIALIZAR PLUGIN DE EMPLEADOS
 $("#empleados").select2({
     placeholder: 'Seleccionar Empleados',
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
+});
+$("#areaAsignarEditar").select2({
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 //: FUNCIONALIDAD DEL SWIRCH EN CONTROL REMOTO
@@ -1165,11 +1158,13 @@ $('#checkboxEmpleadosEditarTodos').on("change.bootstrapSwitch", function (event)
 // * INICIALIZAR PLUGIN
 $("#areaAsignarReg").select2({
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 $("#reg_empleados").select2({
     placeholder: 'Seleccionar Empleados',
     minimumResultsForSearch: 5,
+    closeOnSelect: false,
     allowClear: false
 });
 // * MODAL DE REGISTRAR NUEVA ACTIVIDAD
@@ -1748,6 +1743,16 @@ $('#checkboxEmpleadosTodosReg').on("change.bootstrapSwitch", function (event) {
 $("#actividadesAsignar").select2({
     placeholder: 'Seleccionar actividad',
     matcher: matchStart
+});
+$("#areaAsignar").select2({
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
+});
+$("#empleAsignar").select2({
+    minimumResultsForSearch: 5,
+    closeOnSelect: false,
+    allowClear: false
 });
 //? FUNCIONN PARA LISTAR ACTIVIDADES
 function listaActividades() {

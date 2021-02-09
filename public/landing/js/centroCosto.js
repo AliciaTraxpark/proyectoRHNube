@@ -99,7 +99,8 @@ centroCostoOrganizacion();
 $('#e_empleadosCentro').select2({
     placeholder: "Empleados",
     minimumResultsForSearch: 5,
-    allowClear: false,
+    closeOnSelect: false,
+    allowClear: false
 });
 // * MODAL DE EDITAR
 function editarCentro(id) {
@@ -399,7 +400,8 @@ $('#a_centro').select2({
 });
 $('#a_empleadosCentro').select2({
     minimumResultsForSearch: 5,
-    allowClear: false,
+    closeOnSelect: false,
+    allowClear: false
 });
 // ! ABRIR MODAL DE ASIGNACION
 function asignarCentroC() {
@@ -550,6 +552,7 @@ function modalRegistrar() {
 $('#r_empleadosCentro').select2({
     minimumResultsForSearch: 5,
     allowClear: false,
+    closeOnSelect: false
 });
 // : SWITCH DE POR EMPLEADO
 $('#r_switchPorEmpleado').on("change.bootstrapSwitch", function (event) {

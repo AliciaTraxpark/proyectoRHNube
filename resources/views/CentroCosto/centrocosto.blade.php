@@ -117,7 +117,7 @@
             <tr>
               <th>#</th>
               <th>Centro de costo</th>
-              <th>N° empleados</th>
+              <th>Por Empleado</th>
               <th>En uso</th>
               <th class="text-center"></th>
             </tr>
