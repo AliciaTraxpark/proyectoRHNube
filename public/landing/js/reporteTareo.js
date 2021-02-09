@@ -840,7 +840,7 @@ function cargartabla(fecha) {
                 }
                 $("#tbodyD").html(tbody);
                 $('[data-toggle="tooltip"]').tooltip();
-                if (data.length == 1) {
+                if (data.length <= 4) {
                     var tbodyTR = '';
                     tbodyTR += '<tr>';
 

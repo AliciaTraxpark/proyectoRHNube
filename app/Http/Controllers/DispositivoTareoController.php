@@ -227,18 +227,36 @@ class DispositivoTareoController extends Controller
         $dispositivos->dispoT_tSincro = $request->tSincron_ed;
         $dispositivos->dispoT_tMarca = $request->tMarca_ed;
         $dispositivos->dispoT_Data = $request->tData_ed;
-        foreach ($request->lectura_ed as $lectura) {
-            if ($lectura == 1) {
-                $dispositivos->dispoT_Manu = 1;
-            }
-            if ($lectura == 2) {
-                $dispositivos->dispoT_Scan = 1;
-            }
+        $lectura=$request->lectura_ed;
+        
 
-            if ($lectura == 3) {
-                $dispositivos->dispoT_Cam = 1;
-            }
+        //*ASIGNANDO
+        if(in_array("1", $lectura)){
+
+                $dispositivos->dispoT_Manu = 1;
+
+
         }
+        else{
+            $dispositivos->dispoT_Manu = 0;
+        }
+
+        if(in_array("2", $lectura)){
+
+            $dispositivos->dispoT_Scan = 1;
+        }
+        else{
+            $dispositivos->dispoT_Scan = 0;
+        }
+
+        if(in_array("3", $lectura)){
+
+                $dispositivos->dispoT_Cam = 1;
+        }
+        else{
+            $dispositivos->dispoT_Cam = 0;
+        }
+
         $dispositivos->save();
         /* -------------------------------------------------------------------- */
 
@@ -278,7 +296,7 @@ class DispositivoTareoController extends Controller
             /* COMPARAMOS LOS REGISTRADOS CON LA LISTA DE CONTROLADORES PARA DESCARTAR LOS QUE YA NO TIENEN*/
             foreach ($dispositivo_contAnt as $idcontDis) {
                 $estadoEReg = false;
-                
+
                 if ($idcont_id != null) {
                 foreach ($idcont_id as $idcos) {
                     if ($idcontDis->idcontroladores_tareo == $idcos) {
