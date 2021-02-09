@@ -1056,4 +1056,207 @@ class marcacionTareoController extends Controller
         $marcacion_tareo->idcontroladores_salida=$idControl;
         $marcacion_tareo->save();
     }
+
+     // * HORARIOS DE MARCACIONES
+     public function horariosxMarcacion(Request $request)
+     {
+         $tipo = $request->get('tipo');
+         $id = $request->get('id');
+         $marcacion = marcacion_tareo::findOrFail($id);
+         $fechaM = $tipo == 2 ? $marcacion->marcaTareo_salida : $marcacion->marcaTareo_entrada;
+         $fecha = Carbon::parse($fechaM)->isoFormat("YYYY-MM-DD");
+
+         $respuesta = [];
+
+         $horario = DB::table('horario_empleado as he')
+             ->join('horario_dias as hd', 'hd.id', '=', 'he.horario_dias_id')
+             ->join('horario as h', 'h.horario_id', '=', 'horario_horario_id')
+             ->select(
+                 'he.horarioEmp_id as id',
+                 'h.horario_descripcion',
+                 'h.horaI',
+                 'h.horaF',
+                 'h.horario_tolerancia',
+                 'h.horario_toleranciaF',
+                 DB::raw("CONCAT( DATE(hd.start),' ', h.horaI) as horarioInicio"),
+                 DB::raw("IF(h.horaF > h.horaI,CONCAT( DATE(hd.start),' ', h.horaF),CONCAT( DATE_ADD(DATE(hd.start), INTERVAL 1 DAY),' ', h.horaF)) as horarioFin")
+             )
+             ->where('he.empleado_emple_id', '=', $marcacion->marcaTareo_idempleado)
+             ->where(DB::raw('DATE(hd.start)'), '=', $fecha)
+             ->where('he.estado', '=', 1)
+             ->get();
+
+         foreach ($horario as $h) {
+             $horarioFSuma = Carbon::parse($h->horarioFin)->addMinutes($h->horario_toleranciaF);
+             $horarioIResta = Carbon::parse($h->horarioInicio)->subMinutes($h->horario_tolerancia);
+             // * VALIDACION DE HORARIO CON EL TIEMPO DE MARCACION
+             if (Carbon::parse($fechaM)->gte($horarioIResta) && Carbon::parse($fechaM)->lt($horarioFSuma)) {
+                 $arrayHorario = (object) array(
+                     "id" => $h->id,
+                     "horario_descripcion" => $h->horario_descripcion,
+                     "horaI" => $h->horaI,
+                     "horaF" => $h->horaF
+                 );
+
+                 array_push($respuesta, $arrayHorario);
+             }
+         }
+
+         return response()->json($respuesta, 200);
+     }
+
+     // * GUARDAR A NUEVA ASIGNACION
+    public function asignacionMarcacion(Request $request)
+    {
+        $id = $request->get('id');
+        $idHorarioE = $request->get('idHorario');
+        $marcacionTipo = $request->get('tipoM');
+        $tipo = $request->get('tipo');
+        $marcacion = marcacion_tareo::findOrFail($id);
+        if ($marcacionTipo == 1) {
+            $fecha = Carbon::parse($marcacion->marcaTareo_entrada)->isoFormat('YYYY-MM-DD');
+        } else {
+            $fecha = Carbon::parse($marcacion->marcaTareo_salida)->isoFormat('YYYY-MM-DD');
+        }
+        // * VALIDACIONES
+        $marcacionesValidar = DB::table('marcacion_tareo as m')
+            ->select(
+                'm.idmarcaciones_tareo',
+                DB::raw('IF(m.marcaTareo_entrada is null,0,m.marcaTareo_entrada) AS entrada'),
+                DB::raw('IF(m.marcaTareo_salida is null,0,m.marcaTareo_salida) AS salida')
+            )
+            ->where('m.marcaTareo_idempleado', '=', $marcacion->marcaTareo_idempleado)
+            ->whereNotIn('m.idmarcaciones_tareo', [$marcacion->idmarcaciones_tareo])
+            ->where(DB::raw('IF(m.marcaTareo_entrada is null,DATE(m.marcaTareo_salida),DATE(m.marcaTareo_entrada))'), "=", $fecha)
+            ->whereNotNull('m.marcaTareo_entrada')
+            ->whereNotNull('m.marcaTareo_salida')
+            ->get();
+        // dd(DB::getQueryLog());
+        $respuesta = true;
+        foreach ($marcacionesValidar as $mv) {
+            if ($marcacionTipo == 1) {
+                $respuestaCheck = checkHora($mv->entrada, $mv->salida, $marcacion->marcaTareo_entrada);
+            } else {
+                $respuestaCheck = checkHora($mv->entrada, $mv->salida, $marcacion->marcaTareo_salida);
+            }
+            if ($respuestaCheck) {
+                $respuesta = false;
+            }
+        }
+
+        if ($respuesta) {
+            // * TOMAR MARCACION PARA NUEVA MARCACION
+            if ($marcacionTipo == 1) {
+                $nuevaMarcacion = $marcacion->marcaTareo_entrada;
+                $marcacion->marcaTareo_entrada = NULL;
+                $nuevoDispositivo=$marcacion->iddispositivos_entrada;
+                $marcacion->iddispositivos_entrada=NULL;
+                $nuevoControlador=$marcacion->idcontroladores_entrada;
+                $marcacion->idcontroladores_entrada=NULL;
+                $marcacion->save();
+            } else {
+                $nuevaMarcacion = $marcacion->marcaTareo_salida;
+                $marcacion->marcaTareo_salida = NULL;
+                $nuevoDispositivo=$marcacion->iddispositivos_salida;
+                $marcacion->iddispositivos_salida=NULL;
+                $nuevoControlador=$marcacion->idcontroladores_salida;
+                $marcacion->idcontroladores_salida=NULL;
+                $marcacion->save();
+            }
+
+            // * GENERAR NUEVA MARCACION
+            $newMarcacion = new marcacion_tareo();
+            if ($tipo ==  1) {
+                $newMarcacion->marcaTareo_entrada = $nuevaMarcacion;
+                // * DISPOSITIVO
+                $dispositivoE = $nuevoDispositivo;
+                $dispositivoS = NULL;
+                // * CONTROLADOR
+                $controladorE = $nuevoControlador;
+                $controladorS = NULL;
+            } else {
+                $newMarcacion->marcaTareo_salida = $nuevaMarcacion;
+                // * DISPOSITIVO
+                $dispositivoS = $nuevoDispositivo;
+                $dispositivoE = NULL;
+                // * CONTROLADOR
+                $controladorS = $nuevoControlador;
+                $controladorE = NULL;
+            }
+            $newMarcacion->marcaTareo_idempleado = $marcacion->marcaTareo_idempleado;
+            $newMarcacion->organi_id =  $marcacion->organi_id;
+            $newMarcacion->horarioEmp_id = $idHorarioE == 0 ? NULL : $idHorarioE;
+            $newMarcacion->marcaTareo_latitud = $marcacion->marcaTareo_latitud;
+            $newMarcacion->marcaTareo_longitud = $marcacion->marcaTareo_longitud;
+            $newMarcacion->Activi_id  = $marcacion->Activi_id;
+            $newMarcacion->idsubActividad  = $marcacion->idsubActividad;
+            $newMarcacion->puntoC_id = $marcacion->puntoC_id;
+            $newMarcacion->centroC_id = $marcacion->centroC_id;
+            $newMarcacion->idcontroladores_entrada = $controladorE;
+            $newMarcacion->idcontroladores_salida = $controladorS;
+            $newMarcacion->iddispositivos_entrada = $dispositivoE;
+            $newMarcacion->iddispositivos_salida = $dispositivoS;
+            $newMarcacion->save();
+
+            return response()->json($newMarcacion->idmarcaciones_tareo, 200);
+        } else {
+            return response()->json(array("respuesta" => "Posibilidad de cruze de marcación."), 200);
+        }
+    }
+
+       // * CONVERTIR TIEMPOS
+       public function convertirTiempos(Request $request)
+       {
+           $idM = $request->get('id');
+
+           $marcacion = marcacion_tareo::findOrFail($idM);
+           $carbonEntrada = carbon::parse($marcacion->marcaTareo_entrada);
+           $carbonSalida = carbon::parse($marcacion->marcaTareo_salida);
+           $controladorEntrada=$marcacion->idcontroladores_entrada;
+           $controladorSalida=$marcacion->idcontroladores_salida;
+           $dispositivoEntrada=$marcacion->iddispositivos_entrada;
+           $dispositivoSalida=$marcacion->iddispositivos_salida;
+
+           if ($carbonSalida->lt($carbonEntrada)) {        // ? COMPARAMOS SI LA SALIDA ES MENOR A LA ENTRADA
+               $marcacion->marcaTareo_entrada = $carbonSalida;
+               $marcacion->marcaTareo_salida = $carbonEntrada;
+               $marcacion->idcontroladores_entrada=$controladorSalida;
+               $marcacion->idcontroladores_salida=$controladorEntrada;
+               $marcacion->iddispositivos_entrada=$dispositivoSalida;
+               $marcacion->iddispositivos_salida=$dispositivoEntrada;
+               $marcacion->save();
+
+               return response()->json($marcacion->idmarcaciones_tareo, 200);
+           } else {
+               return response()->json(array("respuesta" => "Hora final debe ser mayor a entrada."), 200);
+           }
+       }
+
+
+     // * LISTA DE ENTRADAS CON SALIDAD NULL
+     function listaDeEntradasSinS(Request $request)
+     {
+         $fecha = $request->get('fecha');
+         $idEmpleado = $request->get('idEmpleado');
+
+         $entradas = DB::table('marcacion_tareo as mt')
+             ->leftJoin('horario_empleado as he', 'mt.horarioEmp_id', '=', 'he.horarioEmp_id')
+             ->leftJoin('horario as h', 'he.horario_horario_id', '=', 'h.horario_id')
+             ->select(
+                 'mt.idmarcaciones_tareo as id',
+                 'mt.marcaTareo_entrada as entrada',
+                 DB::raw('IF(mt.horarioEmp_id is null, 0 , mt.horarioEmp_id ) as idH'),
+                 DB::raw('IF(h.horario_descripcion is null , "Sin horario",h.horario_descripcion) as horario')
+             )
+             ->whereNotNull('mt.marcaTareo_entrada')
+             ->whereNull('mt.marcaTareo_salida')
+             ->whereRaw("DATE(marcaTareo_entrada) = '$fecha'")
+             ->where('mt.marcaTareo_idempleado', '=', $idEmpleado)
+             ->get();
+
+         $entradas = agruparMarcacionesEHorario($entradas);
+
+         return response()->json($entradas, 200);
+     }
+     
 }
