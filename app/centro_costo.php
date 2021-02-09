@@ -13,6 +13,8 @@ class centro_costo extends Model
         'centroC_descripcion',
         'organi_id',
         'estado',
-        'porEmpleado'
+        'porEmpleado',
+        'asistenciaPuerta',
+        'modoTareo'
     ];
 }

@@ -288,6 +288,28 @@
           </div>
           <div class="row mt-2">
             <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="r_switchAP">
+                <label class="custom-control-label" for="r_switchAP" style="font-weight: bold">
+                  <i data-feather="check-circle"
+                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                  &nbsp;&nbsp;
+                  Asistencia en Puerta
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 text-left">
+              <div class="custom-control custom-switch mb-2">
+                <input type="checkbox" class="custom-control-input" id="r_switchMT">
+                <label class="custom-control-label" for="r_switchMT" style="font-weight: bold">
+                  <i data-feather="pocket"
+                    style="height: 15px !important;width: 15px !important;color:#163552 !important"></i>
+                  &nbsp;&nbsp;
+                  Modo tareo
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 text-left border-top pt-1">
               <div class="custom-control custom-switch mb-1">
                 <input type="checkbox" class="custom-control-input" id="r_switchPorEmpleado">
                 <label class="custom-control-label" for="r_switchPorEmpleado" style="font-weight: bold">

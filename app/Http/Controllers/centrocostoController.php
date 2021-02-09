@@ -345,6 +345,8 @@ class centrocostoController extends Controller
         $centro->centroC_descripcion = $request->get('descripcion');
         $centro->codigo = $request->get('codigo');
         $centro->porEmpleado = $request->get('porEmpleado');
+        $centro->asistenciaPuerta = $request->get('asistenciaPuerta');
+        $centro->modoTareo = $request->get('modoTareo');
         $centro->organi_id = session('sesionidorg');
         $centro->save();
         // : ID DE CENTRO COSTO

@@ -598,11 +598,27 @@ function registrarCentroC() {
     var empleados = $('#r_empleadosCentro').val();
     var codigo = $('#r_codigo').val();
     var porEmpleado;
+    var asistenciaPuerta;
+    var modoTareo;
+    // : ******************** POR EMPLEADO *********************
     if ($('#r_switchPorEmpleado').is(":checked")) {
         porEmpleado = 1;
     } else {
         porEmpleado = 0;
     }
+    // : ******************** ASISTENCIA EN PUERTA **************
+    if ($('#r_switchAP').is(":checked")) {
+        asistenciaPuerta = 1;
+    } else {
+        asistenciaPuerta = 0;
+    }
+    // : ******************** MODO TAREO ************************
+    if ($('#r_switchMT').is(":checked")) {
+        modoTareo = 1;
+    } else {
+        modoTareo = 0;
+    }
+    // : ******************** FINALIZACION **********************
     $.ajax({
         async: false,
         url: "/registrarCentro",
@@ -611,7 +627,9 @@ function registrarCentroC() {
             descripcion: descripcion,
             empleados: empleados,
             codigo: codigo,
-            porEmpleado: porEmpleado
+            porEmpleado: porEmpleado,
+            asistenciaPuerta: asistenciaPuerta,
+            modoTareo: modoTareo
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
